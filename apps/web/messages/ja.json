@@ -37,12 +37,30 @@
 		"palettes": "カラーパレット",
 		"gradients": "グラデーション",
 		"icons": "アイコン",
-		"backToHome": "ホームへ戻る"
+		"backToHome": "ホームへ戻る",
+		"groups": {
+			"essentials": "基本",
+			"marketing": "マーケティングとランディング",
+			"navigation": "ナビゲーション",
+			"forms": "フォームと入力",
+			"data": "データとテーブル",
+			"media": "メディアとコンテンツ",
+			"feedback": "フィードバックとオーバーレイ",
+			"commerce": "コマース"
+		},
+		"expandSection": "{label}を展開",
+		"collapseSection": "{label}を折りたたむ"
 	},
 	"topbar": {
 		"searchPlaceholder": "検索またはページへ移動…",
 		"commandPalette": "コマンドパレットを開く",
-		"notifications": "通知"
+		"notifications": "通知",
+		"groups": {
+			"page": "ページ",
+			"category": "カテゴリー",
+			"tag": "タグ"
+		},
+		"noResults": "結果が見つかりません"
 	},
 	"notifications": {
 		"label": "通知",
@@ -911,7 +929,8 @@
 			"change-password": "パスワード変更",
 			"reset-password": "パスワードリセット",
 			"blog": "ブログ",
-			"images": "画像"
+			"images": "画像",
+			"nature": "自然"
 		},
 		"preview": {
 			"title": "プレビュー",
@@ -981,7 +1000,11 @@
 				"missingSection": "{title}は{framework}にはまだ対応していません。",
 				"coverage": "{available} / {total} セクション",
 				"empty": "コードを書き出すにはセクションを追加してください。",
-				"paletteTitle": "プロジェクトのパレット"
+				"paletteTitle": "プロジェクトのパレット",
+				"projectTitle": "プロジェクト一式をダウンロード",
+				"projectHint": "そのまま実行できるプロジェクト。展開して npm install を実行してください。",
+				"downloadProjectNext": "Next.js プロジェクト",
+				"downloadProjectReact": "React プロジェクト"
 			},
 			"tour": {
 				"stepCount": "ステップ {current} / {total}",

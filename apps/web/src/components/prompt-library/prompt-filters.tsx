@@ -5,7 +5,6 @@ import { Search, X, Star, Flame, Sparkles, LayoutGrid } from 'lucide-react';
 import { Button, Input, Select, cn } from '@adysre/ui';
 import {
   ASPECT_RATIOS,
-  PROMPT_CATEGORIES,
   PROMPT_MODELS,
   PROMPT_TIERS,
   type AspectRatio,
@@ -58,7 +57,6 @@ interface PromptFiltersProps {
   onChange: (next: PromptFilterState) => void;
   resultCount: number;
   totalCount: number;
-  categoryCounts: Record<string, number>;
 }
 
 function Chip({
@@ -93,7 +91,6 @@ export function PromptFilters({
   onChange,
   resultCount,
   totalCount,
-  categoryCounts,
 }: PromptFiltersProps) {
   const t = useTranslations('promptLibrary');
   const tCommon = useTranslations('common');
@@ -123,24 +120,6 @@ export function PromptFilters({
           <Chip key={id} active={value.collection === id} onClick={() => set('collection', id)}>
             <Icon className="h-3 w-3" aria-hidden />
             {t(`collections.${id}`)}
-          </Chip>
-        ))}
-      </div>
-
-      {/* 15 categories: scrolls horizontally on a phone rather than eating six
-          rows of vertical space before any prompt is visible. */}
-      <div
-        className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-1 sm:flex-wrap sm:overflow-visible"
-        role="group"
-        aria-label={t('filters.category')}
-      >
-        <Chip active={value.category === 'all'} onClick={() => set('category', 'all')}>
-          {t('filters.allCategories')}
-        </Chip>
-        {PROMPT_CATEGORIES.map(({ id }) => (
-          <Chip key={id} active={value.category === id} onClick={() => set('category', id)}>
-            {t(`categories.${id}`)}
-            <span className="text-[10px] opacity-60">{categoryCounts[id] ?? 0}</span>
           </Chip>
         ))}
       </div>

@@ -37,12 +37,30 @@
 		"palettes": "Color Palettes",
 		"gradients": "Gradients",
 		"icons": "Icons",
-		"backToHome": "Back to home"
+		"backToHome": "Back to home",
+		"groups": {
+			"essentials": "Essentials",
+			"marketing": "Marketing & Landing",
+			"navigation": "Navigation",
+			"forms": "Forms & Input",
+			"data": "Data & Tables",
+			"media": "Media & Content",
+			"feedback": "Feedback & Overlays",
+			"commerce": "Commerce"
+		},
+		"expandSection": "Expand {label}",
+		"collapseSection": "Collapse {label}"
 	},
 	"topbar": {
 		"searchPlaceholder": "Search or jump to…",
 		"commandPalette": "Open command palette",
-		"notifications": "Notifications"
+		"notifications": "Notifications",
+		"groups": {
+			"page": "Page",
+			"category": "Category",
+			"tag": "Tag"
+		},
+		"noResults": "No results found"
 	},
 	"notifications": {
 		"label": "Notifications",
@@ -759,7 +777,8 @@
 			"change-password": "Change Password",
 			"reset-password": "Reset Password",
 			"blog": "Blog",
-			"images": "Images"
+			"images": "Images",
+			"nature": "Nature"
 		},
 		"propDescriptions": {
 			"afterAlt": "Alternative text for the \"after\" image.",
@@ -981,7 +1000,11 @@
 				"missingSection": "{title} isn't available for {framework} yet.",
 				"coverage": "{available} / {total} sections",
 				"empty": "Add sections to export code.",
-				"paletteTitle": "Project palette"
+				"paletteTitle": "Project palette",
+				"projectTitle": "Download full project",
+				"projectHint": "A ready-to-run project. Unzip it, then run npm install.",
+				"downloadProjectNext": "Next.js project",
+				"downloadProjectReact": "React project"
 			},
 			"tour": {
 				"stepCount": "Step {current} of {total}",

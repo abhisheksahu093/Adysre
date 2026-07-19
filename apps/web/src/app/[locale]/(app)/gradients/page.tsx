@@ -17,6 +17,9 @@ export async function generateMetadata({
 }
 
 /** Gradients are static, unlocalised data, so the whole page is the client view. */
+// The grid reads the active tag from `?tag=` (sidebar submenu).
+export const dynamic = 'force-dynamic';
+
 export default async function GradientsPage({
   params,
 }: {

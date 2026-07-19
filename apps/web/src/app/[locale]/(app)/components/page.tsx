@@ -17,6 +17,10 @@ export async function generateMetadata({
   };
 }
 
+// The grid reads the active category from `?category=` (chosen in the sidebar
+// submenu) via useSearchParams, so this route renders per-request.
+export const dynamic = 'force-dynamic';
+
 /** Server Component: resolves prose for the locale, grid is the client boundary. */
 export default async function ComponentsPage({
   params,

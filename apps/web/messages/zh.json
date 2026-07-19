@@ -37,12 +37,30 @@
 		"palettes": "调色板",
 		"gradients": "渐变",
 		"icons": "图标",
-		"backToHome": "返回首页"
+		"backToHome": "返回首页",
+		"groups": {
+			"essentials": "基础",
+			"marketing": "营销与落地页",
+			"navigation": "导航",
+			"forms": "表单与输入",
+			"data": "数据与表格",
+			"media": "媒体与内容",
+			"feedback": "反馈与浮层",
+			"commerce": "电商"
+		},
+		"expandSection": "展开{label}",
+		"collapseSection": "收起{label}"
 	},
 	"topbar": {
 		"searchPlaceholder": "搜索或快速跳转…",
 		"commandPalette": "打开命令面板",
-		"notifications": "通知"
+		"notifications": "通知",
+		"groups": {
+			"page": "页面",
+			"category": "分类",
+			"tag": "标签"
+		},
+		"noResults": "未找到结果"
 	},
 	"notifications": {
 		"label": "通知",
@@ -911,7 +929,8 @@
 			"change-password": "修改密码",
 			"reset-password": "重置密码",
 			"blog": "博客",
-			"images": "图片"
+			"images": "图片",
+			"nature": "自然"
 		},
 		"preview": {
 			"title": "预览",
@@ -981,7 +1000,11 @@
 				"missingSection": "{title} 暂不支持 {framework}。",
 				"coverage": "{available} / {total} 个区块",
 				"empty": "请先添加区块，再导出代码。",
-				"paletteTitle": "项目调色板"
+				"paletteTitle": "项目调色板",
+				"projectTitle": "下载完整项目",
+				"projectHint": "开箱即用的项目。解压后运行 npm install。",
+				"downloadProjectNext": "Next.js 项目",
+				"downloadProjectReact": "React 项目"
 			},
 			"tour": {
 				"stepCount": "第 {current} / {total} 步",

@@ -37,12 +37,30 @@
 		"palettes": "कलर पैलेट",
 		"gradients": "ग्रेडिएंट",
 		"icons": "आइकन",
-		"backToHome": "होम पर वापस"
+		"backToHome": "होम पर वापस",
+		"groups": {
+			"essentials": "ज़रूरी",
+			"marketing": "मार्केटिंग और लैंडिंग",
+			"navigation": "नेविगेशन",
+			"forms": "फ़ॉर्म और इनपुट",
+			"data": "डेटा और टेबल",
+			"media": "मीडिया और कंटेंट",
+			"feedback": "फ़ीडबैक और ओवरले",
+			"commerce": "कॉमर्स"
+		},
+		"expandSection": "{label} खोलें",
+		"collapseSection": "{label} बंद करें"
 	},
 	"topbar": {
 		"searchPlaceholder": "खोजें या सीधे जाएँ…",
 		"commandPalette": "कमांड पैलेट खोलें",
-		"notifications": "नोटिफ़िकेशन"
+		"notifications": "नोटिफ़िकेशन",
+		"groups": {
+			"page": "पेज",
+			"category": "श्रेणी",
+			"tag": "टैग"
+		},
+		"noResults": "कोई परिणाम नहीं मिला"
 	},
 	"notifications": {
 		"label": "सूचनाएँ",
@@ -911,7 +929,8 @@
 			"change-password": "पासवर्ड बदलें",
 			"reset-password": "पासवर्ड रीसेट",
 			"blog": "ब्लॉग",
-			"images": "इमेज"
+			"images": "इमेज",
+			"nature": "प्रकृति"
 		},
 		"preview": {
 			"title": "प्रीव्यू",
@@ -981,7 +1000,11 @@
 				"missingSection": "{title} अभी {framework} के लिए उपलब्ध नहीं है।",
 				"coverage": "{available} / {total} सेक्शन",
 				"empty": "कोड निर्यात करने के लिए सेक्शन जोड़ें।",
-				"paletteTitle": "प्रोजेक्ट पैलेट"
+				"paletteTitle": "प्रोजेक्ट पैलेट",
+				"projectTitle": "पूरा प्रोजेक्ट डाउनलोड करें",
+				"projectHint": "चलने के लिए तैयार प्रोजेक्ट। अनज़िप करें, फिर npm install चलाएँ।",
+				"downloadProjectNext": "Next.js प्रोजेक्ट",
+				"downloadProjectReact": "React प्रोजेक्ट"
 			},
 			"tour": {
 				"stepCount": "चरण {current} / {total}",

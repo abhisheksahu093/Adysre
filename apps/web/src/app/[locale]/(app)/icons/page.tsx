@@ -18,6 +18,9 @@ export async function generateMetadata({
 }
 
 /** Icons are static, unlocalised data, so the whole page is the client view. */
+// The grid reads the active category from `?category=` (sidebar submenu).
+export const dynamic = 'force-dynamic';
+
 export default async function IconsPage({
   params,
 }: {

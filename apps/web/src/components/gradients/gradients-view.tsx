@@ -2,9 +2,10 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslations } from 'next-intl';
+import { useSearchParams } from 'next/navigation';
 import { Search, Wand2, CircleHelp, SearchX, X } from 'lucide-react';
-import { Button, Input, Select, cn } from '@adysre/ui';
-import { ALL_GRADIENT_TAGS, GRADIENTS, type Gradient } from '@/data/gradients';
+import { Button, Input, Select } from '@adysre/ui';
+import { GRADIENTS, type Gradient } from '@/data/gradients';
 import { hueName } from '@/lib/palettes/color';
 import { useGradientsStore } from '@/stores/gradients-store';
 import { SpotlightTour, type SpotlightStep } from '@/components/ui/spotlight-tour';
@@ -39,6 +40,13 @@ export function GradientsView() {
   const [search, setSearch] = useState('');
   const [tag, setTag] = useState<string | 'all'>('all');
   const [sort, setSort] = useState<SortId>('trending');
+
+  // Tag is chosen from the sidebar submenu, which navigates here with `?tag=`.
+  const searchParams = useSearchParams();
+  useEffect(() => {
+    const tg = searchParams.get('tag');
+    setTag(tg ?? 'all');
+  }, [searchParams]);
   const [active, setActive] = useState<Gradient | null>(null);
   const [generatorOpen, setGeneratorOpen] = useState(false);
   const tourOpenedQv = useRef(false);
@@ -120,16 +128,6 @@ export function GradientsView() {
           />
         </div>
         <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-          <div className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-1 sm:flex-wrap sm:overflow-visible" role="group" aria-label={t('filterByTag')}>
-            <TagChip active={tag === 'all'} onClick={() => setTag('all')}>
-              {t('allTags')}
-            </TagChip>
-            {ALL_GRADIENT_TAGS.map((tg) => (
-              <TagChip key={tg} active={tag === tg} onClick={() => setTag(tg)}>
-                {tg}
-              </TagChip>
-            ))}
-          </div>
           <Select value={sort} onChange={(e) => setSort(e.target.value as SortId)} aria-label={t('sortBy')} className="sm:w-40">
             {SORTS.map((s) => (
               <option key={s} value={s}>
@@ -221,19 +219,3 @@ export function GradientsView() {
   );
 }
 
-function TagChip({ active, onClick, children }: { active: boolean; onClick: () => void; children: React.ReactNode }) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      aria-pressed={active}
-      className={cn(
-        'shrink-0 rounded-full border px-3 py-1 text-xs font-medium capitalize transition-colors',
-        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
-        active ? 'border-primary bg-primary/10 text-primary' : 'border-border text-muted-foreground hover:bg-muted hover:text-foreground',
-      )}
-    >
-      {children}
-    </button>
-  );
-}

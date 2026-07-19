@@ -1,10 +1,17 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useTranslations } from 'next-intl';
+import { useSearchParams } from 'next/navigation';
 import { SearchX } from 'lucide-react';
 import { Button } from '@adysre/ui';
-import { countByCategory, isNew, type LocalizedPrompt, type Prompt } from '@/data/prompts';
+import {
+  isNew,
+  PROMPT_CATEGORIES,
+  type LocalizedPrompt,
+  type Prompt,
+  type PromptCategory,
+} from '@/data/prompts';
 import { PromptCard } from './prompt-card';
 import { PromptEditorDialog } from './prompt-editor-dialog';
 import { PremiumGateDialog, type GateAction } from './premium-gate-dialog';
@@ -53,7 +60,14 @@ export function PromptGrid({ prompts }: { prompts: LocalizedPrompt[] }) {
   const t = useTranslations('promptLibrary');
   const tCommon = useTranslations('common');
 
-  const counts = useMemo(() => countByCategory(prompts), [prompts]);
+  // Category is chosen from the sidebar submenu, which navigates here with
+  // `?category=`; sync it into the filter state.
+  const searchParams = useSearchParams();
+  useEffect(() => {
+    const c = searchParams.get('category');
+    const valid = c !== null && PROMPT_CATEGORIES.some((x) => x.id === c);
+    setFilters((f) => ({ ...f, category: valid ? (c as PromptCategory) : 'all' }));
+  }, [searchParams]);
 
   const visible = useMemo(() => {
     // Pinned once per filter change so every card in a pass is judged against
@@ -77,7 +91,6 @@ export function PromptGrid({ prompts }: { prompts: LocalizedPrompt[] }) {
         onChange={setFilters}
         resultCount={visible.length}
         totalCount={prompts.length}
-        categoryCounts={counts}
       />
 
       {visible.length > 0 ? (

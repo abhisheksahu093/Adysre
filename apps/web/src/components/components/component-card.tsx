@@ -5,6 +5,7 @@ import { Sparkles, Star, Layers } from 'lucide-react';
 import { Badge } from '@adysre/ui';
 import { Link } from '@/i18n/navigation';
 import { availableFrameworks, isNewComponent, type LocalizedComponent } from '@/data/components';
+import { ComponentCardPreview } from './component-card-preview';
 
 /**
  * Index-grid card. The whole card is one link - a component's card has no
@@ -21,6 +22,8 @@ export function ComponentCard({ component }: { component: LocalizedComponent }) 
       href={`/components/${component.slug}`}
       className="group flex h-full flex-col rounded-lg border border-border bg-card/60 p-4 transition-colors hover:border-primary/40 hover:bg-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
     >
+      <ComponentCardPreview slug={component.slug} />
+
       <div className="mb-3 flex flex-wrap items-start justify-between gap-1.5">
         <div className="flex flex-wrap gap-1">
           {component.featured && (

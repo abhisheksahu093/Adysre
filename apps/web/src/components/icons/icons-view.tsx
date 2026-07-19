@@ -2,8 +2,9 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslations } from 'next-intl';
+import { useSearchParams } from 'next/navigation';
 import { Search, CircleHelp, SearchX } from 'lucide-react';
-import { Button, Input, cn } from '@adysre/ui';
+import { Button, Input } from '@adysre/ui';
 import {
   ICONS,
   ICON_CATEGORIES,
@@ -43,6 +44,15 @@ export function IconsView() {
   const [category, setCategory] = useState<IconCategoryId | 'all'>('all');
   const [active, setActive] = useState<Icon | null>(null);
   const tourOpenedQv = useRef(false);
+
+  // Category is chosen from the sidebar submenu, which navigates here with
+  // `?category=`; sync it in so the grid follows the URL.
+  const searchParams = useSearchParams();
+  useEffect(() => {
+    const c = searchParams.get('category');
+    const valid = c !== null && ICON_CATEGORIES.some((x) => x.id === c);
+    setCategory(valid ? (c as IconCategoryId) : 'all');
+  }, [searchParams]);
 
   useEffect(() => {
     if (!tourDone) startTour();
@@ -147,25 +157,6 @@ export function IconsView() {
             className="pl-9"
           />
         </div>
-        <div
-          className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-1 sm:flex-wrap sm:overflow-visible"
-          role="group"
-          aria-label={t('filterByCategory')}
-        >
-          <CategoryChip active={category === 'all'} onClick={() => setCategory('all')} count={ICON_COUNT}>
-            {t('allCategories')}
-          </CategoryChip>
-          {ICON_CATEGORIES.map((c) => (
-            <CategoryChip
-              key={c.id}
-              active={category === c.id}
-              onClick={() => setCategory(c.id)}
-              count={c.count}
-            >
-              {t(`categories.${c.id}`)}
-            </CategoryChip>
-          ))}
-        </div>
       </div>
 
       {saved.length > 0 && (
@@ -244,39 +235,3 @@ export function IconsView() {
   );
 }
 
-function CategoryChip({
-  active,
-  onClick,
-  count,
-  children,
-}: {
-  active: boolean;
-  onClick: () => void;
-  count: number;
-  children: React.ReactNode;
-}) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      aria-pressed={active}
-      className={cn(
-        'flex shrink-0 items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-medium capitalize transition-colors',
-        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
-        active
-          ? 'border-primary bg-primary/10 text-primary'
-          : 'border-border text-muted-foreground hover:bg-muted hover:text-foreground',
-      )}
-    >
-      {children}
-      <span
-        className={cn(
-          'rounded-full px-1.5 text-[10px] tabular-nums',
-          active ? 'bg-primary/15 text-primary' : 'bg-muted text-muted-foreground',
-        )}
-      >
-        {count}
-      </span>
-    </button>
-  );
-}

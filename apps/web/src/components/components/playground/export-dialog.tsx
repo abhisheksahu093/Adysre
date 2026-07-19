@@ -3,7 +3,7 @@
 import { useMemo, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
-import { Check, Copy, Download } from 'lucide-react';
+import { Check, Copy, Download, FileArchive } from 'lucide-react';
 import { Button, Dialog, cn } from '@adysre/ui';
 import type { Framework } from '@/data/components';
 import type { PlaygroundSection } from '@/data/playground';
@@ -13,6 +13,8 @@ import {
   downloadText,
   exportableFrameworks,
 } from '@/lib/playground-export';
+import { buildProjectScaffold, type ScaffoldTarget } from '@/lib/project-scaffold';
+import { createZip, downloadBlob } from '@/lib/zip';
 import { readableText } from '@/lib/palettes/color';
 import { useClipboard } from '@/hooks/use-clipboard';
 import { highlightCode } from '@/app/[locale]/(app)/components/actions';
@@ -47,6 +49,13 @@ export function ExportDialog({
   const { copy: copySection, copied: sectionCopied } = useClipboard();
   const [copiedSection, setCopiedSection] = useState<string | null>(null);
   const [framework, setFramework] = useState<Framework | null>(null);
+
+  /** Build the chosen project, zip it in the browser, and download it. */
+  function downloadProject(target: ScaffoldTarget) {
+    const files = buildProjectScaffold(target, sections, 'adysre-page', contentOverrides);
+    const zip = createZip(files);
+    downloadBlob(`adysre-${target}-project.zip`, zip);
+  }
 
   const frameworks = useMemo(() => exportableFrameworks(sections), [sections]);
   const activeFramework =
@@ -108,6 +117,39 @@ export function ExportDialog({
         )
       }
     >
+      {sections.length > 0 && (
+        <div className="mb-4 rounded-lg border border-border bg-muted/30 p-3">
+          <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+            {t('playground.export.projectTitle')}
+          </p>
+          <p className="mt-1 text-xs text-muted-foreground">
+            {t('playground.export.projectHint')}
+          </p>
+          <div className="mt-3 flex flex-wrap gap-2">
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={() => downloadProject('nextjs')}
+              className="gap-1.5"
+            >
+              <FileArchive className="h-4 w-4" aria-hidden />
+              {t('playground.export.downloadProjectNext')}
+            </Button>
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={() => downloadProject('react')}
+              className="gap-1.5"
+            >
+              <FileArchive className="h-4 w-4" aria-hidden />
+              {t('playground.export.downloadProjectReact')}
+            </Button>
+          </div>
+        </div>
+      )}
+
       {palette && (
         <div className="mb-4 space-y-2">
           <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">

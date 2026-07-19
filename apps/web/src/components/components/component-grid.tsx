@@ -1,15 +1,15 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useTranslations } from 'next-intl';
+import { useSearchParams } from 'next/navigation';
 import { Search, X, SearchX } from 'lucide-react';
-import { Button, Input, Select, cn } from '@adysre/ui';
+import { Button, Input, Select } from '@adysre/ui';
 import {
   COMPONENT_CATEGORIES,
   DIFFICULTIES,
   FRAMEWORKS,
   SORT_ORDERS,
-  countComponentsByCategory,
   type ComponentCategory,
   type Difficulty,
   type Framework,
@@ -73,33 +73,6 @@ function compare(a: LocalizedComponent, b: LocalizedComponent, sort: SortOrder):
   }
 }
 
-function Chip({
-  active,
-  onClick,
-  children,
-}: {
-  active: boolean;
-  onClick: () => void;
-  children: React.ReactNode;
-}) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      aria-pressed={active}
-      className={cn(
-        'flex shrink-0 items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-medium transition-colors',
-        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
-        active
-          ? 'border-primary bg-primary/10 text-primary'
-          : 'border-border text-muted-foreground hover:bg-muted hover:text-foreground',
-      )}
-    >
-      {children}
-    </button>
-  );
-}
-
 /**
  * `components` is passed in rather than imported so the server can hand down
  * the active locale's prose - importing every catalogue here would ship all
@@ -110,7 +83,15 @@ export function ComponentGrid({ components }: { components: LocalizedComponent[]
   const t = useTranslations('components');
   const tCommon = useTranslations('common');
 
-  const counts = useMemo(() => countComponentsByCategory(components), [components]);
+  // The category is chosen from the sidebar submenu, which navigates here with
+  // `?category=`. Sync it into the filter so the grid reflects the URL; the
+  // other filters stay page-local.
+  const searchParams = useSearchParams();
+  useEffect(() => {
+    const c = searchParams.get('category');
+    const valid = c !== null && COMPONENT_CATEGORIES.some((x) => x.id === c);
+    setFilters((f) => ({ ...f, category: valid ? (c as ComponentCategory) : 'all' }));
+  }, [searchParams]);
 
   const visible = useMemo(() => {
     const out = components.filter(
@@ -126,10 +107,6 @@ export function ComponentGrid({ components }: { components: LocalizedComponent[]
 
   const set = <K extends keyof Filters>(key: K, v: Filters[K]) =>
     setFilters((f) => ({ ...f, [key]: v }));
-
-  // Only categories that actually have entries - 25 chips for 5 populated
-  // categories is noise while the catalogue is young.
-  const populated = COMPONENT_CATEGORIES.filter((c) => (counts[c.id] ?? 0) > 0);
 
   return (
     <div className="space-y-6">
@@ -147,22 +124,6 @@ export function ComponentGrid({ components }: { components: LocalizedComponent[]
             aria-label={t('searchLabel')}
             className="pl-9"
           />
-        </div>
-
-        <div
-          className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-1 sm:flex-wrap sm:overflow-visible"
-          role="group"
-          aria-label={t('filters.category')}
-        >
-          <Chip active={filters.category === 'all'} onClick={() => set('category', 'all')}>
-            {t('filters.allCategories')}
-          </Chip>
-          {populated.map(({ id }) => (
-            <Chip key={id} active={filters.category === id} onClick={() => set('category', id)}>
-              {t(`categories.${id}`)}
-              <span className="text-[10px] opacity-60">{counts[id]}</span>
-            </Chip>
-          ))}
         </div>
 
         <div className="grid grid-cols-1 gap-2 sm:max-w-xl sm:grid-cols-3">

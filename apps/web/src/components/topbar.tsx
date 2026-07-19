@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { Search } from 'lucide-react';
 import { MobileNav } from './mobile-nav';
@@ -8,17 +9,32 @@ import { CartMenu } from './cart-menu';
 import { NotificationsMenu } from './notifications-menu';
 import { PremiumButton } from './premium-button';
 import { UserMenu } from './user-menu';
+import { SearchCommand } from './search-command';
 
 /** Sticky topbar with search, notifications, theme, cart and account. */
 export function Topbar() {
   const t = useTranslations('topbar');
+  const [searchOpen, setSearchOpen] = useState(false);
+
+  // Cmd/Ctrl-K opens the command palette from anywhere in the app.
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        setSearchOpen(true);
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
 
   return (
     <header className="sticky top-0 z-10 flex h-14 items-center gap-1 border-b border-border bg-background/80 px-4 backdrop-blur sm:gap-2 sm:px-6">
       <MobileNav />
       <button
         type="button"
-        className="flex flex-1 items-center gap-2 text-sm text-muted-foreground"
+        onClick={() => setSearchOpen(true)}
+        className="flex flex-1 items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
         aria-label={t('commandPalette')}
       >
         <Search className="h-4 w-4 shrink-0" />
@@ -28,6 +44,8 @@ export function Topbar() {
           ⌘K
         </kbd>
       </button>
+
+      <SearchCommand open={searchOpen} onClose={() => setSearchOpen(false)} />
 
       <NotificationsMenu />
       <ThemeSwitcher />

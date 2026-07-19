@@ -71,7 +71,7 @@ export function BuilderSidebar({
   ];
 
   return (
-    <div className="space-y-3 lg:sticky lg:top-4 lg:flex lg:h-[calc(100dvh-10.5rem)] lg:flex-col lg:space-y-3">
+    <div className="min-w-0 space-y-3 lg:sticky lg:top-4 lg:flex lg:h-[calc(100dvh-10.5rem)] lg:flex-col lg:space-y-3">
       <div className="lg:shrink-0">
         <SlotRail
           resolved={resolved}

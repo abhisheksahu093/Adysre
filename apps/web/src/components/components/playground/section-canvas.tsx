@@ -56,7 +56,7 @@ export function SectionCanvas({
   const width = deviceWidth(device);
 
   return (
-    <div data-tour="canvas" className="rounded-lg border border-border bg-muted/30 p-3 sm:p-6">
+    <div data-tour="canvas" className="min-w-0 overflow-x-auto rounded-lg border border-border bg-muted/30 p-3 sm:p-6">
       <div
         className="mx-auto overflow-hidden rounded-md border border-border bg-background shadow-sm transition-[width] duration-200"
         style={{ width: width ? `${width}px` : '100%', maxWidth: '100%' }}

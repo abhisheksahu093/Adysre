@@ -170,7 +170,7 @@ export function PlaygroundView({ components }: { components: LocalizedComponent[
       )}
 
       {stage === 'builder' && (
-        <div className="grid gap-4 lg:grid-cols-[320px_minmax(0,1fr)] lg:items-start">
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-[320px_minmax(0,1fr)] lg:items-start">
           <BuilderSidebar
             resolved={resolved}
             components={components}

@@ -1,0 +1,21 @@
+{
+  "name": "@adysre/sdk",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "lint": "eslint src",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@adysre/types": "workspace:*"
+  },
+  "devDependencies": {
+    "@adysre/config": "workspace:*",
+    "@types/node": "^20.16.10",
+    "typescript": "^5.6.3"
+  }
+}

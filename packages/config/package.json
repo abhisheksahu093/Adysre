@@ -1,0 +1,24 @@
+{
+  "name": "@adysre/config",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./eslint": "./eslint/base.js",
+    "./eslint/next": "./eslint/next.js",
+    "./eslint/nest": "./eslint/nest.js",
+    "./tsconfig/base": "./tsconfig/base.json",
+    "./tsconfig/next": "./tsconfig/next.json",
+    "./tsconfig/nest": "./tsconfig/nest.json",
+    "./tailwind": "./tailwind/preset.js"
+  },
+  "files": ["eslint", "tsconfig", "tailwind"],
+  "dependencies": {
+    "@eslint/js": "^9.12.0",
+    "eslint-config-prettier": "^9.1.0",
+    "typescript-eslint": "^8.8.0"
+  },
+  "peerDependencies": {
+    "eslint": "^9.12.0"
+  }
+}

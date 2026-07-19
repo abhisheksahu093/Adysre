@@ -1,0 +1,2 @@
+/* UI package styles — pulls in the design tokens. Apps import this once. */
+@import '@adysre/theme/tokens.css';

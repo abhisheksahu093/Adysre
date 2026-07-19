@@ -1,0 +1,1581 @@
+{
+	"app": {
+		"name": "ADYSRE",
+		"tagline": "企业级业务操作系统"
+	},
+	"common": {
+		"close": "关闭",
+		"cancel": "取消",
+		"reset": "重置",
+		"copy": "复制",
+		"copied": "已复制",
+		"edit": "编辑",
+		"search": "搜索",
+		"clearFilters": "清除筛选",
+		"comingSoon": "即将推出",
+		"inDevelopment": "开发中",
+		"backToSignIn": "返回登录"
+	},
+	"nav": {
+		"dashboard": "仪表板",
+		"promptLibrary": "提示词库",
+		"components": "组件",
+		"templates": "模板",
+		"settings": "设置",
+		"mainLabel": "主导航",
+		"openMenu": "打开导航菜单",
+		"closeMenu": "关闭导航菜单",
+		"descriptions": {
+			"promptLibrary": "浏览、调整并复制适用于你的工作区的提示词。",
+			"components": "浏览所有模块均可使用的构建模块。",
+			"templates": "从现成布局开始，无需从空白页起步。",
+			"settings": "管理你的组织、成员与偏好设置。",
+			"palettes": "浏览、编辑并导出现成的调色板 -- 或生成你自己的。",
+			"gradients": "浏览、编辑并导出 CSS 渐变 -- 或生成你自己的。",
+			"icons": "浏览、自定义并以任意格式或尺寸导出原创 SVG 图标。"
+		},
+		"palettes": "调色板",
+		"gradients": "渐变",
+		"icons": "图标",
+		"backToHome": "返回首页"
+	},
+	"topbar": {
+		"searchPlaceholder": "搜索或快速跳转…",
+		"commandPalette": "打开命令面板",
+		"notifications": "通知"
+	},
+	"notifications": {
+		"label": "通知",
+		"title": "通知",
+		"open": "通知",
+		"openWithCount": "通知，{count} 条未读",
+		"unreadCount": "{count} 条新",
+		"markAllRead": "全部标为已读",
+		"clearAll": "全部清除",
+		"empty": "你已查看全部通知。",
+		"dismiss": "忽略 {title}",
+		"markRead": "将 {title} 标为已读",
+		"items": {
+			"icons": {
+				"title": "图标库已上线",
+				"body": "300+ 个原创、可自定义的线性图标 —— 可复制为 SVG、JSX 或 React，或下载 PNG。"
+			},
+			"playground": {
+				"title": "搭建你的页面",
+				"body": "用组件库中的版块组装完整页面，然后导出完整代码。"
+			},
+			"gradients": {
+				"title": "已新增渐变",
+				"body": "浏览、编辑并导出 CSS 渐变 —— 或生成你自己的。"
+			},
+			"palettes": {
+				"title": "配色方案",
+				"body": "现成的配色方案，可复制、编辑并导出用于你的项目。"
+			},
+			"components": {
+				"title": "组件库",
+				"body": "可复制粘贴的 UI 模块，支持 HTML、React、Next.js 等。"
+			}
+		}
+	},
+	"theme": {
+		"toggle": "切换主题",
+		"switchToDark": "切换到深色模式",
+		"switchToLight": "切换到浅色模式"
+	},
+	"userMenu": {
+		"open": "打开个人菜单",
+		"label": "个人资料",
+		"profileBilling": "个人资料与账单",
+		"contactUs": "联系我们",
+		"emailSupport": "邮件支持",
+		"helpCentre": "帮助中心",
+		"document": "文档",
+		"gettingStarted": "快速开始",
+		"apiReference": "API 参考",
+		"language": "语言",
+		"legal": "法律条款",
+		"terms": "服务条款",
+		"privacy": "隐私政策",
+		"dmca": "DMCA",
+		"signOut": "退出登录"
+	},
+	"comingSoon": {
+		"heading": "{title}即将推出",
+		"body": "我们正在建设此页面，准备就绪后会第一时间在这里呈现。"
+	},
+	"auth": {
+		"signIn": {
+			"title": "登录",
+			"description": "欢迎回来，请输入你的凭据以继续。",
+			"submit": "登录",
+			"submitting": "正在登录…",
+			"failed": "登录失败",
+			"noAccount": "还没有账户？",
+			"createOne": "立即创建",
+			"forgotPassword": "忘记密码？"
+		},
+		"register": {
+			"title": "创建你的工作区",
+			"description": "你将成为该组织的所有者。",
+			"submit": "创建工作区",
+			"submitting": "正在创建…",
+			"failed": "注册失败",
+			"haveAccount": "已有账户？",
+			"signIn": "登录",
+			"organizationName": "组织名称",
+			"organizationSlug": "工作区地址（标识符）",
+			"yourName": "你的姓名"
+		},
+		"forgotPassword": {
+			"title": "重置密码",
+			"description": "输入你的邮箱，我们将发送重置链接。",
+			"submit": "发送重置链接",
+			"submitting": "正在发送…",
+			"sent": "如果该邮箱已注册账户，重置链接即将送达。",
+			"sendAgain": "重新发送"
+		},
+		"resetPassword": {
+			"title": "设置新密码",
+			"description": "请选择一个未在其他地方使用过的高强度密码。",
+			"newPassword": "新密码",
+			"confirmPassword": "确认新密码",
+			"hint": "至少 12 个字符，需包含大写字母、小写字母和数字。",
+			"submit": "设置新密码",
+			"submitting": "正在保存…",
+			"invalidLink": "该重置链接无效或不完整，请重新申请。",
+			"requestNew": "申请新链接",
+			"success": "你的密码已修改，现在可以用新密码登录。",
+			"continueToSignIn": "继续登录",
+			"genericError": "出了点问题。请检查网络连接后重试。"
+		},
+		"fields": {
+			"email": "邮箱",
+			"emailPlaceholder": "you@company.com",
+			"password": "密码",
+			"passwordPlaceholder": "••••••••••••"
+		},
+		"oauth": {
+			"continueWith": "使用 {provider} 继续",
+			"dividerSignIn": "或使用邮箱登录",
+			"dividerSignUp": "或使用邮箱注册",
+			"notConfigured": "{provider} 登录尚未配置",
+			"errors": {
+				"oauth": "无法通过 {provider} 登录，请重试。",
+				"oauth_state": "登录会话已过期，请重试。",
+				"oauth_not_configured": "{provider} 登录尚未配置，请改用邮箱。",
+				"oauth_no_email": "无法从 {provider} 获取已验证的邮箱，请改用邮箱。",
+				"oauth_invalid": "该登录方式不可用。"
+			}
+		}
+	},
+	"dashboard": {
+		"title": "仪表板",
+		"welcome": "欢迎回到你的工作区。",
+		"stats": {
+			"activeUsers": "活跃用户",
+			"openNotifications": "未处理通知",
+			"auditEvents": "审计事件",
+			"storageUsed": "已用存储",
+			"thisWeek": "本周",
+			"last24h": "近 24 小时",
+			"files": "个文件"
+		}
+	},
+	"promptLibrary": {
+		"searchPlaceholder": "按标题、标签或关键词搜索…",
+		"searchLabel": "搜索提示词",
+		"collections": {
+			"all": "全部",
+			"featured": "精选",
+			"trending": "热门",
+			"new": "最新"
+		},
+		"filters": {
+			"collection": "合集",
+			"category": "分类",
+			"allCategories": "全部分类",
+			"allTiers": "全部等级",
+			"allModels": "全部模型",
+			"allRatios": "全部比例",
+			"byTier": "按等级筛选",
+			"byModel": "按模型筛选",
+			"byRatio": "按画面比例筛选"
+		},
+		"count": "{count, plural, other {# 个提示词}}",
+		"countFiltered": "{total} 个提示词中的 {count} 个",
+		"empty": {
+			"title": "没有符合筛选条件的提示词",
+			"description": "换个关键词搜索，或清除筛选条件。"
+		},
+		"card": {
+			"editAria": "编辑 {title}",
+			"searchTag": "搜索 {tag}",
+			"lockedAria": "高级提示词 - 开通高级版后才能使用“{title}”"
+		},
+		"dialog": {
+			"description": "调整措辞后再复制。你的改动不会保存到提示词库。",
+			"promptLabel": "提示词",
+			"copyPrompt": "复制提示词",
+			"characters": "{count} 个字符",
+			"edited": "已编辑",
+			"worksWellOn": "适用模型",
+			"aspectRatios": "画面比例",
+			"tags": "标签",
+			"englishOriginal": "当前显示英文原文 -- 该提示词尚未翻译。"
+		},
+		"tiers": {
+			"free": "免费",
+			"premium": "高级"
+		},
+		"categories": {
+			"portrait": "人像",
+			"headshot": "头像",
+			"business": "商务",
+			"fashion": "时尚",
+			"lifestyle": "生活方式",
+			"cinematic": "电影感",
+			"travel": "旅行",
+			"nature": "自然",
+			"fitness": "健身",
+			"automotive": "汽车",
+			"editorial": "杂志大片",
+			"fantasy": "奇幻",
+			"sci-fi": "科幻",
+			"anime": "动漫",
+			"artistic": "艺术"
+		},
+		"styles": {
+			"photorealistic": "写实摄影",
+			"cinematic": "电影感",
+			"editorial": "杂志大片",
+			"monochrome": "黑白",
+			"painterly": "绘画感",
+			"illustrated": "插画",
+			"3d-render": "3D 渲染",
+			"anime": "动漫"
+		},
+		"ratios": {
+			"1:1": "1:1 方形",
+			"4:5": "4:5 竖版",
+			"3:4": "3:4 竖版",
+			"9:16": "9:16 竖屏",
+			"16:9": "16:9 宽屏"
+		}
+	},
+	"pages": {
+		"profile": {
+			"title": "个人资料",
+			"description": "你的账户详细信息。",
+			"fullName": "姓名",
+			"email": "邮箱",
+			"role": "角色",
+			"status": "状态",
+			"loading": "加载中…",
+			"active": "已激活",
+			"plan": "套餐",
+			"planFree": "免费版",
+			"planPremium": "高级版",
+			"planFreeHint": "您可以使用 41 条免费提示词，高级提示词已锁定。",
+			"planPremiumHint": "您可以复制并调整提示词库中的全部内容。",
+			"upgrade": "升级",
+			"devOnly": "仅限开发环境",
+			"devOnlyHint": "切换访问级别以预览付费墙。生产环境不会显示。"
+		},
+		"helpCentre": {
+			"title": "帮助中心",
+			"description": "查找答案、联系支持团队，并了解如何充分利用 Adysre。",
+			"channels": {
+				"email": {
+					"title": "邮件支持",
+					"body": "直接联系我们的团队——我们通常会在一个工作日内回复。",
+					"cta": "发送邮件"
+				},
+				"docs": {
+					"title": "文档",
+					"body": "帮助你快速上手并充分利用每一项功能的指南。",
+					"cta": "阅读文档"
+				},
+				"api": {
+					"title": "API 参考",
+					"body": "面向开发者的接口、身份验证与响应格式。",
+					"cta": "查看 API"
+				},
+				"community": {
+					"title": "浏览资源库",
+					"body": "探索你今天就能使用的组件、图标、调色板和渐变。",
+					"cta": "打开资源库"
+				}
+			},
+			"emailTitle": "仍需帮助？",
+			"emailBody": "给我们发邮件，我们会尽快回复你。",
+			"faqTitle": "常见问题",
+			"faqs": [
+				{
+					"q": "Adysre 是免费使用的吗？",
+					"a": "核心资源库——组件、图标、调色板和渐变——均可免费浏览、复制和使用。部分高级内容需要付费方案。"
+				},
+				{
+					"q": "支持哪些框架？",
+					"a": "组件随附 HTML、React、Next.js 等多种代码格式。复制你需要的格式，或从演练场导出整个页面。"
+				},
+				{
+					"q": "我可以在商业项目中使用这些图标吗？",
+					"a": "可以。这些图标均为原创，可免费用于个人和商业项目——你可以将它们复制为 SVG、JSX 或 React，也可以下载 PNG。"
+				},
+				{
+					"q": "如何构建一个完整的页面？",
+					"a": "打开「组件」并选择「自定义你的项目」，从资源库的区块中组装页面，然后导出完整代码。"
+				},
+				{
+					"q": "如何更改语言？",
+					"a": "使用右上角个人资料菜单中的语言选项。你的选择会在多次访问间被记住。"
+				},
+				{
+					"q": "如何反馈问题？",
+					"a": "请将详细信息（如果可以，附上截图）发送给我们的支持团队——我们会调查每一份反馈。"
+				}
+			]
+		},
+		"gettingStarted": {
+			"title": "快速入门",
+			"description": "快速了解 Adysre 以及你可以用它构建的一切。",
+			"stepsTitle": "第一步",
+			"steps": [
+				{
+					"title": "探索资源库",
+					"body": "从侧边栏浏览现成的组件、图标、调色板和渐变。"
+				},
+				{
+					"title": "复制或自定义",
+					"body": "复制适用于你所用框架的任意代码片段，或打开某个项目在导出前进行调整。"
+				},
+				{
+					"title": "组装页面",
+					"body": "在「组件」中选择「自定义你的项目」，用各个区块构建完整页面。"
+				},
+				{
+					"title": "导出代码",
+					"body": "带走完整且可用于生产环境的代码——复制它，或下载文件。"
+				}
+			],
+			"exploreTitle": "探索资源库",
+			"resources": {
+				"components": {
+					"title": "组件",
+					"body": "可复制粘贴的 UI 模块"
+				},
+				"icons": {
+					"title": "图标",
+					"body": "300+ 款原创线性图标"
+				},
+				"palettes": {
+					"title": "调色板",
+					"body": "现成的配色方案"
+				},
+				"gradients": {
+					"title": "渐变",
+					"body": "可复制的 CSS 渐变"
+				}
+			},
+			"apiCta": "正在构建集成？请阅读 API 参考"
+		},
+		"apiReference": {
+			"title": "API 参考",
+			"description": "Adysre REST API——约定、身份验证与接口。",
+			"baseUrlTitle": "基础 URL",
+			"baseUrlNote": "所有接口都通过单一的、带版本号的基础路径提供。v1 已稳定，且不会发生破坏性变更。",
+			"authTitle": "身份验证",
+			"authNote": "请求通过在登录时签发的短期访问令牌进行身份验证，该令牌以 HTTP-only cookie 的形式发送。过期的令牌会自动刷新。",
+			"responseTitle": "响应格式",
+			"responseNote": "每个响应都使用相同的信封结构。成功的响应会携带 data 数据（列表还会携带 meta）；错误则携带稳定的 code 和一条便于阅读的 message。",
+			"successLabel": "成功",
+			"errorLabel": "错误",
+			"conventionsTitle": "约定",
+			"pagination": "分页",
+			"filtering": "过滤",
+			"sorting": "排序",
+			"endpointsTitle": "常用接口",
+			"endpoints": {
+				"login": "登录并开启会话",
+				"me": "获取当前用户",
+				"components": "列出资源库组件",
+				"component": "获取单个组件",
+				"icons": "列出图标",
+				"palettes": "列出调色板"
+			},
+			"endpointsNote": "这只是一个具有代表性的子集。完整且始终保持最新的参考文档将随公开 API 一同发布。"
+		},
+		"terms": {
+			"title": "服务条款",
+			"description": "规范你使用 Adysre 的条款。",
+			"updated": "最后更新：2026年7月18日",
+			"sections": [
+				{
+					"heading": "条款的接受",
+					"body": "访问或使用 Adysre 即表示你同意这些条款。如果你不同意，请勿使用本服务。"
+				},
+				{
+					"heading": "使用本服务",
+					"body": "你可以使用 Adysre 浏览、复制并改编资源库内容以用于你自己的项目。你需对如何使用所获取的代码和素材负责。"
+				},
+				{
+					"heading": "账户",
+					"body": "部分功能需要账户。请妥善保管你的凭据；你需对账户下的活动负责。"
+				},
+				{
+					"heading": "可接受的使用",
+					"body": "请勿滥用本服务——不得从事任何违法活动，不得试图干扰或逆向工程本平台，也不得将资源库作为你自己的产品转售。"
+				},
+				{
+					"heading": "知识产权",
+					"body": "资源库内容可用于你的项目。Adysre 的名称、品牌和平台仍归我们所有。"
+				},
+				{
+					"heading": "变更与终止",
+					"body": "我们可能会不时更新这些条款或本服务。在变更后继续使用即表示你接受更新后的条款。"
+				}
+			]
+		},
+		"privacy": {
+			"title": "隐私政策",
+			"description": "我们在 Adysre 如何处理你的数据。",
+			"updated": "最后更新：2026年7月18日",
+			"sections": [
+				{
+					"heading": "我们收集的信息",
+					"body": "我们会收集你提供的信息（例如你的姓名和邮箱），以及运行和改进本服务所需的基本使用数据。"
+				},
+				{
+					"heading": "我们如何使用信息",
+					"body": "我们使用你的信息来提供服务、个性化你的体验、响应支持请求，并保障平台安全。"
+				},
+				{
+					"heading": "Cookie",
+					"body": "我们使用必要的 Cookie 用于身份验证以及语言、主题等偏好设置。我们不会出售你的数据。"
+				},
+				{
+					"heading": "数据共享",
+					"body": "我们不会出售个人数据。我们仅在适当的保护措施下，与协助我们运营服务的供应商共享数据。"
+				},
+				{
+					"heading": "你的权利",
+					"body": "你可以请求访问、更正或删除你的个人数据。请联系我们以行使这些权利。"
+				},
+				{
+					"heading": "安全",
+					"body": "我们采用行业标准措施来保护你的数据。没有任何系统是绝对安全的，但我们会努力确保你的数据安全。"
+				}
+			]
+		},
+		"dmca": {
+			"title": "DMCA 政策",
+			"description": "如何在 Adysre 上举报版权问题。",
+			"updated": "最后更新：2026年7月18日",
+			"sections": [
+				{
+					"heading": "举报侵权",
+					"body": "如果你认为 Adysre 上的内容侵犯了你的版权，请按以下细则向我们发送通知，我们会及时审核。"
+				},
+				{
+					"heading": "需要包含的内容",
+					"body": "请指明受版权保护的作品、你认为构成侵权的材料及其所在位置、你的联系方式，以及一份善意声明。"
+				},
+				{
+					"heading": "我们的处理",
+					"body": "在收到有效通知后，我们可能会移除或禁用对相关材料的访问，并通知发布该材料的一方。"
+				},
+				{
+					"heading": "反通知",
+					"body": "如果你认为你的内容被错误移除，你可以提交反通知，附上你的联系方式，以及一份在承担伪证责任前提下作出的声明。"
+				},
+				{
+					"heading": "重复侵权者",
+					"body": "对于反复侵犯他人权利的账户，我们可能会予以暂停或终止。"
+				},
+				{
+					"heading": "联系方式",
+					"body": "请将版权通知发送至我们的支持邮箱。请在主题行中注明「DMCA」，以便我们快速处理。"
+				}
+			]
+		}
+	},
+	"cart": {
+		"open": "购物车",
+		"label": "购物车",
+		"empty": "购物车是空的",
+		"emptyHint": "购买<b>全通行证</b>即可无限使用所有产品。",
+		"cta": "获取全通行证"
+	},
+	"premium": {
+		"cta": "获取高级版"
+	},
+	"promo": {
+		"title": "使用全通行证更快构建",
+		"description": "一次付费，即可使用所有模板、组件和区块。",
+		"cta": "获取全通行证",
+		"trust": "全球超过 {count, number} 位用户的信赖之选"
+	},
+	"pricing": {
+		"metaTitle": "价格",
+		"title": "立即解锁提示词库中的全部内容",
+		"subtitle": "一次付费，即可解锁 15 个分类下的 120+ 提示词 -- 包含我们后续新增的每一条提示词，以及尚未推出的模块。",
+		"mostPopular": "最受欢迎",
+		"priceAria": "{price} 美元",
+		"questions": "还有疑问？<a>联系我们</a>。",
+		"plans": {
+			"free": {
+				"name": "免费版",
+				"billing": "无需绑定银行卡",
+				"cta": "浏览免费提示词"
+			},
+			"annual": {
+				"name": "年度订阅",
+				"billing": "按年付费",
+				"cta": "开通年度订阅"
+			},
+			"lifetime": {
+				"name": "终身权限",
+				"billing": "一次性付费",
+				"cta": "开通终身权限"
+			},
+			"team": {
+				"name": "团队版",
+				"billing": "一次性付费",
+				"cta": "开通团队权限"
+			}
+		},
+		"features": {
+			"freePrompts": "可使用全部 41 条免费提示词",
+			"allPrompts": "可使用全部 120+ 条高级提示词",
+			"allCategories": "涵盖人像到科幻等全部 15 个分类",
+			"fourModels": "已针对 GPT Image、FLUX、Midjourney 和 SDXL 调优",
+			"copyPaste": "复制粘贴即用，无需配置",
+			"noCard": "无需绑定银行卡",
+			"yearUpdates": "1 年内的新增提示词与更新",
+			"lifetimeUpdates": "终身更新 -- 新增提示词全部包含",
+			"futureModules": "组件与模板模块上线后即可使用",
+			"earlyAccess": "抢先体验新模块",
+			"promptEditor": "复制前可自由调整任意提示词",
+			"emailSupport": "邮件支持",
+			"prioritySupport": "优先支持",
+			"cancelAnytime": "随时可取消",
+			"tenSeats": "包含 10 个团队成员席位",
+			"sharedWorkspace": "团队共享工作区",
+			"rolesPermissions": "角色与权限管理",
+			"everythingAnnual": "包含年度订阅的全部权益",
+			"everythingLifetime": "包含终身权限的全部权益"
+		},
+		"faq": {
+			"title": "常见问题",
+			"subtitle": "一次付费，效率翻倍。如果这里没有你要的答案，欢迎联系 <a>{email}</a>",
+			"items": {
+				"lifetimeIncludes": {
+					"q": "终身权限包含哪些内容？",
+					"a": "15 个分类下的全部 120+ 条提示词，以及之后新增的每一条提示词，均无需额外付费。组件与模板模块上线后同样包含在内。一次付费，无需续费。"
+				},
+				"purchaseFlow": {
+					"q": "购买和开通流程是怎样的？",
+					"a": "选择方案并完成付款后，你的工作区会立即升级。高级提示词将在你登录的所有设备上解锁，无需下载或安装任何内容。"
+				},
+				"freeVsPremium": {
+					"q": "免费提示词和高级提示词有什么区别？",
+					"a": "免费版包含 41 条提示词，无需绑定银行卡即可立即使用。高级版解锁 120+ 条的完整提示词库，包括更复杂的电影感、时尚大片和奇幻风格设定，并支持使用提示词编辑器自由调整。"
+				},
+				"models": {
+					"q": "这些提示词支持哪些 AI 模型？",
+					"a": "每条提示词都会标注适配的模型 -- GPT Image、FLUX、Midjourney 和 SDXL -- 你也可以按模型筛选提示词库。提示词完整保留镜头、光线和调色等细节，因此在不同生成模型间同样适用。"
+				},
+				"refunds": {
+					"q": "是否支持退款？",
+					"a": "由于购买后即可立即、完整地使用提示词库中的全部内容，我们不提供退款。详情请查阅我们的退款政策。"
+				},
+				"help": {
+					"q": "需要帮助或有其他问题？",
+					"a": "请发送邮件至 {email}，我们会尽快回复。终身权限和团队版用户享有优先支持，响应更快。"
+				}
+			}
+		}
+	},
+	"checkout": {
+		"emailLabel": "邮箱",
+		"emailPlaceholder": "请输入邮箱",
+		"recurring": "支付 <b>{price}</b>，此后每 12 个月续费 <b>{price}</b>，直至取消。您可以随时取消订阅。",
+		"oneTime": "一次性支付 <b>{price}</b>，永久使用，无需续费。",
+		"disclaimer": "以上邮箱将用于创建您的账户。我们会将您跳转至支付服务商完成付款。",
+		"submit": "去结算",
+		"submitting": "正在跳转…",
+		"unavailable": "结算功能尚未开放，如需购买请联系支持团队。"
+	},
+	"premiumGate": {
+		"title": "这是高级提示词",
+		"descriptionCopy": "“{title}”属于高级提示词库。开通高级版后即可复制。",
+		"descriptionEdit": "“{title}”属于高级提示词库。开通高级版后即可调整。",
+		"cta": "获取高级版",
+		"notNow": "暂不",
+		"benefits": {
+			"unlockAll": "解锁全部 120+ 条高级提示词",
+			"unlockEdit": "复制前可随意调整任意提示词",
+			"unlockUpdates": "后续新增的提示词全部包含"
+		}
+	},
+	"components": {
+		"metaTitle": "组件",
+		"title": "组件",
+		"subtitle": "免费的复制即用组件，支持 HTML、CSS、Tailwind、React、Next.js 和 TypeScript。MIT 许可，可用于任何项目。",
+		"searchPlaceholder": "按名称、标签或分类搜索组件…",
+		"searchLabel": "搜索组件",
+		"count": "{count, plural, other {# 个组件}}",
+		"countFiltered": "{total} 个组件中的 {count} 个",
+		"frameworkCount": "{count, plural, other {# 个框架}}",
+		"frameworks": "框架",
+		"featured": "精选",
+		"new": "最新",
+		"englishOriginal": "英文",
+		"breadcrumb": "面包屑导航",
+		"code": "代码",
+		"installation": "安装",
+		"packageManager": "包管理器",
+		"props": "属性",
+		"variants": "变体",
+		"propDescriptions": {
+			"afterAlt": "“之后”图片的替代文本。",
+			"afterSrc": "显示在“之后”一侧的图片。",
+			"allowMultiple": "允许同时展开多个项。",
+			"ariaLabel": "按钮的无障碍名称。仅有图标的按钮必须设置。",
+			"authorAvatarSrc": "作者头像的图片 URL。",
+			"authorName": "文章作者的姓名。",
+			"autoDismissAfter": "自动消失前的时长（秒）。为 0 时保持显示。",
+			"avatarSrc": "头像的图片 URL。",
+			"bandCopy": "显示在行动号召条中的一行简短辅助文案。",
+			"beforeAlt": "“之前”图片的替代文本。",
+			"beforeSrc": "显示在“之前”一侧的图片。",
+			"bio": "简短的个人简介段落。",
+			"buildHref": "根据页码生成 URL，使分页保持为真实链接。",
+			"calloutLabel": "标注上方的简短标题，例如“注意”。",
+			"caption": "表格标题，会先于内容播报给屏幕阅读器。",
+			"category": "显示在标题上方的分类标签。",
+			"children": "在组件内部渲染的内容。",
+			"className": "合并到根元素上的额外类名。",
+			"columns": "参与比较的列，按显示顺序排列。",
+			"company": "显示在姓名下方的公司。",
+			"comparisonPeriod": "显示在 delta 旁边的对比周期。",
+			"copy": "显示在标题下方的正文文本。",
+			"count": "徽标中显示的数字；超过 99 会折叠显示为“99+”。",
+			"coverSrc": "封面图片的 URL。",
+			"ctaHref": "行动号召链接的目标地址。",
+			"ctaLabel": "行动号召按钮的文案。",
+			"currentPage": "当前页码，从 1 开始。",
+			"danger": "将该项标记为具有破坏性，使其呈现为警告样式。",
+			"date": "机器可读的发布日期。",
+			"dateLabel": "供人阅读的发布日期。",
+			"defaultAnnual": "首次渲染时是否选中按年计费。",
+			"defaultCollapsed": "侧边栏是否以仅图标的收起状态启动。",
+			"defaultFilter": "首次渲染时应用的筛选条件。",
+			"defaultOpenId": "挂载时默认展开项的 id。",
+			"defaultOpenIds": "挂载时默认展开的项的 id。",
+			"defaultOpenState": "首次渲染时是否处于展开状态。",
+			"defaultTabId": "首次渲染时选中的标签页。",
+			"delay": "入场动画前等待的秒数。",
+			"delta": "相对于对比周期的变化值，需预先格式化。",
+			"direction": "元素出现时的移动方向。",
+			"disabled": "禁止交互并将控件置灰。",
+			"dismissLabel": "关闭按钮的无障碍名称。",
+			"distance": "元素移动的距离（像素）。",
+			"duration": "动画时长（秒）。",
+			"email": "已登录账号的电子邮箱地址。",
+			"eventCount": "此处汇总的事件数量。",
+			"excerpt": "显示在标题下方的简短摘要。",
+			"features": "功能文案字符串数组。",
+			"figureCaption": "描述该图内容的说明文字。",
+			"foundingLabel": "创立年份下方的一行简短说明，用于补充背景。",
+			"foundingYear": "故事开始的年份。",
+			"groupName": "限定互斥分组的范围。页面上每个手风琴请传入唯一值。",
+			"groups": "功能分组，每组包含标题及其列表。",
+			"hasMore": "是否还有内容可加载。为 false 时该控件将不再显示。",
+			"highlighted": "使用强调样式渲染。",
+			"href": "卡片链接到的目标地址。",
+			"icon": "与内容并排渲染的图标元素。",
+			"imageAlt": "图片的替代文本。若 title 已说明图片内容则留空。",
+			"imageSrc": "卡片配图的图片 URL。",
+			"items": "要渲染的项目数组。",
+			"kicker": "显示在标题上方的小标签。",
+			"label": "加载时朗读的无障碍标签。",
+			"lines": "渲染的占位行数。",
+			"loading": "为 true 时显示加载动画并阻止输入。",
+			"magnifyRange": "放大效果的影响范围，以指针两侧的像素数计。",
+			"maxScale": "指针下方图标放大的倍数。",
+			"maxSeats": "滑块允许的最多席位数。",
+			"members": "在网格中展示的成员。",
+			"message": "通知的正文文本。",
+			"meta": "显示在标题下方的简要辅助信息。",
+			"metrics": "要显示的指标，每项包含数值和标签。",
+			"milestones": "时间线条目，从最早开始。",
+			"minSeats": "滑块允许的最少席位数。",
+			"name": "作为标题显示的套餐名称。",
+			"note": "一行小字说明，例如价格不包含的内容。",
+			"onAddToCart": "用户将商品加入购物车时触发。",
+			"once": "仅在首次进入视口时播放动画。",
+			"onClick": "用户激活控件时触发。",
+			"onClose": "当组件请求关闭时调用 -- Escape 键、遮罩层或关闭按钮。",
+			"onConfirm": "破坏性操作被确认后触发。",
+			"onDismiss": "用户关闭通知时触发。",
+			"onLoadMore": "请求下一批内容时调用。",
+			"onPageSizeChange": "每页数量变化时以新值调用。",
+			"onPeriodChange": "切换计费周期时以该周期调用。",
+			"onSelect": "用户选择菜单项时触发，参数为所选项。",
+			"onSignOut": "选择退出登录项时调用。",
+			"onSubmit": "提交时以表单的值调用。",
+			"open": "组件当前是否显示。",
+			"pageSize": "每页显示的项目数量。",
+			"paragraphs": "正文内容，每段一个字符串。",
+			"pathname": "当前路径。与之匹配的项会被标记为当前页面。",
+			"period": "显示在价格旁的计费周期。",
+			"perSeatPrice": "每个席位的价格。",
+			"personName": "作为标题显示的人物姓名。",
+			"price": "要显示的金额。",
+			"principles": "价值观，每项包含名称和说明。",
+			"progressValue": "任务的完成进度，从 0 到 100。",
+			"quote": "推荐语文本，不含首尾引号。",
+			"rating": "0 到 5 的星级评分。",
+			"reviewCount": "显示在评分旁边的评价数量。",
+			"role": "显示在姓名下方的职位。",
+			"rows": "图文交替排列的行，按顺序显示。",
+			"secondaryHref": "次要操作的链接目标。",
+			"secondaryLabel": "次要操作的可见文本。",
+			"services": "要展示的服务，每项包含图标、名称和简介。",
+			"severity": "通知的语气 - 决定其颜色和图标。",
+			"showAvatar": "渲染圆形头像占位符。",
+			"siblingCount": "当前页码两侧各显示多少个页码。",
+			"sliderPosition": "分隔线的位置，以距左侧的百分比表示。",
+			"socials": "以图标形式渲染的社交主页链接。",
+			"statLabel": "显示在数值上方的指标名称。",
+			"steps": "流程的有序步骤。",
+			"tabItems": "标签页，每个包含标签和对应面板内容。",
+			"text": "按下按钮时写入剪贴板的字符串。",
+			"tiers": "定价方案，按显示顺序排列。",
+			"timestamp": "通知到达的时间，需预先格式化。",
+			"title": "卡片的标题文本。",
+			"totalItems": "所有页面的项目总数。",
+			"totalPages": "总页数。",
+			"trend": "变化的方向 - 决定 delta 的颜色和箭头。",
+			"value": "指标的当前值，需预先格式化。"
+		},
+		"variantLabels": {
+			"avatar": "头像",
+			"bordered": "带边框",
+			"card": "卡片",
+			"compact": "紧凑",
+			"default": "默认",
+			"destructive": "危险操作",
+			"disabled": "禁用",
+			"down": "从上方",
+			"extended": "扩展",
+			"floating": "浮动",
+			"glow": "发光",
+			"gradient": "渐变",
+			"highlighted": "强调",
+			"horizontal": "水平",
+			"idle": "空闲",
+			"labeled": "带标签",
+			"loading": "加载中",
+			"multiple": "多个展开",
+			"none": "无位移",
+			"primary": "主要",
+			"scrollable": "可滚动",
+			"single": "单个展开",
+			"text": "文本",
+			"trendDown": "下降趋势",
+			"trendUp": "上升趋势",
+			"up": "从下方",
+			"vertical": "垂直"
+		},
+		"customization": "自定义",
+		"details": "详情",
+		"related": "相关组件",
+		"viewOnGithub": "在 GitHub 上查看",
+		"downloadFile": "下载 .{ext} 文件",
+		"empty": {
+			"title": "没有符合筛选条件的组件",
+			"description": "换个关键词，或清除筛选条件。"
+		},
+		"filters": {
+			"category": "分类",
+			"allCategories": "全部分类",
+			"allFrameworks": "全部框架",
+			"allDifficulties": "全部级别",
+			"byFramework": "按框架筛选",
+			"byDifficulty": "按难度筛选",
+			"sortBy": "排序方式"
+		},
+		"sort": {
+			"newest": "最新",
+			"popular": "热门",
+			"downloads": "下载最多",
+			"trending": "趋势",
+			"updated": "最近更新",
+			"copied": "复制最多",
+			"alphabetical": "A-Z"
+		},
+		"difficulty": {
+			"beginner": "初级",
+			"intermediate": "中级",
+			"advanced": "高级"
+		},
+		"meta": {
+			"author": "作者",
+			"version": "版本",
+			"created": "创建时间",
+			"updated": "更新时间"
+		},
+		"propsTable": {
+			"name": "Prop",
+			"type": "类型",
+			"default": "默认值",
+			"description": "说明",
+			"required": "必填"
+		},
+		"categories": {
+			"buttons": "按钮",
+			"cards": "卡片",
+			"hero": "Hero 区块",
+			"navbar": "导航栏",
+			"footer": "页脚",
+			"authentication": "认证",
+			"forms": "表单",
+			"pricing": "定价",
+			"testimonials": "用户评价",
+			"faq": "FAQ",
+			"features": "功能特性",
+			"dashboards": "仪表盘",
+			"tables": "表格",
+			"modals": "模态框",
+			"loaders": "加载动画",
+			"timeline": "时间线",
+			"calculators": "价格计算器",
+			"ecommerce": "电商",
+			"ai": "AI 组件",
+			"landing": "落地页区块",
+			"marketing": "营销",
+			"animation": "动画",
+			"backgrounds": "背景",
+			"charts": "图表",
+			"admin": "后台管理",
+			"tabs": "标签页",
+			"carousel": "轮播",
+			"services": "服务",
+			"about": "关于我们",
+			"popover": "气泡卡片",
+			"notifications": "通知",
+			"sidebars": "侧边栏",
+			"dropdowns": "下拉菜单",
+			"fab": "悬浮按钮",
+			"alerts": "警告提示",
+			"docks": "停靠栏",
+			"comparisons": "对比",
+			"galleries": "图库",
+			"pagination": "分页",
+			"marquees": "跑马灯",
+			"maps": "地图",
+			"steppers": "步骤条",
+			"gradients": "渐变",
+			"avatars": "头像",
+			"badges": "徽章",
+			"calendar": "日历",
+			"cursors": "光标",
+			"date-pickers": "日期选择器",
+			"time-pickers": "时间选择器",
+			"color-pickers": "颜色选择器",
+			"file-trees": "文件树",
+			"file-uploads": "文件上传",
+			"lists": "列表",
+			"menus": "菜单",
+			"progress": "进度",
+			"search-bars": "搜索栏",
+			"tags": "标签",
+			"toggles": "开关",
+			"tooltips": "工具提示",
+			"tour": "引导教程",
+			"cta": "行动号召",
+			"sign-in": "登录",
+			"sign-up": "注册",
+			"stats": "数据与KPI",
+			"team": "团队",
+			"error-pages": "错误页面",
+			"globes": "地球",
+			"bento": "网格与便当",
+			"social": "社交媒体",
+			"contact": "联系我们",
+			"cart": "购物车",
+			"checkout": "结账",
+			"change-password": "修改密码",
+			"reset-password": "重置密码",
+			"blog": "博客",
+			"images": "图片"
+		},
+		"preview": {
+			"title": "预览",
+			"device": "预览尺寸",
+			"desktop": "桌面端",
+			"tablet": "平板",
+			"mobile": "移动端",
+			"toDark": "以深色模式预览",
+			"toLight": "以浅色模式预览",
+			"reset": "重新播放预览",
+			"fullscreen": "在新标签页中打开预览"
+		},
+		"playground": {
+			"banner": {
+				"title": "搭建你自己的页面",
+				"description": "从页头到页脚，用组件库中的区块拼装页面，并随时复制或下载完整代码。",
+				"cta": "自定义你的项目"
+			},
+			"title": "演练场",
+			"exit": "返回组件库",
+			"restartTour": "重新播放引导",
+			"openExport": "获取代码",
+			"slots": {
+				"header": "页头",
+				"hero": "主视觉",
+				"services": "服务",
+				"about": "关于",
+				"gallery": "图库",
+				"pricing": "价格",
+				"comparison": "对比",
+				"faq": "常见问题",
+				"cta": "行动号召",
+				"footer": "页脚"
+			},
+			"rail": {
+				"title": "区块",
+				"empty": "未添加",
+				"add": "添加{slot}",
+				"remove": "移除{slot}"
+			},
+			"builder": {
+				"layout": "布局",
+				"content": "内容",
+				"tabsLabel": "版块控制"
+			},
+			"variations": {
+				"of": "{slot}的样式",
+				"empty": "暂无可用样式",
+				"select": "使用 {title}",
+				"count": "{current} / {total}",
+				"prev": "上一个样式",
+				"next": "下一个样式"
+			},
+			"canvas": {
+				"empty": {
+					"title": "暂无可预览内容",
+					"description": "请先从列表中添加区块。"
+				}
+			},
+			"export": {
+				"title": "页面代码",
+				"description": "复制或下载拼装好的页面代码。",
+				"copyAll": "复制代码",
+				"downloadAll": "下载 {file}",
+				"downloadSection": "下载 {file}",
+				"files": "文件",
+				"missingSection": "{title} 暂不支持 {framework}。",
+				"coverage": "{available} / {total} 个区块",
+				"empty": "请先添加区块，再导出代码。",
+				"paletteTitle": "项目调色板"
+			},
+			"tour": {
+				"stepCount": "第 {current} / {total} 步",
+				"skip": "跳过",
+				"back": "上一步",
+				"next": "下一步",
+				"done": "完成",
+				"steps": {
+					"welcome": {
+						"title": "欢迎来到演练场",
+						"body": "从页头到页脚，用现成的区块拼装完整页面，代码随时带走。"
+					},
+					"slots": {
+						"title": "挑选区块",
+						"body": "页面的每个区块都在这里。点击进行编辑，也可以添加或移除可选区块。"
+					},
+					"variations": {
+						"title": "尝试不同样式",
+						"body": "每个区块都有多种设计。点击任意样式即可立刻替换到页面中。"
+					},
+					"canvas": {
+						"title": "实时预览页面",
+						"body": "这就是你正在拼装的页面。悬停在区块上即可就地切换样式。"
+					},
+					"device": {
+						"title": "检查各种屏幕",
+						"body": "在桌面、平板和手机宽度下预览页面。"
+					},
+					"export": {
+						"title": "带走代码",
+						"body": "满意后，即可复制或下载全部区块的完整代码。"
+					},
+					"upload": {
+						"title": "从参考图开始",
+						"body": "拖入一张草图或你喜欢的首页截图，我们会在几秒内拼装出匹配的模板。"
+					},
+					"scratch": {
+						"title": "或从零开始搭建",
+						"body": "想自己选择一切？跳过上传，逐个区块搭建页面。"
+					},
+					"result": {
+						"title": "生成的模板",
+						"body": "这是你的起始模板。可直接下载代码、自定义区块，或用新的参考图重新开始。"
+					},
+					"content": {
+						"title": "自定义文案",
+						"body": "选择任意区块，即可在此编辑其标题、正文、标签和按钮。改动会实时显示，并写入下载的代码中。"
+					}
+				}
+			},
+			"start": {
+				"title": "自定义你的项目",
+				"subtitle": "上传一张参考图，我们会为你拼装匹配的模板 -- 或者从空白画布开始。",
+				"or": "或",
+				"scratchTitle": "从零开始搭建",
+				"scratchDescription": "自己挑选每个区块与样式。"
+			},
+			"upload": {
+				"title": "将参考图拖放到这里",
+				"hint": "草图、线框图，或你喜欢的首页截图。",
+				"browse": "选择图片",
+				"formats": "PNG、JPG、WEBP 或 GIF · 最大 12 MB",
+				"errorType": "该文件不是受支持的图片格式。请使用 PNG、JPG、WEBP 或 GIF。",
+				"errorSize": "该图片超过 12 MB。请尝试更小的文件。"
+			},
+			"generating": {
+				"title": "正在生成你的模板…",
+				"subtitle": "正在分析参考图并拼装匹配的区块。",
+				"previewAlt": "你上传的参考图",
+				"error": "无法读取该图片。请尝试其他文件。"
+			},
+			"result": {
+				"title": "你的模板已就绪",
+				"subtitle": "已根据参考图拼装 {count} 个区块。可下载代码，或继续自定义。",
+				"getCode": "获取代码",
+				"customize": "自定义",
+				"startOver": "重新开始"
+			},
+			"palette": {
+				"button": "调色板",
+				"label": "选择项目调色板",
+				"title": "项目调色板",
+				"description": "选择随生成代码一起提供的调色板。",
+				"current": "当前调色板",
+				"remove": "移除调色板",
+				"generateOwn": "生成你自己的",
+				"useReference": "使用参考图的颜色",
+				"chooseLibrary": "从库中选择",
+				"referenceName": "参考调色板"
+			},
+			"content": {
+				"title": "编辑内容",
+				"noneSlot": "未选择任何区块",
+				"empty": "添加区块后即可编辑其文本、标题和标签。",
+				"reading": "正在读取该区块的内容…",
+				"editedCount": "已编辑 {count} 处",
+				"reset": "恢复原始内容",
+				"kind": {
+					"heading": "标题",
+					"button": "按钮",
+					"text": "文本",
+					"label": "标签",
+					"placeholder": "占位符",
+					"alt": "替代文本"
+				}
+			}
+		},
+		"allComponents": "全部组件"
+	},
+	"palettes": {
+		"title": "调色板",
+		"subtitle": "浏览为网站、Web、移动端和桌面应用精选的调色板 -- 复制代码、编辑与交换颜色，或生成你自己的。",
+		"generateCta": "生成调色板",
+		"searchPlaceholder": "按名称、标签或颜色搜索…",
+		"filterByTag": "按标签筛选",
+		"allTags": "全部",
+		"sortBy": "排序",
+		"sort": {
+			"trending": "热门",
+			"name": "名称"
+		},
+		"savedTitle": "我的调色板",
+		"trendingTitle": "热门",
+		"removeSaved": "移除 {name}",
+		"empty": "没有符合筛选条件的调色板。",
+		"card": {
+			"swatches": "{name} 中的颜色",
+			"copyColor": "复制 {hex}",
+			"copyAll": "复制所有颜色",
+			"open": "打开调色板"
+		},
+		"code": {
+			"formats": "代码格式",
+			"download": "下载 .{ext}",
+			"title": "代码"
+		},
+		"quickView": {
+			"editColor": "编辑颜色 {index}",
+			"lock": "锁定颜色",
+			"unlock": "解锁颜色",
+			"shuffle": "随机",
+			"downloadImage": "下载 PNG",
+			"save": "保存",
+			"saved": "已保存",
+			"similar": "探索相似"
+		},
+		"generator": {
+			"title": "生成调色板",
+			"subtitle": "根据需求简介、你自己的颜色或参考图片。",
+			"modeLabel": "生成方式",
+			"modes": {
+				"brief": "简介",
+				"colors": "颜色",
+				"image": "图片"
+			},
+			"fields": {
+				"name": "网站 / 品牌名称",
+				"namePlaceholder": "例如 Northwind Studio",
+				"business": "业务类型",
+				"colors": "想要的颜色（可选）",
+				"colorsPlaceholder": "例如 teal、navy、#f4a261",
+				"comments": "备注（可选）",
+				"commentsPlaceholder": "例如 沉稳高级、以浅色为主",
+				"hexes": "你的颜色",
+				"hexesHint": "输入十六进制代码或颜色名称，用逗号分隔。",
+				"imageTitle": "上传参考图片",
+				"imageHint": "我们会从图片颜色中提取调色板。PNG、JPG、WEBP 或 GIF。"
+			},
+			"business": {
+				"technology": "科技",
+				"finance": "金融",
+				"health": "健康养生",
+				"food": "餐饮",
+				"fashion": "时尚",
+				"education": "教育",
+				"realEstate": "房地产",
+				"travel": "旅行",
+				"creative": "创意/代理",
+				"eco": "环保/可持续",
+				"fitness": "健身/运动",
+				"beauty": "美妆",
+				"luxury": "奢侈品",
+				"other": "其他"
+			},
+			"preview": "预览",
+			"cancel": "取消",
+			"generate": "生成",
+			"regenerate": "重新生成",
+			"use": "使用此调色板",
+			"defaultName": "我的调色板",
+			"error": "出了点问题，请重试。",
+			"errorType": "不支持的图片。请使用 PNG、JPG、WEBP 或 GIF。",
+			"errorSize": "该图片超过 12 MB。"
+		},
+		"tour": {
+			"restart": "重新播放引导",
+			"stepOf": "第 {current}/{total} 步",
+			"back": "上一步",
+			"next": "下一步",
+			"done": "完成",
+			"skip": "跳过",
+			"steps": {
+				"welcome": {
+					"title": "欢迎来到调色板",
+					"body": "为你的网站或应用准备的现成调色板 -- 复制、调整、导出，或生成你自己的。"
+				},
+				"generate": {
+					"title": "生成你自己的",
+					"body": "描述你的品牌、输入颜色，或上传参考图片,我们就会为你生成调色板。"
+				},
+				"browse": {
+					"title": "浏览并复制",
+					"body": "点击任意颜色即可复制其十六进制值,或复制整套。可按标签或颜色搜索与筛选。"
+				},
+				"edit": {
+					"title": "编辑与交换",
+					"body": "打开一个调色板即可重新上色,锁定你喜欢的颜色,并随机其余颜色。"
+				},
+				"export": {
+					"title": "导出代码",
+					"body": "以 CSS、SCSS、Tailwind、数组或 JSON 复制或下载调色板,或保存为 PNG。"
+				},
+				"similar": {
+					"title": "探索相似",
+					"body": "跳转到氛围相近的调色板,继续探索。"
+				}
+			}
+		}
+	},
+	"gradients": {
+		"title": "渐变",
+		"subtitle": "浏览为网站和应用精选的 CSS 渐变 -- 复制代码、编辑色标、以 CSS 或图片下载，或生成你自己的。",
+		"generateCta": "生成渐变",
+		"searchPlaceholder": "按名称、标签或颜色搜索…",
+		"filterByTag": "按标签筛选",
+		"allTags": "全部",
+		"sortBy": "排序",
+		"sort": {
+			"trending": "热门",
+			"name": "名称"
+		},
+		"savedTitle": "我的渐变",
+		"trendingTitle": "热门",
+		"removeSaved": "移除 {name}",
+		"empty": "没有符合筛选条件的渐变。",
+		"card": {
+			"open": "打开 {name}",
+			"edit": "编辑",
+			"copyCss": "复制 CSS"
+		},
+		"code": {
+			"formats": "代码格式",
+			"download": "下载 .{ext}",
+			"title": "代码"
+		},
+		"quickView": {
+			"preview": "渐变预览",
+			"type": "渐变类型",
+			"types": {
+				"linear": "线性",
+				"radial": "径向",
+				"conic": "锥形"
+			},
+			"angle": "角度",
+			"stops": "颜色色标",
+			"addStop": "添加色标",
+			"editStop": "编辑色标 {index}",
+			"stopPosition": "色标 {index} 的位置",
+			"removeStop": "移除色标 {index}",
+			"shuffle": "随机",
+			"downloadImage": "下载 PNG",
+			"save": "保存",
+			"saved": "已保存",
+			"similar": "探索相似"
+		},
+		"generator": {
+			"title": "生成渐变",
+			"subtitle": "根据需求简介、你自己的颜色或参考图片。",
+			"modeLabel": "生成方式",
+			"modes": {
+				"brief": "简介",
+				"colors": "颜色",
+				"image": "图片"
+			},
+			"fields": {
+				"name": "名称（可选）",
+				"namePlaceholder": "例如 Sunset Fade",
+				"style": "风格",
+				"colors": "想要的颜色（可选）",
+				"colorsPlaceholder": "例如 #6a11cb、blue",
+				"comments": "备注（可选）",
+				"commentsPlaceholder": "例如 柔和平静、从上到下",
+				"hexes": "你的颜色",
+				"hexesHint": "输入 2-3 个十六进制代码或颜色名称，用逗号分隔。",
+				"imageTitle": "上传参考图片",
+				"imageHint": "我们会从图片颜色中提取渐变。PNG、JPG、WEBP 或 GIF。"
+			},
+			"styles": {
+				"vibrant": "鲜艳",
+				"sunset": "日落",
+				"ocean": "海洋",
+				"forest": "森林",
+				"pastel": "柔和",
+				"neon": "霓虹",
+				"dark": "暗色",
+				"warm": "暖色",
+				"cool": "冷色",
+				"monochrome": "单色"
+			},
+			"preview": "预览",
+			"cancel": "取消",
+			"generate": "生成",
+			"regenerate": "重新生成",
+			"use": "使用此渐变",
+			"error": "出了点问题，请重试。",
+			"errorType": "不支持的图片。请使用 PNG、JPG、WEBP 或 GIF。",
+			"errorSize": "该图片超过 12 MB。"
+		},
+		"tour": {
+			"restart": "重新播放引导",
+			"stepOf": "第 {current}/{total} 步",
+			"back": "上一步",
+			"next": "下一步",
+			"done": "完成",
+			"skip": "跳过",
+			"steps": {
+				"welcome": {
+					"title": "欢迎来到渐变",
+					"body": "为你的网站或应用准备的现成 CSS 渐变 -- 复制、调整、导出，或生成你自己的。"
+				},
+				"generate": {
+					"title": "生成你自己的",
+					"body": "描述你想要的风格、输入颜色，或上传参考图片,我们就会为你生成渐变。"
+				},
+				"browse": {
+					"title": "浏览并复制",
+					"body": "点击任意渐变即可打开,或直接从卡片复制其 CSS。可按标签或颜色搜索与筛选。"
+				},
+				"edit": {
+					"title": "编辑它",
+					"body": "在线性、径向和锥形之间切换,更改角度,重新上色或添加颜色色标。"
+				},
+				"export": {
+					"title": "导出它",
+					"body": "以 CSS、SCSS、Tailwind、数组或 JSON 复制或下载渐变,或保存为 PNG 图片。"
+				},
+				"similar": {
+					"title": "探索相似",
+					"body": "跳转到氛围相近的渐变,继续探索。"
+				}
+			}
+		}
+	},
+	"icons": {
+		"title": "图标",
+		"subtitle": "{count} 个原创、开放的线性图标 —— 搜索、改色、调整大小，再以 SVG、PNG、React 或 CSS 复制或下载。",
+		"weight": "粗细",
+		"searchPlaceholder": "按名称、类别或标签搜索图标…",
+		"filterByCategory": "按类别筛选",
+		"allCategories": "全部",
+		"resultCount": "{count} 个图标",
+		"savedTitle": "已保存的图标",
+		"empty": "没有匹配的图标。",
+		"categories": {
+			"interface": "界面",
+			"arrows": "箭头",
+			"communication": "通讯",
+			"media": "媒体",
+			"files": "文件",
+			"commerce": "商务",
+			"devices": "设备",
+			"weather": "天气",
+			"social": "社交",
+			"editing": "编辑",
+			"maps": "地图",
+			"status": "状态"
+		},
+		"card": {
+			"open": "打开 {name}",
+			"copySvg": "复制 SVG"
+		},
+		"code": {
+			"formats": "代码格式",
+			"download": "下载 .{ext}",
+			"title": "复制与导出"
+		},
+		"quickView": {
+			"colour": "颜色",
+			"themeColour": "主题",
+			"customColour": "自定义颜色",
+			"style": "样式",
+			"filled": "填充",
+			"outline": "描边",
+			"weight": "粗细",
+			"size": "尺寸",
+			"save": "保存",
+			"saved": "已保存",
+			"downloadSvg": "SVG",
+			"downloadPng": "下载 PNG",
+			"similar": "相关图标"
+		},
+		"tour": {
+			"restart": "重新播放导览",
+			"stepOf": "第 {current} / {total} 步",
+			"back": "上一步",
+			"next": "下一步",
+			"done": "完成",
+			"skip": "跳过导览",
+			"steps": {
+				"welcome": {
+					"title": "欢迎使用图标库",
+					"body": "一套原创、开放的线性图标 —— 浏览、自定义，并以任意格式获取代码。"
+				},
+				"customize": {
+					"title": "设置粗细",
+					"body": "拖动即可让所有图标更细或更粗，你的选择会应用于整个图标库。"
+				},
+				"browse": {
+					"title": "查找图标",
+					"body": "按名称、类别或标签搜索，或按主题筛选。悬停任意图标即可立即复制其 SVG。"
+				},
+				"edit": {
+					"title": "打造你的风格",
+					"body": "打开图标即可实时改色、调整粗细、缩放，或切换为填充样式。"
+				},
+				"export": {
+					"title": "复制或导出",
+					"body": "以 SVG、JSX、React 组件、Data URI 或 CSS 遮罩规则获取图标。"
+				},
+				"download": {
+					"title": "随处下载",
+					"body": "保存清晰的 SVG，或从 16 到 256 像素的任意尺寸 PNG。"
+				}
+			}
+		}
+	},
+	"landing": {
+		"meta": {
+			"title": "ADYSRE - 在同一工作区里设计并交付",
+			"description": "让产品团队在同一处浏览组件、图标、调色板、渐变和提示词，并直接带到生产环境的工作区。"
+		},
+		"nav": {
+			"pricing": "价格",
+			"openApp": "打开工作区",
+			"menu": "打开菜单",
+			"closeMenu": "关闭菜单",
+			"skip": "跳到内容"
+		},
+		"hero": {
+			"badge": "新功能：渐变与调色板生成器",
+			"title": "团队设计与交付所需的一切",
+			"titleAccent": "都在一个从容的工作区里",
+			"subtitle": "ADYSRE 将组件、图标、调色板、渐变和提示词汇聚一处，让团队无需切换工具，就能从想法走到生产。",
+			"ctaPrimary": "打开工作区",
+			"ctaSecondary": "浏览组件",
+			"trust": "全球 {count, number}+ 位开发者的信赖之选",
+			"hint": "浏览无需绑卡"
+		},
+		"marquee": {
+			"label": "为现代产品团队的工作方式而打造"
+		},
+		"features": {
+			"title": "一个工作区，涵盖每一块积木",
+			"subtitle": "每个模块都可即刻浏览、复制并放入你的产品。登录后可随时从侧边菜单打开。",
+			"explore": "查看",
+			"items": {
+				"components": {
+					"title": "组件",
+					"desc": "HTML、Tailwind、React 和 Next.js 的复制即用 UI 块，带类型，可直接用于生产。"
+				},
+				"icons": {
+					"title": "图标",
+					"desc": "可调节字重的精选图标集，支持实时预览与一键复制为你所需的格式。"
+				},
+				"palettes": {
+					"title": "调色板",
+					"desc": "带令牌输出的无障碍调色板，让品牌色处处保持一致。"
+				},
+				"gradients": {
+					"title": "渐变",
+					"desc": "多层的品牌渐变，CSS 可直接粘贴进你的样式。"
+				},
+				"promptLibrary": {
+					"title": "提示词库",
+					"desc": "按类别精选的提示词库，为团队所用的模型做过调校。"
+				},
+				"templates": {
+					"title": "模板",
+					"desc": "将各模块组装成完整界面的页面与流程模板。"
+				}
+			}
+		},
+		"workflow": {
+			"title": "从空白到交付，只需三步",
+			"subtitle": "每个模块都用同一套流程，让全队步调一致。",
+			"steps": {
+				"browse": {
+					"title": "浏览",
+					"desc": "在所有模块中搜索，决定前先实时预览每个结果。"
+				},
+				"tailor": {
+					"title": "调整",
+					"desc": "调整颜色、字重和框架，复制与你令牌一致的输出。"
+				},
+				"ship": {
+					"title": "交付",
+					"desc": "粘贴进产品继续前进，无需清理，也不被锁定。"
+				}
+			}
+		},
+		"showcase": {
+			"title": "决定前先看它运行",
+			"subtitle": "用与你产品相同的设计令牌构建的实时预览。",
+			"palette": {
+				"label": "调色板",
+				"caption": "可用令牌的配色"
+			},
+			"gradient": {
+				"label": "渐变",
+				"caption": "可粘贴的 CSS 背景"
+			},
+			"icons": {
+				"label": "图标",
+				"caption": "可调节，一键复制"
+			},
+			"components": {
+				"label": "组件",
+				"caption": "带类型，生产就绪"
+			}
+		},
+		"templates": {
+			"badge": "即将推出",
+			"title": "完整模板即将到来",
+			"subtitle": "由你熟悉的模块组装而成的完整页面与流程，可随心定制。上线的第一时间通知你。",
+			"cta": "查看路线图",
+			"note": "已包含在每个套餐中，不额外收费。"
+		},
+		"stats": {
+			"title": "每周都在成长",
+			"items": {
+				"components": "组件",
+				"icons": "图标",
+				"prompts": "提示词",
+				"teams": "在建团队"
+			}
+		},
+		"faq": {
+			"title": "常见问题",
+			"subtitle": "开始之前你可能想了解的一切。",
+			"items": {
+				"what": {
+					"q": "ADYSRE 是什么？",
+					"a": "一个集设计与开发资源于一体的工作区：组件、图标、调色板、渐变和提示词，随时复制进你的产品。"
+				},
+				"frameworks": {
+					"q": "支持哪些框架？",
+					"a": "组件以 HTML、CSS、Tailwind、React、Next.js 和 TypeScript 形式提供，可放入大多数现代技术栈。"
+				},
+				"templates": {
+					"q": "模板何时上线？",
+					"a": "模板正在积极开发中。打开模板页可预览即将推出的内容，并第一时间获知上线。"
+				},
+				"pricing": {
+					"q": "有免费方案吗？",
+					"a": "有。你可以无需绑卡浏览并使用丰富的免费内容。一次付费解锁全部，包括我们日后新增的内容。"
+				},
+				"team": {
+					"q": "整个团队都能用吗？",
+					"a": "可以。团队版让你的组织共享同一个工作区，人人使用相同的模块。"
+				}
+			}
+		},
+		"cta": {
+			"title": "准备好更顺畅地构建了吗？",
+			"subtitle": "打开工作区，从侧边菜单浏览每个模块。无需搭建，无需清理。",
+			"primary": "打开工作区",
+			"secondary": "查看价格"
+		},
+		"footer": {
+			"tagline": "让团队一起设计与交付的工作区。",
+			"product": "产品",
+			"resources": "资源",
+			"legal": "法务",
+			"contact": "联系我们",
+			"docs": "文档",
+			"rights": "保留所有权利。",
+			"built": "为现代产品团队打造。"
+		},
+		"announcement": {
+			"region": "公告",
+			"badge": "新上线",
+			"label": "图标、渐变和调色板现已在工作区上线",
+			"cta": "查看",
+			"dismiss": "关闭公告"
+		}
+	}
+}

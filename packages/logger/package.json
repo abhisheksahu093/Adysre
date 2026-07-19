@@ -1,0 +1,23 @@
+{
+  "name": "@adysre/logger",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "lint": "eslint src",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "pino": "^9.4.0",
+    "pino-pretty": "^11.2.2"
+  },
+  "devDependencies": {
+    "@adysre/config": "workspace:*",
+    "@adysre/types": "workspace:*",
+    "@types/node": "^20.16.10",
+    "typescript": "^5.6.3"
+  }
+}

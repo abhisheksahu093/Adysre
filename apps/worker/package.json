@@ -1,0 +1,25 @@
+{
+  "name": "@adysre/worker",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/main.ts",
+    "build": "tsc",
+    "start": "node dist/main.js",
+    "lint": "eslint src",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@adysre/database": "workspace:*",
+    "@adysre/logger": "workspace:*",
+    "bullmq": "^5.15.0",
+    "ioredis": "^5.4.1"
+  },
+  "devDependencies": {
+    "@adysre/config": "workspace:*",
+    "@types/node": "^20.16.10",
+    "tsx": "^4.19.1",
+    "typescript": "^5.6.3"
+  }
+}

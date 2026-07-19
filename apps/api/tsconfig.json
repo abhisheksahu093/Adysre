@@ -1,0 +1,9 @@
+{
+  "extends": "@adysre/config/tsconfig/nest",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "outDir": "./dist",
+    "rootDir": "./src"
+  },
+  "include": ["src"]
+}

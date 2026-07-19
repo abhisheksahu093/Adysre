@@ -1,0 +1,36 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: adysre-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: adysre
+      POSTGRES_PASSWORD: adysre
+      POSTGRES_DB: adysre
+    ports:
+      - "5432:5432"
+    volumes:
+      - adysre_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U adysre"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: adysre-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - adysre_redisdata:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  adysre_pgdata:
+  adysre_redisdata:

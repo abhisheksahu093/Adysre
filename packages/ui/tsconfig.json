@@ -1,0 +1,4 @@
+{
+  "extends": "@adysre/config/tsconfig/next",
+  "include": ["src"]
+}

@@ -1,0 +1,152 @@
+@import 'tailwindcss';
+@import '@adysre/theme/tokens.css';
+
+/* @adysre/ui resolves through a workspace symlink into node_modules, which
+   Tailwind's auto-detection skips — without this, utilities used only inside
+   the UI package (h-10, h-11, …) are never generated and its components
+   silently collapse to content height. */
+@source '../../../../packages/ui/src';
+
+/* Dark mode is class-based (next-themes toggles `.dark` on <html>). */
+@custom-variant dark (&:where(.dark, .dark *));
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---- Shiki code blocks -------------------------------------------------- */
+/* Shiki emits both themes at once; these swap them with CSS so the block
+   follows the theme toggle without re-highlighting or flashing. */
+.shiki-code pre {
+  background-color: var(--muted) !important;
+  padding: 1rem 0;
+  margin: 0;
+  overflow-x: auto;
+}
+
+.dark .shiki-code span {
+  color: var(--shiki-dark) !important;
+}
+
+.shiki-code code {
+  display: grid;
+  font-family: var(--font-mono);
+  line-height: 1.65;
+  counter-reset: line;
+}
+
+/* Line numbers via counters — no markup, so Copy never picks them up. */
+.shiki-code code .line::before {
+  counter-increment: line;
+  content: counter(line);
+  display: inline-block;
+  width: 2.5rem;
+  padding-right: 1rem;
+  text-align: right;
+  color: var(--muted-foreground);
+  opacity: 0.5;
+  user-select: none;
+}
+
+.shiki-code code .line {
+  padding-right: 1rem;
+}
+
+/* ---- Component previews ------------------------------------------------- */
+/* The skeleton loader's shimmer needs keyframes Tailwind can't express inline.
+   Ships here so the copied Tailwind/React variants work as-is. The highlight is
+   an overlay, so anything wearing .skeleton-shimmer must also carry
+   `relative overflow-hidden` to position and clip it — see
+   src/data/components/loaders.ts, which documents this same helper. */
+@keyframes skeleton-shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.skeleton-shimmer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background-image: linear-gradient(
+    90deg,
+    rgb(255 255 255 / 0) 0,
+    rgb(255 255 255 / 0.7) 20%,
+    rgb(255 255 255 / 0.9) 60%,
+    rgb(255 255 255 / 0)
+  );
+  animation: skeleton-shimmer 1.6s infinite;
+}
+
+/* Over a dark bar the same white highlight only needs a fraction of the opacity
+   to read as a sweep rather than a flash. Scoped to .dark rather than
+   prefers-color-scheme because next-themes toggles the class — the snippet ships
+   the media-query form so it works in projects without one. */
+.dark .skeleton-shimmer::after {
+  background-image: linear-gradient(
+    90deg,
+    rgb(255 255 255 / 0) 0,
+    rgb(255 255 255 / 0.08) 20%,
+    rgb(255 255 255 / 0.14) 60%,
+    rgb(255 255 255 / 0)
+  );
+}
+
+/* A shimmer is decoration; someone who asked for less motion gets a flat block
+   rather than a stuttering one. */
+@media (prefers-reduced-motion: reduce) {
+  .skeleton-shimmer::after {
+    animation: none;
+  }
+}
+
+/* ---- Playground tour ---------------------------------------------------- */
+/* The spotlight is one fixed box whose oversized shadow dims everything else —
+   a true cutout would need SVG masking for what is only a highlight. Position
+   comes from JS because it tracks a live element; everything visual lives
+   here, on tokens, so it follows the theme. */
+.tour-spotlight {
+  position: fixed;
+  z-index: 60;
+  pointer-events: none;
+  border-radius: var(--radius-md);
+  box-shadow:
+    0 0 0 2px var(--ring),
+    0 0 0 9999px color-mix(in oklab, var(--foreground) 45%, transparent);
+  transition:
+    top 0.25s ease,
+    left 0.25s ease,
+    width 0.25s ease,
+    height 0.25s ease;
+}
+
+/* The ring hopping between targets is decoration; someone who asked for less
+   motion gets an instant jump. */
+@media (prefers-reduced-motion: reduce) {
+  .tour-spotlight {
+    transition: none;
+  }
+}
+
+/* ---- Icon preview ------------------------------------------------------- */
+/* A faint checkerboard so a transparent icon reads clearly against the panel.
+   Built from a token so it follows the theme in both light and dark. */
+.icon-checker {
+  --icon-checker-tint: color-mix(in oklab, var(--muted-foreground) 12%, transparent);
+  background-color: var(--card);
+  background-image:
+    linear-gradient(45deg, var(--icon-checker-tint) 25%, transparent 25%),
+    linear-gradient(-45deg, var(--icon-checker-tint) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, var(--icon-checker-tint) 75%),
+    linear-gradient(-45deg, transparent 75%, var(--icon-checker-tint) 75%);
+  background-size: 16px 16px;
+  background-position:
+    0 0,
+    0 8px,
+    8px -8px,
+    -8px 0;
+}

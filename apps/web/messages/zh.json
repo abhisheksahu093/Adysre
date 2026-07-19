@@ -49,7 +49,8 @@
 			"commerce": "电商"
 		},
 		"expandSection": "展开{label}",
-		"collapseSection": "收起{label}"
+		"collapseSection": "收起{label}",
+		"viewAll": "全部{label}"
 	},
 	"topbar": {
 		"searchPlaceholder": "搜索或快速跳转…",
@@ -1134,7 +1135,8 @@
 			"swatches": "{name} 中的颜色",
 			"copyColor": "复制 {hex}",
 			"copyAll": "复制所有颜色",
-			"open": "打开调色板"
+			"open": "打开调色板",
+			"like": "点赞 {name}"
 		},
 		"code": {
 			"formats": "代码格式",
@@ -1253,7 +1255,8 @@
 		"card": {
 			"open": "打开 {name}",
 			"edit": "编辑",
-			"copyCss": "复制 CSS"
+			"copyCss": "复制 CSS",
+			"like": "点赞 {name}"
 		},
 		"code": {
 			"formats": "代码格式",

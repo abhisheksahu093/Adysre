@@ -49,7 +49,8 @@
 			"commerce": "コマース"
 		},
 		"expandSection": "{label}を展開",
-		"collapseSection": "{label}を折りたたむ"
+		"collapseSection": "{label}を折りたたむ",
+		"viewAll": "すべての{label}"
 	},
 	"topbar": {
 		"searchPlaceholder": "検索またはページへ移動…",
@@ -1134,7 +1135,8 @@
 			"swatches": "{name}の色",
 			"copyColor": "{hex}をコピー",
 			"copyAll": "すべての色をコピー",
-			"open": "パレットを開く"
+			"open": "パレットを開く",
+			"like": "{name}にいいね"
 		},
 		"code": {
 			"formats": "コード形式",
@@ -1253,7 +1255,8 @@
 		"card": {
 			"open": "{name}を開く",
 			"edit": "編集",
-			"copyCss": "CSSをコピー"
+			"copyCss": "CSSをコピー",
+			"like": "{name}にいいね"
 		},
 		"code": {
 			"formats": "コード形式",

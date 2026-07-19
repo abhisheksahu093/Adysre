@@ -209,6 +209,21 @@ function SidebarNavInner({
 
             {expanded && (
               <div className="mt-1 space-y-0.5 border-l border-border pl-2">
+                {/* "All X" - jumps to the unfiltered module page. */}
+                <Link
+                  href={submenu.href}
+                  onClick={onNavigate}
+                  aria-current={active && !activeValue ? 'page' : undefined}
+                  className={cn(
+                    'block truncate rounded-md px-3 py-1.5 text-[13px] font-medium transition-colors',
+                    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
+                    active && !activeValue
+                      ? 'bg-primary/10 text-primary'
+                      : 'text-muted-foreground hover:bg-muted hover:text-foreground',
+                  )}
+                >
+                  {t('viewAll', { label: t(key) })}
+                </Link>
                 {submenu.groups
                   ? submenu.groups.map((group) => {
                       const groupOpen = openGroup === group.groupKey;

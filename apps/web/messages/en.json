@@ -49,7 +49,8 @@
 			"commerce": "Commerce"
 		},
 		"expandSection": "Expand {label}",
-		"collapseSection": "Collapse {label}"
+		"collapseSection": "Collapse {label}",
+		"viewAll": "All {label}"
 	},
 	"topbar": {
 		"searchPlaceholder": "Search or jump to…",
@@ -1134,7 +1135,8 @@
 			"swatches": "Colours in {name}",
 			"copyColor": "Copy {hex}",
 			"copyAll": "Copy all colours",
-			"open": "Open palette"
+			"open": "Open palette",
+			"like": "Like {name}"
 		},
 		"code": {
 			"formats": "Code formats",
@@ -1253,7 +1255,8 @@
 		"card": {
 			"open": "Open {name}",
 			"edit": "Edit",
-			"copyCss": "Copy CSS"
+			"copyCss": "Copy CSS",
+			"like": "Like {name}"
 		},
 		"code": {
 			"formats": "Code formats",

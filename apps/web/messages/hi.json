@@ -49,7 +49,8 @@
 			"commerce": "कॉमर्स"
 		},
 		"expandSection": "{label} खोलें",
-		"collapseSection": "{label} बंद करें"
+		"collapseSection": "{label} बंद करें",
+		"viewAll": "सभी {label}"
 	},
 	"topbar": {
 		"searchPlaceholder": "खोजें या सीधे जाएँ…",
@@ -1134,7 +1135,8 @@
 			"swatches": "{name} के रंग",
 			"copyColor": "{hex} कॉपी करें",
 			"copyAll": "सभी रंग कॉपी करें",
-			"open": "पैलेट खोलें"
+			"open": "पैलेट खोलें",
+			"like": "{name} को लाइक करें"
 		},
 		"code": {
 			"formats": "कोड फ़ॉर्मेट",
@@ -1253,7 +1255,8 @@
 		"card": {
 			"open": "{name} खोलें",
 			"edit": "एडिट",
-			"copyCss": "CSS कॉपी करें"
+			"copyCss": "CSS कॉपी करें",
+			"like": "{name} को लाइक करें"
 		},
 		"code": {
 			"formats": "कोड फ़ॉर्मेट",

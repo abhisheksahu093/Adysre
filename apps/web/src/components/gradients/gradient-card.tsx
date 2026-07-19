@@ -2,11 +2,12 @@
 
 import { useRef, useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { Check, Copy, Heart, Maximize2 } from 'lucide-react';
+import { Check, Copy, Maximize2 } from 'lucide-react';
 import { cn } from '@adysre/ui';
 import type { Gradient } from '@/data/gradients';
 import { gradientToCss } from '@/lib/gradients/css';
 import { useClipboard } from '@/hooks/use-clipboard';
+import { LikeButton } from '@/components/like-button';
 
 interface GradientCardProps {
   gradient: Gradient;
@@ -56,11 +57,13 @@ export function GradientCard({ gradient, onOpen }: GradientCardProps) {
           className="min-w-0 flex-1 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
         >
           <span className="block truncate text-sm font-semibold">{gradient.name}</span>
-          <span className="flex items-center gap-1 text-[11px] capitalize text-muted-foreground">
-            <Heart className="h-3 w-3" aria-hidden />
-            {gradient.likes} · {gradient.type}
-          </span>
+          <span className="block text-[11px] capitalize text-muted-foreground">{gradient.type}</span>
         </button>
+        <LikeButton
+          id={gradient.id}
+          baseLikes={gradient.likes}
+          label={t('card.like', { name: gradient.name })}
+        />
         <button
           type="button"
           onClick={copyCss}

@@ -2,11 +2,12 @@
 
 import { useRef, useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { Check, Copy, Heart, Maximize2 } from 'lucide-react';
+import { Check, Copy, Maximize2 } from 'lucide-react';
 import { cn } from '@adysre/ui';
 import type { Palette } from '@/data/palettes';
 import { readableText } from '@/lib/palettes/color';
 import { useClipboard } from '@/hooks/use-clipboard';
+import { LikeButton } from '@/components/like-button';
 
 interface PaletteCardProps {
   palette: Palette;
@@ -75,14 +76,15 @@ export function PaletteCard({ palette, onOpen }: PaletteCardProps) {
         <button
           type="button"
           onClick={() => onOpen(palette)}
-          className="min-w-0 flex-1 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          className="min-w-0 flex-1 truncate text-left text-sm font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
         >
-          <span className="block truncate text-sm font-semibold">{palette.name}</span>
-          <span className="flex items-center gap-1 text-[11px] text-muted-foreground">
-            <Heart className="h-3 w-3" aria-hidden />
-            {palette.likes.toLocaleString()}
-          </span>
+          {palette.name}
         </button>
+        <LikeButton
+          id={palette.id}
+          baseLikes={palette.likes}
+          label={t('card.like', { name: palette.name })}
+        />
         <button
           type="button"
           onClick={copyAll}

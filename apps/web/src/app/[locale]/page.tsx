@@ -7,6 +7,7 @@ import { FeatureGrid } from '@/components/landing/feature-grid';
 import { WorkflowSteps } from '@/components/landing/workflow-steps';
 import { Showcase } from '@/components/landing/showcase';
 import { StatsBand } from '@/components/landing/stats-band';
+import { LANDING_STATS } from '@/data/library-stats';
 import { TemplatesTeaser } from '@/components/landing/templates-teaser';
 import { Faq } from '@/components/landing/faq';
 import { CtaBand } from '@/components/landing/cta-band';
@@ -53,7 +54,7 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
         <FeatureGrid />
         <WorkflowSteps />
         <Showcase />
-        <StatsBand />
+        <StatsBand stats={LANDING_STATS} />
         <TemplatesTeaser />
         <Faq />
         <CtaBand />

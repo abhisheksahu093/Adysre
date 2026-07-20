@@ -12,6 +12,8 @@
 		"edit": "编辑",
 		"search": "搜索",
 		"clearFilters": "清除筛选",
+		"jumpToPlaceholder": "搜索并跳转…",
+		"noResults": "未找到结果",
 		"comingSoon": "即将推出",
 		"inDevelopment": "开发中",
 		"backToSignIn": "返回登录"
@@ -32,10 +34,14 @@
 			"settings": "管理你的组织、成员与偏好设置。",
 			"palettes": "浏览、编辑并导出现成的调色板 -- 或生成你自己的。",
 			"gradients": "浏览、编辑并导出 CSS 渐变 -- 或生成你自己的。",
+			"patterns": "浏览、编辑并导出 CSS 背景图案 — 或自己生成。",
+			"textures": "浏览、编辑并导出 CSS 表面纹理 — 或自己生成。",
 			"icons": "浏览、自定义并以任意格式或尺寸导出原创 SVG 图标。"
 		},
 		"palettes": "调色板",
 		"gradients": "渐变",
+		"patterns": "图案",
+		"textures": "纹理",
 		"icons": "图标",
 		"backToHome": "返回首页",
 		"groups": {
@@ -1361,6 +1367,256 @@
 			}
 		}
 	},
+	"patterns": {
+		"title": "图案",
+		"subtitle": "浏览为网站和应用精选的 CSS 背景图案 — 复制代码、调整颜色和大小、下载为 CSS 或图片，或自己生成。",
+		"generateCta": "生成图案",
+		"searchPlaceholder": "按名称、标签或颜色搜索图案…",
+		"filterByTag": "按标签筛选",
+		"allTags": "全部",
+		"sortBy": "排序",
+		"sort": {
+			"trending": "热门",
+			"name": "名称"
+		},
+		"savedTitle": "你的图案",
+		"trendingTitle": "热门",
+		"removeSaved": "移除 {name}",
+		"empty": "没有符合筛选条件的图案。",
+		"card": {
+			"open": "打开 {name}",
+			"edit": "编辑",
+			"copyCss": "复制 CSS",
+			"like": "喜欢 {name}"
+		},
+		"code": {
+			"formats": "代码格式",
+			"download": "下载 .{ext}",
+			"title": "代码"
+		},
+		"quickView": {
+			"preview": "图案预览",
+			"type": "图案类型",
+			"types": {
+				"dots": "圆点",
+				"grid": "网格",
+				"lines": "线条",
+				"checkerboard": "棋盘格",
+				"crosshatch": "交叉线"
+			},
+			"foreground": "前景",
+			"background": "背景",
+			"size": "平铺大小",
+			"angle": "角度",
+			"shuffle": "随机",
+			"downloadImage": "下载 PNG",
+			"save": "保存",
+			"saved": "已保存",
+			"similar": "探索相似"
+		},
+		"generator": {
+			"title": "生成图案",
+			"subtitle": "基于简介、你的颜色或参考图片。",
+			"modeLabel": "生成方式",
+			"modes": {
+				"brief": "简介",
+				"colors": "颜色",
+				"image": "图片"
+			},
+			"fields": {
+				"name": "名称（可选）",
+				"namePlaceholder": "例如 Blueprint Grid",
+				"style": "风格",
+				"colors": "想要的颜色（可选）",
+				"colorsPlaceholder": "例如 #0f172a, slate",
+				"comments": "备注（可选）",
+				"commentsPlaceholder": "例如 精致而明亮",
+				"hexes": "你的颜色",
+				"hexesHint": "输入 1-2 个十六进制代码或颜色名称，用逗号分隔。",
+				"imageTitle": "上传参考图片",
+				"imageHint": "我们会从中提取颜色。PNG、JPG、WEBP 或 GIF。"
+			},
+			"styles": {
+				"dots": "圆点",
+				"grid": "网格",
+				"blueprint": "蓝图",
+				"stripes": "条纹",
+				"diagonal": "斜纹",
+				"checker": "棋盘",
+				"hatch": "影线",
+				"neon": "霓虹",
+				"pastel": "柔和",
+				"mono": "单色"
+			},
+			"preview": "预览",
+			"cancel": "取消",
+			"generate": "生成",
+			"regenerate": "重新生成",
+			"use": "使用此图案",
+			"error": "出了点问题，请重试。",
+			"errorType": "不支持的图片。请使用 PNG、JPG、WEBP 或 GIF。",
+			"errorSize": "该图片超过 12 MB。"
+		},
+		"tour": {
+			"restart": "重播导览",
+			"stepOf": "第 {current}/{total} 步",
+			"back": "上一步",
+			"next": "下一步",
+			"done": "完成",
+			"skip": "跳过导览",
+			"steps": {
+				"welcome": {
+					"title": "欢迎使用图案",
+					"body": "为你的网站或应用准备的现成 CSS 背景图案 — 复制、调整、导出，或自己生成。"
+				},
+				"generate": {
+					"title": "自己生成",
+					"body": "描述你想要的风格、输入颜色，或上传参考图片，我们会为你生成图案。"
+				},
+				"browse": {
+					"title": "浏览并复制",
+					"body": "点击任意图案将其打开，或直接从卡片复制其 CSS。按标签或颜色搜索和筛选。"
+				},
+				"edit": {
+					"title": "编辑它",
+					"body": "在圆点、网格、线条、棋盘格和交叉线之间切换，调整颜色和平铺大小。"
+				},
+				"export": {
+					"title": "导出它",
+					"body": "将图案复制或下载为 CSS、SCSS、Tailwind、数组或 JSON — 或保存为 PNG 图片。"
+				},
+				"similar": {
+					"title": "探索相似",
+					"body": "跳转到风格相近的图案，继续探索。"
+				}
+			}
+		}
+	},
+	"textures": {
+		"title": "纹理",
+		"subtitle": "浏览为网站和应用精选的 CSS 表面纹理 — 复制代码、调整颜色和颗粒、下载为 CSS 或图片，或自己生成。",
+		"generateCta": "生成纹理",
+		"searchPlaceholder": "按名称、标签或颜色搜索纹理…",
+		"filterByTag": "按标签筛选",
+		"allTags": "全部",
+		"sortBy": "排序",
+		"sort": {
+			"trending": "热门",
+			"name": "名称"
+		},
+		"savedTitle": "你的纹理",
+		"trendingTitle": "热门",
+		"removeSaved": "移除 {name}",
+		"empty": "没有符合筛选条件的纹理。",
+		"card": {
+			"open": "打开 {name}",
+			"edit": "编辑",
+			"copyCss": "复制 CSS",
+			"like": "喜欢 {name}"
+		},
+		"code": {
+			"formats": "代码格式",
+			"download": "下载 .{ext}",
+			"title": "代码"
+		},
+		"quickView": {
+			"preview": "纹理预览",
+			"type": "纹理类型",
+			"types": {
+				"noise": "噪点",
+				"grain": "颗粒",
+				"paper": "纸张",
+				"carbon": "碳纤",
+				"fabric": "织物"
+			},
+			"foreground": "颗粒",
+			"background": "背景",
+			"opacity": "强度",
+			"scale": "缩放",
+			"shuffle": "随机",
+			"downloadImage": "下载 PNG",
+			"save": "保存",
+			"saved": "已保存",
+			"similar": "探索相似"
+		},
+		"generator": {
+			"title": "生成纹理",
+			"subtitle": "基于简介、你的颜色或参考图片。",
+			"modeLabel": "生成方式",
+			"modes": {
+				"brief": "简介",
+				"colors": "颜色",
+				"image": "图片"
+			},
+			"fields": {
+				"name": "名称（可选）",
+				"namePlaceholder": "例如 Carbon Fiber",
+				"style": "风格",
+				"colors": "想要的颜色（可选）",
+				"colorsPlaceholder": "例如 #0f172a, slate",
+				"comments": "备注（可选）",
+				"commentsPlaceholder": "例如 精致而深沉",
+				"hexes": "你的颜色",
+				"hexesHint": "输入 1-2 个十六进制代码或颜色名称，用逗号分隔。",
+				"imageTitle": "上传参考图片",
+				"imageHint": "我们会从中提取颜色。PNG、JPG、WEBP 或 GIF。"
+			},
+			"styles": {
+				"noise": "噪点",
+				"grain": "颗粒",
+				"film": "胶片",
+				"paper": "纸张",
+				"craft": "手工",
+				"carbon": "碳纤",
+				"tech": "科技",
+				"fabric": "织物",
+				"denim": "牛仔",
+				"linen": "亚麻"
+			},
+			"preview": "预览",
+			"cancel": "取消",
+			"generate": "生成",
+			"regenerate": "重新生成",
+			"use": "使用此纹理",
+			"error": "出了点问题，请重试。",
+			"errorType": "不支持的图片。请使用 PNG、JPG、WEBP 或 GIF。",
+			"errorSize": "该图片超过 12 MB。"
+		},
+		"tour": {
+			"restart": "重播导览",
+			"stepOf": "第 {current}/{total} 步",
+			"back": "上一步",
+			"next": "下一步",
+			"done": "完成",
+			"skip": "跳过导览",
+			"steps": {
+				"welcome": {
+					"title": "欢迎使用纹理",
+					"body": "为你的网站或应用准备的现成 CSS 表面纹理 — 复制、调整、导出，或自己生成。"
+				},
+				"generate": {
+					"title": "自己生成",
+					"body": "描述你想要的表面、输入颜色，或上传参考图片，我们会为你生成纹理。"
+				},
+				"browse": {
+					"title": "浏览并复制",
+					"body": "点击任意纹理将其打开，或直接从卡片复制其 CSS。按标签或颜色搜索和筛选。"
+				},
+				"edit": {
+					"title": "编辑它",
+					"body": "在噪点、颗粒、纸张、碳纤和织物之间切换，调整颜色、强度和缩放。"
+				},
+				"export": {
+					"title": "导出它",
+					"body": "将纹理复制或下载为 CSS、SCSS、Tailwind、数组或 JSON — 或保存为 PNG 图片。"
+				},
+				"similar": {
+					"title": "探索相似",
+					"body": "跳转到风格相近的纹理，继续探索。"
+				}
+			}
+		}
+	},
 	"icons": {
 		"title": "图标",
 		"subtitle": "{count} 个原创、开放的线性图标 —— 搜索、改色、调整大小，再以 SVG、PNG、React 或 CSS 复制或下载。",
@@ -1454,7 +1710,11 @@
 			"openApp": "打开工作区",
 			"menu": "打开菜单",
 			"closeMenu": "关闭菜单",
-			"skip": "跳到内容"
+			"skip": "跳到内容",
+			"menus": {
+				"styles": "样式",
+				"library": "资源库"
+			}
 		},
 		"hero": {
 			"badge": "新功能：渐变与调色板生成器",
@@ -1489,6 +1749,14 @@
 				"gradients": {
 					"title": "渐变",
 					"desc": "多层的品牌渐变，CSS 可直接粘贴进你的样式。"
+				},
+				"patterns": {
+					"title": "图案",
+					"desc": "可直接粘贴到样式中的可重复 CSS 背景图案。"
+				},
+				"textures": {
+					"title": "纹理",
+					"desc": "纯 CSS 的噪点、颗粒、纸张和织物表面纹理 — 无需图片文件。"
 				},
 				"promptLibrary": {
 					"title": "提示词库",
@@ -1550,6 +1818,10 @@
 			"items": {
 				"components": "组件",
 				"icons": "图标",
+				"colors": "配色",
+				"gradients": "渐变",
+				"patterns": "图案",
+				"textures": "纹理",
 				"prompts": "提示词",
 				"teams": "在建团队"
 			}

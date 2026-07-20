@@ -8,7 +8,8 @@
     "build": "next build",
     "start": "next start -p 3000",
     "lint": "eslint src",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "gen:section-demos": "node scripts/generate-section-demos.mjs"
   },
   "dependencies": {
     "@adysre/sdk": "workspace:*",

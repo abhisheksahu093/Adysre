@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useFormatter, useTranslations } from 'next-intl';
 import { useReducedMotion } from 'framer-motion';
-import { STATS } from '@/data/landing';
+import type { Stat as StatData } from '@/data/landing';
 
 /** Ease-out so the count decelerates into its final value. */
 const easeOut = (x: number) => 1 - Math.pow(1 - x, 3);
@@ -73,14 +73,18 @@ function Stat({
   );
 }
 
-/** Headline metrics band. Client Component for the on-scroll count-up. */
-export function StatsBand() {
+/**
+ * Headline metrics band. Client Component for the on-scroll count-up; the
+ * figures are computed on the server (from the real catalogues) and handed in
+ * as props, so no catalogue is bundled into this client chunk.
+ */
+export function StatsBand({ stats }: { stats: StatData[] }) {
   const t = useTranslations('landing');
 
   return (
     <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6">
-      <div className="grid grid-cols-2 gap-8 rounded-2xl border border-border bg-muted/20 p-10 sm:gap-4 md:grid-cols-4">
-        {STATS.map((s) => (
+      <div className="grid grid-cols-2 gap-8 rounded-2xl border border-border bg-muted/20 p-10 sm:gap-4 sm:grid-cols-4">
+        {stats.map((s) => (
           <Stat key={s.id} value={s.value} suffix={s.suffix} label={t(`stats.items.${s.id}`)} />
         ))}
       </div>

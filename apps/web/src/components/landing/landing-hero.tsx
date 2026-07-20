@@ -6,11 +6,9 @@ import { ArrowRight, Sparkles, Check } from 'lucide-react';
 import { buttonVariants, cn } from '@adysre/ui';
 import { Link } from '@/i18n/navigation';
 import { FEATURE_MODULES, LANDING_LINKS } from '@/data/landing';
+import { TRUSTED_BUILDERS } from '@/config/audience';
 import { LandingBackdrop } from './landing-backdrop';
 import { WorkspacePreview } from './workspace-preview';
-
-/** Users trusted - drives the locale-aware number in the trust line. */
-const TRUSTED_BUILDERS = 18_000;
 
 /**
  * Hero section: value proposition, primary calls to action, and a stylised

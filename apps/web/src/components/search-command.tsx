@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useTranslations } from 'next-intl';
-import { Search, Blocks, Shapes, Palette, Blend, Library, LayoutTemplate, CornerDownLeft } from 'lucide-react';
+import { Search, Blocks, Shapes, Palette, Blend, Grid2x2, Waves, Library, LayoutTemplate, CornerDownLeft } from 'lucide-react';
 import { cn } from '@adysre/ui';
 import { useRouter } from '@/i18n/navigation';
 import { NAV_SUBMENUS } from '@/config/nav-submenus';
@@ -23,6 +23,8 @@ const PAGE_LINKS: { key: string; href: string; icon: typeof Blocks }[] = [
   { key: 'icons', href: '/icons', icon: Shapes },
   { key: 'palettes', href: '/palettes', icon: Palette },
   { key: 'gradients', href: '/gradients', icon: Blend },
+  { key: 'patterns', href: '/patterns', icon: Grid2x2 },
+  { key: 'textures', href: '/textures', icon: Waves },
   { key: 'promptLibrary', href: '/prompt-library', icon: Library },
   { key: 'templates', href: '/templates', icon: LayoutTemplate },
 ];

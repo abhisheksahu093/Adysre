@@ -124,6 +124,9 @@ export const PALETTES: Palette[] = [
   { id: 'electric-sky', name: 'Electric Sky', colors: ['#4cc9f0', '#4895ef', '#4361ee', '#3f37c9', '#3a0ca3'], tags: ['blue', 'gradient', 'vibrant'], likes: 41 },
 ];
 
+/** Total number of curated palettes - the single source of truth for counts. */
+export const PALETTE_COUNT = PALETTES.length;
+
 /** Palettes with the closest overall colour to `palette`, for "explore similar". */
 export function similarPalettes(palette: Palette, all: Palette[], limit = 6): Palette[] {
   const meanHue = (p: Palette): number => {

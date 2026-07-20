@@ -109,6 +109,9 @@ export const GRADIENTS: Gradient[] = [
   { id: 'conic-candy', name: 'Conic Candy', type: 'conic', angle: 45, stops: [{ color: '#ff9a9e', position: 0 }, { color: '#fecfef', position: 50 }, { color: '#ff9a9e', position: 100 }], tags: ['pink', 'conic', 'soft'], likes: 25 },
 ];
 
+/** Total number of curated gradients - the single source of truth for counts. */
+export const GRADIENT_COUNT = GRADIENTS.length;
+
 /** Gradients closest in overall colour to `gradient`, for "explore similar". */
 export function similarGradients(gradient: Gradient, all: Gradient[], limit = 6): Gradient[] {
   const meanHue = (g: Gradient): number => {

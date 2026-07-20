@@ -51,8 +51,11 @@ export function ExportDialog({
   const [framework, setFramework] = useState<Framework | null>(null);
 
   /** Build the chosen project, zip it in the browser, and download it. */
-  function downloadProject(target: ScaffoldTarget) {
-    const files = buildProjectScaffold(target, sections, 'adysre-page', contentOverrides);
+  async function downloadProject(target: ScaffoldTarget) {
+    // The section demos are ~0.5 MB of source strings; load them only when a
+    // project is actually being downloaded rather than on every dialog open.
+    const { SECTION_DEMOS } = await import('@/data/playground/section-demos');
+    const files = buildProjectScaffold(target, sections, 'adysre-page', contentOverrides, SECTION_DEMOS);
     const zip = createZip(files);
     downloadBlob(`adysre-${target}-project.zip`, zip);
   }
@@ -130,7 +133,7 @@ export function ExportDialog({
               type="button"
               variant="outline"
               size="sm"
-              onClick={() => downloadProject('nextjs')}
+              onClick={() => void downloadProject('nextjs')}
               className="gap-1.5"
             >
               <FileArchive className="h-4 w-4" aria-hidden />
@@ -140,7 +143,7 @@ export function ExportDialog({
               type="button"
               variant="outline"
               size="sm"
-              onClick={() => downloadProject('react')}
+              onClick={() => void downloadProject('react')}
               className="gap-1.5"
             >
               <FileArchive className="h-4 w-4" aria-hidden />

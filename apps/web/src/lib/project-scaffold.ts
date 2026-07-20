@@ -32,6 +32,24 @@ function pascalCase(slug: string): string {
     .join('');
 }
 
+/** The bundled placeholder every local image path is pointed at. */
+const PLACEHOLDER_ASSET = '/placeholder.svg';
+
+/**
+ * Point local image references at the bundled placeholder so a fresh download
+ * never 404s. Sections quote demo asset paths (`/promo/all-access.svg`,
+ * `/images/photo-1.jpg`, `/your-image.jpg`) that only exist in the ADYSRE app;
+ * a real download ships just `public/placeholder.svg` for the user to swap.
+ * Only quoted, root-relative image paths are touched - remote URLs, video
+ * sources and non-asset strings are left alone.
+ */
+function rewriteAssetPaths(code: string): string {
+  return code.replace(
+    /(["'`])(\/[^"'`\s?#]*\.(?:png|jpe?g|gif|webp|svg|avif))\1/gi,
+    (_match, quote: string) => `${quote}${PLACEHOLDER_ASSET}${quote}`,
+  );
+}
+
 /** Find the component's exported name so the page can import it. */
 function exportInfo(code: string, slug: string): { name: string; isDefault: boolean } {
   const named = code.match(/export\s+function\s+([A-Za-z0-9_]+)/);
@@ -47,6 +65,7 @@ function resolveModules(
   target: ScaffoldTarget,
   sections: PlaygroundSection[],
   overridesBySlug: Record<string, Record<string, string>>,
+  demos: Record<string, string>,
 ): { modules: SectionModule[]; skipped: string[] } {
   const modules: SectionModule[] = [];
   const skipped: string[] = [];
@@ -55,6 +74,23 @@ function resolveModules(
   for (const { component } of sections) {
     if (seen.has(component.slug)) continue;
     seen.add(component.slug);
+
+    // Prefer the section's self-contained demo (its live preview): a prop-free
+    // component that already ships sample content, so the page renders instead
+    // of crashing on missing props. Imported by its default export.
+    const demo = demos[component.slug];
+    if (demo !== undefined) {
+      const code = rewriteAssetPaths(
+        applyContentOverrides(demo, overridesBySlug[component.slug]).trim(),
+      );
+      modules.push({
+        slug: component.slug,
+        name: pascalCase(component.slug),
+        isDefault: true,
+        code,
+      });
+      continue;
+    }
 
     const variant = VARIANT_ORDER[target].find((v) => component.code[v] !== undefined);
     const raw = variant ? component.code[variant] : undefined;
@@ -69,7 +105,7 @@ function resolveModules(
     if (info.isDefault === false && !/export\s+function/.test(code) && /export\s+default\s+function\s*\(/.test(code)) {
       code = code.replace(/export\s+default\s+function\s*\(/, `export function ${info.name}(`);
     }
-    modules.push({ slug: component.slug, name: info.name, isDefault: info.isDefault, code });
+    modules.push({ slug: component.slug, name: info.name, isDefault: info.isDefault, code: rewriteAssetPaths(code) });
   }
 
   return { modules, skipped };
@@ -100,14 +136,44 @@ const TAILWIND_CSS = `@tailwind base;
 @tailwind utilities;
 `;
 
+/** Neutral placeholder every section image points at until the user swaps it. */
+const PLACEHOLDER_SVG = `<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600" role="img" aria-label="Placeholder image">
+  <rect width="800" height="600" fill="#e5e7eb" />
+  <g fill="none" stroke="#9ca3af" stroke-width="8" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="270" y="200" width="260" height="190" rx="16" />
+    <circle cx="335" cy="265" r="24" />
+    <path d="M285 372l82-74 66 56 58-48 74 66" />
+  </g>
+  <text x="400" y="452" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="26" fill="#6b7280" text-anchor="middle">Replace with your image</text>
+</svg>
+`;
+
+const PUBLIC_README = `# public/
+
+Static assets served from the site root (\`/\`).
+
+Every section was scaffolded to point its images at \`/placeholder.svg\`. Drop your
+own images into this folder and update the \`src\` in the matching section
+component to use them.
+`;
+
+/** The public/ folder shipped with every download - kept mandatory by design. */
+const PUBLIC_FILES: ZipEntry[] = [
+  { path: 'public/placeholder.svg', content: PLACEHOLDER_SVG },
+  { path: 'public/README.md', content: PUBLIC_README },
+  // Keeps the folder present in git even before the user adds real assets.
+  { path: 'public/.gitkeep', content: '' },
+];
+
 /** Build the full file list for the chosen target. */
 export function buildProjectScaffold(
   target: ScaffoldTarget,
   sections: PlaygroundSection[],
   projectName = 'adysre-page',
   overridesBySlug: Record<string, Record<string, string>> = {},
+  demos: Record<string, string> = {},
 ): ZipEntry[] {
-  const { modules, skipped } = resolveModules(target, sections, overridesBySlug);
+  const { modules, skipped } = resolveModules(target, sections, overridesBySlug, demos);
   const files: ZipEntry[] = [];
 
   const skippedNote = skipped.length
@@ -260,11 +326,14 @@ export function buildProjectScaffold(
     files.push({ path: `${componentDir}/${m.slug}.tsx`, content: `${m.code}\n` });
   }
 
+  // Every project ships a public/ folder with a placeholder for section images.
+  files.push(...PUBLIC_FILES);
+
   files.push(
     { path: '.gitignore', content: `node_modules\n${target === 'nextjs' ? '.next' : 'dist'}\n*.log\n.DS_Store\n` },
     {
       path: 'README.md',
-      content: `# ${projectName}\n\nA ${target === 'nextjs' ? 'Next.js (App Router)' : 'React + Vite'} project generated by ADYSRE, with Tailwind CSS pre-wired.\n\n## Getting started\n\n\`\`\`bash\nnpm install\nnpm run dev\n\`\`\`\n\nEach section lives in \`${componentDir}/\` and is composed in ${target === 'nextjs' ? '`app/page.tsx`' : '`src/App.tsx`'}. Some components take props (title, items, image sources) - open a component file to pass your own content.\n${skippedNote}`,
+      content: `# ${projectName}\n\nA ${target === 'nextjs' ? 'Next.js (App Router)' : 'React + Vite'} project generated by ADYSRE, with Tailwind CSS pre-wired.\n\n## Getting started\n\n\`\`\`bash\nnpm install\nnpm run dev\n\`\`\`\n\nEach section lives in \`${componentDir}/\` and is composed in ${target === 'nextjs' ? '`app/page.tsx`' : '`src/App.tsx`'}. Every section ships with sample content, so the project runs as soon as you install it - edit a section file to make it your own.\n\nSection images point at \`public/placeholder.svg\`; drop your own images into \`public/\` and update the \`src\` in the matching section.\n${skippedNote}`,
     },
   );
 

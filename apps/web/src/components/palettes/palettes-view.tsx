@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useRef, useState } from 'react';
+import dynamic from 'next/dynamic';
 import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 import { Search, Sparkles, CircleHelp, SearchX, X } from 'lucide-react';
@@ -9,9 +10,13 @@ import { PALETTES, type Palette } from '@/data/palettes';
 import { hueName } from '@/lib/palettes/color';
 import { usePalettesStore } from '@/stores/palettes-store';
 import { SpotlightTour, type SpotlightStep } from '@/components/ui/spotlight-tour';
+import { JumpToCombobox, type JumpToItem } from '@/components/jump-to-combobox';
 import { PaletteCard } from './palette-card';
 import { PaletteQuickView } from './palette-quick-view';
-import { PaletteGenerator } from './palette-generator';
+
+// Split the generator (and its colour-extraction deps) into its own chunk,
+// loaded only when the user opens it.
+const PaletteGenerator = dynamic(() => import('./palette-generator').then((m) => m.PaletteGenerator));
 
 type SortId = 'trending' | 'name';
 const SORTS: SortId[] = ['trending', 'name'];
@@ -95,6 +100,12 @@ export function PalettesView() {
     body: t(`tour.steps.${s.id}.body`),
   }));
 
+  // Every palette as a "jump to" target: pick one to open its quick view.
+  const jumpItems = useMemo<JumpToItem[]>(
+    () => PALETTES.map((p) => ({ id: p.id, label: p.name, keywords: p.tags.join(' ') })),
+    [],
+  );
+
   return (
     <div className="space-y-6">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
@@ -140,6 +151,13 @@ export function PalettesView() {
           />
         </div>
         <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+          <div className="sm:w-64">
+            <JumpToCombobox
+              items={jumpItems}
+              onSelect={(id) => setActive(PALETTES.find((p) => p.id === id) ?? null)}
+              label={t('searchPlaceholder')}
+            />
+          </div>
           <Select
             value={sort}
             onChange={(e) => setSort(e.target.value as SortId)}
@@ -224,14 +242,16 @@ export function PalettesView() {
         onOpenPalette={setActive}
       />
 
-      <PaletteGenerator
-        open={generatorOpen}
-        onClose={() => setGeneratorOpen(false)}
-        onGenerated={(p) => {
-          setGeneratorOpen(false);
-          setActive(p);
-        }}
-      />
+      {generatorOpen && (
+        <PaletteGenerator
+          open
+          onClose={() => setGeneratorOpen(false)}
+          onGenerated={(p) => {
+            setGeneratorOpen(false);
+            setActive(p);
+          }}
+        />
+      )}
 
       <SpotlightTour
         steps={steps}

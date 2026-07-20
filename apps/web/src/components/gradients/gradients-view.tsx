@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useRef, useState } from 'react';
+import dynamic from 'next/dynamic';
 import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 import { Search, Wand2, CircleHelp, SearchX, X } from 'lucide-react';
@@ -9,9 +10,13 @@ import { GRADIENTS, type Gradient } from '@/data/gradients';
 import { hueName } from '@/lib/palettes/color';
 import { useGradientsStore } from '@/stores/gradients-store';
 import { SpotlightTour, type SpotlightStep } from '@/components/ui/spotlight-tour';
+import { JumpToCombobox, type JumpToItem } from '@/components/jump-to-combobox';
 import { GradientCard } from './gradient-card';
 import { GradientQuickView } from './gradient-quick-view';
-import { GradientGenerator } from './gradient-generator';
+
+// Split the generator (and its colour-extraction deps) into its own chunk,
+// loaded only when the user opens it.
+const GradientGenerator = dynamic(() => import('./gradient-generator').then((m) => m.GradientGenerator));
 
 type SortId = 'trending' | 'name';
 const SORTS: SortId[] = ['trending', 'name'];
@@ -89,6 +94,12 @@ export function GradientsView() {
     body: t(`tour.steps.${s.id}.body`),
   }));
 
+  // Every gradient as a "jump to" target: pick one to open its quick view.
+  const jumpItems = useMemo<JumpToItem[]>(
+    () => GRADIENTS.map((g) => ({ id: g.id, label: g.name, keywords: `${g.type} ${g.tags.join(' ')}` })),
+    [],
+  );
+
   return (
     <div className="space-y-6">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
@@ -128,6 +139,13 @@ export function GradientsView() {
           />
         </div>
         <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+          <div className="sm:w-64">
+            <JumpToCombobox
+              items={jumpItems}
+              onSelect={(id) => setActive(GRADIENTS.find((g) => g.id === id) ?? null)}
+              label={t('searchPlaceholder')}
+            />
+          </div>
           <Select value={sort} onChange={(e) => setSort(e.target.value as SortId)} aria-label={t('sortBy')} className="sm:w-40">
             {SORTS.map((s) => (
               <option key={s} value={s}>
@@ -193,14 +211,16 @@ export function GradientsView() {
         onOpenGradient={setActive}
       />
 
-      <GradientGenerator
-        open={generatorOpen}
-        onClose={() => setGeneratorOpen(false)}
-        onGenerated={(g) => {
-          setGeneratorOpen(false);
-          setActive(g);
-        }}
-      />
+      {generatorOpen && (
+        <GradientGenerator
+          open
+          onClose={() => setGeneratorOpen(false)}
+          onGenerated={(g) => {
+            setGeneratorOpen(false);
+            setActive(g);
+          }}
+        />
+      )}
 
       <SpotlightTour
         steps={steps}

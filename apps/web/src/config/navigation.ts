@@ -4,6 +4,8 @@ import {
   Shapes,
   Palette,
   Blend,
+  Grid2x2,
+  Waves,
   LayoutTemplate,
   Settings,
   type LucideIcon,
@@ -58,6 +60,18 @@ export const NAV_ITEMS: NavItem[] = [
     href: '/gradients',
     icon: Blend,
     descriptionKey: 'gradients',
+  },
+  {
+    key: 'patterns',
+    href: '/patterns',
+    icon: Grid2x2,
+    descriptionKey: 'patterns',
+  },
+  {
+    key: 'textures',
+    href: '/textures',
+    icon: Waves,
+    descriptionKey: 'textures',
   },
   {
     key: 'templates',

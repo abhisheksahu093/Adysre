@@ -15,6 +15,7 @@ import {
 } from '@/data/icons';
 import { useIconsStore } from '@/stores/icons-store';
 import { SpotlightTour, type SpotlightStep } from '@/components/ui/spotlight-tour';
+import { JumpToCombobox, type JumpToItem } from '@/components/jump-to-combobox';
 import { IconCard } from './icon-card';
 import { IconQuickView } from './icon-quick-view';
 
@@ -76,6 +77,18 @@ export function IconsView() {
   const saved = useMemo(
     () => savedIcons.map((n) => getIcon(n)).filter((i): i is Icon => Boolean(i)),
     [savedIcons],
+  );
+
+  // Every icon as a "jump to" target: pick one to open its quick view directly.
+  const jumpItems = useMemo<JumpToItem[]>(
+    () =>
+      ICONS.map((icon) => ({
+        id: icon.name,
+        label: icon.title,
+        sublabel: t(`categories.${icon.category}`),
+        keywords: `${icon.name} ${icon.category} ${icon.tags.join(' ')}`,
+      })),
+    [t],
   );
 
   const visible = useMemo(() => {
@@ -155,6 +168,13 @@ export function IconsView() {
             placeholder={t('searchPlaceholder')}
             aria-label={t('searchPlaceholder')}
             className="pl-9"
+          />
+        </div>
+        <div className="sm:max-w-xs">
+          <JumpToCombobox
+            items={jumpItems}
+            onSelect={(name) => setActive(getIcon(name) ?? null)}
+            label={t('searchPlaceholder')}
           />
         </div>
       </div>

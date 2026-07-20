@@ -162,10 +162,13 @@ export const COMPONENTS: ComponentEntry[] = [
   ...imagesComponents,
 ];
 
+/** Total number of library components - the single source of truth for counts. */
+export const COMPONENT_COUNT = COMPONENTS.length;
+
 /**
  * Duplicate slugs would collide on the permalink and silently shadow an entry.
- * At 700 components across 25 files that is easy to miss in review, so fail
- * loudly in development.
+ * Spread across dozens of category files a collision is easy to miss in review,
+ * so fail loudly in development.
  */
 if (process.env.NODE_ENV !== 'production') {
   const seen = new Set<string>();

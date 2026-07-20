@@ -21,6 +21,8 @@ import {
   Shapes,
   Palette,
   Blend,
+  Grid2x2,
+  Waves,
   Library,
   LayoutTemplate,
   MousePointerClick,
@@ -55,8 +57,10 @@ export const FEATURE_MODULES: FeatureModule[] = [
   { id: 'icons', href: '/icons', icon: Shapes, accent: 'secondary' },
   { id: 'palettes', href: '/palettes', icon: Palette, accent: 'accent' },
   { id: 'gradients', href: '/gradients', icon: Blend, accent: 'primary' },
-  { id: 'promptLibrary', href: '/prompt-library', icon: Library, accent: 'secondary' },
-  { id: 'templates', href: '/templates', icon: LayoutTemplate, accent: 'accent', comingSoon: true },
+  { id: 'patterns', href: '/patterns', icon: Grid2x2, accent: 'secondary' },
+  { id: 'textures', href: '/textures', icon: Waves, accent: 'accent' },
+  { id: 'promptLibrary', href: '/prompt-library', icon: Library, accent: 'primary' },
+  { id: 'templates', href: '/templates', icon: LayoutTemplate, accent: 'primary', comingSoon: true },
 ];
 
 export interface WorkflowStep {
@@ -81,16 +85,9 @@ export interface Stat {
   suffix?: string;
 }
 
-/**
- * Headline metrics. Placeholders until the API reports live figures; kept as
- * numbers so each locale groups digits its own way at render.
- */
-export const STATS: Stat[] = [
-  { id: 'components', value: 240, suffix: '+' },
-  { id: 'icons', value: 6400, suffix: '+' },
-  { id: 'prompts', value: 120, suffix: '+' },
-  { id: 'teams', value: 18000, suffix: '+' },
-];
+// The headline metrics themselves now derive from the real catalogues - see
+// `LANDING_STATS` in `@/data/library-stats` (server-only). This file stays free
+// of data imports so it remains safe to pull into client components.
 
 /** In-app hrefs used across the header nav, feature cards and footer. */
 export const LANDING_LINKS = {
@@ -101,6 +98,8 @@ export const LANDING_LINKS = {
   icons: '/icons',
   palettes: '/palettes',
   gradients: '/gradients',
+  patterns: '/patterns',
+  textures: '/textures',
   promptLibrary: '/prompt-library',
   templates: '/templates',
   pricing: '/pricing',

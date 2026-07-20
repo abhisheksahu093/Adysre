@@ -4,9 +4,7 @@ import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { buttonVariants, cn } from '@adysre/ui';
 import { Link } from '@/i18n/navigation';
-
-/** Users trusted - drives the locale-aware number in the trust line. */
-const TRUSTED_USERS = 120_000;
+import { TRUSTED_USERS } from '@/config/audience';
 
 /**
  * All-Access upsell pinned to the bottom of the sidebar.

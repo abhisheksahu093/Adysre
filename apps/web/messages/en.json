@@ -12,6 +12,8 @@
 		"edit": "Edit",
 		"search": "Search",
 		"clearFilters": "Clear filters",
+		"jumpToPlaceholder": "Search and jump to…",
+		"noResults": "No results found",
 		"comingSoon": "Soon",
 		"inDevelopment": "In development",
 		"backToSignIn": "Back to sign in"
@@ -32,10 +34,14 @@
 			"settings": "Manage your organization, members and preferences.",
 			"palettes": "Browse, edit and export ready-made colour palettes - or generate your own.",
 			"gradients": "Browse, edit and export CSS gradients - or generate your own.",
+			"patterns": "Browse, edit and export CSS background patterns - or generate your own.",
+			"textures": "Browse, edit and export CSS surface textures - or generate your own.",
 			"icons": "Browse, customise and export original SVG icons in any format or size."
 		},
 		"palettes": "Color Palettes",
 		"gradients": "Gradients",
+		"patterns": "Patterns",
+		"textures": "Textures",
 		"icons": "Icons",
 		"backToHome": "Back to home",
 		"groups": {
@@ -1361,6 +1367,256 @@
 			}
 		}
 	},
+	"patterns": {
+		"title": "Patterns",
+		"subtitle": "Browse curated CSS background patterns for websites and apps - copy the code, recolour and resize, download as CSS or an image, or generate your own.",
+		"generateCta": "Generate pattern",
+		"searchPlaceholder": "Search patterns by name, tag or colour…",
+		"filterByTag": "Filter by tag",
+		"allTags": "All",
+		"sortBy": "Sort by",
+		"sort": {
+			"trending": "Trending",
+			"name": "Name"
+		},
+		"savedTitle": "Your patterns",
+		"trendingTitle": "Trending",
+		"removeSaved": "Remove {name}",
+		"empty": "No patterns match your filters.",
+		"card": {
+			"open": "Open {name}",
+			"edit": "Edit",
+			"copyCss": "Copy CSS",
+			"like": "Like {name}"
+		},
+		"code": {
+			"formats": "Code formats",
+			"download": "Download .{ext}",
+			"title": "Code"
+		},
+		"quickView": {
+			"preview": "Pattern preview",
+			"type": "Pattern type",
+			"types": {
+				"dots": "Dots",
+				"grid": "Grid",
+				"lines": "Lines",
+				"checkerboard": "Checkerboard",
+				"crosshatch": "Crosshatch"
+			},
+			"foreground": "Foreground",
+			"background": "Background",
+			"size": "Tile size",
+			"angle": "Angle",
+			"shuffle": "Shuffle",
+			"downloadImage": "Download PNG",
+			"save": "Save",
+			"saved": "Saved",
+			"similar": "Explore similar"
+		},
+		"generator": {
+			"title": "Generate a pattern",
+			"subtitle": "From a brief, your own colours, or a reference image.",
+			"modeLabel": "Generation method",
+			"modes": {
+				"brief": "Brief",
+				"colors": "Colours",
+				"image": "Image"
+			},
+			"fields": {
+				"name": "Name (optional)",
+				"namePlaceholder": "e.g. Blueprint Grid",
+				"style": "Style",
+				"colors": "Colours you want (optional)",
+				"colorsPlaceholder": "e.g. #0f172a, slate",
+				"comments": "Comments (optional)",
+				"commentsPlaceholder": "e.g. subtle and light",
+				"hexes": "Your colours",
+				"hexesHint": "Enter 1-2 hex codes or colour names, separated by commas.",
+				"imageTitle": "Upload a reference image",
+				"imageHint": "We'll pull the colours from it. PNG, JPG, WEBP or GIF."
+			},
+			"styles": {
+				"dots": "Dots",
+				"grid": "Grid",
+				"blueprint": "Blueprint",
+				"stripes": "Stripes",
+				"diagonal": "Diagonal",
+				"checker": "Checker",
+				"hatch": "Hatch",
+				"neon": "Neon",
+				"pastel": "Pastel",
+				"mono": "Mono"
+			},
+			"preview": "Preview",
+			"cancel": "Cancel",
+			"generate": "Generate",
+			"regenerate": "Regenerate",
+			"use": "Use this pattern",
+			"error": "Something went wrong. Please try again.",
+			"errorType": "Unsupported image. Use PNG, JPG, WEBP or GIF.",
+			"errorSize": "That image is over 12 MB."
+		},
+		"tour": {
+			"restart": "Replay the tour",
+			"stepOf": "Step {current} of {total}",
+			"back": "Back",
+			"next": "Next",
+			"done": "Finish",
+			"skip": "Skip tour",
+			"steps": {
+				"welcome": {
+					"title": "Welcome to Patterns",
+					"body": "Ready-made CSS background patterns for your site or app - copy, tweak, export, or generate your own."
+				},
+				"generate": {
+					"title": "Generate your own",
+					"body": "Describe the style you want, type in colours, or upload a reference image and we'll build a pattern for you."
+				},
+				"browse": {
+					"title": "Browse and copy",
+					"body": "Click any pattern to open it, or copy its CSS straight from the card. Search and filter by tag or colour."
+				},
+				"edit": {
+					"title": "Edit it",
+					"body": "Switch between dots, grid, lines, checkerboard and crosshatch, recolour, and resize the tile."
+				},
+				"export": {
+					"title": "Export it",
+					"body": "Copy or download the pattern as CSS, SCSS, Tailwind, an array or JSON - or save it as a PNG image."
+				},
+				"similar": {
+					"title": "Explore similar",
+					"body": "Jump to patterns with a matching mood to keep exploring."
+				}
+			}
+		}
+	},
+	"textures": {
+		"title": "Textures",
+		"subtitle": "Browse curated CSS surface textures for websites and apps - copy the code, recolour and adjust the grain, download as CSS or an image, or generate your own.",
+		"generateCta": "Generate texture",
+		"searchPlaceholder": "Search textures by name, tag or colour…",
+		"filterByTag": "Filter by tag",
+		"allTags": "All",
+		"sortBy": "Sort by",
+		"sort": {
+			"trending": "Trending",
+			"name": "Name"
+		},
+		"savedTitle": "Your textures",
+		"trendingTitle": "Trending",
+		"removeSaved": "Remove {name}",
+		"empty": "No textures match your filters.",
+		"card": {
+			"open": "Open {name}",
+			"edit": "Edit",
+			"copyCss": "Copy CSS",
+			"like": "Like {name}"
+		},
+		"code": {
+			"formats": "Code formats",
+			"download": "Download .{ext}",
+			"title": "Code"
+		},
+		"quickView": {
+			"preview": "Texture preview",
+			"type": "Texture type",
+			"types": {
+				"noise": "Noise",
+				"grain": "Grain",
+				"paper": "Paper",
+				"carbon": "Carbon",
+				"fabric": "Fabric"
+			},
+			"foreground": "Grain",
+			"background": "Background",
+			"opacity": "Strength",
+			"scale": "Scale",
+			"shuffle": "Shuffle",
+			"downloadImage": "Download PNG",
+			"save": "Save",
+			"saved": "Saved",
+			"similar": "Explore similar"
+		},
+		"generator": {
+			"title": "Generate a texture",
+			"subtitle": "From a brief, your own colours, or a reference image.",
+			"modeLabel": "Generation method",
+			"modes": {
+				"brief": "Brief",
+				"colors": "Colours",
+				"image": "Image"
+			},
+			"fields": {
+				"name": "Name (optional)",
+				"namePlaceholder": "e.g. Carbon Fiber",
+				"style": "Style",
+				"colors": "Colours you want (optional)",
+				"colorsPlaceholder": "e.g. #0f172a, slate",
+				"comments": "Comments (optional)",
+				"commentsPlaceholder": "e.g. subtle and dark",
+				"hexes": "Your colours",
+				"hexesHint": "Enter 1-2 hex codes or colour names, separated by commas.",
+				"imageTitle": "Upload a reference image",
+				"imageHint": "We'll pull the colours from it. PNG, JPG, WEBP or GIF."
+			},
+			"styles": {
+				"noise": "Noise",
+				"grain": "Grain",
+				"film": "Film",
+				"paper": "Paper",
+				"craft": "Craft",
+				"carbon": "Carbon",
+				"tech": "Tech",
+				"fabric": "Fabric",
+				"denim": "Denim",
+				"linen": "Linen"
+			},
+			"preview": "Preview",
+			"cancel": "Cancel",
+			"generate": "Generate",
+			"regenerate": "Regenerate",
+			"use": "Use this texture",
+			"error": "Something went wrong. Please try again.",
+			"errorType": "Unsupported image. Use PNG, JPG, WEBP or GIF.",
+			"errorSize": "That image is over 12 MB."
+		},
+		"tour": {
+			"restart": "Replay the tour",
+			"stepOf": "Step {current} of {total}",
+			"back": "Back",
+			"next": "Next",
+			"done": "Finish",
+			"skip": "Skip tour",
+			"steps": {
+				"welcome": {
+					"title": "Welcome to Textures",
+					"body": "Ready-made CSS surface textures for your site or app - copy, tweak, export, or generate your own."
+				},
+				"generate": {
+					"title": "Generate your own",
+					"body": "Describe the surface you want, type in colours, or upload a reference image and we'll build a texture for you."
+				},
+				"browse": {
+					"title": "Browse and copy",
+					"body": "Click any texture to open it, or copy its CSS straight from the card. Search and filter by tag or colour."
+				},
+				"edit": {
+					"title": "Edit it",
+					"body": "Switch between noise, grain, paper, carbon and fabric, recolour, and adjust the strength and scale."
+				},
+				"export": {
+					"title": "Export it",
+					"body": "Copy or download the texture as CSS, SCSS, Tailwind, an array or JSON - or save it as a PNG image."
+				},
+				"similar": {
+					"title": "Explore similar",
+					"body": "Jump to textures with a matching mood to keep exploring."
+				}
+			}
+		}
+	},
 	"icons": {
 		"title": "Icons",
 		"subtitle": "{count} original, open line icons for your product — search, recolour, resize, then copy or download as SVG, PNG, React or CSS.",
@@ -1454,7 +1710,11 @@
 			"openApp": "Open workspace",
 			"menu": "Open menu",
 			"closeMenu": "Close menu",
-			"skip": "Skip to content"
+			"skip": "Skip to content",
+			"menus": {
+				"styles": "Styles",
+				"library": "Library"
+			}
 		},
 		"hero": {
 			"badge": "New: gradient and palette generators",
@@ -1489,6 +1749,14 @@
 				"gradients": {
 					"title": "Gradients",
 					"desc": "Layered, on-brand gradients with CSS you can paste straight into your styles."
+				},
+				"patterns": {
+					"title": "Patterns",
+					"desc": "Repeatable CSS background patterns you can paste straight into your styles."
+				},
+				"textures": {
+					"title": "Textures",
+					"desc": "Noise, grain, paper and woven surface textures in pure CSS - no image files."
 				},
 				"promptLibrary": {
 					"title": "Prompt library",
@@ -1550,6 +1818,10 @@
 			"items": {
 				"components": "Components",
 				"icons": "Icons",
+				"colors": "Colors",
+				"gradients": "Gradients",
+				"patterns": "Patterns",
+				"textures": "Textures",
 				"prompts": "Prompts",
 				"teams": "Teams building"
 			}

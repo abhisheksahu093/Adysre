@@ -166,6 +166,20 @@ const GRADIENT_TAGS = [
   'soft', 'sunset', 'teal', 'vibrant', 'warm', 'yellow',
 ];
 
+/** Texture filter tags (derived from the texture dataset). */
+const TEXTURE_TAGS = [
+  'blue', 'bold', 'brown', 'carbon', 'colorful', 'craft', 'dark', 'fabric', 'film', 'fresh',
+  'gold', 'grain', 'green', 'light', 'luxury', 'mono', 'neon', 'neutral', 'noise', 'orange',
+  'paper', 'pink', 'purple', 'soft', 'subtle', 'teal', 'tech', 'warm',
+];
+
+/** Pattern filter tags (derived from the pattern dataset). */
+const PATTERN_TAGS = [
+  'blue', 'blueprint', 'bold', 'checkerboard', 'colorful', 'crosshatch', 'dark', 'diagonal',
+  'dots', 'fresh', 'gold', 'green', 'grid', 'light', 'lines', 'luxury', 'minimal', 'mono',
+  'neon', 'neutral', 'orange', 'paper', 'pink', 'purple', 'red', 'retro', 'soft', 'subtle', 'teal', 'warm',
+];
+
 /** Palette filter tags (derived from the palette dataset). */
 const PALETTE_TAGS = [
   'autumn', 'blue', 'brown', 'calm', 'contrast', 'cool', 'corporate', 'cyberpunk', 'dark',
@@ -209,5 +223,19 @@ export const NAV_SUBMENUS: Record<string, ModuleSubmenu> = {
     param: 'tag',
     labelMode: 'humanize',
     values: GRADIENT_TAGS,
+  },
+  patterns: {
+    navKey: 'patterns',
+    href: '/patterns',
+    param: 'tag',
+    labelMode: 'humanize',
+    values: PATTERN_TAGS,
+  },
+  textures: {
+    navKey: 'textures',
+    href: '/textures',
+    param: 'tag',
+    labelMode: 'humanize',
+    values: TEXTURE_TAGS,
   },
 };

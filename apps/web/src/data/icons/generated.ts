@@ -1,7 +1,7 @@
 /**
  * AUTO-GENERATED original icon set. Do not edit by hand.
  *
- * 298 original 24x24 line icons, each authored from scratch for this
+ * 448 original 24x24 line icons, each authored from scratch for this
  * project (no third-party icon set was copied). Bodies are sanitised to a strict
  * element/attribute whitelist so colour, weight and fill come only from the
  * wrapper. Regenerate via scripts, not manual edits.
@@ -3512,5 +3512,1805 @@ export const RAW_ICONS: RawIcon[] = [
       "confirm"
     ],
     "body": "<path d=\"M4 12.5 8 16.5 15 8\"/><path d=\"M11 15 12 16 19 8\"/>"
+  },
+  {
+    "name": "repost",
+    "category": "social",
+    "tags": [
+      "retweet",
+      "share",
+      "boost",
+      "recycle",
+      "loop"
+    ],
+    "body": "<polyline points=\"7 4 4 7 7 10\"/><path d=\"M4 7h11a4 4 0 0 1 4 4v1\"/><polyline points=\"17 20 20 17 17 14\"/><path d=\"M20 17H9a4 4 0 0 1-4-4v-1\"/>"
+  },
+  {
+    "name": "hashtag",
+    "category": "social",
+    "tags": [
+      "tag",
+      "trend",
+      "topic",
+      "pound",
+      "number"
+    ],
+    "body": "<line x1=\"9.5\" y1=\"4\" x2=\"7.5\" y2=\"20\"/><line x1=\"16.5\" y1=\"4\" x2=\"14.5\" y2=\"20\"/><line x1=\"4\" y1=\"9\" x2=\"20\" y2=\"9\"/><line x1=\"4\" y1=\"15\" x2=\"20\" y2=\"15\"/>"
+  },
+  {
+    "name": "story-avatar",
+    "category": "social",
+    "tags": [
+      "story",
+      "ring",
+      "profile",
+      "status",
+      "highlight"
+    ],
+    "body": "<circle cx=\"12\" cy=\"12\" r=\"9\"/><circle cx=\"12\" cy=\"10\" r=\"2.5\"/><path d=\"M7.5 17a4.5 3.5 0 0 1 9 0\"/>"
+  },
+  {
+    "name": "live-stream",
+    "category": "social",
+    "tags": [
+      "live",
+      "broadcast",
+      "stream",
+      "signal",
+      "on air"
+    ],
+    "body": "<circle cx=\"12\" cy=\"12\" r=\"2\"/><path d=\"M8.8 8.8a4.5 4.5 0 0 0 0 6.4\"/><path d=\"M15.2 8.8a4.5 4.5 0 0 1 0 6.4\"/><path d=\"M6.3 6.3a8 8 0 0 0 0 11.4\"/><path d=\"M17.7 6.3a8 8 0 0 1 0 11.4\"/>"
+  },
+  {
+    "name": "poll-bars",
+    "category": "social",
+    "tags": [
+      "poll",
+      "vote",
+      "survey",
+      "results",
+      "stats"
+    ],
+    "body": "<line x1=\"4\" y1=\"20\" x2=\"20\" y2=\"20\"/><line x1=\"7\" y1=\"20\" x2=\"7\" y2=\"13\"/><line x1=\"12\" y1=\"20\" x2=\"12\" y2=\"6\"/><line x1=\"17\" y1=\"20\" x2=\"17\" y2=\"16\"/>"
+  },
+  {
+    "name": "emoji-happy",
+    "category": "social",
+    "tags": [
+      "smile",
+      "emoji",
+      "reaction",
+      "happy",
+      "face"
+    ],
+    "body": "<circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M8.5 14a4 4 0 0 0 7 0\"/><line x1=\"9\" y1=\"10\" x2=\"9\" y2=\"10.01\"/><line x1=\"15\" y1=\"10\" x2=\"15\" y2=\"10.01\"/>"
+  },
+  {
+    "name": "emoji-sad",
+    "category": "social",
+    "tags": [
+      "sad",
+      "emoji",
+      "reaction",
+      "frown",
+      "face"
+    ],
+    "body": "<circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M8.5 15.5a4 4 0 0 1 7 0\"/><line x1=\"9\" y1=\"10\" x2=\"9\" y2=\"10.01\"/><line x1=\"15\" y1=\"10\" x2=\"15\" y2=\"10.01\"/>"
+  },
+  {
+    "name": "emoji-neutral",
+    "category": "social",
+    "tags": [
+      "neutral",
+      "emoji",
+      "reaction",
+      "meh",
+      "face"
+    ],
+    "body": "<circle cx=\"12\" cy=\"12\" r=\"9\"/><line x1=\"9\" y1=\"15\" x2=\"15\" y2=\"15\"/><line x1=\"9\" y1=\"10\" x2=\"9\" y2=\"10.01\"/><line x1=\"15\" y1=\"10\" x2=\"15\" y2=\"10.01\"/>"
+  },
+  {
+    "name": "share-external",
+    "category": "social",
+    "tags": [
+      "share",
+      "export",
+      "open",
+      "link",
+      "out"
+    ],
+    "body": "<path d=\"M9 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3\"/><polyline points=\"15 4 20 4 20 9\"/><line x1=\"20\" y1=\"4\" x2=\"11\" y2=\"13\"/>"
+  },
+  {
+    "name": "bookmark-add",
+    "category": "social",
+    "tags": [
+      "bookmark",
+      "save",
+      "add",
+      "plus",
+      "collection"
+    ],
+    "body": "<path d=\"M7 4h10v16l-5-3.5L7 20z\"/><line x1=\"12\" y1=\"8\" x2=\"12\" y2=\"12\"/><line x1=\"10\" y1=\"10\" x2=\"14\" y2=\"10\"/>"
+  },
+  {
+    "name": "comment-add",
+    "category": "social",
+    "tags": [
+      "comment",
+      "reply",
+      "add",
+      "chat",
+      "new"
+    ],
+    "body": "<path d=\"M4 5h16a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H9l-4 3v-3H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z\"/><line x1=\"12\" y1=\"8\" x2=\"12\" y2=\"12\"/><line x1=\"10\" y1=\"10\" x2=\"14\" y2=\"10\"/>"
+  },
+  {
+    "name": "pushpin",
+    "category": "social",
+    "tags": [
+      "pin",
+      "post",
+      "pinned",
+      "attach",
+      "tack"
+    ],
+    "body": "<line x1=\"12\" y1=\"16\" x2=\"12\" y2=\"21\"/><path d=\"M8 3h8l-1.2 6 2.7 3v1H6.5v-1l2.7-3z\"/>"
+  },
+  {
+    "name": "link",
+    "category": "social",
+    "tags": [
+      "link",
+      "chain",
+      "url",
+      "connect",
+      "hyperlink"
+    ],
+    "body": "<path d=\"M9.5 14.5l5-5\"/><path d=\"M11 6.5l1-1a4 4 0 0 1 6 6l-1.5 1.5\"/><path d=\"M13 17.5l-1 1a4 4 0 0 1-6-6l1.5-1.5\"/>"
+  },
+  {
+    "name": "feed-list",
+    "category": "social",
+    "tags": [
+      "feed",
+      "timeline",
+      "posts",
+      "stream",
+      "list"
+    ],
+    "body": "<rect x=\"4\" y=\"4\" width=\"16\" height=\"6\" rx=\"1\"/><line x1=\"4\" y1=\"14\" x2=\"20\" y2=\"14\"/><line x1=\"4\" y1=\"18\" x2=\"14\" y2=\"18\"/>"
+  },
+  {
+    "name": "gallery-grid",
+    "category": "social",
+    "tags": [
+      "gallery",
+      "grid",
+      "posts",
+      "photos",
+      "profile"
+    ],
+    "body": "<rect x=\"4\" y=\"4\" width=\"6\" height=\"6\" rx=\"1\"/><rect x=\"14\" y=\"4\" width=\"6\" height=\"6\" rx=\"1\"/><rect x=\"4\" y=\"14\" width=\"6\" height=\"6\" rx=\"1\"/><rect x=\"14\" y=\"14\" width=\"6\" height=\"6\" rx=\"1\"/>"
+  },
+  {
+    "name": "video-reel",
+    "category": "social",
+    "tags": [
+      "reel",
+      "video",
+      "short",
+      "clip",
+      "play"
+    ],
+    "body": "<rect x=\"4\" y=\"4\" width=\"16\" height=\"16\" rx=\"3\"/><path d=\"M4 8h16\"/><path d=\"M9 4l2 4\"/><path d=\"M14 4l2 4\"/><polygon points=\"11 11 15 13 11 15\"/>"
+  },
+  {
+    "name": "file-image",
+    "category": "files",
+    "tags": [
+      "image",
+      "photo",
+      "picture",
+      "jpg",
+      "png"
+    ],
+    "body": "<path d=\"M6 3h7l5 5v12a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z\"/><polyline points=\"13 3 13 8 18 8\"/><circle cx=\"9.3\" cy=\"13\" r=\"1\"/><polyline points=\"7 18 10 15 12 17 15 14 17 18\"/>"
+  },
+  {
+    "name": "file-video",
+    "category": "files",
+    "tags": [
+      "video",
+      "movie",
+      "mp4",
+      "clip",
+      "play"
+    ],
+    "body": "<path d=\"M6 3h7l5 5v12a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z\"/><polyline points=\"13 3 13 8 18 8\"/><polygon points=\"10 13 15.5 15.5 10 18\"/>"
+  },
+  {
+    "name": "file-audio",
+    "category": "files",
+    "tags": [
+      "audio",
+      "music",
+      "sound",
+      "mp3",
+      "song"
+    ],
+    "body": "<path d=\"M6 3h7l5 5v12a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z\"/><polyline points=\"13 3 13 8 18 8\"/><path d=\"M11 18v-4.5l4-1V17\"/><circle cx=\"9.6\" cy=\"18\" r=\"1.4\"/><circle cx=\"13.6\" cy=\"17\" r=\"1.4\"/>"
+  },
+  {
+    "name": "file-code",
+    "category": "files",
+    "tags": [
+      "code",
+      "source",
+      "script",
+      "dev",
+      "json"
+    ],
+    "body": "<path d=\"M6 3h7l5 5v12a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z\"/><polyline points=\"13 3 13 8 18 8\"/><polyline points=\"10 12.5 7.5 15.5 10 18.5\"/><polyline points=\"14 12.5 16.5 15.5 14 18.5\"/>"
+  },
+  {
+    "name": "file-zip",
+    "category": "files",
+    "tags": [
+      "zip",
+      "archive",
+      "compressed",
+      "rar",
+      "package"
+    ],
+    "body": "<path d=\"M6 3h7l5 5v12a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z\"/><polyline points=\"13 3 13 8 18 8\"/><line x1=\"12\" y1=\"11.5\" x2=\"12\" y2=\"18\"/><rect x=\"11\" y=\"12\" width=\"2\" height=\"1.6\"/><rect x=\"11\" y=\"15\" width=\"2\" height=\"1.6\"/>"
+  },
+  {
+    "name": "file-spreadsheet",
+    "category": "files",
+    "tags": [
+      "spreadsheet",
+      "sheet",
+      "excel",
+      "xls",
+      "table"
+    ],
+    "body": "<path d=\"M6 3h7l5 5v12a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z\"/><polyline points=\"13 3 13 8 18 8\"/><rect x=\"7.5\" y=\"12\" width=\"9\" height=\"6\" rx=\"0.5\"/><line x1=\"7.5\" y1=\"15\" x2=\"16.5\" y2=\"15\"/><line x1=\"12\" y1=\"12\" x2=\"12\" y2=\"18\"/>"
+  },
+  {
+    "name": "file-csv",
+    "category": "files",
+    "tags": [
+      "csv",
+      "data",
+      "comma",
+      "export",
+      "table"
+    ],
+    "body": "<path d=\"M6 3h7l5 5v12a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z\"/><polyline points=\"13 3 13 8 18 8\"/><line x1=\"8\" y1=\"13\" x2=\"16\" y2=\"13\"/><line x1=\"8\" y1=\"15.5\" x2=\"16\" y2=\"15.5\"/><line x1=\"8\" y1=\"18\" x2=\"16\" y2=\"18\"/><line x1=\"11\" y1=\"12\" x2=\"11\" y2=\"19\"/>"
+  },
+  {
+    "name": "file-doc",
+    "category": "files",
+    "tags": [
+      "doc",
+      "word",
+      "document",
+      "text",
+      "writing"
+    ],
+    "body": "<path d=\"M6 3h7l5 5v12a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z\"/><polyline points=\"13 3 13 8 18 8\"/><line x1=\"8\" y1=\"13\" x2=\"16\" y2=\"13\"/><line x1=\"8\" y1=\"15.5\" x2=\"16\" y2=\"15.5\"/><line x1=\"8\" y1=\"18\" x2=\"13\" y2=\"18\"/>"
+  },
+  {
+    "name": "file-pdf",
+    "category": "files",
+    "tags": [
+      "pdf",
+      "document",
+      "acrobat",
+      "export",
+      "print"
+    ],
+    "body": "<path d=\"M6 3h7l5 5v12a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z\"/><polyline points=\"13 3 13 8 18 8\"/><rect x=\"7.5\" y=\"14.5\" width=\"9\" height=\"4.5\" rx=\"1\"/><line x1=\"9.5\" y1=\"16.7\" x2=\"14.5\" y2=\"16.7\"/>"
+  },
+  {
+    "name": "file-slides",
+    "category": "files",
+    "tags": [
+      "slides",
+      "presentation",
+      "ppt",
+      "deck",
+      "keynote"
+    ],
+    "body": "<path d=\"M6 3h7l5 5v12a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z\"/><polyline points=\"13 3 13 8 18 8\"/><rect x=\"7.5\" y=\"12.5\" width=\"9\" height=\"6\" rx=\"0.5\"/><line x1=\"9.5\" y1=\"15.5\" x2=\"14.5\" y2=\"15.5\"/>"
+  },
+  {
+    "name": "file-lock",
+    "category": "files",
+    "tags": [
+      "lock",
+      "secure",
+      "private",
+      "protected",
+      "encrypted"
+    ],
+    "body": "<path d=\"M6 3h7l5 5v12a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z\"/><polyline points=\"13 3 13 8 18 8\"/><rect x=\"9.8\" y=\"15\" width=\"4.4\" height=\"3.6\" rx=\"0.6\"/><path d=\"M10.8 15v-1.1a1.2 1.2 0 0 1 2.4 0V15\"/>"
+  },
+  {
+    "name": "file-search",
+    "category": "files",
+    "tags": [
+      "search",
+      "find",
+      "scan",
+      "lookup",
+      "magnify"
+    ],
+    "body": "<path d=\"M6 3h7l5 5v12a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z\"/><polyline points=\"13 3 13 8 18 8\"/><circle cx=\"11.4\" cy=\"14.4\" r=\"2.1\"/><line x1=\"12.9\" y1=\"15.9\" x2=\"14.6\" y2=\"17.6\"/>"
+  },
+  {
+    "name": "file-heart",
+    "category": "files",
+    "tags": [
+      "heart",
+      "favorite",
+      "like",
+      "love",
+      "saved"
+    ],
+    "body": "<path d=\"M6 3h7l5 5v12a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z\"/><polyline points=\"13 3 13 8 18 8\"/><path d=\"M12 18.4l-2.3-2.2a1.5 1.5 0 0 1 2.3-1.9 1.5 1.5 0 0 1 2.3 1.9z\"/>"
+  },
+  {
+    "name": "file-star",
+    "category": "files",
+    "tags": [
+      "star",
+      "favorite",
+      "important",
+      "featured",
+      "saved"
+    ],
+    "body": "<path d=\"M6 3h7l5 5v12a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z\"/><polyline points=\"13 3 13 8 18 8\"/><path d=\"M12 13.2l1 2 2.2.3-1.6 1.5.4 2.2-2-1.1-2 1.1.4-2.2-1.6-1.5 2.2-.3z\"/>"
+  },
+  {
+    "name": "file-download",
+    "category": "files",
+    "tags": [
+      "download",
+      "save",
+      "get",
+      "export",
+      "down"
+    ],
+    "body": "<path d=\"M6 3h7l5 5v12a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z\"/><polyline points=\"13 3 13 8 18 8\"/><line x1=\"12\" y1=\"12\" x2=\"12\" y2=\"17\"/><polyline points=\"9.8 15 12 17.2 14.2 15\"/>"
+  },
+  {
+    "name": "file-upload",
+    "category": "files",
+    "tags": [
+      "upload",
+      "send",
+      "import",
+      "push",
+      "up"
+    ],
+    "body": "<path d=\"M6 3h7l5 5v12a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z\"/><polyline points=\"13 3 13 8 18 8\"/><line x1=\"12\" y1=\"17.2\" x2=\"12\" y2=\"12.2\"/><polyline points=\"9.8 14.4 12 12.2 14.2 14.4\"/>"
+  },
+  {
+    "name": "file-clock",
+    "category": "files",
+    "tags": [
+      "clock",
+      "recent",
+      "history",
+      "pending",
+      "time"
+    ],
+    "body": "<path d=\"M6 3h7l5 5v12a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z\"/><polyline points=\"13 3 13 8 18 8\"/><circle cx=\"12\" cy=\"15.4\" r=\"2.9\"/><polyline points=\"12 13.8 12 15.4 13.3 16.2\"/>"
+  },
+  {
+    "name": "file-edit",
+    "category": "files",
+    "tags": [
+      "edit",
+      "pencil",
+      "write",
+      "modify",
+      "change"
+    ],
+    "body": "<path d=\"M6 3h7l5 5v12a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z\"/><polyline points=\"13 3 13 8 18 8\"/><path d=\"M14.6 12.6l1.8 1.8-4 4H10.6v-1.8z\"/>"
+  },
+  {
+    "name": "file-cloud",
+    "category": "files",
+    "tags": [
+      "cloud",
+      "sync",
+      "online",
+      "backup",
+      "storage"
+    ],
+    "body": "<path d=\"M6 3h7l5 5v12a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z\"/><polyline points=\"13 3 13 8 18 8\"/><path d=\"M9.2 18a1.6 1.6 0 0 1 .3-3.2 2.4 2.4 0 0 1 4.6.6 1.5 1.5 0 0 1-.3 2.6z\"/>"
+  },
+  {
+    "name": "file-minus",
+    "category": "files",
+    "tags": [
+      "remove",
+      "delete",
+      "minus",
+      "subtract",
+      "discard"
+    ],
+    "body": "<path d=\"M6 3h7l5 5v12a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z\"/><polyline points=\"13 3 13 8 18 8\"/><line x1=\"9.5\" y1=\"15.5\" x2=\"14.5\" y2=\"15.5\"/>"
+  },
+  {
+    "name": "files-copy",
+    "category": "files",
+    "tags": [
+      "copy",
+      "duplicate",
+      "clone",
+      "multiple",
+      "stack"
+    ],
+    "body": "<rect x=\"8\" y=\"8\" width=\"12\" height=\"13\" rx=\"2\"/><path d=\"M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h2\"/>"
+  },
+  {
+    "name": "folder-plus",
+    "category": "files",
+    "tags": [
+      "folder",
+      "add",
+      "new",
+      "create",
+      "plus"
+    ],
+    "body": "<path d=\"M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z\"/><line x1=\"12\" y1=\"10.5\" x2=\"12\" y2=\"16\"/><line x1=\"9.2\" y1=\"13.2\" x2=\"14.8\" y2=\"13.2\"/>"
+  },
+  {
+    "name": "folder-minus",
+    "category": "files",
+    "tags": [
+      "folder",
+      "remove",
+      "delete",
+      "minus",
+      "discard"
+    ],
+    "body": "<path d=\"M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z\"/><line x1=\"9.2\" y1=\"13.2\" x2=\"14.8\" y2=\"13.2\"/>"
+  },
+  {
+    "name": "folder-check",
+    "category": "files",
+    "tags": [
+      "folder",
+      "done",
+      "check",
+      "verified",
+      "complete"
+    ],
+    "body": "<path d=\"M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z\"/><polyline points=\"9.5 13.4 11.3 15.2 14.8 11.7\"/>"
+  },
+  {
+    "name": "folder-lock",
+    "category": "files",
+    "tags": [
+      "folder",
+      "lock",
+      "secure",
+      "private",
+      "protected"
+    ],
+    "body": "<path d=\"M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z\"/><rect x=\"9.8\" y=\"13.2\" width=\"4.4\" height=\"3.4\" rx=\"0.6\"/><path d=\"M10.8 13.2v-1a1.2 1.2 0 0 1 2.4 0v1\"/>"
+  },
+  {
+    "name": "folder-star",
+    "category": "files",
+    "tags": [
+      "folder",
+      "star",
+      "favorite",
+      "important",
+      "featured"
+    ],
+    "body": "<path d=\"M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z\"/><path d=\"M12 11.4l0.9 1.8 2 .3-1.45 1.4.35 2-1.8-1-1.8 1 .35-2L9.1 13.5l2-.3z\"/>"
+  },
+  {
+    "name": "folder-heart",
+    "category": "files",
+    "tags": [
+      "folder",
+      "heart",
+      "favorite",
+      "love",
+      "liked"
+    ],
+    "body": "<path d=\"M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z\"/><path d=\"M12 16.6l-2.2-2.1a1.45 1.45 0 0 1 2.2-1.85 1.45 1.45 0 0 1 2.2 1.85z\"/>"
+  },
+  {
+    "name": "folder-users",
+    "category": "files",
+    "tags": [
+      "folder",
+      "shared",
+      "team",
+      "users",
+      "group"
+    ],
+    "body": "<path d=\"M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z\"/><circle cx=\"10\" cy=\"13.5\" r=\"1.3\"/><circle cx=\"14\" cy=\"13.5\" r=\"1.3\"/><path d=\"M8 17a2 2 0 0 1 4 0\"/><path d=\"M12 17a2 2 0 0 1 4 0\"/>"
+  },
+  {
+    "name": "folder-cloud",
+    "category": "files",
+    "tags": [
+      "folder",
+      "cloud",
+      "sync",
+      "backup",
+      "online"
+    ],
+    "body": "<path d=\"M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z\"/><path d=\"M9.2 16.5a1.5 1.5 0 0 1 .3-3 2.3 2.3 0 0 1 4.4.6 1.4 1.4 0 0 1-.3 2.4z\"/>"
+  },
+  {
+    "name": "folder-download",
+    "category": "files",
+    "tags": [
+      "folder",
+      "download",
+      "save",
+      "get",
+      "export"
+    ],
+    "body": "<path d=\"M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z\"/><line x1=\"12\" y1=\"10.5\" x2=\"12\" y2=\"15.5\"/><polyline points=\"9.8 13.5 12 15.7 14.2 13.5\"/>"
+  },
+  {
+    "name": "folders-stack",
+    "category": "files",
+    "tags": [
+      "folders",
+      "multiple",
+      "group",
+      "nested",
+      "stack"
+    ],
+    "body": "<path d=\"M3 9a1 1 0 0 1 1-1h3l1.5 1.5H14a1 1 0 0 1 1 1V17a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z\"/><path d=\"M7 8V6.5a1 1 0 0 1 1-1h3l1.5 1.5H18a1 1 0 0 1 1 1V13\"/>"
+  },
+  {
+    "name": "file-database",
+    "category": "files",
+    "tags": [
+      "database",
+      "data",
+      "sql",
+      "storage",
+      "records"
+    ],
+    "body": "<path d=\"M6 3h7l5 5v12a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z\"/><polyline points=\"13 3 13 8 18 8\"/><path d=\"M9.5 13c0-.6 1.1-1 2.5-1s2.5.4 2.5 1-1.1 1-2.5 1-2.5-.4-2.5-1z\"/><path d=\"M9.5 13v3c0 .6 1.1 1 2.5 1s2.5-.4 2.5-1v-3\"/>"
+  },
+  {
+    "name": "file-key",
+    "category": "files",
+    "tags": [
+      "key",
+      "license",
+      "access",
+      "credential",
+      "secret"
+    ],
+    "body": "<path d=\"M6 3h7l5 5v12a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z\"/><polyline points=\"13 3 13 8 18 8\"/><circle cx=\"10.5\" cy=\"14.5\" r=\"1.6\"/><path d=\"M11.9 15.2l3 1.6\"/><path d=\"M13.8 16.1l-.6 1\"/>"
+  },
+  {
+    "name": "clipboard-check",
+    "category": "files",
+    "tags": [
+      "clipboard",
+      "task",
+      "done",
+      "check",
+      "todo"
+    ],
+    "body": "<rect x=\"6\" y=\"4\" width=\"12\" height=\"17\" rx=\"2\"/><path d=\"M9 4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1z\"/><polyline points=\"9 13 11 15 15 11\"/>"
+  },
+  {
+    "name": "mail-plus",
+    "category": "communication",
+    "tags": [
+      "mail",
+      "email",
+      "compose",
+      "add",
+      "new"
+    ],
+    "body": "<path d=\"M4 6h11a2 2 0 0 1 2 2v3\"/><path d=\"M4 6v11a1 1 0 0 0 1 1h9\"/><polyline points=\"4 7 11 12 18 7\"/><line x1=\"19\" y1=\"15\" x2=\"19\" y2=\"21\"/><line x1=\"16\" y1=\"18\" x2=\"22\" y2=\"18\"/>"
+  },
+  {
+    "name": "mail-x",
+    "category": "communication",
+    "tags": [
+      "mail",
+      "email",
+      "delete",
+      "remove",
+      "spam"
+    ],
+    "body": "<path d=\"M4 6h13a2 2 0 0 1 2 2v3\"/><path d=\"M4 6v11a1 1 0 0 0 1 1h8\"/><polyline points=\"4 7 11 12 18 7\"/><line x1=\"16\" y1=\"16\" x2=\"21\" y2=\"21\"/><line x1=\"21\" y1=\"16\" x2=\"16\" y2=\"21\"/>"
+  },
+  {
+    "name": "voicemail",
+    "category": "communication",
+    "tags": [
+      "voicemail",
+      "audio",
+      "message",
+      "call",
+      "record"
+    ],
+    "body": "<circle cx=\"6.5\" cy=\"13\" r=\"3.5\"/><circle cx=\"17.5\" cy=\"13\" r=\"3.5\"/><line x1=\"6.5\" y1=\"16.5\" x2=\"17.5\" y2=\"16.5\"/>"
+  },
+  {
+    "name": "video-call",
+    "category": "communication",
+    "tags": [
+      "video",
+      "call",
+      "meeting",
+      "camera",
+      "conference"
+    ],
+    "body": "<rect x=\"3\" y=\"7\" width=\"12\" height=\"10\" rx=\"2\"/><polygon points=\"15 10 21 7 21 17 15 14\"/>"
+  },
+  {
+    "name": "call-incoming",
+    "category": "communication",
+    "tags": [
+      "call",
+      "incoming",
+      "phone",
+      "answer",
+      "received"
+    ],
+    "body": "<path d=\"M5 10a13 13 0 0 0 9 9l2-2.5a1 1 0 0 1 1-.3l3 .8a1 1 0 0 1 .7 1V20a1 1 0 0 1-1 1A16 16 0 0 1 3 5a1 1 0 0 1 1-1h1.9a1 1 0 0 1 1 .7l.8 3a1 1 0 0 1-.3 1z\"/><polyline points=\"16 4 16 9 21 9\"/><line x1=\"16\" y1=\"9\" x2=\"22\" y2=\"3\"/>"
+  },
+  {
+    "name": "call-outgoing",
+    "category": "communication",
+    "tags": [
+      "call",
+      "outgoing",
+      "phone",
+      "dial",
+      "made"
+    ],
+    "body": "<path d=\"M5 10a13 13 0 0 0 9 9l2-2.5a1 1 0 0 1 1-.3l3 .8a1 1 0 0 1 .7 1V20a1 1 0 0 1-1 1A16 16 0 0 1 3 5a1 1 0 0 1 1-1h1.9a1 1 0 0 1 1 .7l.8 3a1 1 0 0 1-.3 1z\"/><polyline points=\"22 8 22 3 17 3\"/><line x1=\"22\" y1=\"3\" x2=\"16\" y2=\"9\"/>"
+  },
+  {
+    "name": "call-end",
+    "category": "communication",
+    "tags": [
+      "call",
+      "end",
+      "hang up",
+      "phone",
+      "decline"
+    ],
+    "body": "<path d=\"M3 13a13 13 0 0 1 18 0l-1.5 2.5a1 1 0 0 1-1.2.4l-2.6-1a1 1 0 0 1-.6-1l.1-1.7a11 11 0 0 0-6.2 0l.1 1.7a1 1 0 0 1-.6 1l-2.6 1a1 1 0 0 1-1.2-.4z\"/>"
+  },
+  {
+    "name": "chat-typing",
+    "category": "communication",
+    "tags": [
+      "typing",
+      "chat",
+      "message",
+      "dots",
+      "writing"
+    ],
+    "body": "<path d=\"M4 5h16a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H9l-4 3v-3H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z\"/><line x1=\"8\" y1=\"10.5\" x2=\"8\" y2=\"10.51\"/><line x1=\"12\" y1=\"10.5\" x2=\"12\" y2=\"10.51\"/><line x1=\"16\" y1=\"10.5\" x2=\"16\" y2=\"10.51\"/>"
+  },
+  {
+    "name": "chat-lock",
+    "category": "communication",
+    "tags": [
+      "chat",
+      "private",
+      "secure",
+      "encrypted",
+      "lock"
+    ],
+    "body": "<path d=\"M4 5h16a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H9l-4 3v-3H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z\"/><rect x=\"10\" y=\"9.5\" width=\"4\" height=\"3.4\" rx=\"0.6\"/><path d=\"M11 9.5v-1a1 1 0 0 1 2 0v1\"/>"
+  },
+  {
+    "name": "rss-feed",
+    "category": "communication",
+    "tags": [
+      "rss",
+      "feed",
+      "subscribe",
+      "news",
+      "blog"
+    ],
+    "body": "<circle cx=\"6\" cy=\"18\" r=\"1.5\"/><path d=\"M5 11a8 8 0 0 1 8 8\"/><path d=\"M5 5a14 14 0 0 1 14 14\"/>"
+  },
+  {
+    "name": "speech-question",
+    "category": "communication",
+    "tags": [
+      "question",
+      "help",
+      "ask",
+      "support",
+      "faq"
+    ],
+    "body": "<path d=\"M4 5h16a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H9l-4 3v-3H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z\"/><path d=\"M10.2 9.2a2 2 0 0 1 3.6 1.3c0 1.3-1.8 1.5-1.8 2.5\"/><line x1=\"12\" y1=\"13.6\" x2=\"12\" y2=\"13.61\"/>"
+  },
+  {
+    "name": "inbox-full",
+    "category": "communication",
+    "tags": [
+      "inbox",
+      "messages",
+      "unread",
+      "mail",
+      "received"
+    ],
+    "body": "<path d=\"M4 13l2.5-7A1 1 0 0 1 7.5 5.3h9A1 1 0 0 1 17.5 6l2.5 7v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1z\"/><path d=\"M4 13h4l1.5 2.5h5L16 13h4\"/>"
+  },
+  {
+    "name": "cart-plus",
+    "category": "commerce",
+    "tags": [
+      "cart",
+      "add",
+      "buy",
+      "shop",
+      "basket"
+    ],
+    "body": "<circle cx=\"9\" cy=\"20\" r=\"1.4\"/><circle cx=\"17\" cy=\"20\" r=\"1.4\"/><path d=\"M3 4h2l2 12h11l2-8H6\"/><line x1=\"14\" y1=\"7\" x2=\"14\" y2=\"11\"/><line x1=\"12\" y1=\"9\" x2=\"16\" y2=\"9\"/>"
+  },
+  {
+    "name": "cart-check",
+    "category": "commerce",
+    "tags": [
+      "cart",
+      "ordered",
+      "done",
+      "checkout",
+      "success"
+    ],
+    "body": "<circle cx=\"9\" cy=\"20\" r=\"1.4\"/><circle cx=\"17\" cy=\"20\" r=\"1.4\"/><path d=\"M3 4h2l2 12h11l2-8H6\"/><polyline points=\"11.5 8.5 13 10 16 7\"/>"
+  },
+  {
+    "name": "cart-remove",
+    "category": "commerce",
+    "tags": [
+      "cart",
+      "remove",
+      "delete",
+      "empty",
+      "discard"
+    ],
+    "body": "<circle cx=\"9\" cy=\"20\" r=\"1.4\"/><circle cx=\"17\" cy=\"20\" r=\"1.4\"/><path d=\"M3 4h2l2 12h11l2-8H6\"/><line x1=\"12\" y1=\"9\" x2=\"16\" y2=\"9\"/>"
+  },
+  {
+    "name": "bag-heart",
+    "category": "commerce",
+    "tags": [
+      "bag",
+      "wishlist",
+      "favorite",
+      "shop",
+      "love"
+    ],
+    "body": "<path d=\"M6 7h12l1 13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1z\"/><path d=\"M9 9V6a3 3 0 0 1 6 0v3\"/><path d=\"M12 18l-2.2-2.1a1.45 1.45 0 0 1 2.2-1.85 1.45 1.45 0 0 1 2.2 1.85z\"/>"
+  },
+  {
+    "name": "coins-stack",
+    "category": "commerce",
+    "tags": [
+      "coins",
+      "money",
+      "savings",
+      "cash",
+      "stack"
+    ],
+    "body": "<path d=\"M6 7a6 2.5 0 0 1 12 0 6 2.5 0 0 1-12 0z\"/><path d=\"M6 7v4c0 1.4 2.7 2.5 6 2.5s6-1.1 6-2.5V7\"/><path d=\"M6 11v4c0 1.4 2.7 2.5 6 2.5s6-1.1 6-2.5v-4\"/>"
+  },
+  {
+    "name": "euro-coin",
+    "category": "commerce",
+    "tags": [
+      "euro",
+      "money",
+      "currency",
+      "eur",
+      "europe"
+    ],
+    "body": "<circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M15 9a4 4 0 1 0 0 6\"/><line x1=\"7.5\" y1=\"11\" x2=\"12.5\" y2=\"11\"/><line x1=\"7.5\" y1=\"13.5\" x2=\"11.5\" y2=\"13.5\"/>"
+  },
+  {
+    "name": "pound-coin",
+    "category": "commerce",
+    "tags": [
+      "pound",
+      "money",
+      "currency",
+      "gbp",
+      "sterling"
+    ],
+    "body": "<circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M10 16v-3.5a2.5 2.5 0 1 1 5 0\"/><line x1=\"9\" y1=\"12.5\" x2=\"13.5\" y2=\"12.5\"/><line x1=\"9\" y1=\"16\" x2=\"15\" y2=\"16\"/>"
+  },
+  {
+    "name": "bitcoin",
+    "category": "commerce",
+    "tags": [
+      "bitcoin",
+      "crypto",
+      "btc",
+      "currency",
+      "coin"
+    ],
+    "body": "<circle cx=\"12\" cy=\"12\" r=\"9\"/><line x1=\"9\" y1=\"8\" x2=\"9\" y2=\"16\"/><path d=\"M9 8h4.5a2 2 0 0 1 0 4H9\"/><path d=\"M9 12h5a2 2 0 0 1 0 4H9\"/><line x1=\"11\" y1=\"6.5\" x2=\"11\" y2=\"8\"/><line x1=\"11\" y1=\"16\" x2=\"11\" y2=\"17.5\"/><line x1=\"13\" y1=\"6.5\" x2=\"13\" y2=\"8\"/><line x1=\"13\" y1=\"16\" x2=\"13\" y2=\"17.5\"/>"
+  },
+  {
+    "name": "gift-card",
+    "category": "commerce",
+    "tags": [
+      "gift",
+      "card",
+      "voucher",
+      "coupon",
+      "reward"
+    ],
+    "body": "<rect x=\"3\" y=\"6\" width=\"18\" height=\"12\" rx=\"2\"/><path d=\"M12 6v12\"/><path d=\"M9 6a1.8 1.8 0 1 1 3-1.3A1.8 1.8 0 1 1 15 6\"/>"
+  },
+  {
+    "name": "refund-arrow",
+    "category": "commerce",
+    "tags": [
+      "refund",
+      "return",
+      "money back",
+      "reverse",
+      "undo"
+    ],
+    "body": "<circle cx=\"12\" cy=\"12\" r=\"9\"/><polyline points=\"9 9 6.5 11.5 9 14\"/><path d=\"M6.5 11.5H14a3 3 0 0 1 0 6h-2\"/>"
+  },
+  {
+    "name": "tag-multiple",
+    "category": "commerce",
+    "tags": [
+      "tags",
+      "labels",
+      "price",
+      "category",
+      "multiple"
+    ],
+    "body": "<path d=\"M6 4h5.5a2 2 0 0 1 1.4.6l6 6a2 2 0 0 1 0 2.8l-4.6 4.6a2 2 0 0 1-2.8 0l-6-6A2 2 0 0 1 4.4 10.5V6a2 2 0 0 1 2-2z\"/><circle cx=\"8.5\" cy=\"8.5\" r=\"1.2\"/>"
+  },
+  {
+    "name": "chart-pie",
+    "category": "commerce",
+    "tags": [
+      "chart",
+      "pie",
+      "analytics",
+      "stats",
+      "report"
+    ],
+    "body": "<path d=\"M12 3a9 9 0 1 0 9 9h-9z\"/><path d=\"M12 3v9h9a9 9 0 0 0-9-9z\"/>"
+  },
+  {
+    "name": "chart-donut",
+    "category": "commerce",
+    "tags": [
+      "chart",
+      "donut",
+      "analytics",
+      "ring",
+      "stats"
+    ],
+    "body": "<circle cx=\"12\" cy=\"12\" r=\"9\"/><circle cx=\"12\" cy=\"12\" r=\"4\"/><path d=\"M12 3v5\"/><path d=\"M20.5 15l-4.7-1.6\"/>"
+  },
+  {
+    "name": "subscription",
+    "category": "commerce",
+    "tags": [
+      "subscription",
+      "recurring",
+      "renew",
+      "plan",
+      "billing"
+    ],
+    "body": "<path d=\"M5 9a7 7 0 0 1 12-3\"/><polyline points=\"17 3 17 6 14 6\"/><path d=\"M19 15a7 7 0 0 1-12 3\"/><polyline points=\"7 21 7 18 10 18\"/>"
+  },
+  {
+    "name": "atm-card",
+    "category": "commerce",
+    "tags": [
+      "atm",
+      "debit",
+      "card",
+      "bank",
+      "payment"
+    ],
+    "body": "<rect x=\"3\" y=\"6\" width=\"18\" height=\"12\" rx=\"2\"/><line x1=\"3\" y1=\"10\" x2=\"21\" y2=\"10\"/><rect x=\"6\" y=\"13\" width=\"4\" height=\"2.5\" rx=\"0.5\"/><line x1=\"14\" y1=\"14\" x2=\"18\" y2=\"14\"/>"
+  },
+  {
+    "name": "sale-badge",
+    "category": "commerce",
+    "tags": [
+      "sale",
+      "discount",
+      "offer",
+      "deal",
+      "promo"
+    ],
+    "body": "<circle cx=\"12\" cy=\"12\" r=\"9\"/><line x1=\"9\" y1=\"15\" x2=\"15\" y2=\"9\"/><circle cx=\"9.5\" cy=\"9.5\" r=\"1.1\"/><circle cx=\"14.5\" cy=\"14.5\" r=\"1.1\"/>"
+  },
+  {
+    "name": "device-tv",
+    "category": "devices",
+    "tags": [
+      "tv",
+      "television",
+      "screen",
+      "display",
+      "monitor"
+    ],
+    "body": "<rect x=\"3\" y=\"5\" width=\"18\" height=\"12\" rx=\"2\"/><polyline points=\"8 21 12 18 16 21\"/>"
+  },
+  {
+    "name": "device-desktop-tower",
+    "category": "devices",
+    "tags": [
+      "desktop",
+      "tower",
+      "pc",
+      "computer",
+      "case"
+    ],
+    "body": "<rect x=\"7\" y=\"3\" width=\"10\" height=\"18\" rx=\"2\"/><line x1=\"10\" y1=\"6\" x2=\"14\" y2=\"6\"/><line x1=\"10\" y1=\"8.5\" x2=\"14\" y2=\"8.5\"/><circle cx=\"12\" cy=\"17\" r=\"1.3\"/>"
+  },
+  {
+    "name": "device-vr-headset",
+    "category": "devices",
+    "tags": [
+      "vr",
+      "headset",
+      "goggles",
+      "virtual",
+      "ar"
+    ],
+    "body": "<rect x=\"2\" y=\"8\" width=\"20\" height=\"9\" rx=\"3\"/><path d=\"M9 17a2.5 2.5 0 0 1 6 0\"/><line x1=\"6\" y1=\"11.5\" x2=\"6\" y2=\"13.5\"/><line x1=\"18\" y1=\"11.5\" x2=\"18\" y2=\"13.5\"/>"
+  },
+  {
+    "name": "device-earbuds",
+    "category": "devices",
+    "tags": [
+      "earbuds",
+      "airpods",
+      "audio",
+      "wireless",
+      "headphones"
+    ],
+    "body": "<path d=\"M8 4a2.5 2.5 0 0 1 2.5 2.5V14a2.5 2.5 0 0 1-5 0 2.5 2.5 0 0 1 2.5-2.5\"/><path d=\"M16 4a2.5 2.5 0 0 0-2.5 2.5V14a2.5 2.5 0 0 0 5 0 2.5 2.5 0 0 0-2.5-2.5\"/>"
+  },
+  {
+    "name": "device-power-bank",
+    "category": "devices",
+    "tags": [
+      "power bank",
+      "battery",
+      "charger",
+      "portable",
+      "charge"
+    ],
+    "body": "<rect x=\"4\" y=\"6\" width=\"16\" height=\"12\" rx=\"2\"/><rect x=\"7\" y=\"9\" width=\"4\" height=\"6\" rx=\"0.5\"/><line x1=\"15\" y1=\"9.5\" x2=\"15\" y2=\"14.5\"/><line x1=\"15\" y1=\"9.5\" x2=\"17\" y2=\"11.5\"/><line x1=\"15\" y1=\"12\" x2=\"17\" y2=\"14\"/>"
+  },
+  {
+    "name": "device-drone",
+    "category": "devices",
+    "tags": [
+      "drone",
+      "quadcopter",
+      "uav",
+      "fly",
+      "aerial"
+    ],
+    "body": "<circle cx=\"6\" cy=\"6\" r=\"2\"/><circle cx=\"18\" cy=\"6\" r=\"2\"/><circle cx=\"6\" cy=\"18\" r=\"2\"/><circle cx=\"18\" cy=\"18\" r=\"2\"/><rect x=\"9\" y=\"9\" width=\"6\" height=\"6\" rx=\"1\"/><line x1=\"7.4\" y1=\"7.4\" x2=\"9.5\" y2=\"9.5\"/><line x1=\"16.6\" y1=\"7.4\" x2=\"14.5\" y2=\"9.5\"/><line x1=\"7.4\" y1=\"16.6\" x2=\"9.5\" y2=\"14.5\"/><line x1=\"16.6\" y1=\"16.6\" x2=\"14.5\" y2=\"14.5\"/>"
+  },
+  {
+    "name": "device-scanner",
+    "category": "devices",
+    "tags": [
+      "scanner",
+      "scan",
+      "document",
+      "copier",
+      "office"
+    ],
+    "body": "<rect x=\"3\" y=\"9\" width=\"18\" height=\"7\" rx=\"1\"/><path d=\"M6 9V5h9l3 3v1\"/><line x1=\"7\" y1=\"12.5\" x2=\"17\" y2=\"12.5\"/>"
+  },
+  {
+    "name": "device-remote",
+    "category": "devices",
+    "tags": [
+      "remote",
+      "control",
+      "tv",
+      "clicker",
+      "buttons"
+    ],
+    "body": "<rect x=\"7\" y=\"3\" width=\"10\" height=\"18\" rx=\"3\"/><circle cx=\"12\" cy=\"7\" r=\"1.4\"/><line x1=\"10\" y1=\"11\" x2=\"14\" y2=\"11\"/><line x1=\"10\" y1=\"14\" x2=\"14\" y2=\"14\"/><line x1=\"10\" y1=\"17\" x2=\"14\" y2=\"17\"/>"
+  },
+  {
+    "name": "device-nas",
+    "category": "devices",
+    "tags": [
+      "nas",
+      "storage",
+      "server",
+      "drive",
+      "backup"
+    ],
+    "body": "<rect x=\"5\" y=\"4\" width=\"14\" height=\"16\" rx=\"2\"/><line x1=\"9\" y1=\"4\" x2=\"9\" y2=\"20\"/><circle cx=\"7\" cy=\"8\" r=\"0.7\"/><circle cx=\"7\" cy=\"12\" r=\"0.7\"/><circle cx=\"7\" cy=\"16\" r=\"0.7\"/>"
+  },
+  {
+    "name": "device-graphics-card",
+    "category": "devices",
+    "tags": [
+      "gpu",
+      "graphics",
+      "card",
+      "video",
+      "hardware"
+    ],
+    "body": "<rect x=\"3\" y=\"7\" width=\"18\" height=\"9\" rx=\"1\"/><circle cx=\"9\" cy=\"11.5\" r=\"2.5\"/><circle cx=\"15\" cy=\"11.5\" r=\"2\"/><line x1=\"6\" y1=\"16\" x2=\"6\" y2=\"19\"/><line x1=\"18\" y1=\"16\" x2=\"18\" y2=\"19\"/>"
+  },
+  {
+    "name": "device-ram-stick",
+    "category": "devices",
+    "tags": [
+      "ram",
+      "memory",
+      "module",
+      "hardware",
+      "stick"
+    ],
+    "body": "<rect x=\"3\" y=\"7\" width=\"18\" height=\"8\" rx=\"1\"/><line x1=\"7\" y1=\"9\" x2=\"7\" y2=\"13\"/><line x1=\"10\" y1=\"9\" x2=\"10\" y2=\"13\"/><line x1=\"14\" y1=\"9\" x2=\"14\" y2=\"13\"/><line x1=\"17\" y1=\"9\" x2=\"17\" y2=\"13\"/><path d=\"M8 15v2M16 15v2\"/>"
+  },
+  {
+    "name": "device-ethernet",
+    "category": "devices",
+    "tags": [
+      "ethernet",
+      "network",
+      "lan",
+      "port",
+      "cable"
+    ],
+    "body": "<path d=\"M7 4h10a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1h-1v4H8v-4H7a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z\"/><line x1=\"9\" y1=\"7\" x2=\"9\" y2=\"9\"/><line x1=\"12\" y1=\"7\" x2=\"12\" y2=\"9\"/><line x1=\"15\" y1=\"7\" x2=\"15\" y2=\"9\"/>"
+  },
+  {
+    "name": "device-hdmi",
+    "category": "devices",
+    "tags": [
+      "hdmi",
+      "cable",
+      "port",
+      "display",
+      "connector"
+    ],
+    "body": "<path d=\"M4 9h16v3l-2 3H6l-2-3z\"/><line x1=\"7\" y1=\"9\" x2=\"7.5\" y2=\"12\"/><line x1=\"17\" y1=\"9\" x2=\"16.5\" y2=\"12\"/>"
+  },
+  {
+    "name": "device-power-supply",
+    "category": "devices",
+    "tags": [
+      "psu",
+      "power supply",
+      "adapter",
+      "plug",
+      "charger"
+    ],
+    "body": "<rect x=\"4\" y=\"8\" width=\"12\" height=\"8\" rx=\"1\"/><circle cx=\"8\" cy=\"12\" r=\"1.6\"/><line x1=\"16\" y1=\"10.5\" x2=\"20\" y2=\"10.5\"/><line x1=\"16\" y1=\"13.5\" x2=\"20\" y2=\"13.5\"/>"
+  },
+  {
+    "name": "arrow-up-left",
+    "category": "arrows",
+    "tags": [
+      "arrow",
+      "up",
+      "left",
+      "diagonal",
+      "northwest"
+    ],
+    "body": "<line x1=\"18\" y1=\"18\" x2=\"7\" y2=\"7\"/><polyline points=\"7 15 7 7 15 7\"/>"
+  },
+  {
+    "name": "arrow-down-left",
+    "category": "arrows",
+    "tags": [
+      "arrow",
+      "down",
+      "left",
+      "diagonal",
+      "southwest"
+    ],
+    "body": "<line x1=\"18\" y1=\"6\" x2=\"7\" y2=\"17\"/><polyline points=\"15 17 7 17 7 9\"/>"
+  },
+  {
+    "name": "arrow-down-right",
+    "category": "arrows",
+    "tags": [
+      "arrow",
+      "down",
+      "right",
+      "diagonal",
+      "southeast"
+    ],
+    "body": "<line x1=\"6\" y1=\"6\" x2=\"17\" y2=\"17\"/><polyline points=\"9 17 17 17 17 9\"/>"
+  },
+  {
+    "name": "arrows-up-down",
+    "category": "arrows",
+    "tags": [
+      "arrows",
+      "sort",
+      "vertical",
+      "up",
+      "down"
+    ],
+    "body": "<polyline points=\"8 8 11 5 14 8\"/><line x1=\"11\" y1=\"5\" x2=\"11\" y2=\"19\"/><polyline points=\"10 16 13 19 16 16\"/><line x1=\"13\" y1=\"19\" x2=\"13\" y2=\"5\"/>"
+  },
+  {
+    "name": "chevrons-up",
+    "category": "arrows",
+    "tags": [
+      "chevrons",
+      "up",
+      "double",
+      "top",
+      "collapse"
+    ],
+    "body": "<polyline points=\"6 15 12 9 18 15\"/><polyline points=\"6 20 12 14 18 20\"/>"
+  },
+  {
+    "name": "chevrons-down",
+    "category": "arrows",
+    "tags": [
+      "chevrons",
+      "down",
+      "double",
+      "bottom",
+      "expand"
+    ],
+    "body": "<polyline points=\"6 9 12 15 18 9\"/><polyline points=\"6 4 12 10 18 4\"/>"
+  },
+  {
+    "name": "chevrons-left",
+    "category": "arrows",
+    "tags": [
+      "chevrons",
+      "left",
+      "double",
+      "previous",
+      "back"
+    ],
+    "body": "<polyline points=\"15 6 9 12 15 18\"/><polyline points=\"20 6 14 12 20 18\"/>"
+  },
+  {
+    "name": "chevrons-right",
+    "category": "arrows",
+    "tags": [
+      "chevrons",
+      "right",
+      "double",
+      "next",
+      "forward"
+    ],
+    "body": "<polyline points=\"9 6 15 12 9 18\"/><polyline points=\"4 6 10 12 4 18\"/>"
+  },
+  {
+    "name": "corner-up-right",
+    "category": "arrows",
+    "tags": [
+      "corner",
+      "up",
+      "right",
+      "turn",
+      "redo"
+    ],
+    "body": "<polyline points=\"14 5 19 5 19 10\"/><path d=\"M19 5l-9 9a2 2 0 0 1-2 2H5\"/>"
+  },
+  {
+    "name": "corner-down-right",
+    "category": "arrows",
+    "tags": [
+      "corner",
+      "down",
+      "right",
+      "turn",
+      "branch"
+    ],
+    "body": "<polyline points=\"14 19 19 19 19 14\"/><path d=\"M19 19l-9-9a2 2 0 0 0-2-2H5\"/>"
+  },
+  {
+    "name": "corner-up-left",
+    "category": "arrows",
+    "tags": [
+      "corner",
+      "up",
+      "left",
+      "turn",
+      "reply"
+    ],
+    "body": "<polyline points=\"10 5 5 5 5 10\"/><path d=\"M5 5l9 9a2 2 0 0 0 2 2h3\"/>"
+  },
+  {
+    "name": "arrow-merge",
+    "category": "arrows",
+    "tags": [
+      "merge",
+      "combine",
+      "join",
+      "converge",
+      "branch"
+    ],
+    "body": "<polyline points=\"8 3 11 6 8 9\"/><path d=\"M11 6H8a4 4 0 0 0-4 4v0\"/><path d=\"M11 6h1a4 4 0 0 1 4 4v11\"/>"
+  },
+  {
+    "name": "arrow-split",
+    "category": "arrows",
+    "tags": [
+      "split",
+      "branch",
+      "diverge",
+      "fork",
+      "separate"
+    ],
+    "body": "<line x1=\"12\" y1=\"21\" x2=\"12\" y2=\"12\"/><line x1=\"12\" y1=\"12\" x2=\"6\" y2=\"6\"/><polyline points=\"6 10 6 6 10 6\"/><line x1=\"12\" y1=\"12\" x2=\"18\" y2=\"6\"/><polyline points=\"14 6 18 6 18 10\"/>"
+  },
+  {
+    "name": "expand-diagonal",
+    "category": "arrows",
+    "tags": [
+      "expand",
+      "fullscreen",
+      "enlarge",
+      "resize",
+      "maximize"
+    ],
+    "body": "<polyline points=\"9 4 4 4 4 9\"/><polyline points=\"15 20 20 20 20 15\"/><line x1=\"4\" y1=\"4\" x2=\"10\" y2=\"10\"/><line x1=\"20\" y1=\"20\" x2=\"14\" y2=\"14\"/>"
+  },
+  {
+    "name": "collapse-diagonal",
+    "category": "arrows",
+    "tags": [
+      "collapse",
+      "shrink",
+      "minimize",
+      "resize",
+      "reduce"
+    ],
+    "body": "<polyline points=\"4 9 9 9 9 4\"/><polyline points=\"20 15 15 15 15 20\"/><line x1=\"9\" y1=\"9\" x2=\"4\" y2=\"4\"/><line x1=\"15\" y1=\"15\" x2=\"20\" y2=\"20\"/>"
+  },
+  {
+    "name": "arrow-loop",
+    "category": "arrows",
+    "tags": [
+      "loop",
+      "cycle",
+      "rotate",
+      "again",
+      "repeat"
+    ],
+    "body": "<path d=\"M4 12a8 8 0 0 1 13.7-5.6L20 8\"/><polyline points=\"20 4 20 8 16 8\"/><path d=\"M20 12a8 8 0 0 1-13.7 5.6L4 16\"/><polyline points=\"4 20 4 16 8 16\"/>"
+  },
+  {
+    "name": "cloud-drizzle",
+    "category": "weather",
+    "tags": [
+      "cloud",
+      "drizzle",
+      "rain",
+      "weather",
+      "light rain"
+    ],
+    "body": "<path d=\"M7 15a4 4 0 0 1 .7-7.9 5 5 0 0 1 9.5 1.4A3.5 3.5 0 0 1 17 15z\"/><line x1=\"9\" y1=\"18\" x2=\"9\" y2=\"19.5\"/><line x1=\"12\" y1=\"18\" x2=\"12\" y2=\"20.5\"/><line x1=\"15\" y1=\"18\" x2=\"15\" y2=\"19.5\"/>"
+  },
+  {
+    "name": "cloud-drizzle-heavy",
+    "category": "weather",
+    "tags": [
+      "cloud",
+      "shower",
+      "rain",
+      "weather",
+      "downpour"
+    ],
+    "body": "<path d=\"M7 14a4 4 0 0 1 .7-7.9 5 5 0 0 1 9.5 1.4A3.5 3.5 0 0 1 17 14z\"/><line x1=\"8\" y1=\"17\" x2=\"7\" y2=\"20\"/><line x1=\"12\" y1=\"17\" x2=\"11\" y2=\"20\"/><line x1=\"16\" y1=\"17\" x2=\"15\" y2=\"20\"/>"
+  },
+  {
+    "name": "moon-stars",
+    "category": "weather",
+    "tags": [
+      "moon",
+      "night",
+      "stars",
+      "clear",
+      "sky"
+    ],
+    "body": "<path d=\"M20 14a8 8 0 1 1-9-11 6 6 0 0 0 9 11z\"/><path d=\"M18 4l.5 1.5L20 6l-1.5.5L18 8l-.5-1.5L16 6l1.5-.5z\"/>"
+  },
+  {
+    "name": "thermometer-hot",
+    "category": "weather",
+    "tags": [
+      "thermometer",
+      "hot",
+      "temperature",
+      "heat",
+      "warm"
+    ],
+    "body": "<path d=\"M12 4a2 2 0 0 1 2 2v8a3.5 3.5 0 1 1-4 0V6a2 2 0 0 1 2-2z\"/><line x1=\"12\" y1=\"16\" x2=\"12\" y2=\"9\"/><path d=\"M18 5v5\"/><path d=\"M18 6l1.5 2L18 10\"/>"
+  },
+  {
+    "name": "thermometer-cold",
+    "category": "weather",
+    "tags": [
+      "thermometer",
+      "cold",
+      "temperature",
+      "freeze",
+      "cool"
+    ],
+    "body": "<path d=\"M12 4a2 2 0 0 1 2 2v8a3.5 3.5 0 1 1-4 0V6a2 2 0 0 1 2-2z\"/><line x1=\"12\" y1=\"16\" x2=\"12\" y2=\"12\"/><line x1=\"18\" y1=\"5\" x2=\"18\" y2=\"11\"/><line x1=\"16\" y1=\"6.5\" x2=\"20\" y2=\"9.5\"/><line x1=\"20\" y1=\"6.5\" x2=\"16\" y2=\"9.5\"/>"
+  },
+  {
+    "name": "humidity-drop",
+    "category": "weather",
+    "tags": [
+      "humidity",
+      "moisture",
+      "water",
+      "percent",
+      "dew"
+    ],
+    "body": "<path d=\"M12 3s6 6.5 6 10.5a6 6 0 0 1-12 0C6 9.5 12 3 12 3z\"/><line x1=\"10\" y1=\"15\" x2=\"14\" y2=\"11\"/><circle cx=\"10.2\" cy=\"11.2\" r=\"0.6\"/><circle cx=\"13.8\" cy=\"14.8\" r=\"0.6\"/>"
+  },
+  {
+    "name": "comet",
+    "category": "weather",
+    "tags": [
+      "comet",
+      "meteor",
+      "shooting star",
+      "space",
+      "sky"
+    ],
+    "body": "<circle cx=\"16\" cy=\"8\" r=\"4\"/><line x1=\"13\" y1=\"11\" x2=\"4\" y2=\"20\"/><line x1=\"15\" y1=\"13\" x2=\"9\" y2=\"19\"/><line x1=\"11\" y1=\"9\" x2=\"6\" y2=\"14\"/>"
+  },
+  {
+    "name": "sun-haze",
+    "category": "weather",
+    "tags": [
+      "sun",
+      "haze",
+      "hazy",
+      "weather",
+      "horizon"
+    ],
+    "body": "<circle cx=\"12\" cy=\"9\" r=\"4\"/><line x1=\"12\" y1=\"2\" x2=\"12\" y2=\"3\"/><line x1=\"5\" y1=\"9\" x2=\"4\" y2=\"9\"/><line x1=\"20\" y1=\"9\" x2=\"19\" y2=\"9\"/><line x1=\"4\" y1=\"17\" x2=\"20\" y2=\"17\"/><line x1=\"7\" y1=\"20\" x2=\"17\" y2=\"20\"/>"
+  },
+  {
+    "name": "list-bullet",
+    "category": "editing",
+    "tags": [
+      "list",
+      "bullet",
+      "unordered",
+      "items",
+      "points"
+    ],
+    "body": "<circle cx=\"5\" cy=\"6\" r=\"1.2\"/><circle cx=\"5\" cy=\"12\" r=\"1.2\"/><circle cx=\"5\" cy=\"18\" r=\"1.2\"/><line x1=\"9\" y1=\"6\" x2=\"20\" y2=\"6\"/><line x1=\"9\" y1=\"12\" x2=\"20\" y2=\"12\"/><line x1=\"9\" y1=\"18\" x2=\"20\" y2=\"18\"/>"
+  },
+  {
+    "name": "list-numbered",
+    "category": "editing",
+    "tags": [
+      "list",
+      "numbered",
+      "ordered",
+      "steps",
+      "items"
+    ],
+    "body": "<line x1=\"10\" y1=\"6\" x2=\"20\" y2=\"6\"/><line x1=\"10\" y1=\"12\" x2=\"20\" y2=\"12\"/><line x1=\"10\" y1=\"18\" x2=\"20\" y2=\"18\"/><path d=\"M4 5h1v3\"/><path d=\"M4 11h1.5a.8.8 0 0 1 0 1.6L4 14h2\"/><path d=\"M4 17h1.5a.8.8 0 0 1 0 1.5.8.8 0 0 1 0 1.5H4\"/>"
+  },
+  {
+    "name": "quote-block",
+    "category": "editing",
+    "tags": [
+      "quote",
+      "blockquote",
+      "citation",
+      "quotation",
+      "text"
+    ],
+    "body": "<path d=\"M6 15a3 3 0 0 1 0-6v0a4 4 0 0 0-2 3.5V16h4v-3z\"/><path d=\"M15 15a3 3 0 0 1 0-6v0a4 4 0 0 0-2 3.5V16h4v-3z\"/>"
+  },
+  {
+    "name": "code-block",
+    "category": "editing",
+    "tags": [
+      "code",
+      "block",
+      "snippet",
+      "developer",
+      "brackets"
+    ],
+    "body": "<rect x=\"3\" y=\"5\" width=\"18\" height=\"14\" rx=\"2\"/><polyline points=\"9 10 7 12 9 14\"/><polyline points=\"14 10 16 12 14 14\"/>"
+  },
+  {
+    "name": "link-insert",
+    "category": "editing",
+    "tags": [
+      "link",
+      "insert",
+      "add",
+      "hyperlink",
+      "url"
+    ],
+    "body": "<path d=\"M9 13a3 3 0 0 0 4.2.2l2.3-2.3a3 3 0 0 0-4.2-4.2L10.5 7.5\"/><path d=\"M13 11a3 3 0 0 0-4.2-.2L6.5 13a3 3 0 0 0 4.2 4.2\"/><line x1=\"19\" y1=\"16\" x2=\"19\" y2=\"21\"/><line x1=\"16.5\" y1=\"18.5\" x2=\"21.5\" y2=\"18.5\"/>"
+  },
+  {
+    "name": "table-insert",
+    "category": "editing",
+    "tags": [
+      "table",
+      "grid",
+      "insert",
+      "rows",
+      "columns"
+    ],
+    "body": "<rect x=\"3\" y=\"4\" width=\"18\" height=\"16\" rx=\"2\"/><line x1=\"3\" y1=\"9\" x2=\"21\" y2=\"9\"/><line x1=\"3\" y1=\"14.5\" x2=\"21\" y2=\"14.5\"/><line x1=\"9\" y1=\"9\" x2=\"9\" y2=\"20\"/><line x1=\"15\" y1=\"9\" x2=\"15\" y2=\"20\"/>"
+  },
+  {
+    "name": "indent-right",
+    "category": "editing",
+    "tags": [
+      "indent",
+      "right",
+      "tab",
+      "paragraph",
+      "align"
+    ],
+    "body": "<line x1=\"8\" y1=\"6\" x2=\"20\" y2=\"6\"/><line x1=\"8\" y1=\"12\" x2=\"20\" y2=\"12\"/><line x1=\"8\" y1=\"18\" x2=\"20\" y2=\"18\"/><polyline points=\"3 8 6 12 3 16\"/>"
+  },
+  {
+    "name": "clear-format",
+    "category": "editing",
+    "tags": [
+      "clear",
+      "format",
+      "remove",
+      "style",
+      "reset"
+    ],
+    "body": "<path d=\"M6 6h12\"/><path d=\"M10 6l-1.5 9\"/><path d=\"M14 6l-.5 3\"/><line x1=\"7\" y1=\"20\" x2=\"13\" y2=\"20\"/><line x1=\"16\" y1=\"14\" x2=\"21\" y2=\"19\"/><line x1=\"21\" y1=\"14\" x2=\"16\" y2=\"19\"/>"
+  },
+  {
+    "name": "calendar",
+    "category": "interface",
+    "tags": [
+      "calendar",
+      "date",
+      "schedule",
+      "month",
+      "planner"
+    ],
+    "body": "<rect x=\"4\" y=\"5\" width=\"16\" height=\"16\" rx=\"2\"/><line x1=\"4\" y1=\"9\" x2=\"20\" y2=\"9\"/><line x1=\"9\" y1=\"3\" x2=\"9\" y2=\"7\"/><line x1=\"15\" y1=\"3\" x2=\"15\" y2=\"7\"/>"
+  },
+  {
+    "name": "calendar-days",
+    "category": "interface",
+    "tags": [
+      "calendar",
+      "days",
+      "month",
+      "grid",
+      "dates"
+    ],
+    "body": "<rect x=\"4\" y=\"5\" width=\"16\" height=\"16\" rx=\"2\"/><line x1=\"4\" y1=\"9\" x2=\"20\" y2=\"9\"/><line x1=\"9\" y1=\"3\" x2=\"9\" y2=\"7\"/><line x1=\"15\" y1=\"3\" x2=\"15\" y2=\"7\"/><line x1=\"8\" y1=\"13\" x2=\"8\" y2=\"13.01\"/><line x1=\"12\" y1=\"13\" x2=\"12\" y2=\"13.01\"/><line x1=\"16\" y1=\"13\" x2=\"16\" y2=\"13.01\"/><line x1=\"8\" y1=\"17\" x2=\"8\" y2=\"17.01\"/><line x1=\"12\" y1=\"17\" x2=\"12\" y2=\"17.01\"/>"
+  },
+  {
+    "name": "calendar-event",
+    "category": "interface",
+    "tags": [
+      "calendar",
+      "event",
+      "appointment",
+      "date",
+      "plus"
+    ],
+    "body": "<rect x=\"4\" y=\"5\" width=\"16\" height=\"16\" rx=\"2\"/><line x1=\"4\" y1=\"9\" x2=\"20\" y2=\"9\"/><line x1=\"9\" y1=\"3\" x2=\"9\" y2=\"7\"/><line x1=\"15\" y1=\"3\" x2=\"15\" y2=\"7\"/><line x1=\"12\" y1=\"12\" x2=\"12\" y2=\"18\"/><line x1=\"9\" y1=\"15\" x2=\"15\" y2=\"15\"/>"
+  },
+  {
+    "name": "calendar-check",
+    "category": "interface",
+    "tags": [
+      "calendar",
+      "check",
+      "done",
+      "confirmed",
+      "booked"
+    ],
+    "body": "<rect x=\"4\" y=\"5\" width=\"16\" height=\"16\" rx=\"2\"/><line x1=\"4\" y1=\"9\" x2=\"20\" y2=\"9\"/><line x1=\"9\" y1=\"3\" x2=\"9\" y2=\"7\"/><line x1=\"15\" y1=\"3\" x2=\"15\" y2=\"7\"/><polyline points=\"9 15 11 17 15 13\"/>"
+  },
+  {
+    "name": "timer",
+    "category": "interface",
+    "tags": [
+      "timer",
+      "countdown",
+      "stopwatch",
+      "time",
+      "clock"
+    ],
+    "body": "<circle cx=\"12\" cy=\"14\" r=\"7\"/><line x1=\"12\" y1=\"14\" x2=\"12\" y2=\"10.5\"/><line x1=\"9.5\" y1=\"3\" x2=\"14.5\" y2=\"3\"/><line x1=\"12\" y1=\"3\" x2=\"12\" y2=\"7\"/><line x1=\"18\" y1=\"8\" x2=\"19.5\" y2=\"6.5\"/>"
+  },
+  {
+    "name": "stopwatch",
+    "category": "interface",
+    "tags": [
+      "stopwatch",
+      "timer",
+      "time",
+      "measure",
+      "lap"
+    ],
+    "body": "<circle cx=\"12\" cy=\"13\" r=\"8\"/><line x1=\"12\" y1=\"13\" x2=\"15\" y2=\"13\"/><line x1=\"12\" y1=\"13\" x2=\"12\" y2=\"8\"/><line x1=\"12\" y1=\"2\" x2=\"12\" y2=\"5\"/><line x1=\"10\" y1=\"3\" x2=\"14\" y2=\"3\"/><line x1=\"19\" y1=\"7\" x2=\"20.5\" y2=\"5.5\"/>"
+  },
+  {
+    "name": "alarm-clock",
+    "category": "interface",
+    "tags": [
+      "alarm",
+      "clock",
+      "wake",
+      "reminder",
+      "time"
+    ],
+    "body": "<circle cx=\"12\" cy=\"13\" r=\"7\"/><polyline points=\"12 10 12 13 14 15\"/><line x1=\"5\" y1=\"3.5\" x2=\"2.5\" y2=\"6\"/><line x1=\"19\" y1=\"3.5\" x2=\"21.5\" y2=\"6\"/><line x1=\"8\" y1=\"20\" x2=\"6\" y2=\"22\"/><line x1=\"16\" y1=\"20\" x2=\"18\" y2=\"22\"/>"
+  },
+  {
+    "name": "columns-two",
+    "category": "interface",
+    "tags": [
+      "columns",
+      "layout",
+      "split",
+      "two",
+      "panels"
+    ],
+    "body": "<rect x=\"3\" y=\"4\" width=\"18\" height=\"16\" rx=\"2\"/><line x1=\"12\" y1=\"4\" x2=\"12\" y2=\"20\"/>"
+  },
+  {
+    "name": "layout-sidebar-right",
+    "category": "interface",
+    "tags": [
+      "sidebar",
+      "right",
+      "layout",
+      "panel",
+      "split"
+    ],
+    "body": "<rect x=\"3\" y=\"4\" width=\"18\" height=\"16\" rx=\"2\"/><line x1=\"15\" y1=\"4\" x2=\"15\" y2=\"20\"/>"
+  },
+  {
+    "name": "terminal-window",
+    "category": "interface",
+    "tags": [
+      "terminal",
+      "console",
+      "command",
+      "shell",
+      "code"
+    ],
+    "body": "<rect x=\"3\" y=\"4\" width=\"18\" height=\"16\" rx=\"2\"/><polyline points=\"7 10 10 13 7 16\"/><line x1=\"12\" y1=\"16\" x2=\"16\" y2=\"16\"/>"
+  },
+  {
+    "name": "code-brackets",
+    "category": "interface",
+    "tags": [
+      "code",
+      "brackets",
+      "developer",
+      "markup",
+      "html"
+    ],
+    "body": "<polyline points=\"8 7 3 12 8 17\"/><polyline points=\"16 7 21 12 16 17\"/><line x1=\"13.5\" y1=\"5\" x2=\"10.5\" y2=\"19\"/>"
+  },
+  {
+    "name": "bookmark-tabs",
+    "category": "interface",
+    "tags": [
+      "tabs",
+      "bookmarks",
+      "saved",
+      "browser",
+      "ribbons"
+    ],
+    "body": "<rect x=\"4\" y=\"4\" width=\"16\" height=\"16\" rx=\"2\"/><path d=\"M9 4v6l2-1.5L13 10V4\"/>"
+  },
+  {
+    "name": "pin-fixed",
+    "category": "interface",
+    "tags": [
+      "pin",
+      "fixed",
+      "keep",
+      "stick",
+      "anchor"
+    ],
+    "body": "<line x1=\"12\" y1=\"14\" x2=\"12\" y2=\"21\"/><path d=\"M9 3h6l-.8 4 2.3 3v1H7.5v-1l2.3-3z\"/>"
+  },
+  {
+    "name": "split-horizontal",
+    "category": "interface",
+    "tags": [
+      "split",
+      "horizontal",
+      "layout",
+      "rows",
+      "divide"
+    ],
+    "body": "<rect x=\"3\" y=\"4\" width=\"18\" height=\"16\" rx=\"2\"/><line x1=\"3\" y1=\"12\" x2=\"21\" y2=\"12\"/>"
+  },
+  {
+    "name": "camera-off",
+    "category": "media",
+    "tags": [
+      "camera",
+      "off",
+      "disabled",
+      "no photo",
+      "blocked"
+    ],
+    "body": "<path d=\"M8 7l1-2h6l1 2h3a1 1 0 0 1 1 1v9\"/><path d=\"M18 18H5a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1\"/><path d=\"M9.5 12.5a3 3 0 0 0 4 4\"/><line x1=\"3\" y1=\"3\" x2=\"21\" y2=\"21\"/>"
+  },
+  {
+    "name": "video-off",
+    "category": "media",
+    "tags": [
+      "video",
+      "off",
+      "disabled",
+      "no camera",
+      "blocked"
+    ],
+    "body": "<path d=\"M14 7H5a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h9\"/><path d=\"M16 10l5-3v10l-3-1.8\"/><line x1=\"3\" y1=\"3\" x2=\"21\" y2=\"21\"/>"
+  },
+  {
+    "name": "images-multiple",
+    "category": "media",
+    "tags": [
+      "images",
+      "photos",
+      "gallery",
+      "multiple",
+      "stack"
+    ],
+    "body": "<rect x=\"7\" y=\"3\" width=\"14\" height=\"12\" rx=\"2\"/><circle cx=\"11\" cy=\"7.5\" r=\"1.3\"/><path d=\"M21 12l-4-3-6 4\"/><path d=\"M17 15v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2\"/>"
+  },
+  {
+    "name": "gif-square",
+    "category": "media",
+    "tags": [
+      "gif",
+      "animation",
+      "loop",
+      "meme",
+      "clip"
+    ],
+    "body": "<rect x=\"3\" y=\"5\" width=\"18\" height=\"14\" rx=\"2\"/><path d=\"M10.5 10a2 2 0 1 0 0 4h1v-1.5\"/><line x1=\"14\" y1=\"10\" x2=\"14\" y2=\"14\"/><path d=\"M17.5 14v-4h2.5\"/><line x1=\"17.5\" y1=\"12\" x2=\"19.5\" y2=\"12\"/>"
+  },
+  {
+    "name": "subtitles",
+    "category": "media",
+    "tags": [
+      "subtitles",
+      "captions",
+      "cc",
+      "text",
+      "accessibility"
+    ],
+    "body": "<rect x=\"3\" y=\"5\" width=\"18\" height=\"14\" rx=\"2\"/><line x1=\"7\" y1=\"11\" x2=\"10\" y2=\"11\"/><line x1=\"13\" y1=\"11\" x2=\"17\" y2=\"11\"/><line x1=\"7\" y1=\"15\" x2=\"12\" y2=\"15\"/><line x1=\"15\" y1=\"15\" x2=\"17\" y2=\"15\"/>"
+  },
+  {
+    "name": "aspect-ratio",
+    "category": "media",
+    "tags": [
+      "aspect",
+      "ratio",
+      "crop",
+      "resize",
+      "frame"
+    ],
+    "body": "<rect x=\"3\" y=\"5\" width=\"18\" height=\"14\" rx=\"2\"/><polyline points=\"7 9 7 12 10 12\"/><polyline points=\"17 15 17 12 14 12\"/>"
+  },
+  {
+    "name": "octagon-alert",
+    "category": "status",
+    "tags": [
+      "alert",
+      "octagon",
+      "stop",
+      "warning",
+      "error"
+    ],
+    "body": "<path d=\"M8 3h8l5 5v8l-5 5H8l-5-5V8z\"/><line x1=\"12\" y1=\"8\" x2=\"12\" y2=\"13\"/><line x1=\"12\" y1=\"16\" x2=\"12\" y2=\"16.01\"/>"
+  },
+  {
+    "name": "battery-charging",
+    "category": "status",
+    "tags": [
+      "battery",
+      "charging",
+      "power",
+      "energy",
+      "charge"
+    ],
+    "body": "<rect x=\"2\" y=\"8\" width=\"16\" height=\"8\" rx=\"2\"/><line x1=\"21\" y1=\"11\" x2=\"21\" y2=\"13\"/><polygon points=\"10 9 8 12.5 11 12.5 9 15.5\"/>"
+  },
+  {
+    "name": "signal-full",
+    "category": "status",
+    "tags": [
+      "signal",
+      "bars",
+      "reception",
+      "network",
+      "strength"
+    ],
+    "body": "<line x1=\"5\" y1=\"18\" x2=\"5\" y2=\"15\"/><line x1=\"10\" y1=\"18\" x2=\"10\" y2=\"12\"/><line x1=\"15\" y1=\"18\" x2=\"15\" y2=\"9\"/><line x1=\"20\" y1=\"18\" x2=\"20\" y2=\"5\"/>"
+  },
+  {
+    "name": "wifi-status",
+    "category": "status",
+    "tags": [
+      "wifi",
+      "wireless",
+      "connection",
+      "network",
+      "online"
+    ],
+    "body": "<path d=\"M4 9a13 13 0 0 1 16 0\"/><path d=\"M7 12.5a8 8 0 0 1 10 0\"/><path d=\"M10 16a3.5 3.5 0 0 1 4 0\"/><line x1=\"12\" y1=\"19\" x2=\"12\" y2=\"19.01\"/>"
+  },
+  {
+    "name": "sync-check",
+    "category": "status",
+    "tags": [
+      "sync",
+      "synced",
+      "done",
+      "updated",
+      "complete"
+    ],
+    "body": "<path d=\"M4 12a8 8 0 0 1 13.7-5.6L20 8\"/><polyline points=\"20 4 20 8 16 8\"/><path d=\"M20 12a8 8 0 0 1-13 6.2\"/><polyline points=\"7 16 9.5 18.5 14 14\"/>"
+  },
+  {
+    "name": "circle-dashed",
+    "category": "status",
+    "tags": [
+      "pending",
+      "progress",
+      "dashed",
+      "loading",
+      "incomplete"
+    ],
+    "body": "<path d=\"M12 3a9 9 0 0 1 3 .5\"/><path d=\"M18.5 6a9 9 0 0 1 2 4\"/><path d=\"M20.5 13.5a9 9 0 0 1-2.5 4\"/><path d=\"M15 20.5a9 9 0 0 1-6 0\"/><path d=\"M6 17.5a9 9 0 0 1-2.5-4\"/><path d=\"M3.5 10a9 9 0 0 1 2.5-4\"/><path d=\"M9 3.5A9 9 0 0 1 12 3\"/>"
   }
 ];

@@ -5,6 +5,8 @@ import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 import { Search, X, SearchX } from 'lucide-react';
 import { Button, Input, Select } from '@adysre/ui';
+import { useRouter } from '@/i18n/navigation';
+import { JumpToCombobox, type JumpToItem } from '@/components/jump-to-combobox';
 import {
   COMPONENT_CATEGORIES,
   DIFFICULTIES,
@@ -82,6 +84,19 @@ export function ComponentGrid({ components }: { components: LocalizedComponent[]
   const [filters, setFilters] = useState<Filters>(INITIAL);
   const t = useTranslations('components');
   const tCommon = useTranslations('common');
+  const router = useRouter();
+
+  // Every component as a "jump to" target: type a name, land on its page.
+  const jumpItems = useMemo<JumpToItem[]>(
+    () =>
+      components.map((c) => ({
+        id: c.slug,
+        label: c.title,
+        sublabel: t(`categories.${c.category}`),
+        keywords: `${c.category} ${c.tags.join(' ')}`,
+      })),
+    [components, t],
+  );
 
   // The category is chosen from the sidebar submenu, which navigates here with
   // `?category=`. Sync it into the filter so the grid reflects the URL; the
@@ -126,7 +141,13 @@ export function ComponentGrid({ components }: { components: LocalizedComponent[]
           />
         </div>
 
-        <div className="grid grid-cols-1 gap-2 sm:max-w-xl sm:grid-cols-3">
+        <div className="grid grid-cols-1 gap-2 sm:max-w-3xl sm:grid-cols-4">
+          <JumpToCombobox
+            items={jumpItems}
+            onSelect={(slug) => router.push(`/components/${slug}`)}
+            label={t('searchLabel')}
+          />
+
           <Select
             value={filters.framework}
             onChange={(e) => set('framework', e.target.value as Framework | 'all')}

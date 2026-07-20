@@ -85,6 +85,15 @@ export function countByCategory(prompts: Prompt[]): Record<string, number> {
 
 export const CATEGORY_COUNTS: Record<string, number> = countByCategory(PROMPTS);
 
+/** Total number of prompts - the single source of truth for counts. */
+export const PROMPT_COUNT = PROMPTS.length;
+
+/** Prompts available on the free tier (the rest are premium). */
+export const FREE_PROMPT_COUNT = PROMPTS.filter((p) => p.tier === 'free').length;
+
+/** Number of distinct prompt categories. */
+export const PROMPT_CATEGORY_COUNT = Object.keys(CATEGORY_COUNTS).length;
+
 /** A prompt resolved for a locale, plus whether its text is still English. */
 export interface LocalizedPrompt extends Prompt {
   /**

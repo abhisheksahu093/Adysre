@@ -12,6 +12,8 @@
 		"edit": "編集",
 		"search": "検索",
 		"clearFilters": "フィルターをクリア",
+		"jumpToPlaceholder": "検索して移動…",
+		"noResults": "結果が見つかりません",
 		"comingSoon": "近日公開",
 		"inDevelopment": "開発中",
 		"backToSignIn": "ログインに戻る"
@@ -32,10 +34,14 @@
 			"settings": "組織・メンバー・環境設定を管理します。",
 			"palettes": "既製のカラーパレットを閲覧・編集・書き出し、または自分で生成できます。",
 			"gradients": "CSSグラデーションを閲覧・編集・書き出し、または自分で生成できます。",
+			"patterns": "CSS背景パターンを閲覧・編集・エクスポート、または自分で生成。",
+			"textures": "CSSサーフェステクスチャを閲覧・編集・エクスポート、または自分で生成。",
 			"icons": "オリジナルの SVG アイコンを閲覧・カスタマイズし、任意の形式やサイズで書き出せます。"
 		},
 		"palettes": "カラーパレット",
 		"gradients": "グラデーション",
+		"patterns": "パターン",
+		"textures": "テクスチャ",
 		"icons": "アイコン",
 		"backToHome": "ホームへ戻る",
 		"groups": {
@@ -1361,6 +1367,256 @@
 			}
 		}
 	},
+	"patterns": {
+		"title": "パターン",
+		"subtitle": "ウェブサイトやアプリ向けの厳選されたCSS背景パターンを閲覧 - コードをコピーし、色やサイズを変更し、CSSや画像としてダウンロード、または自分で生成できます。",
+		"generateCta": "パターンを生成",
+		"searchPlaceholder": "名前・タグ・色でパターンを検索…",
+		"filterByTag": "タグで絞り込み",
+		"allTags": "すべて",
+		"sortBy": "並び替え",
+		"sort": {
+			"trending": "人気",
+			"name": "名前"
+		},
+		"savedTitle": "あなたのパターン",
+		"trendingTitle": "人気",
+		"removeSaved": "{name} を削除",
+		"empty": "条件に合うパターンがありません。",
+		"card": {
+			"open": "{name} を開く",
+			"edit": "編集",
+			"copyCss": "CSSをコピー",
+			"like": "{name} にいいね"
+		},
+		"code": {
+			"formats": "コード形式",
+			"download": ".{ext} をダウンロード",
+			"title": "コード"
+		},
+		"quickView": {
+			"preview": "パターンプレビュー",
+			"type": "パターンの種類",
+			"types": {
+				"dots": "ドット",
+				"grid": "グリッド",
+				"lines": "ライン",
+				"checkerboard": "チェッカー",
+				"crosshatch": "クロスハッチ"
+			},
+			"foreground": "前景",
+			"background": "背景",
+			"size": "タイルサイズ",
+			"angle": "角度",
+			"shuffle": "シャッフル",
+			"downloadImage": "PNGをダウンロード",
+			"save": "保存",
+			"saved": "保存済み",
+			"similar": "類似を探す"
+		},
+		"generator": {
+			"title": "パターンを生成",
+			"subtitle": "ブリーフ、あなたの色、または参照画像から。",
+			"modeLabel": "生成方法",
+			"modes": {
+				"brief": "ブリーフ",
+				"colors": "色",
+				"image": "画像"
+			},
+			"fields": {
+				"name": "名前（任意）",
+				"namePlaceholder": "例: Blueprint Grid",
+				"style": "スタイル",
+				"colors": "使いたい色（任意）",
+				"colorsPlaceholder": "例: #0f172a, slate",
+				"comments": "コメント（任意）",
+				"commentsPlaceholder": "例: 控えめで明るい",
+				"hexes": "あなたの色",
+				"hexesHint": "カンマ区切りで1〜2個のHEXコードまたは色名を入力。",
+				"imageTitle": "参照画像をアップロード",
+				"imageHint": "そこから色を抽出します。PNG、JPG、WEBP、GIF。"
+			},
+			"styles": {
+				"dots": "ドット",
+				"grid": "グリッド",
+				"blueprint": "ブループリント",
+				"stripes": "ストライプ",
+				"diagonal": "斜め",
+				"checker": "チェッカー",
+				"hatch": "ハッチ",
+				"neon": "ネオン",
+				"pastel": "パステル",
+				"mono": "モノ"
+			},
+			"preview": "プレビュー",
+			"cancel": "キャンセル",
+			"generate": "生成",
+			"regenerate": "再生成",
+			"use": "このパターンを使う",
+			"error": "問題が発生しました。もう一度お試しください。",
+			"errorType": "未対応の画像です。PNG、JPG、WEBP、GIFを使用してください。",
+			"errorSize": "その画像は12MBを超えています。"
+		},
+		"tour": {
+			"restart": "ツアーを再生",
+			"stepOf": "ステップ {current}/{total}",
+			"back": "戻る",
+			"next": "次へ",
+			"done": "完了",
+			"skip": "ツアーをスキップ",
+			"steps": {
+				"welcome": {
+					"title": "パターンへようこそ",
+					"body": "サイトやアプリ向けの既製CSS背景パターン - コピー、調整、エクスポート、または自分で生成。"
+				},
+				"generate": {
+					"title": "自分で生成",
+					"body": "欲しいスタイルを説明し、色を入力するか、参照画像をアップロードすると、パターンを作成します。"
+				},
+				"browse": {
+					"title": "閲覧してコピー",
+					"body": "任意のパターンをクリックして開くか、カードから直接CSSをコピー。タグや色で検索・絞り込み。"
+				},
+				"edit": {
+					"title": "編集する",
+					"body": "ドット、グリッド、ライン、チェッカー、クロスハッチを切り替え、色を変え、タイルサイズを調整。"
+				},
+				"export": {
+					"title": "エクスポート",
+					"body": "パターンをCSS、SCSS、Tailwind、配列、JSONとしてコピーまたはダウンロード - あるいはPNG画像として保存。"
+				},
+				"similar": {
+					"title": "類似を探す",
+					"body": "雰囲気の合うパターンに移動して探索を続けましょう。"
+				}
+			}
+		}
+	},
+	"textures": {
+		"title": "テクスチャ",
+		"subtitle": "ウェブサイトやアプリ向けの厳選されたCSSサーフェステクスチャを閲覧 - コードをコピーし、色や粒度を調整し、CSSや画像としてダウンロード、または自分で生成できます。",
+		"generateCta": "テクスチャを生成",
+		"searchPlaceholder": "名前・タグ・色でテクスチャを検索…",
+		"filterByTag": "タグで絞り込み",
+		"allTags": "すべて",
+		"sortBy": "並び替え",
+		"sort": {
+			"trending": "人気",
+			"name": "名前"
+		},
+		"savedTitle": "あなたのテクスチャ",
+		"trendingTitle": "人気",
+		"removeSaved": "{name} を削除",
+		"empty": "条件に合うテクスチャがありません。",
+		"card": {
+			"open": "{name} を開く",
+			"edit": "編集",
+			"copyCss": "CSSをコピー",
+			"like": "{name} にいいね"
+		},
+		"code": {
+			"formats": "コード形式",
+			"download": ".{ext} をダウンロード",
+			"title": "コード"
+		},
+		"quickView": {
+			"preview": "テクスチャプレビュー",
+			"type": "テクスチャの種類",
+			"types": {
+				"noise": "ノイズ",
+				"grain": "グレイン",
+				"paper": "紙",
+				"carbon": "カーボン",
+				"fabric": "布"
+			},
+			"foreground": "グレイン",
+			"background": "背景",
+			"opacity": "強さ",
+			"scale": "スケール",
+			"shuffle": "シャッフル",
+			"downloadImage": "PNGをダウンロード",
+			"save": "保存",
+			"saved": "保存済み",
+			"similar": "類似を探す"
+		},
+		"generator": {
+			"title": "テクスチャを生成",
+			"subtitle": "ブリーフ、あなたの色、または参照画像から。",
+			"modeLabel": "生成方法",
+			"modes": {
+				"brief": "ブリーフ",
+				"colors": "色",
+				"image": "画像"
+			},
+			"fields": {
+				"name": "名前（任意）",
+				"namePlaceholder": "例: Carbon Fiber",
+				"style": "スタイル",
+				"colors": "使いたい色（任意）",
+				"colorsPlaceholder": "例: #0f172a, slate",
+				"comments": "コメント（任意）",
+				"commentsPlaceholder": "例: 控えめで暗い",
+				"hexes": "あなたの色",
+				"hexesHint": "カンマ区切りで1〜2個のHEXコードまたは色名を入力。",
+				"imageTitle": "参照画像をアップロード",
+				"imageHint": "そこから色を抽出します。PNG、JPG、WEBP、GIF。"
+			},
+			"styles": {
+				"noise": "ノイズ",
+				"grain": "グレイン",
+				"film": "フィルム",
+				"paper": "紙",
+				"craft": "クラフト",
+				"carbon": "カーボン",
+				"tech": "テック",
+				"fabric": "布",
+				"denim": "デニム",
+				"linen": "リネン"
+			},
+			"preview": "プレビュー",
+			"cancel": "キャンセル",
+			"generate": "生成",
+			"regenerate": "再生成",
+			"use": "このテクスチャを使う",
+			"error": "問題が発生しました。もう一度お試しください。",
+			"errorType": "未対応の画像です。PNG、JPG、WEBP、GIFを使用してください。",
+			"errorSize": "その画像は12MBを超えています。"
+		},
+		"tour": {
+			"restart": "ツアーを再生",
+			"stepOf": "ステップ {current}/{total}",
+			"back": "戻る",
+			"next": "次へ",
+			"done": "完了",
+			"skip": "ツアーをスキップ",
+			"steps": {
+				"welcome": {
+					"title": "テクスチャへようこそ",
+					"body": "サイトやアプリ向けの既製CSSサーフェステクスチャ - コピー、調整、エクスポート、または自分で生成。"
+				},
+				"generate": {
+					"title": "自分で生成",
+					"body": "欲しい表面を説明し、色を入力するか、参照画像をアップロードすると、テクスチャを作成します。"
+				},
+				"browse": {
+					"title": "閲覧してコピー",
+					"body": "任意のテクスチャをクリックして開くか、カードから直接CSSをコピー。タグや色で検索・絞り込み。"
+				},
+				"edit": {
+					"title": "編集する",
+					"body": "ノイズ、グレイン、紙、カーボン、布を切り替え、色を変え、強さとスケールを調整。"
+				},
+				"export": {
+					"title": "エクスポート",
+					"body": "テクスチャをCSS、SCSS、Tailwind、配列、JSONとしてコピーまたはダウンロード - あるいはPNG画像として保存。"
+				},
+				"similar": {
+					"title": "類似を探す",
+					"body": "雰囲気の合うテクスチャに移動して探索を続けましょう。"
+				}
+			}
+		}
+	},
 	"icons": {
 		"title": "アイコン",
 		"subtitle": "{count} 個のオリジナルなラインアイコン。検索・色変更・サイズ調整して、SVG・PNG・React・CSS でコピーまたはダウンロードできます。",
@@ -1454,7 +1710,11 @@
 			"openApp": "ワークスペースを開く",
 			"menu": "メニューを開く",
 			"closeMenu": "メニューを閉じる",
-			"skip": "本文へスキップ"
+			"skip": "本文へスキップ",
+			"menus": {
+				"styles": "スタイル",
+				"library": "ライブラリ"
+			}
 		},
 		"hero": {
 			"badge": "新機能: グラデーションとパレットのジェネレーター",
@@ -1489,6 +1749,14 @@
 				"gradients": {
 					"title": "グラデーション",
 					"desc": "重ねられたブランド向けグラデーション。CSS をそのままスタイルに貼り付けられます。"
+				},
+				"patterns": {
+					"title": "パターン",
+					"desc": "スタイルにそのまま貼り付けられる、繰り返し可能なCSS背景パターン。"
+				},
+				"textures": {
+					"title": "テクスチャ",
+					"desc": "純粋なCSSによるノイズ・グレイン・紙・織りのサーフェステクスチャ - 画像ファイル不要。"
 				},
 				"promptLibrary": {
 					"title": "プロンプトライブラリ",
@@ -1550,6 +1818,10 @@
 			"items": {
 				"components": "コンポーネント",
 				"icons": "アイコン",
+				"colors": "カラー",
+				"gradients": "グラデーション",
+				"patterns": "パターン",
+				"textures": "テクスチャ",
 				"prompts": "プロンプト",
 				"teams": "利用中のチーム"
 			}

@@ -1,0 +1,14 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "extends": ["//"],
+  "tasks": {
+    // `prisma generate` writes into node_modules/.prisma, outside this package,
+    // so turbo cannot capture it as an output. Caching would let a hit skip
+    // generation on a fresh install and leave consumers typed against the
+    // stub client — exactly the failure this task exists to prevent.
+    "build": {
+      "cache": false,
+      "outputs": []
+    }
+  }
+}

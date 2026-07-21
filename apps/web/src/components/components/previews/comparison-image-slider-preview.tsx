@@ -11,6 +11,10 @@ import type { KeyboardEvent, PointerEvent } from 'react';
  * across the whole frame - a wipe you cannot see is a wipe you cannot review.
  * Drag the handle, or focus it and use the arrow keys. Keep this in step with
  * `src/data/components/comparisons.ts`.
+ *
+ * The default export adds a page-section shell - padding plus a centred
+ * max-width - which is preview-only; the component itself is width-agnostic
+ * and takes its width from the caller.
  */
 interface WipeImage {
   src: string;
@@ -67,7 +71,7 @@ function ComparisonImageSlider({
   return (
     <div
       ref={rootRef}
-      className={`relative w-full max-w-lg cursor-ew-resize touch-none select-none overflow-hidden rounded-xl border border-gray-200 dark:border-gray-800 ${className}`}
+      className={`relative w-full cursor-ew-resize touch-none select-none overflow-hidden rounded-xl border border-gray-200 dark:border-gray-800 ${className}`}
       onPointerDown={(event: PointerEvent<HTMLDivElement>) => {
         event.currentTarget.setPointerCapture(event.pointerId);
         fromPointer(event);
@@ -76,13 +80,13 @@ function ComparisonImageSlider({
         if (event.currentTarget.hasPointerCapture(event.pointerId)) fromPointer(event);
       }}
     >
-      {/* eslint-disable-next-line @next/next/no-img-element */}
+      { }
       <img className="block h-72 w-full object-cover" src={after.src} alt={after.alt} />
 
       {/* Both layers stay full size; clip-path hides the overflow, so the two
           pictures never slide against each other as the edge moves. */}
       <div className="absolute inset-0" style={{ clipPath: `inset(0 ${100 - pos}% 0 0)` }}>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
+        { }
         <img className="block h-72 w-full object-cover" src={before.src} alt={before.alt} />
       </div>
 
@@ -150,6 +154,14 @@ const AFTER: WipeImage = {
 
 export default function ComparisonImageSliderPreview() {
   return (
-    <ComparisonImageSlider before={BEFORE} after={AFTER} ariaLabel="Reveal the kitchen before the renovation" />
+    <section className="w-full px-4 py-12 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-5xl">
+        <ComparisonImageSlider
+          before={BEFORE}
+          after={AFTER}
+          ariaLabel="Reveal the kitchen before the renovation"
+        />
+      </div>
+    </section>
   );
 }

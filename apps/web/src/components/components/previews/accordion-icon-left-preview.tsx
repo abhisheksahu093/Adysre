@@ -26,7 +26,7 @@ function AccordionIconLeft({ items, defaultOpenId, className = '' }: AccordionIc
   const [openId, setOpenId] = useState<string | null>(defaultOpenId ?? null);
 
   return (
-    <div className={`max-w-2xl ${className}`}>
+    <div className={`w-full ${className}`}>
       {items.map((item: FaqItem) => {
         const isOpen = openId === item.id;
         const buttonId = `${baseId}-${item.id}-button`;
@@ -91,5 +91,11 @@ const SAMPLE_ITEMS: FaqItem[] = [
 ];
 
 export default function AccordionIconLeftPreview() {
-  return <AccordionIconLeft items={SAMPLE_ITEMS} defaultOpenId="api" className="w-full" />;
+  return (
+    <section className="w-full px-4 py-12 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-3xl">
+        <AccordionIconLeft items={SAMPLE_ITEMS} defaultOpenId="api" />
+      </div>
+    </section>
+  );
 }

@@ -5,9 +5,10 @@ import { useId, useState, type FormEvent } from 'react';
 /**
  * Live preview for `newsletter-split`.
  *
- * Mirrors the `typescript` code variant verbatim. On a narrow stage this shows
- * the stacked layout - copy above form, in source order - which is the half of
- * the design most worth checking.
+ * Mirrors the `typescript` code variant verbatim. The section is width-agnostic
+ * (`w-full`); the preview supplies the page shell that centres it. Below the `md`
+ * breakpoint it collapses to the stacked layout - copy above form, in source
+ * order - which is the half of the design most worth checking.
  * Keep this in step with `src/data/components/marketing.ts`.
  */
 interface NewsletterSplitProps {
@@ -39,7 +40,7 @@ function NewsletterSplit({
   return (
     <section
       aria-labelledby={titleId}
-      className={`grid w-full max-w-4xl items-center gap-6 rounded-2xl border border-gray-200 bg-gray-50 p-6 md:grid-cols-[1.2fr_1fr] md:gap-10 md:p-8 dark:border-gray-800 dark:bg-gray-900 ${className}`}
+      className={`grid w-full items-center gap-6 rounded-2xl border border-gray-200 bg-gray-50 p-6 md:grid-cols-[1.2fr_1fr] md:gap-10 md:p-8 dark:border-gray-800 dark:bg-gray-900 ${className}`}
     >
       <div>
         {kicker ? (
@@ -87,11 +88,15 @@ function NewsletterSplit({
 
 export default function NewsletterSplitPreview() {
   return (
-    <NewsletterSplit
-      title="The five-minute engineering digest"
-      kicker="Weekly"
-      copy="What broke, what shipped, and what we learned - from teams running the same stack as you."
-      ctaLabel="Subscribe"
-    />
+    <section className="w-full px-4 py-12 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-5xl">
+        <NewsletterSplit
+          title="The five-minute engineering digest"
+          kicker="Weekly"
+          copy="What broke, what shipped, and what we learned - from teams running the same stack as you."
+          ctaLabel="Subscribe"
+        />
+      </div>
+    </section>
   );
 }

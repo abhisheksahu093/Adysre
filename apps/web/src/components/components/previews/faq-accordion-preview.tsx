@@ -40,7 +40,7 @@ function FaqAccordion({
   };
 
   return (
-    <div className={`max-w-2xl ${className}`}>
+    <div className={`w-full ${className}`}>
       {items.map((item: FaqItem) => {
         const isOpen = openIds.includes(item.id);
         const buttonId = `${baseId}-${item.id}-button`;
@@ -102,5 +102,11 @@ const SAMPLE_ITEMS: FaqItem[] = [
 ];
 
 export default function FaqAccordionPreview() {
-  return <FaqAccordion items={SAMPLE_ITEMS} defaultOpenId="plan" className="w-full" />;
+  return (
+    <section className="w-full px-4 py-12 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-3xl">
+        <FaqAccordion items={SAMPLE_ITEMS} defaultOpenId="plan" />
+      </div>
+    </section>
+  );
 }

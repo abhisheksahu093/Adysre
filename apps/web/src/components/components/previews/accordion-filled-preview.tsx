@@ -26,7 +26,7 @@ function AccordionFilled({ items, defaultOpenId, className = '' }: AccordionFill
   const [openId, setOpenId] = useState<string | null>(defaultOpenId ?? null);
 
   return (
-    <div className={`max-w-2xl space-y-2 ${className}`}>
+    <div className={`w-full space-y-2 ${className}`}>
       {items.map((item: FaqItem) => {
         const isOpen = openId === item.id;
         const buttonId = `${baseId}-${item.id}-button`;
@@ -99,5 +99,11 @@ const SAMPLE_ITEMS: FaqItem[] = [
 ];
 
 export default function AccordionFilledPreview() {
-  return <AccordionFilled items={SAMPLE_ITEMS} defaultOpenId="hours" className="w-full" />;
+  return (
+    <section className="w-full px-4 py-12 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-3xl">
+        <AccordionFilled items={SAMPLE_ITEMS} defaultOpenId="hours" />
+      </div>
+    </section>
+  );
 }

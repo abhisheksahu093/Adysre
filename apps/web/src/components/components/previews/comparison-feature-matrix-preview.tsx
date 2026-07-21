@@ -11,6 +11,10 @@
  * needs a scroll container the preview stage does not have - sticky here would
  * only cost the header its transparency. Everything load-bearing is identical.
  * Keep this in step with `src/data/components/comparisons.ts`.
+ *
+ * The default export adds a page-section shell - padding plus a centred
+ * max-width - which is preview-only; the component itself is width-agnostic
+ * and takes its width from the caller.
  */
 interface MatrixPlan {
   id: string;
@@ -169,11 +173,10 @@ const SAMPLE_GROUPS: FeatureGroup[] = [
 
 export default function ComparisonFeatureMatrixPreview() {
   return (
-    <ComparisonFeatureMatrix
-      items={SAMPLE_GROUPS}
-      plans={SAMPLE_PLANS}
-      highlighted="pro"
-      className="max-w-2xl"
-    />
+    <section className="w-full px-4 py-12 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-6xl">
+        <ComparisonFeatureMatrix items={SAMPLE_GROUPS} plans={SAMPLE_PLANS} highlighted="pro" />
+      </div>
+    </section>
   );
 }

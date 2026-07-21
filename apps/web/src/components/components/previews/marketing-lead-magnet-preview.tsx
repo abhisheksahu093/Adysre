@@ -84,11 +84,15 @@ function LeadMagnet({
 
 export default function MarketingLeadMagnetPreview() {
   return (
-    <LeadMagnet
-      title="The 2026 SaaS onboarding playbook"
-      copy="28 pages of teardown, checklists and copy you can steal for your own flow."
-      ctaLabel="Get the guide"
-    />
+    <section className="w-full px-4 py-12 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-5xl">
+        <LeadMagnet
+          title="The 2026 SaaS onboarding playbook"
+          copy="28 pages of teardown, checklists and copy you can steal for your own flow."
+          ctaLabel="Get the guide"
+        />
+      </div>
+    </section>
   );
 }
 

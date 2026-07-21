@@ -5,14 +5,14 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 /**
  * Live preview for `navbar-mobile-drawer`.
  *
- * Mirrors the `typescript` code variant, with one preview-only change: the
- * overlay and panel are `absolute` inside this card rather than `fixed` to the
- * viewport, so the drawer does not take over the whole gallery page. The
- * shipped component uses `fixed inset-y-0 right-0`.
+ * Mirrors the `typescript` code variant verbatim: the bar is a real full-width
+ * header and the drawer is `fixed` to the viewport, so this renders identically
+ * whether it sits in the library card (its own iframe document), on an
+ * assembled playground page, or in a downloaded project.
  *
- * The parts worth trying are unchanged and real: Tab is trapped inside the
- * panel, Escape closes it and returns focus to the hamburger, and the body
- * scroll lock is live. Keep this in step with `src/data/components/navbar.ts`.
+ * Tab is trapped inside the panel, Escape closes it and returns focus to the
+ * hamburger, and the body scroll lock is live.
+ * Keep this in step with `src/data/components/navbar.ts`.
  */
 interface NavLink {
   href: string;
@@ -80,7 +80,7 @@ export default function NavbarMobileDrawerPreview() {
   }, [open, close]);
 
   return (
-    <div className="relative h-56 w-full overflow-hidden rounded-lg border border-gray-200 bg-gray-50 dark:border-gray-800 dark:bg-gray-950">
+    <header className="w-full">
       <div className="flex h-14 items-center justify-between border-b border-gray-200 bg-white px-4 dark:border-gray-800 dark:bg-gray-900">
         <a
           href="#"
@@ -112,20 +112,16 @@ export default function NavbarMobileDrawerPreview() {
         </button>
       </div>
 
-      <p className="p-4 text-sm text-gray-600 dark:text-gray-400">
-        Open the menu, then try Tab and Escape.
-      </p>
-
       {open ? (
         <>
-          <div className="absolute inset-0 z-40 bg-gray-900/50 dark:bg-black/70" onClick={close} />
+          <div className="fixed inset-0 z-40 bg-gray-900/50 dark:bg-black/70" onClick={close} />
           <div
             ref={panelRef}
             id="navdrawer-panel"
             role="dialog"
             aria-modal="true"
             aria-label="Main menu"
-            className="absolute inset-y-0 right-0 z-50 flex w-[min(14rem,80%)] flex-col gap-4 border-l border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900"
+            className="fixed inset-y-0 right-0 z-50 flex w-[min(18rem,85vw)] flex-col gap-4 border-l border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900"
           >
             <div className="flex items-center justify-between">
               <span className="text-xs font-semibold uppercase tracking-[0.06em] text-gray-500 dark:text-gray-400">
@@ -177,6 +173,6 @@ export default function NavbarMobileDrawerPreview() {
           </div>
         </>
       ) : null}
-    </div>
+    </header>
   );
 }

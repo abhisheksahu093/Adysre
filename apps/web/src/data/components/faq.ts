@@ -84,7 +84,7 @@ export const faqComponents: ComponentEntry[] = [
   </details>
 </div>`,
       css: `.faq {
-  max-width: 42rem;
+  width: 100%;
 }
 
 .faq__heading {
@@ -194,7 +194,7 @@ export const faqComponents: ComponentEntry[] = [
   The chevron rotation uses the group-open: variant on <details>, and the
   motion-reduce: variant keeps it still for reduced-motion users.
 -->
-<div class="max-w-2xl">
+<div class="w-full">
   <h2 class="mb-4 text-xl font-semibold text-gray-900 dark:text-gray-100">Frequently asked questions</h2>
 
   <details class="group border-b border-gray-200 dark:border-gray-800" name="faq" open>
@@ -247,7 +247,7 @@ export function FaqAccordion({ items, allowMultiple = false, defaultOpenId, clas
   }
 
   return (
-    <div className={\`max-w-2xl \${className}\`}>
+    <div className={\`w-full \${className}\`}>
       {items.map((item) => {
         const isOpen = openIds.includes(item.id);
         const buttonId = \`\${baseId}-\${item.id}-button\`;
@@ -322,7 +322,7 @@ export function FaqAccordion({
   }
 
   return (
-    <div className={\`max-w-2xl \${className}\`}>
+    <div className={\`w-full \${className}\`}>
       {items.map((item) => {
         const isOpen = openIds.includes(item.id);
         const buttonId = \`\${baseId}-\${item.id}-button\`;
@@ -394,7 +394,7 @@ export function FaqAccordion({
   };
 
   return (
-    <div className={\`max-w-2xl \${className}\`}>
+    <div className={\`w-full \${className}\`}>
       {items.map((item: FaqItem) => {
         const isOpen = openIds.includes(item.id);
         const buttonId = \`\${baseId}-\${item.id}-button\`;
@@ -508,7 +508,7 @@ export function FaqAccordion({
   </details>
 </div>`,
       css: `.acc-multi {
-  max-width: 42rem;
+  width: 100%;
 }
 
 .acc-multi__item {
@@ -597,7 +597,7 @@ export function FaqAccordion({
   }
 }`,
       tailwind: `<!-- No name attribute => every panel is independent, so any number can be open. -->
-<div class="max-w-2xl">
+<div class="w-full">
   <details class="group border-b border-gray-200 dark:border-gray-800" open>
     <summary class="flex cursor-pointer list-none items-center justify-between gap-4 px-1 py-4 text-[0.9375rem] font-medium text-gray-900 hover:text-blue-600 focus-visible:rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:text-gray-100 dark:hover:text-blue-400 dark:focus-visible:ring-blue-400 dark:focus-visible:ring-offset-gray-900 [&::-webkit-details-marker]:hidden">
       How long does delivery take?
@@ -655,7 +655,7 @@ export function AccordionMultiOpen({ items, defaultOpenIds = [], className = '' 
   }
 
   return (
-    <div className={\`max-w-2xl \${className}\`}>
+    <div className={\`w-full \${className}\`}>
       <div className="flex justify-end pb-1">
         <button
           type="button"
@@ -744,7 +744,7 @@ export function AccordionMultiOpen({
   }
 
   return (
-    <div className={\`max-w-2xl \${className}\`}>
+    <div className={\`w-full \${className}\`}>
       <div className="flex justify-end pb-1">
         <button
           type="button"
@@ -831,7 +831,7 @@ export function AccordionMultiOpen({
   };
 
   return (
-    <div className={\`max-w-2xl \${className}\`}>
+    <div className={\`w-full \${className}\`}>
       <div className="flex justify-end pb-1">
         <button
           type="button"
@@ -954,7 +954,7 @@ export function AccordionMultiOpen({
   </details>
 </div>`,
       css: `.acc-bordered {
-  max-width: 42rem;
+  width: 100%;
   overflow: hidden;
   border: 1px solid #e5e7eb;
   border-radius: 0.75rem;
@@ -1051,7 +1051,7 @@ export function AccordionMultiOpen({
   }
 }`,
       tailwind: `<!-- divide-y draws the dividers; overflow-hidden clips the rows to the radius. -->
-<div class="max-w-2xl divide-y divide-gray-200 overflow-hidden rounded-xl border border-gray-200 bg-white dark:divide-gray-800 dark:border-gray-800 dark:bg-gray-950">
+<div class="w-full divide-y divide-gray-200 overflow-hidden rounded-xl border border-gray-200 bg-white dark:divide-gray-800 dark:border-gray-800 dark:bg-gray-950">
   <details class="group" name="acc-bordered" open>
     <summary class="flex cursor-pointer list-none items-center justify-between gap-4 px-4 py-3.5 text-[0.9375rem] font-medium text-gray-900 hover:text-blue-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-blue-600 dark:text-gray-100 dark:hover:text-blue-400 dark:focus-visible:ring-blue-400 [&::-webkit-details-marker]:hidden">
       How many seats are included?
@@ -1096,7 +1096,7 @@ export function AccordionBordered({ items, defaultOpenId, className = '' }) {
 
   return (
     <div
-      className={\`max-w-2xl divide-y divide-gray-200 overflow-hidden rounded-xl border border-gray-200 bg-white dark:divide-gray-800 dark:border-gray-800 dark:bg-gray-950 \${className}\`}
+      className={\`w-full divide-y divide-gray-200 overflow-hidden rounded-xl border border-gray-200 bg-white dark:divide-gray-800 dark:border-gray-800 dark:bg-gray-950 \${className}\`}
     >
       {items.map((item) => {
         const isOpen = openId === item.id;
@@ -1159,7 +1159,7 @@ export function AccordionBordered({ items, defaultOpenId, className = '' }: Acco
 
   return (
     <div
-      className={\`max-w-2xl divide-y divide-gray-200 overflow-hidden rounded-xl border border-gray-200 bg-white dark:divide-gray-800 dark:border-gray-800 dark:bg-gray-950 \${className}\`}
+      className={\`w-full divide-y divide-gray-200 overflow-hidden rounded-xl border border-gray-200 bg-white dark:divide-gray-800 dark:border-gray-800 dark:bg-gray-950 \${className}\`}
     >
       {items.map((item) => {
         const isOpen = openId === item.id;
@@ -1224,7 +1224,7 @@ export function AccordionBordered({
 
   return (
     <div
-      className={\`max-w-2xl divide-y divide-gray-200 overflow-hidden rounded-xl border border-gray-200 bg-white dark:divide-gray-800 dark:border-gray-800 dark:bg-gray-950 \${className}\`}
+      className={\`w-full divide-y divide-gray-200 overflow-hidden rounded-xl border border-gray-200 bg-white dark:divide-gray-800 dark:border-gray-800 dark:bg-gray-950 \${className}\`}
     >
       {items.map((item: FaqItem) => {
         const isOpen = openId === item.id;
@@ -1341,7 +1341,7 @@ export function AccordionBordered({
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-  max-width: 42rem;
+  width: 100%;
 }
 
 .acc-sep__item {
@@ -1435,7 +1435,7 @@ export function AccordionBordered({
   }
 }`,
       tailwind: `<!-- space-y-3 between detached cards; no name attribute, so cards open independently. -->
-<div class="max-w-2xl space-y-3">
+<div class="w-full space-y-3">
   <details class="group rounded-xl border border-gray-200 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-950 dark:shadow-none" open>
     <summary class="flex cursor-pointer list-none items-center justify-between gap-4 rounded-xl px-4 py-3.5 text-[0.9375rem] font-medium text-gray-900 hover:text-blue-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-blue-600 dark:text-gray-100 dark:hover:text-blue-400 dark:focus-visible:ring-blue-400 [&::-webkit-details-marker]:hidden">
       How long does setup take?
@@ -1491,7 +1491,7 @@ export function AccordionSeparated({
   }
 
   return (
-    <div className={\`max-w-2xl space-y-3 \${className}\`}>
+    <div className={\`w-full space-y-3 \${className}\`}>
       {items.map((item) => {
         const isOpen = openIds.includes(item.id);
         const buttonId = \`\${baseId}-\${item.id}-button\`;
@@ -1568,7 +1568,7 @@ export function AccordionSeparated({
   }
 
   return (
-    <div className={\`max-w-2xl space-y-3 \${className}\`}>
+    <div className={\`w-full space-y-3 \${className}\`}>
       {items.map((item) => {
         const isOpen = openIds.includes(item.id);
         const buttonId = \`\${baseId}-\${item.id}-button\`;
@@ -1643,7 +1643,7 @@ export function AccordionSeparated({
   };
 
   return (
-    <div className={\`max-w-2xl space-y-3 \${className}\`}>
+    <div className={\`w-full space-y-3 \${className}\`}>
       {items.map((item: FaqItem) => {
         const isOpen = openIds.includes(item.id);
         const buttonId = \`\${baseId}-\${item.id}-button\`;
@@ -1759,7 +1759,7 @@ export function AccordionSeparated({
   </details>
 </div>`,
       css: `.acc-left {
-  max-width: 42rem;
+  width: 100%;
 }
 
 .acc-left__item {
@@ -1848,7 +1848,7 @@ export function AccordionSeparated({
   }
 }`,
       tailwind: `<!-- pl-[1.875rem] on the answer = 1rem icon + 0.625rem gap, so text lines up. -->
-<div class="max-w-2xl">
+<div class="w-full">
   <details class="group border-b border-gray-200 dark:border-gray-800" name="acc-left" open>
     <summary class="flex cursor-pointer list-none items-center gap-2.5 px-1 py-4 text-[0.9375rem] font-medium text-gray-900 hover:text-blue-600 focus-visible:rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:text-gray-100 dark:hover:text-blue-400 dark:focus-visible:ring-blue-400 dark:focus-visible:ring-offset-gray-900 [&::-webkit-details-marker]:hidden">
       <svg class="h-4 w-4 flex-none text-gray-500 transition-transform duration-200 group-open:rotate-90 motion-reduce:transition-none dark:text-gray-400" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
@@ -1892,7 +1892,7 @@ export function AccordionIconLeft({ items, defaultOpenId, className = '' }) {
   const [openId, setOpenId] = useState(defaultOpenId ?? null);
 
   return (
-    <div className={\`max-w-2xl \${className}\`}>
+    <div className={\`w-full \${className}\`}>
       {items.map((item) => {
         const isOpen = openId === item.id;
         const buttonId = \`\${baseId}-\${item.id}-button\`;
@@ -1955,7 +1955,7 @@ export function AccordionIconLeft({ items, defaultOpenId, className = '' }: Acco
   const [openId, setOpenId] = useState<string | null>(defaultOpenId ?? null);
 
   return (
-    <div className={\`max-w-2xl \${className}\`}>
+    <div className={\`w-full \${className}\`}>
       {items.map((item) => {
         const isOpen = openId === item.id;
         const buttonId = \`\${baseId}-\${item.id}-button\`;
@@ -2020,7 +2020,7 @@ export function AccordionIconLeft({
   const [openId, setOpenId] = useState<string | null>(defaultOpenId ?? null);
 
   return (
-    <div className={\`max-w-2xl \${className}\`}>
+    <div className={\`w-full \${className}\`}>
       {items.map((item: FaqItem) => {
         const isOpen = openId === item.id;
         const buttonId = \`\${baseId}-\${item.id}-button\`;
@@ -2139,7 +2139,7 @@ export function AccordionIconLeft({
   </details>
 </div>`,
       css: `.acc-pm {
-  max-width: 42rem;
+  width: 100%;
 }
 
 .acc-pm__item {
@@ -2247,7 +2247,7 @@ export function AccordionIconLeft({
   group-open:scale-x-0 collapses the vertical bar, morphing + into −.
   The rotate-90 stays applied, so the transition is a pure scale.
 -->
-<div class="max-w-2xl">
+<div class="w-full">
   <details class="group border-b border-gray-200 dark:border-gray-800" name="acc-pm" open>
     <summary class="flex cursor-pointer list-none items-center justify-between gap-4 px-1 py-4 text-[0.9375rem] font-medium text-gray-900 hover:text-blue-600 focus-visible:rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:text-gray-100 dark:hover:text-blue-400 dark:focus-visible:ring-blue-400 dark:focus-visible:ring-offset-gray-900 [&::-webkit-details-marker]:hidden">
       Is there a free trial?
@@ -2294,7 +2294,7 @@ export function AccordionPlusMinus({ items, defaultOpenId, className = '' }) {
   const [openId, setOpenId] = useState(defaultOpenId ?? null);
 
   return (
-    <div className={\`max-w-2xl \${className}\`}>
+    <div className={\`w-full \${className}\`}>
       {items.map((item) => {
         const isOpen = openId === item.id;
         const buttonId = \`\${baseId}-\${item.id}-button\`;
@@ -2356,7 +2356,7 @@ export function AccordionPlusMinus({
   const [openId, setOpenId] = useState<string | null>(defaultOpenId ?? null);
 
   return (
-    <div className={\`max-w-2xl \${className}\`}>
+    <div className={\`w-full \${className}\`}>
       {items.map((item) => {
         const isOpen = openId === item.id;
         const buttonId = \`\${baseId}-\${item.id}-button\`;
@@ -2415,7 +2415,7 @@ export function AccordionPlusMinus({
   const [openId, setOpenId] = useState<string | null>(defaultOpenId ?? null);
 
   return (
-    <div className={\`max-w-2xl \${className}\`}>
+    <div className={\`w-full \${className}\`}>
       {items.map((item: FaqItem) => {
         const isOpen = openId === item.id;
         const buttonId = \`\${baseId}-\${item.id}-button\`;
@@ -2532,7 +2532,7 @@ export function AccordionPlusMinus({
  * accordion still works. This only removes the default marker and dresses it.
  */
 .acc-native {
-  max-width: 42rem;
+  width: 100%;
 }
 
 .acc-native__item {
@@ -2621,7 +2621,7 @@ export function AccordionPlusMinus({
   }
 }`,
       tailwind: `<!-- Same zero-JS element, utilities instead of a stylesheet. -->
-<div class="max-w-2xl">
+<div class="w-full">
   <details class="group border-b border-gray-200 dark:border-gray-800" name="faq-native" open>
     <summary class="flex cursor-pointer list-none items-center justify-between gap-4 px-1 py-4 text-[0.9375rem] font-medium text-gray-900 hover:text-blue-600 focus-visible:rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:text-gray-100 dark:hover:text-blue-400 dark:focus-visible:ring-blue-400 dark:focus-visible:ring-offset-gray-900 [&::-webkit-details-marker]:hidden">
       Do you sell my data?
@@ -2670,7 +2670,7 @@ export function AccordionNativeDetails({
   className = '',
 }) {
   return (
-    <div className={\`max-w-2xl \${className}\`}>
+    <div className={\`w-full \${className}\`}>
       {items.map((item) => (
         <details
           key={item.id}
@@ -2723,7 +2723,7 @@ export function AccordionNativeDetails({
   className = '',
 }: AccordionNativeDetailsProps) {
   return (
-    <div className={\`max-w-2xl \${className}\`}>
+    <div className={\`w-full \${className}\`}>
       {items.map((item) => (
         <details
           key={item.id}
@@ -2771,7 +2771,7 @@ export function AccordionNativeDetails({
   className = '',
 }: AccordionNativeDetailsProps): JSX.Element {
   return (
-    <div className={\`max-w-2xl \${className}\`}>
+    <div className={\`w-full \${className}\`}>
       {items.map((item: FaqItem) => (
         <details
           key={item.id}
@@ -2894,7 +2894,7 @@ export function AccordionNativeDetails({
   </details>
 </div>`,
       css: `.acc-nest {
-  max-width: 42rem;
+  width: 100%;
 }
 
 .acc-nest__item {
@@ -3022,7 +3022,7 @@ export function AccordionNativeDetails({
   }
 }`,
       tailwind: `<!-- h3 outside, h4 inside: the heading outline nests with the boxes. -->
-<div class="max-w-2xl">
+<div class="w-full">
   <details class="group border-b border-gray-200 dark:border-gray-800" name="acc-nest" open>
     <summary class="flex cursor-pointer list-none items-center justify-between gap-4 px-1 py-4 focus-visible:rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-blue-400 dark:focus-visible:ring-offset-gray-900 [&::-webkit-details-marker]:hidden">
       <h3 class="m-0 text-base font-semibold text-gray-900 dark:text-gray-100">Billing</h3>
@@ -3089,7 +3089,7 @@ export function AccordionNested({ items, defaultOpenId, className = '' }) {
   const [openChildId, setOpenChildId] = useState(null);
 
   return (
-    <div className={\`max-w-2xl \${className}\`}>
+    <div className={\`w-full \${className}\`}>
       {items.map((item) => {
         const isOpen = openId === item.id;
         const buttonId = \`\${baseId}-\${item.id}-button\`;
@@ -3205,7 +3205,7 @@ export function AccordionNested({ items, defaultOpenId, className = '' }: Accord
   const [openChildId, setOpenChildId] = useState<string | null>(null);
 
   return (
-    <div className={\`max-w-2xl \${className}\`}>
+    <div className={\`w-full \${className}\`}>
       {items.map((item) => {
         const isOpen = openId === item.id;
         const buttonId = \`\${baseId}-\${item.id}-button\`;
@@ -3322,7 +3322,7 @@ export function AccordionNested({
   const [openChildId, setOpenChildId] = useState<string | null>(null);
 
   return (
-    <div className={\`max-w-2xl \${className}\`}>
+    <div className={\`w-full \${className}\`}>
       {items.map((item: NestedFaqItem) => {
         const isOpen = openId === item.id;
         const buttonId = \`\${baseId}-\${item.id}-button\`;
@@ -3486,7 +3486,7 @@ export function AccordionNested({
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  max-width: 42rem;
+  width: 100%;
 }
 
 .acc-fill__item {
@@ -3597,7 +3597,7 @@ export function AccordionNested({
   }
 }`,
       tailwind: `<!-- open:bg-blue-50 tints the card; the text darkens to keep 4.5:1 on the tint. -->
-<div class="max-w-2xl space-y-2">
+<div class="w-full space-y-2">
   <details class="group rounded-xl transition-colors duration-200 open:bg-blue-50 motion-reduce:transition-none dark:open:bg-blue-950" name="acc-fill" open>
     <summary class="flex cursor-pointer list-none items-center justify-between gap-4 rounded-xl px-4 py-3.5 text-[0.9375rem] font-medium text-gray-900 group-open:text-blue-900 hover:bg-gray-50 group-open:hover:bg-transparent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-blue-600 dark:text-gray-100 dark:group-open:text-blue-100 dark:hover:bg-gray-900 dark:group-open:hover:bg-transparent dark:focus-visible:ring-blue-400 [&::-webkit-details-marker]:hidden">
       What are your support hours?
@@ -3641,7 +3641,7 @@ export function AccordionFilled({ items, defaultOpenId, className = '' }) {
   const [openId, setOpenId] = useState(defaultOpenId ?? null);
 
   return (
-    <div className={\`max-w-2xl space-y-2 \${className}\`}>
+    <div className={\`w-full space-y-2 \${className}\`}>
       {items.map((item) => {
         const isOpen = openId === item.id;
         const buttonId = \`\${baseId}-\${item.id}-button\`;
@@ -3713,7 +3713,7 @@ export function AccordionFilled({ items, defaultOpenId, className = '' }: Accord
   const [openId, setOpenId] = useState<string | null>(defaultOpenId ?? null);
 
   return (
-    <div className={\`max-w-2xl space-y-2 \${className}\`}>
+    <div className={\`w-full space-y-2 \${className}\`}>
       {items.map((item) => {
         const isOpen = openId === item.id;
         const buttonId = \`\${baseId}-\${item.id}-button\`;
@@ -3787,7 +3787,7 @@ export function AccordionFilled({
   const [openId, setOpenId] = useState<string | null>(defaultOpenId ?? null);
 
   return (
-    <div className={\`max-w-2xl space-y-2 \${className}\`}>
+    <div className={\`w-full space-y-2 \${className}\`}>
       {items.map((item: FaqItem) => {
         const isOpen = openId === item.id;
         const buttonId = \`\${baseId}-\${item.id}-button\`;
@@ -3924,7 +3924,7 @@ export function AccordionFilled({
   </div>
 </div>`,
       css: `.acc-search {
-  max-width: 42rem;
+  width: 100%;
 }
 
 .acc-search__form {
@@ -4070,7 +4070,7 @@ export function AccordionFilled({
   }
 }`,
       tailwind: `<!-- sr-only label + aria-live count; see the React tabs for the filtering. -->
-<div class="max-w-2xl">
+<div class="w-full">
   <form class="mb-3" role="search" onsubmit="return false">
     <label class="sr-only" for="faq-search">Search questions</label>
     <input
@@ -4142,7 +4142,7 @@ export function AccordionFaqSearch({ items, defaultOpenId, className = '' }) {
   const searchId = \`\${baseId}-search\`;
 
   return (
-    <div className={\`max-w-2xl \${className}\`}>
+    <div className={\`w-full \${className}\`}>
       <form className="mb-3" role="search" onSubmit={(event) => event.preventDefault()}>
         <label className="sr-only" htmlFor={searchId}>
           Search questions
@@ -4245,7 +4245,7 @@ export function AccordionFaqSearch({
   const searchId = \`\${baseId}-search\`;
 
   return (
-    <div className={\`max-w-2xl \${className}\`}>
+    <div className={\`w-full \${className}\`}>
       <form className="mb-3" role="search" onSubmit={(event) => event.preventDefault()}>
         <label className="sr-only" htmlFor={searchId}>
           Search questions
@@ -4346,7 +4346,7 @@ export function AccordionFaqSearch({
   const searchId = \`\${baseId}-search\`;
 
   return (
-    <div className={\`max-w-2xl \${className}\`}>
+    <div className={\`w-full \${className}\`}>
       <form className="mb-3" role="search" onSubmit={(event) => event.preventDefault()}>
         <label className="sr-only" htmlFor={searchId}>
           Search questions

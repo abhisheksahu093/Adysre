@@ -8,6 +8,10 @@ import { useState } from 'react';
  * Mirrors the `typescript` code variant. The toggle is a real radiogroup, so
  * the two options are reachable and announced as radios rather than as two
  * unlabelled buttons. Keep this in step with `src/data/components/comparisons.ts`.
+ *
+ * The default export adds a page-section shell - padding plus a centred
+ * max-width - which is preview-only; the component itself is width-agnostic
+ * and takes its width from the caller.
  */
 type BillingCycle = 'monthly' | 'annual';
 
@@ -31,7 +35,7 @@ function ComparisonPricingToggle({ plans, currency = '$', className = '' }: Comp
   const annual = cycle === 'annual';
 
   return (
-    <section className={`w-full max-w-3xl ${className}`}>
+    <section className={`w-full ${className}`}>
       <div className="mb-6 flex justify-center">
         <div
           role="radiogroup"
@@ -117,7 +121,13 @@ const SAMPLE_PLANS: TogglePlan[] = [
 ];
 
 export default function ComparisonPricingTogglePreview() {
-  return <ComparisonPricingToggle plans={SAMPLE_PLANS} />;
+  return (
+    <section className="w-full px-4 py-12 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-5xl">
+        <ComparisonPricingToggle plans={SAMPLE_PLANS} />
+      </div>
+    </section>
+  );
 }
 
 export const minHeight = 420;

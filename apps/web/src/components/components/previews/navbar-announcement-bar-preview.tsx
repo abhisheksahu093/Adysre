@@ -112,7 +112,7 @@ function NavbarAnnouncementBar() {
 
 export default function NavbarAnnouncementBarPreview() {
   return (
-    <div className="w-full overflow-hidden rounded-lg border border-gray-200 dark:border-gray-800">
+    <div className="w-full overflow-hidden border-b border-gray-200 dark:border-gray-800">
       <NavbarAnnouncementBar />
     </div>
   );

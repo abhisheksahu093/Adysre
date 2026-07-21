@@ -5,6 +5,10 @@
  * <dl>: on mobile each value carries an inline product label and the header
  * row is hidden, so the sheet stacks without losing which value belongs to
  * which product. Keep this in step with `src/data/components/comparisons.ts`.
+ *
+ * The default export adds a page-section shell - padding plus a centred
+ * max-width - which is preview-only; the component itself is width-agnostic
+ * and takes its width from the caller.
  */
 interface SpecRow {
   id: string;
@@ -22,7 +26,7 @@ interface ComparisonSpecListProps {
 
 function ComparisonSpecList({ productA, productB, specs, className = '' }: ComparisonSpecListProps) {
   return (
-    <section className={`w-full max-w-xl rounded-xl border border-gray-200 dark:border-gray-800 ${className}`}>
+    <section className={`w-full rounded-xl border border-gray-200 dark:border-gray-800 ${className}`}>
       <div className="hidden grid-cols-[1fr_1fr_1fr] gap-3 border-b border-gray-200 px-4 py-3 sm:grid dark:border-gray-800">
         <span className="text-sm font-semibold text-gray-500 dark:text-gray-400">Spec</span>
         <span className="text-sm font-semibold text-gray-900 dark:text-gray-100">{productA}</span>
@@ -55,7 +59,13 @@ const SAMPLE_SPECS: SpecRow[] = [
 ];
 
 export default function ComparisonSpecListPreview() {
-  return <ComparisonSpecList productA="Model A" productB="Model B" specs={SAMPLE_SPECS} />;
+  return (
+    <section className="w-full px-4 py-12 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-5xl">
+        <ComparisonSpecList productA="Model A" productB="Model B" specs={SAMPLE_SPECS} />
+      </div>
+    </section>
+  );
 }
 
 export const minHeight = 320;

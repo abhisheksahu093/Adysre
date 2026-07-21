@@ -12,10 +12,16 @@
     "./tsconfig/nest": "./tsconfig/nest.json",
     "./tailwind": "./tailwind/preset.js"
   },
-  "files": ["eslint", "tsconfig", "tailwind"],
+  "files": [
+    "eslint",
+    "tsconfig",
+    "tailwind"
+  ],
   "dependencies": {
     "@eslint/js": "^9.12.0",
+    "@next/eslint-plugin-next": "^16.2.10",
     "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
     "typescript-eslint": "^8.8.0"
   },
   "peerDependencies": {

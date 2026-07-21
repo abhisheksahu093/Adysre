@@ -4,6 +4,10 @@
  * Mirrors the `typescript` code variant. Two product cards that stack below
  * 40rem; the avatar is a gradient tile with initials, so there is no external
  * image to load. Keep this in step with `src/data/components/comparisons.ts`.
+ *
+ * The default export adds a page-section shell - padding plus a centred
+ * max-width - which is preview-only; the component itself is width-agnostic
+ * and takes its width from the caller.
  */
 interface SideCard {
   id: string;
@@ -30,7 +34,7 @@ function initials(name: string): string {
 
 function ComparisonSideBySideCards({ products, className = '' }: ComparisonSideBySideCardsProps) {
   return (
-    <div className={`grid w-full max-w-3xl gap-4 sm:grid-cols-2 ${className}`}>
+    <div className={`grid w-full gap-4 sm:grid-cols-2 ${className}`}>
       {products.map((product) => (
         <section
           key={product.id}
@@ -112,7 +116,13 @@ const SAMPLE_PRODUCTS: SideCard[] = [
 ];
 
 export default function ComparisonSideBySideCardsPreview() {
-  return <ComparisonSideBySideCards products={SAMPLE_PRODUCTS} />;
+  return (
+    <section className="w-full px-4 py-12 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-5xl">
+        <ComparisonSideBySideCards products={SAMPLE_PRODUCTS} />
+      </div>
+    </section>
+  );
 }
 
 export const minHeight = 420;

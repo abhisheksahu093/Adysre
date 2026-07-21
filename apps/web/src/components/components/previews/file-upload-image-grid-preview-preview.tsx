@@ -131,7 +131,7 @@ function FileUploadImageGrid({
           {items.map((item) => (
             <li key={item.id} className="group relative">
               <div className="overflow-hidden rounded-lg border border-gray-200 bg-gray-100 dark:border-gray-800 dark:bg-gray-800">
-                {/* eslint-disable-next-line @next/next/no-img-element -- object URL, not a static asset */}
+                { }
                 <img
                   src={item.url}
                   alt={item.name}

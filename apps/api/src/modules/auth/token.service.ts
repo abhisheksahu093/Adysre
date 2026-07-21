@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { createHash, randomBytes } from 'node:crypto';
 import type { AuthContext } from '@adysre/types';
+import { accessTokenSecret } from '../../common/config/jwt-secret';
 
 /** Issues/verifies JWT access tokens and generates/hashes refresh tokens. */
 @Injectable()
@@ -17,7 +18,7 @@ export class TokenService {
         permissions: auth.permissions,
       },
       {
-        secret: process.env.JWT_ACCESS_SECRET,
+        secret: accessTokenSecret(),
         expiresIn: Number(process.env.JWT_ACCESS_TTL ?? 900),
       },
     );

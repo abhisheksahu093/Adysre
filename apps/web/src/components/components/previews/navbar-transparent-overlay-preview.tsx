@@ -27,7 +27,7 @@ function NavbarTransparentOverlay() {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="relative isolate min-h-64 overflow-hidden rounded-lg bg-gradient-to-br from-gray-900 via-gray-800 to-blue-900">
+    <div className="relative isolate min-h-64 w-full overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-blue-900">
       <header className="absolute inset-x-0 top-0 z-20">
         <div className="mx-auto flex h-16 max-w-6xl items-center gap-4 px-4">
           <a href="#" className="mr-auto font-bold text-white">

@@ -14,6 +14,10 @@ import { useRef, useState } from 'react';
  * only ever run because a user pressed something - an effect would fire on
  * mount and scroll the page hosting this iframe. `block: 'nearest'` keeps it
  * from scrolling vertically at all.
+ *
+ * The carousel fills its container - the stage grows 14rem -> 20rem -> 28rem so
+ * a full-width placement is not a letterbox - and the default export wraps it in
+ * a centred, full-width page section.
  * Keep this in step with `src/data/components/galleries.ts`.
  */
 interface GalleryPhoto {
@@ -48,15 +52,15 @@ function GalleryCarouselThumbs({ items, onSelect, className = '' }: GalleryCarou
   if (!active) return null;
 
   return (
-    <div className={`max-w-lg ${className}`}>
+    <div className={`w-full ${className}`}>
       <section aria-roledescription="carousel" aria-label="Photo gallery">
         <div
           className="overflow-hidden rounded-xl border border-gray-200 bg-gray-50 dark:border-gray-800 dark:bg-gray-900"
           aria-live="polite"
         >
           {/* key forces a swap so the live region sees a new node, not a mutated src. */}
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img key={active.id} className="block h-56 w-full object-cover" src={active.imageSrc} alt={active.imageAlt} />
+          { }
+          <img key={active.id} className="block h-56 w-full object-cover sm:h-80 lg:h-[28rem]" src={active.imageSrc} alt={active.imageAlt} />
         </div>
 
         <div className="flex items-center gap-2 pt-2.5">
@@ -104,7 +108,7 @@ function GalleryCarouselThumbs({ items, onSelect, className = '' }: GalleryCarou
               }`}
             >
               {/* alt="" - the sr-only span is this button's accessible name. */}
-              {/* eslint-disable-next-line @next/next/no-img-element */}
+              { }
               <img className="block aspect-square w-full object-cover" src={item.imageSrc} alt="" />
               <span className="sr-only">{`Show ${item.title}`}</span>
             </button>
@@ -139,5 +143,11 @@ const SAMPLE_PHOTOS: GalleryPhoto[] = [
 ];
 
 export default function GalleryCarouselThumbsPreview() {
-  return <GalleryCarouselThumbs items={SAMPLE_PHOTOS} className="w-full" />;
+  return (
+    <section className="w-full px-4 py-12 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-6xl">
+        <GalleryCarouselThumbs items={SAMPLE_PHOTOS} className="w-full" />
+      </div>
+    </section>
+  );
 }

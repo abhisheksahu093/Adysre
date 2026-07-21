@@ -7,7 +7,9 @@ import { useId, useState, type FormEvent } from 'react';
  *
  * Mirrors the `typescript` code variant verbatim. Form is UI-only: submit is
  * prevented and `onSubmit` no-ops here. The date badge and the form stack on
- * mobile. Keep in step with `src/data/components/marketing.ts`.
+ * mobile. The section itself is width-agnostic (`w-full`); the preview supplies
+ * the page shell that centres it. Keep in step with
+ * `src/data/components/marketing.ts`.
  */
 interface WebinarSignupProps {
   title: string;
@@ -40,7 +42,7 @@ function WebinarSignup({
   return (
     <section
       aria-labelledby={titleId}
-      className={`w-full max-w-lg rounded-2xl border border-gray-200 bg-white p-6 sm:p-7 dark:border-gray-800 dark:bg-gray-900 ${className}`}
+      className={`w-full rounded-2xl border border-gray-200 bg-white p-6 sm:p-7 dark:border-gray-800 dark:bg-gray-900 ${className}`}
     >
       <div className="flex items-center gap-3">
         <span className="inline-flex h-11 w-11 flex-none items-center justify-center rounded-xl bg-indigo-50 text-indigo-600 dark:bg-indigo-950 dark:text-indigo-400">
@@ -103,13 +105,17 @@ function WebinarSignup({
 
 export default function MarketingWebinarSignupPreview() {
   return (
-    <WebinarSignup
-      title="Scaling design systems without slowing product teams"
-      dateLabel="Thu, Aug 14"
-      timeLabel="11:00 AM ET"
-      presenter="Dana Ruiz, Head of Design"
-      ctaLabel="Save my seat"
-    />
+    <section className="w-full px-4 py-12 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-5xl">
+        <WebinarSignup
+          title="Scaling design systems without slowing product teams"
+          dateLabel="Thu, Aug 14"
+          timeLabel="11:00 AM ET"
+          presenter="Dana Ruiz, Head of Design"
+          ctaLabel="Save my seat"
+        />
+      </div>
+    </section>
   );
 }
 

@@ -5,6 +5,9 @@
  * (role="img" + aria-label), so the preview never touches the network. Six
  * tiles are supplied so the row actually overflows and scrolls sideways - the
  * whole reason this component exists.
+ *
+ * The row fills its container; the default export wraps it in a centred,
+ * full-width page section, so the sideways scroll is the only overflow here.
  * Keep this in step with `src/data/components/galleries.ts`.
  */
 interface GalleryTile {
@@ -21,7 +24,7 @@ interface GalleryHorizontalScrollProps {
 
 function GalleryHorizontalScroll({ items, className = '' }: GalleryHorizontalScrollProps) {
   return (
-    <ul className={`flex snap-x snap-mandatory list-none gap-3 overflow-x-auto p-0 pb-2 ${className}`}>
+    <ul className={`flex w-full snap-x snap-mandatory list-none gap-3 overflow-x-auto p-0 pb-2 ${className}`}>
       {items.map((item: GalleryTile) => (
         <li key={item.id} className="w-40 shrink-0 snap-start sm:w-56">
           <figure className="m-0">
@@ -50,5 +53,11 @@ const SAMPLE_TILES: GalleryTile[] = [
 ];
 
 export default function GalleryHorizontalScrollPreview() {
-  return <GalleryHorizontalScroll items={SAMPLE_TILES} className="w-full max-w-xl" />;
+  return (
+    <section className="w-full px-4 py-12 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-6xl">
+        <GalleryHorizontalScroll items={SAMPLE_TILES} className="w-full" />
+      </div>
+    </section>
+  );
 }

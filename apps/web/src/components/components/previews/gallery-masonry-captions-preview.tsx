@@ -4,6 +4,9 @@
  * Mirrors the `typescript` code variant. Varied `heightClass` per tile is what
  * makes it read as masonry; captions sit on a dark-to-transparent scrim so they
  * stay legible on any tile colour. Media are CSS gradient tiles - no network.
+ *
+ * The column list carries no width cap of its own and steps 2 -> 3 -> 4 columns;
+ * the default export wraps it in a centred, full-width page section.
  * Keep this in step with `src/data/components/galleries.ts`.
  */
 interface MasonryTile {
@@ -21,7 +24,7 @@ interface GalleryMasonryCaptionsProps {
 
 function GalleryMasonryCaptions({ items, className = '' }: GalleryMasonryCaptionsProps) {
   return (
-    <ul className={`list-none columns-2 gap-3 p-0 sm:columns-3 ${className}`}>
+    <ul className={`w-full list-none columns-2 gap-3 p-0 sm:columns-3 lg:columns-4 ${className}`}>
       {items.map((item: MasonryTile) => (
         <li key={item.id} className="mb-3 break-inside-avoid">
           <figure className="relative m-0 overflow-hidden rounded-xl">
@@ -46,5 +49,11 @@ const SAMPLE_TILES: MasonryTile[] = [
 ];
 
 export default function GalleryMasonryCaptionsPreview() {
-  return <GalleryMasonryCaptions items={SAMPLE_TILES} className="w-full max-w-xl" />;
+  return (
+    <section className="w-full px-4 py-12 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-6xl">
+        <GalleryMasonryCaptions items={SAMPLE_TILES} className="w-full" />
+      </div>
+    </section>
+  );
 }

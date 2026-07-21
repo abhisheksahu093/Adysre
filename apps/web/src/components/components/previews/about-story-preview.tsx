@@ -70,8 +70,7 @@ function AboutStory({
       </div>
 
       <figure className="m-0">
-        {/* eslint-disable-next-line @next/next/no-img-element -- the preview
-            mirrors the framework-agnostic `typescript` variant, not next/image. */}
+        { }
         <img
           src={imageSrc}
           alt={imageAlt}

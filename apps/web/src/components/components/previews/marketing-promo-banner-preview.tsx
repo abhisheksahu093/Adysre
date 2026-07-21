@@ -4,7 +4,9 @@
  * Mirrors the `typescript` code variant verbatim. Text sits on a gradient, so a
  * `bg-black/25` scrim layer sits between the two to hold WCAG-AA contrast
  * regardless of where the gradient lands. The CTA goes full width and stacks
- * below the copy on mobile. Keep in step with `src/data/components/marketing.ts`.
+ * below the copy on mobile. The section itself is width-agnostic (`w-full`); the
+ * preview supplies the page shell that centres it. Keep in step with
+ * `src/data/components/marketing.ts`.
  */
 interface PromoBannerProps {
   title: string;
@@ -25,7 +27,7 @@ function PromoBanner({
 }: PromoBannerProps) {
   return (
     <section
-      className={`relative w-full max-w-4xl overflow-hidden rounded-2xl bg-gradient-to-br from-indigo-600 via-purple-600 to-fuchsia-600 ${className}`}
+      className={`relative w-full overflow-hidden rounded-2xl bg-gradient-to-br from-indigo-600 via-purple-600 to-fuchsia-600 ${className}`}
     >
       {/* Scrim: keeps white text at AA over any point of the gradient. */}
       <div className="absolute inset-0 bg-black/25" aria-hidden="true" />
@@ -54,13 +56,17 @@ function PromoBanner({
 
 export default function MarketingPromoBannerPreview() {
   return (
-    <PromoBanner
-      title="Save 30% on annual plans"
-      copy="Switch to yearly billing before the end of the month and lock in the launch price for good."
-      badge="Limited time"
-      ctaLabel="Claim offer"
-      ctaHref="#"
-    />
+    <section className="w-full px-4 py-12 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-5xl">
+        <PromoBanner
+          title="Save 30% on annual plans"
+          copy="Switch to yearly billing before the end of the month and lock in the launch price for good."
+          badge="Limited time"
+          ctaLabel="Claim offer"
+          ctaHref="#"
+        />
+      </div>
+    </section>
   );
 }
 

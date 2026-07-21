@@ -5,6 +5,10 @@
  * with a visually-hidden "Pro:" / "Con:" prefix, so a screen reader never gets
  * a bare "+" with no anchor. Keep this in step with
  * `src/data/components/comparisons.ts`.
+ *
+ * The default export adds a page-section shell - padding plus a centred
+ * max-width - which is preview-only; the component itself is width-agnostic
+ * and takes its width from the caller.
  */
 interface ComparisonProsConsProps {
   title?: string;
@@ -29,7 +33,7 @@ function ComparisonProsCons({
   ];
 
   return (
-    <section className={`w-full max-w-2xl ${className}`}>
+    <section className={`w-full ${className}`}>
       {title ? <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-gray-100">{title}</h2> : null}
       <div className="grid gap-4 sm:grid-cols-2">
         {columns.map((col) => (
@@ -76,11 +80,15 @@ function ComparisonProsCons({
 
 export default function ComparisonProsConsPreview() {
   return (
-    <ComparisonProsCons
-      title="Should you self-host?"
-      pros={['No per-seat billing', 'Data stays in your VPC', 'Full API access']}
-      cons={['You own the upgrades', 'Needs an on-call rotation', 'Slower to start']}
-    />
+    <section className="w-full px-4 py-12 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-5xl">
+        <ComparisonProsCons
+          title="Should you self-host?"
+          pros={['No per-seat billing', 'Data stays in your VPC', 'Full API access']}
+          cons={['You own the upgrades', 'Needs an on-call rotation', 'Slower to start']}
+        />
+      </div>
+    </section>
   );
 }
 

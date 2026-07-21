@@ -31,7 +31,7 @@ function AccordionNativeDetails({
   className = '',
 }: AccordionNativeDetailsProps) {
   return (
-    <div className={`max-w-2xl ${className}`}>
+    <div className={`w-full ${className}`}>
       {items.map((item: FaqItem) => (
         <details
           key={item.id}
@@ -82,11 +82,14 @@ const SAMPLE_ITEMS: FaqItem[] = [
 
 export default function AccordionNativeDetailsPreview() {
   return (
-    <AccordionNativeDetails
-      items={SAMPLE_ITEMS}
-      name="faq-native-preview"
-      defaultOpenId="privacy"
-      className="w-full"
-    />
+    <section className="w-full px-4 py-12 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-3xl">
+        <AccordionNativeDetails
+          items={SAMPLE_ITEMS}
+          name="faq-native-preview"
+          defaultOpenId="privacy"
+        />
+      </div>
+    </section>
   );
 }

@@ -68,8 +68,7 @@ function ServicesAlternating({ kicker, title, rows, className = '' }: ServicesAl
               .filter(Boolean)
               .join(' ')}
           >
-            {/* eslint-disable-next-line @next/next/no-img-element -- the preview
-                mirrors the framework-agnostic `typescript` variant, not next/image. */}
+            { }
             <img
               src={row.imageSrc}
               alt={row.imageAlt ?? ''}

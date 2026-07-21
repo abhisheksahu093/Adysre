@@ -22,6 +22,7 @@
 		"dashboard": "Dashboard",
 		"promptLibrary": "Prompt Library",
 		"components": "Components",
+		"designPlayground": "Design Playground",
 		"templates": "Templates",
 		"settings": "Settings",
 		"mainLabel": "Main",
@@ -36,7 +37,8 @@
 			"gradients": "Browse, edit and export CSS gradients - or generate your own.",
 			"patterns": "Browse, edit and export CSS background patterns - or generate your own.",
 			"textures": "Browse, edit and export CSS surface textures - or generate your own.",
-			"icons": "Browse, customise and export original SVG icons in any format or size."
+			"icons": "Browse, customise and export original SVG icons in any format or size.",
+			"designPlayground": "Design pages, dashboards and graphics on an infinite canvas - no code."
 		},
 		"palettes": "Color Palettes",
 		"gradients": "Gradients",
@@ -1874,6 +1876,291 @@
 			"label": "Icons, Gradients and Palettes are now live in the workspace",
 			"cta": "Explore",
 			"dismiss": "Dismiss announcement"
+		}
+	},
+	"designPlayground": {
+		"title": "Design Playground",
+		"subtitle": "A visual editor for pages, dashboards, mobile screens and graphics. Drag, edit and export - no code required.",
+		"backToApp": "Back to the app",
+		"toolbarLabel": "Tools",
+		"railLabel": "Editor panels",
+		"breakpointLabel": "Breakpoint",
+		"tools": {
+			"select": "Select",
+			"hand": "Hand",
+			"frame": "Frame",
+			"rectangle": "Rectangle",
+			"ellipse": "Ellipse",
+			"text": "Text",
+			"pen": "Pen"
+		},
+		"panels": {
+			"pages": {
+				"title": "Pages",
+				"description": "Every page in this project, each with its own infinite canvas.",
+				"add": "Add page",
+				"remove": "Delete page",
+				"nameLabel": "Page name"
+			},
+			"layers": {
+				"title": "Layers",
+				"description": "The layer tree: group, reorder, rename, lock and hide anything on the canvas.",
+				"empty": "No layers on this page yet.",
+				"expand": "Expand layer",
+				"collapse": "Collapse layer",
+				"nameLabel": "Layer name",
+				"hide": "Hide layer",
+				"show": "Show layer",
+				"lock": "Lock layer",
+				"unlock": "Unlock layer",
+				"remove": "Delete layer",
+				"moveUp": "Move up",
+				"moveDown": "Move down"
+			},
+			"sections": {
+				"title": "Sections",
+				"description": "Drop in ready-made headers, heroes, pricing, FAQ and footers from the component library.",
+				"search": "Search sections",
+				"empty": "No sections match that search.",
+				"insert": "Insert {name}"
+			},
+			"components": {
+				"title": "Components",
+				"description": "Buttons, inputs, cards, tables and the rest - insert once, reuse everywhere.",
+				"search": "Search components",
+				"empty": "No components match that search.",
+				"insert": "Insert {name}"
+			},
+			"assets": {
+				"title": "Assets",
+				"description": "Icons, illustrations, patterns, gradients and your uploads.",
+				"tablistLabel": "Asset groups",
+				"tabs": {
+					"colors": "Colours",
+					"gradients": "Gradients",
+					"icons": "Icons"
+				},
+				"colors": {
+					"applyHint": "Click a swatch to fill the selection.",
+					"placeHint": "Nothing selected - a swatch places a coloured square.",
+					"apply": "Apply {color} from {palette}",
+					"place": "Place {color} from {palette}",
+					"empty": "No colour palettes available."
+				},
+				"gradients": {
+					"hint": "Places a square in the gradient's first colour. Real gradient fills arrive with the effects work.",
+					"place": "Place {name}",
+					"empty": "No gradients available."
+				},
+				"icons": {
+					"searchLabel": "Search icons",
+					"searchPlaceholder": "Search icons",
+					"hint": "Click an icon to place it on the canvas.",
+					"place": "Place {name}",
+					"empty": "No icons match that search.",
+					"more": "Showing {shown} of {total}. Refine your search to see more."
+				}
+			},
+			"images": {
+				"title": "Images",
+				"description": "Upload your own images or pull from stock providers, then crop, mask and filter.",
+				"upload": "Upload images",
+				"uploadHint": "Drag files here, or click to browse. PNG, JPG, GIF, WebP or SVG.",
+				"importing": "Adding images…",
+				"empty": "No images yet. Upload one to place it on the canvas.",
+				"place": "Place on canvas",
+				"remove": "Remove from library",
+				"removeNamed": "Remove {name} from library",
+				"usage": "{used} of {total} used ({percent}%)",
+				"storageFailed": "These images could not be saved to this browser, so they will be gone after a reload. Remove a few to free space.",
+				"errors": {
+					"unsupported": "is not a supported image type.",
+					"unreadable": "could not be read. The file may be damaged.",
+					"tooLarge": "is too large to store, even after downscaling.",
+					"libraryFull": "does not fit - the image library is full. Remove some images and try again."
+				}
+			},
+			"ai": {
+				"title": "AI",
+				"description": "Describe a page and get editable frames back, or edit the current selection by prompt.",
+				"label": "Describe the section to generate",
+				"placeholder": "A dark pricing section with three tiers and a highlighted middle plan…",
+				"generate": "Generate section",
+				"working": "Generating…",
+				"examplesTitle": "Try one of these",
+				"examples": {
+					"hero": "A bold hero for a fintech app, dark background, headline, subtext and a primary button.",
+					"pricing": "A pricing section with three plan cards and the middle one highlighted.",
+					"features": "A three-column feature grid with an icon block, title and description in each.",
+					"cta": "A closing call-to-action band with a headline and one button, on an accent colour."
+				},
+				"errors": {
+					"not-configured": "AI generation is not configured on this deployment. Set ANTHROPIC_API_KEY on the server to enable it.",
+					"invalid-request": "Describe the section you want before generating.",
+					"refused": "That request was declined. Try describing the design differently.",
+					"rate-limited": "Too many requests right now. Wait a moment and try again.",
+					"empty": "The model returned nothing usable. Try again.",
+					"failed": "Generation failed. Try again in a moment."
+				}
+			}
+		},
+		"inspector": {
+			"title": "Properties",
+			"empty": "Select something on the canvas to edit its properties.",
+			"groups": {
+				"transform": "Transform",
+				"layout": "Layout",
+				"style": "Fill & stroke",
+				"effects": "Effects",
+				"typography": "Typography",
+				"export": "Export"
+			},
+			"mixed": "Mixed",
+			"multiple": "{count} layers selected",
+			"soon": "Arriving in a later phase.",
+			"colorNone": "None",
+			"colorPicker": "Colour picker",
+			"colorHex": "Hex",
+			"fields": {
+				"x": "X",
+				"y": "Y",
+				"width": "Width",
+				"height": "Height",
+				"rotation": "Rotation",
+				"mode": "Mode",
+				"direction": "Direction",
+				"gap": "Gap",
+				"padding": "Padding",
+				"fill": "Fill",
+				"stroke": "Stroke",
+				"strokeWidth": "Stroke width",
+				"radius": "Corner radius",
+				"opacity": "Opacity",
+				"text": "Content",
+				"fontSize": "Size",
+				"fontWeight": "Weight",
+				"lineHeight": "Line height",
+				"letterSpacing": "Letter spacing",
+				"align": "Alignment",
+				"shadow": "Shadow",
+				"shadowColor": "Shadow colour",
+				"shadowBlur": "Blur",
+				"shadowOffsetX": "Offset X",
+				"shadowOffsetY": "Offset Y",
+				"shadowOpacity": "Shadow opacity",
+				"blendMode": "Blend mode"
+			},
+			"options": {
+				"none": "None",
+				"flex": "Flex",
+				"row": "Row",
+				"column": "Column",
+				"left": "Left",
+				"center": "Center",
+				"right": "Right",
+				"dropShadow": "Drop shadow",
+				"normal": "Normal",
+				"multiply": "Multiply",
+				"screen": "Screen",
+				"overlay": "Overlay",
+				"darken": "Darken",
+				"lighten": "Lighten"
+			},
+			"tabs": "Sidebar tabs",
+			"tabLabels": {
+				"properties": "Properties",
+				"frames": "Frames"
+			}
+		},
+		"canvas": {
+			"empty": {
+				"title": "Start with a frame",
+				"description": "Frames are the artboards you design in. Pick a size to begin — or draw one with the frame tool (F).",
+				"cta": "Choose a frame size"
+			},
+			"editText": "Edit text"
+		},
+		"frameGroups": {
+			"screens": "Screens",
+			"social": "Social",
+			"print": "Print & slides"
+		},
+		"frames": {
+			"desktop": "Desktop",
+			"laptop": "Laptop",
+			"tablet": "Tablet",
+			"mobile": "Mobile",
+			"instagram": "Instagram",
+			"facebook": "Facebook",
+			"twitter": "Twitter",
+			"youtube": "YouTube",
+			"presentation": "Presentation",
+			"a4": "A4",
+			"description": "Frames are the artboards you design in. Adding one places it beside your existing work."
+		},
+		"breakpoints": {
+			"desktop": "Desktop",
+			"laptop": "Laptop",
+			"tablet": "Tablet",
+			"mobile": "Mobile"
+		},
+		"status": {
+			"grid": "Grid",
+			"coordinates": "Pointer position"
+		},
+		"actions": {
+			"share": "Share",
+			"export": "Export",
+			"toggleInspector": "Toggle properties panel",
+			"zoomIn": "Zoom in",
+			"zoomOut": "Zoom out",
+			"resetZoom": "Reset zoom to 100%",
+			"undo": "Undo",
+			"redo": "Redo",
+			"selectionLabel": "Selection actions",
+			"duplicate": "Duplicate",
+			"bringToFront": "Bring to front",
+			"sendToBack": "Send to back",
+			"lock": "Lock",
+			"unlock": "Unlock",
+			"hide": "Hide",
+			"show": "Show",
+			"delete": "Delete",
+			"group": "Group",
+			"ungroup": "Ungroup",
+			"zoomToFit": "Zoom to fit"
+		},
+		"export": {
+			"working": "Working…",
+			"failed": "Export failed. Try a different format.",
+			"formats": {
+				"png": "PNG image",
+				"jpeg": "JPEG image",
+				"svg": "SVG vector",
+				"html": "HTML page",
+				"json": "Project file"
+			},
+			"import": "Open project file…",
+			"importFailed": "That file is not a valid ADYSRE project.",
+			"scale": "Scale",
+			"exportAs": "Export as {format}",
+			"selectFirst": "Select something on the canvas to export it on its own."
+		},
+		"sync": {
+			"saving": "Saving…",
+			"saved": "Saved",
+			"offline": "Offline — saved on this device only",
+			"error": "Couldn't save"
+		},
+		"projects": {
+			"menu": "Project",
+			"new": "New design",
+			"rename": "Rename design",
+			"nameLabel": "Design name",
+			"recent": "Previous designs",
+			"loading": "Loading…",
+			"empty": "No saved designs yet.",
+			"unavailable": "Saved designs are unavailable — storage is not reachable. Your work is still saved on this device."
 		}
 	}
 }

@@ -64,7 +64,7 @@ function FileUploadAvatar({
       <div className="relative h-20 w-20 shrink-0">
         <div className="h-20 w-20 overflow-hidden rounded-full border border-gray-200 bg-gray-100 dark:border-gray-700 dark:bg-gray-800">
           {url ? (
-            // eslint-disable-next-line @next/next/no-img-element -- object URL, not a static asset
+             
             <img src={url} alt="" className="h-full w-full object-cover" />
           ) : (
             <svg

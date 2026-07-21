@@ -4,6 +4,9 @@
  * Mirrors the `typescript` code variant. Alternating tilt gives the scattered
  * look; each card is a button so it straightens on focus-visible as well as
  * hover, with motion-reduce dropping the tilt. Media are CSS gradient tiles.
+ *
+ * The grid fills its container; the default export wraps it in a centred,
+ * full-width page section.
  * Keep this in step with `src/data/components/galleries.ts`.
  */
 interface GalleryTile {
@@ -20,7 +23,7 @@ interface GalleryPolaroidProps {
 
 function GalleryPolaroid({ items, className = '' }: GalleryPolaroidProps) {
   return (
-    <ul className={`grid list-none grid-cols-2 gap-4 p-0 sm:grid-cols-3 lg:grid-cols-4 ${className}`}>
+    <ul className={`grid w-full list-none grid-cols-2 gap-4 p-0 sm:grid-cols-3 lg:grid-cols-4 ${className}`}>
       {items.map((item: GalleryTile, i: number) => (
         <li key={item.id}>
           <button
@@ -44,5 +47,11 @@ const SAMPLE_TILES: GalleryTile[] = [
 ];
 
 export default function GalleryPolaroidPreview() {
-  return <GalleryPolaroid items={SAMPLE_TILES} className="w-full max-w-xl" />;
+  return (
+    <section className="w-full px-4 py-12 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-6xl">
+        <GalleryPolaroid items={SAMPLE_TILES} className="w-full" />
+      </div>
+    </section>
+  );
 }

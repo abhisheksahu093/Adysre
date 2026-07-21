@@ -7,7 +7,9 @@ import { useId, useState, type FormEvent } from 'react';
  *
  * Mirrors the `typescript` code variant verbatim. Worth flipping the stage to
  * dark: the input drops to gray-950 while the card stays gray-900, which is
- * what keeps the field from dissolving into its own container.
+ * what keeps the field from dissolving into its own container. The card itself is
+ * width-agnostic (`w-full`); the preview supplies the page shell and the narrow
+ * measure that centres it.
  * Keep this in step with `src/data/components/marketing.ts`.
  */
 interface NewsletterCardProps {
@@ -39,7 +41,7 @@ function NewsletterCard({
   return (
     <section
       aria-labelledby={titleId}
-      className={`w-full max-w-sm rounded-2xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900 dark:shadow-none ${className}`}
+      className={`w-full rounded-2xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900 dark:shadow-none ${className}`}
     >
       <h2 id={titleId} className="text-lg font-semibold text-gray-900 dark:text-gray-100">
         {title}
@@ -82,10 +84,16 @@ function NewsletterCard({
 
 export default function NewsletterCardPreview() {
   return (
-    <NewsletterCard
-      title="Subscribe to the changelog"
-      copy="Every shipped feature, once a fortnight. Written by the people who built it."
-      ctaLabel="Subscribe"
-    />
+    <section className="w-full px-4 py-12 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-5xl">
+        <div className="mx-auto w-full max-w-sm">
+          <NewsletterCard
+            title="Subscribe to the changelog"
+            copy="Every shipped feature, once a fortnight. Written by the people who built it."
+            ctaLabel="Subscribe"
+          />
+        </div>
+      </div>
+    </section>
   );
 }

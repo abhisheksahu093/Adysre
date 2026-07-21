@@ -8,8 +8,9 @@ import { useEffect, useState } from 'react';
  * Mirrors the `typescript` code variant verbatim. The separators carry a pulse
  * that is gated behind `motion-reduce:animate-none`, so a reduced-motion user
  * gets the numbers with no throb. The clock still counts either way. The four
- * units wrap and never overflow at 320px. Keep in step with
- * `src/data/components/marketing.ts`.
+ * units wrap and never overflow at 320px. The section itself is width-agnostic
+ * (`w-full`); the preview supplies the page shell that centres it. Keep in step
+ * with `src/data/components/marketing.ts`.
  */
 interface CountdownOfferProps {
   title: string;
@@ -63,7 +64,7 @@ function CountdownOffer({
 
   return (
     <section
-      className={`w-full max-w-2xl rounded-2xl border border-gray-200 bg-white p-6 text-center sm:p-8 dark:border-gray-800 dark:bg-gray-900 ${className}`}
+      className={`w-full rounded-2xl border border-gray-200 bg-white p-6 text-center sm:p-8 dark:border-gray-800 dark:bg-gray-900 ${className}`}
     >
       <h2 className="text-xl font-bold tracking-tight text-gray-900 sm:text-2xl dark:text-gray-100">
         {title}
@@ -104,13 +105,17 @@ function CountdownOffer({
 export default function MarketingCountdownOfferPreview() {
   const deadline = new Date(Date.now() + (2 * 86400 + 5 * 3600 + 37 * 60 + 12) * 1000).toISOString();
   return (
-    <CountdownOffer
-      title="Spring sale ends soon"
-      copy="Every annual plan is 30% off until the timer runs out."
-      deadline={deadline}
-      ctaLabel="Shop the sale"
-      ctaHref="#"
-    />
+    <section className="w-full px-4 py-12 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-5xl">
+        <CountdownOffer
+          title="Spring sale ends soon"
+          copy="Every annual plan is 30% off until the timer runs out."
+          deadline={deadline}
+          ctaLabel="Shop the sale"
+          ctaHref="#"
+        />
+      </div>
+    </section>
   );
 }
 

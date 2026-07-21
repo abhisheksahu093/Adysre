@@ -41,7 +41,7 @@ function AccordionMultiOpen({ items, defaultOpenIds = [], className = '' }: Acco
   };
 
   return (
-    <div className={`max-w-2xl ${className}`}>
+    <div className={`w-full ${className}`}>
       <div className="flex justify-end pb-1">
         <button
           type="button"
@@ -113,6 +113,10 @@ const SAMPLE_ITEMS: FaqItem[] = [
 
 export default function AccordionMultiOpenPreview() {
   return (
-    <AccordionMultiOpen items={SAMPLE_ITEMS} defaultOpenIds={['delivery', 'tracking']} className="w-full" />
+    <section className="w-full px-4 py-12 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-3xl">
+        <AccordionMultiOpen items={SAMPLE_ITEMS} defaultOpenIds={['delivery', 'tracking']} />
+      </div>
+    </section>
   );
 }

@@ -697,7 +697,6 @@ export function ComparisonTable({ items, plans, className = '' }: ComparisonTabl
   position: relative;
   overflow: hidden;
   width: 100%;
-  max-width: 34rem;
   border-radius: 0.75rem;
   border: 1px solid #e5e7eb;
   /* The pointer is a wipe control across the whole frame, so a text cursor here
@@ -805,7 +804,7 @@ export function ComparisonTable({ items, plans, className = '' }: ComparisonTabl
 }`,
       tailwind: `<!-- Same script as the HTML tab; the classes change, the behaviour does not. -->
 <div
-  class="relative w-full max-w-lg cursor-ew-resize touch-none select-none overflow-hidden rounded-xl border border-gray-200 dark:border-gray-800"
+  class="relative w-full cursor-ew-resize touch-none select-none overflow-hidden rounded-xl border border-gray-200 dark:border-gray-800"
   data-wipe
 >
   <img class="block h-72 w-full object-cover" src="/images/kitchen-after.jpg" alt="Kitchen after the renovation" />
@@ -925,7 +924,7 @@ export function ComparisonImageSlider({
   return (
     <div
       ref={rootRef}
-      className={\`relative w-full max-w-lg cursor-ew-resize touch-none select-none overflow-hidden rounded-xl border border-gray-200 dark:border-gray-800 \${className}\`}
+      className={\`relative w-full cursor-ew-resize touch-none select-none overflow-hidden rounded-xl border border-gray-200 dark:border-gray-800 \${className}\`}
       onPointerDown={(event) => {
         event.currentTarget.setPointerCapture(event.pointerId);
         fromPointer(event);
@@ -1021,7 +1020,7 @@ export function ComparisonImageSlider({
   return (
     <div
       ref={rootRef}
-      className={\`relative w-full max-w-lg cursor-ew-resize touch-none select-none overflow-hidden rounded-xl border border-gray-200 dark:border-gray-800 \${className}\`}
+      className={\`relative w-full cursor-ew-resize touch-none select-none overflow-hidden rounded-xl border border-gray-200 dark:border-gray-800 \${className}\`}
       onPointerDown={(event) => {
         event.currentTarget.setPointerCapture(event.pointerId);
         fromPointer(event);
@@ -1125,7 +1124,7 @@ export function ComparisonImageSlider({
   return (
     <div
       ref={rootRef}
-      className={\`relative w-full max-w-lg cursor-ew-resize touch-none select-none overflow-hidden rounded-xl border border-gray-200 dark:border-gray-800 \${className}\`}
+      className={\`relative w-full cursor-ew-resize touch-none select-none overflow-hidden rounded-xl border border-gray-200 dark:border-gray-800 \${className}\`}
       onPointerDown={(event: PointerEvent<HTMLDivElement>) => {
         event.currentTarget.setPointerCapture(event.pointerId);
         fromPointer(event);
@@ -1255,7 +1254,6 @@ export function ComparisonImageSlider({
 </section>`,
       css: `.versus {
   width: 100%;
-  max-width: 48rem;
 }
 
 .versus__kicker {
@@ -1400,7 +1398,7 @@ export function ComparisonImageSlider({
     color: #9ca3af;
   }
 }`,
-      tailwind: `<section class="w-full max-w-3xl" aria-labelledby="versus-title">
+      tailwind: `<section class="w-full" aria-labelledby="versus-title">
   <p class="text-xs font-semibold uppercase tracking-wider text-gray-600 dark:text-gray-400">Why teams switch</p>
   <h2 class="mb-5 mt-1.5 text-2xl font-bold text-gray-900 dark:text-gray-100" id="versus-title">
     Spreadsheets vs. a real system
@@ -1480,7 +1478,7 @@ export function ComparisonTwoColumn({ kicker, title, items = COLUMNS, className 
   const titleId = useId();
 
   return (
-    <section className={\`w-full max-w-3xl \${className}\`} aria-labelledby={titleId}>
+    <section className={\`w-full \${className}\`} aria-labelledby={titleId}>
       {kicker && (
         <p className="text-xs font-semibold uppercase tracking-wider text-gray-600 dark:text-gray-400">
           {kicker}
@@ -1562,7 +1560,7 @@ export function ComparisonTwoColumn({ kicker, title, items, className = '' }: Co
   const titleId = useId();
 
   return (
-    <section className={\`w-full max-w-3xl \${className}\`} aria-labelledby={titleId}>
+    <section className={\`w-full \${className}\`} aria-labelledby={titleId}>
       {kicker ? (
         <p className="text-xs font-semibold uppercase tracking-wider text-gray-600 dark:text-gray-400">
           {kicker}
@@ -1650,7 +1648,7 @@ export function ComparisonTwoColumn({
   const titleId = useId();
 
   return (
-    <section className={\`w-full max-w-3xl \${className}\`} aria-labelledby={titleId}>
+    <section className={\`w-full \${className}\`} aria-labelledby={titleId}>
       {kicker ? (
         <p className="text-xs font-semibold uppercase tracking-wider text-gray-600 dark:text-gray-400">
           {kicker}
@@ -2496,7 +2494,6 @@ export function ComparisonFeatureMatrix({
 </section>`,
       css: `.ba {
   width: 100%;
-  max-width: 48rem;
 }
 
 .ba__title {
@@ -2572,7 +2569,7 @@ export function ComparisonFeatureMatrix({
     color: #d1d5db;
   }
 }`,
-      tailwind: `<section class="w-full max-w-3xl" aria-labelledby="ba-title">
+      tailwind: `<section class="w-full" aria-labelledby="ba-title">
   <h2 class="mb-4 text-2xl font-bold text-gray-900 dark:text-gray-100" id="ba-title">Dashboard redesign</h2>
 
   <div class="grid gap-4 sm:grid-cols-2">
@@ -2617,7 +2614,7 @@ export function ComparisonBeforeAfterCards({ title, items = ITEMS, className = '
   const titleId = useId();
 
   return (
-    <section className={\`w-full max-w-3xl \${className}\`} aria-labelledby={titleId}>
+    <section className={\`w-full \${className}\`} aria-labelledby={titleId}>
       <h2 className="mb-4 text-2xl font-bold text-gray-900 dark:text-gray-100" id={titleId}>
         {title}
       </h2>
@@ -2669,7 +2666,7 @@ export function ComparisonBeforeAfterCards({
   const titleId = useId();
 
   return (
-    <section className={\`w-full max-w-3xl \${className}\`} aria-labelledby={titleId}>
+    <section className={\`w-full \${className}\`} aria-labelledby={titleId}>
       <h2 className="mb-4 text-2xl font-bold text-gray-900 dark:text-gray-100" id={titleId}>
         {title}
       </h2>
@@ -2720,7 +2717,7 @@ export function ComparisonBeforeAfterCards({
   const titleId = useId();
 
   return (
-    <section className={\`w-full max-w-3xl \${className}\`} aria-labelledby={titleId}>
+    <section className={\`w-full \${className}\`} aria-labelledby={titleId}>
       <h2 className="mb-4 text-2xl font-bold text-gray-900 dark:text-gray-100" id={titleId}>
         {title}
       </h2>
@@ -2779,7 +2776,7 @@ export function ComparisonBeforeAfterCards({
   swaps every monthly figure for its annual one - no JavaScript. The toggle is a
   labelled checkbox so it is operable and announced without extra ARIA.
 -->
-<section class="group w-full max-w-3xl">
+<section class="group w-full">
   <div class="mb-6 flex justify-center">
     <label class="inline-flex cursor-pointer items-center gap-3 text-sm font-medium text-gray-700 dark:text-gray-300">
       <span>Monthly</span>
@@ -2836,7 +2833,7 @@ export function ComparisonPricingToggle({ plans = SAMPLE_PLANS, currency = '$', 
   const annual = cycle === 'annual';
 
   return (
-    <section className={\`w-full max-w-3xl \${className}\`}>
+    <section className={\`w-full \${className}\`}>
       <div className="mb-6 flex justify-center">
         <div role="radiogroup" aria-label="Billing cycle" className="inline-flex rounded-full border border-gray-200 bg-gray-50 p-1 dark:border-gray-800 dark:bg-gray-900">
           {['monthly', 'annual'].map((option) => {
@@ -2908,7 +2905,7 @@ export function ComparisonPricingToggle({ plans, currency = '$', className = '' 
   const annual = cycle === 'annual';
 
   return (
-    <section className={\`w-full max-w-3xl \${className}\`}>
+    <section className={\`w-full \${className}\`}>
       <div className="mb-6 flex justify-center">
         <div role="radiogroup" aria-label="Billing cycle" className="inline-flex rounded-full border border-gray-200 bg-gray-50 p-1 dark:border-gray-800 dark:bg-gray-900">
           {(['monthly', 'annual'] as const).map((option: BillingCycle) => {
@@ -2991,7 +2988,7 @@ export function ComparisonPricingToggle({ plans, currency = '$', className = '' 
   them. The badge is aria-hidden and hides once the panels stack, so a stacked
   screen never shows a floating "VS" over the first card.
 -->
-<section class="relative w-full max-w-3xl">
+<section class="relative w-full">
   <div class="grid gap-4 sm:grid-cols-2">
     <section aria-label="Notion" class="rounded-xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-gray-900">
       <h3 class="text-lg font-bold text-gray-900 dark:text-gray-100">Notion</h3>
@@ -3025,7 +3022,7 @@ export function ComparisonVsVersus({ left = LEFT, right = RIGHT, className = '' 
   const sides = [left, right];
 
   return (
-    <section className={\`relative w-full max-w-3xl \${className}\`}>
+    <section className={\`relative w-full \${className}\`}>
       <div className="grid gap-4 sm:grid-cols-2">
         {sides.map((side) => (
           <section key={side.id} aria-label={side.name} className="rounded-xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-gray-900">
@@ -3067,7 +3064,7 @@ export function ComparisonVsVersus({ left, right, className = '' }: ComparisonVs
   const sides: VersusSide[] = [left, right];
 
   return (
-    <section className={\`relative w-full max-w-3xl \${className}\`}>
+    <section className={\`relative w-full \${className}\`}>
       <div className="grid gap-4 sm:grid-cols-2">
         {sides.map((side: VersusSide) => (
           <section key={side.id} aria-label={side.name} className="rounded-xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-gray-900">
@@ -3124,7 +3121,7 @@ export function ComparisonVsVersus({ left, right, className = '' }: ComparisonVs
   prefix, so a screen reader never hears a bare "+" with nothing to anchor it.
   Colour is reinforced by the +/- and ✓/✗ glyphs, never the sole signal.
 -->
-<section class="w-full max-w-2xl">
+<section class="w-full">
   <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-gray-100">Should you self-host?</h2>
   <div class="grid gap-4 sm:grid-cols-2">
     <section aria-label="Pros" class="rounded-xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-gray-900">
@@ -3159,7 +3156,7 @@ export function ComparisonVsVersus({ left, right, className = '' }: ComparisonVs
   ];
 
   return (
-    <section className={\`w-full max-w-2xl \${className}\`}>
+    <section className={\`w-full \${className}\`}>
       {title ? <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-gray-100">{title}</h2> : null}
       <div className="grid gap-4 sm:grid-cols-2">
         {columns.map((col) => (
@@ -3207,7 +3204,7 @@ export function ComparisonProsCons({ title, prosLabel = 'Pros', consLabel = 'Con
   ];
 
   return (
-    <section className={\`w-full max-w-2xl \${className}\`}>
+    <section className={\`w-full \${className}\`}>
       {title ? <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-gray-100">{title}</h2> : null}
       <div className="grid gap-4 sm:grid-cols-2">
         {columns.map((col: ProsConsColumn) => (
@@ -3266,7 +3263,7 @@ export function ComparisonProsCons({ title, prosLabel = 'Pros', consLabel = 'Con
   row - an aria-hidden ✗ plus a visually-hidden "Not included:" - so the lists
   stay row-aligned across columns instead of silently dropping absent rows.
 -->
-<div class="grid w-full max-w-4xl gap-4 sm:grid-cols-2 lg:grid-cols-3">
+<div class="grid w-full gap-4 sm:grid-cols-2 lg:grid-cols-3">
   <section aria-label="Free" class="flex flex-col rounded-xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-gray-900">
     <div class="flex items-center justify-between gap-2">
       <h3 class="text-base font-semibold text-gray-900 dark:text-gray-100">Free</h3>
@@ -3319,7 +3316,7 @@ export function ComparisonProsCons({ title, prosLabel = 'Pros', consLabel = 'Con
 
 export function ComparisonThreeColumn({ columns = COLUMNS, className = '' }) {
   return (
-    <div className={\`grid w-full max-w-4xl gap-4 sm:grid-cols-2 lg:grid-cols-3 \${className}\`}>
+    <div className={\`grid w-full gap-4 sm:grid-cols-2 lg:grid-cols-3 \${className}\`}>
       {columns.map((col) => (
         <section
           key={col.id}
@@ -3368,7 +3365,7 @@ export interface ComparisonThreeColumnProps {
 
 export function ComparisonThreeColumn({ columns, className = '' }: ComparisonThreeColumnProps): JSX.Element {
   return (
-    <div className={\`grid w-full max-w-4xl gap-4 sm:grid-cols-2 lg:grid-cols-3 \${className}\`}>
+    <div className={\`grid w-full gap-4 sm:grid-cols-2 lg:grid-cols-3 \${className}\`}>
       {columns.map((col: ThreeColItem) => (
         <section
           key={col.id}
@@ -3433,7 +3430,7 @@ export function ComparisonThreeColumn({ columns, className = '' }: ComparisonThr
   value carries its own inline product label, so the sheet stacks without
   losing which value belongs to which product - no table to scroll.
 -->
-<section class="w-full max-w-xl rounded-xl border border-gray-200 dark:border-gray-800">
+<section class="w-full rounded-xl border border-gray-200 dark:border-gray-800">
   <div class="hidden grid-cols-[1fr_1fr_1fr] gap-3 border-b border-gray-200 px-4 py-3 sm:grid dark:border-gray-800">
     <span class="text-sm font-semibold text-gray-500 dark:text-gray-400">Spec</span>
     <span class="text-sm font-semibold text-gray-900 dark:text-gray-100">Model A</span>
@@ -3460,7 +3457,7 @@ export function ComparisonThreeColumn({ columns, className = '' }: ComparisonThr
 
 export function ComparisonSpecList({ productA = 'Model A', productB = 'Model B', specs = SPECS, className = '' }) {
   return (
-    <section className={\`w-full max-w-xl rounded-xl border border-gray-200 dark:border-gray-800 \${className}\`}>
+    <section className={\`w-full rounded-xl border border-gray-200 dark:border-gray-800 \${className}\`}>
       <div className="hidden grid-cols-[1fr_1fr_1fr] gap-3 border-b border-gray-200 px-4 py-3 sm:grid dark:border-gray-800">
         <span className="text-sm font-semibold text-gray-500 dark:text-gray-400">Spec</span>
         <span className="text-sm font-semibold text-gray-900 dark:text-gray-100">{productA}</span>
@@ -3498,7 +3495,7 @@ export interface ComparisonSpecListProps {
 
 export function ComparisonSpecList({ productA, productB, specs, className = '' }: ComparisonSpecListProps): JSX.Element {
   return (
-    <section className={\`w-full max-w-xl rounded-xl border border-gray-200 dark:border-gray-800 \${className}\`}>
+    <section className={\`w-full rounded-xl border border-gray-200 dark:border-gray-800 \${className}\`}>
       <div className="hidden grid-cols-[1fr_1fr_1fr] gap-3 border-b border-gray-200 px-4 py-3 sm:grid dark:border-gray-800">
         <span className="text-sm font-semibold text-gray-500 dark:text-gray-400">Spec</span>
         <span className="text-sm font-semibold text-gray-900 dark:text-gray-100">{productA}</span>
@@ -3752,7 +3749,7 @@ export function ComparisonPlanMatrix({ plans, rows, className = '' }: Comparison
   "(best)" - colour never carries the verdict alone, so it survives forced
   colours and greyscale. Cells stack to one column below 40rem.
 -->
-<div class="grid w-full max-w-2xl gap-3">
+<div class="grid w-full gap-3">
   <div>
     <p class="mb-1 text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">Uptime SLA</p>
     <div class="grid gap-2 sm:grid-cols-2">
@@ -3780,7 +3777,7 @@ export function ComparisonHighlightDiff({ labelA = 'Basic', labelB = 'Plus', row
     \`rounded-lg border px-3 py-2 text-sm \${win ? 'border-emerald-600 bg-emerald-50 text-emerald-900 dark:border-emerald-500 dark:bg-emerald-950/40 dark:text-emerald-100' : 'border-gray-200 text-gray-700 dark:border-gray-800 dark:text-gray-300'}\`;
 
   return (
-    <div className={\`grid w-full max-w-2xl gap-3 \${className}\`}>
+    <div className={\`grid w-full gap-3 \${className}\`}>
       {rows.map((row) => (
         <div key={row.id}>
           <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">{row.label}</p>
@@ -3826,7 +3823,7 @@ export function ComparisonHighlightDiff({ labelA, labelB, rows, className = '' }
     \`rounded-lg border px-3 py-2 text-sm \${win ? 'border-emerald-600 bg-emerald-50 text-emerald-900 dark:border-emerald-500 dark:bg-emerald-950/40 dark:text-emerald-100' : 'border-gray-200 text-gray-700 dark:border-gray-800 dark:text-gray-300'}\`;
 
   return (
-    <div className={\`grid w-full max-w-2xl gap-3 \${className}\`}>
+    <div className={\`grid w-full gap-3 \${className}\`}>
       {rows.map((row: DiffRow) => (
         <div key={row.id}>
           <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">{row.label}</p>
@@ -3887,7 +3884,7 @@ export function ComparisonHighlightDiff({ labelA, labelB, rows, className = '' }
   initials (aria-hidden) - no external image to load. The CTA is a real link
   with a focus-visible ring.
 -->
-<div class="grid w-full max-w-3xl gap-4 sm:grid-cols-2">
+<div class="grid w-full gap-4 sm:grid-cols-2">
   <section aria-label="ADYSRE Cloud" class="flex flex-col rounded-xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-gray-900">
     <div class="flex items-center gap-3">
       <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-indigo-600 text-sm font-bold text-white" aria-hidden="true">AC</span>
@@ -3938,7 +3935,7 @@ function initials(name) {
 
 export function ComparisonSideBySideCards({ products = PRODUCTS, className = '' }) {
   return (
-    <div className={\`grid w-full max-w-3xl gap-4 sm:grid-cols-2 \${className}\`}>
+    <div className={\`grid w-full gap-4 sm:grid-cols-2 \${className}\`}>
       {products.map((product) => (
         <section
           key={product.id}
@@ -3997,7 +3994,7 @@ function initials(name: string): string {
 
 export function ComparisonSideBySideCards({ products, className = '' }: ComparisonSideBySideCardsProps): JSX.Element {
   return (
-    <div className={\`grid w-full max-w-3xl gap-4 sm:grid-cols-2 \${className}\`}>
+    <div className={\`grid w-full gap-4 sm:grid-cols-2 \${className}\`}>
       {products.map((product: SideCard) => (
         <section
           key={product.id}
@@ -4211,7 +4208,7 @@ export function ComparisonCheckmarkGrid({ options, rows, className = '' }: Compa
   in words ("Everything in Team, plus") instead of re-listing every lower
   feature - shorter to read and impossible to let the lists drift out of sync.
 -->
-<div class="grid w-full max-w-4xl gap-4 sm:grid-cols-2 lg:grid-cols-3">
+<div class="grid w-full gap-4 sm:grid-cols-2 lg:grid-cols-3">
   <section aria-label="Starter" class="flex flex-col rounded-xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-gray-900">
     <h3 class="text-base font-semibold text-gray-900 dark:text-gray-100">Starter</h3>
     <p class="mt-1 text-2xl font-bold text-gray-900 dark:text-gray-100">$0</p>
@@ -4255,7 +4252,7 @@ export function ComparisonCheckmarkGrid({ options, rows, className = '' }: Compa
 
 export function ComparisonTieredFeatures({ tiers = TIERS, className = '' }) {
   return (
-    <div className={\`grid w-full max-w-4xl gap-4 sm:grid-cols-2 lg:grid-cols-3 \${className}\`}>
+    <div className={\`grid w-full gap-4 sm:grid-cols-2 lg:grid-cols-3 \${className}\`}>
       {tiers.map((tier) => (
         <section
           key={tier.id}
@@ -4294,7 +4291,7 @@ export interface ComparisonTieredFeaturesProps {
 
 export function ComparisonTieredFeatures({ tiers, className = '' }: ComparisonTieredFeaturesProps): JSX.Element {
   return (
-    <div className={\`grid w-full max-w-4xl gap-4 sm:grid-cols-2 lg:grid-cols-3 \${className}\`}>
+    <div className={\`grid w-full gap-4 sm:grid-cols-2 lg:grid-cols-3 \${className}\`}>
       {tiers.map((tier: Tier) => (
         <section
           key={tier.id}

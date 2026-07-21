@@ -4,6 +4,9 @@
  * Mirrors the `typescript` code variant. A fixed row height plus `grow` on each
  * tile stretches every row edge-to-edge; the per-tile `basisClass` varies the
  * natural widths. Media are CSS gradient tiles - no network.
+ *
+ * The row list fills its container - the default export wraps it in a centred,
+ * full-width page section, which is how the playground stacks it.
  * Keep this in step with `src/data/components/galleries.ts`.
  */
 interface JustifiedTile {
@@ -20,7 +23,7 @@ interface GalleryJustifiedProps {
 
 function GalleryJustified({ items, className = '' }: GalleryJustifiedProps) {
   return (
-    <ul className={`flex list-none flex-wrap gap-2 p-0 ${className}`}>
+    <ul className={`flex w-full list-none flex-wrap gap-2 p-0 ${className}`}>
       {items.map((item: JustifiedTile) => (
         <li key={item.id} className={`h-28 grow sm:h-36 ${item.basisClass}`}>
           <div role="img" aria-label={item.label} className={`h-full w-full rounded-lg bg-gradient-to-br ${item.gradient}`} />
@@ -40,5 +43,11 @@ const SAMPLE_TILES: JustifiedTile[] = [
 ];
 
 export default function GalleryJustifiedPreview() {
-  return <GalleryJustified items={SAMPLE_TILES} className="w-full max-w-xl" />;
+  return (
+    <section className="w-full px-4 py-12 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-6xl">
+        <GalleryJustified items={SAMPLE_TILES} className="w-full" />
+      </div>
+    </section>
+  );
 }

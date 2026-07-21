@@ -29,7 +29,7 @@ export function ProjectPaletteDialog({
   const referenceFile = usePlaygroundStore((s) => s.referenceFile);
   const [busy, setBusy] = useState(false);
 
-  const useReference = async () => {
+  const applyReferencePalette = async () => {
     if (!referenceFile) return;
     setBusy(true);
     try {
@@ -98,7 +98,7 @@ export function ProjectPaletteDialog({
               type="button"
               variant="outline"
               size="sm"
-              onClick={() => void useReference()}
+              onClick={() => void applyReferencePalette()}
               disabled={busy}
               className="gap-1.5"
             >

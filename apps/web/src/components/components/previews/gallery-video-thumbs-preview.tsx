@@ -4,6 +4,9 @@
  * Mirrors the `typescript` code variant. The play glyph is a pure-CSS triangle
  * (a bordered zero-size box) - no asset, no real <video>. It scales on hover
  * and focus-visible; motion-reduce holds it still. Media are CSS gradient tiles.
+ *
+ * The grid fills its container; the default export wraps it in a centred,
+ * full-width page section.
  * Keep this in step with `src/data/components/galleries.ts`.
  */
 interface VideoTile {
@@ -21,7 +24,7 @@ interface GalleryVideoThumbsProps {
 
 function GalleryVideoThumbs({ items, className = '' }: GalleryVideoThumbsProps) {
   return (
-    <ul className={`grid list-none grid-cols-2 gap-3 p-0 sm:grid-cols-3 lg:grid-cols-4 ${className}`}>
+    <ul className={`grid w-full list-none grid-cols-2 gap-3 p-0 sm:grid-cols-3 lg:grid-cols-4 ${className}`}>
       {items.map((item: VideoTile) => (
         <li key={item.id}>
           <button
@@ -53,5 +56,11 @@ const SAMPLE_TILES: VideoTile[] = [
 ];
 
 export default function GalleryVideoThumbsPreview() {
-  return <GalleryVideoThumbs items={SAMPLE_TILES} className="w-full max-w-xl" />;
+  return (
+    <section className="w-full px-4 py-12 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-6xl">
+        <GalleryVideoThumbs items={SAMPLE_TILES} className="w-full" />
+      </div>
+    </section>
+  );
 }

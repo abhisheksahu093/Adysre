@@ -22,6 +22,7 @@
 		"dashboard": "仪表板",
 		"promptLibrary": "提示词库",
 		"components": "组件",
+		"designPlayground": "设计工作台",
 		"templates": "模板",
 		"settings": "设置",
 		"mainLabel": "主导航",
@@ -36,7 +37,8 @@
 			"gradients": "浏览、编辑并导出 CSS 渐变 -- 或生成你自己的。",
 			"patterns": "浏览、编辑并导出 CSS 背景图案 — 或自己生成。",
 			"textures": "浏览、编辑并导出 CSS 表面纹理 — 或自己生成。",
-			"icons": "浏览、自定义并以任意格式或尺寸导出原创 SVG 图标。"
+			"icons": "浏览、自定义并以任意格式或尺寸导出原创 SVG 图标。",
+			"designPlayground": "在无限画布上设计页面、仪表板和图形 — 无需编写代码。"
 		},
 		"palettes": "调色板",
 		"gradients": "渐变",
@@ -1874,6 +1876,291 @@
 			"label": "图标、渐变和调色板现已在工作区上线",
 			"cta": "查看",
 			"dismiss": "关闭公告"
+		}
+	},
+	"designPlayground": {
+		"title": "设计工作台",
+		"subtitle": "用于页面、仪表板、移动端界面和图形的可视化编辑器。拖拽、编辑、导出 — 无需编写代码。",
+		"backToApp": "返回应用",
+		"toolbarLabel": "工具",
+		"railLabel": "编辑器面板",
+		"breakpointLabel": "断点",
+		"tools": {
+			"select": "选择",
+			"hand": "抓手",
+			"frame": "画框",
+			"rectangle": "矩形",
+			"ellipse": "椭圆",
+			"text": "文本",
+			"pen": "钢笔"
+		},
+		"panels": {
+			"pages": {
+				"title": "页面",
+				"description": "本项目的所有页面，每个页面都有自己的无限画布。",
+				"add": "添加页面",
+				"remove": "删除页面",
+				"nameLabel": "页面名称"
+			},
+			"layers": {
+				"title": "图层",
+				"description": "图层树：对画布上的任何元素进行分组、排序、重命名、锁定或隐藏。",
+				"empty": "此页面还没有图层。",
+				"expand": "展开图层",
+				"collapse": "折叠图层",
+				"nameLabel": "图层名称",
+				"hide": "隐藏图层",
+				"show": "显示图层",
+				"lock": "锁定图层",
+				"unlock": "解锁图层",
+				"remove": "删除图层",
+				"moveUp": "上移",
+				"moveDown": "下移"
+			},
+			"sections": {
+				"title": "区块",
+				"description": "从组件库中直接放入现成的页头、主视觉、价格表、常见问题和页脚。",
+				"search": "搜索区块",
+				"empty": "没有匹配的区块。",
+				"insert": "插入 {name}"
+			},
+			"components": {
+				"title": "组件",
+				"description": "按钮、输入框、卡片、表格等 — 创建一次，随处复用。",
+				"search": "搜索组件",
+				"empty": "没有匹配的组件。",
+				"insert": "插入 {name}"
+			},
+			"assets": {
+				"title": "素材",
+				"description": "图标、插画、图案、渐变以及你上传的文件。",
+				"tablistLabel": "素材分组",
+				"tabs": {
+					"colors": "颜色",
+					"gradients": "渐变",
+					"icons": "图标"
+				},
+				"colors": {
+					"applyHint": "点击色块为选中对象填色。",
+					"placeHint": "未选中任何对象 — 点击色块将放置一个彩色方块。",
+					"apply": "应用 {palette} 中的 {color}",
+					"place": "放置 {palette} 中的 {color}",
+					"empty": "暂无可用的调色板。"
+				},
+				"gradients": {
+					"hint": "放置一个使用渐变首色的方块。真正的渐变填充将随特效功能推出。",
+					"place": "放置 {name}",
+					"empty": "暂无可用的渐变。"
+				},
+				"icons": {
+					"searchLabel": "搜索图标",
+					"searchPlaceholder": "搜索图标",
+					"hint": "点击图标将其放置到画布上。",
+					"place": "放置 {name}",
+					"empty": "没有匹配的图标。",
+					"more": "显示 {total} 个中的 {shown} 个，请细化搜索条件。"
+				}
+			},
+			"images": {
+				"title": "图片",
+				"description": "上传自己的图片或从图库获取，然后裁剪、蒙版与滤镜处理。",
+				"upload": "上传图片",
+				"uploadHint": "将文件拖到此处，或点击浏览。支持 PNG、JPG、GIF、WebP 和 SVG。",
+				"importing": "正在添加图片…",
+				"empty": "暂无图片。上传后即可放置到画布上。",
+				"place": "放置到画布",
+				"remove": "从库中移除",
+				"removeNamed": "将 {name} 从库中移除",
+				"usage": "已使用 {used}／{total}（{percent}%）",
+				"storageFailed": "这些图片无法保存到此浏览器，刷新后将会丢失。请移除部分图片以释放空间。",
+				"errors": {
+					"unsupported": "不是受支持的图片类型。",
+					"unreadable": "无法读取，文件可能已损坏。",
+					"tooLarge": "即使压缩后仍然过大，无法保存。",
+					"libraryFull": "无法放入 — 图片库已满。请移除部分图片后重试。"
+				}
+			},
+			"ai": {
+				"title": "AI",
+				"description": "描述一个页面即可生成可编辑画框，也可以用提示词编辑当前选区。",
+				"label": "描述要生成的区块",
+				"placeholder": "一个深色的价格区块，包含三个套餐，中间套餐高亮…",
+				"generate": "生成区块",
+				"working": "生成中…",
+				"examplesTitle": "试试这些",
+				"examples": {
+					"hero": "金融科技应用的醒目主视觉：深色背景、标题、副文案和一个主要按钮。",
+					"pricing": "包含三个套餐卡片的价格区块，中间一个高亮显示。",
+					"features": "三列功能网格，每列包含图标块、标题和描述。",
+					"cta": "在强调色背景上，带有标题和一个按钮的结尾行动号召条。"
+				},
+				"errors": {
+					"not-configured": "此部署未配置 AI 生成。请在服务器上设置 ANTHROPIC_API_KEY 以启用。",
+					"invalid-request": "请先描述你想要的区块，然后再生成。",
+					"refused": "该请求被拒绝。请尝试换一种方式描述设计。",
+					"rate-limited": "当前请求过多，请稍后再试。",
+					"empty": "模型未返回可用结果，请重试。",
+					"failed": "生成失败，请稍后重试。"
+				}
+			}
+		},
+		"inspector": {
+			"title": "属性",
+			"empty": "在画布上选择元素以编辑其属性。",
+			"groups": {
+				"transform": "变换",
+				"layout": "布局",
+				"style": "填充与描边",
+				"effects": "效果",
+				"typography": "排版",
+				"export": "导出"
+			},
+			"mixed": "多个值",
+			"multiple": "已选择 {count} 个图层",
+			"soon": "将在后续阶段推出。",
+			"colorNone": "无",
+			"colorPicker": "拾色器",
+			"colorHex": "十六进制",
+			"fields": {
+				"x": "X",
+				"y": "Y",
+				"width": "宽度",
+				"height": "高度",
+				"rotation": "旋转",
+				"mode": "模式",
+				"direction": "方向",
+				"gap": "间距",
+				"padding": "内边距",
+				"fill": "填充",
+				"stroke": "描边",
+				"strokeWidth": "描边宽度",
+				"radius": "圆角",
+				"opacity": "不透明度",
+				"text": "内容",
+				"fontSize": "字号",
+				"fontWeight": "字重",
+				"lineHeight": "行高",
+				"letterSpacing": "字间距",
+				"align": "对齐",
+				"shadow": "阴影",
+				"shadowColor": "阴影颜色",
+				"shadowBlur": "模糊",
+				"shadowOffsetX": "水平偏移",
+				"shadowOffsetY": "垂直偏移",
+				"shadowOpacity": "阴影不透明度",
+				"blendMode": "混合模式"
+			},
+			"options": {
+				"none": "无",
+				"flex": "弹性",
+				"row": "行",
+				"column": "列",
+				"left": "左对齐",
+				"center": "居中",
+				"right": "右对齐",
+				"dropShadow": "投影",
+				"normal": "正常",
+				"multiply": "正片叠底",
+				"screen": "滤色",
+				"overlay": "叠加",
+				"darken": "变暗",
+				"lighten": "变亮"
+			},
+			"tabs": "侧栏标签",
+			"tabLabels": {
+				"properties": "属性",
+				"frames": "画框"
+			}
+		},
+		"canvas": {
+			"empty": {
+				"title": "从画框开始",
+				"description": "画框就是你设计所用的画板。选择一个尺寸，或用画框工具（F）绘制。",
+				"cta": "选择画框尺寸"
+			},
+			"editText": "编辑文本"
+		},
+		"frameGroups": {
+			"screens": "屏幕",
+			"social": "社交媒体",
+			"print": "打印与幻灯片"
+		},
+		"frames": {
+			"desktop": "桌面",
+			"laptop": "笔记本",
+			"tablet": "平板",
+			"mobile": "手机",
+			"instagram": "Instagram",
+			"facebook": "Facebook",
+			"twitter": "Twitter",
+			"youtube": "YouTube",
+			"presentation": "演示文稿",
+			"a4": "A4",
+			"description": "画框就是你设计所用的画板。新建的画框会放在现有内容旁边。"
+		},
+		"breakpoints": {
+			"desktop": "桌面",
+			"laptop": "笔记本",
+			"tablet": "平板",
+			"mobile": "手机"
+		},
+		"status": {
+			"grid": "网格",
+			"coordinates": "指针位置"
+		},
+		"actions": {
+			"share": "分享",
+			"export": "导出",
+			"toggleInspector": "切换属性面板",
+			"zoomIn": "放大",
+			"zoomOut": "缩小",
+			"resetZoom": "缩放重置为 100%",
+			"undo": "撤销",
+			"redo": "重做",
+			"selectionLabel": "选区操作",
+			"duplicate": "复制",
+			"bringToFront": "置于顶层",
+			"sendToBack": "置于底层",
+			"lock": "锁定",
+			"unlock": "解锁",
+			"hide": "隐藏",
+			"show": "显示",
+			"delete": "删除",
+			"group": "编组",
+			"ungroup": "取消编组",
+			"zoomToFit": "缩放以适应"
+		},
+		"export": {
+			"working": "处理中…",
+			"failed": "导出失败，请尝试其他格式。",
+			"formats": {
+				"png": "PNG 图片",
+				"jpeg": "JPEG 图片",
+				"svg": "SVG 矢量图",
+				"html": "HTML 页面",
+				"json": "项目文件"
+			},
+			"import": "打开项目文件…",
+			"importFailed": "该文件不是有效的 ADYSRE 项目。",
+			"scale": "倍率",
+			"exportAs": "导出为 {format}",
+			"selectFirst": "在画布上选择元素以单独导出。"
+		},
+		"sync": {
+			"saving": "正在保存…",
+			"saved": "已保存",
+			"offline": "离线 — 仅保存在此设备",
+			"error": "保存失败"
+		},
+		"projects": {
+			"menu": "项目",
+			"new": "新建设计",
+			"rename": "重命名设计",
+			"nameLabel": "设计名称",
+			"recent": "以往的设计",
+			"loading": "加载中…",
+			"empty": "还没有已保存的设计。",
+			"unavailable": "无法显示已保存的设计 — 存储不可用。你的工作仍保存在此设备上。"
 		}
 	}
 }

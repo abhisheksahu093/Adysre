@@ -22,6 +22,7 @@
 		"dashboard": "ダッシュボード",
 		"promptLibrary": "プロンプトライブラリ",
 		"components": "コンポーネント",
+		"designPlayground": "デザインプレイグラウンド",
 		"templates": "テンプレート",
 		"settings": "設定",
 		"mainLabel": "メイン",
@@ -36,7 +37,8 @@
 			"gradients": "CSSグラデーションを閲覧・編集・書き出し、または自分で生成できます。",
 			"patterns": "CSS背景パターンを閲覧・編集・エクスポート、または自分で生成。",
 			"textures": "CSSサーフェステクスチャを閲覧・編集・エクスポート、または自分で生成。",
-			"icons": "オリジナルの SVG アイコンを閲覧・カスタマイズし、任意の形式やサイズで書き出せます。"
+			"icons": "オリジナルの SVG アイコンを閲覧・カスタマイズし、任意の形式やサイズで書き出せます。",
+			"designPlayground": "無限キャンバスでページ・ダッシュボード・グラフィックをコードなしでデザイン。"
 		},
 		"palettes": "カラーパレット",
 		"gradients": "グラデーション",
@@ -1874,6 +1876,291 @@
 			"label": "アイコン、グラデーション、パレットがワークスペースで公開されました",
 			"cta": "見る",
 			"dismiss": "お知らせを閉じる"
+		}
+	},
+	"designPlayground": {
+		"title": "デザインプレイグラウンド",
+		"subtitle": "ページ、ダッシュボード、モバイル画面、グラフィックのためのビジュアルエディター。ドラッグして編集し、書き出すだけ。コードは不要です。",
+		"backToApp": "アプリに戻る",
+		"toolbarLabel": "ツール",
+		"railLabel": "エディターパネル",
+		"breakpointLabel": "ブレークポイント",
+		"tools": {
+			"select": "選択",
+			"hand": "ハンド",
+			"frame": "フレーム",
+			"rectangle": "長方形",
+			"ellipse": "楕円",
+			"text": "テキスト",
+			"pen": "ペン"
+		},
+		"panels": {
+			"pages": {
+				"title": "ページ",
+				"description": "このプロジェクトの全ページ。各ページが無限キャンバスを持ちます。",
+				"add": "ページを追加",
+				"remove": "ページを削除",
+				"nameLabel": "ページ名"
+			},
+			"layers": {
+				"title": "レイヤー",
+				"description": "レイヤーツリー。グループ化、並べ替え、名前変更、ロック、非表示ができます。",
+				"empty": "このページにはまだレイヤーがありません。",
+				"expand": "レイヤーを展開",
+				"collapse": "レイヤーを折りたたむ",
+				"nameLabel": "レイヤー名",
+				"hide": "レイヤーを非表示",
+				"show": "レイヤーを表示",
+				"lock": "レイヤーをロック",
+				"unlock": "レイヤーのロックを解除",
+				"remove": "レイヤーを削除",
+				"moveUp": "前面へ",
+				"moveDown": "背面へ"
+			},
+			"sections": {
+				"title": "セクション",
+				"description": "コンポーネントライブラリのヘッダー、ヒーロー、価格表、FAQ、フッターを配置。",
+				"search": "セクションを検索",
+				"empty": "一致するセクションがありません。",
+				"insert": "{name} を挿入"
+			},
+			"components": {
+				"title": "コンポーネント",
+				"description": "ボタン、入力欄、カード、テーブルなど。一度作ればどこでも再利用できます。",
+				"search": "コンポーネントを検索",
+				"empty": "一致するコンポーネントがありません。",
+				"insert": "{name} を挿入"
+			},
+			"assets": {
+				"title": "アセット",
+				"description": "アイコン、イラスト、パターン、グラデーション、アップロードした素材。",
+				"tablistLabel": "アセットのグループ",
+				"tabs": {
+					"colors": "カラー",
+					"gradients": "グラデーション",
+					"icons": "アイコン"
+				},
+				"colors": {
+					"applyHint": "スウォッチをクリックすると選択範囲に塗りを適用します。",
+					"placeHint": "未選択です - スウォッチをクリックすると色の四角形を配置します。",
+					"apply": "{palette} の {color} を適用",
+					"place": "{palette} の {color} を配置",
+					"empty": "利用できるカラーパレットがありません。"
+				},
+				"gradients": {
+					"hint": "グラデーションの最初の色で四角形を配置します。実際のグラデーション塗りはエフェクト対応時に追加されます。",
+					"place": "{name} を配置",
+					"empty": "利用できるグラデーションがありません。"
+				},
+				"icons": {
+					"searchLabel": "アイコンを検索",
+					"searchPlaceholder": "アイコンを検索",
+					"hint": "アイコンをクリックするとキャンバスに配置します。",
+					"place": "{name} を配置",
+					"empty": "一致するアイコンがありません。",
+					"more": "{total} 件中 {shown} 件を表示中。検索を絞り込んでください。"
+				}
+			},
+			"images": {
+				"title": "画像",
+				"description": "画像をアップロードまたはストックから取得し、トリミング・マスク・フィルターを適用。",
+				"upload": "画像をアップロード",
+				"uploadHint": "ここにファイルをドラッグするか、クリックして選択します。PNG・JPG・GIF・WebP・SVG に対応。",
+				"importing": "画像を追加しています…",
+				"empty": "まだ画像がありません。アップロードするとキャンバスに配置できます。",
+				"place": "キャンバスに配置",
+				"remove": "ライブラリから削除",
+				"removeNamed": "{name} をライブラリから削除",
+				"usage": "{total} 中 {used} を使用中（{percent}%）",
+				"storageFailed": "これらの画像はこのブラウザーに保存できなかったため、再読み込み後は失われます。いくつか削除して空き容量を確保してください。",
+				"errors": {
+					"unsupported": "は対応していない画像形式です。",
+					"unreadable": "を読み込めませんでした。ファイルが破損している可能性があります。",
+					"tooLarge": "は縮小しても保存できないほど大きすぎます。",
+					"libraryFull": "は保存できません - 画像ライブラリが一杯です。いくつか削除してからお試しください。"
+				}
+			},
+			"ai": {
+				"title": "AI",
+				"description": "ページを説明すると編集可能なフレームを生成。選択範囲もプロンプトで編集できます。",
+				"label": "生成したいセクションを説明してください",
+				"placeholder": "3つのプランがあり中央が強調されたダークな料金セクション…",
+				"generate": "セクションを生成",
+				"working": "生成中…",
+				"examplesTitle": "例から試す",
+				"examples": {
+					"hero": "フィンテックアプリ向けの力強いヒーロー。ダーク背景、見出し、補足文、主要ボタン。",
+					"pricing": "3つのプランカードを並べ、中央を強調した料金セクション。",
+					"features": "アイコン・タイトル・説明を含む3カラムの機能グリッド。",
+					"cta": "アクセントカラーの上に見出しとボタンを1つ置いた締めのCTA帯。"
+				},
+				"errors": {
+					"not-configured": "このデプロイでは AI 生成が設定されていません。有効にするにはサーバーに ANTHROPIC_API_KEY を設定してください。",
+					"invalid-request": "生成する前に、作りたいセクションを説明してください。",
+					"refused": "このリクエストは拒否されました。デザインの説明を変えてお試しください。",
+					"rate-limited": "現在リクエストが多すぎます。しばらくしてからお試しください。",
+					"empty": "モデルから利用できる結果が返りませんでした。もう一度お試しください。",
+					"failed": "生成に失敗しました。しばらくしてからお試しください。"
+				}
+			}
+		},
+		"inspector": {
+			"title": "プロパティ",
+			"empty": "プロパティを編集するには、キャンバス上の要素を選択してください。",
+			"groups": {
+				"transform": "変形",
+				"layout": "レイアウト",
+				"style": "塗りと線",
+				"effects": "エフェクト",
+				"typography": "タイポグラフィ",
+				"export": "書き出し"
+			},
+			"mixed": "複数の値",
+			"multiple": "{count} 個のレイヤーを選択中",
+			"soon": "今後のフェーズで提供予定です。",
+			"colorNone": "なし",
+			"colorPicker": "カラーピッカー",
+			"colorHex": "HEX",
+			"fields": {
+				"x": "X",
+				"y": "Y",
+				"width": "幅",
+				"height": "高さ",
+				"rotation": "回転",
+				"mode": "モード",
+				"direction": "方向",
+				"gap": "間隔",
+				"padding": "余白",
+				"fill": "塗り",
+				"stroke": "線",
+				"strokeWidth": "線幅",
+				"radius": "角丸",
+				"opacity": "不透明度",
+				"text": "内容",
+				"fontSize": "サイズ",
+				"fontWeight": "ウェイト",
+				"lineHeight": "行の高さ",
+				"letterSpacing": "字間",
+				"align": "揃え",
+				"shadow": "シャドウ",
+				"shadowColor": "シャドウの色",
+				"shadowBlur": "ぼかし",
+				"shadowOffsetX": "オフセット X",
+				"shadowOffsetY": "オフセット Y",
+				"shadowOpacity": "シャドウの不透明度",
+				"blendMode": "描画モード"
+			},
+			"options": {
+				"none": "なし",
+				"flex": "フレックス",
+				"row": "横",
+				"column": "縦",
+				"left": "左",
+				"center": "中央",
+				"right": "右",
+				"dropShadow": "ドロップシャドウ",
+				"normal": "通常",
+				"multiply": "乗算",
+				"screen": "スクリーン",
+				"overlay": "オーバーレイ",
+				"darken": "比較（暗）",
+				"lighten": "比較（明）"
+			},
+			"tabs": "サイドバーのタブ",
+			"tabLabels": {
+				"properties": "プロパティ",
+				"frames": "フレーム"
+			}
+		},
+		"canvas": {
+			"empty": {
+				"title": "フレームから始めましょう",
+				"description": "フレームはデザインするアートボードです。サイズを選ぶか、フレームツール（F）で描いてください。",
+				"cta": "フレームサイズを選ぶ"
+			},
+			"editText": "テキストを編集"
+		},
+		"frameGroups": {
+			"screens": "画面",
+			"social": "ソーシャル",
+			"print": "印刷・スライド"
+		},
+		"frames": {
+			"desktop": "デスクトップ",
+			"laptop": "ノートPC",
+			"tablet": "タブレット",
+			"mobile": "モバイル",
+			"instagram": "Instagram",
+			"facebook": "Facebook",
+			"twitter": "Twitter",
+			"youtube": "YouTube",
+			"presentation": "プレゼンテーション",
+			"a4": "A4",
+			"description": "フレームはデザインするアートボードです。追加すると既存の作業の隣に配置されます。"
+		},
+		"breakpoints": {
+			"desktop": "デスクトップ",
+			"laptop": "ノートPC",
+			"tablet": "タブレット",
+			"mobile": "モバイル"
+		},
+		"status": {
+			"grid": "グリッド",
+			"coordinates": "ポインター位置"
+		},
+		"actions": {
+			"share": "共有",
+			"export": "書き出し",
+			"toggleInspector": "プロパティパネルの表示切替",
+			"zoomIn": "ズームイン",
+			"zoomOut": "ズームアウト",
+			"resetZoom": "ズームを100%に戻す",
+			"undo": "元に戻す",
+			"redo": "やり直す",
+			"selectionLabel": "選択範囲の操作",
+			"duplicate": "複製",
+			"bringToFront": "最前面へ",
+			"sendToBack": "最背面へ",
+			"lock": "ロック",
+			"unlock": "ロック解除",
+			"hide": "非表示",
+			"show": "表示",
+			"delete": "削除",
+			"group": "グループ化",
+			"ungroup": "グループ解除",
+			"zoomToFit": "全体を表示"
+		},
+		"export": {
+			"working": "処理中…",
+			"failed": "書き出しに失敗しました。別の形式をお試しください。",
+			"formats": {
+				"png": "PNG 画像",
+				"jpeg": "JPEG 画像",
+				"svg": "SVG ベクター",
+				"html": "HTML ページ",
+				"json": "プロジェクトファイル"
+			},
+			"import": "プロジェクトファイルを開く…",
+			"importFailed": "このファイルは有効な ADYSRE プロジェクトではありません。",
+			"scale": "倍率",
+			"exportAs": "{format} として書き出す",
+			"selectFirst": "単体で書き出すには、キャンバス上の要素を選択してください。"
+		},
+		"sync": {
+			"saving": "保存中…",
+			"saved": "保存済み",
+			"offline": "オフライン — この端末にのみ保存",
+			"error": "保存できませんでした"
+		},
+		"projects": {
+			"menu": "プロジェクト",
+			"new": "新規デザイン",
+			"rename": "デザイン名を変更",
+			"nameLabel": "デザイン名",
+			"recent": "以前のデザイン",
+			"loading": "読み込み中…",
+			"empty": "保存されたデザインはまだありません。",
+			"unavailable": "保存済みデザインを表示できません — ストレージに接続できません。作業内容はこの端末に保存されています。"
 		}
 	}
 }

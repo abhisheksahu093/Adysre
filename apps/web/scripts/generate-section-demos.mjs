@@ -73,9 +73,26 @@ function cleanSource(source) {
     .trimEnd();
 }
 
+/**
+ * Preview-only chrome that must never reach a downloaded project: copy that
+ * narrates the preview card ("Scroll this panel…"), and the fixed-height
+ * scrollable stages some previews used to fake page scroll. A section is a page
+ * section - it spans the page and scrolls with it.
+ */
+const CHROME_PATTERNS = [
+  { name: 'instructional copy', re: />\s*(?:Scroll|Resize|Open the menu|Try)\b[^<]*(?:this panel|the stage|the preview|then try)[^<]*</i },
+  { name: 'fixed-height scroll stage', re: /className="[^"]*\bh-\d+\b[^"]*\boverflow-y-auto\b[^"]*"/ },
+];
+
+/** Report previews still carrying preview-only chrome (never silently ship it). */
+function chromeIssues(slug, source) {
+  return CHROME_PATTERNS.filter((p) => p.re.test(source)).map((p) => `${slug}: ${p.name}`);
+}
+
 const slugCategory = readSlugCategories();
 const demos = {};
 const skipped = [];
+const chrome = [];
 
 for (const file of readdirSync(previewsDir)) {
   if (!file.endsWith('-preview.tsx')) continue;
@@ -89,6 +106,7 @@ for (const file of readdirSync(previewsDir)) {
     skipped.push(`${slug} (no default export)`);
     continue;
   }
+  chrome.push(...chromeIssues(slug, source));
   demos[slug] = source;
 }
 
@@ -116,3 +134,9 @@ writeFileSync(outFile, banner, 'utf8');
 
 console.log(`Wrote ${Object.keys(demos).length} section demos to ${outFile}`);
 if (skipped.length) console.log(`Skipped: ${skipped.join(', ')}`);
+
+// A download is a real project, so this is a build failure, not a warning.
+if (chrome.length) {
+  console.error(`\nPreview-only chrome would ship in a download:\n  ${chrome.join('\n  ')}`);
+  process.exit(1);
+}

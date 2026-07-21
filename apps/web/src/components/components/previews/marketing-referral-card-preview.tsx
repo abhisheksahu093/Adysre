@@ -81,7 +81,13 @@ function ReferralCard({
 }
 
 export default function MarketingReferralCardPreview() {
-  return <ReferralCard code="FRIEND-4KQ9" title="Give $20, get $20" />;
+  return (
+    <section className="w-full px-4 py-12 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-5xl">
+        <ReferralCard code="FRIEND-4KQ9" title="Give $20, get $20" />
+      </div>
+    </section>
+  );
 }
 
 export const minHeight = 300;

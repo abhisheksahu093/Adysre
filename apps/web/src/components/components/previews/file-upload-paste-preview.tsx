@@ -108,7 +108,7 @@ function FileUploadPaste({
       <div aria-live="polite">
         {preview ? (
           <figure className="mt-3 overflow-hidden rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
-            {/* eslint-disable-next-line @next/next/no-img-element -- object URL, not a static asset */}
+            { }
             <img src={preview.url} alt={preview.name} className="max-h-48 w-full object-contain" />
             <figcaption className="truncate px-3 py-2 text-xs text-gray-500 dark:text-gray-400">
               {preview.name}

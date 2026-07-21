@@ -4,6 +4,10 @@
  * Mirrors the `typescript` code variant. The like/comment overlay reveals on
  * hover and focus-visible and is mirrored in an sr-only label. grid-cols-3 holds
  * at 320px. Media are CSS gradient tiles - no network.
+ *
+ * The grid fills its container and deliberately stays at three columns at every
+ * width - that square three-up rhythm is the whole look. The default export
+ * wraps it in a centred, full-width page section.
  * Keep this in step with `src/data/components/galleries.ts`.
  */
 interface SocialTile {
@@ -22,7 +26,7 @@ interface GalleryInstagramGridProps {
 
 function GalleryInstagramGrid({ items, className = '' }: GalleryInstagramGridProps) {
   return (
-    <ul className={`grid list-none grid-cols-3 gap-1 p-0 sm:gap-2 ${className}`}>
+    <ul className={`grid w-full list-none grid-cols-3 gap-1 p-0 sm:gap-2 ${className}`}>
       {items.map((item: SocialTile) => (
         <li key={item.id}>
           <button
@@ -55,5 +59,11 @@ const SAMPLE_TILES: SocialTile[] = [
 ];
 
 export default function GalleryInstagramGridPreview() {
-  return <GalleryInstagramGrid items={SAMPLE_TILES} className="w-full max-w-md" />;
+  return (
+    <section className="w-full px-4 py-12 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-6xl">
+        <GalleryInstagramGrid items={SAMPLE_TILES} className="w-full" />
+      </div>
+    </section>
+  );
 }

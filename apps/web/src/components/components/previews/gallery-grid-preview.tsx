@@ -6,6 +6,10 @@
  * app, and a real <img src> to an external host would simply fail. Each hue is
  * derived from the tile's index rather than randomised, so the server and the
  * client paint the same colours and hydration matches.
+ *
+ * The grid carries no width cap of its own - it fills its container and steps
+ * 2 -> 3 -> 4 columns - and the default export wraps it in a centred, full-width
+ * page section, which is how the playground stacks it.
  * Keep this in step with `src/data/components/galleries.ts`.
  */
 interface GalleryPhoto {
@@ -22,11 +26,11 @@ interface GalleryGridProps {
 
 function GalleryGrid({ items, className = '' }: GalleryGridProps) {
   return (
-    <ul className={`grid list-none grid-cols-2 gap-3 p-0 sm:grid-cols-3 ${className}`}>
+    <ul className={`grid w-full list-none grid-cols-2 gap-3 p-0 sm:grid-cols-3 lg:grid-cols-4 ${className}`}>
       {items.map((item: GalleryPhoto) => (
         <li key={item.id}>
           <figure className="m-0 overflow-hidden rounded-xl border border-gray-200 bg-gray-50 dark:border-gray-800 dark:bg-gray-900">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
+            { }
             <img
               className="block aspect-[4/3] w-full object-cover"
               src={item.imageSrc}
@@ -67,5 +71,11 @@ const SAMPLE_PHOTOS: GalleryPhoto[] = [
 ];
 
 export default function GalleryGridPreview() {
-  return <GalleryGrid items={SAMPLE_PHOTOS} className="w-full max-w-xl" />;
+  return (
+    <section className="w-full px-4 py-12 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-6xl">
+        <GalleryGrid items={SAMPLE_PHOTOS} className="w-full" />
+      </div>
+    </section>
+  );
 }

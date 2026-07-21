@@ -5,22 +5,17 @@ import { useEffect, useRef, useState } from 'react';
 /**
  * Live preview for `gallery-lightbox`.
  *
- * Two deliberate departures from the shipped `typescript` variant, both forced
- * by the preview stage rather than by the component:
- *
- *  1. The overlay is `absolute` inside a `relative min-h-*` box, not `fixed`.
- *     The stage sizes its iframe from `document.body.scrollHeight`, and a fixed
- *     element contributes nothing to that - the real dialog would size the
- *     iframe to zero and then be clipped by it. The shipped code uses `fixed`,
- *     which is correct everywhere that is not this iframe.
- *  2. It is seeded OPEN so the dialog is what you see on load, and the
- *     open-time autofocus is skipped for that seeded state (see `open`). A
- *     preview that grabs focus on mount would scroll the detail page down to
- *     its own iframe before the reader has touched anything.
+ * Mirrors the shipped `typescript` variant: the gallery starts closed and the
+ * overlay is `fixed`, so this behaves the same in the library card, on an
+ * assembled playground page and in a downloaded project - a section must never
+ * open a dialog on load, and a lightbox belongs to the viewport, not to a box.
  *
  * Everything else is the real thing: role="dialog" + aria-modal, a Tab trap,
  * Escape to close, and focus handed back to the thumbnail that opened it.
  * The photos are inline SVG data URIs - the preview never touches the network.
+ *
+ * The thumbnail grid fills its container and steps 2 -> 3 -> 4 columns; the
+ * default export wraps it in a centred, full-width page section.
  * Keep this in step with `src/data/components/galleries.ts`.
  */
 interface GalleryPhoto {
@@ -36,10 +31,10 @@ interface GalleryLightboxProps {
 }
 
 function GalleryLightbox({ items, className = '' }: GalleryLightboxProps) {
-  const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
   const dialogRef = useRef<HTMLDivElement | null>(null);
   const thumbRefs = useRef<Array<HTMLButtonElement | null>>([]);
-  /** Which thumb opened us. Null for the seeded-open state, which nobody clicked. */
+  /** Which thumb opened us, so focus can be handed back on close. */
   const openerIndex = useRef<number | null>(null);
 
   const open = (i: number): void => {
@@ -65,10 +60,7 @@ function GalleryLightbox({ items, className = '' }: GalleryLightboxProps) {
     const dialog = dialogRef.current;
     if (!dialog) return undefined;
 
-    // Only pull focus in when a user actually opened the dialog. On the seeded
-    // state openerIndex is null, so the preview renders open without hijacking
-    // focus from the page hosting the iframe.
-    if (openerIndex.current !== null) dialog.querySelector('button')?.focus();
+    dialog.querySelector('button')?.focus();
 
     const onKeyDown = (event: KeyboardEvent): void => {
       if (event.key === 'Escape') {
@@ -95,14 +87,14 @@ function GalleryLightbox({ items, className = '' }: GalleryLightboxProps) {
 
     document.addEventListener('keydown', onKeyDown);
     return () => document.removeEventListener('keydown', onKeyDown);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+     
   }, [openIndex]);
 
   const active: GalleryPhoto | null = openIndex === null ? null : (items[openIndex] ?? null);
 
   return (
-    <div className={`relative min-h-[26rem] ${className}`}>
-      <ul className="grid list-none grid-cols-2 gap-3 p-0 sm:grid-cols-4">
+    <div className={`w-full ${className}`}>
+      <ul className="grid list-none grid-cols-2 gap-3 p-0 sm:grid-cols-3 lg:grid-cols-4">
         {items.map((item: GalleryPhoto, i: number) => (
           <li key={item.id}>
             <button
@@ -115,7 +107,7 @@ function GalleryLightbox({ items, className = '' }: GalleryLightboxProps) {
               className="block w-full overflow-hidden rounded-xl border border-gray-200 bg-gray-50 p-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 dark:border-gray-800 dark:bg-gray-900 dark:focus-visible:ring-blue-400 dark:focus-visible:ring-offset-gray-950"
             >
               {/* alt="" - the sr-only span below is this button's name. */}
-              {/* eslint-disable-next-line @next/next/no-img-element */}
+              { }
               <img className="block aspect-square w-full object-cover" src={item.imageSrc} alt="" />
               <span className="sr-only">{`Open ${item.title}`}</span>
             </button>
@@ -125,7 +117,7 @@ function GalleryLightbox({ items, className = '' }: GalleryLightboxProps) {
 
       {active !== null && openIndex !== null ? (
         <div
-          className="absolute inset-0 z-10 flex items-center justify-center rounded-xl bg-gray-950/85 p-4"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-gray-950/85 p-4"
           onClick={(event) => {
             // Only the backdrop closes; a click on the photo bubbles here too.
             if (event.target === event.currentTarget) close();
@@ -136,11 +128,11 @@ function GalleryLightbox({ items, className = '' }: GalleryLightboxProps) {
             role="dialog"
             aria-modal="true"
             aria-label={active.title}
-            className="w-full max-w-sm rounded-xl bg-white p-3 dark:bg-gray-900"
+            className="w-full max-w-lg rounded-xl bg-white p-3 dark:bg-gray-900"
           >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
+            { }
             <img
-              className="block h-48 w-full rounded-lg bg-gray-100 object-cover dark:bg-gray-800"
+              className="block aspect-[4/3] w-full rounded-lg bg-gray-100 object-cover dark:bg-gray-800"
               src={active.imageSrc}
               alt={active.imageAlt}
             />
@@ -200,5 +192,11 @@ const SAMPLE_PHOTOS: GalleryPhoto[] = [
 ];
 
 export default function GalleryLightboxPreview() {
-  return <GalleryLightbox items={SAMPLE_PHOTOS} className="w-full max-w-xl" />;
+  return (
+    <section className="w-full px-4 py-12 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-6xl">
+        <GalleryLightbox items={SAMPLE_PHOTOS} className="w-full" />
+      </div>
+    </section>
+  );
 }

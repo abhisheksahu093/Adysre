@@ -6,6 +6,7 @@ import {
   Blend,
   Grid2x2,
   Waves,
+  PenTool,
   LayoutTemplate,
   Settings,
   type LucideIcon,
@@ -72,6 +73,12 @@ export const NAV_ITEMS: NavItem[] = [
     href: '/textures',
     icon: Waves,
     descriptionKey: 'textures',
+  },
+  {
+    key: 'designPlayground',
+    href: '/design-playground',
+    icon: PenTool,
+    descriptionKey: 'designPlayground',
   },
   {
     key: 'templates',

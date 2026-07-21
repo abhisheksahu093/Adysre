@@ -39,7 +39,7 @@ function AccordionSeparated({
   };
 
   return (
-    <div className={`max-w-2xl space-y-3 ${className}`}>
+    <div className={`w-full space-y-3 ${className}`}>
       {items.map((item: FaqItem) => {
         const isOpen = openIds.includes(item.id);
         const buttonId = `${baseId}-${item.id}-button`;
@@ -104,5 +104,11 @@ const SAMPLE_ITEMS: FaqItem[] = [
 ];
 
 export default function AccordionSeparatedPreview() {
-  return <AccordionSeparated items={SAMPLE_ITEMS} defaultOpenId="setup" className="w-full" />;
+  return (
+    <section className="w-full px-4 py-12 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-3xl">
+        <AccordionSeparated items={SAMPLE_ITEMS} defaultOpenId="setup" />
+      </div>
+    </section>
+  );
 }

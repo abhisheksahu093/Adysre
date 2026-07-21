@@ -7,7 +7,9 @@ import { useId, useState, type FormEvent } from 'react';
  *
  * Mirrors the `typescript` code variant verbatim. Tab into it: the field is
  * announced as "Email address" despite having no visible label - that is the
- * sr-only label doing its job, and it is the whole point of the entry.
+ * sr-only label doing its job, and it is the whole point of the entry. The form
+ * itself is width-agnostic (`w-full`); the preview supplies the page shell and
+ * the narrow measure that centres it.
  * Keep this in step with `src/data/components/marketing.ts`.
  */
 interface NewsletterInlineProps {
@@ -36,7 +38,7 @@ function NewsletterInline({
   return (
     <form
       onSubmit={handleSubmit}
-      className={`flex w-full max-w-md flex-col gap-2 sm:flex-row ${className}`}
+      className={`flex w-full flex-col gap-2 sm:flex-row ${className}`}
     >
       <label htmlFor={emailId} className="sr-only">
         {label}
@@ -65,5 +67,13 @@ function NewsletterInline({
 }
 
 export default function NewsletterInlinePreview() {
-  return <NewsletterInline ctaLabel="Subscribe" label="Email address" />;
+  return (
+    <section className="w-full px-4 py-12 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-5xl">
+        <div className="mx-auto w-full max-w-md">
+          <NewsletterInline ctaLabel="Subscribe" label="Email address" />
+        </div>
+      </div>
+    </section>
+  );
 }

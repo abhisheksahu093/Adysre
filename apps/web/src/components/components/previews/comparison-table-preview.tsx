@@ -7,6 +7,10 @@
  * real <table> with <caption>, scoped column and row headers, and boolean cells
  * whose ✓/✗ is aria-hidden beside a visually-hidden word. Keep this in step with
  * `src/data/components/comparisons.ts`.
+ *
+ * The default export adds a page-section shell - padding plus a centred
+ * max-width - which is preview-only; the component itself is width-agnostic
+ * and takes its width from the caller.
  */
 interface ComparisonRow {
   id: string;
@@ -98,5 +102,11 @@ const SAMPLE_ROWS: ComparisonRow[] = [
 ];
 
 export default function ComparisonTablePreview() {
-  return <ComparisonTable items={SAMPLE_ROWS} plans={SAMPLE_PLANS} className="max-w-2xl" />;
+  return (
+    <section className="w-full px-4 py-12 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-6xl">
+        <ComparisonTable items={SAMPLE_ROWS} plans={SAMPLE_PLANS} />
+      </div>
+    </section>
+  );
 }

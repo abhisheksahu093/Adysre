@@ -35,8 +35,9 @@ model Organization {
   sessions      Session[]
   auditLogs     AuditLog[]
   notifications Notification[]
-  files         File[]
-  settings      Setting[]
+  files          File[]
+  settings       Setting[]
+  designProjects DesignProject[]
 
   @@index([deletedAt])
   @@map("organizations")
@@ -237,4 +238,35 @@ model Setting {
 
   @@unique([tenantId, key])
   @@map("settings")
+}
+
+// ---------------------------------------------------------------------------
+// Design Playground — see documents/DESIGN_PLAYGROUND_PRD.md §6.1
+// ---------------------------------------------------------------------------
+
+model DesignProject {
+  id        String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  tenantId  String    @map("tenant_id") @db.Uuid
+  name      String
+  /// The full document (pages + flat node map), validated on read by
+  /// `schema.parseDocument` before it reaches the canvas. JSONB rather than
+  /// relational tables: the editor loads and saves whole documents, and a node
+  /// row per shape would turn one autosave into thousands of statements.
+  document  Json
+  /// Mirrors document.schemaVersion so a migration can find stale rows without
+  /// parsing every blob.
+  schemaVersion Int   @default(1) @map("schema_version")
+  /// Data-URI or object-store key for the card thumbnail; null until rendered.
+  thumbnail String?
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  createdBy String?   @map("created_by") @db.Uuid
+  updatedBy String?   @map("updated_by") @db.Uuid
+  deletedAt DateTime? @map("deleted_at")
+
+  organization Organization @relation(fields: [tenantId], references: [id])
+
+  // The list view is always "this tenant's live projects, newest first".
+  @@index([tenantId, deletedAt, updatedAt])
+  @@map("design_projects")
 }

@@ -111,7 +111,7 @@ function collectTargets(root: HTMLElement): { targets: EditableTarget[]; fields:
  *  - reports its content height to the parent via postMessage, so the iframe
  *    can size itself instead of guessing and clipping the component.
  */
-export function PreviewStage({ slug }: { slug: string }) {
+export function PreviewStage({ slug, bleed = false }: { slug: string; bleed?: boolean }) {
   const [mod, setMod] = useState<PreviewModule | null>(null);
   /** Live handles to the rendered text, rebuilt whenever the component mounts. */
   const targetsRef = useRef<EditableTarget[]>([]);
@@ -233,8 +233,16 @@ export function PreviewStage({ slug }: { slug: string }) {
   }
 
   const { Component } = mod;
+  // A page section brings its own padding and spans the frame; anything smaller
+  // gets the padded, centred stage it was authored for.
   return (
-    <div className="flex min-h-48 w-full items-center justify-center bg-background p-6">
+    <div
+      className={
+        bleed
+          ? 'w-full bg-background'
+          : 'flex min-h-48 w-full items-center justify-center bg-background p-6'
+      }
+    >
       <Component />
     </div>
   );

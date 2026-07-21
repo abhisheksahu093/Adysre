@@ -36,7 +36,7 @@ function CarouselThumbnails({ items, className = '', ariaLabel = 'Gallery' }: Ca
           aria-live="polite"
         >
           {/* key forces a swap so the live region sees a new node, not a mutated src. */}
-          {/* eslint-disable-next-line @next/next/no-img-element */}
+          { }
           <img
             key={active.id}
             className="block h-64 w-full object-contain"
@@ -61,7 +61,7 @@ function CarouselThumbnails({ items, className = '', ariaLabel = 'Gallery' }: Ca
             }`}
           >
             {/* alt="" - the button's label already names this image. */}
-            {/* eslint-disable-next-line @next/next/no-img-element */}
+            { }
             <img className="h-full w-full object-contain" src={item.imageSrc} alt="" />
           </button>
         ))}

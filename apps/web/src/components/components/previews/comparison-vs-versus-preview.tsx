@@ -4,6 +4,10 @@
  * Mirrors the `typescript` code variant. Each side is its own labelled
  * <section>; the "VS" badge is aria-hidden decoration between them and hides
  * when the columns stack. Keep this in step with `src/data/components/comparisons.ts`.
+ *
+ * The default export adds a page-section shell - padding plus a centred
+ * max-width - which is preview-only; the component itself is width-agnostic
+ * and takes its width from the caller.
  */
 interface VersusSide {
   id: string;
@@ -22,7 +26,7 @@ function ComparisonVsVersus({ left, right, className = '' }: ComparisonVsVersusP
   const sides = [left, right];
 
   return (
-    <section className={`relative w-full max-w-3xl ${className}`}>
+    <section className={`relative w-full ${className}`}>
       <div className="grid gap-4 sm:grid-cols-2">
         {sides.map((side) => (
           <section
@@ -62,20 +66,24 @@ function ComparisonVsVersus({ left, right, className = '' }: ComparisonVsVersusP
 
 export default function ComparisonVsVersusPreview() {
   return (
-    <ComparisonVsVersus
-      left={{
-        id: 'notion',
-        name: 'Notion',
-        tagline: 'Docs-first workspace',
-        points: ['Flexible pages', 'Great for wikis', 'Weaker at structured data'],
-      }}
-      right={{
-        id: 'adysre',
-        name: 'ADYSRE',
-        tagline: 'Operations platform',
-        points: ['Records, not pages', 'Role-based access', 'Reports that refresh themselves'],
-      }}
-    />
+    <section className="w-full px-4 py-12 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-5xl">
+        <ComparisonVsVersus
+          left={{
+            id: 'notion',
+            name: 'Notion',
+            tagline: 'Docs-first workspace',
+            points: ['Flexible pages', 'Great for wikis', 'Weaker at structured data'],
+          }}
+          right={{
+            id: 'adysre',
+            name: 'ADYSRE',
+            tagline: 'Operations platform',
+            points: ['Records, not pages', 'Role-based access', 'Reports that refresh themselves'],
+          }}
+        />
+      </div>
+    </section>
   );
 }
 

@@ -3,7 +3,9 @@
  *
  * Mirrors the `typescript` code variant verbatim. Text sits on a gradient, so a
  * `bg-black/30` scrim layer holds contrast. The stats collapse to one column on
- * phones. Keep in step with `src/data/components/marketing.ts`.
+ * phones. The section itself is width-agnostic (`w-full`); the preview supplies
+ * the page shell that centres it. Keep in step with
+ * `src/data/components/marketing.ts`.
  */
 interface Stat {
   value: string;
@@ -19,7 +21,7 @@ interface StatsBandProps {
 function StatsBand({ title, stats, className = '' }: StatsBandProps) {
   return (
     <section
-      className={`relative w-full max-w-5xl overflow-hidden rounded-2xl bg-gradient-to-r from-blue-700 via-indigo-700 to-violet-700 ${className}`}
+      className={`relative w-full overflow-hidden rounded-2xl bg-gradient-to-r from-blue-700 via-indigo-700 to-violet-700 ${className}`}
     >
       {/* Scrim: white numerals stay AA over the full sweep of the gradient. */}
       <div className="absolute inset-0 bg-black/30" aria-hidden="true" />
@@ -44,15 +46,19 @@ function StatsBand({ title, stats, className = '' }: StatsBandProps) {
 
 export default function MarketingStatsBandPreview() {
   return (
-    <StatsBand
-      title="Teams ship faster on ADYSRE"
-      stats={[
-        { value: '12,000+', label: 'Active teams' },
-        { value: '99.98%', label: 'Uptime' },
-        { value: '4.9/5', label: 'Average rating' },
-        { value: '40+', label: 'Integrations' },
-      ]}
-    />
+    <section className="w-full px-4 py-12 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-5xl">
+        <StatsBand
+          title="Teams ship faster on ADYSRE"
+          stats={[
+            { value: '12,000+', label: 'Active teams' },
+            { value: '99.98%', label: 'Uptime' },
+            { value: '4.9/5', label: 'Average rating' },
+            { value: '40+', label: 'Integrations' },
+          ]}
+        />
+      </div>
+    </section>
   );
 }
 

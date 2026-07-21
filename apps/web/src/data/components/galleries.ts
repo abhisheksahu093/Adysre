@@ -145,7 +145,7 @@ export const galleriesComponents: ComponentEntry[] = [
     color: #d1d5db;
   }
 }`,
-      tailwind: `<ul class="grid list-none grid-cols-2 gap-3 p-0 sm:grid-cols-3">
+      tailwind: `<ul class="grid w-full list-none grid-cols-2 gap-3 p-0 sm:grid-cols-3 lg:grid-cols-4">
   <li>
     <figure class="m-0 overflow-hidden rounded-xl border border-gray-200 bg-gray-50 dark:border-gray-800 dark:bg-gray-900">
       <img class="block aspect-[4/3] w-full object-cover" src="/images/photo-1.jpg" alt="Fishing boats moored under an orange sky" width="800" height="600" loading="lazy" />
@@ -185,7 +185,7 @@ export const galleriesComponents: ComponentEntry[] = [
 </ul>`,
       react: `export function GalleryGrid({ items, className = '' }) {
   return (
-    <ul className={\`grid list-none grid-cols-2 gap-3 p-0 sm:grid-cols-3 \${className}\`}>
+    <ul className={\`grid w-full list-none grid-cols-2 gap-3 p-0 sm:grid-cols-3 lg:grid-cols-4 \${className}\`}>
       {items.map((item) => (
         <li key={item.id}>
           <figure className="m-0 overflow-hidden rounded-xl border border-gray-200 bg-gray-50 dark:border-gray-800 dark:bg-gray-900">
@@ -215,7 +215,7 @@ interface GalleryGridProps {
 // and ships no JavaScript at all.
 export function GalleryGrid({ items, className = '' }: GalleryGridProps) {
   return (
-    <ul className={\`grid list-none grid-cols-2 gap-3 p-0 sm:grid-cols-3 \${className}\`}>
+    <ul className={\`grid w-full list-none grid-cols-2 gap-3 p-0 sm:grid-cols-3 lg:grid-cols-4 \${className}\`}>
       {items.map((item) => (
         <li key={item.id}>
           <figure className="m-0 overflow-hidden rounded-xl border border-gray-200 bg-gray-50 dark:border-gray-800 dark:bg-gray-900">
@@ -253,7 +253,7 @@ export interface GalleryGridProps {
 
 export function GalleryGrid({ items, className = '' }: GalleryGridProps): JSX.Element {
   return (
-    <ul className={\`grid list-none grid-cols-2 gap-3 p-0 sm:grid-cols-3 \${className}\`}>
+    <ul className={\`grid w-full list-none grid-cols-2 gap-3 p-0 sm:grid-cols-3 lg:grid-cols-4 \${className}\`}>
       {items.map((item: GalleryPhoto) => (
         <li key={item.id}>
           <figure className="m-0 overflow-hidden rounded-xl border border-gray-200 bg-gray-50 dark:border-gray-800 dark:bg-gray-900">
@@ -415,10 +415,11 @@ export function GalleryGrid({ items, className = '' }: GalleryGridProps): JSX.El
   }
 }`,
       tailwind: `<!--
-  columns-2 sm:columns-3 is the whole layout. break-inside-avoid on the item is
-  not optional: without it a tile splits across the column boundary.
+  columns-2 sm:columns-3 lg:columns-4 is the whole layout. break-inside-avoid
+  on the item is not optional: without it a tile splits across the column
+  boundary.
 -->
-<ul class="list-none columns-2 gap-3 p-0 sm:columns-3">
+<ul class="w-full list-none columns-2 gap-3 p-0 sm:columns-3 lg:columns-4">
   <li class="mb-3 break-inside-avoid">
     <figure class="m-0 overflow-hidden rounded-xl border border-gray-200 bg-gray-50 dark:border-gray-800 dark:bg-gray-900">
       <img class="block h-auto w-full" src="/images/photo-1.jpg" alt="Fishing boats moored under an orange sky" width="800" height="600" loading="lazy" />
@@ -458,7 +459,7 @@ export function GalleryGrid({ items, className = '' }: GalleryGridProps): JSX.El
 </ul>`,
       react: `export function GalleryMasonry({ items, className = '' }) {
   return (
-    <ul className={\`list-none columns-2 gap-3 p-0 sm:columns-3 \${className}\`}>
+    <ul className={\`w-full list-none columns-2 gap-3 p-0 sm:columns-3 lg:columns-4 \${className}\`}>
       {items.map((item) => (
         <li key={item.id} className="mb-3 break-inside-avoid">
           <figure className="m-0 overflow-hidden rounded-xl border border-gray-200 bg-gray-50 dark:border-gray-800 dark:bg-gray-900">
@@ -485,7 +486,7 @@ interface GalleryMasonryProps {
 // they cannot render on the server and they reflow on every resize.
 export function GalleryMasonry({ items, className = '' }: GalleryMasonryProps) {
   return (
-    <ul className={\`list-none columns-2 gap-3 p-0 sm:columns-3 \${className}\`}>
+    <ul className={\`w-full list-none columns-2 gap-3 p-0 sm:columns-3 lg:columns-4 \${className}\`}>
       {items.map((item) => (
         <li key={item.id} className="mb-3 break-inside-avoid">
           <figure className="m-0 overflow-hidden rounded-xl border border-gray-200 bg-gray-50 dark:border-gray-800 dark:bg-gray-900">
@@ -527,7 +528,7 @@ export interface GalleryMasonryProps {
 
 export function GalleryMasonry({ items, className = '' }: GalleryMasonryProps): JSX.Element {
   return (
-    <ul className={\`list-none columns-2 gap-3 p-0 sm:columns-3 \${className}\`}>
+    <ul className={\`w-full list-none columns-2 gap-3 p-0 sm:columns-3 lg:columns-4 \${className}\`}>
       {items.map((item: GalleryPhoto) => (
         <li key={item.id} className="mb-3 break-inside-avoid">
           <figure className="m-0 overflow-hidden rounded-xl border border-gray-200 bg-gray-50 dark:border-gray-800 dark:bg-gray-900">
@@ -888,8 +889,8 @@ export function GalleryMasonry({ items, className = '' }: GalleryMasonryProps): 
   }
 }`,
       tailwind: `<!-- Same script as the HTML tab; only the classes change. -->
-<div data-lightbox>
-  <ul class="grid list-none grid-cols-2 gap-3 p-0 sm:grid-cols-4">
+<div class="w-full" data-lightbox>
+  <ul class="grid list-none grid-cols-2 gap-3 p-0 sm:grid-cols-3 lg:grid-cols-4">
     <li>
       <button
         class="block w-full overflow-hidden rounded-xl border border-gray-200 bg-gray-50 p-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 dark:border-gray-800 dark:bg-gray-900 dark:focus-visible:ring-blue-400 dark:focus-visible:ring-offset-gray-950"
@@ -1011,8 +1012,8 @@ export function GalleryLightbox({ items, className = '' }) {
   const active = openIndex === null ? null : items[openIndex];
 
   return (
-    <div className={className}>
-      <ul className="grid list-none grid-cols-2 gap-3 p-0 sm:grid-cols-4">
+    <div className={\`w-full \${className}\`}>
+      <ul className="grid list-none grid-cols-2 gap-3 p-0 sm:grid-cols-3 lg:grid-cols-4">
         {items.map((item, i) => (
           <li key={item.id}>
             <button
@@ -1143,8 +1144,8 @@ export function GalleryLightbox({ items, className = '' }: GalleryLightboxProps)
   const active = openIndex === null ? null : items[openIndex];
 
   return (
-    <div className={className}>
-      <ul className="grid list-none grid-cols-2 gap-3 p-0 sm:grid-cols-4">
+    <div className={\`w-full \${className}\`}>
+      <ul className="grid list-none grid-cols-2 gap-3 p-0 sm:grid-cols-3 lg:grid-cols-4">
         {items.map((item, i) => (
           <li key={item.id}>
             <button
@@ -1277,8 +1278,8 @@ export function GalleryLightbox({ items, className = '' }: GalleryLightboxProps)
   const active: GalleryPhoto | null = openIndex === null ? null : (items[openIndex] ?? null);
 
   return (
-    <div className={className}>
-      <ul className="grid list-none grid-cols-2 gap-3 p-0 sm:grid-cols-4">
+    <div className={\`w-full \${className}\`}>
+      <ul className="grid list-none grid-cols-2 gap-3 p-0 sm:grid-cols-3 lg:grid-cols-4">
         {items.map((item: GalleryPhoto, i: number) => (
           <li key={item.id}>
             <button
@@ -1481,7 +1482,8 @@ export function GalleryLightbox({ items, className = '' }: GalleryLightboxProps)
   })();
 </script>`,
       css: `.filmstrip {
-  max-width: 32rem;
+  /* The caller owns the width - the filmstrip fills whatever box it lands in. */
+  width: 100%;
 }
 
 .filmstrip__viewport {
@@ -1496,6 +1498,19 @@ export function GalleryLightbox({ items, className = '' }: GalleryLightboxProps)
   width: 100%;
   height: 16rem;
   object-fit: cover;
+}
+
+/* The stage grows with the container so a full-width filmstrip is not a strip. */
+@media (min-width: 640px) {
+  .filmstrip__image {
+    height: 20rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .filmstrip__image {
+    height: 28rem;
+  }
 }
 
 .filmstrip__bar {
@@ -1662,10 +1677,10 @@ export function GalleryLightbox({ items, className = '' }: GalleryLightboxProps)
 }`,
       tailwind: `<!-- Same script as the HTML tab. aria-current drives the ring, so the
      selected state lives in exactly one attribute. -->
-<div class="max-w-lg" data-filmstrip>
+<div class="w-full" data-filmstrip>
   <section aria-roledescription="carousel" aria-label="Photo gallery">
     <div class="overflow-hidden rounded-xl border border-gray-200 bg-gray-50 dark:border-gray-800 dark:bg-gray-900" aria-live="polite">
-      <img class="block h-64 w-full object-cover" src="/images/photo-1.jpg" alt="Fishing boats moored under an orange sky" data-filmstrip-image />
+      <img class="block h-64 w-full object-cover sm:h-80 lg:h-[28rem]" src="/images/photo-1.jpg" alt="Fishing boats moored under an orange sky" data-filmstrip-image />
     </div>
 
     <div class="flex items-center gap-2 pt-2.5">
@@ -1742,14 +1757,14 @@ export function GalleryCarouselThumbs({ items, onSelect, className = '' }) {
   if (!active) return null;
 
   return (
-    <div className={\`max-w-lg \${className}\`}>
+    <div className={\`w-full \${className}\`}>
       <section aria-roledescription="carousel" aria-label="Photo gallery">
         <div
           className="overflow-hidden rounded-xl border border-gray-200 bg-gray-50 dark:border-gray-800 dark:bg-gray-900"
           aria-live="polite"
         >
           {/* key forces a swap so the live region sees a new node. */}
-          <img key={active.id} className="block h-64 w-full object-cover" src={active.imageSrc} alt={active.imageAlt} />
+          <img key={active.id} className="block h-64 w-full object-cover sm:h-80 lg:h-[28rem]" src={active.imageSrc} alt={active.imageAlt} />
         </div>
 
         <div className="flex items-center gap-2 pt-2.5">
@@ -1835,13 +1850,13 @@ export function GalleryCarouselThumbs({ items, onSelect, className = '' }: Galle
   if (!active) return null;
 
   return (
-    <div className={\`max-w-lg \${className}\`}>
+    <div className={\`w-full \${className}\`}>
       <section aria-roledescription="carousel" aria-label="Photo gallery">
         <div
           className="overflow-hidden rounded-xl border border-gray-200 bg-gray-50 dark:border-gray-800 dark:bg-gray-900"
           aria-live="polite"
         >
-          <img key={active.id} className="block h-64 w-full object-cover" src={active.imageSrc} alt={active.imageAlt} />
+          <img key={active.id} className="block h-64 w-full object-cover sm:h-80 lg:h-[28rem]" src={active.imageSrc} alt={active.imageAlt} />
         </div>
 
         <div className="flex items-center gap-2 pt-2.5">
@@ -1933,13 +1948,13 @@ export function GalleryCarouselThumbs({
   if (!active) return null;
 
   return (
-    <div className={\`max-w-lg \${className}\`}>
+    <div className={\`w-full \${className}\`}>
       <section aria-roledescription="carousel" aria-label="Photo gallery">
         <div
           className="overflow-hidden rounded-xl border border-gray-200 bg-gray-50 dark:border-gray-800 dark:bg-gray-900"
           aria-live="polite"
         >
-          <img key={active.id} className="block h-64 w-full object-cover" src={active.imageSrc} alt={active.imageAlt} />
+          <img key={active.id} className="block h-64 w-full object-cover sm:h-80 lg:h-[28rem]" src={active.imageSrc} alt={active.imageAlt} />
         </div>
 
         <div className="flex items-center gap-2 pt-2.5">
@@ -2233,7 +2248,7 @@ export function GalleryCarouselThumbs({
   }
 }`,
       tailwind: `<!-- Same script as the HTML tab. -->
-<div data-filter-gallery>
+<div class="w-full" data-filter-gallery>
   <div class="flex flex-wrap gap-2" role="group" aria-label="Filter photos by tag">
     <button class="rounded-full border border-gray-300 px-3 py-1.5 text-[0.8125rem] font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 aria-[pressed=true]:border-blue-700 aria-[pressed=true]:bg-blue-700 aria-[pressed=true]:text-white dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus-visible:ring-blue-400 dark:focus-visible:ring-offset-gray-950 dark:aria-[pressed=true]:border-blue-500 dark:aria-[pressed=true]:bg-blue-500 dark:aria-[pressed=true]:text-gray-950" type="button" aria-pressed="true" data-filter="all">All</button>
     <button class="rounded-full border border-gray-300 px-3 py-1.5 text-[0.8125rem] font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 aria-[pressed=true]:border-blue-700 aria-[pressed=true]:bg-blue-700 aria-[pressed=true]:text-white dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus-visible:ring-blue-400 dark:focus-visible:ring-offset-gray-950 dark:aria-[pressed=true]:border-blue-500 dark:aria-[pressed=true]:bg-blue-500 dark:aria-[pressed=true]:text-gray-950" type="button" aria-pressed="false" data-filter="places">Places</button>
@@ -2243,7 +2258,7 @@ export function GalleryCarouselThumbs({
 
   <p class="my-3 text-[0.8125rem] text-gray-600 dark:text-gray-400" aria-live="polite" data-filter-count>Showing 6 of 6 photos</p>
 
-  <ul class="grid list-none grid-cols-2 gap-3 p-0 sm:grid-cols-3" data-filter-grid>
+  <ul class="grid list-none grid-cols-2 gap-3 p-0 sm:grid-cols-3 lg:grid-cols-4" data-filter-grid>
     <li data-tag="places">
       <figure class="m-0 overflow-hidden rounded-xl border border-gray-200 bg-gray-50 dark:border-gray-800 dark:bg-gray-900">
         <img class="block aspect-[4/3] w-full object-cover" src="/images/photo-1.jpg" alt="Fishing boats moored under an orange sky" loading="lazy" />
@@ -2300,7 +2315,7 @@ export function GalleryFilterable({ items, className = '' }) {
   );
 
   return (
-    <div className={className}>
+    <div className={\`w-full \${className}\`}>
       {/* A group, not a radiogroup: these toggle a view, they do not answer a
           question, and nothing here is submitted. */}
       <div className="flex flex-wrap gap-2" role="group" aria-label="Filter photos by tag">
@@ -2322,7 +2337,7 @@ export function GalleryFilterable({ items, className = '' }) {
         Showing {shown.length} of {items.length} photos
       </p>
 
-      <ul className="grid list-none grid-cols-2 gap-3 p-0 sm:grid-cols-3">
+      <ul className="grid list-none grid-cols-2 gap-3 p-0 sm:grid-cols-3 lg:grid-cols-4">
         {shown.map((item) => (
           <li key={item.id}>
             <figure className="m-0 overflow-hidden rounded-xl border border-gray-200 bg-gray-50 dark:border-gray-800 dark:bg-gray-900">
@@ -2361,7 +2376,7 @@ export function GalleryFilterable({ items, className = '' }: GalleryFilterablePr
   );
 
   return (
-    <div className={className}>
+    <div className={\`w-full \${className}\`}>
       <div className="flex flex-wrap gap-2" role="group" aria-label="Filter photos by tag">
         {FILTERS.map((filter) => (
           <button
@@ -2380,7 +2395,7 @@ export function GalleryFilterable({ items, className = '' }: GalleryFilterablePr
         Showing {shown.length} of {items.length} photos
       </p>
 
-      <ul className="grid list-none grid-cols-2 gap-3 p-0 sm:grid-cols-3">
+      <ul className="grid list-none grid-cols-2 gap-3 p-0 sm:grid-cols-3 lg:grid-cols-4">
         {shown.map((item) => (
           <li key={item.id}>
             <figure className="m-0 overflow-hidden rounded-xl border border-gray-200 bg-gray-50 dark:border-gray-800 dark:bg-gray-900">
@@ -2430,7 +2445,7 @@ export function GalleryFilterable({ items, className = '' }: GalleryFilterablePr
   );
 
   return (
-    <div className={className}>
+    <div className={\`w-full \${className}\`}>
       <div className="flex flex-wrap gap-2" role="group" aria-label="Filter photos by tag">
         {FILTERS.map((filter: Filter) => (
           <button
@@ -2449,7 +2464,7 @@ export function GalleryFilterable({ items, className = '' }: GalleryFilterablePr
         Showing {shown.length} of {items.length} photos
       </p>
 
-      <ul className="grid list-none grid-cols-2 gap-3 p-0 sm:grid-cols-3">
+      <ul className="grid list-none grid-cols-2 gap-3 p-0 sm:grid-cols-3 lg:grid-cols-4">
         {shown.map((item: FilterablePhoto) => (
           <li key={item.id}>
             <figure className="m-0 overflow-hidden rounded-xl border border-gray-200 bg-gray-50 dark:border-gray-800 dark:bg-gray-900">
@@ -2501,7 +2516,7 @@ export function GalleryFilterable({ items, className = '' }: GalleryFilterablePr
   the failure a fixed-width row causes at 320px. Media are CSS gradient tiles
   (role="img" + aria-label) so the component needs no image host.
 -->
-<ul class="flex snap-x snap-mandatory list-none gap-3 overflow-x-auto p-0 pb-2">
+<ul class="flex w-full snap-x snap-mandatory list-none gap-3 overflow-x-auto p-0 pb-2">
   <li class="w-40 shrink-0 snap-start sm:w-56">
     <figure class="m-0">
       <div class="aspect-[4/3] w-full rounded-xl bg-gradient-to-br from-sky-400 to-indigo-600" role="img" aria-label="Sky-blue to indigo gradient"></div>
@@ -2529,7 +2544,7 @@ export function GalleryFilterable({ items, className = '' }: GalleryFilterablePr
 </ul>`,
       react: `export function GalleryHorizontalScroll({ items, className = '' }) {
   return (
-    <ul className={\`flex snap-x snap-mandatory list-none gap-3 overflow-x-auto p-0 pb-2 \${className}\`}>
+    <ul className={\`flex w-full snap-x snap-mandatory list-none gap-3 overflow-x-auto p-0 pb-2 \${className}\`}>
       {items.map((item) => (
         <li key={item.id} className="w-40 shrink-0 snap-start sm:w-56">
           <figure className="m-0">
@@ -2564,7 +2579,7 @@ export interface GalleryHorizontalScrollProps {
 
 export function GalleryHorizontalScroll({ items, className = '' }: GalleryHorizontalScrollProps): JSX.Element {
   return (
-    <ul className={\`flex snap-x snap-mandatory list-none gap-3 overflow-x-auto p-0 pb-2 \${className}\`}>
+    <ul className={\`flex w-full snap-x snap-mandatory list-none gap-3 overflow-x-auto p-0 pb-2 \${className}\`}>
       {items.map((item: GalleryTile) => (
         <li key={item.id} className="w-40 shrink-0 snap-start sm:w-56">
           <figure className="m-0">
@@ -2615,7 +2630,7 @@ export function GalleryHorizontalScroll({ items, className = '' }: GalleryHorizo
   same feedback a mouse does. motion-reduce cancels the scale for anyone who
   asked the OS to still animations.
 -->
-<ul class="grid list-none grid-cols-2 gap-3 p-0 sm:grid-cols-3 lg:grid-cols-4">
+<ul class="grid w-full list-none grid-cols-2 gap-3 p-0 sm:grid-cols-3 lg:grid-cols-4">
   <li>
     <button type="button" class="group block w-full overflow-hidden rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 dark:focus-visible:ring-blue-400 dark:focus-visible:ring-offset-gray-950">
       <span class="block aspect-square w-full bg-gradient-to-br from-sky-400 to-indigo-600 transition-transform duration-300 group-hover:scale-110 group-focus-visible:scale-110 motion-reduce:transition-none motion-reduce:group-hover:scale-100 motion-reduce:group-focus-visible:scale-100" role="img" aria-label="Sky-blue to indigo gradient"></span>
@@ -2639,7 +2654,7 @@ export function GalleryHorizontalScroll({ items, className = '' }: GalleryHorizo
 </ul>`,
       react: `export function GalleryHoverZoom({ items, onSelect, className = '' }) {
   return (
-    <ul className={\`grid list-none grid-cols-2 gap-3 p-0 sm:grid-cols-3 lg:grid-cols-4 \${className}\`}>
+    <ul className={\`grid w-full list-none grid-cols-2 gap-3 p-0 sm:grid-cols-3 lg:grid-cols-4 \${className}\`}>
       {items.map((item, i) => (
         <li key={item.id}>
           <button
@@ -2676,7 +2691,7 @@ export interface GalleryHoverZoomProps {
 
 export function GalleryHoverZoom({ items, onSelect, className = '' }: GalleryHoverZoomProps): JSX.Element {
   return (
-    <ul className={\`grid list-none grid-cols-2 gap-3 p-0 sm:grid-cols-3 lg:grid-cols-4 \${className}\`}>
+    <ul className={\`grid w-full list-none grid-cols-2 gap-3 p-0 sm:grid-cols-3 lg:grid-cols-4 \${className}\`}>
       {items.map((item: GalleryTile, i: number) => (
         <li key={item.id}>
           <button
@@ -2730,7 +2745,7 @@ export function GalleryHoverZoom({ items, onSelect, className = '' }: GalleryHov
   fill a sighted user sees are one thing, not two that can drift.
   The tab switching is wired in the React/TS tabs.
 -->
-<div>
+<div class="w-full">
   <div class="flex flex-wrap gap-2" role="group" aria-label="Filter by category">
     <button type="button" aria-pressed="true" class="rounded-full border border-gray-300 px-3 py-1.5 text-[0.8125rem] font-medium text-gray-700 hover:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 aria-[pressed=true]:border-blue-700 aria-[pressed=true]:bg-blue-700 aria-[pressed=true]:text-white dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-800 dark:focus-visible:ring-blue-400 dark:focus-visible:ring-offset-gray-950">All</button>
     <button type="button" aria-pressed="false" class="rounded-full border border-gray-300 px-3 py-1.5 text-[0.8125rem] font-medium text-gray-700 hover:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 aria-[pressed=true]:border-blue-700 aria-[pressed=true]:bg-blue-700 aria-[pressed=true]:text-white dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-800 dark:focus-visible:ring-blue-400 dark:focus-visible:ring-offset-gray-950">Nature</button>
@@ -2760,7 +2775,7 @@ export function GalleryTabsCategory({ items, categories, className = '' }) {
   const tabs = [{ id: 'all', label: 'All' }, ...categories];
 
   return (
-    <div className={className}>
+    <div className={\`w-full \${className}\`}>
       <div className="flex flex-wrap gap-2" role="group" aria-label="Filter by category">
         {tabs.map((tab) => (
           <button
@@ -2815,7 +2830,7 @@ export function GalleryTabsCategory({ items, categories, className = '' }: Galle
   const tabs: CategoryTab[] = [{ id: 'all', label: 'All' }, ...categories];
 
   return (
-    <div className={className}>
+    <div className={\`w-full \${className}\`}>
       <div className="flex flex-wrap gap-2" role="group" aria-label="Filter by category">
         {tabs.map((tab) => (
           <button
@@ -2870,12 +2885,12 @@ export function GalleryTabsCategory({ items, categories, className = '' }: Galle
     ],
     code: {
       tailwind: `<!--
-  CSS-columns masonry (columns-2 sm:columns-3) with the caption overlaid on a
+  CSS-columns masonry (columns-2 sm:columns-3 lg:columns-4) with the caption overlaid on a
   dark-to-transparent scrim so it reads on any tile colour. break-inside-avoid
   is not optional: without it a tile splits across the column boundary. The
   varying heightClass per tile is what makes it read as masonry, not a grid.
 -->
-<ul class="list-none columns-2 gap-3 p-0 sm:columns-3">
+<ul class="w-full list-none columns-2 gap-3 p-0 sm:columns-3 lg:columns-4">
   <li class="mb-3 break-inside-avoid">
     <figure class="relative m-0 overflow-hidden rounded-xl">
       <div class="h-40 w-full bg-gradient-to-br from-sky-400 to-indigo-600" role="img" aria-label="Sky-blue to indigo gradient"></div>
@@ -2903,7 +2918,7 @@ export function GalleryTabsCategory({ items, categories, className = '' }: Galle
 </ul>`,
       react: `export function GalleryMasonryCaptions({ items, className = '' }) {
   return (
-    <ul className={\`list-none columns-2 gap-3 p-0 sm:columns-3 \${className}\`}>
+    <ul className={\`w-full list-none columns-2 gap-3 p-0 sm:columns-3 lg:columns-4 \${className}\`}>
       {items.map((item) => (
         <li key={item.id} className="mb-3 break-inside-avoid">
           <figure className="relative m-0 overflow-hidden rounded-xl">
@@ -2933,7 +2948,7 @@ export interface GalleryMasonryCaptionsProps {
 
 export function GalleryMasonryCaptions({ items, className = '' }: GalleryMasonryCaptionsProps): JSX.Element {
   return (
-    <ul className={\`list-none columns-2 gap-3 p-0 sm:columns-3 \${className}\`}>
+    <ul className={\`w-full list-none columns-2 gap-3 p-0 sm:columns-3 lg:columns-4 \${className}\`}>
       {items.map((item: MasonryTile) => (
         <li key={item.id} className="mb-3 break-inside-avoid">
           <figure className="relative m-0 overflow-hidden rounded-xl">
@@ -2979,7 +2994,7 @@ export function GalleryMasonryCaptions({ items, className = '' }: GalleryMasonry
   basisClass gives them different natural widths so the ragged-right seam falls
   in a different place each row. flex-wrap keeps it within the container width.
 -->
-<ul class="flex list-none flex-wrap gap-2 p-0">
+<ul class="flex w-full list-none flex-wrap gap-2 p-0">
   <li class="h-28 grow basis-52 sm:h-36">
     <div class="h-full w-full rounded-lg bg-gradient-to-br from-sky-400 to-indigo-600" role="img" aria-label="Sky-blue to indigo gradient"></div>
   </li>
@@ -2998,7 +3013,7 @@ export function GalleryMasonryCaptions({ items, className = '' }: GalleryMasonry
 </ul>`,
       react: `export function GalleryJustified({ items, className = '' }) {
   return (
-    <ul className={\`flex list-none flex-wrap gap-2 p-0 \${className}\`}>
+    <ul className={\`flex w-full list-none flex-wrap gap-2 p-0 \${className}\`}>
       {items.map((item) => (
         <li key={item.id} className={\`h-28 grow sm:h-36 \${item.basisClass}\`}>
           <div role="img" aria-label={item.label} className={\`h-full w-full rounded-lg bg-gradient-to-br \${item.gradient}\`} />
@@ -3022,7 +3037,7 @@ export interface GalleryJustifiedProps {
 
 export function GalleryJustified({ items, className = '' }: GalleryJustifiedProps): JSX.Element {
   return (
-    <ul className={\`flex list-none flex-wrap gap-2 p-0 \${className}\`}>
+    <ul className={\`flex w-full list-none flex-wrap gap-2 p-0 \${className}\`}>
       {items.map((item: JustifiedTile) => (
         <li key={item.id} className={\`h-28 grow sm:h-36 \${item.basisClass}\`}>
           <div role="img" aria-label={item.label} className={\`h-full w-full rounded-lg bg-gradient-to-br \${item.gradient}\`} />
@@ -3063,7 +3078,7 @@ export function GalleryJustified({ items, className = '' }: GalleryJustifiedProp
   + fill, never colour alone). Arrow controls are >=40px targets. Slide logic is
   in the React/TS tabs.
 -->
-<section class="relative mx-auto w-full max-w-3xl" aria-roledescription="carousel" aria-label="Featured photos">
+<section class="relative w-full" aria-roledescription="carousel" aria-label="Featured photos">
   <div class="overflow-hidden rounded-2xl" aria-live="polite">
     <div class="relative aspect-video w-full bg-gradient-to-br from-sky-400 to-indigo-600" role="img" aria-label="Sky-blue to indigo gradient">
       <p class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent px-4 pb-3 pt-10 text-base font-semibold text-white">Coastline</p>
@@ -3087,7 +3102,7 @@ export function GalleryCarouselFullwidth({ items, className = '' }) {
 
   return (
     <section
-      className={\`relative mx-auto w-full max-w-3xl \${className}\`}
+      className={\`relative w-full \${className}\`}
       aria-roledescription="carousel"
       aria-label="Featured photos"
     >
@@ -3140,7 +3155,7 @@ export function GalleryCarouselFullwidth({ items, className = '' }: GalleryCarou
 
   return (
     <section
-      className={\`relative mx-auto w-full max-w-3xl \${className}\`}
+      className={\`relative w-full \${className}\`}
       aria-roledescription="carousel"
       aria-label="Featured photos"
     >
@@ -3202,7 +3217,7 @@ export function GalleryCarouselFullwidth({ items, className = '' }: GalleryCarou
   focus-visible; motion-reduce cancels the tilt entirely. The white frame is
   intentional in both themes - a photo print is not a UI surface.
 -->
-<ul class="grid list-none grid-cols-2 gap-4 p-0 sm:grid-cols-3 lg:grid-cols-4">
+<ul class="grid w-full list-none grid-cols-2 gap-4 p-0 sm:grid-cols-3 lg:grid-cols-4">
   <li>
     <button type="button" class="group block w-full -rotate-2 rounded-sm bg-white p-2 pb-1 shadow-md transition-transform hover:rotate-0 focus-visible:rotate-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 motion-reduce:transition-none motion-reduce:rotate-0">
       <span class="block aspect-square w-full bg-gradient-to-br from-sky-400 to-indigo-600" role="img" aria-label="Sky-blue to indigo gradient"></span>
@@ -3230,7 +3245,7 @@ export function GalleryCarouselFullwidth({ items, className = '' }: GalleryCarou
 </ul>`,
       react: `export function GalleryPolaroid({ items, className = '' }) {
   return (
-    <ul className={\`grid list-none grid-cols-2 gap-4 p-0 sm:grid-cols-3 lg:grid-cols-4 \${className}\`}>
+    <ul className={\`grid w-full list-none grid-cols-2 gap-4 p-0 sm:grid-cols-3 lg:grid-cols-4 \${className}\`}>
       {items.map((item, i) => (
         <li key={item.id}>
           <button
@@ -3259,7 +3274,7 @@ export interface GalleryPolaroidProps {
 
 export function GalleryPolaroid({ items, className = '' }: GalleryPolaroidProps): JSX.Element {
   return (
-    <ul className={\`grid list-none grid-cols-2 gap-4 p-0 sm:grid-cols-3 lg:grid-cols-4 \${className}\`}>
+    <ul className={\`grid w-full list-none grid-cols-2 gap-4 p-0 sm:grid-cols-3 lg:grid-cols-4 \${className}\`}>
       {items.map((item: GalleryTile, i: number) => (
         <li key={item.id}>
           <button
@@ -3306,7 +3321,7 @@ export function GalleryPolaroid({ items, className = '' }: GalleryPolaroidProps)
   and motion-reduce drops the fade. grid-cols-3 holds at 320px (three ~100px
   squares); no lg bump - the three-column identity is the point.
 -->
-<ul class="grid list-none grid-cols-3 gap-1 p-0 sm:gap-2">
+<ul class="grid w-full list-none grid-cols-3 gap-1 p-0 sm:gap-2">
   <li>
     <button type="button" class="group relative block w-full overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 dark:focus-visible:ring-blue-400 dark:focus-visible:ring-offset-gray-950">
       <span class="block aspect-square w-full bg-gradient-to-br from-sky-400 to-indigo-600" role="img" aria-label="Sky-blue to indigo gradient"></span>
@@ -3337,7 +3352,7 @@ export function GalleryPolaroid({ items, className = '' }: GalleryPolaroidProps)
 </ul>`,
       react: `export function GalleryInstagramGrid({ items, className = '' }) {
   return (
-    <ul className={\`grid list-none grid-cols-3 gap-1 p-0 sm:gap-2 \${className}\`}>
+    <ul className={\`grid w-full list-none grid-cols-3 gap-1 p-0 sm:gap-2 \${className}\`}>
       {items.map((item) => (
         <li key={item.id}>
           <button
@@ -3375,7 +3390,7 @@ export interface GalleryInstagramGridProps {
 
 export function GalleryInstagramGrid({ items, className = '' }: GalleryInstagramGridProps): JSX.Element {
   return (
-    <ul className={\`grid list-none grid-cols-3 gap-1 p-0 sm:gap-2 \${className}\`}>
+    <ul className={\`grid w-full list-none grid-cols-3 gap-1 p-0 sm:gap-2 \${className}\`}>
       {items.map((item: SocialTile) => (
         <li key={item.id}>
           <button
@@ -3429,7 +3444,7 @@ export function GalleryInstagramGrid({ items, className = '' }: GalleryInstagram
   badge. The play button scales on group-hover and group-focus-visible alike;
   motion-reduce holds it still. Each card's accessible name says "Play <title>".
 -->
-<ul class="grid list-none grid-cols-2 gap-3 p-0 sm:grid-cols-3 lg:grid-cols-4">
+<ul class="grid w-full list-none grid-cols-2 gap-3 p-0 sm:grid-cols-3 lg:grid-cols-4">
   <li>
     <button type="button" class="group relative block w-full overflow-hidden rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 dark:focus-visible:ring-blue-400 dark:focus-visible:ring-offset-gray-950">
       <span class="block aspect-video w-full bg-gradient-to-br from-sky-400 to-indigo-600" role="img" aria-label="Sky-blue to indigo gradient"></span>
@@ -3457,7 +3472,7 @@ export function GalleryInstagramGrid({ items, className = '' }: GalleryInstagram
 </ul>`,
       react: `export function GalleryVideoThumbs({ items, className = '' }) {
   return (
-    <ul className={\`grid list-none grid-cols-2 gap-3 p-0 sm:grid-cols-3 lg:grid-cols-4 \${className}\`}>
+    <ul className={\`grid w-full list-none grid-cols-2 gap-3 p-0 sm:grid-cols-3 lg:grid-cols-4 \${className}\`}>
       {items.map((item) => (
         <li key={item.id}>
           <button
@@ -3497,7 +3512,7 @@ export interface GalleryVideoThumbsProps {
 
 export function GalleryVideoThumbs({ items, className = '' }: GalleryVideoThumbsProps): JSX.Element {
   return (
-    <ul className={\`grid list-none grid-cols-2 gap-3 p-0 sm:grid-cols-3 lg:grid-cols-4 \${className}\`}>
+    <ul className={\`grid w-full list-none grid-cols-2 gap-3 p-0 sm:grid-cols-3 lg:grid-cols-4 \${className}\`}>
       {items.map((item: VideoTile) => (
         <li key={item.id}>
           <button
@@ -3553,7 +3568,7 @@ export function GalleryVideoThumbs({ items, className = '' }: GalleryVideoThumbs
   disappears once everything is shown rather than sitting there dead. Reveal
   logic is in the React/TS tabs.
 -->
-<div>
+<div class="w-full">
   <ul class="grid list-none grid-cols-2 gap-3 p-0 sm:grid-cols-3 lg:grid-cols-4">
     <li>
       <figure class="m-0">
@@ -3583,7 +3598,7 @@ export function GalleryLoadMore({ items, step = 4, className = '' }) {
   const allShown = visible >= items.length;
 
   return (
-    <div className={className}>
+    <div className={\`w-full \${className}\`}>
       <ul className="grid list-none grid-cols-2 gap-3 p-0 sm:grid-cols-3 lg:grid-cols-4">
         {shown.map((item) => (
           <li key={item.id}>
@@ -3634,7 +3649,7 @@ export function GalleryLoadMore({ items, step = 4, className = '' }: GalleryLoad
   const allShown = visible >= items.length;
 
   return (
-    <div className={className}>
+    <div className={\`w-full \${className}\`}>
       <ul className="grid list-none grid-cols-2 gap-3 p-0 sm:grid-cols-3 lg:grid-cols-4">
         {shown.map((item: GalleryTile) => (
           <li key={item.id}>

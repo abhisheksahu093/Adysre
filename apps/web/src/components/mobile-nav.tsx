@@ -47,11 +47,16 @@ export function MobileNav() {
 
     panelRef.current?.focus();
 
+    // Capture the trigger while the effect runs: by cleanup time the ref may
+    // already point at a different element (or null), and focus would land
+    // somewhere arbitrary instead of back where the user opened the menu.
+    const trigger = triggerRef.current;
+
     return () => {
       document.body.style.overflow = previousOverflow;
       document.removeEventListener('keydown', onKeyDown);
       // Send focus back to the trigger so keyboard users don't lose their place.
-      triggerRef.current?.focus();
+      trigger?.focus();
     };
   }, [open]);
 

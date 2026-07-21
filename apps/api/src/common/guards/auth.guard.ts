@@ -9,6 +9,7 @@ import { JwtService } from '@nestjs/jwt';
 import type { Request } from 'express';
 import type { AuthContext } from '@adysre/types';
 import { IS_PUBLIC_KEY } from '../decorators/index.js';
+import { accessTokenSecret } from '../config/jwt-secret';
 
 /**
  * Validates the JWT access token (from HTTP-only cookie) and attaches the
@@ -34,7 +35,7 @@ export class AuthGuard implements CanActivate {
 
     try {
       const payload = await this.jwt.verifyAsync<AuthContext & { sub: string }>(token, {
-        secret: process.env.JWT_ACCESS_SECRET,
+        secret: accessTokenSecret(),
       });
       req.auth = {
         userId: payload.sub ?? payload.userId,

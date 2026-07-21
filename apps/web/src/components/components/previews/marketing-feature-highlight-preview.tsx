@@ -3,8 +3,9 @@
  *
  * Mirrors the `typescript` code variant verbatim. The media is a decorative
  * gradient panel with inline SVG - no external image - so nothing here needs a
- * scrim: no text sits on the gradient. Keep in step with
- * `src/data/components/marketing.ts`.
+ * scrim: no text sits on the gradient. The section itself is width-agnostic
+ * (`w-full`); the preview supplies the page shell that centres it. Keep in step
+ * with `src/data/components/marketing.ts`.
  */
 interface FeatureHighlightProps {
   title: string;
@@ -25,7 +26,7 @@ function FeatureHighlight({
 }: FeatureHighlightProps) {
   return (
     <section
-      className={`grid w-full max-w-5xl items-center gap-8 rounded-2xl border border-gray-200 bg-white p-6 sm:p-8 md:grid-cols-2 dark:border-gray-800 dark:bg-gray-900 ${className}`}
+      className={`grid w-full items-center gap-8 rounded-2xl border border-gray-200 bg-white p-6 sm:p-8 md:grid-cols-2 dark:border-gray-800 dark:bg-gray-900 ${className}`}
     >
       <div className="order-2 md:order-1">
         {kicker ? (
@@ -68,13 +69,17 @@ function FeatureHighlight({
 
 export default function MarketingFeatureHighlightPreview() {
   return (
-    <FeatureHighlight
-      title="Automate the busywork, keep the craft"
-      kicker="Workflow"
-      copy="Let the platform handle triage, routing and follow-ups so your team spends its hours on the work only people can do."
-      ctaLabel="See how it works"
-      ctaHref="#"
-    />
+    <section className="w-full px-4 py-12 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-5xl">
+        <FeatureHighlight
+          title="Automate the busywork, keep the craft"
+          kicker="Workflow"
+          copy="Let the platform handle triage, routing and follow-ups so your team spends its hours on the work only people can do."
+          ctaLabel="See how it works"
+          ctaHref="#"
+        />
+      </div>
+    </section>
   );
 }
 

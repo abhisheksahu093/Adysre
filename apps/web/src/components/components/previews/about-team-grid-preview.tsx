@@ -57,8 +57,7 @@ function AboutTeamGrid({ kicker, title, members, className = '' }: AboutTeamGrid
             key={member.name}
             className="rounded-2xl border border-gray-200 bg-white p-6 text-center dark:border-gray-800 dark:bg-gray-900"
           >
-            {/* eslint-disable-next-line @next/next/no-img-element -- the preview
-                mirrors the framework-agnostic `typescript` variant, not next/image. */}
+            { }
             <img
               src={member.avatarSrc}
               alt=""

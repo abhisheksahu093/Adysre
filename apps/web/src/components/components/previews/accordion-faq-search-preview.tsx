@@ -39,7 +39,7 @@ function AccordionFaqSearch({ items, defaultOpenId, className = '' }: AccordionF
   const searchId = `${baseId}-search`;
 
   return (
-    <div className={`max-w-2xl ${className}`}>
+    <div className={`w-full ${className}`}>
       <form className="mb-3" role="search" onSubmit={(event) => event.preventDefault()}>
         <label className="sr-only" htmlFor={searchId}>
           Search questions
@@ -127,5 +127,11 @@ const SAMPLE_ITEMS: FaqItem[] = [
 ];
 
 export default function AccordionFaqSearchPreview() {
-  return <AccordionFaqSearch items={SAMPLE_ITEMS} defaultOpenId="export" className="w-full" />;
+  return (
+    <section className="w-full px-4 py-12 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-3xl">
+        <AccordionFaqSearch items={SAMPLE_ITEMS} defaultOpenId="export" />
+      </div>
+    </section>
+  );
 }

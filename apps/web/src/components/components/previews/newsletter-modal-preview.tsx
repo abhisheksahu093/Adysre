@@ -14,12 +14,12 @@ import {
  * Live preview for `newsletter-modal`.
  *
  * `NewsletterModal` mirrors the `typescript` code variant verbatim. The preview
- * adds only what a dialog needs to be a dialog: an opener to be summoned from
- * and a `min-h` wrapper, because a modal <dialog> lives in the top layer and
- * contributes nothing to `document.body.scrollHeight` - without the wrapper the
- * stage would size itself to the button and clip the thing on show.
+ * wraps it in the page section a modal like this is summoned from: a heading,
+ * a line of copy and a Subscribe button. The dialog panel keeps its own
+ * `w-[min(100%-2rem,26rem)]` measure - that width is the design, not a preview
+ * cap - so nothing there is width-agnostic.
  *
- * It opens on mount so there is something to look at, and the opener stays put
+ * It starts closed - a page must never open a modal on load - and the opener stays put
  * so it can be re-summoned after a dismiss. All three exits are real here: try
  * Escape, the close button, and a click on the backdrop.
  *
@@ -138,27 +138,35 @@ function NewsletterModal({
 }
 
 export default function NewsletterModalPreview() {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const handleDismiss = useCallback(() => setOpen(false), []);
 
   return (
-    <div className="flex min-h-80 w-full items-center justify-center">
-      <button
-        type="button"
-        onClick={() => setOpen(true)}
-        className="rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 focus-visible:ring-offset-white motion-reduce:transition-none dark:focus-visible:ring-blue-400 dark:focus-visible:ring-offset-gray-900"
-      >
-        Subscribe
-      </button>
+    <section className="w-full px-4 py-12 sm:px-6 lg:px-8">
+      <div className="mx-auto flex w-full max-w-5xl flex-col items-center text-center">
+        <h2 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl dark:text-gray-100">
+          One good email a week
+        </h2>
+        <p className="mt-3 max-w-prose text-sm leading-relaxed text-gray-600 sm:text-base dark:text-gray-400">
+          Join 14,000 engineers reading what shipped, what broke and what we learned.
+        </p>
+        <button
+          type="button"
+          onClick={() => setOpen(true)}
+          className="mt-6 rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 focus-visible:ring-offset-white motion-reduce:transition-none dark:focus-visible:ring-blue-400 dark:focus-visible:ring-offset-gray-900"
+        >
+          Subscribe
+        </button>
 
-      <NewsletterModal
-        open={open}
-        title="One good email a week"
-        copy="Join 14,000 engineers. No spam, and one click to leave."
-        ctaLabel="Subscribe"
-        dismissLabel="Close"
-        onDismiss={handleDismiss}
-      />
-    </div>
+        <NewsletterModal
+          open={open}
+          title="One good email a week"
+          copy="Join 14,000 engineers. No spam, and one click to leave."
+          ctaLabel="Subscribe"
+          dismissLabel="Close"
+          onDismiss={handleDismiss}
+        />
+      </div>
+    </section>
   );
 }

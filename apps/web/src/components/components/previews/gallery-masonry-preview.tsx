@@ -6,6 +6,9 @@
  * the tile's index, never Math.random(), so the server and the client agree and
  * hydration matches. The varying heights are the whole point - they are what
  * the columns balance against.
+ *
+ * The column list carries no width cap of its own and steps 2 -> 3 -> 4 columns;
+ * the default export wraps it in a centred, full-width page section.
  * Keep this in step with `src/data/components/galleries.ts`.
  */
 interface GalleryPhoto {
@@ -24,12 +27,12 @@ interface GalleryMasonryProps {
 
 function GalleryMasonry({ items, className = '' }: GalleryMasonryProps) {
   return (
-    <ul className={`list-none columns-2 gap-3 p-0 sm:columns-3 ${className}`}>
+    <ul className={`w-full list-none columns-2 gap-3 p-0 sm:columns-3 lg:columns-4 ${className}`}>
       {items.map((item: GalleryPhoto) => (
         // break-inside-avoid: without it a tile splits across the column edge.
         <li key={item.id} className="mb-3 break-inside-avoid">
           <figure className="m-0 overflow-hidden rounded-xl border border-gray-200 bg-gray-50 dark:border-gray-800 dark:bg-gray-900">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
+            { }
             <img
               className="block h-auto w-full"
               src={item.imageSrc}
@@ -78,5 +81,11 @@ const SAMPLE_PHOTOS: GalleryPhoto[] = [
 ];
 
 export default function GalleryMasonryPreview() {
-  return <GalleryMasonry items={SAMPLE_PHOTOS} className="w-full max-w-xl" />;
+  return (
+    <section className="w-full px-4 py-12 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-6xl">
+        <GalleryMasonry items={SAMPLE_PHOTOS} className="w-full" />
+      </div>
+    </section>
+  );
 }

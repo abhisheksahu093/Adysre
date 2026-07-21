@@ -8,6 +8,9 @@ import { useState } from 'react';
  * Mirrors the `typescript` code variant. Category chips are aria-pressed
  * toggles; the pressed fill keys off the attribute so state and style cannot
  * drift. Media are CSS gradient tiles - no network.
+ *
+ * The gallery fills its container; the default export wraps it in a centred,
+ * full-width page section.
  * Keep this in step with `src/data/components/galleries.ts`.
  */
 interface CategorisedTile {
@@ -35,7 +38,7 @@ function GalleryTabsCategory({ items, categories, className = '' }: GalleryTabsC
   const tabs: CategoryTab[] = [{ id: 'all', label: 'All' }, ...categories];
 
   return (
-    <div className={className}>
+    <div className={`w-full ${className}`}>
       <div className="flex flex-wrap gap-2" role="group" aria-label="Filter by category">
         {tabs.map((tab) => (
           <button
@@ -79,5 +82,11 @@ const SAMPLE_TILES: CategorisedTile[] = [
 ];
 
 export default function GalleryTabsCategoryPreview() {
-  return <GalleryTabsCategory items={SAMPLE_TILES} categories={SAMPLE_CATEGORIES} className="w-full max-w-xl" />;
+  return (
+    <section className="w-full px-4 py-12 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-6xl">
+        <GalleryTabsCategory items={SAMPLE_TILES} categories={SAMPLE_CATEGORIES} className="w-full" />
+      </div>
+    </section>
+  );
 }

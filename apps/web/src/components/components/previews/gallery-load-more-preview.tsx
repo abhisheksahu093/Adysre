@@ -8,6 +8,9 @@ import { useState } from 'react';
  * Mirrors the `typescript` code variant. A polite live region announces the
  * running count as tiles reveal in place; the button removes itself once
  * everything is shown. Media are CSS gradient tiles - no network.
+ *
+ * The gallery fills its container; the default export wraps it in a centred,
+ * full-width page section.
  * Keep this in step with `src/data/components/galleries.ts`.
  */
 interface GalleryTile {
@@ -29,7 +32,7 @@ function GalleryLoadMore({ items, step = 4, className = '' }: GalleryLoadMorePro
   const allShown = visible >= items.length;
 
   return (
-    <div className={className}>
+    <div className={`w-full ${className}`}>
       <ul className="grid list-none grid-cols-2 gap-3 p-0 sm:grid-cols-3 lg:grid-cols-4">
         {shown.map((item: GalleryTile) => (
           <li key={item.id}>
@@ -72,5 +75,11 @@ const SAMPLE_TILES: GalleryTile[] = [
 ];
 
 export default function GalleryLoadMorePreview() {
-  return <GalleryLoadMore items={SAMPLE_TILES} className="w-full max-w-xl" />;
+  return (
+    <section className="w-full px-4 py-12 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-6xl">
+        <GalleryLoadMore items={SAMPLE_TILES} className="w-full" />
+      </div>
+    </section>
+  );
 }

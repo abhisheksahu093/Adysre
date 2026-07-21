@@ -9,6 +9,10 @@ import { useId } from 'react';
  * the preview never touches the network - the shipped snippet points at real
  * `/images/*.jpg` paths instead. Keep this in step with
  * `src/data/components/comparisons.ts`.
+ *
+ * The default export adds a page-section shell - padding plus a centred
+ * max-width - which is preview-only; the component itself is width-agnostic
+ * and takes its width from the caller.
  */
 interface BeforeAfterItem {
   id: string;
@@ -29,7 +33,7 @@ function ComparisonBeforeAfterCards({ title, items, className = '' }: Comparison
   const titleId = useId();
 
   return (
-    <section className={`w-full max-w-3xl ${className}`} aria-labelledby={titleId}>
+    <section className={`w-full ${className}`} aria-labelledby={titleId}>
       <h2 className="mb-4 text-2xl font-bold text-gray-900 dark:text-gray-100" id={titleId}>
         {title}
       </h2>
@@ -43,7 +47,7 @@ function ComparisonBeforeAfterCards({ title, items, className = '' }: Comparison
             <span className="absolute left-3 top-3 rounded-full bg-gray-950/75 px-2 py-0.5 text-xs font-semibold text-white">
               {item.label}
             </span>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
+            { }
             <img className="block h-48 w-full object-cover" src={item.imageSrc} alt={item.imageAlt} />
             <figcaption className="px-4 py-3.5 text-sm leading-relaxed text-gray-700 dark:text-gray-300">
               {item.caption}
@@ -105,5 +109,11 @@ const SAMPLE_ITEMS: BeforeAfterItem[] = [
 ];
 
 export default function ComparisonBeforeAfterCardsPreview() {
-  return <ComparisonBeforeAfterCards title="Dashboard redesign" items={SAMPLE_ITEMS} />;
+  return (
+    <section className="w-full px-4 py-12 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-5xl">
+        <ComparisonBeforeAfterCards title="Dashboard redesign" items={SAMPLE_ITEMS} />
+      </div>
+    </section>
+  );
 }

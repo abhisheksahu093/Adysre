@@ -5,6 +5,10 @@
  * plan name; the wrapper scrolls (min-w on the table) so the feature column
  * never leaves the viewport at 320px. Keep this in step with
  * `src/data/components/comparisons.ts`.
+ *
+ * The default export adds a page-section shell - padding plus a centred
+ * max-width - which is preview-only; the component itself is width-agnostic
+ * and takes its width from the caller.
  */
 interface MatrixPlan {
   name: string;
@@ -100,7 +104,13 @@ const SAMPLE_ROWS: MatrixRow[] = [
 ];
 
 export default function ComparisonPlanMatrixPreview() {
-  return <ComparisonPlanMatrix plans={SAMPLE_PLANS} rows={SAMPLE_ROWS} />;
+  return (
+    <section className="w-full px-4 py-12 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-6xl">
+        <ComparisonPlanMatrix plans={SAMPLE_PLANS} rows={SAMPLE_ROWS} />
+      </div>
+    </section>
+  );
 }
 
 export const minHeight = 300;

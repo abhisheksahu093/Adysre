@@ -66,7 +66,6 @@ export const marketingComponents: ComponentEntry[] = [
   flex-direction: column;
   gap: 0.5rem;
   width: 100%;
-  max-width: 28rem;
 }
 
 /* One row only when there is room for one. Below 480px the button drops under
@@ -159,7 +158,7 @@ export const marketingComponents: ComponentEntry[] = [
     transition: none;
   }
 }`,
-      tailwind: `<form action="/api/subscribe" method="post" class="flex w-full max-w-md flex-col gap-2 sm:flex-row">
+      tailwind: `<form action="/api/subscribe" method="post" class="flex w-full flex-col gap-2 sm:flex-row">
   <label for="nl-inline-email" class="sr-only">Email address</label>
   <input
     id="nl-inline-email"
@@ -196,7 +195,7 @@ export function NewsletterInline({
   return (
     <form
       onSubmit={handleSubmit}
-      className={\`flex w-full max-w-md flex-col gap-2 sm:flex-row \${className}\`}
+      className={\`flex w-full flex-col gap-2 sm:flex-row \${className}\`}
     >
       <label htmlFor={emailId} className="sr-only">
         {label}
@@ -253,7 +252,7 @@ export function NewsletterInline({
   return (
     <form
       onSubmit={handleSubmit}
-      className={\`flex w-full max-w-md flex-col gap-2 sm:flex-row \${className}\`}
+      className={\`flex w-full flex-col gap-2 sm:flex-row \${className}\`}
     >
       <label htmlFor={emailId} className="sr-only">
         {label}
@@ -308,7 +307,7 @@ export function NewsletterInline({
   return (
     <form
       onSubmit={handleSubmit}
-      className={\`flex w-full max-w-md flex-col gap-2 sm:flex-row \${className}\`}
+      className={\`flex w-full flex-col gap-2 sm:flex-row \${className}\`}
     >
       <label htmlFor={emailId} className="sr-only">
         {label}
@@ -394,7 +393,6 @@ export function NewsletterInline({
 </section>`,
       css: `.nl-card {
   width: 100%;
-  max-width: 26rem;
   padding: 1.5rem;
   border: 1px solid #e5e7eb;
   border-radius: 1rem;
@@ -526,7 +524,7 @@ export function NewsletterInline({
 }`,
       tailwind: `<section
   aria-labelledby="nl-card-title"
-  class="w-full max-w-sm rounded-2xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900 dark:shadow-none"
+  class="w-full rounded-2xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900 dark:shadow-none"
 >
   <h2 id="nl-card-title" class="text-lg font-semibold text-gray-900 dark:text-gray-100">
     Subscribe to the changelog
@@ -579,7 +577,7 @@ export function NewsletterCard({
   return (
     <section
       aria-labelledby={titleId}
-      className={\`w-full max-w-sm rounded-2xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900 dark:shadow-none \${className}\`}
+      className={\`w-full rounded-2xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900 dark:shadow-none \${className}\`}
     >
       <h2 id={titleId} className="text-lg font-semibold text-gray-900 dark:text-gray-100">
         {title}
@@ -650,7 +648,7 @@ export function NewsletterCard({
   return (
     <section
       aria-labelledby={titleId}
-      className={\`w-full max-w-sm rounded-2xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900 dark:shadow-none \${className}\`}
+      className={\`w-full rounded-2xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900 dark:shadow-none \${className}\`}
     >
       <h2 id={titleId} className="text-lg font-semibold text-gray-900 dark:text-gray-100">
         {title}
@@ -721,7 +719,7 @@ export function NewsletterCard({
   return (
     <section
       aria-labelledby={titleId}
-      className={\`w-full max-w-sm rounded-2xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900 dark:shadow-none \${className}\`}
+      className={\`w-full rounded-2xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900 dark:shadow-none \${className}\`}
     >
       <h2 id={titleId} className="text-lg font-semibold text-gray-900 dark:text-gray-100">
         {title}
@@ -822,7 +820,6 @@ export function NewsletterCard({
   gap: 1.5rem;
   align-items: center;
   width: 100%;
-  max-width: 56rem;
   padding: 1.5rem;
   border: 1px solid #e5e7eb;
   border-radius: 1rem;
@@ -972,7 +969,7 @@ export function NewsletterCard({
 }`,
       tailwind: `<section
   aria-labelledby="nl-split-title"
-  class="grid w-full max-w-4xl items-center gap-6 rounded-2xl border border-gray-200 bg-gray-50 p-6 md:grid-cols-[1.2fr_1fr] md:gap-10 md:p-8 dark:border-gray-800 dark:bg-gray-900"
+  class="grid w-full items-center gap-6 rounded-2xl border border-gray-200 bg-gray-50 p-6 md:grid-cols-[1.2fr_1fr] md:gap-10 md:p-8 dark:border-gray-800 dark:bg-gray-900"
 >
   <div>
     <p class="text-xs font-bold uppercase tracking-widest text-blue-700 dark:text-blue-400">
@@ -1029,7 +1026,7 @@ export function NewsletterSplit({
   return (
     <section
       aria-labelledby={titleId}
-      className={\`grid w-full max-w-4xl items-center gap-6 rounded-2xl border border-gray-200 bg-gray-50 p-6 md:grid-cols-[1.2fr_1fr] md:gap-10 md:p-8 dark:border-gray-800 dark:bg-gray-900 \${className}\`}
+      className={\`grid w-full items-center gap-6 rounded-2xl border border-gray-200 bg-gray-50 p-6 md:grid-cols-[1.2fr_1fr] md:gap-10 md:p-8 dark:border-gray-800 dark:bg-gray-900 \${className}\`}
     >
       <div>
         {kicker ? (
@@ -1107,7 +1104,7 @@ export function NewsletterSplit({
   return (
     <section
       aria-labelledby={titleId}
-      className={\`grid w-full max-w-4xl items-center gap-6 rounded-2xl border border-gray-200 bg-gray-50 p-6 md:grid-cols-[1.2fr_1fr] md:gap-10 md:p-8 dark:border-gray-800 dark:bg-gray-900 \${className}\`}
+      className={\`grid w-full items-center gap-6 rounded-2xl border border-gray-200 bg-gray-50 p-6 md:grid-cols-[1.2fr_1fr] md:gap-10 md:p-8 dark:border-gray-800 dark:bg-gray-900 \${className}\`}
     >
       <div>
         {kicker ? (
@@ -1183,7 +1180,7 @@ export function NewsletterSplit({
   return (
     <section
       aria-labelledby={titleId}
-      className={\`grid w-full max-w-4xl items-center gap-6 rounded-2xl border border-gray-200 bg-gray-50 p-6 md:grid-cols-[1.2fr_1fr] md:gap-10 md:p-8 dark:border-gray-800 dark:bg-gray-900 \${className}\`}
+      className={\`grid w-full items-center gap-6 rounded-2xl border border-gray-200 bg-gray-50 p-6 md:grid-cols-[1.2fr_1fr] md:gap-10 md:p-8 dark:border-gray-800 dark:bg-gray-900 \${className}\`}
     >
       <div>
         {kicker ? (
@@ -2338,7 +2335,7 @@ export function NewsletterModal({
   mobile. The media is inline SVG on a gradient - no external image - and carries
   no text, so it needs no scrim. The CTA is full width until there is room.
 -->
-<section class="grid w-full max-w-5xl items-center gap-8 rounded-2xl border border-gray-200 bg-white p-6 sm:p-8 md:grid-cols-2 dark:border-gray-800 dark:bg-gray-900">
+<section class="grid w-full items-center gap-8 rounded-2xl border border-gray-200 bg-white p-6 sm:p-8 md:grid-cols-2 dark:border-gray-800 dark:bg-gray-900">
   <div class="order-2 md:order-1">
     <p class="text-xs font-bold uppercase tracking-widest text-blue-700 dark:text-blue-400">Workflow</p>
     <h2 class="mt-2 text-2xl font-bold leading-tight tracking-tight text-gray-900 sm:text-3xl dark:text-gray-100">
@@ -2374,7 +2371,7 @@ export function NewsletterModal({
 }) {
   return (
     <section
-      className={\`grid w-full max-w-5xl items-center gap-8 rounded-2xl border border-gray-200 bg-white p-6 sm:p-8 md:grid-cols-2 dark:border-gray-800 dark:bg-gray-900 \${className}\`}
+      className={\`grid w-full items-center gap-8 rounded-2xl border border-gray-200 bg-white p-6 sm:p-8 md:grid-cols-2 dark:border-gray-800 dark:bg-gray-900 \${className}\`}
     >
       <div className="order-2 md:order-1">
         {kicker ? (
@@ -2424,7 +2421,7 @@ export function MarketingFeatureHighlight({
 }: MarketingFeatureHighlightProps): JSX.Element {
   return (
     <section
-      className={\`grid w-full max-w-5xl items-center gap-8 rounded-2xl border border-gray-200 bg-white p-6 sm:p-8 md:grid-cols-2 dark:border-gray-800 dark:bg-gray-900 \${className}\`}
+      className={\`grid w-full items-center gap-8 rounded-2xl border border-gray-200 bg-white p-6 sm:p-8 md:grid-cols-2 dark:border-gray-800 dark:bg-gray-900 \${className}\`}
     >
       <div className="order-2 md:order-1">
         {kicker ? (
@@ -2478,7 +2475,7 @@ export function MarketingFeatureHighlight({
   A "trusted by" wall. Each logo is an inline SVG mark plus its wordmark - no
   external image files - and the list wraps rather than overflowing at 320px.
 -->
-<section class="w-full max-w-5xl px-4 py-8 text-center" aria-label="Trusted by teams at">
+<section class="w-full px-4 py-8 text-center" aria-label="Trusted by teams at">
   <p class="text-xs font-semibold uppercase tracking-widest text-gray-500 dark:text-gray-400">Trusted by teams at</p>
   <ul class="mt-6 flex flex-wrap items-center justify-center gap-x-8 gap-y-5">
     <li class="inline-flex items-center gap-2 text-gray-400 transition-colors hover:text-gray-700 motion-reduce:transition-none dark:text-gray-500 dark:hover:text-gray-200">
@@ -2496,7 +2493,7 @@ export function MarketingFeatureHighlight({
   className = '',
 }) {
   return (
-    <section className={\`w-full max-w-5xl px-4 py-8 text-center \${className}\`} aria-label={title}>
+    <section className={\`w-full px-4 py-8 text-center \${className}\`} aria-label={title}>
       <p className="text-xs font-semibold uppercase tracking-widest text-gray-500 dark:text-gray-400">{title}</p>
       <ul className="mt-6 flex flex-wrap items-center justify-center gap-x-8 gap-y-5">
         {logos.map((logo) => (
@@ -2530,7 +2527,7 @@ export function MarketingLogosSocialProof({
   className = '',
 }: MarketingLogosSocialProofProps): JSX.Element {
   return (
-    <section className={\`w-full max-w-5xl px-4 py-8 text-center \${className}\`} aria-label={title}>
+    <section className={\`w-full px-4 py-8 text-center \${className}\`} aria-label={title}>
       <p className="text-xs font-semibold uppercase tracking-widest text-gray-500 dark:text-gray-400">{title}</p>
       <ul className="mt-6 flex flex-wrap items-center justify-center gap-x-8 gap-y-5">
         {logos.map((logo) => (
@@ -2724,7 +2721,7 @@ export function MarketingAnnouncementBar({
   the text is never trusted to the gradient alone. The CTA stacks below the copy
   on mobile and goes full width.
 -->
-<section class="relative w-full max-w-4xl overflow-hidden rounded-2xl bg-gradient-to-br from-indigo-600 via-purple-600 to-fuchsia-600">
+<section class="relative w-full overflow-hidden rounded-2xl bg-gradient-to-br from-indigo-600 via-purple-600 to-fuchsia-600">
   <div class="absolute inset-0 bg-black/25" aria-hidden="true"></div>
   <div class="relative flex flex-col items-start gap-5 p-6 sm:p-8 md:flex-row md:items-center md:justify-between">
     <div class="min-w-0">
@@ -2749,7 +2746,7 @@ export function MarketingAnnouncementBar({
   className = '',
 }) {
   return (
-    <section className={\`relative w-full max-w-4xl overflow-hidden rounded-2xl bg-gradient-to-br from-indigo-600 via-purple-600 to-fuchsia-600 \${className}\`}>
+    <section className={\`relative w-full overflow-hidden rounded-2xl bg-gradient-to-br from-indigo-600 via-purple-600 to-fuchsia-600 \${className}\`}>
       {/* Scrim: keeps white text at AA over any point of the gradient. */}
       <div className="absolute inset-0 bg-black/25" aria-hidden="true" />
       <div className="relative flex flex-col items-start gap-5 p-6 sm:p-8 md:flex-row md:items-center md:justify-between">
@@ -2788,7 +2785,7 @@ export function MarketingPromoBanner({
   className = '',
 }: MarketingPromoBannerProps): JSX.Element {
   return (
-    <section className={\`relative w-full max-w-4xl overflow-hidden rounded-2xl bg-gradient-to-br from-indigo-600 via-purple-600 to-fuchsia-600 \${className}\`}>
+    <section className={\`relative w-full overflow-hidden rounded-2xl bg-gradient-to-br from-indigo-600 via-purple-600 to-fuchsia-600 \${className}\`}>
       {/* Scrim: keeps white text at AA over any point of the gradient. */}
       <div className="absolute inset-0 bg-black/25" aria-hidden="true" />
       <div className="relative flex flex-col items-start gap-5 p-6 sm:p-8 md:flex-row md:items-center md:justify-between">
@@ -2838,7 +2835,7 @@ export function MarketingPromoBanner({
   visually-hidden aria-live line narrates the remaining time; the ticks are
   driven by the React/TS variants.
 -->
-<section class="w-full max-w-2xl rounded-2xl border border-gray-200 bg-white p-6 text-center sm:p-8 dark:border-gray-800 dark:bg-gray-900">
+<section class="w-full rounded-2xl border border-gray-200 bg-white p-6 text-center sm:p-8 dark:border-gray-800 dark:bg-gray-900">
   <h2 class="text-xl font-bold tracking-tight text-gray-900 sm:text-2xl dark:text-gray-100">Spring sale ends soon</h2>
   <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">Every annual plan is 30% off until the timer runs out.</p>
   <ul class="mt-6 flex flex-wrap items-stretch justify-center gap-2 sm:gap-3" aria-hidden="true">
@@ -2892,7 +2889,7 @@ export function MarketingCountdownOffer({
   ];
 
   return (
-    <section className={\`w-full max-w-2xl rounded-2xl border border-gray-200 bg-white p-6 text-center sm:p-8 dark:border-gray-800 dark:bg-gray-900 \${className}\`}>
+    <section className={\`w-full rounded-2xl border border-gray-200 bg-white p-6 text-center sm:p-8 dark:border-gray-800 dark:bg-gray-900 \${className}\`}>
       <h2 className="text-xl font-bold tracking-tight text-gray-900 sm:text-2xl dark:text-gray-100">{title}</h2>
       {copy ? <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">{copy}</p> : null}
       <ul className="mt-6 flex flex-wrap items-stretch justify-center gap-2 sm:gap-3" aria-hidden="true">
@@ -2971,7 +2968,7 @@ export function MarketingCountdownOffer({
   ];
 
   return (
-    <section className={\`w-full max-w-2xl rounded-2xl border border-gray-200 bg-white p-6 text-center sm:p-8 dark:border-gray-800 dark:bg-gray-900 \${className}\`}>
+    <section className={\`w-full rounded-2xl border border-gray-200 bg-white p-6 text-center sm:p-8 dark:border-gray-800 dark:bg-gray-900 \${className}\`}>
       <h2 className="text-xl font-bold tracking-tight text-gray-900 sm:text-2xl dark:text-gray-100">{title}</h2>
       {copy ? <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">{copy}</p> : null}
       <ul className="mt-6 flex flex-wrap items-stretch justify-center gap-2 sm:gap-3" aria-hidden="true">
@@ -3019,7 +3016,7 @@ export function MarketingCountdownOffer({
   A three-up benefits grid. One column on phones, two at sm, three at lg, so the
   cells never crowd at 320px. Icons are inline SVG.
 -->
-<section class="w-full max-w-5xl px-4 py-8">
+<section class="w-full px-4 py-8">
   <h2 class="mb-8 text-center text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl dark:text-gray-100">Why teams switch</h2>
   <ul class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
     <li class="flex flex-col">
@@ -3036,7 +3033,7 @@ export function MarketingCountdownOffer({
 </section>`,
       react: `export function MarketingValueProps({ heading, items, className = '' }) {
   return (
-    <section className={\`w-full max-w-5xl px-4 py-8 \${className}\`}>
+    <section className={\`w-full px-4 py-8 \${className}\`}>
       {heading ? (
         <h2 className="mb-8 text-center text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl dark:text-gray-100">{heading}</h2>
       ) : null}
@@ -3073,7 +3070,7 @@ export function MarketingValueProps({
   className = '',
 }: MarketingValuePropsProps): JSX.Element {
   return (
-    <section className={\`w-full max-w-5xl px-4 py-8 \${className}\`}>
+    <section className={\`w-full px-4 py-8 \${className}\`}>
       {heading ? (
         <h2 className="mb-8 text-center text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl dark:text-gray-100">{heading}</h2>
       ) : null}
@@ -3285,7 +3282,7 @@ export function MarketingLeadMagnet({
   A webinar registration card. aria-labelledby ties the section to its heading.
   The date badge and the email row both stack on mobile; submit is UI-only here.
 -->
-<section aria-labelledby="webinar-title" class="w-full max-w-lg rounded-2xl border border-gray-200 bg-white p-6 sm:p-7 dark:border-gray-800 dark:bg-gray-900">
+<section aria-labelledby="webinar-title" class="w-full rounded-2xl border border-gray-200 bg-white p-6 sm:p-7 dark:border-gray-800 dark:bg-gray-900">
   <div class="flex items-center gap-3">
     <span class="inline-flex h-11 w-11 flex-none items-center justify-center rounded-xl bg-indigo-50 text-indigo-600 dark:bg-indigo-950 dark:text-indigo-400">
       <svg viewBox="0 0 24 24" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
@@ -3338,7 +3335,7 @@ export function MarketingWebinarSignup({
   }
 
   return (
-    <section aria-labelledby={titleId} className={\`w-full max-w-lg rounded-2xl border border-gray-200 bg-white p-6 sm:p-7 dark:border-gray-800 dark:bg-gray-900 \${className}\`}>
+    <section aria-labelledby={titleId} className={\`w-full rounded-2xl border border-gray-200 bg-white p-6 sm:p-7 dark:border-gray-800 dark:bg-gray-900 \${className}\`}>
       <div className="flex items-center gap-3">
         <span className="inline-flex h-11 w-11 flex-none items-center justify-center rounded-xl bg-indigo-50 text-indigo-600 dark:bg-indigo-950 dark:text-indigo-400">
           <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true" focusable="false">
@@ -3405,7 +3402,7 @@ export function MarketingWebinarSignup({
   }
 
   return (
-    <section aria-labelledby={titleId} className={\`w-full max-w-lg rounded-2xl border border-gray-200 bg-white p-6 sm:p-7 dark:border-gray-800 dark:bg-gray-900 \${className}\`}>
+    <section aria-labelledby={titleId} className={\`w-full rounded-2xl border border-gray-200 bg-white p-6 sm:p-7 dark:border-gray-800 dark:bg-gray-900 \${className}\`}>
       <div className="flex items-center gap-3">
         <span className="inline-flex h-11 w-11 flex-none items-center justify-center rounded-xl bg-indigo-50 text-indigo-600 dark:bg-indigo-950 dark:text-indigo-400">
           <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true" focusable="false">
@@ -3622,7 +3619,7 @@ export function MarketingReferralCard({
   collapse to one column on phones. The value is the <dd> and the label the
   <dt>, reordered visually so the big number reads first.
 -->
-<section class="relative w-full max-w-5xl overflow-hidden rounded-2xl bg-gradient-to-r from-blue-700 via-indigo-700 to-violet-700">
+<section class="relative w-full overflow-hidden rounded-2xl bg-gradient-to-r from-blue-700 via-indigo-700 to-violet-700">
   <div class="absolute inset-0 bg-black/30" aria-hidden="true"></div>
   <div class="relative px-6 py-10 sm:px-8">
     <h2 class="mb-8 text-center text-lg font-semibold text-white/90">Teams ship faster on ADYSRE</h2>
@@ -3637,7 +3634,7 @@ export function MarketingReferralCard({
 </section>`,
       react: `export function MarketingStatsBand({ title, stats, className = '' }) {
   return (
-    <section className={\`relative w-full max-w-5xl overflow-hidden rounded-2xl bg-gradient-to-r from-blue-700 via-indigo-700 to-violet-700 \${className}\`}>
+    <section className={\`relative w-full overflow-hidden rounded-2xl bg-gradient-to-r from-blue-700 via-indigo-700 to-violet-700 \${className}\`}>
       {/* Scrim: white numerals stay AA over the full sweep of the gradient. */}
       <div className="absolute inset-0 bg-black/30" aria-hidden="true" />
       <div className="relative px-6 py-10 sm:px-8">
@@ -3671,7 +3668,7 @@ export function MarketingStatsBand({
   className = '',
 }: MarketingStatsBandProps): JSX.Element {
   return (
-    <section className={\`relative w-full max-w-5xl overflow-hidden rounded-2xl bg-gradient-to-r from-blue-700 via-indigo-700 to-violet-700 \${className}\`}>
+    <section className={\`relative w-full overflow-hidden rounded-2xl bg-gradient-to-r from-blue-700 via-indigo-700 to-violet-700 \${className}\`}>
       {/* Scrim: white numerals stay AA over the full sweep of the gradient. */}
       <div className="absolute inset-0 bg-black/30" aria-hidden="true" />
       <div className="relative px-6 py-10 sm:px-8">

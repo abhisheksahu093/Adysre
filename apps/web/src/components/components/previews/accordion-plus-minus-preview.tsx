@@ -26,7 +26,7 @@ function AccordionPlusMinus({ items, defaultOpenId, className = '' }: AccordionP
   const [openId, setOpenId] = useState<string | null>(defaultOpenId ?? null);
 
   return (
-    <div className={`max-w-2xl ${className}`}>
+    <div className={`w-full ${className}`}>
       {items.map((item: FaqItem) => {
         const isOpen = openId === item.id;
         const buttonId = `${baseId}-${item.id}-button`;
@@ -84,5 +84,11 @@ const SAMPLE_ITEMS: FaqItem[] = [
 ];
 
 export default function AccordionPlusMinusPreview() {
-  return <AccordionPlusMinus items={SAMPLE_ITEMS} defaultOpenId="trial" className="w-full" />;
+  return (
+    <section className="w-full px-4 py-12 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-3xl">
+        <AccordionPlusMinus items={SAMPLE_ITEMS} defaultOpenId="trial" />
+      </div>
+    </section>
+  );
 }

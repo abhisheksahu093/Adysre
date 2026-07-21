@@ -5,6 +5,10 @@
  * each higher tier states what it inherits in words ("Everything in Team,
  * plus") rather than re-listing every lower feature. Keep this in step with
  * `src/data/components/comparisons.ts`.
+ *
+ * The default export adds a page-section shell - padding plus a centred
+ * max-width - which is preview-only; the component itself is width-agnostic
+ * and takes its width from the caller.
  */
 interface Tier {
   id: string;
@@ -22,7 +26,7 @@ interface ComparisonTieredFeaturesProps {
 
 function ComparisonTieredFeatures({ tiers, className = '' }: ComparisonTieredFeaturesProps) {
   return (
-    <div className={`grid w-full max-w-4xl gap-4 sm:grid-cols-2 lg:grid-cols-3 ${className}`}>
+    <div className={`grid w-full gap-4 sm:grid-cols-2 lg:grid-cols-3 ${className}`}>
       {tiers.map((tier) => (
         <section
           key={tier.id}
@@ -87,7 +91,13 @@ const SAMPLE_TIERS: Tier[] = [
 ];
 
 export default function ComparisonTieredFeaturesPreview() {
-  return <ComparisonTieredFeatures tiers={SAMPLE_TIERS} />;
+  return (
+    <section className="w-full px-4 py-12 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-6xl">
+        <ComparisonTieredFeatures tiers={SAMPLE_TIERS} />
+      </div>
+    </section>
+  );
 }
 
 export const minHeight = 440;

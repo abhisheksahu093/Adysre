@@ -3,7 +3,9 @@
  *
  * Mirrors the `typescript` code variant verbatim. Logos are inline SVG marks +
  * a wordmark, never external images, and the row wraps rather than overflowing
- * at 320px. Keep in step with `src/data/components/marketing.ts`.
+ * at 320px. The section itself is width-agnostic (`w-full`); the preview supplies
+ * the page shell that centres it. Keep in step with
+ * `src/data/components/marketing.ts`.
  */
 interface LogoItem {
   name: string;
@@ -22,7 +24,7 @@ function LogosSocialProof({
 }: LogosSocialProofProps) {
   return (
     <section
-      className={`w-full max-w-5xl px-4 py-8 text-center ${className}`}
+      className={`w-full px-4 py-8 text-center ${className}`}
       aria-label={title}
     >
       <p className="text-xs font-semibold uppercase tracking-widest text-gray-500 dark:text-gray-400">
@@ -55,15 +57,19 @@ function LogosSocialProof({
 
 export default function MarketingLogosSocialProofPreview() {
   return (
-    <LogosSocialProof
-      logos={[
-        { name: 'Northwind' },
-        { name: 'Acme' },
-        { name: 'Globex' },
-        { name: 'Umbra' },
-        { name: 'Initech' },
-      ]}
-    />
+    <section className="w-full px-4 py-12 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-5xl">
+        <LogosSocialProof
+          logos={[
+            { name: 'Northwind' },
+            { name: 'Acme' },
+            { name: 'Globex' },
+            { name: 'Umbra' },
+            { name: 'Initech' },
+          ]}
+        />
+      </div>
+    </section>
   );
 }
 

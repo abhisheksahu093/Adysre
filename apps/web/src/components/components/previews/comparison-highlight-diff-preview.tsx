@@ -5,6 +5,10 @@
  * with a star glyph plus a visually-hidden "(best)" - colour alone never
  * carries the verdict. Keep this in step with
  * `src/data/components/comparisons.ts`.
+ *
+ * The default export adds a page-section shell - padding plus a centred
+ * max-width - which is preview-only; the component itself is width-agnostic
+ * and takes its width from the caller.
  */
 type DiffWinner = 'a' | 'b' | 'tie';
 
@@ -32,7 +36,7 @@ function ComparisonHighlightDiff({ labelA, labelB, rows, className = '' }: Compa
     }`;
 
   return (
-    <div className={`grid w-full max-w-2xl gap-3 ${className}`}>
+    <div className={`grid w-full gap-3 ${className}`}>
       {rows.map((row) => (
         <div key={row.id}>
           <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">
@@ -78,7 +82,13 @@ const SAMPLE_ROWS: DiffRow[] = [
 ];
 
 export default function ComparisonHighlightDiffPreview() {
-  return <ComparisonHighlightDiff labelA="Basic" labelB="Plus" rows={SAMPLE_ROWS} />;
+  return (
+    <section className="w-full px-4 py-12 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-5xl">
+        <ComparisonHighlightDiff labelA="Basic" labelB="Plus" rows={SAMPLE_ROWS} />
+      </div>
+    </section>
+  );
 }
 
 export const minHeight = 360;

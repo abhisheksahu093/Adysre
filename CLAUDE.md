@@ -16,6 +16,9 @@ A multi-tenant, modular platform that hosts business modules (CRM, etc.) on a
 shared core: auth, RBAC/ABAC, organizations, users, settings, notifications,
 files, audit, and AI. See [`documents/BOOTSTRAP_PROJECT.md`](./documents/BOOTSTRAP_PROJECT.md).
 
+**Module specs:** [Design Playground](./documents/DESIGN_PLAYGROUND_PRD.md) —
+the visual design editor at `/design-playground` (Phase 1: shell only).
+
 ## 2. Stack (do not deviate without updating the docs)
 
 - **Monorepo:** pnpm + Turborepo

@@ -9,6 +9,9 @@ import { useMemo, useState } from 'react';
  * the preview never touches the network, and each hue comes from the tile's
  * index rather than Math.random() - a random hue would differ between the
  * server and client renders and trip hydration.
+ *
+ * The gallery fills its container and steps 2 -> 3 -> 4 columns; the default
+ * export wraps it in a centred, full-width page section.
  * Keep this in step with `src/data/components/galleries.ts`.
  */
 interface FilterablePhoto {
@@ -45,7 +48,7 @@ function GalleryFilterable({ items, className = '' }: GalleryFilterableProps) {
   );
 
   return (
-    <div className={className}>
+    <div className={`w-full ${className}`}>
       {/* A group, not a radiogroup: these toggle a view, they do not answer a
           question, and nothing here is submitted. */}
       <div className="flex flex-wrap gap-2" role="group" aria-label="Filter photos by tag">
@@ -67,11 +70,11 @@ function GalleryFilterable({ items, className = '' }: GalleryFilterableProps) {
         Showing {shown.length} of {items.length} photos
       </p>
 
-      <ul className="grid list-none grid-cols-2 gap-3 p-0 sm:grid-cols-3">
+      <ul className="grid list-none grid-cols-2 gap-3 p-0 sm:grid-cols-3 lg:grid-cols-4">
         {shown.map((item: FilterablePhoto) => (
           <li key={item.id}>
             <figure className="m-0 overflow-hidden rounded-xl border border-gray-200 bg-gray-50 dark:border-gray-800 dark:bg-gray-900">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
+              { }
               <img
                 className="block aspect-[4/3] w-full object-cover"
                 src={item.imageSrc}
@@ -113,5 +116,11 @@ const SAMPLE_PHOTOS: FilterablePhoto[] = [
 ];
 
 export default function GalleryFilterablePreview() {
-  return <GalleryFilterable items={SAMPLE_PHOTOS} className="w-full max-w-xl" />;
+  return (
+    <section className="w-full px-4 py-12 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-6xl">
+        <GalleryFilterable items={SAMPLE_PHOTOS} className="w-full" />
+      </div>
+    </section>
+  );
 }

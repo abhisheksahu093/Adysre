@@ -5,6 +5,10 @@
  * boolean, rendered as an aria-hidden glyph plus a visually-hidden word, inside
  * a real <table> that scrolls in its wrapper. Keep this in step with
  * `src/data/components/comparisons.ts`.
+ *
+ * The default export adds a page-section shell - padding plus a centred
+ * max-width - which is preview-only; the component itself is width-agnostic
+ * and takes its width from the caller.
  */
 interface CheckGridRow {
   id: string;
@@ -86,7 +90,13 @@ const SAMPLE_ROWS: CheckGridRow[] = [
 ];
 
 export default function ComparisonCheckmarkGridPreview() {
-  return <ComparisonCheckmarkGrid options={SAMPLE_OPTIONS} rows={SAMPLE_ROWS} />;
+  return (
+    <section className="w-full px-4 py-12 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-5xl">
+        <ComparisonCheckmarkGrid options={SAMPLE_OPTIONS} rows={SAMPLE_ROWS} />
+      </div>
+    </section>
+  );
 }
 
 export const minHeight = 280;

@@ -243,7 +243,7 @@ export function buildProjectScaffold(
       { path: 'app/globals.css', content: TAILWIND_CSS },
       {
         path: 'app/layout.tsx',
-        content: `import type { Metadata } from 'next';\nimport './globals.css';\n\nexport const metadata: Metadata = {\n  title: '${projectName}',\n  description: 'Built with ADYSRE',\n};\n\nexport default function RootLayout({ children }: { children: React.ReactNode }) {\n  return (\n    <html lang=\"en\">\n      <body className=\"bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-100\">{children}</body>\n    </html>\n  );\n}\n`,
+        content: `import type { Metadata } from 'next';\nimport './globals.css';\n\nexport const metadata: Metadata = {\n  title: '${projectName}',\n  description: 'Built with ADYSRE',\n};\n\nexport default function RootLayout({ children }: { children: React.ReactNode }) {\n  return (\n    <html lang="en">\n      <body className="bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-100">{children}</body>\n    </html>\n  );\n}\n`,
       },
       {
         path: 'app/page.tsx',
@@ -281,7 +281,7 @@ export function buildProjectScaffold(
           2,
         )}\n`,
       },
-      { path: 'index.html', content: `<!doctype html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title>${projectName}</title>\n  </head>\n  <body>\n    <div id=\"root\"></div>\n    <script type=\"module\" src=\"/src/main.tsx\"></script>\n  </body>\n</html>\n` },
+      { path: 'index.html', content: `<!doctype html>\n<html lang="en">\n  <head>\n    <meta charset="UTF-8" />\n    <meta name="viewport" content="width=device-width, initial-scale=1.0" />\n    <title>${projectName}</title>\n  </head>\n  <body>\n    <div id="root"></div>\n    <script type="module" src="/src/main.tsx"></script>\n  </body>\n</html>\n` },
       { path: 'vite.config.ts', content: `import { defineConfig } from 'vite';\nimport react from '@vitejs/plugin-react';\n\nexport default defineConfig({ plugins: [react()] });\n` },
       { path: 'postcss.config.js', content: POSTCSS_CONFIG },
       { path: 'tailwind.config.js', content: TAILWIND_CONFIG(`'./index.html', './src/**/*.{ts,tsx}'`) },
@@ -315,7 +315,7 @@ export function buildProjectScaffold(
       },
       {
         path: 'src/App.tsx',
-        content: `${imports}\n\nexport default function App() {\n  return (\n    <main className=\"bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-100\">\n${renders}\n    </main>\n  );\n}\n`,
+        content: `${imports}\n\nexport default function App() {\n  return (\n    <main className="bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-100">\n${renders}\n    </main>\n  );\n}\n`,
       },
     );
   }

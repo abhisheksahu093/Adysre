@@ -33,7 +33,7 @@ function AccordionNested({ items, defaultOpenId, className = '' }: AccordionNest
   const [openChildId, setOpenChildId] = useState<string | null>(null);
 
   return (
-    <div className={`max-w-2xl ${className}`}>
+    <div className={`w-full ${className}`}>
       {items.map((item: NestedFaqItem) => {
         const isOpen = openId === item.id;
         const buttonId = `${baseId}-${item.id}-button`;
@@ -155,5 +155,11 @@ const SAMPLE_ITEMS: NestedFaqItem[] = [
 ];
 
 export default function AccordionNestedPreview() {
-  return <AccordionNested items={SAMPLE_ITEMS} defaultOpenId="billing" className="w-full" />;
+  return (
+    <section className="w-full px-4 py-12 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-3xl">
+        <AccordionNested items={SAMPLE_ITEMS} defaultOpenId="billing" />
+      </div>
+    </section>
+  );
 }

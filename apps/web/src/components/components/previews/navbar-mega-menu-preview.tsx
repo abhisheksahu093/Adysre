@@ -149,7 +149,7 @@ function NavbarMegaMenu() {
 
 export default function NavbarMegaMenuPreview() {
   return (
-    <div className="w-full overflow-hidden rounded-lg border border-gray-200 dark:border-gray-800">
+    <div className="w-full overflow-hidden border-b border-gray-200 dark:border-gray-800">
       <NavbarMegaMenu />
     </div>
   );

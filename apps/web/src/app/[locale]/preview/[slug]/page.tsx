@@ -2,6 +2,15 @@ import { notFound } from 'next/navigation';
 import { PreviewStage } from '@/components/components/previews/preview-stage';
 import { hasPreview } from '@/components/components/previews/registry';
 import { COMPONENTS } from '@/data/components';
+import { PLAYGROUND_SLOTS } from '@/data/playground';
+
+/**
+ * Categories the page builder stacks into a full page. Their previews are page
+ * sections: they own their padding and span the full width, so the stage must
+ * not inset them - a gutter around a navbar or a footer reads as a bug. Every
+ * other category is a component shown on a padded, centred stage.
+ */
+const SECTION_CATEGORIES = new Set<string>(PLAYGROUND_SLOTS.map((slot) => slot.category));
 
 /**
  * The document an iframe loads to show a live component.
@@ -32,5 +41,6 @@ export default async function PreviewPage({
 }) {
   const { slug } = await params;
   if (!hasPreview(slug)) notFound();
-  return <PreviewStage slug={slug} />;
+  const category = COMPONENTS.find((c) => c.slug === slug)?.category;
+  return <PreviewStage slug={slug} bleed={category !== undefined && SECTION_CATEGORIES.has(category)} />;
 }

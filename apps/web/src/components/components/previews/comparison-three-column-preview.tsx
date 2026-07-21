@@ -5,6 +5,10 @@
  * two then one; excluded features keep their row with an aria-hidden cross plus
  * a visually-hidden "Not included:" prefix. Keep this in step with
  * `src/data/components/comparisons.ts`.
+ *
+ * The default export adds a page-section shell - padding plus a centred
+ * max-width - which is preview-only; the component itself is width-agnostic
+ * and takes its width from the caller.
  */
 interface ThreeColFeature {
   label: string;
@@ -26,7 +30,7 @@ interface ComparisonThreeColumnProps {
 
 function ComparisonThreeColumn({ columns, className = '' }: ComparisonThreeColumnProps) {
   return (
-    <div className={`grid w-full max-w-4xl gap-4 sm:grid-cols-2 lg:grid-cols-3 ${className}`}>
+    <div className={`grid w-full gap-4 sm:grid-cols-2 lg:grid-cols-3 ${className}`}>
       {columns.map((col) => (
         <section
           key={col.id}
@@ -112,7 +116,13 @@ const SAMPLE_COLUMNS: ThreeColItem[] = [
 ];
 
 export default function ComparisonThreeColumnPreview() {
-  return <ComparisonThreeColumn columns={SAMPLE_COLUMNS} />;
+  return (
+    <section className="w-full px-4 py-12 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-5xl">
+        <ComparisonThreeColumn columns={SAMPLE_COLUMNS} />
+      </div>
+    </section>
+  );
 }
 
 export const minHeight = 440;

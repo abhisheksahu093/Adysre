@@ -8,6 +8,9 @@ import { useState } from 'react';
  * Mirrors the `typescript` code variant. The stage is a polite live region; the
  * dots carry aria-current shown as ring + fill. Wrap-around paging keeps both
  * arrows live. Media are CSS gradient tiles - no network.
+ *
+ * The carousel carries no width cap of its own, so the default export lets it
+ * run the full width of the page section rather than centring it in a column.
  * Keep this in step with `src/data/components/galleries.ts`.
  */
 interface GalleryTile {
@@ -31,7 +34,7 @@ function GalleryCarouselFullwidth({ items, className = '' }: GalleryCarouselFull
 
   return (
     <section
-      className={`relative mx-auto w-full max-w-3xl ${className}`}
+      className={`relative w-full ${className}`}
       aria-roledescription="carousel"
       aria-label="Featured photos"
     >
@@ -70,5 +73,9 @@ const SAMPLE_TILES: GalleryTile[] = [
 ];
 
 export default function GalleryCarouselFullwidthPreview() {
-  return <GalleryCarouselFullwidth items={SAMPLE_TILES} />;
+  return (
+    <section className="w-full px-4 py-12 sm:px-6 lg:px-8">
+      <GalleryCarouselFullwidth items={SAMPLE_TILES} className="w-full" />
+    </section>
+  );
 }

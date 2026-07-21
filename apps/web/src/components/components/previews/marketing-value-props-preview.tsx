@@ -3,7 +3,8 @@
  *
  * Mirrors the `typescript` code variant verbatim. The grid is one column on
  * phones and grows to three, so nothing crowds at 320px. Icons are inline SVG.
- * Keep in step with `src/data/components/marketing.ts`.
+ * The section itself is width-agnostic (`w-full`); the preview supplies the page
+ * shell that centres it. Keep in step with `src/data/components/marketing.ts`.
  */
 interface ValueProp {
   title: string;
@@ -18,7 +19,7 @@ interface ValuePropsProps {
 
 function ValueProps({ heading, items, className = '' }: ValuePropsProps) {
   return (
-    <section className={`w-full max-w-5xl px-4 py-8 ${className}`}>
+    <section className={`w-full px-4 py-8 ${className}`}>
       {heading ? (
         <h2 className="mb-8 text-center text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl dark:text-gray-100">
           {heading}
@@ -55,14 +56,18 @@ function ValueProps({ heading, items, className = '' }: ValuePropsProps) {
 
 export default function MarketingValuePropsPreview() {
   return (
-    <ValueProps
-      heading="Why teams switch"
-      items={[
-        { title: 'Set up in minutes', copy: 'Import your data and invite the team - no migration project required.' },
-        { title: 'Priced for growth', copy: 'One flat seat price with every feature included, however large you get.' },
-        { title: 'Secure by default', copy: 'SSO, audit logs and encryption at rest ship on every plan from day one.' },
-      ]}
-    />
+    <section className="w-full px-4 py-12 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-5xl">
+        <ValueProps
+          heading="Why teams switch"
+          items={[
+            { title: 'Set up in minutes', copy: 'Import your data and invite the team - no migration project required.' },
+            { title: 'Priced for growth', copy: 'One flat seat price with every feature included, however large you get.' },
+            { title: 'Secure by default', copy: 'SSO, audit logs and encryption at rest ship on every plan from day one.' },
+          ]}
+        />
+      </div>
+    </section>
   );
 }
 

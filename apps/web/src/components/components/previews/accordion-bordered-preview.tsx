@@ -27,7 +27,7 @@ function AccordionBordered({ items, defaultOpenId, className = '' }: AccordionBo
 
   return (
     <div
-      className={`max-w-2xl divide-y divide-gray-200 overflow-hidden rounded-xl border border-gray-200 bg-white dark:divide-gray-800 dark:border-gray-800 dark:bg-gray-950 ${className}`}
+      className={`w-full divide-y divide-gray-200 overflow-hidden rounded-xl border border-gray-200 bg-white dark:divide-gray-800 dark:border-gray-800 dark:bg-gray-950 ${className}`}
     >
       {items.map((item: FaqItem) => {
         const isOpen = openId === item.id;
@@ -91,5 +91,11 @@ const SAMPLE_ITEMS: FaqItem[] = [
 ];
 
 export default function AccordionBorderedPreview() {
-  return <AccordionBordered items={SAMPLE_ITEMS} defaultOpenId="seats" className="w-full" />;
+  return (
+    <section className="w-full px-4 py-12 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-3xl">
+        <AccordionBordered items={SAMPLE_ITEMS} defaultOpenId="seats" />
+      </div>
+    </section>
+  );
 }

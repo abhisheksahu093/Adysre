@@ -8,6 +8,10 @@ import { useId } from 'react';
  * Mirrors the `typescript` code variant. Deliberately not a table: the two
  * lists have no shared row axis, so each side is its own labelled <section>.
  * Keep this in step with `src/data/components/comparisons.ts`.
+ *
+ * The default export adds a page-section shell - padding plus a centred
+ * max-width - which is preview-only; the component itself is width-agnostic
+ * and takes its width from the caller.
  */
 type ComparisonTone = 'positive' | 'negative';
 
@@ -30,7 +34,7 @@ function ComparisonTwoColumn({ kicker, title, items, className = '' }: Compariso
   const titleId = useId();
 
   return (
-    <section className={`w-full max-w-3xl ${className}`} aria-labelledby={titleId}>
+    <section className={`w-full ${className}`} aria-labelledby={titleId}>
       {kicker ? (
         <p className="text-xs font-semibold uppercase tracking-wider text-gray-600 dark:text-gray-400">
           {kicker}
@@ -113,10 +117,14 @@ const SAMPLE_COLUMNS: ComparisonColumn[] = [
 
 export default function ComparisonTwoColumnPreview() {
   return (
-    <ComparisonTwoColumn
-      kicker="Why teams switch"
-      title="Spreadsheets vs. a real system"
-      items={SAMPLE_COLUMNS}
-    />
+    <section className="w-full px-4 py-12 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-5xl">
+        <ComparisonTwoColumn
+          kicker="Why teams switch"
+          title="Spreadsheets vs. a real system"
+          items={SAMPLE_COLUMNS}
+        />
+      </div>
+    </section>
   );
 }

@@ -4,6 +4,9 @@
  * Mirrors the `typescript` code variant. The zoom lives on the inner tile and
  * the clip on the button, so hover and focus-visible drive it identically;
  * motion-reduce cancels it. Media are CSS gradient tiles - no network.
+ *
+ * The grid fills its container; the default export wraps it in a centred,
+ * full-width page section.
  * Keep this in step with `src/data/components/galleries.ts`.
  */
 interface GalleryTile {
@@ -21,7 +24,7 @@ interface GalleryHoverZoomProps {
 
 function GalleryHoverZoom({ items, onSelect, className = '' }: GalleryHoverZoomProps) {
   return (
-    <ul className={`grid list-none grid-cols-2 gap-3 p-0 sm:grid-cols-3 lg:grid-cols-4 ${className}`}>
+    <ul className={`grid w-full list-none grid-cols-2 gap-3 p-0 sm:grid-cols-3 lg:grid-cols-4 ${className}`}>
       {items.map((item: GalleryTile, i: number) => (
         <li key={item.id}>
           <button
@@ -52,5 +55,11 @@ const SAMPLE_TILES: GalleryTile[] = [
 ];
 
 export default function GalleryHoverZoomPreview() {
-  return <GalleryHoverZoom items={SAMPLE_TILES} className="w-full max-w-xl" />;
+  return (
+    <section className="w-full px-4 py-12 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-6xl">
+        <GalleryHoverZoom items={SAMPLE_TILES} className="w-full" />
+      </div>
+    </section>
+  );
 }

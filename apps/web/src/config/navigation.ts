@@ -84,7 +84,6 @@ export const NAV_ITEMS: NavItem[] = [
     key: 'templates',
     href: '/templates',
     icon: LayoutTemplate,
-    comingSoon: true,
     descriptionKey: 'templates',
   },
   {

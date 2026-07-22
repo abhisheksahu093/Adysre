@@ -10,7 +10,8 @@
     "lint": "eslint src",
     "typecheck": "tsc --noEmit",
     "test": "tsx --test src/**/*.test.ts",
-    "gen:section-demos": "node scripts/generate-section-demos.mjs"
+    "gen:section-demos": "node scripts/generate-section-demos.mjs",
+    "gen:template-sources": "node scripts/generate-template-sources.mjs"
   },
   "dependencies": {
     "@adysre/database": "workspace:^",

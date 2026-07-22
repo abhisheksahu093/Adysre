@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { Menu, X, ArrowRight, ChevronDown } from 'lucide-react';
+import { Menu, X, PenTool, ChevronDown } from 'lucide-react';
 import { buttonVariants, cn } from '@adysre/ui';
 import { Link } from '@/i18n/navigation';
 import { Logo } from '@/components/logo';
@@ -31,7 +31,6 @@ const NAV_MENUS: { key: string; items: NavItem[] }[] = [
       { href: LANDING_LINKS.components, navKey: 'components' },
       { href: LANDING_LINKS.icons, navKey: 'icons' },
       { href: LANDING_LINKS.promptLibrary, navKey: 'promptLibrary' },
-      { href: LANDING_LINKS.templates, navKey: 'templates', soon: true },
     ],
   },
   {
@@ -177,6 +176,15 @@ export function LandingHeader() {
               navLabel={tNav}
             />
           ))}
+
+          {/* Templates is a destination, not a category: it earns a top-level
+              slot rather than a row inside the Library dropdown. */}
+          <Link
+            href={LANDING_LINKS.templates}
+            className="whitespace-nowrap rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          >
+            {tNav('templates')}
+          </Link>
         </nav>
 
         <div className="ml-auto flex items-center gap-0.5 sm:gap-1">
@@ -196,9 +204,9 @@ export function LandingHeader() {
             <Link href={LOGIN_HREF} className={cn(buttonVariants({ variant: 'ghost', size: 'sm' }))}>
               {tAuth('signIn.title')}
             </Link>
-            <Link href={LANDING_LINKS.app} className={cn(buttonVariants({ size: 'sm' }), 'gap-1.5')}>
-              {t('nav.openApp')}
-              <ArrowRight className="h-3.5 w-3.5" aria-hidden />
+            <Link href={LANDING_LINKS.designPlayground} className={cn(buttonVariants({ size: 'sm' }), 'gap-1.5')}>
+              <PenTool className="h-3.5 w-3.5" aria-hidden />
+              {tNav('designPlayground')}
             </Link>
           </div>
 
@@ -244,6 +252,14 @@ export function LandingHeader() {
 
             <div className="my-2 h-px bg-border" aria-hidden />
 
+            {/* Top level here too, matching the desktop nav. */}
+            <Link
+              href={LANDING_LINKS.templates}
+              onClick={() => setOpen(false)}
+              className="block rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+            >
+              {tNav('templates')}
+            </Link>
             <Link
               href={LANDING_LINKS.pricing}
               onClick={() => setOpen(false)}
@@ -259,12 +275,12 @@ export function LandingHeader() {
               {tAuth('signIn.title')}
             </Link>
             <Link
-              href={LANDING_LINKS.app}
+              href={LANDING_LINKS.designPlayground}
               onClick={() => setOpen(false)}
               className={cn(buttonVariants({ size: 'sm' }), 'mt-2 w-full gap-1.5')}
             >
-              {t('nav.openApp')}
-              <ArrowRight className="h-3.5 w-3.5" aria-hidden />
+              <PenTool className="h-3.5 w-3.5" aria-hidden />
+              {tNav('designPlayground')}
             </Link>
           </nav>
         </div>

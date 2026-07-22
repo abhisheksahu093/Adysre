@@ -15,6 +15,7 @@ import { usePreviewHeight } from '@/hooks/use-preview-height';
 import { usePlaygroundStore } from '@/stores/playground-store';
 import { encodePaletteParam } from '@/lib/palettes/apply-to-preview';
 import type { PreviewContentMessage, PreviewFieldsMessage } from '@/lib/playground/content';
+import type { PreviewStyleMessage } from '@/lib/playground/section-style';
 import { deviceWidth, type PreviewDeviceId } from '../preview-devices';
 
 interface SectionCanvasProps {
@@ -117,6 +118,8 @@ function CanvasSection({
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const setSectionFields = usePlaygroundStore((s) => s.setSectionFields);
   const overrides = usePlaygroundStore((s) => s.contentOverrides[component.slug]);
+  // Styling belongs to the slot, so it survives a variation swap.
+  const sectionStyle = usePlaygroundStore((s) => s.sectionStyles[slot.id]);
 
   /** Push the current edits into this section's frame (once it can receive). */
   function postOverrides(target: Window | null): void {
@@ -125,6 +128,17 @@ function CanvasSection({
       type: 'adysre:preview-content',
       slug: component.slug,
       overrides: overrides ?? {},
+    };
+    target.postMessage(message, window.location.origin);
+  }
+
+  /** Push the slot's background / text / border styling into the frame. */
+  function postStyle(target: Window | null): void {
+    if (!target) return;
+    const message: PreviewStyleMessage = {
+      type: 'adysre:preview-style',
+      slug: component.slug,
+      style: sectionStyle ?? null,
     };
     target.postMessage(message, window.location.origin);
   }
@@ -138,6 +152,7 @@ function CanvasSection({
       if (!data || data.type !== 'adysre:preview-fields' || data.slug !== component.slug) return;
       setSectionFields(component.slug, data.fields);
       postOverrides(event.source as Window | null);
+      postStyle(event.source as Window | null);
     };
     window.addEventListener('message', onMessage);
     return () => window.removeEventListener('message', onMessage);
@@ -151,6 +166,13 @@ function CanvasSection({
     postOverrides(iframeRef.current?.contentWindow ?? null);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [overrides]);
+
+  // Same for styling: repaint the frame as the user drags a colour or picks a
+  // pattern, with no reload and no flash of the section's original design.
+  useEffect(() => {
+    postStyle(iframeRef.current?.contentWindow ?? null);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sectionStyle]);
 
   const position = variations.findIndex((c) => c.slug === component.slug) + 1;
   const previous = adjacentVariation(component.slug, variations, -1);

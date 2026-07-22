@@ -1,0 +1,470 @@
+<!doctype html>
+<html lang="en" data-template="nova">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Nova — Warehouse-native analytics monitoring</title>
+    <meta
+      name="description"
+      content="Nova reads your warehouse, watches every pipeline and tells you what changed before the dashboard does."
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="./nova.css" />
+  </head>
+
+  <body class="min-h-screen antialiased">
+    <!-- Header -->
+    <header
+      id="site-header"
+      class="sticky top-0 z-50 w-full border-b border-transparent transition-colors duration-300"
+    >
+      <div class="mx-auto flex h-16 max-w-6xl items-center justify-between gap-6 px-5 sm:px-8">
+        <a href="#top" class="flex items-center gap-2.5">
+          <span
+            class="grid h-7 w-7 place-items-center rounded-md bg-gradient-to-br from-[var(--nova-accent)] to-[var(--nova-accent-2)] text-sm font-bold text-[var(--nova-bg)]"
+            >N</span
+          >
+          <span class="text-[15px] font-semibold tracking-tight">Nova</span>
+        </a>
+
+        <nav aria-label="Main" class="hidden items-center gap-8 md:flex">
+          <a href="#about" class="text-[13px] text-[var(--nova-muted)] transition-colors hover:text-[var(--nova-text)]">About</a>
+          <a href="#services" class="text-[13px] text-[var(--nova-muted)] transition-colors hover:text-[var(--nova-text)]">Platform</a>
+          <a href="#why" class="text-[13px] text-[var(--nova-muted)] transition-colors hover:text-[var(--nova-text)]">Why Nova</a>
+          <a href="#faq" class="text-[13px] text-[var(--nova-muted)] transition-colors hover:text-[var(--nova-text)]">FAQ</a>
+        </nav>
+
+        <a
+          href="#contact"
+          class="rounded-full bg-[var(--nova-text)] px-4 py-2 text-[13px] font-semibold text-[var(--nova-bg)] transition-transform hover:-translate-y-0.5"
+          >Book a demo</a
+        >
+      </div>
+    </header>
+
+    <main>
+      <!-- Hero -->
+      <section id="top" class="nova-mesh relative isolate overflow-hidden">
+        <div class="nova-grid absolute inset-0 -z-10" aria-hidden="true"></div>
+        <div class="mx-auto max-w-6xl px-5 pb-20 pt-20 text-center sm:px-8 sm:pb-28 sm:pt-28">
+          <div class="nova-reveal flex justify-center">
+            <span
+              class="nova-mono inline-flex items-center gap-2 rounded-full border border-[var(--nova-line-strong)] bg-[var(--nova-accent-soft)] px-3.5 py-1.5 text-[10px]"
+            >
+              <span class="h-1.5 w-1.5 rounded-full bg-[var(--nova-accent-2)]"></span>
+              Now with streaming anomaly detection
+            </span>
+          </div>
+
+          <h1
+            class="nova-reveal mx-auto mt-7 max-w-4xl text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.03em] sm:text-6xl md:text-7xl"
+            style="--nova-delay: 80ms"
+          >
+            Every metric your team argues about,
+            <span
+              class="bg-gradient-to-r from-[var(--nova-accent)] via-[#a78bfa] to-[var(--nova-accent-2)] bg-clip-text text-transparent"
+              >settled in one place</span
+            >
+          </h1>
+
+          <p
+            class="nova-reveal mx-auto mt-6 max-w-2xl text-pretty text-base leading-relaxed text-[var(--nova-muted)] sm:text-lg"
+            style="--nova-delay: 160ms"
+          >
+            Nova reads your warehouse, watches every pipeline and tells you what changed before the dashboard
+            does. No cron jobs, no guesswork, no 2am pages.
+          </p>
+
+          <div
+            class="nova-reveal mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row"
+            style="--nova-delay: 240ms"
+          >
+            <a
+              href="#contact"
+              class="inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[var(--nova-accent)] to-[#5b8cff] px-6 py-3.5 text-sm font-semibold transition-transform hover:-translate-y-0.5 sm:w-auto"
+              >Start free trial &rarr;</a
+            >
+            <a
+              href="#about"
+              class="inline-flex w-full items-center justify-center gap-2 rounded-full border border-[var(--nova-line-strong)] px-6 py-3.5 text-sm font-medium text-[var(--nova-muted)] transition-colors hover:border-[var(--nova-text)] hover:text-[var(--nova-text)] sm:w-auto"
+              >Watch the 2-min tour</a
+            >
+          </div>
+
+          <dl
+            class="nova-reveal mx-auto mt-16 grid max-w-3xl grid-cols-1 gap-px overflow-hidden rounded-2xl border border-[var(--nova-line)] bg-[var(--nova-line)] sm:grid-cols-3"
+            style="--nova-delay: 320ms"
+          >
+            <div class="bg-[var(--nova-surface)] px-6 py-7">
+              <dt class="nova-mono text-[10px] text-[var(--nova-faint)]">Faster root cause</dt>
+              <dd class="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">
+                <span class="nova-count" data-value="4" data-suffix="x">4x</span>
+              </dd>
+            </div>
+            <div class="bg-[var(--nova-surface)] px-6 py-7">
+              <dt class="nova-mono text-[10px] text-[var(--nova-faint)]">Alerts that matter</dt>
+              <dd class="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">
+                <span class="nova-count" data-value="92" data-suffix="%">92%</span>
+              </dd>
+            </div>
+            <div class="bg-[var(--nova-surface)] px-6 py-7">
+              <dt class="nova-mono text-[10px] text-[var(--nova-faint)]">Rows scanned daily</dt>
+              <dd class="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">
+                <span class="nova-count" data-value="30" data-suffix="B">30B</span>
+              </dd>
+            </div>
+          </dl>
+        </div>
+      </section>
+
+      <!-- Marquee -->
+      <section class="border-y border-[var(--nova-line)] py-7">
+        <div
+          class="relative overflow-hidden [mask-image:linear-gradient(90deg,transparent,#000_12%,#000_88%,transparent)]"
+        >
+          <div class="nova-marquee flex w-max items-center gap-14 pr-14">
+            <div class="flex items-center gap-14 pr-14">
+              <span class="nova-mono whitespace-nowrap text-[11px] text-[var(--nova-faint)]">Snowflake</span>
+              <span class="nova-mono whitespace-nowrap text-[11px] text-[var(--nova-faint)]">BigQuery</span>
+              <span class="nova-mono whitespace-nowrap text-[11px] text-[var(--nova-faint)]">Databricks</span>
+              <span class="nova-mono whitespace-nowrap text-[11px] text-[var(--nova-faint)]">dbt</span>
+              <span class="nova-mono whitespace-nowrap text-[11px] text-[var(--nova-faint)]">Kafka</span>
+              <span class="nova-mono whitespace-nowrap text-[11px] text-[var(--nova-faint)]">Postgres</span>
+              <span class="nova-mono whitespace-nowrap text-[11px] text-[var(--nova-faint)]">Looker</span>
+              <span class="nova-mono whitespace-nowrap text-[11px] text-[var(--nova-faint)]">Segment</span>
+            </div>
+            <div class="flex items-center gap-14 pr-14" aria-hidden="true">
+              <span class="nova-mono whitespace-nowrap text-[11px] text-[var(--nova-faint)]">Snowflake</span>
+              <span class="nova-mono whitespace-nowrap text-[11px] text-[var(--nova-faint)]">BigQuery</span>
+              <span class="nova-mono whitespace-nowrap text-[11px] text-[var(--nova-faint)]">Databricks</span>
+              <span class="nova-mono whitespace-nowrap text-[11px] text-[var(--nova-faint)]">dbt</span>
+              <span class="nova-mono whitespace-nowrap text-[11px] text-[var(--nova-faint)]">Kafka</span>
+              <span class="nova-mono whitespace-nowrap text-[11px] text-[var(--nova-faint)]">Postgres</span>
+              <span class="nova-mono whitespace-nowrap text-[11px] text-[var(--nova-faint)]">Looker</span>
+              <span class="nova-mono whitespace-nowrap text-[11px] text-[var(--nova-faint)]">Segment</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- About -->
+      <section id="about" class="mx-auto max-w-6xl scroll-mt-20 px-5 py-24 sm:px-8 sm:py-32">
+        <div class="grid items-center gap-14 lg:grid-cols-2 lg:gap-20">
+          <div class="nova-reveal">
+            <p class="nova-mono text-[10px] text-[var(--nova-accent-2)]">About us</p>
+            <h2 class="mt-4 text-balance text-3xl font-semibold tracking-[-0.02em] sm:text-4xl">
+              We built the tool our own data team kept asking for
+            </h2>
+            <p class="mt-5 text-[15px] leading-relaxed text-[var(--nova-muted)]">
+              Nova started inside a fintech data platform, where seven analysts spent their mornings
+              reconciling numbers that should have agreed. The dashboards were fine. The pipelines were fine.
+              Nobody could say which one had moved.
+            </p>
+            <p class="mt-5 text-[15px] leading-relaxed text-[var(--nova-muted)]">
+              So we wrote a service that watched the warehouse itself &mdash; every table, every freshness
+              window, every silent schema change &mdash; and explained the delta in plain language. Four years
+              later that service is Nova.
+            </p>
+            <ul class="mt-8 space-y-3">
+              <li class="flex items-start gap-3 text-[15px] text-[var(--nova-muted)]">
+                <span class="nova-check" aria-hidden="true"></span>Founded by data engineers, not dashboard
+                vendors
+              </li>
+              <li class="flex items-start gap-3 text-[15px] text-[var(--nova-muted)]">
+                <span class="nova-check" aria-hidden="true"></span>SOC 2 Type II, audited annually
+              </li>
+              <li class="flex items-start gap-3 text-[15px] text-[var(--nova-muted)]">
+                <span class="nova-check" aria-hidden="true"></span>Deploys in your own VPC in under an hour
+              </li>
+            </ul>
+          </div>
+
+          <div class="nova-reveal nova-card p-5" style="--nova-delay: 120ms" aria-hidden="true">
+            <div class="flex items-center justify-between border-b border-[var(--nova-line)] pb-4">
+              <span class="nova-mono text-[10px] text-[var(--nova-faint)]">Warehouse monitor</span>
+              <span class="flex gap-1.5">
+                <span class="h-2 w-2 rounded-full bg-[var(--nova-line-strong)]"></span>
+                <span class="h-2 w-2 rounded-full bg-[var(--nova-line-strong)]"></span>
+                <span class="h-2 w-2 rounded-full bg-[var(--nova-accent-2)]"></span>
+              </span>
+            </div>
+            <ul class="mt-4 space-y-2.5">
+              <li class="flex items-center justify-between rounded-[var(--nova-radius-sm)] border border-[var(--nova-line)] px-3.5 py-3">
+                <span class="nova-mono text-[11px] tracking-[0.08em] text-[var(--nova-muted)]">fct_orders</span>
+                <span class="nova-mono rounded-full bg-[rgb(34_211_238/12%)] px-2 py-1 text-[10px] text-[var(--nova-accent-2)]">+0.4%</span>
+              </li>
+              <li class="flex items-center justify-between rounded-[var(--nova-radius-sm)] border border-[var(--nova-line)] px-3.5 py-3">
+                <span class="nova-mono text-[11px] tracking-[0.08em] text-[var(--nova-muted)]">dim_customer</span>
+                <span class="nova-mono rounded-full bg-[rgb(34_211_238/12%)] px-2 py-1 text-[10px] text-[var(--nova-accent-2)]">+1.1%</span>
+              </li>
+              <li class="flex items-center justify-between rounded-[var(--nova-radius-sm)] border border-[var(--nova-line)] px-3.5 py-3">
+                <span class="nova-mono text-[11px] tracking-[0.08em] text-[var(--nova-muted)]">stg_payments</span>
+                <span class="nova-mono rounded-full bg-[rgb(251_113_133/16%)] px-2 py-1 text-[10px] text-[#fb7185]">-18.2%</span>
+              </li>
+              <li class="flex items-center justify-between rounded-[var(--nova-radius-sm)] border border-[var(--nova-line)] px-3.5 py-3">
+                <span class="nova-mono text-[11px] tracking-[0.08em] text-[var(--nova-muted)]">fct_sessions</span>
+                <span class="nova-mono rounded-full bg-[rgb(34_211_238/12%)] px-2 py-1 text-[10px] text-[var(--nova-accent-2)]">+2.7%</span>
+              </li>
+            </ul>
+            <div class="mt-5 h-24 rounded-[var(--nova-radius-sm)] bg-gradient-to-tr from-[var(--nova-accent-soft)] to-transparent"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Platform -->
+      <section id="services" class="scroll-mt-20 border-t border-[var(--nova-line)] bg-[var(--nova-surface)]/40">
+        <div class="mx-auto max-w-6xl px-5 py-24 sm:px-8 sm:py-32">
+          <div class="nova-reveal max-w-2xl">
+            <p class="nova-mono text-[10px] text-[var(--nova-accent-2)]">The platform</p>
+            <h2 class="mt-4 text-balance text-3xl font-semibold tracking-[-0.02em] sm:text-4xl">
+              Four surfaces, one source of truth
+            </h2>
+            <p class="mt-4 text-[15px] leading-relaxed text-[var(--nova-muted)]">
+              Each piece works on its own. Together they close the loop from a raw table to the decision
+              someone makes on Monday.
+            </p>
+          </div>
+
+          <div class="mt-14 grid gap-5 sm:grid-cols-2">
+            <article class="nova-reveal nova-card nova-lift p-7">
+              <span class="nova-icon" aria-hidden="true"></span>
+              <h3 class="mt-5 text-lg font-semibold tracking-tight">Signal detection</h3>
+              <p class="mt-2.5 text-[15px] leading-relaxed text-[var(--nova-muted)]">
+                Streaming models learn each metric&rsquo;s normal rhythm and flag the break, not the noise.
+                Seasonality and launches included.
+              </p>
+            </article>
+            <article class="nova-reveal nova-card nova-lift p-7" style="--nova-delay: 60ms">
+              <span class="nova-icon" aria-hidden="true"></span>
+              <h3 class="mt-5 text-lg font-semibold tracking-tight">Lineage graph</h3>
+              <p class="mt-2.5 text-[15px] leading-relaxed text-[var(--nova-muted)]">
+                Trace any number back through every join, model and source. Click a node to see exactly which
+                commit changed it.
+              </p>
+            </article>
+            <article class="nova-reveal nova-card nova-lift p-7" style="--nova-delay: 120ms">
+              <span class="nova-icon" aria-hidden="true"></span>
+              <h3 class="mt-5 text-lg font-semibold tracking-tight">Narrative reports</h3>
+              <p class="mt-2.5 text-[15px] leading-relaxed text-[var(--nova-muted)]">
+                Nova writes the weekly summary your stakeholders actually read, with the caveats an analyst
+                would have added.
+              </p>
+            </article>
+            <article class="nova-reveal nova-card nova-lift p-7" style="--nova-delay: 180ms">
+              <span class="nova-icon" aria-hidden="true"></span>
+              <h3 class="mt-5 text-lg font-semibold tracking-tight">Warehouse-native</h3>
+              <p class="mt-2.5 text-[15px] leading-relaxed text-[var(--nova-muted)]">
+                Runs where your data already lives. Nothing is copied out, nothing is cached in someone
+                else&rsquo;s cloud.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- Why -->
+      <section id="why" class="mx-auto max-w-6xl scroll-mt-20 px-5 py-24 sm:px-8 sm:py-32">
+        <div class="nova-reveal max-w-2xl">
+          <p class="nova-mono text-[10px] text-[var(--nova-accent-2)]">Why Nova</p>
+          <h2 class="mt-4 text-balance text-3xl font-semibold tracking-[-0.02em] sm:text-4xl">
+            Built for the team that gets paged
+          </h2>
+          <p class="mt-4 text-[15px] leading-relaxed text-[var(--nova-muted)]">
+            Four decisions we made early that you will feel on your first bad morning.
+          </p>
+        </div>
+
+        <div class="mt-14 grid gap-x-10 gap-y-12 sm:grid-cols-2">
+          <div class="nova-reveal nova-numbered" data-index="01">
+            <h3 class="text-lg font-semibold tracking-tight">Answers in seconds</h3>
+            <p class="mt-2 text-[15px] leading-relaxed text-[var(--nova-muted)]">
+              Incident context loads in under two seconds against a 30-billion-row warehouse, because
+              detection runs beside the data.
+            </p>
+          </div>
+          <div class="nova-reveal nova-numbered" data-index="02" style="--nova-delay: 60ms">
+            <h3 class="text-lg font-semibold tracking-tight">Your perimeter, your keys</h3>
+            <p class="mt-2 text-[15px] leading-relaxed text-[var(--nova-muted)]">
+              Self-hosted or in-VPC by default. Nova never needs egress to read a row, and every query is
+              logged for audit.
+            </p>
+          </div>
+          <div class="nova-reveal nova-numbered" data-index="03" style="--nova-delay: 120ms">
+            <h3 class="text-lg font-semibold tracking-tight">Fewer, better alerts</h3>
+            <p class="mt-2 text-[15px] leading-relaxed text-[var(--nova-muted)]">
+              Teams that switch to Nova cut alert volume by 92% in the first month, without losing a single
+              real incident.
+            </p>
+          </div>
+          <div class="nova-reveal nova-numbered" data-index="04" style="--nova-delay: 180ms">
+            <h3 class="text-lg font-semibold tracking-tight">Adopted, not installed</h3>
+            <p class="mt-2 text-[15px] leading-relaxed text-[var(--nova-muted)]">
+              A guided first week walks each analyst through their own tables. Median time to first caught
+              incident: four days.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ -->
+      <section id="faq" class="scroll-mt-20 border-y border-[var(--nova-line)] bg-[var(--nova-surface)]/40">
+        <div class="mx-auto max-w-3xl px-5 py-24 sm:px-8 sm:py-32">
+          <div class="nova-reveal text-center">
+            <p class="nova-mono text-[10px] text-[var(--nova-accent-2)]">FAQ</p>
+            <h2 class="mt-4 text-balance text-3xl font-semibold tracking-[-0.02em] sm:text-4xl">
+              The questions procurement always asks
+            </h2>
+          </div>
+
+          <div class="nova-faq mt-12 border-y border-[var(--nova-line)]">
+            <details open>
+              <summary>Does Nova move our data anywhere?</summary>
+              <p>
+                No. Detection runs as scheduled queries inside your own warehouse, and only aggregate
+                statistics leave it. In self-hosted mode nothing leaves at all.
+              </p>
+            </details>
+            <details>
+              <summary>How long does a proof of concept take?</summary>
+              <p>
+                Most teams connect a warehouse in about forty minutes and see their first real anomaly inside
+                a week. We do not gate the trial on a sales call.
+              </p>
+            </details>
+            <details>
+              <summary>What happens to our existing dashboards?</summary>
+              <p>
+                They stay exactly where they are. Nova annotates them &mdash; it is the layer that explains
+                why a chart moved, not a replacement for the chart.
+              </p>
+            </details>
+            <details>
+              <summary>Can we bring our own models?</summary>
+              <p>
+                Yes. Every detector is a Python class with a documented interface, so you can register your
+                own alongside the built-in ones.
+              </p>
+            </details>
+            <details>
+              <summary>How is Nova priced?</summary>
+              <p>
+                Per monitored table, billed monthly, with a flat cap once you pass a thousand. No per-seat
+                pricing &mdash; analysts should not have to ration access.
+              </p>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact -->
+      <section id="contact" class="mx-auto max-w-6xl scroll-mt-20 px-5 py-24 sm:px-8 sm:py-32">
+        <div class="grid gap-14 lg:grid-cols-[1fr_1.1fr] lg:gap-20">
+          <div class="nova-reveal">
+            <p class="nova-mono text-[10px] text-[var(--nova-accent-2)]">Contact</p>
+            <h2 class="mt-4 text-balance text-3xl font-semibold tracking-[-0.02em] sm:text-4xl">
+              Talk to an engineer, not a rep
+            </h2>
+            <p class="mt-4 text-[15px] leading-relaxed text-[var(--nova-muted)]">
+              Tell us what broke last quarter and we will show you what Nova would have caught. Replies come
+              from the people who build it, usually the same day.
+            </p>
+            <dl class="mt-10 space-y-5">
+              <div>
+                <dt class="nova-mono text-[10px] text-[var(--nova-faint)]">Email</dt>
+                <dd class="mt-1.5 text-[15px]">hello@nova.example</dd>
+              </div>
+              <div>
+                <dt class="nova-mono text-[10px] text-[var(--nova-faint)]">Sales</dt>
+                <dd class="mt-1.5 text-[15px]">+1 (415) 555-0134</dd>
+              </div>
+              <div>
+                <dt class="nova-mono text-[10px] text-[var(--nova-faint)]">Office</dt>
+                <dd class="mt-1.5 text-[15px]">312 Bryant St, San Francisco</dd>
+              </div>
+            </dl>
+          </div>
+
+          <form id="contact-form" class="nova-reveal nova-card p-6 sm:p-8" style="--nova-delay: 100ms">
+            <div class="grid gap-4 sm:grid-cols-2">
+              <label class="block">
+                <span class="nova-mono text-[10px] text-[var(--nova-faint)]">Full name</span>
+                <input type="text" name="name" required autocomplete="name" class="nova-field mt-2" />
+              </label>
+              <label class="block">
+                <span class="nova-mono text-[10px] text-[var(--nova-faint)]">Work email</span>
+                <input type="email" name="email" required autocomplete="email" class="nova-field mt-2" />
+              </label>
+              <label class="block sm:col-span-2">
+                <span class="nova-mono text-[10px] text-[var(--nova-faint)]">What are you trying to fix?</span>
+                <textarea name="message" required rows="4" class="nova-field mt-2 resize-y"></textarea>
+              </label>
+            </div>
+            <button
+              type="submit"
+              class="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[var(--nova-accent)] to-[#5b8cff] px-6 py-3.5 text-sm font-semibold transition-transform hover:-translate-y-0.5"
+            >
+              Send message
+            </button>
+            <p id="contact-status" aria-live="polite" class="mt-3 min-h-5 text-center text-[13px] text-[var(--nova-faint)]"></p>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-[var(--nova-line)] bg-[var(--nova-surface)]/60">
+      <div class="mx-auto max-w-6xl px-5 py-16 sm:px-8">
+        <div class="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.4fr_repeat(3,1fr)]">
+          <div>
+            <div class="flex items-center gap-2.5">
+              <span
+                class="grid h-7 w-7 place-items-center rounded-md bg-gradient-to-br from-[var(--nova-accent)] to-[var(--nova-accent-2)] text-sm font-bold text-[var(--nova-bg)]"
+                >N</span
+              >
+              <span class="text-[15px] font-semibold tracking-tight">Nova</span>
+            </div>
+            <p class="mt-4 max-w-xs text-sm leading-relaxed text-[var(--nova-muted)]">
+              Warehouse-native analytics monitoring for teams who own their numbers.
+            </p>
+          </div>
+
+          <div>
+            <p class="nova-mono text-[10px] text-[var(--nova-faint)]">Product</p>
+            <ul class="mt-4 space-y-2.5">
+              <li><a href="#top" class="text-sm text-[var(--nova-muted)] hover:text-[var(--nova-text)]">Signal detection</a></li>
+              <li><a href="#top" class="text-sm text-[var(--nova-muted)] hover:text-[var(--nova-text)]">Lineage graph</a></li>
+              <li><a href="#top" class="text-sm text-[var(--nova-muted)] hover:text-[var(--nova-text)]">Narrative reports</a></li>
+              <li><a href="#top" class="text-sm text-[var(--nova-muted)] hover:text-[var(--nova-text)]">Changelog</a></li>
+            </ul>
+          </div>
+          <div>
+            <p class="nova-mono text-[10px] text-[var(--nova-faint)]">Company</p>
+            <ul class="mt-4 space-y-2.5">
+              <li><a href="#top" class="text-sm text-[var(--nova-muted)] hover:text-[var(--nova-text)]">About</a></li>
+              <li><a href="#top" class="text-sm text-[var(--nova-muted)] hover:text-[var(--nova-text)]">Careers</a></li>
+              <li><a href="#top" class="text-sm text-[var(--nova-muted)] hover:text-[var(--nova-text)]">Customers</a></li>
+              <li><a href="#top" class="text-sm text-[var(--nova-muted)] hover:text-[var(--nova-text)]">Security</a></li>
+            </ul>
+          </div>
+          <div>
+            <p class="nova-mono text-[10px] text-[var(--nova-faint)]">Resources</p>
+            <ul class="mt-4 space-y-2.5">
+              <li><a href="#top" class="text-sm text-[var(--nova-muted)] hover:text-[var(--nova-text)]">Docs</a></li>
+              <li><a href="#top" class="text-sm text-[var(--nova-muted)] hover:text-[var(--nova-text)]">API reference</a></li>
+              <li><a href="#top" class="text-sm text-[var(--nova-muted)] hover:text-[var(--nova-text)]">Status</a></li>
+              <li><a href="#top" class="text-sm text-[var(--nova-muted)] hover:text-[var(--nova-text)]">Community</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="mt-14 border-t border-[var(--nova-line)] pt-6">
+          <p class="nova-mono text-[10px] text-[var(--nova-faint)]">
+            &copy; 2026 Nova Analytics, Inc. All rights reserved.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="./nova.js" defer></script>
+  </body>
+</html>

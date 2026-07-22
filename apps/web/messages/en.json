@@ -1123,6 +1123,109 @@
 		},
 		"allComponents": "All components"
 	},
+	"templates": {
+		"title": "Templates",
+		"subtitle": "Complete, single-page websites you can preview live, clone with a prompt, or download as a runnable project. Every template ships with header, hero, about, services, why-us, FAQ, contact and footer.",
+		"meta": {
+			"title": "Website Templates",
+			"description": "Free and premium single-page website templates in React, Next.js, Tailwind and plain HTML."
+		},
+		"empty": "No templates yet.",
+		"tiers": {
+			"free": "Free",
+			"premium": "Premium"
+		},
+		"themes": {
+			"saas": "SaaS",
+			"restaurant": "Restaurant",
+			"fitness": "Fitness",
+			"health": "Health",
+			"architecture": "Architecture",
+			"legal": "Legal",
+			"realEstate": "Real estate",
+			"ecommerce": "E-commerce",
+			"finance": "Finance",
+			"agency": "Agency",
+			"beauty": "Beauty",
+			"payments": "Payments",
+			"consulting": "Consulting",
+			"education": "Education"
+		},
+		"taglines": {
+			"nova": "Dark, glassy analytics SaaS with a gradient mesh hero and animated counters.",
+			"saffron": "Warm, editorial fine dining in cream and forest green, with parallax plating and serif display type.",
+			"pulse": "Calm, rounded clinic site in medical blue and mint, built to reassure.",
+			"aurora": "High-energy gym landing page in acid lime on near-black, with condensed display type.",
+			"atelier": "Stark white architecture portfolio: hairline rules, huge whitespace, numbered project index.",
+			"verdant": "Forest-and-brass estate agency with a filterable listings grid across four pages.",
+			"meridian": "Navy-and-gold corporate law firm across four pages, formal and typographic.",
+			"lumen": "Seven-page lighting store: shop, product, cart, checkout, sign in and sign up.",
+			"kite": "Maximal creative agency in magenta-to-tangerine, with outlined display type and tilting case cards.",
+			"vanta": "Dark trading platform with CSS candlesticks, order book and a live-feel ticker, across five pages.",
+			"cadence": "Warm online academy with animated progress rings, a filterable catalogue and a curriculum accordion.",
+			"lumiere": "Blush-and-plum salon across seven pages: treatment categories, a filterable shop, cart and booking.",
+			"northgate": "Payments infrastructure across five pages, with a self-drawing flow diagram and a live pricing calculator.",
+			"pinnacle": "Sand-and-blue strategy consultancy: oversized type, a numbered process rail and measured outcomes."
+		},
+		"sections": {
+			"header": "Header",
+			"hero": "Hero",
+			"about": "About us",
+			"services": "Services",
+			"why": "Why choose us",
+			"faq": "FAQ",
+			"contact": "Contact",
+			"footer": "Footer"
+		},
+		"downloads": {
+			"nextjs": "Next.js",
+			"react": "React",
+			"tailwind": "Tailwind + HTML",
+			"html": "HTML & CSS"
+		},
+		"kinds": {
+			"project": "Project",
+			"static": "Static"
+		},
+		"detail": {
+			"sections": "Sections included",
+			"prompt": "Prompt",
+			"promptHint": "Copy this into any AI tool to generate a page in the same spirit.",
+			"download": "Download",
+			"downloadHint": "Every download is a ZIP with a README and no build step you have not asked for.",
+			"downloadFailed": "That download could not be built. Please try again.",
+			"pages": "Pages"
+		},
+		"actions": {
+			"openTab": "Open in new tab",
+			"copyPrompt": "Copy prompt",
+			"copied": "Copied",
+			"close": "Close"
+		},
+		"pagesCount": "{count} pages",
+		"filters": {
+			"tabsLabel": "Filter templates",
+			"theme": "Business",
+			"allThemes": "All",
+			"tabs": {
+				"all": "All",
+				"free": "Free",
+				"premium": "Premium",
+				"new": "New",
+				"multipage": "Multipage"
+			}
+		},
+		"locked": {
+			"title": "Premium template",
+			"body": "Preview it as much as you like. The prompt and the code downloads come with premium access.",
+			"cta": "Get premium access",
+			"included": {
+				"preview": "Live preview, in full, no account needed",
+				"prompt": "Copy the design prompt",
+				"download": "Download React, Next.js and static builds"
+			}
+		}
+	},
 	"palettes": {
 		"title": "Color Palettes",
 		"subtitle": "Browse curated palettes for websites, web, mobile and desktop apps - copy the code, edit and swap colours, or generate your own.",
@@ -1723,8 +1826,9 @@
 			"title": "Everything your team needs to design and ship",
 			"titleAccent": "in one calm workspace",
 			"subtitle": "ADYSRE brings components, icons, palettes, gradients and prompts together, so your team can move from idea to production without switching tools.",
-			"ctaPrimary": "Open the workspace",
-			"ctaSecondary": "Explore components",
+			"ctaComponents": "Explore components",
+			"ctaPlayground": "Open the playground",
+			"ctaWorkspace": "Open the workspace",
 			"trust": "Trusted by {count, number}+ builders worldwide",
 			"hint": "No card required to browse"
 		},

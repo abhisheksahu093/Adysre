@@ -56,7 +56,14 @@ export interface EditorPanel {
   /** Key under `designPlayground.panels`. */
   id: string;
   icon: LucideIcon;
+  /** False until the panel's engine lands (Phase 1+); shown but inert. */
   ready: boolean;
+  /**
+   * False keeps the panel in this registry but out of the editor entirely - no
+   * rail icon, no body. Use it for a finished panel we are not shipping yet;
+   * `ready: false` is the weaker statement ("visible, but coming soon").
+   */
+  enabled?: boolean;
 }
 
 export const EDITOR_PANELS: EditorPanel[] = [
@@ -66,8 +73,19 @@ export const EDITOR_PANELS: EditorPanel[] = [
   { id: 'components', icon: Boxes, ready: true },
   { id: 'assets', icon: Shapes, ready: true },
   { id: 'images', icon: ImageIcon, ready: true },
-  { id: 'ai', icon: Sparkles, ready: true },
+  // Hidden until AI generation is configured end to end (it needs a server-side
+  // ANTHROPIC_API_KEY). Flip to `enabled: true` to bring it back - the panel and
+  // its route are complete and untouched.
+  { id: 'ai', icon: Sparkles, ready: true, enabled: false },
 ];
+
+/**
+ * The panels the editor actually offers. Everything that renders the rail reads
+ * this, so hiding a panel is one flag above rather than an edit in each consumer.
+ */
+export const AVAILABLE_EDITOR_PANELS: EditorPanel[] = EDITOR_PANELS.filter(
+  (panel) => panel.enabled !== false,
+);
 
 /** Inspector groups in the right panel, in render order. */
 export const INSPECTOR_GROUPS = [

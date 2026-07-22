@@ -7,6 +7,12 @@
 
 import type { PlaygroundSection } from '@/data/playground';
 import { applyContentOverrides } from '@/lib/playground/content';
+import {
+  SECTION_ATTR,
+  hasSectionStyle,
+  pageSectionStylesCss,
+  type SectionStyle,
+} from '@/lib/playground/section-style';
 import type { ZipEntry } from './zip';
 
 export type ScaffoldTarget = 'nextjs' | 'react';
@@ -17,6 +23,15 @@ interface SectionModule {
   isDefault: boolean;
   code: string;
 }
+
+/** One line of the page: which module renders, and under which slot's styling. */
+interface SectionRender {
+  slotId: string;
+  name: string;
+}
+
+/** The stylesheet shipped alongside the components when sections are styled. */
+const SECTION_STYLES_FILE = 'section-styles.css';
 
 /** The code variant to prefer per target, most-specific first. */
 const VARIANT_ORDER: Record<ScaffoldTarget, ('nextjs' | 'typescript' | 'react')[]> = {
@@ -66,14 +81,26 @@ function resolveModules(
   sections: PlaygroundSection[],
   overridesBySlug: Record<string, Record<string, string>>,
   demos: Record<string, string>,
-): { modules: SectionModule[]; skipped: string[] } {
+): { modules: SectionModule[]; renders: SectionRender[]; skipped: string[] } {
   const modules: SectionModule[] = [];
+  const renders: SectionRender[] = [];
   const skipped: string[] = [];
-  const seen = new Set<string>();
+  const bySlug = new Map<string, SectionModule>();
 
-  for (const { component } of sections) {
-    if (seen.has(component.slug)) continue;
-    seen.add(component.slug);
+  for (const { slot, component } of sections) {
+    // A slug already resolved gets one module file but still renders in every
+    // slot that chose it - each with its own styling.
+    const done = bySlug.get(component.slug);
+    if (done) {
+      renders.push({ slotId: slot.id, name: done.name });
+      continue;
+    }
+
+    const push = (module: SectionModule): void => {
+      modules.push(module);
+      bySlug.set(module.slug, module);
+      renders.push({ slotId: slot.id, name: module.name });
+    };
 
     // Prefer the section's self-contained demo (its live preview): a prop-free
     // component that already ships sample content, so the page renders instead
@@ -83,7 +110,7 @@ function resolveModules(
       const code = rewriteAssetPaths(
         applyContentOverrides(demo, overridesBySlug[component.slug]).trim(),
       );
-      modules.push({
+      push({
         slug: component.slug,
         name: pascalCase(component.slug),
         isDefault: true,
@@ -105,10 +132,30 @@ function resolveModules(
     if (info.isDefault === false && !/export\s+function/.test(code) && /export\s+default\s+function\s*\(/.test(code)) {
       code = code.replace(/export\s+default\s+function\s*\(/, `export function ${info.name}(`);
     }
-    modules.push({ slug: component.slug, name: info.name, isDefault: info.isDefault, code: rewriteAssetPaths(code) });
+    push({ slug: component.slug, name: info.name, isDefault: info.isDefault, code: rewriteAssetPaths(code) });
   }
 
-  return { modules, skipped };
+  return { modules, renders, skipped };
+}
+
+/**
+ * The page body: each section rendered in order, wrapped in a tagged `<div>`
+ * when the user styled it. The wrapper carries no inline style - the rules live
+ * in `section-styles.css`, matched on the same attribute the live preview uses,
+ * so the download looks exactly like the canvas did.
+ */
+function renderLines(
+  renders: SectionRender[],
+  stylesBySlot: Record<string, SectionStyle | undefined>,
+  indent: string,
+): string {
+  return renders
+    .map(({ slotId, name }) =>
+      hasSectionStyle(stylesBySlot[slotId])
+        ? `${indent}<div ${SECTION_ATTR}="${slotId}">\n${indent}  <${name} />\n${indent}</div>`
+        : `${indent}<${name} />`,
+    )
+    .join('\n');
 }
 
 function importLine(m: SectionModule, base: string): string {
@@ -172,9 +219,25 @@ export function buildProjectScaffold(
   projectName = 'adysre-page',
   overridesBySlug: Record<string, Record<string, string>> = {},
   demos: Record<string, string> = {},
+  /** Per-slot background / text / border styling, keyed by slot id. */
+  stylesBySlot: Record<string, SectionStyle | undefined> = {},
 ): ZipEntry[] {
-  const { modules, skipped } = resolveModules(target, sections, overridesBySlug, demos);
+  const { modules, renders: sectionRenders, skipped } = resolveModules(
+    target,
+    sections,
+    overridesBySlug,
+    demos,
+  );
   const files: ZipEntry[] = [];
+
+  const sectionStylesCss = pageSectionStylesCss(
+    sections.map(({ slot, component }) => ({
+      slotId: slot.id,
+      title: component.title,
+      style: stylesBySlot[slot.id],
+    })),
+  );
+  const styled = sectionStylesCss !== '';
 
   const skippedNote = skipped.length
     ? `\n> Note: these sections had no ${target} source and were left out: ${skipped.join(', ')}.\n`
@@ -183,7 +246,7 @@ export function buildProjectScaffold(
   if (target === 'nextjs') {
     const importBase = '../components';
     const imports = modules.map((m) => importLine(m, importBase)).join('\n');
-    const renders = modules.map((m) => `      <${m.name} />`).join('\n');
+    const renders = renderLines(sectionRenders, stylesBySlot, '      ');
 
     files.push(
       {
@@ -243,7 +306,7 @@ export function buildProjectScaffold(
       { path: 'app/globals.css', content: TAILWIND_CSS },
       {
         path: 'app/layout.tsx',
-        content: `import type { Metadata } from 'next';\nimport './globals.css';\n\nexport const metadata: Metadata = {\n  title: '${projectName}',\n  description: 'Built with ADYSRE',\n};\n\nexport default function RootLayout({ children }: { children: React.ReactNode }) {\n  return (\n    <html lang="en">\n      <body className="bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-100">{children}</body>\n    </html>\n  );\n}\n`,
+        content: `import type { Metadata } from 'next';\nimport './globals.css';\n${styled ? `import './${SECTION_STYLES_FILE}';\n` : ''}\nexport const metadata: Metadata = {\n  title: '${projectName}',\n  description: 'Built with ADYSRE',\n};\n\nexport default function RootLayout({ children }: { children: React.ReactNode }) {\n  return (\n    <html lang="en">\n      <body className="bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-100">{children}</body>\n    </html>\n  );\n}\n`,
       },
       {
         path: 'app/page.tsx',
@@ -253,7 +316,7 @@ export function buildProjectScaffold(
   } else {
     const importBase = './components';
     const imports = modules.map((m) => importLine(m, importBase)).join('\n');
-    const renders = modules.map((m) => `      <${m.name} />`).join('\n');
+    const renders = renderLines(sectionRenders, stylesBySlot, '      ');
 
     files.push(
       {
@@ -311,7 +374,7 @@ export function buildProjectScaffold(
       { path: 'src/index.css', content: TAILWIND_CSS },
       {
         path: 'src/main.tsx',
-        content: `import { StrictMode } from 'react';\nimport { createRoot } from 'react-dom/client';\nimport App from './App';\nimport './index.css';\n\ncreateRoot(document.getElementById('root')!).render(\n  <StrictMode>\n    <App />\n  </StrictMode>,\n);\n`,
+        content: `import { StrictMode } from 'react';\nimport { createRoot } from 'react-dom/client';\nimport App from './App';\nimport './index.css';\n${styled ? `import './${SECTION_STYLES_FILE}';\n` : ''}\ncreateRoot(document.getElementById('root')!).render(\n  <StrictMode>\n    <App />\n  </StrictMode>,\n);\n`,
       },
       {
         path: 'src/App.tsx',
@@ -326,6 +389,15 @@ export function buildProjectScaffold(
     files.push({ path: `${componentDir}/${m.slug}.tsx`, content: `${m.code}\n` });
   }
 
+  // The section styling the user set in the playground, as one plain stylesheet
+  // the page imports - edit it to retune the look without touching a component.
+  if (styled) {
+    files.push({
+      path: target === 'nextjs' ? `app/${SECTION_STYLES_FILE}` : `src/${SECTION_STYLES_FILE}`,
+      content: sectionStylesCss,
+    });
+  }
+
   // Every project ships a public/ folder with a placeholder for section images.
   files.push(...PUBLIC_FILES);
 
@@ -333,7 +405,13 @@ export function buildProjectScaffold(
     { path: '.gitignore', content: `node_modules\n${target === 'nextjs' ? '.next' : 'dist'}\n*.log\n.DS_Store\n` },
     {
       path: 'README.md',
-      content: `# ${projectName}\n\nA ${target === 'nextjs' ? 'Next.js (App Router)' : 'React + Vite'} project generated by ADYSRE, with Tailwind CSS pre-wired.\n\n## Getting started\n\n\`\`\`bash\nnpm install\nnpm run dev\n\`\`\`\n\nEach section lives in \`${componentDir}/\` and is composed in ${target === 'nextjs' ? '`app/page.tsx`' : '`src/App.tsx`'}. Every section ships with sample content, so the project runs as soon as you install it - edit a section file to make it your own.\n\nSection images point at \`public/placeholder.svg\`; drop your own images into \`public/\` and update the \`src\` in the matching section.\n${skippedNote}`,
+      content: `# ${projectName}\n\nA ${target === 'nextjs' ? 'Next.js (App Router)' : 'React + Vite'} project generated by ADYSRE, with Tailwind CSS pre-wired.\n\n## Getting started\n\n\`\`\`bash\nnpm install\nnpm run dev\n\`\`\`\n\nEach section lives in \`${componentDir}/\` and is composed in ${target === 'nextjs' ? '`app/page.tsx`' : '`src/App.tsx`'}. Every section ships with sample content, so the project runs as soon as you install it - edit a section file to make it your own.\n\nSection images point at \`public/placeholder.svg\`; drop your own images into \`public/\` and update the \`src\` in the matching section.\n${
+        styled
+          ? `\nThe background, text and border styling you set per section lives in \`${
+              target === 'nextjs' ? 'app' : 'src'
+            }/${SECTION_STYLES_FILE}\`, matched on each section's \`${SECTION_ATTR}\` wrapper. Edit that one file to retune the look.\n`
+          : ''
+      }${skippedNote}`,
     },
   );
 

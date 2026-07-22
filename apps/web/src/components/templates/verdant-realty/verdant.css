@@ -1,0 +1,211 @@
+/*
+ * VERDANT - template-scoped design tokens.
+ *
+ * A template is a standalone artifact with its own brand, so it cannot inherit
+ * the app's tokens - it must look like a different company. It still may not
+ * scatter raw colour through markup (Rule 6), so the whole palette is declared
+ * here, scoped to `[data-template='verdant']`, and every section references the
+ * variables only. This file is the single place VERDANT's colour exists.
+ *
+ * Deliberately warm and architectural: forest green on sand, one brass accent,
+ * so it reads as neither the dark SaaS template nor the cream restaurant one.
+ */
+
+[data-template='verdant'] {
+  --verdant-forest: #0d2f24;
+  --verdant-forest-deep: #07201a;
+  --verdant-forest-soft: #174535;
+
+  --verdant-sand: #e8e2d5;
+  --verdant-sand-warm: #f2ede2;
+  --verdant-sand-deep: #d9d2c1;
+
+  --verdant-brass: #c9a227;
+  --verdant-brass-soft: rgb(201 162 39 / 16%);
+
+  /* Text on sand. */
+  --verdant-ink: #0d2f24;
+  --verdant-ink-soft: rgb(13 47 36 / 74%);
+  --verdant-ink-faint: rgb(13 47 36 / 48%);
+  --verdant-rule: rgb(13 47 36 / 14%);
+  --verdant-rule-strong: rgb(13 47 36 / 26%);
+
+  /* Text on forest. */
+  --verdant-on-forest: #f2ede2;
+  --verdant-on-forest-soft: rgb(242 237 226 / 76%);
+  --verdant-on-forest-faint: rgb(242 237 226 / 52%);
+  --verdant-rule-inverse: rgb(242 237 226 / 20%);
+
+  --verdant-radius: 20px;
+  --verdant-radius-sm: 12px;
+  --verdant-shadow: 0 24px 60px -34px rgb(7 32 26 / 55%);
+
+  color: var(--verdant-ink);
+  background-color: var(--verdant-sand);
+  /*
+   * A modern grotesque stack. System faces only: a downloaded template must run
+   * with no network request and no font file in the zip.
+   */
+  font-family: 'Helvetica Neue', Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+  /* Anchor jumps inside a page (the FAQ, the listings grid) glide rather than cut. */
+  scroll-behavior: smooth;
+}
+
+/* Uppercase brass eyebrow above every section heading. */
+[data-template='verdant'] .verdant-eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--verdant-brass);
+}
+
+/*
+ * Prices, bed counts and square footage sit in aligned columns across a grid of
+ * cards, so their digits have to be the same width or the rows visibly wobble.
+ */
+[data-template='verdant'] .verdant-figures {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+
+[data-template='verdant'] .verdant-card {
+  background: var(--verdant-sand-warm);
+  border: 1px solid var(--verdant-rule);
+  border-radius: var(--verdant-radius);
+  box-shadow: var(--verdant-shadow);
+}
+
+/* Same card, sitting on the forest sections. */
+[data-template='verdant'] .verdant-card-inverse {
+  background: var(--verdant-forest-soft);
+  border: 1px solid var(--verdant-rule-inverse);
+  border-radius: var(--verdant-radius);
+}
+
+/*
+ * The property "photograph": layered linear gradients reading as sky, facade
+ * and planting, plus a brass window band. Three variants so a nine-card grid
+ * does not repeat, and not a single image byte in the download.
+ *
+ * CAUTION: this rule must never set `position`. A scoped selector like
+ * `[data-template='verdant'] .verdant-window` outranks Tailwind's single-class
+ * `.absolute`/`.relative`, so declaring position here would silently override
+ * whatever utility the usage applies. Every usage positions itself.
+ */
+[data-template='verdant'] .verdant-window {
+  border-radius: var(--verdant-radius-sm);
+  overflow: hidden;
+  background:
+    linear-gradient(180deg, transparent 0 62%, rgb(7 32 26 / 22%) 62% 100%),
+    linear-gradient(90deg, transparent 0 18%, rgb(201 162 39 / 26%) 18% 26%, transparent 26% 100%),
+    linear-gradient(180deg, var(--verdant-sand-warm) 0 34%, var(--verdant-forest-soft) 34% 100%);
+}
+
+[data-template='verdant'] .verdant-window--a {
+  background:
+    /* planting along the sill */
+    radial-gradient(ellipse 40% 22% at 22% 100%, rgb(23 69 53 / 85%) 0 60%, transparent 62%),
+    radial-gradient(ellipse 30% 18% at 78% 100%, rgb(23 69 53 / 70%) 0 60%, transparent 62%),
+    /* two lit windows */
+    linear-gradient(90deg, transparent 0 30%, var(--verdant-brass) 30% 38%, transparent 38% 58%, var(--verdant-brass) 58% 66%, transparent 66%),
+    /* facade, then sky */
+    linear-gradient(180deg, transparent 0 44%, var(--verdant-forest) 44% 100%),
+    linear-gradient(180deg, var(--verdant-sand-warm), var(--verdant-sand-deep));
+}
+
+[data-template='verdant'] .verdant-window--b {
+  background:
+    radial-gradient(ellipse 55% 26% at 84% 100%, rgb(13 47 36 / 82%) 0 62%, transparent 64%),
+    /* a pitched roofline, cut with a rotated gradient */
+    linear-gradient(200deg, transparent 0 38%, var(--verdant-forest-deep) 38% 100%),
+    linear-gradient(90deg, transparent 0 46%, rgb(201 162 39 / 78%) 46% 54%, transparent 54%),
+    linear-gradient(180deg, var(--verdant-sand-deep) 0 40%, var(--verdant-forest) 40% 100%);
+}
+
+[data-template='verdant'] .verdant-window--c {
+  background:
+    /* stacked glazing bands: a modern, mostly-glass elevation */
+    repeating-linear-gradient(
+      180deg,
+      rgb(242 237 226 / 22%) 0 6px,
+      transparent 6px 22px
+    ),
+    linear-gradient(90deg, transparent 0 62%, rgb(201 162 39 / 30%) 62% 70%, transparent 70%),
+    linear-gradient(160deg, var(--verdant-forest-soft), var(--verdant-forest-deep));
+}
+
+/*
+ * Floor-plan line art. Repeating gradients draw the grid, and the two inset
+ * borders read as rooms. Decorative only - every usage marks it `aria-hidden`.
+ */
+[data-template='verdant'] .verdant-plan {
+  border: 1px solid var(--verdant-rule-strong);
+  border-radius: var(--verdant-radius-sm);
+  background-image:
+    linear-gradient(90deg, var(--verdant-rule) 1px, transparent 1px),
+    linear-gradient(180deg, var(--verdant-rule) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+/* The two "rooms". Positioned by this rule because nothing else places them. */
+[data-template='verdant'] .verdant-plan::before,
+[data-template='verdant'] .verdant-plan::after {
+  content: '';
+  position: absolute;
+  border: 1px solid var(--verdant-rule-strong);
+  border-radius: 4px;
+}
+
+[data-template='verdant'] .verdant-plan::before {
+  inset-block: 12% 46%;
+  inset-inline: 10% 44%;
+  border-color: var(--verdant-brass);
+}
+
+[data-template='verdant'] .verdant-plan::after {
+  inset-block: 34% 12%;
+  inset-inline: 38% 12%;
+}
+
+/* Hairline that draws itself in when its section is revealed. */
+[data-template='verdant'] .verdant-rule {
+  display: block;
+  height: 2px;
+  width: 0;
+  background: var(--verdant-brass);
+  transition: width 800ms cubic-bezier(0.22, 1, 0.36, 1) 100ms;
+}
+
+[data-template='verdant'] .verdant-revealed .verdant-rule {
+  width: 3.5rem;
+}
+
+[data-template='verdant'] .verdant-marquee {
+  animation: verdant-drift 42s linear infinite;
+}
+
+@keyframes verdant-drift {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    /* The strip renders its items twice; -50% lands on the seam exactly. */
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-template='verdant'] {
+    scroll-behavior: auto;
+  }
+
+  [data-template='verdant'] .verdant-marquee {
+    animation: none;
+  }
+
+  [data-template='verdant'] .verdant-rule {
+    transition: none;
+    width: 3.5rem;
+  }
+}

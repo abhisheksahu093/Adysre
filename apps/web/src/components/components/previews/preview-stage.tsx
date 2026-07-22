@@ -9,6 +9,12 @@ import type {
   PreviewContentMessage,
   PreviewFieldsMessage,
 } from '@/lib/playground/content';
+import {
+  SECTION_ATTR,
+  sectionStyleCss,
+  type PreviewStyleMessage,
+  type SectionStyle,
+} from '@/lib/playground/section-style';
 
 /** A single editable spot in the rendered preview, plus how to rewrite it. */
 interface EditableTarget {
@@ -116,6 +122,8 @@ export function PreviewStage({ slug, bleed = false }: { slug: string; bleed?: bo
   /** Live handles to the rendered text, rebuilt whenever the component mounts. */
   const targetsRef = useRef<EditableTarget[]>([]);
   const overridesRef = useRef<Record<string, string>>({});
+  /** The section styling the playground last sent, or `null` for none. */
+  const [sectionStyle, setSectionStyle] = useState<SectionStyle | null>(null);
 
   useEffect(() => {
     const load = PREVIEWS[slug];
@@ -201,8 +209,13 @@ export function PreviewStage({ slug, bleed = false }: { slug: string; bleed?: bo
 
     const onMessage = (event: MessageEvent): void => {
       if (event.origin !== window.location.origin) return;
-      const data = event.data as PreviewContentMessage | undefined;
-      if (!data || data.type !== 'adysre:preview-content' || data.slug !== slug) return;
+      const data = event.data as PreviewContentMessage | PreviewStyleMessage | undefined;
+      if (!data || data.slug !== slug) return;
+      if (data.type === 'adysre:preview-style') {
+        setSectionStyle(data.style);
+        return;
+      }
+      if (data.type !== 'adysre:preview-content') return;
       overridesRef.current = data.overrides ?? {};
       for (const target of targetsRef.current) target.apply(overridesRef.current[target.text]);
     };
@@ -233,16 +246,26 @@ export function PreviewStage({ slug, bleed = false }: { slug: string; bleed?: bo
   }
 
   const { Component } = mod;
+  // The playground's per-section styling, as real CSS scoped to this wrapper.
+  // A stylesheet rather than an inline style because the text colour has to
+  // reach the section's own children, which carry their own colour utilities -
+  // and it is the exact CSS the export writes, so preview and download agree.
+  const styleCss = sectionStyle ? sectionStyleCss(`[${SECTION_ATTR}]`, sectionStyle) : '';
+
   // A page section brings its own padding and spans the frame; anything smaller
   // gets the padded, centred stage it was authored for.
   return (
     <div
+      {...{ [SECTION_ATTR]: '' }}
       className={
         bleed
           ? 'w-full bg-background'
           : 'flex min-h-48 w-full items-center justify-center bg-background p-6'
       }
     >
+      {/* Our own generated CSS - colours and lengths from the style editor,
+          never user-authored markup. */}
+      {styleCss && <style dangerouslySetInnerHTML={{ __html: styleCss }} />}
       <Component />
     </div>
   );

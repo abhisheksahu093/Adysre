@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import { cn } from '@adysre/ui';
-import { EDITOR_PANELS } from '@/config/design-playground';
+import { AVAILABLE_EDITOR_PANELS } from '@/config/design-playground';
 import { useDesignPlaygroundStore } from '@/stores/design-playground-store';
 import { AiPanel } from './panels/ai-panel';
 import { AssetsPanel } from './panels/assets-panel';
@@ -26,7 +26,9 @@ export function EditorRail() {
   const panel = useDesignPlaygroundStore((s) => s.panel);
   const togglePanel = useDesignPlaygroundStore((s) => s.togglePanel);
 
-  const open = EDITOR_PANELS.find((p) => p.id === panel) ?? null;
+  // A hidden panel can still be the persisted choice from an earlier session,
+  // so resolve against the available list: it closes instead of reopening.
+  const open = AVAILABLE_EDITOR_PANELS.find((p) => p.id === panel) ?? null;
 
   return (
     <div className="flex min-h-0 shrink-0">
@@ -34,7 +36,7 @@ export function EditorRail() {
         aria-label={t('railLabel')}
         className="flex w-12 shrink-0 flex-col items-center gap-0.5 border-r border-border bg-card py-2"
       >
-        {EDITOR_PANELS.map(({ id, icon: Icon }) => {
+        {AVAILABLE_EDITOR_PANELS.map(({ id, icon: Icon }) => {
           const active = panel === id;
           const label = t(`panels.${id}.title`);
           return (

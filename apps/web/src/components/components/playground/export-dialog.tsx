@@ -16,6 +16,7 @@ import {
 import { buildProjectScaffold, type ScaffoldTarget } from '@/lib/project-scaffold';
 import { createZip, downloadBlob } from '@/lib/zip';
 import { readableText } from '@/lib/palettes/color';
+import { pageSectionStylesCss, type SectionStyle } from '@/lib/playground/section-style';
 import { useClipboard } from '@/hooks/use-clipboard';
 import { highlightCode } from '@/app/[locale]/(app)/components/actions';
 import { PaletteCode } from '@/components/palettes/palette-code';
@@ -28,6 +29,8 @@ interface ExportDialogProps {
   palette: Palette | null;
   /** Per-slug text edits to bake into the exported source. */
   contentOverrides: Record<string, Record<string, string>>;
+  /** Per-slot background / text / border styling, shipped as a stylesheet. */
+  sectionStyles: Record<string, SectionStyle | undefined>;
 }
 
 /**
@@ -42,11 +45,13 @@ export function ExportDialog({
   sections,
   palette,
   contentOverrides,
+  sectionStyles,
 }: ExportDialogProps) {
   const t = useTranslations('components');
   const tCommon = useTranslations('common');
   const { copy, copied } = useClipboard();
   const { copy: copySection, copied: sectionCopied } = useClipboard();
+  const { copy: copyStyles, copied: stylesCopied } = useClipboard();
   const [copiedSection, setCopiedSection] = useState<string | null>(null);
   const [framework, setFramework] = useState<Framework | null>(null);
 
@@ -55,10 +60,31 @@ export function ExportDialog({
     // The section demos are ~0.5 MB of source strings; load them only when a
     // project is actually being downloaded rather than on every dialog open.
     const { SECTION_DEMOS } = await import('@/data/playground/section-demos');
-    const files = buildProjectScaffold(target, sections, 'adysre-page', contentOverrides, SECTION_DEMOS);
+    const files = buildProjectScaffold(
+      target,
+      sections,
+      'adysre-page',
+      contentOverrides,
+      SECTION_DEMOS,
+      sectionStyles,
+    );
     const zip = createZip(files);
     downloadBlob(`adysre-${target}-project.zip`, zip);
   }
+
+  // The per-section styling as one stylesheet - the same CSS the downloaded
+  // project ships, offered here for anyone copying sections by hand.
+  const stylesCss = useMemo(
+    () =>
+      pageSectionStylesCss(
+        sections.map(({ slot, component }) => ({
+          slotId: slot.id,
+          title: component.title,
+          style: sectionStyles[slot.id],
+        })),
+      ),
+    [sections, sectionStyles],
+  );
 
   const frameworks = useMemo(() => exportableFrameworks(sections), [sections]);
   const activeFramework =
@@ -174,6 +200,44 @@ export function ExportDialog({
           <PaletteCode colors={palette.colors} name={palette.name} />
         </div>
       )}
+      {stylesCss && (
+        <div className="mb-4 space-y-2">
+          <div className="flex items-center gap-2">
+            <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+              {t('playground.export.stylesTitle')}
+            </p>
+            <div className="ml-auto flex items-center gap-1">
+              <Button
+                type="button"
+                variant="ghost"
+                size="icon"
+                aria-label={tCommon('copy')}
+                title={tCommon('copy')}
+                onClick={() => void copyStyles(stylesCss)}
+                className="h-7 w-7 text-muted-foreground hover:text-foreground"
+              >
+                {stylesCopied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
+              </Button>
+              <Button
+                type="button"
+                variant="ghost"
+                size="icon"
+                aria-label={t('playground.export.downloadSection', { file: 'section-styles.css' })}
+                title={t('playground.export.downloadSection', { file: 'section-styles.css' })}
+                onClick={() => downloadText('section-styles.css', stylesCss)}
+                className="h-7 w-7 text-muted-foreground hover:text-foreground"
+              >
+                <Download className="h-3.5 w-3.5" />
+              </Button>
+            </div>
+          </div>
+          <p className="text-xs text-muted-foreground">{t('playground.export.stylesHint')}</p>
+          <pre className="max-h-44 overflow-auto rounded-lg border border-border p-3 font-mono text-[11px] leading-relaxed">
+            <code>{stylesCss}</code>
+          </pre>
+        </div>
+      )}
+
       {!assembled ? (
         <p className="text-sm text-muted-foreground">{t('playground.export.empty')}</p>
       ) : (

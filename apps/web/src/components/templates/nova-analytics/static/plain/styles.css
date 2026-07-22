@@ -1,0 +1,640 @@
+/*
+ * NOVA - the Tailwind-free build.
+ *
+ * `nova.css` already carries the tokens and the compound pieces (cards, FAQ,
+ * fields, the hero mesh). This file adds what Tailwind was doing in the other
+ * build - layout, spacing and type - against semantic class names, so the HTML
+ * stays readable and the whole site is two stylesheets and no toolchain.
+ */
+@import './nova.css';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+img {
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+p,
+ul,
+ol,
+dl,
+dd,
+figure {
+  margin: 0;
+}
+
+ul {
+  padding: 0;
+  list-style: none;
+}
+
+/* ---- Layout primitives ------------------------------------------------- */
+
+.nova-shell {
+  max-width: 72rem;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+}
+
+@media (min-width: 640px) {
+  .nova-shell {
+    padding-inline: 2rem;
+  }
+}
+
+.nova-section {
+  padding-block: 6rem;
+  scroll-margin-top: 5rem;
+}
+
+@media (min-width: 640px) {
+  .nova-section {
+    padding-block: 8rem;
+  }
+}
+
+.nova-section--tinted {
+  border-top: 1px solid var(--nova-line);
+  background: rgb(11 13 22 / 40%);
+}
+
+.nova-section--bordered {
+  border-block: 1px solid var(--nova-line);
+  background: rgb(11 13 22 / 40%);
+}
+
+.nova-narrow {
+  max-width: 48rem;
+  margin-inline: auto;
+}
+
+.nova-measure {
+  max-width: 42rem;
+}
+
+/* ---- Type -------------------------------------------------------------- */
+
+.nova-eyebrow {
+  font-size: 10px;
+  color: var(--nova-accent-2);
+}
+
+.nova-h1 {
+  margin-top: 1.75rem;
+  font-size: clamp(2.25rem, 6vw, 4.5rem);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
+.nova-h2 {
+  margin-top: 1rem;
+  font-size: clamp(1.875rem, 3.4vw, 2.25rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.nova-h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.nova-lead {
+  margin-top: 1.5rem;
+  margin-inline: auto;
+  max-width: 40rem;
+  font-size: 1.125rem;
+  line-height: 1.7;
+  color: var(--nova-muted);
+  text-wrap: pretty;
+}
+
+.nova-body {
+  margin-top: 1.25rem;
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--nova-muted);
+}
+
+.nova-gradient-text {
+  background: linear-gradient(90deg, var(--nova-accent), #a78bfa, var(--nova-accent-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ---- Header ------------------------------------------------------------ */
+
+.nova-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  width: 100%;
+  border-bottom: 1px solid transparent;
+  transition: background-color 300ms ease, border-color 300ms ease;
+}
+
+.nova-header__bar {
+  display: flex;
+  height: 4rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.nova-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.nova-brand__mark {
+  display: grid;
+  place-items: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 0.375rem;
+  background: linear-gradient(135deg, var(--nova-accent), var(--nova-accent-2));
+  color: var(--nova-bg);
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+.nova-nav {
+  display: none;
+  align-items: center;
+  gap: 2rem;
+}
+
+@media (min-width: 768px) {
+  .nova-nav {
+    display: flex;
+  }
+}
+
+.nova-nav a {
+  font-size: 13px;
+  color: var(--nova-muted);
+  transition: color 200ms ease;
+}
+
+.nova-nav a:hover {
+  color: var(--nova-text);
+}
+
+/* ---- Buttons ----------------------------------------------------------- */
+
+.nova-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  padding: 0.875rem 1.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border: 0;
+  cursor: pointer;
+  transition: transform 200ms ease, border-color 200ms ease, color 200ms ease;
+}
+
+.nova-btn:hover {
+  transform: translateY(-2px);
+}
+
+.nova-btn--primary {
+  background: linear-gradient(90deg, var(--nova-accent), #5b8cff);
+  color: var(--nova-text);
+  box-shadow: 0 10px 40px -12px rgb(124 92 255 / 70%);
+}
+
+.nova-btn--ghost {
+  background: transparent;
+  border: 1px solid var(--nova-line-strong);
+  color: var(--nova-muted);
+  font-weight: 500;
+}
+
+.nova-btn--ghost:hover {
+  border-color: var(--nova-text);
+  color: var(--nova-text);
+}
+
+.nova-btn--solid {
+  background: var(--nova-text);
+  color: var(--nova-bg);
+  padding: 0.5rem 1rem;
+  font-size: 13px;
+}
+
+.nova-btn--block {
+  width: 100%;
+}
+
+/* ---- Hero -------------------------------------------------------------- */
+
+.nova-hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  text-align: center;
+  padding-block: 5rem;
+}
+
+@media (min-width: 640px) {
+  .nova-hero {
+    padding-block: 7rem;
+  }
+}
+
+.nova-hero__grid {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+
+.nova-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid var(--nova-line-strong);
+  border-radius: 9999px;
+  background: var(--nova-accent-soft);
+  padding: 0.375rem 0.875rem;
+  font-size: 10px;
+}
+
+.nova-badge__dot {
+  width: 0.375rem;
+  height: 0.375rem;
+  border-radius: 9999px;
+  background: var(--nova-accent-2);
+}
+
+.nova-hero__actions {
+  margin-top: 2.25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+@media (min-width: 640px) {
+  .nova-hero__actions {
+    flex-direction: row;
+  }
+
+  .nova-hero__actions .nova-btn {
+    width: auto;
+  }
+}
+
+.nova-stats {
+  margin-top: 4rem;
+  margin-inline: auto;
+  max-width: 48rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1px;
+  border: 1px solid var(--nova-line);
+  border-radius: 1rem;
+  background: var(--nova-line);
+  overflow: hidden;
+}
+
+@media (min-width: 640px) {
+  .nova-stats {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.nova-stat {
+  background: var(--nova-surface);
+  padding: 1.75rem 1.5rem;
+}
+
+.nova-stat dt {
+  font-size: 10px;
+  color: var(--nova-faint);
+}
+
+.nova-stat dd {
+  margin-top: 0.5rem;
+  font-size: clamp(1.875rem, 3vw, 2.25rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+/* ---- Marquee ----------------------------------------------------------- */
+
+.nova-marquee-band {
+  border-block: 1px solid var(--nova-line);
+  padding-block: 1.75rem;
+}
+
+.nova-marquee-viewport {
+  position: relative;
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+}
+
+.nova-marquee {
+  display: flex;
+  width: max-content;
+  align-items: center;
+  gap: 3.5rem;
+  padding-right: 3.5rem;
+}
+
+.nova-marquee__row {
+  display: flex;
+  align-items: center;
+  gap: 3.5rem;
+  padding-right: 3.5rem;
+}
+
+.nova-marquee__row span {
+  white-space: nowrap;
+  font-size: 11px;
+  color: var(--nova-faint);
+}
+
+/* ---- Grids ------------------------------------------------------------- */
+
+.nova-split {
+  display: grid;
+  gap: 3.5rem;
+  align-items: center;
+}
+
+@media (min-width: 1024px) {
+  .nova-split {
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+  }
+
+  .nova-split--form {
+    grid-template-columns: 1fr 1.1fr;
+    align-items: start;
+  }
+}
+
+.nova-cards {
+  margin-top: 3.5rem;
+  display: grid;
+  gap: 1.25rem;
+}
+
+@media (min-width: 640px) {
+  .nova-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.nova-cards article {
+  padding: 1.75rem;
+}
+
+.nova-reasons {
+  margin-top: 3.5rem;
+  display: grid;
+  gap: 3rem 2.5rem;
+}
+
+@media (min-width: 640px) {
+  .nova-reasons {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.nova-checklist {
+  margin-top: 2rem;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.nova-checklist li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  font-size: 15px;
+  color: var(--nova-muted);
+}
+
+/* ---- Monitor panel ----------------------------------------------------- */
+
+.nova-panel__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--nova-line);
+  padding-bottom: 1rem;
+}
+
+.nova-panel__dots {
+  display: flex;
+  gap: 0.375rem;
+}
+
+.nova-panel__dots span {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 9999px;
+  background: var(--nova-line-strong);
+}
+
+.nova-panel__dots span:last-child {
+  background: var(--nova-accent-2);
+}
+
+.nova-panel__rows {
+  margin-top: 1rem;
+  display: grid;
+  gap: 0.625rem;
+}
+
+.nova-panel__rows li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid var(--nova-line);
+  border-radius: var(--nova-radius-sm);
+  padding: 0.75rem 0.875rem;
+}
+
+.nova-panel__table {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--nova-muted);
+}
+
+.nova-tag {
+  border-radius: 9999px;
+  padding: 0.25rem 0.5rem;
+  font-size: 10px;
+  background: rgb(34 211 238 / 12%);
+  color: var(--nova-accent-2);
+}
+
+.nova-tag--warn {
+  background: rgb(251 113 133 / 16%);
+  color: #fb7185;
+}
+
+.nova-panel__chart {
+  margin-top: 1.25rem;
+  height: 6rem;
+  border-radius: var(--nova-radius-sm);
+  background: linear-gradient(to top right, var(--nova-accent-soft), transparent);
+}
+
+/* ---- Contact ----------------------------------------------------------- */
+
+.nova-contact__details {
+  margin-top: 2.5rem;
+  display: grid;
+  gap: 1.25rem;
+}
+
+.nova-contact__details dt {
+  font-size: 10px;
+  color: var(--nova-faint);
+}
+
+.nova-contact__details dd {
+  margin-top: 0.375rem;
+  font-size: 15px;
+}
+
+.nova-form {
+  padding: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .nova-form {
+    padding: 2rem;
+  }
+}
+
+.nova-form__grid {
+  display: grid;
+  gap: 1rem;
+}
+
+@media (min-width: 640px) {
+  .nova-form__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .nova-form__grid label:last-of-type {
+    grid-column: span 2;
+  }
+}
+
+.nova-form label span {
+  display: block;
+  font-size: 10px;
+  color: var(--nova-faint);
+  margin-bottom: 0.5rem;
+}
+
+.nova-form button {
+  margin-top: 1.5rem;
+}
+
+.nova-form__status {
+  margin-top: 0.75rem;
+  min-height: 1.25rem;
+  text-align: center;
+  font-size: 13px;
+  color: var(--nova-faint);
+}
+
+/* ---- FAQ --------------------------------------------------------------- */
+
+.nova-faq {
+  margin-top: 3rem;
+  border-block: 1px solid var(--nova-line);
+}
+
+/* ---- Footer ------------------------------------------------------------ */
+
+.nova-footer {
+  border-top: 1px solid var(--nova-line);
+  background: rgb(11 13 22 / 60%);
+  padding-block: 4rem;
+}
+
+.nova-footer__grid {
+  display: grid;
+  gap: 2.5rem;
+}
+
+@media (min-width: 640px) {
+  .nova-footer__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .nova-footer__grid {
+    grid-template-columns: 1.4fr repeat(3, 1fr);
+  }
+}
+
+.nova-footer__tagline {
+  margin-top: 1rem;
+  max-width: 20rem;
+  font-size: 0.875rem;
+  line-height: 1.7;
+  color: var(--nova-muted);
+}
+
+.nova-footer__links {
+  margin-top: 1rem;
+  display: grid;
+  gap: 0.625rem;
+}
+
+.nova-footer__links a {
+  font-size: 0.875rem;
+  color: var(--nova-muted);
+  transition: color 200ms ease;
+}
+
+.nova-footer__links a:hover {
+  color: var(--nova-text);
+}
+
+.nova-footer__legal {
+  margin-top: 3.5rem;
+  border-top: 1px solid var(--nova-line);
+  padding-top: 1.5rem;
+  font-size: 10px;
+  color: var(--nova-faint);
+}

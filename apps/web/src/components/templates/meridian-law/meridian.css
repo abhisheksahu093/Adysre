@@ -1,0 +1,190 @@
+/*
+ * MERIDIAN - template-scoped design tokens.
+ *
+ * A template is a standalone artifact with its own brand, so it cannot inherit
+ * the app's tokens - it has to look like a different institution. It still may
+ * not scatter raw colour through markup (Rule 6), so the whole palette lives
+ * here, scoped to `[data-template='meridian']`, and every section references
+ * these variables only. This file is the single place MERIDIAN's colours exist.
+ *
+ * CAUTION for anyone extending this file: a scoped selector such as
+ * `[data-template='meridian'] .mer-x` has higher specificity than Tailwind's
+ * single-class `.absolute`, so it must NEVER set `position` on an element that
+ * Tailwind positions. Only pseudo-elements below are positioned from CSS.
+ */
+
+[data-template='meridian'] {
+  /* Navy is the firm's authority colour: mastheads, inverted bands, footer. */
+  --mer-navy: #0f1d33;
+
+  /* Ivory is every reading surface. Two tones so bands can alternate. */
+  --mer-ivory: #f7f5f0;
+  --mer-ivory-2: #efece3;
+
+  /* Ink on ivory. Alphas are chosen to clear WCAG AA at their used sizes. */
+  --mer-ink: #0f1d33;
+  --mer-ink-soft: rgb(15 29 51 / 78%);
+  --mer-ink-faint: rgb(15 29 51 / 62%);
+  --mer-rule: rgb(15 29 51 / 16%);
+  --mer-rule-strong: rgb(15 29 51 / 32%);
+
+  /* Ivory on navy, for the inverted bands. */
+  --mer-on-navy: #f7f5f0;
+  --mer-on-navy-soft: rgb(247 245 240 / 82%);
+  --mer-on-navy-faint: rgb(247 245 240 / 66%);
+  --mer-navy-rule: rgb(247 245 240 / 20%);
+
+  /* One accent, used sparingly: rules, eyebrows, a single hairline border. */
+  --mer-gold: #b08d4f;
+  /* The same accent darkened for TEXT on ivory: #b08d4f reads at 2.9:1 against
+     the paper, which fails AA, so gold type uses this and gold rules use the
+     brighter value above. */
+  --mer-gold-ink: #7a5e2a;
+  --mer-gold-bright: #c9a463;
+
+  --mer-serif: 'Iowan Old Style', 'Palatino Linotype', Palatino, 'Book Antiqua', Georgia,
+    'Times New Roman', serif;
+  --mer-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+
+  color: var(--mer-ink);
+  background-color: var(--mer-ivory);
+  /* Sans for body: the serif is reserved for headings, so it stays formal. */
+  font-family: var(--mer-sans);
+  /* Anchors and the page-switch land softly rather than jumping. */
+  scroll-behavior: smooth;
+}
+
+/* Every heading and display numeral. The one place the serif is allowed. */
+[data-template='meridian'] .mer-display {
+  font-family: var(--mer-serif);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+/* Small, letterspaced, gold - the label above every section heading. */
+[data-template='meridian'] .mer-eyebrow {
+  font-family: var(--mer-sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--mer-gold-ink);
+}
+
+[data-template='meridian'] .mer-eyebrow-invert {
+  color: var(--mer-gold-bright);
+}
+
+/*
+ * The gold hairline that follows an eyebrow. A block element with its own
+ * width, so it never needs positioning - see the CAUTION above.
+ */
+[data-template='meridian'] .mer-hairline {
+  display: block;
+  width: 3.5rem;
+  height: 1px;
+  background: var(--mer-gold);
+}
+
+/*
+ * Fine diagonal hatch behind the navy hero. Drawn with a repeating gradient
+ * rather than an image, so the download carries no binary assets.
+ */
+[data-template='meridian'] .mer-hatch {
+  background-image: repeating-linear-gradient(
+    135deg,
+    rgb(247 245 240 / 5%) 0 1px,
+    transparent 1px 9px
+  );
+}
+
+/*
+ * The crest: a thin gold square rule with a second rule inset. Both are drawn
+ * with pseudo-elements, which are positioned here because nothing else styles
+ * them - Tailwind never touches a ::after.
+ */
+[data-template='meridian'] .mer-crest::after {
+  content: '';
+  position: absolute;
+  inset: 5px;
+  border: 1px solid var(--mer-gold);
+  opacity: 0.55;
+}
+
+/* A framed ivory panel: hairline rule, no radius. Nothing here is rounded. */
+[data-template='meridian'] .mer-panel {
+  border: 1px solid var(--mer-rule);
+  background: linear-gradient(180deg, var(--mer-ivory), var(--mer-ivory-2));
+}
+
+/* Partner monogram: serif initials inside a ruled square, in place of a photo. */
+[data-template='meridian'] .mer-monogram {
+  font-family: var(--mer-serif);
+  letter-spacing: 0.08em;
+  color: var(--mer-gold-ink);
+  border: 1px solid var(--mer-rule-strong);
+  background: linear-gradient(160deg, var(--mer-ivory-2), var(--mer-ivory));
+}
+
+/*
+ * Display numerals. Deliberately colourless: the same class appears on ivory
+ * and on navy, and a colour declared here would outrank the Tailwind text
+ * utility each usage sets - the specificity trap this file warns about.
+ */
+[data-template='meridian'] .mer-year {
+  font-family: var(--mer-serif);
+  letter-spacing: 0.02em;
+}
+
+/* Form controls: square, hairline, gold focus. Matches the rules elsewhere. */
+[data-template='meridian'] .mer-field {
+  border: 1px solid var(--mer-rule-strong);
+  background: var(--mer-ivory);
+  color: var(--mer-ink);
+  font-family: var(--mer-sans);
+}
+
+[data-template='meridian'] .mer-field:focus-visible {
+  outline: 2px solid var(--mer-gold);
+  outline-offset: 1px;
+}
+
+/* One visible focus treatment for every interactive element in the template. */
+[data-template='meridian'] a:focus-visible,
+[data-template='meridian'] button:focus-visible {
+  outline: 2px solid var(--mer-gold);
+  outline-offset: 3px;
+}
+
+/*
+ * The accolades strip drifts rather than scrolls: slow, linear, and the only
+ * continuous motion in a design whose whole point is restraint.
+ */
+[data-template='meridian'] .mer-marquee {
+  animation: mer-drift 64s linear infinite;
+}
+
+@keyframes mer-drift {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    /* The strip renders its items twice; -50% lands on the seam exactly. */
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-template='meridian'] {
+    scroll-behavior: auto;
+  }
+
+  [data-template='meridian'] .mer-marquee {
+    animation: none;
+  }
+
+  /* Colour transitions on the masthead and links stand down with everything else. */
+  [data-template='meridian'] * {
+    transition-duration: 0.01ms !important;
+  }
+}

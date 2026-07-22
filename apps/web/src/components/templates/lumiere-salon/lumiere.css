@@ -1,0 +1,761 @@
+/*
+ * LUMIERE - template-scoped design tokens.
+ *
+ * A template is a standalone artifact with its own brand, so it declares its own
+ * palette rather than inheriting the app's, and every section references only the
+ * variables below (Rule 6). This file is the single place any LUMIERE colour, and
+ * the only place a hex literal, exists.
+ *
+ * The direction is blush paper and plum ink with a champagne accent: a soft,
+ * high-radius, unmistakably feminine luxury that reads nothing like LUMEN's
+ * hairline-and-charcoal shop or SAFFRON's serif cream.
+ *
+ * The token prefix is `--lumi-` rather than `--lum-`: LUMEN already owns the
+ * shorter one, and although both are scoped by `data-template`, two templates
+ * previewed on the same page should never share a variable name.
+ *
+ * !! Positioning warning !!
+ * A scoped selector such as `[data-template='lumiere'] .lumi-arch` has higher
+ * specificity than Tailwind's single-class `.absolute` / `.relative`. No rule in
+ * this file may set `position` on an element that markup positions with a
+ * Tailwind utility - it would silently win and collapse the layout. Pseudo-
+ * elements are exempt: nothing in the markup positions those.
+ */
+
+[data-template='lumiere'] {
+  --lumi-paper: #f7efe9;
+  --lumi-paper-2: #fbf6f2;
+  --lumi-paper-3: #efe1d9;
+  /* The scrolled header's translucent fill. A token rather than a Tailwind
+     opacity modifier, so the alpha lives with the colour it belongs to. */
+  --lumi-paper-veil: rgb(247 239 233 / 90%);
+
+  --lumi-ink: #2c1b2e;
+  /*
+   * The plum, as a CONSTANT. `--lumi-ink` is re-pointed to cream inside
+   * `.lumi-inverse`, so anything that must stay dark on a light surface *within*
+   * that band - a cream button's own label - has to read this instead. Using
+   * `--lumi-ink` there produced cream text on a cream button.
+   */
+  --lumi-ink-fixed: #2c1b2e;
+  --lumi-ink-soft: rgb(44 27 46 / 72%);
+  --lumi-ink-faint: rgb(44 27 46 / 50%);
+  --lumi-rule: rgb(44 27 46 / 12%);
+  --lumi-rule-strong: rgb(44 27 46 / 22%);
+
+  /*
+   * The champagne is ornament only. At #c8a06a on blush paper it lands near
+   * 2.2:1, which fails AA for text, so anything a person has to read uses
+   * `--lumi-accent-deep` (#8a5a2b, ~5.6:1) instead. Both exist deliberately.
+   */
+  --lumi-accent: #c8a06a;
+  --lumi-accent-deep: #8a5a2b;
+  --lumi-accent-soft: rgb(200 160 106 / 18%);
+
+  --lumi-mauve: #b9a0bd;
+  --lumi-mauve-deep: #6d4f74;
+  --lumi-mauve-soft: rgb(185 160 189 / 20%);
+
+  /* Body copy on the plum inverse band. Kept a token rather than an opacity
+     modifier so its contrast is decided here, once, and stays above AA. */
+  --lumi-paper-dim: rgb(247 239 233 / 80%);
+
+  --lumi-shadow: rgb(44 27 46 / 8%);
+  --lumi-shadow-deep: rgb(44 27 46 / 16%);
+
+  /* Shade discs. Named so `.lumi-shade--<id>` maps straight from the data. */
+  --lumi-shade-rose: #d9a7a0;
+  --lumi-shade-champagne: #e2c79a;
+  --lumi-shade-amber: #b98246;
+  --lumi-shade-mauve: #a98cae;
+  --lumi-shade-neroli: #ead7b8;
+
+  --lumi-serif:
+    'Didot', 'Bodoni MT', 'Playfair Display', 'Iowan Old Style', Georgia, 'Times New Roman', serif;
+  --lumi-sans:
+    'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', sans-serif;
+
+  /* One easing for the whole template, so nothing moves on a different curve. */
+  --lumi-ease: cubic-bezier(0.16, 1, 0.3, 1);
+
+  color: var(--lumi-ink);
+  background-color: var(--lumi-paper);
+  font-family: var(--lumi-sans);
+
+  /* In-page anchors (the menu jumps to a category) should glide, not snap. */
+  scroll-behavior: smooth;
+}
+
+/* ------------------------------------------------------------------- type */
+
+/*
+ * The display face. Fluid up to ~110px so the hero is genuinely large on a
+ * desktop without a media query, and tight enough in tracking that a high-
+ * contrast serif does not fall apart at size.
+ */
+[data-template='lumiere'] .lumi-display {
+  font-family: var(--lumi-serif);
+  font-weight: 400;
+  font-size: clamp(2.75rem, 7.4vw, 6.875rem);
+  line-height: 0.98;
+  letter-spacing: -0.025em;
+}
+
+[data-template='lumiere'] .lumi-title {
+  font-family: var(--lumi-serif);
+  font-weight: 400;
+  font-size: clamp(2rem, 4.2vw, 3.25rem);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+}
+
+[data-template='lumiere'] .lumi-subtitle {
+  font-family: var(--lumi-serif);
+  font-weight: 400;
+  font-size: clamp(1.375rem, 2.4vw, 1.75rem);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+/* The italic accent half of a display heading, set in the champagne-on-ink. */
+[data-template='lumiere'] .lumi-accent-type {
+  font-style: italic;
+  color: var(--lumi-accent-deep);
+}
+
+/* The uppercase label that opens every section. Deep champagne, for contrast. */
+[data-template='lumiere'] .lumi-eyebrow {
+  font-family: var(--lumi-sans);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--lumi-accent-deep);
+}
+
+/* Same rhythm, quieter: field labels, meta rows, table headers. */
+[data-template='lumiere'] .lumi-label {
+  font-family: var(--lumi-sans);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--lumi-ink-faint);
+}
+
+/* Prices and durations in tabular figures so a menu column lines up. */
+[data-template='lumiere'] .lumi-num {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+
+/*
+ * Focus is drawn once, here, so every control in the template - link, button,
+ * input, select, chip - carries the same visible ring at AA contrast against
+ * blush paper. Sections never restyle it.
+ */
+[data-template='lumiere'] :focus-visible {
+  outline: 2px solid var(--lumi-mauve-deep);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* --------------------------------------------------------------- surfaces */
+
+/*
+ * The one card treatment: no border, a very soft two-layer shadow, and a radius
+ * large enough to read as a cushion rather than a box. 40px is the template's
+ * base radius; the arch panels go further.
+ */
+[data-template='lumiere'] .lumi-panel {
+  border-radius: 40px;
+  background: var(--lumi-paper-2);
+  box-shadow:
+    0 1px 2px var(--lumi-shadow),
+    0 18px 40px -32px var(--lumi-shadow-deep);
+  transition:
+    transform 620ms var(--lumi-ease),
+    box-shadow 620ms var(--lumi-ease);
+}
+
+/* Hover lift, shared by every card that links somewhere. */
+[data-template='lumiere'] .lumi-lift:hover .lumi-panel,
+[data-template='lumiere'] .lumi-lift:focus-visible .lumi-panel {
+  transform: translateY(-6px);
+  box-shadow:
+    0 1px 2px var(--lumi-shadow),
+    0 34px 60px -34px var(--lumi-shadow-deep);
+}
+
+/* A deeper surface for bands that need to separate from the paper. */
+[data-template='lumiere'] .lumi-band {
+  background: linear-gradient(168deg, var(--lumi-paper-3), var(--lumi-paper));
+}
+
+/*
+ * The plum inverse, used once per page at most.
+ *
+ * It re-points the ink tokens rather than restating colours on every child: the
+ * shared section heading writes `var(--lumi-ink-soft)` for its subtitle, and
+ * that value has to mean "readable body copy here" inside this band too.
+ */
+[data-template='lumiere'] .lumi-inverse {
+  --lumi-ink: var(--lumi-paper-2);
+  --lumi-ink-soft: var(--lumi-paper-dim);
+  --lumi-ink-faint: rgb(247 239 233 / 62%);
+  --lumi-accent-deep: var(--lumi-accent);
+
+  background: linear-gradient(150deg, #2c1b2e, #6d4f74 210%);
+  color: var(--lumi-paper-2);
+}
+
+/*
+ * The arch: a panel whose top is a half-round. It is the template's signature
+ * silhouette, used behind treatment categories, product vessels and portraits.
+ */
+[data-template='lumiere'] .lumi-arch {
+  border-radius: 999px 999px 44px 44px;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 64% 40% at 50% 74%, var(--lumi-accent-soft), transparent 72%),
+    linear-gradient(168deg, var(--lumi-paper-2) 0%, var(--lumi-paper-3) 100%);
+  box-shadow:
+    0 1px 2px var(--lumi-shadow),
+    0 26px 54px -36px var(--lumi-shadow-deep);
+  transition:
+    transform 620ms var(--lumi-ease),
+    box-shadow 620ms var(--lumi-ease);
+}
+
+[data-template='lumiere'] .lumi-lift:hover .lumi-arch,
+[data-template='lumiere'] .lumi-lift:focus-visible .lumi-arch {
+  transform: translateY(-6px);
+  box-shadow:
+    0 1px 2px var(--lumi-shadow),
+    0 40px 70px -38px var(--lumi-shadow-deep);
+}
+
+/*
+ * Category arch fills. Each is two soft washes inside the arch, so the four
+ * treatment categories are told apart by colour temperature rather than by an
+ * icon. The host carries Tailwind's `relative`; nothing here sets `position`.
+ */
+[data-template='lumiere'] .lumi-arch--petal {
+  background:
+    radial-gradient(ellipse 70% 46% at 32% 26%, rgb(217 167 160 / 46%), transparent 70%),
+    radial-gradient(ellipse 60% 40% at 76% 78%, var(--lumi-accent-soft), transparent 72%),
+    linear-gradient(168deg, var(--lumi-paper-2), var(--lumi-paper-3));
+}
+
+[data-template='lumiere'] .lumi-arch--halo {
+  background:
+    radial-gradient(circle at 50% 30%, rgb(226 199 154 / 58%), transparent 56%),
+    radial-gradient(circle at 50% 30%, transparent 58%, var(--lumi-accent-soft) 60%, transparent 68%),
+    linear-gradient(168deg, var(--lumi-paper-2), var(--lumi-paper-3));
+}
+
+[data-template='lumiere'] .lumi-arch--wave {
+  background:
+    radial-gradient(ellipse 90% 30% at 50% 66%, var(--lumi-mauve-soft), transparent 70%),
+    radial-gradient(ellipse 90% 26% at 50% 84%, rgb(185 160 189 / 34%), transparent 72%),
+    linear-gradient(168deg, var(--lumi-paper-2), var(--lumi-paper-3));
+}
+
+[data-template='lumiere'] .lumi-arch--bloom {
+  background:
+    conic-gradient(
+      from 200deg at 50% 62%,
+      rgb(217 167 160 / 40%),
+      rgb(226 199 154 / 40%),
+      rgb(185 160 189 / 40%),
+      rgb(217 167 160 / 40%)
+    ),
+    linear-gradient(168deg, var(--lumi-paper-2), var(--lumi-paper-3));
+}
+
+/*
+ * The petal that drifts behind the hero. A four-lobed border-radius shape on a
+ * long, slow float - the one piece of ambient motion in the template.
+ */
+[data-template='lumiere'] .lumi-drift {
+  border-radius: 62% 38% 44% 56% / 54% 46% 54% 46%;
+  background:
+    radial-gradient(circle at 34% 30%, rgb(226 199 154 / 62%), transparent 62%),
+    radial-gradient(circle at 72% 74%, var(--lumi-mauve-soft), transparent 66%),
+    linear-gradient(150deg, var(--lumi-paper-3), var(--lumi-paper-2));
+  filter: blur(0.5px);
+  animation: lumi-float 26s var(--lumi-ease) infinite alternate;
+}
+
+@keyframes lumi-float {
+  from {
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+  }
+  to {
+    transform: translate3d(-2.5%, -4%, 0) rotate(8deg) scale(1.06);
+  }
+}
+
+/* ---------------------------------------------------------------- buttons */
+
+[data-template='lumiere'] .lumi-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  border-radius: 999px;
+  padding: 0.95rem 1.9rem;
+  font-family: var(--lumi-sans);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  transition:
+    background-color 420ms var(--lumi-ease),
+    color 420ms var(--lumi-ease),
+    box-shadow 420ms var(--lumi-ease),
+    transform 420ms var(--lumi-ease);
+}
+
+[data-template='lumiere'] .lumi-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+}
+
+[data-template='lumiere'] .lumi-btn--solid {
+  background: var(--lumi-ink);
+  color: var(--lumi-paper-2);
+  box-shadow: 0 14px 30px -18px var(--lumi-shadow-deep);
+}
+
+[data-template='lumiere'] .lumi-btn--solid:hover:not(:disabled) {
+  background: var(--lumi-mauve-deep);
+}
+
+[data-template='lumiere'] .lumi-btn--ghost {
+  background: transparent;
+  color: var(--lumi-ink);
+  box-shadow: inset 0 0 0 1px var(--lumi-rule-strong);
+}
+
+[data-template='lumiere'] .lumi-btn--ghost:hover:not(:disabled) {
+  background: var(--lumi-paper-2);
+  box-shadow: inset 0 0 0 1px var(--lumi-ink);
+}
+
+/* On the plum inverse the solid button flips to paper so it still reads. */
+[data-template='lumiere'] .lumi-inverse .lumi-btn--solid {
+  background: var(--lumi-paper-2);
+  /* NOT `--lumi-ink`: this band re-points it to cream, which erased the label. */
+  color: var(--lumi-ink-fixed);
+}
+
+[data-template='lumiere'] .lumi-inverse .lumi-btn--solid:hover:not(:disabled) {
+  background: var(--lumi-accent);
+  color: var(--lumi-ink-fixed);
+}
+
+[data-template='lumiere'] .lumi-inverse .lumi-btn--ghost {
+  color: var(--lumi-paper-2);
+  box-shadow: inset 0 0 0 1px rgb(247 239 233 / 40%);
+}
+
+[data-template='lumiere'] .lumi-inverse .lumi-btn--ghost:hover:not(:disabled) {
+  background: rgb(247 239 233 / 10%);
+  box-shadow: inset 0 0 0 1px var(--lumi-paper-2);
+}
+
+/* ------------------------------------------------------------------ chips */
+
+/* The shop's category filter. A pill that fills when it is the active filter. */
+[data-template='lumiere'] .lumi-chip {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 0.55rem 1.15rem;
+  font-size: 13px;
+  color: var(--lumi-ink-soft);
+  background: var(--lumi-paper-2);
+  box-shadow: inset 0 0 0 1px var(--lumi-rule);
+  transition:
+    background-color 380ms var(--lumi-ease),
+    color 380ms var(--lumi-ease),
+    box-shadow 380ms var(--lumi-ease);
+}
+
+[data-template='lumiere'] .lumi-chip:hover {
+  box-shadow: inset 0 0 0 1px var(--lumi-rule-strong);
+}
+
+[data-template='lumiere'] .lumi-chip[aria-pressed='true'] {
+  background: var(--lumi-ink);
+  color: var(--lumi-paper-2);
+  box-shadow: inset 0 0 0 1px var(--lumi-ink);
+}
+
+/* A small static pill: a treatment note, a category tag, a stat suffix. */
+[data-template='lumiere'] .lumi-pill {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 0.3rem 0.85rem;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--lumi-accent-deep);
+  background: var(--lumi-accent-soft);
+}
+
+/* ----------------------------------------------------------- form fields */
+
+[data-template='lumiere'] .lumi-field {
+  width: 100%;
+  border: none;
+  border-radius: 22px;
+  background: var(--lumi-paper-2);
+  box-shadow: inset 0 0 0 1px var(--lumi-rule);
+  padding: 0.85rem 1.1rem;
+  font-family: var(--lumi-sans);
+  font-size: 15px;
+  color: var(--lumi-ink);
+  transition: box-shadow 380ms var(--lumi-ease);
+}
+
+[data-template='lumiere'] textarea.lumi-field {
+  border-radius: 26px;
+  resize: vertical;
+}
+
+/* A select needs the same skin but keeps the platform arrow, which is legible. */
+[data-template='lumiere'] select.lumi-field {
+  appearance: none;
+  background-image: linear-gradient(transparent, transparent);
+  padding-right: 2.5rem;
+}
+
+[data-template='lumiere'] .lumi-field::placeholder {
+  color: var(--lumi-ink-faint);
+}
+
+[data-template='lumiere'] .lumi-field:hover {
+  box-shadow: inset 0 0 0 1px var(--lumi-rule-strong);
+}
+
+/* ------------------------------------------------------------- ornaments */
+
+/*
+ * The rose-gold hairline: a thin champagne rule with a rotated diamond at its
+ * centre. It is the template's divider motif and appears between every band.
+ */
+[data-template='lumiere'] .lumi-hairline {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.9rem;
+}
+
+[data-template='lumiere'] .lumi-hairline::before,
+[data-template='lumiere'] .lumi-hairline::after {
+  content: '';
+  height: 1px;
+  flex: 1 1 0;
+  background: linear-gradient(90deg, transparent, var(--lumi-accent), transparent);
+}
+
+[data-template='lumiere'] .lumi-hairline > span {
+  width: 7px;
+  height: 7px;
+  transform: rotate(45deg);
+  background: var(--lumi-accent);
+}
+
+/*
+ * The champagne rule that draws itself under a section heading once revealed -
+ * the reward for scrolling that costs nothing when motion is off.
+ */
+[data-template='lumiere'] .lumi-underline {
+  display: block;
+  height: 1px;
+  width: 0;
+  background: linear-gradient(90deg, var(--lumi-accent), var(--lumi-mauve));
+  transition: width 900ms var(--lumi-ease) 120ms;
+}
+
+[data-template='lumiere'] .lumi-revealed .lumi-underline {
+  width: 4rem;
+}
+
+/*
+ * Fades a horizontally drifting strip out at both edges. The mask lives here
+ * rather than as a Tailwind arbitrary value because a mask stop is written as a
+ * colour, and no hex may appear outside this file.
+ */
+[data-template='lumiere'] .lumi-fade-x {
+  mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+}
+
+[data-template='lumiere'] .lumi-marquee {
+  animation: lumi-drift 68s linear infinite;
+}
+
+@keyframes lumi-drift {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    /* The strip renders its items twice; -50% lands on the seam exactly. */
+    transform: translateX(-50%);
+  }
+}
+
+/* ------------------------------------------------------------------ shades */
+
+/*
+ * A shade is never one flat colour in the hand, so the swatch is a conic
+ * gradient that turns through its own tone. Selected state is a double ring in
+ * paper then ink, which survives on any of the five fills.
+ */
+[data-template='lumiere'] .lumi-shade {
+  border-radius: 999px;
+  box-shadow: inset 0 0 0 1px var(--lumi-rule-strong);
+  transition: box-shadow 320ms var(--lumi-ease);
+}
+
+[data-template='lumiere'] .lumi-shade[aria-pressed='true'] {
+  box-shadow:
+    inset 0 0 0 1px var(--lumi-rule-strong),
+    0 0 0 2px var(--lumi-paper),
+    0 0 0 4px var(--lumi-ink);
+}
+
+[data-template='lumiere'] .lumi-shade--rose {
+  background: conic-gradient(from 40deg, var(--lumi-shade-rose), var(--lumi-paper-3), var(--lumi-shade-rose));
+}
+[data-template='lumiere'] .lumi-shade--champagne {
+  background: conic-gradient(
+    from 40deg,
+    var(--lumi-shade-champagne),
+    var(--lumi-accent),
+    var(--lumi-shade-champagne)
+  );
+}
+[data-template='lumiere'] .lumi-shade--amber {
+  background: conic-gradient(from 40deg, var(--lumi-shade-amber), var(--lumi-accent), var(--lumi-shade-amber));
+}
+[data-template='lumiere'] .lumi-shade--mauve {
+  background: conic-gradient(from 40deg, var(--lumi-shade-mauve), var(--lumi-mauve), var(--lumi-shade-mauve));
+}
+[data-template='lumiere'] .lumi-shade--neroli {
+  background: conic-gradient(
+    from 40deg,
+    var(--lumi-shade-neroli),
+    var(--lumi-paper-2),
+    var(--lumi-shade-neroli)
+  );
+}
+
+/* ------------------------------------------------------------- vessels */
+
+/*
+ * Products are drawn, not photographed.
+ *
+ * Each `.lumi-vessel--<key>` composes a recognisable container from two pseudo-
+ * elements on an arch-shaped host: `::before` is the cap, collar or pipette and
+ * `::after` is the body, shaped with border-radius rather than clip-path so the
+ * glass reads soft. That keeps the download free of binary assets and lets one
+ * small element scale from a thumbnail to a hero without going soft.
+ *
+ * The host must carry Tailwind's `relative` in markup - see the warning at the
+ * top of this file for why it cannot be set here.
+ */
+[data-template='lumiere'] .lumi-vessel::before,
+[data-template='lumiere'] .lumi-vessel::after {
+  content: '';
+  position: absolute;
+}
+
+/* Bottle: a tall shouldered flask under a slim collar. */
+[data-template='lumiere'] .lumi-vessel--bottle::before {
+  left: 44%;
+  right: 44%;
+  top: 22%;
+  height: 9%;
+  border-radius: 6px 6px 3px 3px;
+  background: linear-gradient(160deg, var(--lumi-accent), var(--lumi-accent-deep));
+}
+
+[data-template='lumiere'] .lumi-vessel--bottle::after {
+  left: 33%;
+  right: 33%;
+  top: 31%;
+  bottom: 16%;
+  border-radius: 34% 34% 26% 26% / 22% 22% 12% 12%;
+  background: linear-gradient(148deg, var(--lumi-paper-2) 4%, var(--lumi-shade-rose) 58%, var(--lumi-accent-deep) 140%);
+  box-shadow: inset -6px -10px 22px -12px var(--lumi-shadow-deep);
+}
+
+/* Jar: a low, wide balm pot with a broad champagne lid. */
+[data-template='lumiere'] .lumi-vessel--jar::before {
+  left: 28%;
+  right: 28%;
+  top: 40%;
+  height: 12%;
+  border-radius: 999px 999px 8px 8px;
+  background: linear-gradient(160deg, var(--lumi-shade-champagne), var(--lumi-accent-deep));
+}
+
+[data-template='lumiere'] .lumi-vessel--jar::after {
+  left: 30%;
+  right: 30%;
+  top: 51%;
+  bottom: 20%;
+  border-radius: 10px 10px 26px 26px;
+  background: linear-gradient(148deg, var(--lumi-paper-2), var(--lumi-shade-mauve) 130%);
+  box-shadow: inset -6px -8px 20px -12px var(--lumi-shadow-deep);
+}
+
+/* Dropper: a narrow amber phial with a long pipette bulb. */
+[data-template='lumiere'] .lumi-vessel--dropper::before {
+  left: 46%;
+  right: 46%;
+  top: 18%;
+  height: 16%;
+  border-radius: 999px 999px 4px 4px;
+  background: linear-gradient(160deg, var(--lumi-mauve), var(--lumi-mauve-deep));
+}
+
+[data-template='lumiere'] .lumi-vessel--dropper::after {
+  left: 38%;
+  right: 38%;
+  top: 34%;
+  bottom: 18%;
+  border-radius: 18px 18px 24px 24px;
+  background: linear-gradient(148deg, var(--lumi-shade-champagne) 2%, var(--lumi-shade-amber) 70%, var(--lumi-ink) 190%);
+  box-shadow: inset -5px -8px 18px -10px var(--lumi-shadow-deep);
+}
+
+/* Tube: a soft squeeze tube tapering to a flat crimped seam. */
+[data-template='lumiere'] .lumi-vessel--tube::before {
+  left: 45%;
+  right: 45%;
+  top: 20%;
+  height: 8%;
+  border-radius: 4px;
+  background: linear-gradient(160deg, var(--lumi-accent), var(--lumi-accent-deep));
+}
+
+[data-template='lumiere'] .lumi-vessel--tube::after {
+  left: 36%;
+  right: 36%;
+  top: 27%;
+  bottom: 18%;
+  border-radius: 14px 14px 40% 40% / 10px 10px 30% 30%;
+  background: linear-gradient(148deg, var(--lumi-paper-2), var(--lumi-shade-rose) 120%);
+  box-shadow: inset -6px -10px 22px -14px var(--lumi-shadow-deep);
+}
+
+/* Compact: a round powder case, half-open, catching the light on its lid. */
+[data-template='lumiere'] .lumi-vessel--compact::before {
+  left: 24%;
+  right: 24%;
+  top: 34%;
+  height: 22%;
+  border-radius: 999px;
+  background: conic-gradient(
+    from 210deg,
+    var(--lumi-shade-champagne),
+    var(--lumi-accent),
+    var(--lumi-shade-champagne)
+  );
+}
+
+[data-template='lumiere'] .lumi-vessel--compact::after {
+  left: 30%;
+  right: 30%;
+  top: 55%;
+  bottom: 22%;
+  border-radius: 999px 999px 44% 44%;
+  background: linear-gradient(148deg, var(--lumi-paper-2), var(--lumi-shade-mauve) 150%);
+  box-shadow: inset -4px -8px 18px -12px var(--lumi-shadow-deep);
+}
+
+/* Mist: an atomiser with a squared shoulder and a fine spray head. */
+[data-template='lumiere'] .lumi-vessel--mist::before {
+  left: 45%;
+  right: 45%;
+  top: 16%;
+  height: 12%;
+  border-radius: 4px 4px 2px 2px;
+  background: linear-gradient(160deg, var(--lumi-accent), var(--lumi-ink) 180%);
+}
+
+[data-template='lumiere'] .lumi-vessel--mist::after {
+  left: 34%;
+  right: 34%;
+  top: 30%;
+  bottom: 18%;
+  border-radius: 18px 18px 22px 22px;
+  background: linear-gradient(148deg, var(--lumi-paper-2) 2%, var(--lumi-shade-neroli) 46%, var(--lumi-accent) 150%);
+  box-shadow: inset -6px -10px 22px -12px var(--lumi-shadow-deep);
+}
+
+/* ---------------------------------------------------------- portraits */
+
+/*
+ * A therapist's initials inside an arch, in place of a photograph. Real salons
+ * would drop a portrait in here; the point is that the layout does not change
+ * when they do.
+ */
+[data-template='lumiere'] .lumi-portrait {
+  display: grid;
+  place-items: center;
+  border-radius: 999px 999px 36px 36px;
+  background:
+    radial-gradient(ellipse 70% 44% at 50% 34%, var(--lumi-mauve-soft), transparent 70%),
+    linear-gradient(160deg, var(--lumi-paper-2), var(--lumi-paper-3));
+  box-shadow: 0 18px 40px -32px var(--lumi-shadow-deep);
+  font-family: var(--lumi-serif);
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  color: var(--lumi-accent-deep);
+}
+
+/* ------------------------------------------------- reduced motion */
+
+/*
+ * Everything above that moves is decoration, so under a reduced-motion request
+ * it simply stops: the drifting petal, the testimonial strip, the self-drawing
+ * rule, every lift and every transition, plus smooth scrolling itself.
+ */
+@media (prefers-reduced-motion: reduce) {
+  [data-template='lumiere'] {
+    scroll-behavior: auto;
+  }
+
+  [data-template='lumiere'] .lumi-drift,
+  [data-template='lumiere'] .lumi-marquee {
+    animation: none;
+  }
+
+  [data-template='lumiere'] .lumi-underline,
+  [data-template='lumiere'] .lumi-revealed .lumi-underline {
+    width: 4rem;
+    transition: none;
+  }
+
+  [data-template='lumiere'] .lumi-panel,
+  [data-template='lumiere'] .lumi-arch,
+  [data-template='lumiere'] .lumi-btn,
+  [data-template='lumiere'] .lumi-chip,
+  [data-template='lumiere'] .lumi-field,
+  [data-template='lumiere'] .lumi-shade {
+    transition: none;
+  }
+
+  [data-template='lumiere'] .lumi-lift:hover .lumi-panel,
+  [data-template='lumiere'] .lumi-lift:focus-visible .lumi-panel,
+  [data-template='lumiere'] .lumi-lift:hover .lumi-arch,
+  [data-template='lumiere'] .lumi-lift:focus-visible .lumi-arch,
+  [data-template='lumiere'] .lumi-btn:hover:not(:disabled) {
+    transform: none;
+  }
+}

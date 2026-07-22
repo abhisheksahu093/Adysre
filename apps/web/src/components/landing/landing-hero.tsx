@@ -2,7 +2,7 @@
 
 import { motion, useReducedMotion, type Variants } from 'framer-motion';
 import { useTranslations } from 'next-intl';
-import { ArrowRight, Sparkles, Check } from 'lucide-react';
+import { ArrowRight, Sparkles, Check, PenTool } from 'lucide-react';
 import { buttonVariants, cn } from '@adysre/ui';
 import { Link } from '@/i18n/navigation';
 import { FEATURE_MODULES, LANDING_LINKS } from '@/data/landing';
@@ -65,19 +65,34 @@ export function LandingHero() {
             {t('hero.subtitle')}
           </motion.p>
 
-          <motion.div variants={item} className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <Link
-              href={LANDING_LINKS.app}
-              className={cn(buttonVariants({ size: 'lg' }), 'w-full gap-1.5 sm:w-auto')}
-            >
-              {t('hero.ctaPrimary')}
-              <ArrowRight className="h-4 w-4" aria-hidden />
-            </Link>
+          {/* Stacked full-width on phones - the labels are `whitespace-nowrap`,
+              so a two-up mobile row would overflow in the longer locales. From
+              `sm` up the three sit on one wrapping row. */}
+          <motion.div
+            variants={item}
+            className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row sm:flex-wrap"
+          >
             <Link
               href={LANDING_LINKS.components}
               className={cn(buttonVariants({ variant: 'outline', size: 'lg' }), 'w-full sm:w-auto')}
             >
-              {t('hero.ctaSecondary')}
+              {t('hero.ctaComponents')}
+            </Link>
+            {/* The playground is the headline action, so it takes the filled
+                variant and sits between the two outline links. */}
+            <Link
+              href={LANDING_LINKS.designPlayground}
+              className={cn(buttonVariants({ size: 'lg' }), 'w-full gap-1.5 sm:w-auto')}
+            >
+              <PenTool className="h-4 w-4" aria-hidden />
+              {t('hero.ctaPlayground')}
+            </Link>
+            <Link
+              href={LANDING_LINKS.app}
+              className={cn(buttonVariants({ variant: 'outline', size: 'lg' }), 'w-full gap-1.5 sm:w-auto')}
+            >
+              {t('hero.ctaWorkspace')}
+              <ArrowRight className="h-4 w-4" aria-hidden />
             </Link>
           </motion.div>
 

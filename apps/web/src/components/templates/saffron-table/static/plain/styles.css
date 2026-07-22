@@ -1,0 +1,627 @@
+/*
+ * SAFFRON - the Tailwind-free build.
+ *
+ * `saffron.css` already carries the tokens, the plated compositions, the FAQ,
+ * the field and the motion. This file adds what Tailwind was doing in the other
+ * build - layout, spacing and type - against semantic class names, so the site
+ * is two stylesheets and no toolchain.
+ */
+@import './saffron.css';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+p,
+ul,
+dl,
+dd,
+figure {
+  margin: 0;
+}
+
+ul {
+  padding: 0;
+  list-style: none;
+}
+
+/* ---- Layout ------------------------------------------------------------ */
+
+.saf-shell {
+  max-width: 72rem;
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .saf-shell {
+    padding-inline: 2.5rem;
+  }
+}
+
+.saf-section {
+  padding-block: 6rem;
+  scroll-margin-top: 6rem;
+}
+
+@media (min-width: 640px) {
+  .saf-section {
+    padding-block: 8rem;
+  }
+}
+
+.saf-section--tinted {
+  background: var(--saf-paper-2);
+}
+
+.saf-narrow {
+  max-width: 48rem;
+}
+
+.saf-measure {
+  max-width: 42rem;
+}
+
+/* ---- Type -------------------------------------------------------------- */
+
+.saf-display {
+  margin-top: 1.75rem;
+  font-size: clamp(3rem, 6vw, 4.5rem);
+  line-height: 1.06;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
+.saf-display em {
+  font-style: normal;
+  color: var(--saf-accent);
+}
+
+.saf-h2 {
+  margin-top: 1.5rem;
+  font-size: clamp(2.25rem, 4vw, 3rem);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+.saf-h3 {
+  font-size: 1.5rem;
+  letter-spacing: -0.01em;
+  font-weight: 400;
+}
+
+.saf-body {
+  margin-top: 1.75rem;
+  font-size: 17px;
+  line-height: 1.85;
+  color: var(--saf-ink-soft);
+}
+
+.saf-caps {
+  font-size: 11px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--saf-ink-faint);
+}
+
+/* ---- Header ------------------------------------------------------------ */
+
+.saf-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  width: 100%;
+  border-bottom: 1px solid transparent;
+  transition: background-color 500ms ease, border-color 500ms ease;
+}
+
+.saf-header__bar {
+  display: flex;
+  height: 5rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.saf-wordmark {
+  font-size: 1.25rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+.saf-nav {
+  display: none;
+  align-items: center;
+  gap: 2.5rem;
+}
+
+@media (min-width: 768px) {
+  .saf-nav {
+    display: flex;
+  }
+}
+
+.saf-nav a {
+  font-size: 0.875rem;
+  color: var(--saf-ink-soft);
+  transition: color 200ms ease;
+}
+
+.saf-nav a:hover {
+  color: var(--saf-accent);
+}
+
+.saf-menu-toggle {
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 1px solid var(--saf-rule);
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+/* Must follow the rule above: same specificity, so source order decides. */
+@media (min-width: 768px) {
+  .saf-menu-toggle {
+    display: none;
+  }
+}
+
+.saf-mobile-menu {
+  border-top: 1px solid var(--saf-rule);
+  background: var(--saf-paper);
+}
+
+.saf-mobile-menu a {
+  display: block;
+  padding-block: 0.625rem;
+  font-size: 0.875rem;
+  color: var(--saf-ink-soft);
+}
+
+@media (min-width: 768px) {
+  .saf-mobile-menu {
+    display: none;
+  }
+}
+
+/* ---- Buttons ----------------------------------------------------------- */
+
+.saf-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 2rem;
+  border: 0;
+  font-family: inherit;
+  font-size: 0.75rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 300ms ease, color 300ms ease;
+}
+
+.saf-btn--solid {
+  background: var(--saf-ink);
+  color: var(--saf-paper);
+}
+
+.saf-btn--solid:hover {
+  background: var(--saf-accent);
+}
+
+.saf-btn--quiet {
+  padding-inline: 0.5rem;
+  background: transparent;
+  color: var(--saf-ink-soft);
+}
+
+.saf-btn--quiet:hover {
+  color: var(--saf-accent);
+}
+
+.saf-btn--outline {
+  padding: 0.625rem 1.25rem;
+  border: 1px solid var(--saf-ink);
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+}
+
+.saf-btn--outline:hover {
+  background: var(--saf-ink);
+  color: var(--saf-paper);
+}
+
+.saf-btn--block {
+  width: 100%;
+}
+
+/* ---- Hero -------------------------------------------------------------- */
+
+.saf-hero {
+  position: relative;
+  overflow: hidden;
+  padding-block: 4rem 6rem;
+}
+
+@media (min-width: 640px) {
+  .saf-hero {
+    padding-block: 6rem 8rem;
+  }
+}
+
+.saf-hero__grid {
+  display: grid;
+  gap: 4rem;
+}
+
+@media (min-width: 1024px) {
+  .saf-hero__grid {
+    grid-template-columns: 1.05fr 0.95fr;
+    align-items: center;
+    gap: 5rem;
+  }
+}
+
+.saf-hero__actions {
+  margin-top: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+@media (min-width: 640px) {
+  .saf-hero__actions {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+.saf-figures {
+  margin-top: 4rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  max-width: 32rem;
+}
+
+.saf-figures dd {
+  font-size: 2.25rem;
+}
+
+.saf-figures dt {
+  margin-top: 0.5rem;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--saf-ink-faint);
+}
+
+.saf-plate-stack {
+  position: relative;
+  margin-inline: auto;
+  width: 100%;
+  max-width: 28rem;
+}
+
+@media (min-width: 1024px) {
+  .saf-plate-stack {
+    max-width: none;
+  }
+}
+
+.saf-plate-stack__square {
+  position: relative;
+  aspect-ratio: 1 / 1;
+}
+
+.saf-plate-stack__main {
+  position: absolute;
+  inset: 0;
+}
+
+.saf-plate-stack__small {
+  position: absolute;
+  bottom: -1.5rem;
+  left: -1.5rem;
+  width: 8rem;
+  height: 8rem;
+}
+
+@media (min-width: 640px) {
+  .saf-plate-stack__small {
+    bottom: -2.5rem;
+    left: -2.5rem;
+    width: 11rem;
+    height: 11rem;
+  }
+}
+
+/* ---- Accolades --------------------------------------------------------- */
+
+.saf-accolades {
+  border-block: 1px solid var(--saf-rule);
+  padding-block: 1.5rem;
+}
+
+.saf-accolades__viewport {
+  position: relative;
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+}
+
+.saf-marquee {
+  display: flex;
+  width: max-content;
+  align-items: center;
+  gap: 4rem;
+  padding-right: 4rem;
+}
+
+.saf-marquee__row {
+  display: flex;
+  align-items: center;
+  gap: 4rem;
+  padding-right: 4rem;
+}
+
+.saf-marquee__row span {
+  white-space: nowrap;
+  font-size: 11px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--saf-ink-faint);
+}
+
+/* ---- Story ------------------------------------------------------------- */
+
+.saf-split {
+  display: grid;
+  gap: 4rem;
+}
+
+@media (min-width: 1024px) {
+  .saf-split {
+    grid-template-columns: 0.9fr 1.1fr;
+    align-items: center;
+    gap: 6rem;
+  }
+
+  .saf-split--even {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+  }
+}
+
+.saf-portrait {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  padding: 2rem;
+}
+
+.saf-portrait__plate {
+  position: absolute;
+  left: 2rem;
+  right: 2rem;
+  top: 50%;
+  aspect-ratio: 1 / 1;
+  transform: translateY(-50%);
+}
+
+.saf-portrait__caption {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 2rem;
+}
+
+.saf-list {
+  margin-top: 2.5rem;
+  border-block: 1px solid var(--saf-rule);
+}
+
+.saf-list li {
+  padding-block: 1rem;
+  font-size: 15px;
+  color: var(--saf-ink-soft);
+}
+
+.saf-list li + li {
+  border-top: 1px solid var(--saf-rule);
+}
+
+/* ---- Menu & reasons ---------------------------------------------------- */
+
+.saf-menu {
+  margin-top: 4rem;
+  display: grid;
+  column-gap: 4rem;
+}
+
+@media (min-width: 640px) {
+  .saf-menu {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.saf-menu article {
+  border-top: 1px solid var(--saf-rule);
+  padding-block: 2.25rem;
+}
+
+.saf-menu p {
+  margin-top: 0.75rem;
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--saf-ink-soft);
+}
+
+.saf-reasons {
+  margin-top: 4rem;
+  display: grid;
+  gap: 3.5rem 4rem;
+}
+
+@media (min-width: 640px) {
+  .saf-reasons {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.saf-reason {
+  display: flex;
+  gap: 1.75rem;
+}
+
+.saf-reason p {
+  margin-top: 0.75rem;
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--saf-ink-soft);
+}
+
+/* ---- Reservations ------------------------------------------------------ */
+
+.saf-details {
+  margin-top: 3rem;
+  border-block: 1px solid var(--saf-rule);
+}
+
+.saf-details > div {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding-block: 1rem;
+}
+
+.saf-details > div + div {
+  border-top: 1px solid var(--saf-rule);
+}
+
+.saf-details dd {
+  text-align: right;
+  font-size: 16px;
+}
+
+.saf-form {
+  padding: 2rem;
+}
+
+@media (min-width: 640px) {
+  .saf-form {
+    padding: 2.5rem;
+  }
+}
+
+.saf-form__grid {
+  display: grid;
+  gap: 1.75rem;
+}
+
+.saf-form label span {
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.saf-form button {
+  margin-top: 2.25rem;
+}
+
+.saf-form__status {
+  margin-top: 1rem;
+  min-height: 1.25rem;
+  text-align: center;
+  font-size: 13px;
+  color: var(--saf-ink-faint);
+}
+
+/* ---- FAQ --------------------------------------------------------------- */
+
+.saf-faq {
+  margin-top: 3.5rem;
+  border-top: 1px solid var(--saf-rule);
+}
+
+/* ---- Footer ------------------------------------------------------------ */
+
+.saf-footer {
+  border-top: 1px solid var(--saf-rule);
+  background: var(--saf-paper-2);
+  padding-block: 4rem;
+}
+
+@media (min-width: 640px) {
+  .saf-footer {
+    padding-block: 5rem;
+  }
+}
+
+.saf-footer__grid {
+  display: grid;
+  gap: 3rem;
+}
+
+@media (min-width: 640px) {
+  .saf-footer__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .saf-footer__grid {
+    grid-template-columns: 1.4fr repeat(3, 1fr);
+  }
+}
+
+.saf-footer__tagline {
+  margin-top: 1.25rem;
+  max-width: 20rem;
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--saf-ink-soft);
+}
+
+.saf-footer__links {
+  margin-top: 1.25rem;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.saf-footer__links a {
+  font-size: 15px;
+  color: var(--saf-ink-soft);
+  transition: color 200ms ease;
+}
+
+.saf-footer__links a:hover {
+  color: var(--saf-accent);
+}
+
+.saf-footer__legal {
+  margin-top: 4rem;
+  border-top: 1px solid var(--saf-rule);
+  padding-top: 1.5rem;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--saf-ink-faint);
+}

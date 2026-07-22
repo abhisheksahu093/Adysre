@@ -1,0 +1,324 @@
+/*
+ * CADENCE - template-scoped design tokens.
+ *
+ * A template is a standalone artifact with its own brand, so it cannot inherit
+ * the app's tokens - it must look like a different company. It still may not
+ * scatter raw colour through markup (Rule 6), so the whole palette is declared
+ * here, scoped to `[data-template='cadence']`, and every section references the
+ * variables only. This file is the single place CADENCE's colour exists.
+ *
+ * Deliberately friendly and energetic: warm cream, deep aubergine ink, a vivid
+ * violet primary and a lime highlight, with radii large enough that nothing on
+ * the page has a sharp corner.
+ */
+
+[data-template='cadence'] {
+  --cad-cream: #fdfaf5;
+  --cad-cream-warm: #f7f0e4;
+  --cad-cream-deep: #ece0cd;
+
+  --cad-ink: #221033;
+  --cad-ink-deep: #170a24;
+  --cad-ink-mid: #3a1c55;
+
+  /* Ink on cream. */
+  --cad-ink-soft: rgb(34 16 51 / 74%);
+  /*
+   * 62%, not the 50% the eye would pick: this carries 11-13px labels on cream,
+   * and anything lighter drops the blend under 4.5:1 and fails AA outright.
+   */
+  --cad-ink-faint: rgb(34 16 51 / 62%);
+  --cad-rule: rgb(34 16 51 / 12%);
+  --cad-rule-strong: rgb(34 16 51 / 24%);
+
+  --cad-violet: #7c3aed;
+  --cad-violet-deep: #5b21b6;
+  --cad-violet-bright: #a78bfa;
+  --cad-violet-soft: rgb(124 58 237 / 12%);
+
+  --cad-lime: #a3e635;
+  --cad-lime-soft: rgb(163 230 53 / 26%);
+  /*
+   * Lime is a highlight, not a text colour: #a3e635 on cream sits near 1.6:1
+   * and fails AA outright. Anything that has to be *read* in the lime family
+   * uses this darker olive instead, which clears AA on cream and on lime.
+   */
+  --cad-lime-ink: #3f6212;
+
+  /* Type on the single inverted section. */
+  --cad-on-ink: #fdfaf5;
+  --cad-on-ink-soft: rgb(253 250 245 / 78%);
+  --cad-on-ink-faint: rgb(253 250 245 / 56%);
+  --cad-rule-inverse: rgb(253 250 245 / 18%);
+
+  /* Very generous, per the art direction: nothing here has a sharp corner. */
+  --cad-radius-xl: 65px;
+  --cad-radius: 40px;
+  --cad-radius-sm: 22px;
+  --cad-radius-pill: 999px;
+
+  --cad-shadow: 0 30px 70px -40px rgb(34 16 51 / 45%);
+  --cad-shadow-lift: 0 44px 90px -44px rgb(34 16 51 / 55%);
+
+  /* One easing curve for the whole template, matched by the JS variants. */
+  --cad-ease: cubic-bezier(0.16, 1, 0.3, 1);
+
+  color: var(--cad-ink);
+  background-color: var(--cad-cream);
+  /*
+   * A rounded geometric stack. System faces only: a downloaded template must
+   * run with no network request and no font file in the zip, so this leans on
+   * ui-rounded where it exists and falls back to a friendly grotesque.
+   */
+  font-family: ui-rounded, 'SF Pro Rounded', 'Hiragino Maru Gothic ProN', Quicksand, Nunito,
+    'Avenir Next', 'Segoe UI Variable Display', Inter, system-ui, sans-serif;
+  /* In-page jumps (the curriculum, the catalogue) glide rather than cut. */
+  scroll-behavior: smooth;
+}
+
+/* Lime-family eyebrow above every section heading, on cream. */
+[data-template='cadence'] .cad-eyebrow {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--cad-lime-ink);
+}
+
+/* The same eyebrow on the inverted section, where lime finally passes as type. */
+[data-template='cadence'] .cad-eyebrow-inverse {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--cad-lime);
+}
+
+/*
+ * Display type. The big headlines are the template's signature, so their scale
+ * lives here once rather than as a different arbitrary size on every page.
+ */
+[data-template='cadence'] .cad-display {
+  font-size: clamp(2.75rem, 7.5vw, 6.875rem);
+  font-weight: 700;
+  line-height: 0.95;
+  letter-spacing: -0.035em;
+}
+
+[data-template='cadence'] .cad-display-sm {
+  font-size: clamp(2.25rem, 5vw, 3.75rem);
+  font-weight: 700;
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+}
+
+/*
+ * Hours, prices, ratings and module numbers sit in aligned columns across a
+ * grid of cards, so their digits have to be the same width or rows wobble.
+ */
+[data-template='cadence'] .cad-figures {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+
+[data-template='cadence'] .cad-card {
+  background: var(--cad-cream);
+  border-radius: var(--cad-radius);
+  box-shadow: var(--cad-shadow);
+  transition:
+    transform 400ms var(--cad-ease),
+    box-shadow 400ms var(--cad-ease);
+}
+
+/* Hover lift. Kept in CSS with the shadow it belongs to, not split across two files. */
+[data-template='cadence'] .cad-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--cad-shadow-lift);
+}
+
+/* Same card, sitting on the inverted section. */
+[data-template='cadence'] .cad-card-inverse {
+  background: var(--cad-ink-mid);
+  border-radius: var(--cad-radius);
+}
+
+/* A panel rather than a card: warmer fill, no lift, the biggest radius. */
+[data-template='cadence'] .cad-panel {
+  background: var(--cad-cream-warm);
+  border-radius: var(--cad-radius-xl);
+}
+
+/*
+ * The course "thumbnail": layered gradients standing in for cover art. Four
+ * variants so a nine-card grid never repeats twice in a row, and not one image
+ * byte in the download.
+ *
+ * CAUTION: this rule must never set `position`. A scoped selector like
+ * `[data-template='cadence'] .cad-thumb` outranks Tailwind's single-class
+ * `.absolute`/`.relative`, so declaring position here would silently override
+ * whatever utility the usage applies. Every usage positions itself.
+ */
+[data-template='cadence'] .cad-thumb {
+  border-radius: var(--cad-radius-sm);
+  overflow: hidden;
+  background: linear-gradient(140deg, var(--cad-violet), var(--cad-violet-deep));
+}
+
+[data-template='cadence'] .cad-thumb--a {
+  background:
+    radial-gradient(circle 42% at 78% 22%, var(--cad-lime) 0 38%, transparent 40%),
+    radial-gradient(circle 55% at 18% 84%, rgb(167 139 250 / 70%) 0 46%, transparent 48%),
+    linear-gradient(140deg, var(--cad-violet), var(--cad-violet-deep));
+}
+
+[data-template='cadence'] .cad-thumb--b {
+  background:
+    repeating-linear-gradient(
+      118deg,
+      rgb(253 250 245 / 16%) 0 10px,
+      transparent 10px 30px
+    ),
+    radial-gradient(circle 40% at 82% 78%, var(--cad-lime-soft) 0 52%, transparent 54%),
+    linear-gradient(200deg, var(--cad-ink-mid), var(--cad-violet));
+}
+
+[data-template='cadence'] .cad-thumb--c {
+  background:
+    conic-gradient(from 210deg at 30% 30%, var(--cad-lime) 0 12%, transparent 12% 100%),
+    radial-gradient(circle 60% at 70% 90%, var(--cad-violet-bright) 0 44%, transparent 46%),
+    linear-gradient(160deg, var(--cad-violet-deep), var(--cad-ink));
+}
+
+[data-template='cadence'] .cad-thumb--d {
+  background:
+    repeating-radial-gradient(
+      circle at 12% 16%,
+      rgb(253 250 245 / 18%) 0 2px,
+      transparent 2px 16px
+    ),
+    linear-gradient(90deg, transparent 0 62%, var(--cad-lime) 62% 68%, transparent 68%),
+    linear-gradient(220deg, var(--cad-violet-bright), var(--cad-violet-deep));
+}
+
+/*
+ * Progress ring. `--cad-ring-fill` is registered so the conic stop can be
+ * *transitioned* - an unregistered custom property jumps rather than animates.
+ * The target percentage is the only thing a component sets inline, because it
+ * is data (a completion figure), not styling.
+ */
+@property --cad-ring-fill {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 0%;
+}
+
+[data-template='cadence'] .cad-ring {
+  --cad-ring-fill: 0%;
+  border-radius: var(--cad-radius-pill);
+  background: conic-gradient(
+    from -90deg,
+    var(--cad-violet) 0 var(--cad-ring-fill),
+    var(--cad-rule) var(--cad-ring-fill) 100%
+  );
+  /* Punches the middle out so the figure sits in a hole, not on a disc. */
+  mask: radial-gradient(circle, transparent 0 61%, black 63% 100%);
+  transition: --cad-ring-fill 1400ms var(--cad-ease);
+}
+
+/* Rings on the inverted section need a visible unfilled track. */
+[data-template='cadence'] .cad-ring-inverse {
+  background: conic-gradient(
+    from -90deg,
+    var(--cad-lime) 0 var(--cad-ring-fill),
+    var(--cad-rule-inverse) var(--cad-ring-fill) 100%
+  );
+}
+
+/* Fills once the section it lives in has been revealed, not on mount. */
+[data-template='cadence'] .cad-revealed .cad-ring {
+  --cad-ring-fill: var(--cad-ring-target, 0%);
+}
+
+/*
+ * The completion seal. A rosette drawn from a repeating conic gradient, with
+ * the ribbon as a pseudo-element. Decorative - every usage marks it aria-hidden
+ * and prints the same words as real text beside it.
+ */
+[data-template='cadence'] .cad-seal {
+  border-radius: var(--cad-radius-pill);
+  background:
+    radial-gradient(circle, var(--cad-cream) 0 62%, transparent 63%),
+    repeating-conic-gradient(
+      from 0deg,
+      var(--cad-violet) 0deg 9deg,
+      var(--cad-lime) 9deg 18deg
+    );
+}
+
+/* Two ribbon tails, cut from one square with a notch. */
+[data-template='cadence'] .cad-seal::after {
+  content: '';
+  position: absolute;
+  inset-block-start: 72%;
+  inset-inline: 26%;
+  height: 46%;
+  background: var(--cad-violet-deep);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 74%, 0 100%);
+  border-end-start-radius: 4px;
+  border-end-end-radius: 4px;
+}
+
+/* Underline that draws itself in when its section is revealed. */
+[data-template='cadence'] .cad-underline {
+  display: block;
+  height: 6px;
+  width: 0;
+  border-radius: var(--cad-radius-pill);
+  background: var(--cad-lime);
+  transition: width 900ms var(--cad-ease) 120ms;
+}
+
+[data-template='cadence'] .cad-revealed .cad-underline {
+  width: 4.5rem;
+}
+
+[data-template='cadence'] .cad-marquee {
+  animation: cad-drift 38s linear infinite;
+}
+
+@keyframes cad-drift {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    /* The strip renders its items twice; -50% lands on the seam exactly. */
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-template='cadence'] {
+    scroll-behavior: auto;
+  }
+
+  [data-template='cadence'] .cad-marquee {
+    animation: none;
+  }
+
+  [data-template='cadence'] .cad-card,
+  [data-template='cadence'] .cad-card:hover {
+    transform: none;
+    transition: none;
+  }
+
+  /* The ring is information, so it arrives filled rather than not at all. */
+  [data-template='cadence'] .cad-ring {
+    --cad-ring-fill: var(--cad-ring-target, 0%);
+    transition: none;
+  }
+
+  [data-template='cadence'] .cad-underline {
+    transition: none;
+    width: 4.5rem;
+  }
+}

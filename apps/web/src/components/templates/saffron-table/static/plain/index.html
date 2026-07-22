@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="en" data-template="saffron">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Saffron — Twelve courses, one long evening</title>
+    <meta
+      name="description"
+      content="A thirty-seat room in the old spice quarter, where the menu changes with the market and dinner is meant to take four hours."
+    />
+    <!-- Two stylesheets, no build step: styles.css imports the shared tokens. -->
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+
+  <body>
+    <header id="site-header" class="saf-header">
+      <div class="saf-shell saf-header__bar">
+        <a href="#top" class="saf-wordmark">Saffron</a>
+
+        <nav class="saf-nav" aria-label="Main">
+          <a href="#about">Our story</a>
+          <a href="#services">The menu</a>
+          <a href="#why">The room</a>
+          <a href="#faq">Visiting</a>
+        </nav>
+
+        <div style="display: flex; align-items: center; gap: 1rem">
+          <a href="#contact" class="saf-btn saf-btn--outline">Reserve</a>
+          <button
+            id="menu-toggle"
+            type="button"
+            class="saf-menu-toggle"
+            aria-expanded="false"
+            aria-controls="mobile-menu"
+            aria-label="Open menu"
+          >
+            &#9776;
+          </button>
+        </div>
+      </div>
+
+      <div id="mobile-menu" class="saf-mobile-menu" hidden>
+        <nav class="saf-shell" aria-label="Main" style="padding-block: 1rem">
+          <a href="#about">Our story</a>
+          <a href="#services">The menu</a>
+          <a href="#why">The room</a>
+          <a href="#faq">Visiting</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <!-- Hero -->
+      <section id="top" class="saf-hero">
+        <div class="saf-shell saf-hero__grid">
+          <div>
+            <p class="saf-eyebrow saf-reveal">Winter tasting menu — now serving</p>
+
+            <h1 class="saf-display saf-reveal" style="--saf-delay: 100ms">
+              Twelve courses,<br />
+              <em>one long evening</em>
+            </h1>
+
+            <p class="saf-body saf-reveal" style="--saf-delay: 200ms; max-width: 36rem">
+              A thirty-seat room in the old spice quarter, where the menu changes with the market and dinner is
+              meant to take four hours. Reservations open on the first of each month.
+            </p>
+
+            <div class="saf-hero__actions saf-reveal" style="--saf-delay: 300ms">
+              <a href="#contact" class="saf-btn saf-btn--solid">Reserve a table</a>
+              <a href="#services" class="saf-btn saf-btn--quiet">Read the menu</a>
+            </div>
+
+            <dl class="saf-figures saf-reveal" style="--saf-delay: 400ms">
+              <div>
+                <dd>12</dd>
+                <dt>Courses</dt>
+              </div>
+              <div>
+                <dd>30</dd>
+                <dt>Seats nightly</dt>
+              </div>
+              <div>
+                <dd>9yrs</dd>
+                <dt>On Bridge Street</dt>
+              </div>
+            </dl>
+          </div>
+
+          <div class="saf-plate-stack" data-parallax="80">
+            <div class="saf-plate-stack__square">
+              <div class="saf-plate saf-plate-stack__main" aria-hidden="true"></div>
+              <div class="saf-plate saf-plate-stack__small" aria-hidden="true"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Accolades -->
+      <section class="saf-accolades">
+        <div class="saf-accolades__viewport">
+          <div class="saf-marquee">
+            <div class="saf-marquee__row">
+              <span>Michelin Guide</span><span>World’s 50 Best — Discovery</span><span>Good Food Award</span>
+              <span>Slow Food Alliance</span><span>Terroir Prize</span><span>Harvest Table</span>
+            </div>
+            <div class="saf-marquee__row" aria-hidden="true">
+              <span>Michelin Guide</span><span>World’s 50 Best — Discovery</span><span>Good Food Award</span>
+              <span>Slow Food Alliance</span><span>Terroir Prize</span><span>Harvest Table</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Our story -->
+      <section id="about" class="saf-section">
+        <div class="saf-shell saf-split">
+          <div data-parallax="64">
+            <div class="saf-frame saf-portrait">
+              <div class="saf-plate saf-portrait__plate" aria-hidden="true"></div>
+              <span class="saf-caps saf-portrait__caption">Bridge Street, 2017</span>
+            </div>
+          </div>
+
+          <div>
+            <div class="saf-reveal">
+              <p class="saf-eyebrow">Our story</p>
+              <span class="saf-rule" style="margin-top: 1rem" aria-hidden="true"></span>
+              <h2 class="saf-h2">A kitchen built around what the market has that morning</h2>
+            </div>
+
+            <p class="saf-body saf-reveal" style="--saf-delay: 80ms">
+              Saffron began in 2017 as a supper club in the back of a spice merchant’s shop, cooking for
+              whoever turned up. The menu was whatever the growers on Bridge Street had left at closing, and it
+              changed every night out of necessity rather than principle.
+            </p>
+            <p class="saf-body saf-reveal" style="--saf-delay: 160ms">
+              Nine years later the room is our own and the principle stayed. Chef Amara Idowu writes the menu
+              each morning after the market, so no two weeks taste the same and nothing travels further than
+              the county line to reach the pass.
+            </p>
+
+            <ul class="saf-list saf-reveal" style="--saf-delay: 240ms">
+              <li>Menu rewritten daily, printed at four o’clock</li>
+              <li>Every producer within sixty miles, named on the card</li>
+              <li>Whole-animal butchery and a zero-waste larder</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- The menu -->
+      <section id="services" class="saf-section saf-section--tinted">
+        <div class="saf-shell">
+          <div class="saf-measure saf-reveal">
+            <p class="saf-eyebrow">The menu</p>
+            <span class="saf-rule" style="margin-top: 1rem" aria-hidden="true"></span>
+            <h2 class="saf-h2">Four ways to spend an evening</h2>
+            <p class="saf-body">
+              Every seating is a set menu. Tell us about allergies when you book and the kitchen will write
+              around them rather than remove a course.
+            </p>
+          </div>
+
+          <div class="saf-menu">
+            <article class="saf-reveal">
+              <h3 class="saf-h3">The tasting menu</h3>
+              <p>
+                Twelve courses across four hours, from the market that morning. £145 per guest, served to the
+                whole table.
+              </p>
+            </article>
+            <article class="saf-reveal" style="--saf-delay: 70ms">
+              <h3 class="saf-h3">The garden menu</h3>
+              <p>
+                The same twelve courses, drawn entirely from the kitchen garden and our growers. Vegan on
+                request, never an afterthought.
+              </p>
+            </article>
+            <article class="saf-reveal" style="--saf-delay: 140ms">
+              <h3 class="saf-h3">Cellar pairing</h3>
+              <p>
+                Nine glasses chosen by our sommelier, weighted toward small growers and older vintages. £95, or
+                £45 without alcohol.
+              </p>
+            </article>
+            <article class="saf-reveal" style="--saf-delay: 210ms">
+              <h3 class="saf-h3">The chef’s table</h3>
+              <p>
+                Six seats at the pass, cooked and explained by the team in front of you. Wednesdays and
+                Thursdays only.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- The room -->
+      <section id="why" class="saf-section">
+        <div class="saf-shell">
+          <div class="saf-measure saf-reveal">
+            <p class="saf-eyebrow">The room</p>
+            <span class="saf-rule" style="margin-top: 1rem" aria-hidden="true"></span>
+            <h2 class="saf-h2">Why people come back</h2>
+            <p class="saf-body">Four things we decided early, and have not been talked out of since.</p>
+          </div>
+
+          <div class="saf-reasons">
+            <div class="saf-reason saf-reveal">
+              <span class="saf-numeral" aria-hidden="true">01</span>
+              <div>
+                <h3 class="saf-h3">One kitchen, one seating</h3>
+                <p>
+                  Thirty guests, all seated within half an hour. Nobody is rushed for a second turn, because
+                  there is no second turn.
+                </p>
+              </div>
+            </div>
+            <div class="saf-reason saf-reveal" style="--saf-delay: 70ms">
+              <span class="saf-numeral" aria-hidden="true">02</span>
+              <div>
+                <h3 class="saf-h3">Growers on the card</h3>
+                <p>
+                  Every producer is named beside the course they made possible. If it is not from within sixty
+                  miles, we tell you why.
+                </p>
+              </div>
+            </div>
+            <div class="saf-reason saf-reveal" style="--saf-delay: 140ms">
+              <span class="saf-numeral" aria-hidden="true">03</span>
+              <div>
+                <h3 class="saf-h3">Service without theatre</h3>
+                <p>
+                  Our team explains a dish when it helps and steps away when it does not. No scripts, no
+                  performance, no hovering.
+                </p>
+              </div>
+            </div>
+            <div class="saf-reason saf-reveal" style="--saf-delay: 210ms">
+              <span class="saf-numeral" aria-hidden="true">04</span>
+              <div>
+                <h3 class="saf-h3">A table that keeps</h3>
+                <p>
+                  Booked for something that matters? Tell us. Anniversaries, birthdays and first dates are
+                  written into the evening.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Visiting -->
+      <section id="faq" class="saf-section saf-section--tinted">
+        <div class="saf-shell saf-narrow">
+          <div class="saf-reveal">
+            <p class="saf-eyebrow">Visiting</p>
+            <span class="saf-rule" style="margin-top: 1rem" aria-hidden="true"></span>
+            <h2 class="saf-h2">Before you book</h2>
+          </div>
+
+          <div class="saf-faq">
+            <details open>
+              <summary>How far ahead should we reserve?</summary>
+              <p>
+                Reservations for the following month open at 9am on the first, and the weekends usually go the
+                same day. Midweek tables are often available a fortnight out, and we hold six seats each night
+                for walk-ins at the counter.
+              </p>
+            </details>
+            <details>
+              <summary>Can you cook around allergies and diets?</summary>
+              <p>
+                Yes, and gladly — tell us when you book rather than on the night. The kitchen rewrites courses
+                around an allergy instead of removing them, so nobody at the table eats a shorter menu.
+              </p>
+            </details>
+            <details>
+              <summary>Is there a dress code?</summary>
+              <p>
+                None. Come as you would to a good friend’s dinner. The room is warm, so most guests leave a
+                jacket at the door.
+              </p>
+            </details>
+            <details>
+              <summary>How long is dinner?</summary>
+              <p>
+                Between three and a half and four hours for the full menu. If you have a train or a sitter to
+                relieve, say so when you arrive and we will pace the kitchen accordingly.
+              </p>
+            </details>
+            <details>
+              <summary>Do you take large groups?</summary>
+              <p>
+                Up to eight in the main room, and the whole restaurant for private dinners on Sundays and
+                Mondays. Write to us and Amara will plan the menu with you.
+              </p>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <!-- Reservations -->
+      <section id="contact" class="saf-section">
+        <div class="saf-shell saf-split saf-split--even">
+          <div class="saf-reveal">
+            <p class="saf-eyebrow">Reservations</p>
+            <span class="saf-rule" style="margin-top: 1rem" aria-hidden="true"></span>
+            <h2 class="saf-h2">Come and eat with us</h2>
+            <p class="saf-body" style="max-width: 28rem">
+              Send us the date and we will confirm within the day. For same-evening tables, please telephone
+              the restaurant — the inbox moves slower than the room does.
+            </p>
+
+            <dl class="saf-details">
+              <div>
+                <dt class="saf-caps">Address</dt>
+                <dd>14 Bridge Street, Old Spice Quarter</dd>
+              </div>
+              <div>
+                <dt class="saf-caps">Telephone</dt>
+                <dd>+44 20 7946 0312</dd>
+              </div>
+              <div>
+                <dt class="saf-caps">Dinner</dt>
+                <dd>Wednesday to Sunday, from 6pm</dd>
+              </div>
+            </dl>
+          </div>
+
+          <form id="reservation-form" class="saf-frame saf-form saf-reveal" style="--saf-delay: 120ms">
+            <div class="saf-form__grid">
+              <label>
+                <span class="saf-caps">Your name</span>
+                <input type="text" name="name" required autocomplete="name" class="saf-field" />
+              </label>
+              <label>
+                <span class="saf-caps">Email address</span>
+                <input type="email" name="email" required autocomplete="email" class="saf-field" />
+              </label>
+              <label>
+                <span class="saf-caps">Date, guests and anything we should know</span>
+                <textarea name="message" required rows="4" class="saf-field" style="resize: vertical"></textarea>
+              </label>
+            </div>
+
+            <button type="submit" class="saf-btn saf-btn--solid saf-btn--block">Request a table</button>
+            <p id="reservation-status" class="saf-form__status" aria-live="polite"></p>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer class="saf-footer">
+      <div class="saf-shell">
+        <div class="saf-footer__grid">
+          <div>
+            <p class="saf-wordmark">Saffron</p>
+            <p class="saf-footer__tagline">
+              A thirty-seat kitchen on Bridge Street, cooking what the market brought that morning.
+            </p>
+          </div>
+
+          <div>
+            <p class="saf-caps">The restaurant</p>
+            <ul class="saf-footer__links">
+              <li><a href="#top">Our story</a></li>
+              <li><a href="#top">The menu</a></li>
+              <li><a href="#top">The chef’s table</a></li>
+              <li><a href="#top">Private dining</a></li>
+            </ul>
+          </div>
+          <div>
+            <p class="saf-caps">Visiting</p>
+            <ul class="saf-footer__links">
+              <li><a href="#top">Reservations</a></li>
+              <li><a href="#top">Opening hours</a></li>
+              <li><a href="#top">Getting here</a></li>
+              <li><a href="#top">Gift vouchers</a></li>
+            </ul>
+          </div>
+          <div>
+            <p class="saf-caps">Follow</p>
+            <ul class="saf-footer__links">
+              <li><a href="#top">Instagram</a></li>
+              <li><a href="#top">Newsletter</a></li>
+              <li><a href="#top">Press</a></li>
+              <li><a href="#top">Careers</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <p class="saf-footer__legal">© 2026 Saffron. Bridge Street. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script src="./saffron.js" defer></script>
+  </body>
+</html>

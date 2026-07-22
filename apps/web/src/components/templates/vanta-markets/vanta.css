@@ -1,0 +1,461 @@
+/*
+ * VANTA - template-scoped design tokens and CSS-composed instrumentation.
+ *
+ * A template is a standalone artifact with its own brand, so it cannot inherit
+ * the app's tokens - it must look like a different company. It still may not
+ * scatter raw colour through markup (Rule 6), so the whole palette is declared
+ * here, scoped to `[data-template='vanta']`, and every section references the
+ * variables only. This file is the single place VANTA's colour exists.
+ *
+ * It is also the only place VANTA's charts exist. The template ships no images
+ * and no charting library, so the ticker strip, the area charts, the candles,
+ * the order-book ladder and the allocation donut are all built from gradients,
+ * clip-paths and pseudo-elements below.
+ *
+ * CAUTION, and this is a bug we have actually shipped: a scoped selector like
+ * `[data-template='vanta'] .vanta-card` outranks Tailwind's single-class
+ * `.absolute` / `.relative`, so no rule in this file may set `position` on an
+ * element that Tailwind positions. Pseudo-elements are exempt - nothing else
+ * places them - and every rule that positions one is marked as such.
+ */
+
+[data-template='vanta'] {
+  /* Ink, layered. Elevation is a lighter surface, never a shadow alone. */
+  --vanta-ink: #0b0f14;
+  --vanta-ink-deep: #06090c;
+  --vanta-surface: #111820;
+  --vanta-surface-2: #16202a;
+  --vanta-surface-3: #1d2935;
+
+  --vanta-line: rgb(226 240 248 / 10%);
+  --vanta-line-strong: rgb(226 240 248 / 20%);
+
+  --vanta-text: #eef4f8;
+  --vanta-muted: rgb(238 244 248 / 72%);
+  --vanta-faint: rgb(238 244 248 / 62%);
+
+  /* Direction. Always paired with a sign in the markup - never colour alone. */
+  --vanta-up: #14e0a0;
+  --vanta-up-soft: rgb(20 224 160 / 16%);
+  --vanta-up-ghost: rgb(20 224 160 / 6%);
+  --vanta-down: #ff5c5c;
+  --vanta-down-soft: rgb(255 92 92 / 16%);
+  --vanta-down-ghost: rgb(255 92 92 / 6%);
+
+  /* Brand. One violet, used for the mark, the eyebrow and a single button. */
+  --vanta-brand: #8f7bff;
+  --vanta-brand-soft: rgb(143 123 255 / 16%);
+
+  /* Allocation wedges, in legend order. Declared here so the donut and its
+     legend can never drift apart - both read the same five variables. */
+  --vanta-wedge-1: #8f7bff;
+  --vanta-wedge-2: #14e0a0;
+  --vanta-wedge-3: #2ea9d8;
+  --vanta-wedge-4: #ff5c5c;
+  --vanta-wedge-5: #4a5a6a;
+
+  /* Very large radii, deliberately set against 1px hairlines. */
+  --vanta-radius-lg: 48px;
+  --vanta-radius: 32px;
+  --vanta-radius-sm: 20px;
+  --vanta-radius-xs: 12px;
+
+  --vanta-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --vanta-shadow: 0 40px 120px -60px rgb(0 0 0 / 90%);
+
+  color: var(--vanta-text);
+  background-color: var(--vanta-ink);
+  /*
+   * System faces only: a downloaded template must run with no network request
+   * and no font file in the zip.
+   */
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+  /* In-page anchors (the FAQ, the fee table) glide rather than cut. */
+  scroll-behavior: smooth;
+}
+
+/*
+ * The mono face carries every number, ticker, spread and label. Tabular figures
+ * because prices sit in aligned columns and proportional digits visibly wobble
+ * a fourteen-row board.
+ */
+[data-template='vanta'] .vanta-mono {
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+
+/* Uppercase mono label, one step above the eyebrow in the hierarchy. */
+[data-template='vanta'] .vanta-label {
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--vanta-faint);
+}
+
+[data-template='vanta'] .vanta-eyebrow {
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 11px;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--vanta-brand);
+}
+
+/*
+ * Display type. Fluid up to roughly 120px with negative tracking and a
+ * sub-1 line height, which is what makes the mastheads read as a statement
+ * rather than as a heading.
+ */
+[data-template='vanta'] .vanta-display {
+  font-size: clamp(2.75rem, 8.6vw, 7.5rem);
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+  font-weight: 600;
+}
+
+[data-template='vanta'] .vanta-display-sm {
+  font-size: clamp(2rem, 4.4vw, 3.5rem);
+  line-height: 1;
+  letter-spacing: -0.035em;
+  font-weight: 600;
+}
+
+/* Directional text. The sign in the copy carries the meaning; this is emphasis. */
+[data-template='vanta'] .vanta-up {
+  color: var(--vanta-up);
+}
+
+[data-template='vanta'] .vanta-down {
+  color: var(--vanta-down);
+}
+
+/* ---------------------------------------------------------------- surfaces */
+
+[data-template='vanta'] .vanta-card {
+  background: linear-gradient(160deg, var(--vanta-surface-2), var(--vanta-surface));
+  border: 1px solid var(--vanta-line);
+  border-radius: var(--vanta-radius);
+  box-shadow: var(--vanta-shadow);
+}
+
+[data-template='vanta'] .vanta-card-lg {
+  border-radius: var(--vanta-radius-lg);
+}
+
+[data-template='vanta'] .vanta-card-flat {
+  background: var(--vanta-surface);
+  border: 1px solid var(--vanta-line);
+  border-radius: var(--vanta-radius-sm);
+}
+
+/* The one highlighted plan: a violet hairline instead of a heavier fill. */
+[data-template='vanta'] .vanta-card-featured {
+  border-color: var(--vanta-brand);
+  background: linear-gradient(160deg, var(--vanta-surface-3), var(--vanta-surface));
+}
+
+/* Small mono chip used for asset classes, plan labels and filter buttons. */
+[data-template='vanta'] .vanta-chip {
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  border: 1px solid var(--vanta-line-strong);
+  border-radius: 999px;
+  color: var(--vanta-faint);
+}
+
+[data-template='vanta'] .vanta-chip-active {
+  border-color: var(--vanta-brand);
+  background: var(--vanta-brand-soft);
+  color: var(--vanta-text);
+}
+
+/*
+ * Ambient blooms behind the mastheads. Two blurred radials, no image asset.
+ * Positioned by this rule because pseudo-elements have nothing else to place
+ * them; the host element takes `relative` from Tailwind.
+ */
+[data-template='vanta'] .vanta-bloom::before,
+[data-template='vanta'] .vanta-bloom::after {
+  content: '';
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(120px);
+  pointer-events: none;
+}
+
+[data-template='vanta'] .vanta-bloom::before {
+  inset-inline-start: -12%;
+  inset-block-start: -34%;
+  width: 44rem;
+  height: 44rem;
+  background: radial-gradient(circle, rgb(143 123 255 / 34%), transparent 68%);
+}
+
+[data-template='vanta'] .vanta-bloom::after {
+  inset-inline-end: -16%;
+  inset-block-start: -10%;
+  width: 34rem;
+  height: 34rem;
+  background: radial-gradient(circle, rgb(20 224 160 / 20%), transparent 70%);
+}
+
+/* Chart-paper rules, masked so they fade before they reach the copy. */
+[data-template='vanta'] .vanta-grid {
+  background-image:
+    linear-gradient(90deg, var(--vanta-line) 1px, transparent 1px),
+    linear-gradient(180deg, var(--vanta-line) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(ellipse 78% 62% at 50% 0%, rgb(0 0 0 / 100%) 30%, transparent 100%);
+}
+
+/* --------------------------------------------------------------- the charts */
+
+/*
+ * Area chart. A gradient block cut to a price silhouette with `clip-path`, and
+ * a second copy offset by one pixel acting as the trace line. Reading the
+ * polygon: pairs are x then y, y grows downward, and the last two points close
+ * the shape along the bottom edge.
+ */
+[data-template='vanta'] .vanta-area {
+  background: linear-gradient(180deg, var(--vanta-up-soft) 0%, var(--vanta-up-ghost) 55%, transparent 100%);
+  clip-path: polygon(
+    0% 82%, 6% 74%, 12% 79%, 18% 66%, 24% 71%, 30% 58%, 36% 63%, 42% 47%,
+    48% 54%, 54% 41%, 60% 46%, 66% 33%, 72% 38%, 78% 26%, 84% 30%, 92% 17%,
+    100% 12%, 100% 100%, 0% 100%
+  );
+}
+
+/* The trace: same silhouette, drawn as a thin bright band along the top edge. */
+[data-template='vanta'] .vanta-area-line {
+  background: linear-gradient(90deg, var(--vanta-brand), var(--vanta-up));
+  clip-path: polygon(
+    0% 82%, 6% 74%, 12% 79%, 18% 66%, 24% 71%, 30% 58%, 36% 63%, 42% 47%,
+    48% 54%, 54% 41%, 60% 46%, 66% 33%, 72% 38%, 78% 26%, 84% 30%, 92% 17%,
+    100% 12%, 100% 14%, 92% 19%, 84% 32%, 78% 28%, 72% 40%, 66% 35%, 60% 48%,
+    54% 43%, 48% 56%, 42% 49%, 36% 65%, 30% 60%, 24% 73%, 18% 68%, 12% 81%,
+    6% 76%, 0% 84%
+  );
+}
+
+/*
+ * Row sparklines. Six silhouettes so a fourteen-row board never places two
+ * identical shapes side by side; the shape is art direction, the row's figures
+ * are the information.
+ */
+[data-template='vanta'] .vanta-spark {
+  background: linear-gradient(180deg, var(--vanta-up-soft), transparent 92%);
+}
+
+[data-template='vanta'] .vanta-spark-down {
+  background: linear-gradient(180deg, var(--vanta-down-soft), transparent 92%);
+}
+
+[data-template='vanta'] .vanta-spark-a {
+  clip-path: polygon(0% 76%, 14% 62%, 28% 70%, 42% 48%, 56% 55%, 70% 34%, 86% 40%, 100% 18%, 100% 100%, 0% 100%);
+}
+
+[data-template='vanta'] .vanta-spark-b {
+  clip-path: polygon(0% 84%, 12% 80%, 24% 58%, 38% 66%, 52% 36%, 64% 44%, 78% 22%, 100% 14%, 100% 100%, 0% 100%);
+}
+
+[data-template='vanta'] .vanta-spark-c {
+  clip-path: polygon(0% 58%, 16% 68%, 30% 50%, 44% 60%, 58% 38%, 72% 52%, 86% 30%, 100% 36%, 100% 100%, 0% 100%);
+}
+
+[data-template='vanta'] .vanta-spark-d {
+  clip-path: polygon(0% 26%, 14% 38%, 28% 30%, 42% 52%, 56% 46%, 70% 66%, 84% 60%, 100% 80%, 100% 100%, 0% 100%);
+}
+
+[data-template='vanta'] .vanta-spark-e {
+  clip-path: polygon(0% 34%, 12% 28%, 26% 48%, 40% 42%, 54% 64%, 68% 58%, 82% 74%, 100% 86%, 100% 100%, 0% 100%);
+}
+
+[data-template='vanta'] .vanta-spark-f {
+  clip-path: polygon(0% 44%, 14% 52%, 28% 40%, 42% 58%, 56% 52%, 70% 70%, 84% 62%, 100% 78%, 100% 100%, 0% 100%);
+}
+
+/*
+ * Candlesticks. Each column is one `.vanta-candle`, and its wick and body are
+ * the two pseudo-elements - positioned here because nothing else places them,
+ * while the column itself takes `relative` from Tailwind.
+ *
+ * Colour comes from `currentColor`, so a session flips gain to loss by swapping
+ * one class rather than by restating four declarations.
+ */
+[data-template='vanta'] .vanta-candle-up {
+  color: var(--vanta-up);
+}
+
+[data-template='vanta'] .vanta-candle-down {
+  color: var(--vanta-down);
+}
+
+[data-template='vanta'] .vanta-candle::before {
+  content: '';
+  position: absolute;
+  inset-inline-start: 50%;
+  width: 1px;
+  margin-inline-start: -0.5px;
+  inset-block-end: var(--vanta-wick-b);
+  height: var(--vanta-wick-h);
+  background: currentcolor;
+  opacity: 0.5;
+}
+
+[data-template='vanta'] .vanta-candle::after {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  inset-block-end: var(--vanta-body-b);
+  height: var(--vanta-body-h);
+  border-radius: 2px;
+  background: currentcolor;
+}
+
+/*
+ * Sixteen sessions of authored geometry. Kept as `nth-child` rather than as
+ * per-candle classes so the markup stays a plain map over the session list in
+ * the content module, and so the drawing lives entirely in this file.
+ */
+[data-template='vanta'] .vanta-candles > :nth-child(1) { --vanta-body-b: 8%; --vanta-body-h: 14%; --vanta-wick-b: 4%; --vanta-wick-h: 24%; }
+[data-template='vanta'] .vanta-candles > :nth-child(2) { --vanta-body-b: 18%; --vanta-body-h: 12%; --vanta-wick-b: 13%; --vanta-wick-h: 24%; }
+[data-template='vanta'] .vanta-candles > :nth-child(3) { --vanta-body-b: 22%; --vanta-body-h: 10%; --vanta-wick-b: 17%; --vanta-wick-h: 21%; }
+[data-template='vanta'] .vanta-candles > :nth-child(4) { --vanta-body-b: 20%; --vanta-body-h: 18%; --vanta-wick-b: 15%; --vanta-wick-h: 29%; }
+[data-template='vanta'] .vanta-candles > :nth-child(5) { --vanta-body-b: 32%; --vanta-body-h: 16%; --vanta-wick-b: 27%; --vanta-wick-h: 27%; }
+[data-template='vanta'] .vanta-candles > :nth-child(6) { --vanta-body-b: 38%; --vanta-body-h: 11%; --vanta-wick-b: 33%; --vanta-wick-h: 22%; }
+[data-template='vanta'] .vanta-candles > :nth-child(7) { --vanta-body-b: 30%; --vanta-body-h: 13%; --vanta-wick-b: 25%; --vanta-wick-h: 24%; }
+[data-template='vanta'] .vanta-candles > :nth-child(8) { --vanta-body-b: 28%; --vanta-body-h: 20%; --vanta-wick-b: 23%; --vanta-wick-h: 32%; }
+[data-template='vanta'] .vanta-candles > :nth-child(9) { --vanta-body-b: 42%; --vanta-body-h: 15%; --vanta-wick-b: 37%; --vanta-wick-h: 26%; }
+[data-template='vanta'] .vanta-candles > :nth-child(10) { --vanta-body-b: 50%; --vanta-body-h: 17%; --vanta-wick-b: 45%; --vanta-wick-h: 28%; }
+[data-template='vanta'] .vanta-candles > :nth-child(11) { --vanta-body-b: 56%; --vanta-body-h: 12%; --vanta-wick-b: 51%; --vanta-wick-h: 23%; }
+[data-template='vanta'] .vanta-candles > :nth-child(12) { --vanta-body-b: 52%; --vanta-body-h: 19%; --vanta-wick-b: 47%; --vanta-wick-h: 31%; }
+[data-template='vanta'] .vanta-candles > :nth-child(13) { --vanta-body-b: 62%; --vanta-body-h: 10%; --vanta-wick-b: 57%; --vanta-wick-h: 21%; }
+[data-template='vanta'] .vanta-candles > :nth-child(14) { --vanta-body-b: 58%; --vanta-body-h: 18%; --vanta-wick-b: 53%; --vanta-wick-h: 30%; }
+[data-template='vanta'] .vanta-candles > :nth-child(15) { --vanta-body-b: 68%; --vanta-body-h: 14%; --vanta-wick-b: 63%; --vanta-wick-h: 26%; }
+[data-template='vanta'] .vanta-candles > :nth-child(16) { --vanta-body-b: 74%; --vanta-body-h: 16%; --vanta-wick-b: 69%; --vanta-wick-h: 27%; }
+
+/*
+ * Order-book depth bars. The bar element is placed by Tailwind (`absolute
+ * inset-y-0 end-0`), so this rule sets width and fill only - never `position`.
+ * Depth is authored per level below, for the same reason the candles are.
+ */
+[data-template='vanta'] .vanta-depth {
+  width: var(--vanta-depth, 0%);
+  border-radius: var(--vanta-radius-xs);
+}
+
+[data-template='vanta'] .vanta-ladder-asks .vanta-depth {
+  background: var(--vanta-down-soft);
+}
+
+[data-template='vanta'] .vanta-ladder-bids .vanta-depth {
+  background: var(--vanta-up-soft);
+}
+
+[data-template='vanta'] .vanta-ladder-asks > :nth-child(1) { --vanta-depth: 14%; }
+[data-template='vanta'] .vanta-ladder-asks > :nth-child(2) { --vanta-depth: 30%; }
+[data-template='vanta'] .vanta-ladder-asks > :nth-child(3) { --vanta-depth: 44%; }
+[data-template='vanta'] .vanta-ladder-asks > :nth-child(4) { --vanta-depth: 70%; }
+[data-template='vanta'] .vanta-ladder-asks > :nth-child(5) { --vanta-depth: 96%; }
+
+[data-template='vanta'] .vanta-ladder-bids > :nth-child(1) { --vanta-depth: 92%; }
+[data-template='vanta'] .vanta-ladder-bids > :nth-child(2) { --vanta-depth: 64%; }
+[data-template='vanta'] .vanta-ladder-bids > :nth-child(3) { --vanta-depth: 41%; }
+[data-template='vanta'] .vanta-ladder-bids > :nth-child(4) { --vanta-depth: 26%; }
+[data-template='vanta'] .vanta-ladder-bids > :nth-child(5) { --vanta-depth: 12%; }
+
+/*
+ * Allocation donut. One conic-gradient with the stops written out at the same
+ * cumulative percentages the legend prints (42 / 21 / 18 / 11 / 8), and a mask
+ * punching the hole so no second element is needed to cover the middle.
+ */
+[data-template='vanta'] .vanta-donut {
+  border-radius: 9999px;
+  background: conic-gradient(
+    from -90deg,
+    var(--vanta-wedge-1) 0 42%,
+    var(--vanta-wedge-2) 42% 63%,
+    var(--vanta-wedge-3) 63% 81%,
+    var(--vanta-wedge-4) 81% 92%,
+    var(--vanta-wedge-5) 92% 100%
+  );
+  mask-image: radial-gradient(circle, transparent 0 57%, rgb(0 0 0 / 100%) 57.5% 100%);
+}
+
+/* Legend swatches, one per wedge, reading the same five variables. */
+[data-template='vanta'] .vanta-swatch-1 { background: var(--vanta-wedge-1); }
+[data-template='vanta'] .vanta-swatch-2 { background: var(--vanta-wedge-2); }
+[data-template='vanta'] .vanta-swatch-3 { background: var(--vanta-wedge-3); }
+[data-template='vanta'] .vanta-swatch-4 { background: var(--vanta-wedge-4); }
+[data-template='vanta'] .vanta-swatch-5 { background: var(--vanta-wedge-5); }
+
+/* --------------------------------------------------------------- the motion */
+
+/* Ticker strip and venue marquee, at different speeds so they never lock step. */
+[data-template='vanta'] .vanta-ticker {
+  animation: vanta-scroll 46s linear infinite;
+}
+
+[data-template='vanta'] .vanta-marquee {
+  animation: vanta-scroll 64s linear infinite;
+}
+
+@keyframes vanta-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    /* Both strips render their items twice; -50% lands on the seam exactly. */
+    transform: translateX(-50%);
+  }
+}
+
+/* The snapshot dot. Slow, so it reads as a status light rather than an alarm. */
+[data-template='vanta'] .vanta-pulse {
+  animation: vanta-pulse 2.6s var(--vanta-ease) infinite;
+}
+
+@keyframes vanta-pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.35;
+    transform: scale(0.72);
+  }
+}
+
+/* Hairline that draws itself in when its section is revealed. */
+[data-template='vanta'] .vanta-rule {
+  display: block;
+  height: 1px;
+  width: 0;
+  background: linear-gradient(90deg, var(--vanta-brand), transparent);
+  transition: width 900ms var(--vanta-ease) 120ms;
+}
+
+[data-template='vanta'] .vanta-revealed .vanta-rule {
+  width: 6rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-template='vanta'] {
+    scroll-behavior: auto;
+  }
+
+  [data-template='vanta'] .vanta-ticker,
+  [data-template='vanta'] .vanta-marquee,
+  [data-template='vanta'] .vanta-pulse {
+    animation: none;
+  }
+
+  [data-template='vanta'] .vanta-rule {
+    transition: none;
+    width: 6rem;
+  }
+}

@@ -1123,6 +1123,109 @@
 		},
 		"allComponents": "全部组件"
 	},
+	"templates": {
+		"title": "模板",
+		"subtitle": "完整的单页网站，可实时预览、用提示词克隆，或下载为可运行的项目。每个模板都包含页头、主视觉、关于我们、服务、选择我们的理由、常见问题、联系方式和页脚。",
+		"meta": {
+			"title": "网站模板",
+			"description": "React、Next.js、Tailwind 和纯 HTML 的免费与高级单页网站模板。"
+		},
+		"empty": "暂无模板。",
+		"tiers": {
+			"free": "免费",
+			"premium": "高级"
+		},
+		"themes": {
+			"saas": "SaaS",
+			"restaurant": "餐厅",
+			"fitness": "健身",
+			"health": "健康",
+			"architecture": "建筑",
+			"legal": "法律",
+			"realEstate": "房地产",
+			"ecommerce": "电商",
+			"finance": "金融",
+			"agency": "创意机构",
+			"beauty": "美业",
+			"payments": "支付",
+			"consulting": "咨询",
+			"education": "教育"
+		},
+		"taglines": {
+			"nova": "深色玻璃质感的分析 SaaS，配渐变网格主视觉与动态计数器。",
+			"saffron": "奶油色与森林绿的温暖编辑风高级餐饮，配视差摆盘与衬线标题字体。",
+			"pulse": "医疗蓝与薄荷绿的平静圆润诊所网站，以令人安心为设计目标。",
+			"aurora": "近黑底配酸性青柠色的高能量健身房落地页，采用压缩标题字体。",
+			"atelier": "纯白建筑作品集：细线分隔、大量留白、带编号的项目索引。",
+			"verdant": "森绿与黄铜色调的房产中介网站，四个页面，含可筛选房源列表。",
+			"meridian": "藏青与金色的公司法律事务所网站，四个页面，正式而重排版。",
+			"lumen": "七页面灯具商店：商品列表、商品详情、购物车、结账、登录与注册。",
+			"kite": "洋红到橘色的张扬创意机构网站，配描边标题字体与倾斜案例卡片。",
+			"vanta": "深色交易平台，含纯 CSS K 线、盘口与实时感行情条，共五个页面。",
+			"cadence": "温暖风格的在线学院，含动画进度环、可筛选课程目录与课程大纲折叠面板。",
+			"lumiere": "裸粉与李子色的沙龙网站，七个页面：护理分类、可筛选商店、购物车与预约。",
+			"northgate": "五页面支付基础设施网站，含自动绘制的流程图与实时定价计算器。",
+			"pinnacle": "沙色与蓝色的战略咨询网站：超大字体、编号流程轨与可量化成果。"
+		},
+		"sections": {
+			"header": "页头",
+			"hero": "主视觉",
+			"about": "关于我们",
+			"services": "服务",
+			"why": "选择我们的理由",
+			"faq": "常见问题",
+			"contact": "联系方式",
+			"footer": "页脚"
+		},
+		"downloads": {
+			"nextjs": "Next.js",
+			"react": "React",
+			"tailwind": "Tailwind + HTML",
+			"html": "HTML 与 CSS"
+		},
+		"kinds": {
+			"project": "项目",
+			"static": "静态"
+		},
+		"detail": {
+			"sections": "包含的板块",
+			"prompt": "提示词",
+			"promptHint": "把它复制到任意 AI 工具，即可生成同样风格的页面。",
+			"download": "下载",
+			"downloadHint": "每次下载都是一个 ZIP，附带 README，没有多余的构建步骤。",
+			"downloadFailed": "无法生成该下载，请重试。",
+			"pages": "页面"
+		},
+		"actions": {
+			"openTab": "在新标签页打开",
+			"copyPrompt": "复制提示词",
+			"copied": "已复制",
+			"close": "关闭"
+		},
+		"pagesCount": "{count} 个页面",
+		"filters": {
+			"tabsLabel": "筛选模板",
+			"theme": "行业",
+			"allThemes": "全部",
+			"tabs": {
+				"all": "全部",
+				"free": "免费",
+				"premium": "高级",
+				"new": "最新",
+				"multipage": "多页面"
+			}
+		},
+		"locked": {
+			"title": "高级模板",
+			"body": "预览不受限制。提示词与代码下载需要高级权限。",
+			"cta": "获取高级权限",
+			"included": {
+				"preview": "完整实时预览，无需账户",
+				"prompt": "复制设计提示词",
+				"download": "下载 React、Next.js 与静态构建"
+			}
+		}
+	},
 	"palettes": {
 		"title": "调色板",
 		"subtitle": "浏览为网站、Web、移动端和桌面应用精选的调色板 -- 复制代码、编辑与交换颜色，或生成你自己的。",
@@ -1723,8 +1826,9 @@
 			"title": "团队设计与交付所需的一切",
 			"titleAccent": "都在一个从容的工作区里",
 			"subtitle": "ADYSRE 将组件、图标、调色板、渐变和提示词汇聚一处，让团队无需切换工具，就能从想法走到生产。",
-			"ctaPrimary": "打开工作区",
-			"ctaSecondary": "浏览组件",
+			"ctaComponents": "浏览组件",
+			"ctaPlayground": "打开设计工作台",
+			"ctaWorkspace": "打开工作区",
 			"trust": "全球 {count, number}+ 位开发者的信赖之选",
 			"hint": "浏览无需绑卡"
 		},

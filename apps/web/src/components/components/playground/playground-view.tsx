@@ -45,6 +45,7 @@ export function PlaygroundView({ components }: { components: LocalizedComponent[
   const palette = usePlaygroundStore((s) => s.palette);
   const setPalette = usePlaygroundStore((s) => s.setPalette);
   const contentOverrides = usePlaygroundStore((s) => s.contentOverrides);
+  const sectionStyles = usePlaygroundStore((s) => s.sectionStyles);
   const [exportOpen, setExportOpen] = useState(false);
   const [paletteChooserOpen, setPaletteChooserOpen] = useState(false);
   const [paletteGeneratorOpen, setPaletteGeneratorOpen] = useState(false);
@@ -198,6 +199,7 @@ export function PlaygroundView({ components }: { components: LocalizedComponent[
         sections={sections}
         palette={palette}
         contentOverrides={contentOverrides}
+        sectionStyles={sectionStyles}
       />
 
       <ProjectPaletteDialog

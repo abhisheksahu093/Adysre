@@ -6,6 +6,7 @@ import { tourStepsForStage, type PlaygroundStage } from '@/data/playground/tour'
 import type { PreviewDeviceId } from '@/components/components/preview-devices';
 import type { Palette } from '@/data/palettes';
 import type { EditableField } from '@/lib/playground/content';
+import type { SectionStyle, SectionStylePatch } from '@/lib/playground/section-style';
 
 /** Summary of the generated template, shown on the result screen. */
 export interface GeneratedSummary {
@@ -40,6 +41,13 @@ interface PlaygroundStore {
    * Session-only - re-read from the iframe each visit, never persisted.
    */
   sectionFields: Record<string, EditableField[]>;
+  /**
+   * Per-section background / text / border customization, keyed by SLOT id
+   * rather than slug: styling belongs to the section's place in the page, so
+   * swapping the hero for another variation keeps the look the user chose.
+   * Persisted, applied live to the preview, and baked into every export.
+   */
+  sectionStyles: Partial<Record<PlaygroundSlotId, SectionStyle>>;
 
   /** The uploaded reference, held only for the current session. */
   referenceFile: File | null;
@@ -77,6 +85,11 @@ interface PlaygroundStore {
   /** Drop every edit for one component, reverting it to its shipped content. */
   resetContent: (slug: string) => void;
 
+  /** Merge a partial style into a slot's styling (undefined values clear it). */
+  setSectionStyle: (slotId: PlaygroundSlotId, patch: SectionStylePatch) => void;
+  /** Drop a slot's styling entirely, back to the section's own design. */
+  resetSectionStyle: (slotId: PlaygroundSlotId) => void;
+
   startTour: () => void;
   goToTourStep: (step: number) => void;
   endTour: () => void;
@@ -100,6 +113,7 @@ export const usePlaygroundStore = create<PlaygroundStore>()(
       device: 'desktop',
       contentOverrides: {},
       sectionFields: {},
+      sectionStyles: {},
       referenceFile: null,
       referenceUrl: null,
       generated: null,
@@ -204,6 +218,28 @@ export const usePlaygroundStore = create<PlaygroundStore>()(
           return { contentOverrides: next };
         }),
 
+      setSectionStyle: (slotId, patch) =>
+        set((s) => {
+          const next: SectionStylePatch = { ...(s.sectionStyles[slotId] ?? {}), ...patch };
+          // An explicit `undefined` in the patch means "clear this part"; drop
+          // the key so `hasSectionStyle` and the exporters see a clean object.
+          for (const key of Object.keys(next) as (keyof SectionStyle)[]) {
+            if (next[key] === undefined) delete next[key];
+          }
+          const styles = { ...s.sectionStyles };
+          // Every remaining key is defined, so this is a complete SectionStyle.
+          if (Object.keys(next).length === 0) delete styles[slotId];
+          else styles[slotId] = next as SectionStyle;
+          return { sectionStyles: styles };
+        }),
+      resetSectionStyle: (slotId) =>
+        set((s) => {
+          if (!s.sectionStyles[slotId]) return {};
+          const styles = { ...s.sectionStyles };
+          delete styles[slotId];
+          return { sectionStyles: styles };
+        }),
+
       startTour: () => set({ tourStep: 0 }),
       goToTourStep: (step) => {
         const stepCount = tourStepsForStage(get().stage).length;
@@ -226,6 +262,7 @@ export const usePlaygroundStore = create<PlaygroundStore>()(
         device: state.device,
         tourDone: state.tourDone,
         contentOverrides: state.contentOverrides,
+        sectionStyles: state.sectionStyles,
       }),
     },
   ),

@@ -1,0 +1,380 @@
+/*
+ * KITE - template-scoped design tokens.
+ *
+ * A template is a standalone artifact with its own brand, so it cannot inherit
+ * the app's tokens - it has to look like a different company. It still may not
+ * scatter raw colour through markup (Rule 6), so the entire palette lives here,
+ * scoped to `[data-template='kite']`, and every section references the variables
+ * only. This file is the single place KITE's colour exists.
+ *
+ * Deliberately maximal: off-black, a hot magenta-to-tangerine gradient and one
+ * acid highlight, so it reads as nothing like the sand-and-forest realty
+ * template or the warm restaurant one.
+ *
+ * Contrast, checked rather than assumed, against --kite-void (#0e0e10):
+ *   magenta   #ff2d78 -> 5.4:1   (passes AA for body text)
+ *   tangerine #ff8a3d -> 8.2:1
+ *   acid      #d6ff3f -> 15.2:1
+ *   paper     #f7f5f2 -> 17.4:1
+ * Both ends of the gradient clear 4.5:1, which is why gradient text is safe on
+ * this background at any size.
+ */
+
+[data-template='kite'] {
+  --kite-void: #0e0e10;
+  --kite-void-deep: #08080a;
+  --kite-surface: #161619;
+  --kite-surface-2: #1e1e23;
+
+  --kite-magenta: #ff2d78;
+  --kite-tangerine: #ff8a3d;
+  --kite-acid: #d6ff3f;
+
+  --kite-paper: #f7f5f2;
+  --kite-paper-soft: rgb(247 245 242 / 74%);
+  --kite-paper-faint: rgb(247 245 242 / 52%);
+  --kite-line: rgb(247 245 242 / 12%);
+  --kite-line-strong: rgb(247 245 242 / 26%);
+
+  /* Text sitting ON the hot gradient - the gradient is light, so ink goes dark. */
+  --kite-on-hot: #14060c;
+
+  --kite-hot: linear-gradient(96deg, var(--kite-magenta), var(--kite-tangerine));
+
+  --kite-radius: 44px;
+  --kite-radius-lg: 64px;
+  --kite-radius-sm: 24px;
+
+  /* One curve for the whole template, so every motion feels like one hand. */
+  --kite-ease: cubic-bezier(0.16, 1, 0.3, 1);
+
+  color: var(--kite-paper);
+  background-color: var(--kite-void);
+  /*
+   * A tight grotesque stack, system faces only: a downloaded template has to
+   * run with no network request and no font file in the zip.
+   */
+  font-family: 'Helvetica Neue', Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Arial,
+    sans-serif;
+  /* In-page anchors (the process rail, the FAQ) glide rather than cut. */
+  scroll-behavior: smooth;
+}
+
+/* Acid eyebrow above every section heading. */
+[data-template='kite'] .kite-eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--kite-acid);
+}
+
+/*
+ * The display setting. Fluid to ~120px, tracked in hard, and mixed case: the
+ * whole art direction rests on the headline being uncomfortably large.
+ */
+[data-template='kite'] .kite-display {
+  font-size: clamp(2.75rem, 9vw, 7.5rem);
+  line-height: 0.92;
+  letter-spacing: -0.045em;
+  font-weight: 700;
+  text-wrap: balance;
+}
+
+/* One size down, for inner-page mastheads and section headings. */
+[data-template='kite'] .kite-display-sm {
+  font-size: clamp(2.25rem, 6vw, 4.5rem);
+  line-height: 0.96;
+  letter-spacing: -0.04em;
+  font-weight: 700;
+  text-wrap: balance;
+}
+
+/*
+ * The oversized outlined word. `-webkit-text-stroke` is the only spelling any
+ * engine actually ships, and `color: transparent` is what turns the glyph into
+ * an outline. The stroke is full-strength paper rather than a faint tint,
+ * because this word is a real part of the headline and has to be readable.
+ */
+[data-template='kite'] .kite-outline {
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--kite-paper);
+}
+
+@media (min-width: 640px) {
+  [data-template='kite'] .kite-outline {
+    -webkit-text-stroke-width: 2px;
+  }
+}
+
+/*
+ * Gradient text. Both stops clear AA against the void (see the table above), so
+ * this is used on real headline words rather than ornament only.
+ */
+[data-template='kite'] .kite-gradient-text {
+  background: var(--kite-hot);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* The filled pill: hot gradient with dark ink on top. */
+[data-template='kite'] .kite-pill-hot {
+  background: var(--kite-hot);
+  color: var(--kite-on-hot);
+  transition:
+    transform 500ms var(--kite-ease),
+    box-shadow 500ms var(--kite-ease);
+}
+
+[data-template='kite'] .kite-pill-hot:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 44px -18px var(--kite-magenta);
+}
+
+[data-template='kite'] .kite-panel {
+  background: var(--kite-surface);
+  border: 1px solid var(--kite-line);
+  border-radius: var(--kite-radius);
+}
+
+[data-template='kite'] .kite-panel-lg {
+  background: var(--kite-surface);
+  border: 1px solid var(--kite-line);
+  border-radius: var(--kite-radius-lg);
+}
+
+/*
+ * A card with a hot gradient hairline, used for the package the studio steers
+ * people toward. The border is painted as a masked background rather than a
+ * `border-image`, which keeps the very large radius intact.
+ */
+[data-template='kite'] .kite-panel-hot {
+  background: var(--kite-surface);
+  border: 1px solid transparent;
+  border-radius: var(--kite-radius);
+  background-image: linear-gradient(var(--kite-surface), var(--kite-surface)), var(--kite-hot);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+}
+
+/*
+ * The drifting mesh blob behind the hero. Three offset radial gradients, heavily
+ * blurred, moving on a long loop so the background is never quite still.
+ *
+ * CAUTION: this rule must never set `position`. A scoped selector like
+ * `[data-template='kite'] .kite-blob` outranks Tailwind's single-class
+ * `.absolute`, so declaring position here would silently drop the blob out of
+ * its intended box. Every usage positions itself with utilities.
+ */
+[data-template='kite'] .kite-blob {
+  background:
+    radial-gradient(circle at 28% 34%, var(--kite-magenta) 0%, transparent 58%),
+    radial-gradient(circle at 72% 42%, var(--kite-tangerine) 0%, transparent 55%),
+    radial-gradient(circle at 52% 76%, var(--kite-acid) 0%, transparent 45%);
+  filter: blur(90px);
+  opacity: 0.42;
+  animation: kite-drift 26s var(--kite-ease) infinite alternate;
+}
+
+@keyframes kite-drift {
+  from {
+    transform: translate3d(-4%, -2%, 0) scale(1);
+  }
+  to {
+    transform: translate3d(6%, 4%, 0) scale(1.14);
+  }
+}
+
+/*
+ * Case-study "photography", entirely in CSS. Four variants so a six-card grid
+ * never repeats side by side, and not one image byte in the download.
+ *
+ * Same caution as the blob: no `position` here. Every usage places itself, and
+ * being positioned by the usage is also what gives ::after its containing block.
+ */
+[data-template='kite'] .kite-canvas {
+  border-radius: var(--kite-radius-sm);
+  overflow: hidden;
+  background: var(--kite-surface-2);
+}
+
+[data-template='kite'] .kite-canvas--a {
+  background:
+    conic-gradient(from 210deg at 32% 34%, var(--kite-magenta) 0deg, transparent 120deg),
+    radial-gradient(circle at 78% 70%, var(--kite-tangerine) 0 26%, transparent 27%),
+    linear-gradient(150deg, var(--kite-surface-2), var(--kite-void-deep));
+}
+
+[data-template='kite'] .kite-canvas--b {
+  background:
+    repeating-linear-gradient(
+      115deg,
+      rgb(255 45 120 / 55%) 0 14px,
+      transparent 14px 34px
+    ),
+    radial-gradient(ellipse 70% 50% at 20% 100%, var(--kite-tangerine) 0 40%, transparent 42%),
+    linear-gradient(200deg, var(--kite-surface-2), var(--kite-void-deep));
+}
+
+[data-template='kite'] .kite-canvas--c {
+  background:
+    radial-gradient(circle at 50% 50%, transparent 0 28%, var(--kite-magenta) 28.5% 33%, transparent 34%),
+    radial-gradient(circle at 50% 50%, transparent 0 44%, var(--kite-tangerine) 44.5% 49%, transparent 50%),
+    radial-gradient(circle at 50% 50%, transparent 0 60%, var(--kite-acid) 60.5% 63%, transparent 64%),
+    linear-gradient(120deg, var(--kite-surface-2), var(--kite-void-deep));
+}
+
+[data-template='kite'] .kite-canvas--d {
+  background:
+    linear-gradient(90deg, transparent 0 12%, var(--kite-acid) 12% 16%, transparent 16%),
+    conic-gradient(from 40deg at 70% 30%, var(--kite-tangerine) 0deg 70deg, transparent 70deg),
+    linear-gradient(180deg, var(--kite-magenta) 0 6px, transparent 6px),
+    linear-gradient(170deg, var(--kite-surface-2), var(--kite-void-deep));
+}
+
+/* A soft bloom over every canvas, so the compositions read as lit rather than flat. */
+[data-template='kite'] .kite-canvas::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 80% 60% at 50% 0%, rgb(247 245 242 / 14%), transparent 70%);
+}
+
+/*
+ * Hover tilt on a work card. Perspective lives on the transform itself so the
+ * grid needs no wrapper, and the two directions alternate down the grid to keep
+ * the page from feeling mechanical.
+ */
+[data-template='kite'] .kite-tilt {
+  transition: transform 600ms var(--kite-ease);
+  transform-style: preserve-3d;
+}
+
+[data-template='kite'] .kite-tilt--l:hover,
+[data-template='kite'] .kite-tilt--l:focus-within {
+  transform: perspective(1100px) rotateX(3.5deg) rotateY(-5deg) translateY(-10px);
+}
+
+[data-template='kite'] .kite-tilt--r:hover,
+[data-template='kite'] .kite-tilt--r:focus-within {
+  transform: perspective(1100px) rotateX(3.5deg) rotateY(5deg) translateY(-10px);
+}
+
+/*
+ * The process rail's connecting line. Drawn by a pseudo-element (allowed to be
+ * positioned, since nothing else places it) and grown from 0 when the rail is
+ * revealed, so scrolling into the section draws the thread through the steps.
+ */
+[data-template='kite'] .kite-rail::before {
+  content: '';
+  position: absolute;
+  inset-block: 0 auto;
+  inset-inline: 0;
+  height: 2px;
+  width: 0;
+  background: var(--kite-hot);
+  transition: width 1400ms var(--kite-ease) 160ms;
+}
+
+[data-template='kite'] .kite-revealed.kite-rail::before,
+[data-template='kite'] .kite-revealed .kite-rail::before {
+  width: 100%;
+}
+
+/* Vertical variant of the same thread, for the stacked mobile rail. */
+[data-template='kite'] .kite-rail-v::before {
+  content: '';
+  position: absolute;
+  inset-inline: 0 auto;
+  inset-block: 0;
+  width: 2px;
+  height: 0;
+  background: var(--kite-hot);
+  transition: height 1400ms var(--kite-ease) 160ms;
+}
+
+[data-template='kite'] .kite-revealed .kite-rail-v::before {
+  height: 100%;
+}
+
+/* The oversized step numeral, outlined so it never competes with the step title. */
+[data-template='kite'] .kite-numeral {
+  font-size: clamp(3rem, 7vw, 5rem);
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: -0.05em;
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--kite-line-strong);
+}
+
+/* CSS avatar for the studio roster: initials on a hot gradient, no photography. */
+[data-template='kite'] .kite-avatar {
+  background: var(--kite-hot);
+  color: var(--kite-on-hot);
+  border-radius: 9999px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+/*
+ * Prices, years and result figures line up in columns across a grid of cards,
+ * so their digits have to be one width or the rows visibly wobble.
+ */
+[data-template='kite'] .kite-figures {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+
+[data-template='kite'] .kite-marquee {
+  animation: kite-scroll 34s linear infinite;
+}
+
+@keyframes kite-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    /* The strip renders its items twice; -50% lands on the seam exactly. */
+    transform: translateX(-50%);
+  }
+}
+
+/*
+ * The whole art direction is motion-led, so the reduced-motion block has real
+ * work to do: kill every loop, freeze the two rails at full length so the
+ * connecting line still reads, and stop the tilt from firing on hover.
+ */
+@media (prefers-reduced-motion: reduce) {
+  [data-template='kite'] {
+    scroll-behavior: auto;
+  }
+
+  [data-template='kite'] .kite-marquee,
+  [data-template='kite'] .kite-blob {
+    animation: none;
+  }
+
+  [data-template='kite'] .kite-rail::before {
+    transition: none;
+    width: 100%;
+  }
+
+  [data-template='kite'] .kite-rail-v::before {
+    transition: none;
+    height: 100%;
+  }
+
+  [data-template='kite'] .kite-tilt,
+  [data-template='kite'] .kite-pill-hot {
+    transition: none;
+  }
+
+  [data-template='kite'] .kite-tilt--l:hover,
+  [data-template='kite'] .kite-tilt--l:focus-within,
+  [data-template='kite'] .kite-tilt--r:hover,
+  [data-template='kite'] .kite-tilt--r:focus-within,
+  [data-template='kite'] .kite-pill-hot:hover {
+    transform: none;
+  }
+}

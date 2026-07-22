@@ -1,0 +1,170 @@
+/*
+ * ATELIER NORD - template-scoped design tokens.
+ *
+ * A template is a standalone artifact with its own identity, so it cannot
+ * inherit the app's tokens; it still may not scatter raw colour through markup
+ * (Rule 6). Everything this design needs is declared here, scoped to
+ * `[data-template='atelier']`, and the sections reference the variables only.
+ *
+ * The palette is deliberately almost empty. This template's whole argument is
+ * restraint: one paper, one ink, and the ink at four opacities. If a value here
+ * ever grows into a hue, the design has stopped being this design.
+ */
+
+[data-template='atelier'] {
+  --atelier-paper: #ffffff;
+  --atelier-wash: #f4f4f2;
+  --atelier-ink: #0a0a0a;
+
+  /*
+   * Opacity steps chosen for contrast, not for taste: `soft` reads at ~6:1 on
+   * paper and `faint` at ~4.6:1, so both clear WCAG AA at the 10-13px sizes
+   * this design uses. `--atelier-rule` is decoration and is never text.
+   */
+  --atelier-ink-soft: rgb(10 10 10 / 66%);
+  --atelier-ink-faint: rgb(10 10 10 / 55%);
+  --atelier-rule: rgb(10 10 10 / 14%);
+  --atelier-rule-soft: rgb(10 10 10 / 7%);
+
+  --atelier-sans: ui-sans-serif, system-ui, -apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+  color: var(--atelier-ink);
+  background-color: var(--atelier-paper);
+  font-family: var(--atelier-sans);
+  /* Anchor nav is the only navigation in a single-page site, so travel to a
+     section should read as movement rather than as a jump cut. */
+  scroll-behavior: smooth;
+}
+
+/*
+ * The label. Tiny, uppercase, widely tracked - it sits beside a very large thin
+ * heading, and the contrast between the two is the typographic idea of the
+ * whole template.
+ */
+[data-template='atelier'] .atelier-label {
+  font-size: 10px;
+  line-height: 1.4;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--atelier-ink-faint);
+}
+
+/* Headings: thin, tight, and allowed to get very large without shouting. */
+[data-template='atelier'] .atelier-display {
+  font-weight: 200;
+  letter-spacing: -0.03em;
+  line-height: 1.02;
+}
+
+[data-template='atelier'] .atelier-heading {
+  font-weight: 250;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+}
+
+/*
+ * The hairline that draws itself. It measures zero until the section is
+ * revealed, at which point the `atelier-revealed` class (set by the Reveal
+ * primitive when the element enters view) lets it run out to full width - the
+ * one piece of ornament in the design, and it costs no layout.
+ */
+[data-template='atelier'] .atelier-draw {
+  display: block;
+  height: 1px;
+  width: 0;
+  background: var(--atelier-ink);
+  transition: width 1100ms cubic-bezier(0.16, 1, 0.3, 1) 160ms;
+}
+
+[data-template='atelier'] .atelier-revealed .atelier-draw {
+  width: 100%;
+}
+
+/*
+ * The single hairline grid: four vertical rules behind the hero, faded out at
+ * the bottom so they never collide with the content below. No `position` here
+ * on purpose - the element is placed with Tailwind's `absolute inset-0`, and a
+ * scoped attribute selector would outrank that single class and collapse it.
+ */
+[data-template='atelier'] .atelier-grid {
+  background-image: repeating-linear-gradient(
+    to right,
+    var(--atelier-rule-soft) 0 1px,
+    transparent 1px 25%
+  );
+  mask-image: linear-gradient(to bottom, #000 0%, #000 62%, transparent 100%);
+}
+
+/*
+ * Project blocks, composed entirely from gradients so the template downloads
+ * with no binary assets. Each variant is an abstraction of the building it
+ * captions: a horizon, a waterline, a stacked facade, a single north window.
+ * Indexes drive the variant because the composition is decoration, not content.
+ */
+[data-template='atelier'] .atelier-plate {
+  background-color: var(--atelier-wash);
+}
+
+[data-template='atelier'] .atelier-plate-0 {
+  background-image:
+    linear-gradient(to bottom, transparent 0 58%, rgb(10 10 10 / 8%) 58% 100%),
+    linear-gradient(100deg, transparent 0 42%, rgb(10 10 10 / 16%) 42% 44%, transparent 44%),
+    linear-gradient(80deg, transparent 0 56%, rgb(10 10 10 / 16%) 56% 58%, transparent 58%);
+}
+
+[data-template='atelier'] .atelier-plate-1 {
+  background-image:
+    linear-gradient(to bottom, transparent 0 72%, rgb(10 10 10 / 12%) 72% 73%, rgb(10 10 10 / 5%) 73% 100%),
+    repeating-linear-gradient(to right, rgb(10 10 10 / 10%) 0 1px, transparent 1px 9%);
+}
+
+[data-template='atelier'] .atelier-plate-2 {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    rgb(10 10 10 / 9%) 0 1px,
+    transparent 1px 14%
+  );
+}
+
+[data-template='atelier'] .atelier-plate-3 {
+  background-image:
+    radial-gradient(circle at 50% 34%, rgb(10 10 10 / 10%) 0 16%, transparent 16.5%),
+    linear-gradient(to bottom, transparent 0 78%, rgb(10 10 10 / 14%) 78% 79%, transparent 79%);
+}
+
+/*
+ * Material strip. Very slow by design: at 74 seconds it reads as the page
+ * breathing rather than as an animation asking to be watched.
+ */
+[data-template='atelier'] .atelier-drift {
+  animation: atelier-drift 74s linear infinite;
+}
+
+@keyframes atelier-drift {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    /* The strip renders its items twice; -50% lands on the seam exactly. */
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-template='atelier'] {
+    scroll-behavior: auto;
+  }
+
+  [data-template='atelier'] *,
+  [data-template='atelier'] *::before,
+  [data-template='atelier'] *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  /* The drawn hairline has no animation left to run, so it starts full length
+     rather than never appearing at all. */
+  [data-template='atelier'] .atelier-draw {
+    width: 100%;
+  }
+}

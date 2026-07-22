@@ -1,0 +1,438 @@
+<!doctype html>
+<html lang="en" data-template="saffron">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Saffron — Twelve courses, one long evening</title>
+    <meta
+      name="description"
+      content="A thirty-seat room in the old spice quarter, where the menu changes with the market and dinner is meant to take four hours."
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="./saffron.css" />
+  </head>
+
+  <body class="min-h-screen antialiased">
+    <header id="site-header" class="sticky top-0 z-50 w-full border-b border-transparent transition-colors duration-500">
+      <div class="mx-auto flex h-20 max-w-6xl items-center justify-between gap-8 px-6 sm:px-10">
+        <a href="#top" class="text-xl uppercase tracking-[0.24em]">Saffron</a>
+
+        <nav aria-label="Main" class="hidden items-center gap-10 md:flex">
+          <a href="#about" class="text-sm text-[var(--saf-ink-soft)] transition-colors hover:text-[var(--saf-accent)]">Our story</a>
+          <a href="#services" class="text-sm text-[var(--saf-ink-soft)] transition-colors hover:text-[var(--saf-accent)]">The menu</a>
+          <a href="#why" class="text-sm text-[var(--saf-ink-soft)] transition-colors hover:text-[var(--saf-accent)]">The room</a>
+          <a href="#faq" class="text-sm text-[var(--saf-ink-soft)] transition-colors hover:text-[var(--saf-accent)]">Visiting</a>
+        </nav>
+
+        <div class="flex items-center gap-4">
+          <a
+            href="#contact"
+            class="hidden border border-[var(--saf-ink)] px-5 py-2.5 text-xs uppercase tracking-[0.2em] transition-colors hover:bg-[var(--saf-ink)] hover:text-[var(--saf-paper)] sm:inline-block"
+            >Reserve</a
+          >
+          <button
+            id="menu-toggle"
+            type="button"
+            aria-expanded="false"
+            aria-controls="mobile-menu"
+            aria-label="Open menu"
+            class="grid h-9 w-9 place-items-center border border-[var(--saf-rule)] md:hidden"
+          >
+            &#9776;
+          </button>
+        </div>
+      </div>
+
+      <div id="mobile-menu" hidden class="border-t border-[var(--saf-rule)] bg-[var(--saf-paper)] md:hidden">
+        <nav aria-label="Main" class="mx-auto flex max-w-6xl flex-col px-6 py-4 sm:px-10">
+          <a href="#about" class="py-2.5 text-sm text-[var(--saf-ink-soft)]">Our story</a>
+          <a href="#services" class="py-2.5 text-sm text-[var(--saf-ink-soft)]">The menu</a>
+          <a href="#why" class="py-2.5 text-sm text-[var(--saf-ink-soft)]">The room</a>
+          <a href="#faq" class="py-2.5 text-sm text-[var(--saf-ink-soft)]">Visiting</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <!-- Hero -->
+      <section id="top" class="relative overflow-hidden">
+        <div class="mx-auto grid max-w-6xl gap-16 px-6 pb-24 pt-16 sm:px-10 sm:pb-32 sm:pt-24 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-20">
+          <div>
+            <p class="saf-eyebrow saf-reveal">Winter tasting menu — now serving</p>
+
+            <h1 class="saf-reveal mt-7 text-balance text-5xl leading-[1.06] tracking-[-0.015em] sm:text-6xl md:text-7xl" style="--saf-delay: 100ms">
+              Twelve courses,<br />
+              <span class="text-[var(--saf-accent)]">one long evening</span>
+            </h1>
+
+            <p class="saf-reveal mt-8 max-w-xl text-pretty text-[17px] leading-[1.85] text-[var(--saf-ink-soft)]" style="--saf-delay: 200ms">
+              A thirty-seat room in the old spice quarter, where the menu changes with the market and dinner is
+              meant to take four hours. Reservations open on the first of each month.
+            </p>
+
+            <div class="saf-reveal mt-10 flex flex-col gap-4 sm:flex-row sm:items-center" style="--saf-delay: 300ms">
+              <a
+                href="#contact"
+                class="inline-flex items-center justify-center bg-[var(--saf-ink)] px-8 py-4 text-xs uppercase tracking-[0.22em] text-[var(--saf-paper)] transition-colors hover:bg-[var(--saf-accent)]"
+                >Reserve a table</a
+              >
+              <a
+                href="#services"
+                class="inline-flex items-center justify-center text-xs uppercase tracking-[0.22em] text-[var(--saf-ink-soft)] transition-colors hover:text-[var(--saf-accent)] sm:px-2"
+                >Read the menu</a
+              >
+            </div>
+
+            <dl class="saf-reveal mt-16 grid max-w-lg grid-cols-3 gap-8" style="--saf-delay: 400ms">
+              <div>
+                <dd class="text-4xl">12</dd>
+                <dt class="mt-2 text-[11px] uppercase tracking-[0.2em] text-[var(--saf-ink-faint)]">Courses</dt>
+              </div>
+              <div>
+                <dd class="text-4xl">30</dd>
+                <dt class="mt-2 text-[11px] uppercase tracking-[0.2em] text-[var(--saf-ink-faint)]">Seats nightly</dt>
+              </div>
+              <div>
+                <dd class="text-4xl">9yrs</dd>
+                <dt class="mt-2 text-[11px] uppercase tracking-[0.2em] text-[var(--saf-ink-faint)]">On Bridge Street</dt>
+              </div>
+            </dl>
+          </div>
+
+          <div data-parallax="80" class="relative mx-auto w-full max-w-md lg:max-w-none">
+            <div class="relative aspect-square">
+              <div class="saf-plate absolute inset-0" aria-hidden="true"></div>
+              <div class="saf-plate absolute -bottom-6 -left-6 h-32 w-32 sm:-bottom-10 sm:-left-10 sm:h-44 sm:w-44" aria-hidden="true"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Accolades -->
+      <section class="border-y border-[var(--saf-rule)] py-6">
+        <div class="relative overflow-hidden [mask-image:linear-gradient(90deg,transparent,#000_10%,#000_90%,transparent)]">
+          <div class="saf-marquee flex w-max items-center gap-16 pr-16">
+            <div class="flex items-center gap-16 pr-16">
+              <span class="whitespace-nowrap text-[11px] uppercase tracking-[0.28em] text-[var(--saf-ink-faint)]">Michelin Guide</span>
+              <span class="whitespace-nowrap text-[11px] uppercase tracking-[0.28em] text-[var(--saf-ink-faint)]">World’s 50 Best — Discovery</span>
+              <span class="whitespace-nowrap text-[11px] uppercase tracking-[0.28em] text-[var(--saf-ink-faint)]">Good Food Award</span>
+              <span class="whitespace-nowrap text-[11px] uppercase tracking-[0.28em] text-[var(--saf-ink-faint)]">Slow Food Alliance</span>
+              <span class="whitespace-nowrap text-[11px] uppercase tracking-[0.28em] text-[var(--saf-ink-faint)]">Terroir Prize</span>
+              <span class="whitespace-nowrap text-[11px] uppercase tracking-[0.28em] text-[var(--saf-ink-faint)]">Harvest Table</span>
+            </div>
+            <div class="flex items-center gap-16 pr-16" aria-hidden="true">
+              <span class="whitespace-nowrap text-[11px] uppercase tracking-[0.28em] text-[var(--saf-ink-faint)]">Michelin Guide</span>
+              <span class="whitespace-nowrap text-[11px] uppercase tracking-[0.28em] text-[var(--saf-ink-faint)]">World’s 50 Best — Discovery</span>
+              <span class="whitespace-nowrap text-[11px] uppercase tracking-[0.28em] text-[var(--saf-ink-faint)]">Good Food Award</span>
+              <span class="whitespace-nowrap text-[11px] uppercase tracking-[0.28em] text-[var(--saf-ink-faint)]">Slow Food Alliance</span>
+              <span class="whitespace-nowrap text-[11px] uppercase tracking-[0.28em] text-[var(--saf-ink-faint)]">Terroir Prize</span>
+              <span class="whitespace-nowrap text-[11px] uppercase tracking-[0.28em] text-[var(--saf-ink-faint)]">Harvest Table</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Our story -->
+      <section id="about" class="mx-auto max-w-6xl scroll-mt-24 px-6 py-24 sm:px-10 sm:py-32">
+        <div class="grid gap-16 lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:gap-24">
+          <div data-parallax="64" class="order-2 lg:order-1">
+            <div class="saf-frame relative aspect-[4/5] p-8">
+              <div class="saf-plate absolute left-8 right-8 top-1/2 aspect-square -translate-y-1/2" aria-hidden="true"></div>
+              <span class="absolute bottom-6 left-8 text-[11px] uppercase tracking-[0.24em] text-[var(--saf-ink-faint)]">Bridge Street, 2017</span>
+            </div>
+          </div>
+
+          <div class="order-1 lg:order-2">
+            <div class="saf-reveal">
+              <p class="saf-eyebrow">Our story</p>
+              <span class="saf-rule mt-4" aria-hidden="true"></span>
+              <h2 class="mt-6 text-balance text-4xl leading-[1.15] tracking-[-0.01em] sm:text-5xl">
+                A kitchen built around what the market has that morning
+              </h2>
+            </div>
+
+            <p class="saf-reveal mt-7 text-[17px] leading-[1.85] text-[var(--saf-ink-soft)]" style="--saf-delay: 80ms">
+              Saffron began in 2017 as a supper club in the back of a spice merchant’s shop, cooking for
+              whoever turned up. The menu was whatever the growers on Bridge Street had left at closing, and it
+              changed every night out of necessity rather than principle.
+            </p>
+            <p class="saf-reveal mt-7 text-[17px] leading-[1.85] text-[var(--saf-ink-soft)]" style="--saf-delay: 160ms">
+              Nine years later the room is our own and the principle stayed. Chef Amara Idowu writes the menu
+              each morning after the market, so no two weeks taste the same and nothing travels further than
+              the county line to reach the pass.
+            </p>
+
+            <ul class="saf-reveal mt-10 divide-y divide-[var(--saf-rule)] border-y border-[var(--saf-rule)]" style="--saf-delay: 240ms">
+              <li class="py-4 text-[15px] text-[var(--saf-ink-soft)]">Menu rewritten daily, printed at four o’clock</li>
+              <li class="py-4 text-[15px] text-[var(--saf-ink-soft)]">Every producer within sixty miles, named on the card</li>
+              <li class="py-4 text-[15px] text-[var(--saf-ink-soft)]">Whole-animal butchery and a zero-waste larder</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- The menu -->
+      <section id="services" class="scroll-mt-24 bg-[var(--saf-paper-2)]">
+        <div class="mx-auto max-w-6xl px-6 py-24 sm:px-10 sm:py-32">
+          <div class="saf-reveal max-w-2xl">
+            <p class="saf-eyebrow">The menu</p>
+            <span class="saf-rule mt-4" aria-hidden="true"></span>
+            <h2 class="mt-6 text-balance text-4xl leading-[1.15] tracking-[-0.01em] sm:text-5xl">
+              Four ways to spend an evening
+            </h2>
+            <p class="mt-6 text-[17px] leading-[1.85] text-[var(--saf-ink-soft)]">
+              Every seating is a set menu. Tell us about allergies when you book and the kitchen will write
+              around them rather than remove a course.
+            </p>
+          </div>
+
+          <div class="mt-16 grid gap-x-16 sm:grid-cols-2">
+            <article class="saf-reveal border-t border-[var(--saf-rule)] py-9">
+              <h3 class="text-2xl tracking-[-0.01em]">The tasting menu</h3>
+              <p class="mt-3 text-[16px] leading-[1.8] text-[var(--saf-ink-soft)]">
+                Twelve courses across four hours, from the market that morning. £145 per guest, served to the
+                whole table.
+              </p>
+            </article>
+            <article class="saf-reveal border-t border-[var(--saf-rule)] py-9" style="--saf-delay: 70ms">
+              <h3 class="text-2xl tracking-[-0.01em]">The garden menu</h3>
+              <p class="mt-3 text-[16px] leading-[1.8] text-[var(--saf-ink-soft)]">
+                The same twelve courses, drawn entirely from the kitchen garden and our growers. Vegan on
+                request, never an afterthought.
+              </p>
+            </article>
+            <article class="saf-reveal border-t border-[var(--saf-rule)] py-9" style="--saf-delay: 140ms">
+              <h3 class="text-2xl tracking-[-0.01em]">Cellar pairing</h3>
+              <p class="mt-3 text-[16px] leading-[1.8] text-[var(--saf-ink-soft)]">
+                Nine glasses chosen by our sommelier, weighted toward small growers and older vintages. £95, or
+                £45 without alcohol.
+              </p>
+            </article>
+            <article class="saf-reveal border-t border-[var(--saf-rule)] py-9" style="--saf-delay: 210ms">
+              <h3 class="text-2xl tracking-[-0.01em]">The chef’s table</h3>
+              <p class="mt-3 text-[16px] leading-[1.8] text-[var(--saf-ink-soft)]">
+                Six seats at the pass, cooked and explained by the team in front of you. Wednesdays and
+                Thursdays only.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- The room -->
+      <section id="why" class="mx-auto max-w-6xl scroll-mt-24 px-6 py-24 sm:px-10 sm:py-32">
+        <div class="saf-reveal max-w-2xl">
+          <p class="saf-eyebrow">The room</p>
+          <span class="saf-rule mt-4" aria-hidden="true"></span>
+          <h2 class="mt-6 text-balance text-4xl leading-[1.15] tracking-[-0.01em] sm:text-5xl">
+            Why people come back
+          </h2>
+          <p class="mt-6 text-[17px] leading-[1.85] text-[var(--saf-ink-soft)]">
+            Four things we decided early, and have not been talked out of since.
+          </p>
+        </div>
+
+        <div class="mt-16 grid gap-x-16 gap-y-14 sm:grid-cols-2">
+          <div class="saf-reveal flex gap-7">
+            <span class="saf-numeral shrink-0" aria-hidden="true">01</span>
+            <div>
+              <h3 class="text-2xl tracking-[-0.01em]">One kitchen, one seating</h3>
+              <p class="mt-3 text-[16px] leading-[1.8] text-[var(--saf-ink-soft)]">
+                Thirty guests, all seated within half an hour. Nobody is rushed for a second turn, because
+                there is no second turn.
+              </p>
+            </div>
+          </div>
+          <div class="saf-reveal flex gap-7" style="--saf-delay: 70ms">
+            <span class="saf-numeral shrink-0" aria-hidden="true">02</span>
+            <div>
+              <h3 class="text-2xl tracking-[-0.01em]">Growers on the card</h3>
+              <p class="mt-3 text-[16px] leading-[1.8] text-[var(--saf-ink-soft)]">
+                Every producer is named beside the course they made possible. If it is not from within sixty
+                miles, we tell you why.
+              </p>
+            </div>
+          </div>
+          <div class="saf-reveal flex gap-7" style="--saf-delay: 140ms">
+            <span class="saf-numeral shrink-0" aria-hidden="true">03</span>
+            <div>
+              <h3 class="text-2xl tracking-[-0.01em]">Service without theatre</h3>
+              <p class="mt-3 text-[16px] leading-[1.8] text-[var(--saf-ink-soft)]">
+                Our team explains a dish when it helps and steps away when it does not. No scripts, no
+                performance, no hovering.
+              </p>
+            </div>
+          </div>
+          <div class="saf-reveal flex gap-7" style="--saf-delay: 210ms">
+            <span class="saf-numeral shrink-0" aria-hidden="true">04</span>
+            <div>
+              <h3 class="text-2xl tracking-[-0.01em]">A table that keeps</h3>
+              <p class="mt-3 text-[16px] leading-[1.8] text-[var(--saf-ink-soft)]">
+                Booked for something that matters? Tell us. Anniversaries, birthdays and first dates are
+                written into the evening.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Visiting -->
+      <section id="faq" class="scroll-mt-24 bg-[var(--saf-paper-2)]">
+        <div class="mx-auto max-w-3xl px-6 py-24 sm:px-10 sm:py-32">
+          <div class="saf-reveal">
+            <p class="saf-eyebrow">Visiting</p>
+            <span class="saf-rule mt-4" aria-hidden="true"></span>
+            <h2 class="mt-6 text-balance text-4xl leading-[1.15] tracking-[-0.01em] sm:text-5xl">
+              Before you book
+            </h2>
+          </div>
+
+          <div class="saf-faq mt-14 border-t border-[var(--saf-rule)]">
+            <details open>
+              <summary>How far ahead should we reserve?</summary>
+              <p>
+                Reservations for the following month open at 9am on the first, and the weekends usually go the
+                same day. Midweek tables are often available a fortnight out, and we hold six seats each night
+                for walk-ins at the counter.
+              </p>
+            </details>
+            <details>
+              <summary>Can you cook around allergies and diets?</summary>
+              <p>
+                Yes, and gladly — tell us when you book rather than on the night. The kitchen rewrites courses
+                around an allergy instead of removing them, so nobody at the table eats a shorter menu.
+              </p>
+            </details>
+            <details>
+              <summary>Is there a dress code?</summary>
+              <p>
+                None. Come as you would to a good friend’s dinner. The room is warm, so most guests leave a
+                jacket at the door.
+              </p>
+            </details>
+            <details>
+              <summary>How long is dinner?</summary>
+              <p>
+                Between three and a half and four hours for the full menu. If you have a train or a sitter to
+                relieve, say so when you arrive and we will pace the kitchen accordingly.
+              </p>
+            </details>
+            <details>
+              <summary>Do you take large groups?</summary>
+              <p>
+                Up to eight in the main room, and the whole restaurant for private dinners on Sundays and
+                Mondays. Write to us and Amara will plan the menu with you.
+              </p>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <!-- Reservations -->
+      <section id="contact" class="mx-auto max-w-6xl scroll-mt-24 px-6 py-24 sm:px-10 sm:py-32">
+        <div class="grid gap-16 lg:grid-cols-2 lg:gap-24">
+          <div class="saf-reveal">
+            <p class="saf-eyebrow">Reservations</p>
+            <span class="saf-rule mt-4" aria-hidden="true"></span>
+            <h2 class="mt-6 text-balance text-4xl leading-[1.15] tracking-[-0.01em] sm:text-5xl">
+              Come and eat with us
+            </h2>
+            <p class="mt-6 max-w-md text-[17px] leading-[1.85] text-[var(--saf-ink-soft)]">
+              Send us the date and we will confirm within the day. For same-evening tables, please telephone
+              the restaurant — the inbox moves slower than the room does.
+            </p>
+
+            <dl class="mt-12 divide-y divide-[var(--saf-rule)] border-y border-[var(--saf-rule)]">
+              <div class="flex items-baseline justify-between gap-6 py-4">
+                <dt class="text-[11px] uppercase tracking-[0.24em] text-[var(--saf-ink-faint)]">Address</dt>
+                <dd class="text-right text-[16px]">14 Bridge Street, Old Spice Quarter</dd>
+              </div>
+              <div class="flex items-baseline justify-between gap-6 py-4">
+                <dt class="text-[11px] uppercase tracking-[0.24em] text-[var(--saf-ink-faint)]">Telephone</dt>
+                <dd class="text-right text-[16px]">+44 20 7946 0312</dd>
+              </div>
+              <div class="flex items-baseline justify-between gap-6 py-4">
+                <dt class="text-[11px] uppercase tracking-[0.24em] text-[var(--saf-ink-faint)]">Dinner</dt>
+                <dd class="text-right text-[16px]">Wednesday to Sunday, from 6pm</dd>
+              </div>
+            </dl>
+          </div>
+
+          <form id="reservation-form" class="saf-frame saf-reveal p-8 sm:p-10" style="--saf-delay: 120ms">
+            <div class="grid gap-7">
+              <label class="block">
+                <span class="text-[11px] uppercase tracking-[0.24em] text-[var(--saf-ink-faint)]">Your name</span>
+                <input type="text" name="name" required autocomplete="name" class="saf-field" />
+              </label>
+              <label class="block">
+                <span class="text-[11px] uppercase tracking-[0.24em] text-[var(--saf-ink-faint)]">Email address</span>
+                <input type="email" name="email" required autocomplete="email" class="saf-field" />
+              </label>
+              <label class="block">
+                <span class="text-[11px] uppercase tracking-[0.24em] text-[var(--saf-ink-faint)]">Date, guests and anything we should know</span>
+                <textarea name="message" required rows="4" class="saf-field resize-y"></textarea>
+              </label>
+            </div>
+
+            <button
+              type="submit"
+              class="mt-9 w-full bg-[var(--saf-ink)] px-8 py-4 text-xs uppercase tracking-[0.22em] text-[var(--saf-paper)] transition-colors hover:bg-[var(--saf-accent)]"
+            >
+              Request a table
+            </button>
+            <p id="reservation-status" aria-live="polite" class="mt-4 min-h-5 text-center text-[13px] text-[var(--saf-ink-faint)]"></p>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer class="border-t border-[var(--saf-rule)] bg-[var(--saf-paper-2)]">
+      <div class="mx-auto max-w-6xl px-6 py-16 sm:px-10 sm:py-20">
+        <div class="grid gap-12 sm:grid-cols-2 lg:grid-cols-[1.4fr_repeat(3,1fr)]">
+          <div>
+            <p class="text-xl uppercase tracking-[0.24em]">Saffron</p>
+            <p class="mt-5 max-w-xs text-[15px] leading-[1.8] text-[var(--saf-ink-soft)]">
+              A thirty-seat kitchen on Bridge Street, cooking what the market brought that morning.
+            </p>
+          </div>
+
+          <div>
+            <p class="text-[11px] uppercase tracking-[0.24em] text-[var(--saf-ink-faint)]">The restaurant</p>
+            <ul class="mt-5 space-y-3">
+              <li><a href="#top" class="text-[15px] text-[var(--saf-ink-soft)] hover:text-[var(--saf-accent)]">Our story</a></li>
+              <li><a href="#top" class="text-[15px] text-[var(--saf-ink-soft)] hover:text-[var(--saf-accent)]">The menu</a></li>
+              <li><a href="#top" class="text-[15px] text-[var(--saf-ink-soft)] hover:text-[var(--saf-accent)]">The chef’s table</a></li>
+              <li><a href="#top" class="text-[15px] text-[var(--saf-ink-soft)] hover:text-[var(--saf-accent)]">Private dining</a></li>
+            </ul>
+          </div>
+          <div>
+            <p class="text-[11px] uppercase tracking-[0.24em] text-[var(--saf-ink-faint)]">Visiting</p>
+            <ul class="mt-5 space-y-3">
+              <li><a href="#top" class="text-[15px] text-[var(--saf-ink-soft)] hover:text-[var(--saf-accent)]">Reservations</a></li>
+              <li><a href="#top" class="text-[15px] text-[var(--saf-ink-soft)] hover:text-[var(--saf-accent)]">Opening hours</a></li>
+              <li><a href="#top" class="text-[15px] text-[var(--saf-ink-soft)] hover:text-[var(--saf-accent)]">Getting here</a></li>
+              <li><a href="#top" class="text-[15px] text-[var(--saf-ink-soft)] hover:text-[var(--saf-accent)]">Gift vouchers</a></li>
+            </ul>
+          </div>
+          <div>
+            <p class="text-[11px] uppercase tracking-[0.24em] text-[var(--saf-ink-faint)]">Follow</p>
+            <ul class="mt-5 space-y-3">
+              <li><a href="#top" class="text-[15px] text-[var(--saf-ink-soft)] hover:text-[var(--saf-accent)]">Instagram</a></li>
+              <li><a href="#top" class="text-[15px] text-[var(--saf-ink-soft)] hover:text-[var(--saf-accent)]">Newsletter</a></li>
+              <li><a href="#top" class="text-[15px] text-[var(--saf-ink-soft)] hover:text-[var(--saf-accent)]">Press</a></li>
+              <li><a href="#top" class="text-[15px] text-[var(--saf-ink-soft)] hover:text-[var(--saf-accent)]">Careers</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="mt-16 border-t border-[var(--saf-rule)] pt-6">
+          <p class="text-[11px] uppercase tracking-[0.22em] text-[var(--saf-ink-faint)]">
+            © 2026 Saffron. Bridge Street. All rights reserved.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="./saffron.js" defer></script>
+  </body>
+</html>

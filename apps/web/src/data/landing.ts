@@ -60,7 +60,7 @@ export const FEATURE_MODULES: FeatureModule[] = [
   { id: 'patterns', href: '/patterns', icon: Grid2x2, accent: 'secondary' },
   { id: 'textures', href: '/textures', icon: Waves, accent: 'accent' },
   { id: 'promptLibrary', href: '/prompt-library', icon: Library, accent: 'primary' },
-  { id: 'templates', href: '/templates', icon: LayoutTemplate, accent: 'primary', comingSoon: true },
+  { id: 'templates', href: '/templates', icon: LayoutTemplate, accent: 'primary' },
 ];
 
 export interface WorkflowStep {
@@ -95,6 +95,7 @@ export const LANDING_LINKS = {
   // a hidden page (dashboard is hidden for now).
   app: APP_HOME,
   components: '/components',
+  designPlayground: '/design-playground',
   icons: '/icons',
   palettes: '/palettes',
   gradients: '/gradients',

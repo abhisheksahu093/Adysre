@@ -1,0 +1,105 @@
+/*
+ * NOVA - template-scoped design tokens.
+ *
+ * A template is a standalone artifact with its own brand, so it cannot inherit
+ * the app's tokens - it must look like a different company. It still may not
+ * scatter raw colour through markup (Rule 6), so it declares its own token set
+ * here, scoped to `[data-template='nova']`, and the sections reference those
+ * variables only. This file is the single place NOVA's palette exists.
+ */
+
+[data-template='nova'] {
+  --nova-bg: #05060a;
+  --nova-surface: #0b0d16;
+  --nova-line: rgb(255 255 255 / 8%);
+  --nova-line-strong: rgb(255 255 255 / 16%);
+
+  --nova-text: #f5f7ff;
+  --nova-muted: rgb(226 232 240 / 62%);
+  --nova-faint: rgb(226 232 240 / 38%);
+
+  --nova-accent: #7c5cff;
+  --nova-accent-2: #22d3ee;
+  --nova-accent-soft: rgb(124 92 255 / 14%);
+
+  --nova-radius: 16px;
+  --nova-radius-sm: 10px;
+
+  color: var(--nova-text);
+  background-color: var(--nova-bg);
+  font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* Anchor links in the nav should glide, not jump. */
+  scroll-behavior: smooth;
+}
+
+/* The mono face carries every eyebrow, stat and label in this design. */
+[data-template='nova'] .nova-mono {
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+/* Gradient mesh behind the hero. Two blurred radial blooms, no image asset. */
+[data-template='nova'] .nova-mesh::before,
+[data-template='nova'] .nova-mesh::after {
+  content: '';
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(96px);
+  pointer-events: none;
+}
+
+[data-template='nova'] .nova-mesh::before {
+  inset-inline-start: -10%;
+  inset-block-start: -30%;
+  width: 46rem;
+  height: 46rem;
+  background: radial-gradient(circle, rgb(124 92 255 / 42%), transparent 68%);
+}
+
+[data-template='nova'] .nova-mesh::after {
+  inset-inline-end: -14%;
+  inset-block-start: -8%;
+  width: 38rem;
+  height: 38rem;
+  background: radial-gradient(circle, rgb(34 211 238 / 26%), transparent 68%);
+}
+
+/* Dotted grid overlay - masked so it fades out before it reaches the content. */
+[data-template='nova'] .nova-grid {
+  background-image: radial-gradient(var(--nova-line-strong) 1px, transparent 1px);
+  background-size: 32px 32px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 100%);
+}
+
+[data-template='nova'] .nova-card {
+  background: linear-gradient(180deg, rgb(255 255 255 / 6%), rgb(255 255 255 / 2%));
+  border: 1px solid var(--nova-line);
+  border-radius: var(--nova-radius);
+  backdrop-filter: blur(12px);
+}
+
+[data-template='nova'] .nova-marquee {
+  animation: nova-scroll 32s linear infinite;
+}
+
+@keyframes nova-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    /* The strip renders its items twice; -50% lands on the seam exactly. */
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-template='nova'] {
+    scroll-behavior: auto;
+  }
+
+  [data-template='nova'] .nova-marquee {
+    animation: none;
+  }
+}

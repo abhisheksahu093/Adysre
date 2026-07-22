@@ -1,0 +1,214 @@
+/*
+ * SAFFRON - standalone stylesheet for the static builds.
+ *
+ * Self-contained by design: the download ships this beside index.html with no
+ * build step, so it repeats the token block from the React version rather than
+ * importing it. Everything here is what utilities cannot express - tokens, the
+ * plated compositions, the drawn rule, keyframes and the reveal states.
+ */
+
+[data-template='saffron'] {
+  --saf-paper: #faf6ee;
+  --saf-paper-2: #f3ece0;
+  --saf-ink: #16301f;
+  --saf-ink-soft: rgb(22 48 31 / 72%);
+  --saf-ink-faint: rgb(22 48 31 / 46%);
+  --saf-rule: rgb(22 48 31 / 14%);
+  --saf-accent: #c2622a;
+
+  --saf-serif: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, 'Times New Roman', serif;
+
+  color: var(--saf-ink);
+  background-color: var(--saf-paper);
+  font-family: var(--saf-serif);
+}
+
+.saf-eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--saf-accent);
+}
+
+/* ---- Header ------------------------------------------------------------ */
+
+#site-header.is-scrolled {
+  border-color: var(--saf-rule);
+  background-color: rgb(250 246 238 / 85%);
+  backdrop-filter: blur(10px);
+}
+
+/* ---- Ornament ---------------------------------------------------------- */
+
+/*
+ * The rule under a heading draws itself once its section is revealed - a small
+ * reward for scrolling that moves no text.
+ */
+.saf-rule {
+  display: block;
+  height: 1px;
+  width: 0;
+  background: var(--saf-accent);
+  transition: width 900ms cubic-bezier(0.22, 1, 0.36, 1) 120ms;
+}
+
+.is-visible .saf-rule,
+.saf-reveal.is-visible .saf-rule {
+  width: 4.5rem;
+}
+
+/*
+ * A plated composition: concentric radial gradients in a circle, framed by a
+ * thin ring. Suggests food without shipping an image, so the download carries
+ * no binary assets at all.
+ *
+ * Note it does NOT set `position` - each instance positions itself, and the
+ * ::after ring resolves against whatever that is.
+ */
+.saf-plate {
+  border-radius: 9999px;
+  background:
+    radial-gradient(circle at 50% 42%, rgb(194 98 42 / 26%) 0 12%, transparent 12.5%),
+    radial-gradient(circle at 38% 56%, rgb(22 48 31 / 20%) 0 7%, transparent 7.5%),
+    radial-gradient(circle at 62% 60%, rgb(194 98 42 / 16%) 0 9%, transparent 9.5%),
+    radial-gradient(circle at 50% 50%, var(--saf-paper) 0 68%, transparent 68.5%),
+    radial-gradient(circle at 50% 50%, var(--saf-paper-2) 0 100%);
+  box-shadow: 0 24px 60px -30px rgb(22 48 31 / 45%);
+}
+
+.saf-plate::after {
+  content: '';
+  position: absolute;
+  inset: 8%;
+  border: 1px solid var(--saf-rule);
+  border-radius: 9999px;
+}
+
+.saf-frame {
+  border: 1px solid var(--saf-rule);
+  background: linear-gradient(160deg, var(--saf-paper), var(--saf-paper-2));
+}
+
+.saf-numeral {
+  font-size: 3rem;
+  line-height: 1;
+  color: var(--saf-accent);
+  opacity: 0.32;
+}
+
+/* ---- Form -------------------------------------------------------------- */
+
+.saf-field {
+  display: block;
+  width: 100%;
+  border: 0;
+  border-bottom: 1px solid var(--saf-rule);
+  background: transparent;
+  padding: 0.75rem 0;
+  color: var(--saf-ink);
+  font-family: inherit;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 200ms ease;
+}
+
+.saf-field:focus {
+  border-color: var(--saf-accent);
+}
+
+/* ---- FAQ --------------------------------------------------------------- */
+
+.saf-faq details {
+  border-bottom: 1px solid var(--saf-rule);
+}
+
+.saf-faq summary {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: 1.5rem 0;
+  cursor: pointer;
+  font-size: 1.25rem;
+  letter-spacing: -0.01em;
+  list-style: none;
+  transition: color 200ms ease;
+}
+
+.saf-faq summary::-webkit-details-marker {
+  display: none;
+}
+
+.saf-faq summary:hover {
+  color: var(--saf-accent);
+}
+
+.saf-faq summary::after {
+  content: '+';
+  flex: none;
+  color: var(--saf-accent);
+  transition: transform 500ms ease;
+}
+
+.saf-faq details[open] summary::after {
+  transform: rotate(45deg);
+}
+
+.saf-faq p {
+  padding: 0 2.5rem 1.75rem 0;
+  color: var(--saf-ink-soft);
+  font-size: 16px;
+  line-height: 1.85;
+}
+
+/* ---- Motion ------------------------------------------------------------ */
+
+.saf-marquee {
+  animation: saf-drift 46s linear infinite;
+}
+
+@keyframes saf-drift {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/*
+ * Scroll reveal. saffron.js adds `is-visible` as each element enters view;
+ * without JS the no-js fallback shows everything rather than hiding it forever.
+ */
+.saf-reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 700ms cubic-bezier(0.22, 1, 0.36, 1) var(--saf-delay, 0ms),
+    transform 700ms cubic-bezier(0.22, 1, 0.36, 1) var(--saf-delay, 0ms);
+}
+
+.saf-reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+html.no-js .saf-reveal {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .saf-marquee {
+    animation: none;
+  }
+
+  .saf-rule {
+    transition: none;
+  }
+
+  .saf-reveal {
+    transform: none;
+    transition-duration: 200ms;
+  }
+}

@@ -1,0 +1,471 @@
+/*
+ * LUMEN - template-scoped design tokens.
+ *
+ * A template is a standalone artifact with its own brand, so it declares its own
+ * palette rather than inheriting the app's, and the sections reference only the
+ * variables below (Rule 6). This file is the single place any LUMEN colour, and
+ * the only place a hex literal, exists.
+ *
+ * The direction is warm paper and charcoal with one amber accent, kept as far as
+ * possible from NOVA's dark glass and SAFFRON's serif cream: refined sans type,
+ * hairline rules, wide whitespace and shadows only under a product.
+ *
+ * !! Positioning warning !!
+ * A scoped selector such as `[data-template='lumen'] .lum-art` has higher
+ * specificity than Tailwind's single-class `.absolute` / `.relative`. No rule in
+ * this file may set `position` on an element that markup positions with a
+ * Tailwind utility - it would silently win and collapse the layout. Pseudo-
+ * elements are exempt: nothing in the markup positions those.
+ */
+
+[data-template='lumen'] {
+  --lum-paper: #fbfaf8;
+  --lum-paper-2: #f4f1eb;
+  --lum-paper-3: #ece7de;
+
+  --lum-ink: #1c1c1e;
+  --lum-ink-soft: rgb(28 28 30 / 68%);
+  --lum-ink-faint: rgb(28 28 30 / 45%);
+  --lum-rule: rgb(28 28 30 / 12%);
+  --lum-rule-strong: rgb(28 28 30 / 22%);
+
+  --lum-accent: #e0a458;
+  --lum-accent-deep: #b9782f;
+  --lum-accent-soft: rgb(224 164 88 / 16%);
+
+  --lum-shadow: rgb(28 28 30 / 9%);
+  --lum-shadow-deep: rgb(28 28 30 / 16%);
+
+  /* Finish swatches. Named so `.lum-swatch--<id>` maps straight from the data. */
+  --lum-swatch-brass: #c69a5c;
+  --lum-swatch-charcoal: #3a3a3d;
+  --lum-swatch-alabaster: #ede8df;
+  --lum-swatch-clay: #b98a6e;
+  --lum-swatch-sage: #8b9280;
+  --lum-swatch-oak: #cbab7d;
+  --lum-swatch-linen: #ddd3c2;
+  --lum-swatch-ink: #23231f;
+
+  --lum-sans:
+    'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', sans-serif;
+
+  color: var(--lum-ink);
+  background-color: var(--lum-paper);
+  font-family: var(--lum-sans);
+  scroll-behavior: smooth;
+}
+
+/* The uppercase label that opens every section and every summary block. */
+[data-template='lumen'] .lum-eyebrow {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--lum-accent-deep);
+}
+
+/* Same rhythm, quieter: field labels, table headers, meta rows. */
+[data-template='lumen'] .lum-label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--lum-ink-faint);
+}
+
+/* Prices are set in tabular figures so a column of them lines up on the decimal. */
+[data-template='lumen'] .lum-price {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+
+/*
+ * Focus is drawn once, here, so every control in the template - link, button,
+ * input, stepper - carries the same visible ring at WCAG AA contrast against
+ * paper. Sections never restyle it.
+ */
+[data-template='lumen'] :focus-visible {
+  outline: 2px solid var(--lum-accent-deep);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* ------------------------------------------------------------ form fields */
+
+[data-template='lumen'] .lum-field {
+  width: 100%;
+  border: 1px solid var(--lum-rule);
+  border-radius: 4px;
+  background: var(--lum-paper);
+  padding: 0.75rem 0.9rem;
+  font-size: 15px;
+  color: var(--lum-ink);
+  transition:
+    border-color 220ms ease,
+    box-shadow 220ms ease;
+}
+
+[data-template='lumen'] .lum-field::placeholder {
+  color: var(--lum-ink-faint);
+}
+
+[data-template='lumen'] .lum-field:hover:not(:disabled) {
+  border-color: var(--lum-rule-strong);
+}
+
+[data-template='lumen'] .lum-field:disabled {
+  background: var(--lum-paper-2);
+  color: var(--lum-ink-faint);
+  cursor: not-allowed;
+}
+
+/* ---------------------------------------------------------------- surface */
+
+/*
+ * The one card treatment. A hairline rule and a very soft shadow - the shadow is
+ * what separates this from SAFFRON's flat frames without ever reading as a
+ * material.
+ */
+[data-template='lumen'] .lum-panel {
+  border: 1px solid var(--lum-rule);
+  border-radius: 6px;
+  background: var(--lum-paper);
+  box-shadow: 0 1px 2px var(--lum-shadow);
+}
+
+[data-template='lumen'] .lum-notice {
+  border: 1px solid var(--lum-accent);
+  border-radius: 6px;
+  background: var(--lum-accent-soft);
+}
+
+/* ---------------------------------------------------------------- buttons */
+
+[data-template='lumen'] .lum-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 4px;
+  padding: 0.9rem 1.75rem;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  transition:
+    background-color 220ms ease,
+    color 220ms ease,
+    border-color 220ms ease;
+}
+
+[data-template='lumen'] .lum-btn--solid {
+  background: var(--lum-ink);
+  color: var(--lum-paper);
+}
+
+[data-template='lumen'] .lum-btn--solid:hover {
+  background: var(--lum-accent-deep);
+}
+
+[data-template='lumen'] .lum-btn--outline {
+  border: 1px solid var(--lum-rule-strong);
+  color: var(--lum-ink);
+}
+
+[data-template='lumen'] .lum-btn--outline:hover {
+  border-color: var(--lum-ink);
+  background: var(--lum-paper-2);
+}
+
+/* --------------------------------------------------------------- swatches */
+
+[data-template='lumen'] .lum-swatch {
+  border-radius: 9999px;
+  border: 1px solid var(--lum-rule-strong);
+  transition: box-shadow 200ms ease;
+}
+
+[data-template='lumen'] .lum-swatch[aria-pressed='true'] {
+  box-shadow: 0 0 0 2px var(--lum-paper), 0 0 0 3px var(--lum-ink);
+}
+
+[data-template='lumen'] .lum-swatch--brass {
+  background: var(--lum-swatch-brass);
+}
+[data-template='lumen'] .lum-swatch--charcoal {
+  background: var(--lum-swatch-charcoal);
+}
+[data-template='lumen'] .lum-swatch--alabaster {
+  background: var(--lum-swatch-alabaster);
+}
+[data-template='lumen'] .lum-swatch--clay {
+  background: var(--lum-swatch-clay);
+}
+[data-template='lumen'] .lum-swatch--sage {
+  background: var(--lum-swatch-sage);
+}
+[data-template='lumen'] .lum-swatch--oak {
+  background: var(--lum-swatch-oak);
+}
+[data-template='lumen'] .lum-swatch--linen {
+  background: var(--lum-swatch-linen);
+}
+[data-template='lumen'] .lum-swatch--ink {
+  background: var(--lum-swatch-ink);
+}
+
+/* ------------------------------------------------------------ product art */
+
+/*
+ * Products are drawn, not photographed.
+ *
+ * Each `.lum-art--<key>` composes a recognisable silhouette from a background
+ * wash on the host plus two pseudo-elements: `::before` is the stem, cord or
+ * secondary mass, `::after` is the body, cut to shape with `clip-path`. That
+ * keeps the download free of binary assets and lets one small element scale from
+ * a thumbnail to a hero without going soft.
+ *
+ * The host must carry Tailwind's `relative` in markup - see the warning at the
+ * top of this file for why it cannot be set here.
+ */
+[data-template='lumen'] .lum-art {
+  overflow: hidden;
+  border-radius: 6px;
+  background:
+    radial-gradient(ellipse 60% 34% at 50% 62%, rgb(224 164 88 / 22%), transparent 70%),
+    linear-gradient(168deg, var(--lum-paper-2) 0%, var(--lum-paper-3) 100%);
+  box-shadow: 0 1px 2px var(--lum-shadow);
+  transition:
+    box-shadow 400ms ease,
+    transform 400ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+[data-template='lumen'] .lum-art::before,
+[data-template='lumen'] .lum-art::after {
+  content: '';
+  position: absolute;
+}
+
+/* The lift on hover is the only motion a product visual makes. */
+[data-template='lumen'] .lum-art-lift:hover .lum-art,
+[data-template='lumen'] .lum-art-lift:focus-visible .lum-art {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 34px -22px var(--lum-shadow-deep);
+}
+
+/* Pendant: a braided flex dropping to a spun trapezoid shade. */
+[data-template='lumen'] .lum-art--pendant::before {
+  left: 50%;
+  top: 0;
+  width: 2px;
+  height: 34%;
+  transform: translateX(-50%);
+  background: linear-gradient(180deg, var(--lum-rule-strong), var(--lum-ink-soft));
+}
+
+[data-template='lumen'] .lum-art--pendant::after {
+  left: 22%;
+  right: 22%;
+  top: 32%;
+  height: 26%;
+  clip-path: polygon(34% 0%, 66% 0%, 100% 100%, 0% 100%);
+  background: linear-gradient(105deg, var(--lum-swatch-brass), var(--lum-accent-deep) 62%, var(--lum-ink) 130%);
+}
+
+/* Table lamp: a stoneware body under a wide linen shade. */
+[data-template='lumen'] .lum-art--globe::before {
+  left: 30%;
+  right: 30%;
+  top: 22%;
+  height: 26%;
+  clip-path: polygon(16% 0%, 84% 0%, 100% 100%, 0% 100%);
+  background: linear-gradient(100deg, var(--lum-swatch-linen), var(--lum-paper) 70%);
+  border-radius: 2px;
+}
+
+[data-template='lumen'] .lum-art--globe::after {
+  left: 36%;
+  right: 36%;
+  top: 48%;
+  bottom: 20%;
+  border-radius: 40% 40% 46% 46% / 60% 60% 22% 22%;
+  background: linear-gradient(100deg, var(--lum-swatch-clay), var(--lum-accent-deep) 120%);
+}
+
+/* Floor lamp: a tall column on a low cast base. */
+[data-template='lumen'] .lum-art--column::before {
+  left: 34%;
+  right: 34%;
+  bottom: 14%;
+  height: 2.5%;
+  border-radius: 2px;
+  background: var(--lum-ink);
+}
+
+[data-template='lumen'] .lum-art--column::after {
+  left: 45%;
+  right: 45%;
+  top: 16%;
+  bottom: 16%;
+  border-radius: 3px;
+  background: linear-gradient(100deg, var(--lum-swatch-charcoal), var(--lum-ink) 55%, var(--lum-swatch-charcoal));
+}
+
+/* Sconce: a half-disc washing the wall, on a slim backplate. */
+[data-template='lumen'] .lum-art--sconce::before {
+  left: 26%;
+  top: 30%;
+  bottom: 30%;
+  width: 3%;
+  border-radius: 2px;
+  background: var(--lum-ink-soft);
+}
+
+[data-template='lumen'] .lum-art--sconce::after {
+  left: 29%;
+  top: 26%;
+  bottom: 26%;
+  width: 26%;
+  border-radius: 0 9999px 9999px 0;
+  background: linear-gradient(90deg, var(--lum-accent-deep), var(--lum-swatch-brass) 80%);
+}
+
+/* Vase: a narrow neck flaring into a tall vessel. */
+[data-template='lumen'] .lum-art--vase::before {
+  left: 46%;
+  right: 46%;
+  top: 16%;
+  height: 22%;
+  background: linear-gradient(90deg, var(--lum-accent-deep), var(--lum-swatch-clay));
+}
+
+[data-template='lumen'] .lum-art--vase::after {
+  left: 34%;
+  right: 34%;
+  top: 34%;
+  bottom: 16%;
+  clip-path: polygon(36% 0%, 64% 0%, 100% 34%, 92% 100%, 8% 100%, 0% 34%);
+  background: linear-gradient(100deg, var(--lum-swatch-clay), var(--lum-accent-deep) 130%);
+}
+
+/* Throw: folded linen, the fold lines drawn as a repeating gradient. */
+[data-template='lumen'] .lum-art--throw::before {
+  left: 18%;
+  right: 18%;
+  top: 30%;
+  bottom: 28%;
+  border-radius: 3px;
+  background: repeating-linear-gradient(
+    172deg,
+    var(--lum-swatch-linen) 0 14px,
+    var(--lum-paper-2) 14px 17px
+  );
+}
+
+[data-template='lumen'] .lum-art--throw::after {
+  left: 18%;
+  right: 18%;
+  top: 30%;
+  height: 9%;
+  border-radius: 3px 3px 0 0;
+  background: linear-gradient(180deg, var(--lum-paper), transparent);
+}
+
+/* Side table: a round top on tapered legs. */
+[data-template='lumen'] .lum-art--table::before {
+  left: 32%;
+  right: 32%;
+  top: 44%;
+  bottom: 20%;
+  clip-path: polygon(0% 0%, 100% 0%, 78% 100%, 22% 100%);
+  background: linear-gradient(100deg, var(--lum-swatch-oak), var(--lum-accent-deep) 140%);
+}
+
+[data-template='lumen'] .lum-art--table::after {
+  left: 20%;
+  right: 20%;
+  top: 36%;
+  height: 10%;
+  border-radius: 9999px;
+  background: linear-gradient(100deg, var(--lum-swatch-oak), var(--lum-paper-2) 150%);
+}
+
+/* Diffuser: a small glazed bottle with reeds. */
+[data-template='lumen'] .lum-art--diffuser::before {
+  left: 48%;
+  top: 14%;
+  width: 14%;
+  height: 34%;
+  clip-path: polygon(0% 100%, 22% 0%, 38% 0%, 30% 100%);
+  background: var(--lum-swatch-oak);
+}
+
+[data-template='lumen'] .lum-art--diffuser::after {
+  left: 36%;
+  right: 36%;
+  top: 42%;
+  bottom: 20%;
+  border-radius: 30% 30% 18% 18% / 26% 26% 12% 12%;
+  background: linear-gradient(100deg, var(--lum-swatch-charcoal), var(--lum-ink) 120%);
+}
+
+/* -------------------------------------------------------------- ornaments */
+
+/*
+ * The amber rule that draws itself under a section heading once revealed. It is
+ * the template's only decorative motion and costs nothing when it is off.
+ */
+[data-template='lumen'] .lum-underline {
+  display: block;
+  height: 1px;
+  width: 0;
+  background: var(--lum-accent);
+  transition: width 800ms cubic-bezier(0.22, 1, 0.36, 1) 100ms;
+}
+
+[data-template='lumen'] .lum-revealed .lum-underline {
+  width: 3rem;
+}
+
+/*
+ * Fades a horizontally scrolling strip out at both edges. The mask lives here
+ * rather than as a Tailwind arbitrary value because a mask stop is written as a
+ * colour, and no hex may appear outside this file.
+ */
+[data-template='lumen'] .lum-fade-x {
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+
+[data-template='lumen'] .lum-marquee {
+  animation: lum-drift 52s linear infinite;
+}
+
+@keyframes lum-drift {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    /* The strip renders its items twice; -50% lands on the seam exactly. */
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-template='lumen'] {
+    scroll-behavior: auto;
+  }
+
+  [data-template='lumen'] .lum-marquee {
+    animation: none;
+  }
+
+  [data-template='lumen'] .lum-underline,
+  [data-template='lumen'] .lum-art {
+    transition: none;
+  }
+
+  [data-template='lumen'] .lum-art-lift:hover .lum-art,
+  [data-template='lumen'] .lum-art-lift:focus-visible .lum-art {
+    transform: none;
+  }
+}

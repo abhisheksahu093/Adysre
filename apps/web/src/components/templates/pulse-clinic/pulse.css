@@ -1,0 +1,206 @@
+/*
+ * PULSE - template-scoped design tokens.
+ *
+ * A template is a standalone artifact with its own brand, so it cannot inherit
+ * the app's tokens - it has to look like a different business. It still may not
+ * scatter raw colour through markup (Rule 6), so the whole palette lives here,
+ * scoped to `[data-template='pulse']`, and the sections reference variables
+ * only. This file is the single place PULSE's colour exists.
+ *
+ * The palette is deliberately light: a clinic page that opens dark reads as a
+ * product launch, not a place you would take a child.
+ */
+
+[data-template='pulse'] {
+  --pulse-bg: #ffffff;
+  --pulse-surface: #f2f6fc;
+  --pulse-surface-2: #e7eefa;
+  --pulse-line: #dde6f4;
+
+  --pulse-ink: #0f1b2d;
+  /* Soft and faint stay above 4.5:1 on white and on --pulse-surface. */
+  --pulse-ink-soft: rgb(15 27 45 / 72%);
+  --pulse-ink-faint: rgb(15 27 45 / 58%);
+  --pulse-on-accent: #ffffff;
+
+  --pulse-accent: #2563eb;
+  --pulse-accent-deep: #1d4ed8;
+  --pulse-accent-soft: rgb(37 99 235 / 9%);
+
+  /* Mint is a 2.5:1 colour on white, so it may tint and mark but never carry
+   * text. Anything readable in the mint family uses --pulse-mint-deep. */
+  --pulse-mint: #10b981;
+  --pulse-mint-deep: #047857;
+  --pulse-mint-soft: rgb(16 185 129 / 12%);
+
+  --pulse-radius: 24px;
+  --pulse-radius-sm: 16px;
+
+  --pulse-shadow: 0 18px 44px -28px rgb(15 27 45 / 40%);
+  --pulse-shadow-lift: 0 26px 54px -26px rgb(37 99 235 / 34%);
+
+  color: var(--pulse-ink);
+  background-color: var(--pulse-bg);
+  font-family: 'Segoe UI', system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;
+
+  /* Anchor nav is the primary way through a one-page clinic site, so the jump
+   * is eased rather than instant. Undone under reduced motion, below. */
+  scroll-behavior: smooth;
+}
+
+/* Section eyebrow: small, blue and sentence case - uppercase tracking would
+ * read colder than the rest of this design. */
+[data-template='pulse'] .pulse-eyebrow {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--pulse-accent);
+}
+
+/*
+ * The base card. No `position` here on purpose: a scoped
+ * `[data-template='pulse'] .pulse-card` selector outranks Tailwind's
+ * single-class `.absolute`/`.relative`, so any card that needs positioning must
+ * get it from a utility at the usage site.
+ */
+[data-template='pulse'] .pulse-card {
+  background: var(--pulse-bg);
+  border: 1px solid var(--pulse-line);
+  border-radius: var(--pulse-radius);
+  box-shadow: var(--pulse-shadow);
+  transition:
+    transform 320ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 320ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/*
+ * Tinted variant. It exists as a class rather than a Tailwind `bg-[...]` at the
+ * usage site because `[data-template='pulse'] .pulse-card` (0,2,0) outranks a
+ * single-class utility (0,1,0) and would silently win the background back.
+ */
+[data-template='pulse'] .pulse-card-soft {
+  background: var(--pulse-surface);
+  box-shadow: none;
+}
+
+[data-template='pulse'] .pulse-card-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--pulse-shadow-lift);
+}
+
+/*
+ * Soft floating shapes behind the hero. Pure gradient, no image asset, so the
+ * downloaded template ships with nothing binary in it. Sized in rem and blurred
+ * hard enough that no edge ever lands on a word.
+ */
+[data-template='pulse'] .pulse-orb {
+  border-radius: 9999px;
+  filter: blur(80px);
+  pointer-events: none;
+}
+
+[data-template='pulse'] .pulse-orb-blue {
+  background: radial-gradient(circle, rgb(37 99 235 / 34%), transparent 70%);
+  animation: pulse-drift 16s ease-in-out infinite;
+}
+
+[data-template='pulse'] .pulse-orb-mint {
+  background: radial-gradient(circle, rgb(16 185 129 / 30%), transparent 70%);
+  animation: pulse-drift 20s ease-in-out infinite reverse;
+}
+
+@keyframes pulse-drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(2.5rem, -1.75rem, 0) scale(1.08);
+  }
+}
+
+/* Pale wash used behind the alternating sections. */
+[data-template='pulse'] .pulse-wash {
+  background: linear-gradient(180deg, var(--pulse-bg), var(--pulse-surface) 22%, var(--pulse-surface));
+}
+
+/* Rounded tile behind a treatment icon. */
+[data-template='pulse'] .pulse-tile {
+  border-radius: var(--pulse-radius-sm);
+  background: var(--pulse-accent-soft);
+  color: var(--pulse-accent);
+}
+
+[data-template='pulse'] .pulse-tile-mint {
+  background: var(--pulse-mint-soft);
+  color: var(--pulse-mint-deep);
+}
+
+/* Pill form field. The focus ring is a shadow so the field never resizes. */
+[data-template='pulse'] .pulse-field {
+  width: 100%;
+  border: 1px solid var(--pulse-line);
+  border-radius: var(--pulse-radius-sm);
+  background: var(--pulse-bg);
+  color: var(--pulse-ink);
+  outline: none;
+  transition:
+    border-color 200ms ease,
+    box-shadow 200ms ease;
+}
+
+[data-template='pulse'] .pulse-field::placeholder {
+  color: var(--pulse-ink-faint);
+}
+
+[data-template='pulse'] .pulse-field:focus-visible {
+  border-color: var(--pulse-accent);
+  box-shadow: 0 0 0 4px var(--pulse-accent-soft);
+}
+
+/* One shared focus treatment for links and buttons, on a light page. */
+[data-template='pulse'] a:focus-visible,
+[data-template='pulse'] button:focus-visible {
+  outline: 2px solid var(--pulse-accent);
+  outline-offset: 3px;
+  border-radius: 9999px;
+}
+
+[data-template='pulse'] .pulse-marquee {
+  animation: pulse-scroll 38s linear infinite;
+}
+
+@keyframes pulse-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    /* The strip renders its items twice; -50% lands on the seam exactly. */
+    transform: translateX(-50%);
+  }
+}
+
+/*
+ * Reduced motion: the page still works, it simply stops moving. Smooth scroll
+ * is reverted too - an eased jump is motion the visitor did not ask for.
+ */
+@media (prefers-reduced-motion: reduce) {
+  [data-template='pulse'] {
+    scroll-behavior: auto;
+  }
+
+  [data-template='pulse'] .pulse-orb-blue,
+  [data-template='pulse'] .pulse-orb-mint,
+  [data-template='pulse'] .pulse-marquee {
+    animation: none;
+  }
+
+  [data-template='pulse'] .pulse-card,
+  [data-template='pulse'] .pulse-field {
+    transition: none;
+  }
+
+  [data-template='pulse'] .pulse-card-lift:hover {
+    transform: none;
+  }
+}

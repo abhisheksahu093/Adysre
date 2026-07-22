@@ -2,16 +2,18 @@
 
 import { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { LayoutTemplate, Pencil } from 'lucide-react';
+import { LayoutTemplate, Paintbrush, Pencil } from 'lucide-react';
 import { cn } from '@adysre/ui';
 import type { LocalizedComponent } from '@/data/components';
 import type { PlaygroundSlot, PlaygroundSlotId } from '@/data/playground';
 import { tourStepsForStage } from '@/data/playground/tour';
 import { usePlaygroundStore } from '@/stores/playground-store';
 import { overrideCount } from '@/lib/playground/content';
+import { sectionStyleEditCount } from '@/lib/playground/section-style';
 import { SlotRail } from './slot-rail';
 import { VariationPicker } from './variation-picker';
 import { ContentEditor } from './content-editor';
+import { SectionStyleEditor } from './section-style-editor';
 
 interface BuilderSidebarProps {
   resolved: Record<PlaygroundSlotId, string | null>;
@@ -24,7 +26,7 @@ interface BuilderSidebarProps {
   onChange: (id: PlaygroundSlotId, slug: string | null) => void;
 }
 
-type BuilderTab = 'layout' | 'content';
+type BuilderTab = 'layout' | 'content' | 'style';
 
 /**
  * The builder's control column. The section rail stays pinned at the top as the
@@ -56,6 +58,7 @@ export function BuilderSidebar({
     activeComponent ? s.contentOverrides[activeComponent.slug] : undefined,
   );
   const editedCount = overrideCount(overrides);
+  const styledCount = usePlaygroundStore((s) => sectionStyleEditCount(s.sectionStyles[activeSlot.id]));
 
   // Keep the tour's spotlight target mounted by opening the tab it lives in.
   useEffect(() => {
@@ -68,6 +71,7 @@ export function BuilderSidebar({
   const tabs: { id: BuilderTab; label: string; icon: typeof LayoutTemplate; badge?: number }[] = [
     { id: 'layout', label: t('playground.builder.layout'), icon: LayoutTemplate },
     { id: 'content', label: t('playground.builder.content'), icon: Pencil, badge: editedCount },
+    { id: 'style', label: t('playground.builder.style'), icon: Paintbrush, badge: styledCount },
   ];
 
   return (
@@ -137,6 +141,14 @@ export function BuilderSidebar({
             <ContentEditor
               component={activeComponent}
               slotLabel={t(`playground.slots.${activeSlot.id}`)}
+              fill
+            />
+          </div>
+          <div className={cn('flex h-full min-h-0 flex-col', tab !== 'style' && 'hidden')}>
+            <SectionStyleEditor
+              slot={activeSlot}
+              slotLabel={t(`playground.slots.${activeSlot.id}`)}
+              hasSection={activeComponent !== null}
               fill
             />
           </div>

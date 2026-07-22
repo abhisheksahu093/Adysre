@@ -1,0 +1,125 @@
+/*
+ * SAFFRON - template-scoped design tokens.
+ *
+ * Everything the template's palette, type and ornament need, scoped to
+ * `[data-template='saffron']` so it can sit inside the app without leaking a
+ * single value (Rule 6). Deliberately warm and light: the whole point of this
+ * template is that it reads nothing like NOVA.
+ */
+
+[data-template='saffron'] {
+  --saf-paper: #faf6ee;
+  --saf-paper-2: #f3ece0;
+  --saf-ink: #16301f;
+  --saf-ink-soft: rgb(22 48 31 / 72%);
+  --saf-ink-faint: rgb(22 48 31 / 46%);
+  --saf-rule: rgb(22 48 31 / 14%);
+  --saf-accent: #c2622a;
+
+  --saf-serif: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, 'Times New Roman', serif;
+
+  color: var(--saf-ink);
+  background-color: var(--saf-paper);
+  font-family: var(--saf-serif);
+
+  /* Anchor links in the nav should glide, not jump. */
+  scroll-behavior: smooth;
+}
+
+/* Small-caps eyebrow, used above every section heading. */
+[data-template='saffron'] .saf-eyebrow {
+  font-family: var(--saf-serif);
+  font-size: 11px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--saf-accent);
+}
+
+/*
+ * The saffron rule under a heading. It draws itself from 0 to full width when
+ * the section is revealed - a small piece of ornament that rewards scrolling
+ * without moving any text.
+ */
+[data-template='saffron'] .saf-rule {
+  display: block;
+  height: 1px;
+  width: 0;
+  background: var(--saf-accent);
+  transition: width 900ms cubic-bezier(0.22, 1, 0.36, 1) 120ms;
+}
+
+[data-template='saffron'] .saf-revealed .saf-rule {
+  width: 4.5rem;
+}
+
+/*
+ * A plated composition: concentric radial gradients inside a circle, framed by
+ * a thin rule. Suggests food without shipping a single image, which keeps the
+ * download free of binary assets.
+ */
+/*
+ * Every instance positions itself (each usage is absolutely placed), so this
+ * rule must NOT set `position` - a scoped `[data-template] .saf-plate` selector
+ * outranks Tailwind's single-class `.absolute`, which would silently collapse
+ * an `inset-0` plate to zero height. Being positioned by its usage also gives
+ * the ::after ring the containing block it needs.
+ */
+[data-template='saffron'] .saf-plate {
+  border-radius: 9999px;
+  background:
+    radial-gradient(circle at 50% 42%, rgb(194 98 42 / 26%) 0 12%, transparent 12.5%),
+    radial-gradient(circle at 38% 56%, rgb(22 48 31 / 20%) 0 7%, transparent 7.5%),
+    radial-gradient(circle at 62% 60%, rgb(194 98 42 / 16%) 0 9%, transparent 9.5%),
+    radial-gradient(circle at 50% 50%, var(--saf-paper) 0 68%, transparent 68.5%),
+    radial-gradient(circle at 50% 50%, var(--saf-paper-2) 0 100%);
+  box-shadow: 0 24px 60px -30px rgb(22 48 31 / 45%);
+}
+
+[data-template='saffron'] .saf-plate::after {
+  content: '';
+  position: absolute;
+  inset: 8%;
+  border: 1px solid var(--saf-rule);
+  border-radius: 9999px;
+}
+
+[data-template='saffron'] .saf-frame {
+  border: 1px solid var(--saf-rule);
+  background: linear-gradient(160deg, var(--saf-paper), var(--saf-paper-2));
+}
+
+[data-template='saffron'] .saf-numeral {
+  font-family: var(--saf-serif);
+  font-size: 3rem;
+  line-height: 1;
+  color: var(--saf-accent);
+  opacity: 0.32;
+}
+
+[data-template='saffron'] .saf-marquee {
+  animation: saf-drift 46s linear infinite;
+}
+
+@keyframes saf-drift {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    /* The strip renders its items twice; -50% lands on the seam exactly. */
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-template='saffron'] {
+    scroll-behavior: auto;
+  }
+
+  [data-template='saffron'] .saf-marquee {
+    animation: none;
+  }
+
+  [data-template='saffron'] .saf-rule {
+    transition: none;
+  }
+}

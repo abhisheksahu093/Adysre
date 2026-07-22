@@ -1,0 +1,136 @@
+/*
+ * AURORA - template-scoped design tokens.
+ *
+ * Everything this template's palette, type and ornament need, scoped to
+ * `[data-template='aurora']` so it can sit inside the app without leaking a
+ * single value (Rule 6). Deliberately loud and hard-edged: near-black, one acid
+ * accent, no radii anywhere, so it reads nothing like NOVA's glass or SAFFRON's
+ * warm serif.
+ */
+
+[data-template='aurora'] {
+  --aurora-bg: #0a0a0b;
+  --aurora-surface: #141417;
+  --aurora-line: #2b2b30;
+  --aurora-line-strong: #3f3f46;
+
+  --aurora-text: #f5f5f2;
+  /* Both muted steps clear 4.5:1 against --aurora-bg, so body copy stays AA. */
+  --aurora-muted: rgb(245 245 242 / 72%);
+  --aurora-faint: rgb(245 245 242 / 55%);
+
+  --aurora-acid: #d7ff3e;
+  --aurora-acid-dim: #a9cc1f;
+  /* Text drawn on top of a full acid fill - never the other way round. */
+  --aurora-on-acid: #0a0a0b;
+
+  --aurora-border: 2px;
+
+  /*
+   * Condensed display stack. No webfont is loaded (the download must stay free
+   * of external assets), so the stack names the narrow faces that ship with
+   * mainstream systems and `font-stretch` squeezes anything variable.
+   */
+  --aurora-display: 'Oswald', 'Archivo Narrow', 'Roboto Condensed', 'Arial Narrow', 'Helvetica Neue', ui-sans-serif,
+    system-ui, sans-serif;
+  --aurora-body: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  color: var(--aurora-text);
+  background-color: var(--aurora-bg);
+  font-family: var(--aurora-body);
+  /* Anchor nav is the only navigation this single page has, so ease it. */
+  scroll-behavior: smooth;
+}
+
+/* Every heading, eyebrow, stat and button label in the design. */
+[data-template='aurora'] .aurora-display {
+  font-family: var(--aurora-display);
+  font-stretch: 75%;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  line-height: 0.92;
+}
+
+/* Small uppercase label: eyebrows, stat captions, footer column titles. */
+[data-template='aurora'] .aurora-tag {
+  font-family: var(--aurora-display);
+  font-stretch: 87.5%;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.24em;
+  line-height: 1;
+}
+
+/*
+ * Diagonal hatching, the template's only texture. Built from a repeating
+ * gradient rather than an image so nothing has to be downloaded with the zip.
+ * Never sets `position`: a scoped class selector outranks Tailwind's single
+ * class `.absolute`, which would silently drop any element placed with it.
+ */
+[data-template='aurora'] .aurora-hatch {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    var(--aurora-line) 0 1px,
+    transparent 1px 10px
+  );
+}
+
+[data-template='aurora'] .aurora-hatch-acid {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    rgb(215 255 62 / 22%) 0 2px,
+    transparent 2px 12px
+  );
+}
+
+/* The crate: 2px border, flat fill, hard corners. The whole card language. */
+[data-template='aurora'] .aurora-crate {
+  border: var(--aurora-border) solid var(--aurora-line);
+  background-color: var(--aurora-surface);
+}
+
+/* Cards scale a touch and take an acid edge on hover - transform only. */
+[data-template='aurora'] .aurora-lift {
+  transition:
+    transform 260ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 260ms ease,
+    background-color 260ms ease;
+}
+
+[data-template='aurora'] .aurora-lift:hover {
+  transform: scale(1.02);
+  border-color: var(--aurora-acid);
+}
+
+[data-template='aurora'] .aurora-marquee {
+  animation: aurora-slide 26s linear infinite;
+}
+
+@keyframes aurora-slide {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    /* The strip renders its items twice; -50% lands on the seam exactly. */
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-template='aurora'] {
+    scroll-behavior: auto;
+  }
+
+  [data-template='aurora'] .aurora-marquee {
+    animation: none;
+  }
+
+  [data-template='aurora'] .aurora-lift {
+    transition: border-color 260ms ease;
+  }
+
+  [data-template='aurora'] .aurora-lift:hover {
+    transform: none;
+  }
+}

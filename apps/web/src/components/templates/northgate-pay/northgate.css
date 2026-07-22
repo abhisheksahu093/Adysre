@@ -1,0 +1,431 @@
+/*
+ * NORTHGATE - template-scoped design tokens.
+ *
+ * A template is a standalone artifact with its own brand, so it cannot inherit
+ * the app's tokens - it has to look like a different company. It still may not
+ * scatter raw colour through markup (Rule 6), so the whole palette lives here,
+ * scoped to `[data-template='northgate']`, and every section references these
+ * variables only. This file is the single place NORTHGATE's colours exist.
+ *
+ * CAUTION for anyone extending this file, and this is a bug we actually shipped
+ * once: a scoped selector such as `[data-template='northgate'] .ngp-x` has
+ * higher specificity than Tailwind's single-class `.absolute`, so it must NEVER
+ * set `position` on an element that Tailwind positions. Only pseudo-elements
+ * below are positioned from CSS, because Tailwind never touches a ::after.
+ */
+
+[data-template='northgate'] {
+  /* Paper. Near-white with a trace of blue so the indigo ink sits on it warmly. */
+  --ngp-bg: #fbfbfd;
+  --ngp-bg-2: #f2f3f9;
+  --ngp-bg-3: #e9ebf4;
+
+  /* Ink on paper. Alphas chosen to clear WCAG AA at the sizes they are used. */
+  --ngp-ink: #10132b;
+  --ngp-ink-soft: rgb(16 19 43 / 74%);
+  --ngp-ink-faint: rgb(16 19 43 / 58%);
+  --ngp-rule: rgb(16 19 43 / 10%);
+  --ngp-rule-strong: rgb(16 19 43 / 22%);
+
+  /* The inverted bands. Two depths so a panel can sit on the darker ground. */
+  --ngp-deep: #0a0c1d;
+  --ngp-deep-2: #141833;
+  --ngp-on-deep: #eef0fb;
+  --ngp-on-deep-soft: rgb(238 240 251 / 78%);
+  --ngp-on-deep-faint: rgb(238 240 251 / 62%);
+  --ngp-deep-rule: rgb(238 240 251 / 16%);
+  --ngp-deep-rule-strong: rgb(238 240 251 / 30%);
+
+  /*
+   * The accent, at two ends of one gradient. #4338ff clears 6.4:1 on the paper,
+   * so it is safe as TEXT on light; the cyan is not, and is therefore only ever
+   * used inside gradients, on rules, or as type on the deep ground where the
+   * brighter pair below takes over.
+   */
+  --ngp-indigo: #4338ff;
+  --ngp-indigo-deep: #2b21c4;
+  --ngp-cyan: #12c9e8;
+  --ngp-indigo-bright: #9b9cff;
+  --ngp-cyan-bright: #6fe6f6;
+
+  --ngp-accent-wash: rgb(67 56 255 / 8%);
+  --ngp-accent-line: rgb(67 56 255 / 28%);
+  --ngp-gradient: linear-gradient(100deg, var(--ngp-indigo), var(--ngp-cyan));
+  --ngp-gradient-bright: linear-gradient(100deg, var(--ngp-indigo-bright), var(--ngp-cyan-bright));
+
+  /* Large radii are the shape language: 48px on panels, 32px on cards. */
+  --ngp-radius-xl: 48px;
+  --ngp-radius: 32px;
+  --ngp-radius-sm: 16px;
+  --ngp-radius-xs: 10px;
+
+  --ngp-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+  --ngp-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+
+  /* One easing for the whole template, so every motion feels like one system. */
+  --ngp-ease: cubic-bezier(0.16, 1, 0.3, 1);
+
+  color: var(--ngp-ink);
+  background-color: var(--ngp-bg);
+  font-family: var(--ngp-sans);
+  /* The page-switch and any anchor land softly rather than jumping. */
+  scroll-behavior: smooth;
+}
+
+/*
+ * Display type. Tight tracking and an optical weight that stays readable at
+ * 110px - the hero is the loudest thing in the design and everything else is
+ * quiet, so it has to carry the whole personality on its own.
+ */
+[data-template='northgate'] .ngp-display {
+  font-weight: 560;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+
+/*
+ * `line-height` lives on the SIZE classes, never on `.ngp-display` itself.
+ * A scoped rule outranks Tailwind's `.leading-snug`, so declaring it on the
+ * base class would silently win over every `leading-*` utility in the markup -
+ * the same specificity trap this file warns about for `position`. Only the
+ * oversized sizes need a tightened leading, and they never carry a utility.
+ */
+[data-template='northgate'] .ngp-display-xl {
+  font-size: clamp(2.75rem, 8.6vw, 6.875rem);
+  line-height: 0.96;
+}
+
+[data-template='northgate'] .ngp-display-lg {
+  font-size: clamp(2.125rem, 5.4vw, 4.25rem);
+  line-height: 1;
+}
+
+[data-template='northgate'] .ngp-display-md {
+  font-size: clamp(1.75rem, 3.4vw, 2.75rem);
+  line-height: 1.04;
+}
+
+/* The mono face: every figure, label, eyebrow, code block and table header. */
+[data-template='northgate'] .ngp-mono {
+  font-family: var(--ngp-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+[data-template='northgate'] .ngp-eyebrow {
+  font-family: var(--ngp-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ngp-indigo-deep);
+}
+
+[data-template='northgate'] .ngp-eyebrow-invert {
+  color: var(--ngp-cyan-bright);
+}
+
+/*
+ * Gradient display words. Used only on the deep ground, where both stops clear
+ * AA against #0a0c1d; on paper the same treatment would fail on the cyan end.
+ * `color: transparent` with a background clip degrades to the painted colour if
+ * the clip is unsupported, so the fallback colour is set first.
+ */
+[data-template='northgate'] .ngp-grad-text {
+  color: var(--ngp-cyan-bright);
+  background: var(--ngp-gradient-bright);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* The same idea on paper, using the two dark-enough stops of the gradient. */
+[data-template='northgate'] .ngp-grad-text-ink {
+  color: var(--ngp-indigo);
+  background: linear-gradient(100deg, var(--ngp-indigo), var(--ngp-indigo-deep));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* A 1px gradient rule - the hairline that separates most bands. */
+[data-template='northgate'] .ngp-rule-grad {
+  display: block;
+  height: 1px;
+  background: var(--ngp-gradient);
+}
+
+/*
+ * Gradient wash behind the hero and the dark bands. Two blurred radial blooms
+ * on pseudo-elements, so there is no image asset anywhere in the download.
+ */
+[data-template='northgate'] .ngp-wash::before,
+[data-template='northgate'] .ngp-wash::after {
+  content: '';
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(110px);
+  pointer-events: none;
+}
+
+[data-template='northgate'] .ngp-wash::before {
+  inset-inline-start: -12%;
+  inset-block-start: -34%;
+  width: 44rem;
+  height: 44rem;
+  background: radial-gradient(circle, rgb(67 56 255 / 34%), transparent 70%);
+}
+
+[data-template='northgate'] .ngp-wash::after {
+  inset-inline-end: -16%;
+  inset-block-start: 4%;
+  width: 34rem;
+  height: 34rem;
+  background: radial-gradient(circle, rgb(18 201 232 / 24%), transparent 70%);
+}
+
+/* A fainter version for light bands, where the wash must not tint the type. */
+[data-template='northgate'] .ngp-wash-soft::before {
+  background: radial-gradient(circle, rgb(67 56 255 / 14%), transparent 70%);
+}
+
+[data-template='northgate'] .ngp-wash-soft::after {
+  background: radial-gradient(circle, rgb(18 201 232 / 12%), transparent 70%);
+}
+
+/* Engineering grid, masked so it fades out before it reaches the copy. */
+[data-template='northgate'] .ngp-grid {
+  background-image:
+    linear-gradient(var(--ngp-deep-rule) 1px, transparent 1px),
+    linear-gradient(90deg, var(--ngp-deep-rule) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(ellipse 70% 62% at 50% 0%, #000 30%, transparent 100%);
+}
+
+/* Glass panel on the deep ground: the platform's default container. */
+[data-template='northgate'] .ngp-glass {
+  background: linear-gradient(160deg, rgb(255 255 255 / 8%), rgb(255 255 255 / 2%));
+  border: 1px solid var(--ngp-deep-rule);
+  border-radius: var(--ngp-radius);
+  backdrop-filter: blur(14px);
+}
+
+/* The paper equivalent: a hairline card with a barely-there gradient fill. */
+[data-template='northgate'] .ngp-card {
+  background: linear-gradient(170deg, #ffffff, var(--ngp-bg-2));
+  border: 1px solid var(--ngp-rule);
+  border-radius: var(--ngp-radius);
+}
+
+[data-template='northgate'] .ngp-card-lg {
+  border-radius: var(--ngp-radius-xl);
+}
+
+/* The emphasised pricing tier: gradient hairline instead of a heavier border. */
+[data-template='northgate'] .ngp-card-accent {
+  border-color: var(--ngp-accent-line);
+  background: linear-gradient(170deg, #ffffff, var(--ngp-accent-wash));
+}
+
+/*
+ * The console. A dark panel that appears on both grounds, so its colours are
+ * declared absolutely rather than inherited from the band it sits in.
+ */
+[data-template='northgate'] .ngp-console {
+  background: linear-gradient(168deg, var(--ngp-deep-2), var(--ngp-deep));
+  border: 1px solid var(--ngp-deep-rule);
+  border-radius: var(--ngp-radius);
+  color: var(--ngp-on-deep);
+}
+
+[data-template='northgate'] .ngp-code {
+  font-family: var(--ngp-mono);
+  font-size: 12.5px;
+  line-height: 1.75;
+  color: var(--ngp-on-deep-soft);
+  white-space: pre;
+  tab-size: 2;
+}
+
+/* HTTP method chips. Colour carries meaning, so both stops clear AA on deep. */
+[data-template='northgate'] .ngp-method {
+  font-family: var(--ngp-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  border-radius: var(--ngp-radius-xs);
+  border: 1px solid var(--ngp-accent-line);
+  background: var(--ngp-accent-wash);
+  color: var(--ngp-indigo-deep);
+}
+
+/*
+ * Flow diagram nodes. The connectors between them are motion elements and are
+ * animated by framer-motion, not from here - a scaleX transition declared in
+ * CSS could not be sequenced against the reveal without duplicating the timing.
+ */
+[data-template='northgate'] .ngp-node {
+  background: linear-gradient(160deg, rgb(255 255 255 / 9%), rgb(255 255 255 / 3%));
+  border: 1px solid var(--ngp-deep-rule);
+  border-radius: var(--ngp-radius-sm);
+}
+
+[data-template='northgate'] .ngp-connector {
+  background: var(--ngp-gradient-bright);
+  transform-origin: left center;
+}
+
+/* The vertical connector the diagram uses when it stacks on narrow screens. */
+[data-template='northgate'] .ngp-connector-y {
+  background: var(--ngp-gradient-bright);
+  transform-origin: top center;
+}
+
+/*
+ * The card terminal. Entirely gradients: a rounded body, an inset screen, a
+ * keypad drawn as a repeating radial gradient, and a contactless mark made of
+ * three arcs. Decorative only - there is no input anywhere inside it.
+ */
+[data-template='northgate'] .ngp-terminal {
+  background:
+    linear-gradient(150deg, rgb(255 255 255 / 14%), rgb(255 255 255 / 3%)),
+    linear-gradient(180deg, var(--ngp-deep-2), var(--ngp-deep));
+  border: 1px solid var(--ngp-deep-rule-strong);
+  border-radius: 34px;
+  box-shadow: 0 40px 80px -40px rgb(10 12 29 / 70%);
+}
+
+[data-template='northgate'] .ngp-terminal-screen {
+  background: linear-gradient(155deg, rgb(67 56 255 / 34%), rgb(18 201 232 / 20%));
+  border: 1px solid var(--ngp-deep-rule-strong);
+  border-radius: 18px;
+}
+
+[data-template='northgate'] .ngp-terminal-keys {
+  background-image: radial-gradient(circle at 50% 50%, var(--ngp-deep-rule-strong) 42%, transparent 44%);
+  background-size: 33.333% 33.333%;
+  border-radius: 18px;
+}
+
+/* The decorative card. Gradient face, a matte chip, and no text that could be
+   mistaken for a real number - the digits are a repeated placeholder glyph. */
+[data-template='northgate'] .ngp-cardface {
+  background:
+    linear-gradient(140deg, rgb(255 255 255 / 22%), rgb(255 255 255 / 4%)),
+    var(--ngp-gradient);
+  border: 1px solid rgb(255 255 255 / 24%);
+  border-radius: 22px;
+  box-shadow: 0 30px 60px -30px rgb(10 12 29 / 60%);
+}
+
+[data-template='northgate'] .ngp-chip {
+  background: linear-gradient(150deg, #f2e6bd, #c9a94f);
+  border-radius: 6px;
+}
+
+/* Settlement timeline rail - a gradient hairline the stops hang from. */
+[data-template='northgate'] .ngp-rail {
+  background: linear-gradient(180deg, var(--ngp-indigo), var(--ngp-cyan));
+}
+
+[data-template='northgate'] .ngp-rail-dot {
+  background: var(--ngp-bg);
+  border: 2px solid var(--ngp-indigo);
+  border-radius: 9999px;
+}
+
+/* Form controls: large radius, hairline, gradient focus ring. */
+[data-template='northgate'] .ngp-field {
+  border: 1px solid var(--ngp-rule-strong);
+  background: #ffffff;
+  color: var(--ngp-ink);
+  border-radius: var(--ngp-radius-sm);
+  font-family: var(--ngp-sans);
+}
+
+[data-template='northgate'] .ngp-field:focus-visible {
+  outline: 2px solid var(--ngp-indigo);
+  outline-offset: 1px;
+}
+
+/*
+ * The volume slider. Styled on both engines because the calculator is the one
+ * control in the template a visitor is expected to drag.
+ */
+[data-template='northgate'] .ngp-slider {
+  appearance: none;
+  width: 100%;
+  height: 4px;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, var(--ngp-indigo), var(--ngp-cyan));
+}
+
+[data-template='northgate'] .ngp-slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 9999px;
+  background: var(--ngp-bg);
+  border: 2px solid var(--ngp-indigo);
+  cursor: pointer;
+}
+
+[data-template='northgate'] .ngp-slider::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 9999px;
+  background: var(--ngp-bg);
+  border: 2px solid var(--ngp-indigo);
+  cursor: pointer;
+}
+
+[data-template='northgate'] .ngp-slider:focus-visible {
+  outline: 2px solid var(--ngp-indigo);
+  outline-offset: 6px;
+}
+
+/* One visible focus treatment for every interactive element in the template. */
+[data-template='northgate'] a:focus-visible,
+[data-template='northgate'] button:focus-visible {
+  outline: 2px solid var(--ngp-indigo);
+  outline-offset: 3px;
+  border-radius: var(--ngp-radius-xs);
+}
+
+/* Focus on the deep ground needs the bright end of the gradient to be seen. */
+[data-template='northgate'] .ngp-on-deep a:focus-visible,
+[data-template='northgate'] .ngp-on-deep button:focus-visible {
+  outline-color: var(--ngp-cyan-bright);
+}
+
+/*
+ * The merchant strip drifts rather than scrolls. The track renders its items
+ * twice, so -50% lands exactly on the seam and the loop is invisible.
+ */
+[data-template='northgate'] .ngp-marquee {
+  animation: ngp-drift 46s linear infinite;
+}
+
+@keyframes ngp-drift {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-template='northgate'] {
+    scroll-behavior: auto;
+  }
+
+  [data-template='northgate'] .ngp-marquee {
+    animation: none;
+  }
+
+  /* Hover and colour transitions stand down with everything else. */
+  [data-template='northgate'] * {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

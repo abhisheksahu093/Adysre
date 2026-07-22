@@ -1,8 +1,8 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import {
+  AVAILABLE_EDITOR_PANELS,
   EDITOR_BREAKPOINTS,
-  EDITOR_PANELS,
   ZOOM,
   type EditorBreakpointId,
 } from '@/config/design-playground';
@@ -53,7 +53,7 @@ interface DesignPlaygroundStore {
 
 const clampZoom = (zoom: number): number => Math.min(ZOOM.max, Math.max(ZOOM.min, zoom));
 
-const FIRST_PANEL = EDITOR_PANELS[0]?.id ?? null;
+const FIRST_PANEL = AVAILABLE_EDITOR_PANELS[0]?.id ?? null;
 const FIRST_BREAKPOINT = (EDITOR_BREAKPOINTS[0]?.id ?? 'desktop') as EditorBreakpointId;
 
 export const useDesignPlaygroundStore = create<DesignPlaygroundStore>()(

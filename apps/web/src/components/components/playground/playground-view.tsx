@@ -12,7 +12,12 @@ import {
   slotVariations,
   type PlaygroundSlotId,
 } from '@/data/playground';
-import { usePlaygroundStore } from '@/stores/playground-store';
+import {
+  useActiveOrder,
+  useActiveSectionStyles,
+  useActiveSelections,
+  usePlaygroundStore,
+} from '@/stores/playground-store';
 import { PREVIEW_DEVICES } from '../preview-devices';
 import { BuilderSidebar } from './builder-sidebar';
 import { SectionCanvas } from './section-canvas';
@@ -38,23 +43,29 @@ export function PlaygroundView({ components }: { components: LocalizedComponent[
   const device = usePlaygroundStore((s) => s.device);
   const setDevice = usePlaygroundStore((s) => s.setDevice);
   const startTour = usePlaygroundStore((s) => s.startTour);
-  const selections = usePlaygroundStore((s) => s.selections);
   const activeSlotId = usePlaygroundStore((s) => s.activeSlotId);
   const setActiveSlot = usePlaygroundStore((s) => s.setActiveSlot);
   const select = usePlaygroundStore((s) => s.select);
   const palette = usePlaygroundStore((s) => s.palette);
   const setPalette = usePlaygroundStore((s) => s.setPalette);
   const contentOverrides = usePlaygroundStore((s) => s.contentOverrides);
-  const sectionStyles = usePlaygroundStore((s) => s.sectionStyles);
+  // Merged views: the site's shared chrome plus the page being edited. Reading
+  // `s.selections` directly here would render every page without its body.
+  const selectionsForPage = useActiveSelections();
+  const sectionStyles = useActiveSectionStyles();
+  const order = useActiveOrder();
   const [exportOpen, setExportOpen] = useState(false);
   const [paletteChooserOpen, setPaletteChooserOpen] = useState(false);
   const [paletteGeneratorOpen, setPaletteGeneratorOpen] = useState(false);
 
   const resolved = useMemo(
-    () => resolveSelections(selections, components),
-    [selections, components],
+    () => resolveSelections(selectionsForPage, components),
+    [selectionsForPage, components],
   );
-  const sections = useMemo(() => resolveSections(resolved, components), [resolved, components]);
+  const sections = useMemo(
+    () => resolveSections(resolved, components, order),
+    [resolved, components, order],
+  );
   const variationsBySlot = useMemo(() => {
     const map = new Map<PlaygroundSlotId, LocalizedComponent[]>();
     for (const slot of PLAYGROUND_SLOTS) map.set(slot.id, slotVariations(slot, components));

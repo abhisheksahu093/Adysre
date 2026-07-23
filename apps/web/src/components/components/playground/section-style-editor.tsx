@@ -22,7 +22,7 @@ import {
 import { useGradientsStore } from '@/stores/gradients-store';
 import { usePatternsStore } from '@/stores/patterns-store';
 import { useTexturesStore } from '@/stores/textures-store';
-import { usePlaygroundStore } from '@/stores/playground-store';
+import { sectionStyleOf, usePlaygroundStore } from '@/stores/playground-store';
 
 interface SectionStyleEditorProps {
   /** The slot being styled - styling is keyed by slot, not by variation. */
@@ -64,7 +64,7 @@ export function SectionStyleEditor({
   fill = false,
 }: SectionStyleEditorProps) {
   const t = useTranslations('components');
-  const style = usePlaygroundStore((s) => s.sectionStyles[slot.id]);
+  const style = usePlaygroundStore((s) => sectionStyleOf(s, slot.id));
   const setSectionStyle = usePlaygroundStore((s) => s.setSectionStyle);
   const resetSectionStyle = usePlaygroundStore((s) => s.resetSectionStyle);
   const palette = usePlaygroundStore((s) => s.palette);

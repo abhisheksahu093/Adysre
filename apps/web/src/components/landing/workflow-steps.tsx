@@ -1,5 +1,5 @@
 import { getTranslations } from 'next-intl/server';
-import { cn } from '@adysre/ui';
+import { cn } from 'adysre';
 import { WORKFLOW_STEPS } from '@/data/landing';
 import { SectionHeading } from './section-heading';
 

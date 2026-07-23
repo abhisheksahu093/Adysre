@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { useTransition } from 'react';
 import { useTranslations } from 'next-intl';
-import { Button } from '@adysre/ui';
+import { Button } from 'adysre';
 import { ACCESS_COOKIE, ACCESS_LEVELS, type AccessLevel } from '@/lib/access';
 
 /**

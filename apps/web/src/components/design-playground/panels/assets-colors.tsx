@@ -1,7 +1,7 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { cn } from '@adysre/ui';
+import { cn } from 'adysre';
 import { PALETTES } from '@/data/palettes';
 import { box } from '@/lib/design-playground/templates';
 import { useDesignDocumentStore } from '@/stores/design-document-store';

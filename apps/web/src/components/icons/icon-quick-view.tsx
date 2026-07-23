@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { RotateCcw, BookmarkPlus, BookmarkCheck, Download, ImageDown } from 'lucide-react';
-import { Button, Dialog, cn } from '@adysre/ui';
+import { Button, Dialog, cn } from 'adysre';
 import { type Icon, similarIcons } from '@/data/icons';
 import { useIconsStore } from '@/stores/icons-store';
 import { downloadIconSvg, downloadIconPng } from '@/lib/icons/download';

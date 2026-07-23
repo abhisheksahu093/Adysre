@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import { Check, Code2, SlidersHorizontal, RotateCcw } from 'lucide-react';
-import { Button } from '@adysre/ui';
+import { Button } from 'adysre';
 import type { LocalizedComponent } from '@/data/components';
 import type { PlaygroundSection, PlaygroundSlotId } from '@/data/playground';
 import { usePlaygroundStore } from '@/stores/playground-store';

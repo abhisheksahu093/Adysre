@@ -5,7 +5,7 @@ import dynamic from 'next/dynamic';
 import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 import { Search, Sparkles, CircleHelp, SearchX, X } from 'lucide-react';
-import { Button, Input, Select } from '@adysre/ui';
+import { Button, Input, Select } from 'adysre';
 import { PALETTES, type Palette } from '@/data/palettes';
 import { hueName } from '@/lib/palettes/color';
 import { usePalettesStore } from '@/stores/palettes-store';

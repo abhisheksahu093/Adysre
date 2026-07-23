@@ -1,6 +1,6 @@
 import type { LucideIcon } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
-import { Card, CardContent } from '@adysre/ui';
+import { Card, CardContent } from 'adysre';
 import { getNavItem } from '@/config/navigation';
 
 interface ComingSoonProps {

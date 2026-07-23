@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState, type CSSProperties } from 'react';
 import { createPortal } from 'react-dom';
-import { Button, cn } from '@adysre/ui';
+import { Button, cn } from 'adysre';
 
 /** One tour step: a `data-tour` target (or `null` to centre) plus its copy. */
 export interface SpotlightStep {

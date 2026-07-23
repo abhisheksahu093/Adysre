@@ -1,6 +1,6 @@
 import { getTranslations } from 'next-intl/server';
 import { ArrowUpRight } from 'lucide-react';
-import { cn } from '@adysre/ui';
+import { cn } from 'adysre';
 import { Link } from '@/i18n/navigation';
 import { FEATURE_MODULES } from '@/data/landing';
 import { SectionHeading } from './section-heading';

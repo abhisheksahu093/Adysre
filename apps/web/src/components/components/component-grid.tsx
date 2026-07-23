@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 import { Search, X, SearchX } from 'lucide-react';
-import { Button, Input, Select } from '@adysre/ui';
+import { Button, Input, Select } from 'adysre';
 import { useRouter } from '@/i18n/navigation';
 import { JumpToCombobox, type JumpToItem } from '@/components/jump-to-combobox';
 import {

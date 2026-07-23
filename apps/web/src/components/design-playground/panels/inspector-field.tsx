@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { Ban, type LucideIcon } from 'lucide-react';
-import { cn } from '@adysre/ui';
+import { cn } from 'adysre';
 
 /**
  * Design Playground - inspector field primitives.

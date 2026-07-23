@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { Shuffle, RotateCcw, ImageDown, BookmarkPlus, Check } from 'lucide-react';
-import { Button, Dialog, cn } from '@adysre/ui';
+import { Button, Dialog, cn } from 'adysre';
 import { PATTERNS, similarPatterns, type Pattern, type PatternType } from '@/data/patterns';
 import { patternToStyle, downloadPatternPng, PATTERN_TYPES } from '@/lib/patterns/css';
 import { hslToHex } from '@/lib/palettes/color';

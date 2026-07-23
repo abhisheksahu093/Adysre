@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import { Sparkles, Star, Layers } from 'lucide-react';
-import { Badge } from '@adysre/ui';
+import { Badge } from 'adysre';
 import { Link } from '@/i18n/navigation';
 import { availableFrameworks, isNewComponent, type LocalizedComponent } from '@/data/components';
 import { ComponentCardPreview } from './component-card-preview';

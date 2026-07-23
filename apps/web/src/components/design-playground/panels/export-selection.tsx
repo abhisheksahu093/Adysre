@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { Download } from 'lucide-react';
-import { cn } from '@adysre/ui';
+import { cn } from 'adysre';
 import { MIME, download, toSvgForSelection } from '@/lib/design-playground/export';
 import { useDesignDocumentStore } from '@/stores/design-document-store';
 import { getNodesDataUrl } from '../canvas/stage-registry';

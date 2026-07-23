@@ -30,7 +30,7 @@ import {
 import { useDesignDocumentStore } from '@/stores/design-document-store';
 import { useDesignPlaygroundStore } from '@/stores/design-playground-store';
 import { SelectionActions } from './selection-actions';
-import { cn } from '@adysre/ui';
+import { cn } from 'adysre';
 import { ExportSelection } from './panels/export-selection';
 import { FramesPanel } from './panels/frames-panel';
 import {

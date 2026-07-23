@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import { Pencil, RotateCcw, Type } from 'lucide-react';
-import { Button, cn } from '@adysre/ui';
+import { Button, cn } from 'adysre';
 import type { LocalizedComponent } from '@/data/components';
 import { usePlaygroundStore } from '@/stores/playground-store';
 import { overrideCount, type EditableFieldKind } from '@/lib/playground/content';

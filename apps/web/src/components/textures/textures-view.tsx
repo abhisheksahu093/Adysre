@@ -5,7 +5,7 @@ import dynamic from 'next/dynamic';
 import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 import { Search, Wand2, CircleHelp, SearchX, X } from 'lucide-react';
-import { Button, Input, Select } from '@adysre/ui';
+import { Button, Input, Select } from 'adysre';
 import { TEXTURES, type Texture } from '@/data/textures';
 import { hueName } from '@/lib/palettes/color';
 import { useTexturesStore } from '@/stores/textures-store';

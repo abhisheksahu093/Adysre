@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import { Grid2x2, Maximize2, Minus, Plus } from 'lucide-react';
-import { cn } from '@adysre/ui';
+import { cn } from 'adysre';
 import { useDesignPlaygroundStore } from '@/stores/design-playground-store';
 
 /**

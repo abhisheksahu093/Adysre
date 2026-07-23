@@ -3,7 +3,7 @@
 import type { ReactNode } from 'react';
 import { useTranslations } from 'next-intl';
 import { Wand2, ArrowRight } from 'lucide-react';
-import { Button } from '@adysre/ui';
+import { Button } from 'adysre';
 import type { LocalizedComponent } from '@/data/components';
 import { usePlaygroundStore } from '@/stores/playground-store';
 import { ComponentGrid } from '../component-grid';

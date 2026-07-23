@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import { Check, CloudOff, Loader2, TriangleAlert } from 'lucide-react';
-import { cn } from '@adysre/ui';
+import { cn } from 'adysre';
 import { useDesignDocumentStore } from '@/stores/design-document-store';
 
 /**

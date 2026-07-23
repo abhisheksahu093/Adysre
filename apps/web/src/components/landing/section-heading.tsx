@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { cn } from '@adysre/ui';
+import { cn } from 'adysre';
 
 /**
  * Centred title + subtitle used at the top of most landing sections. Extracted

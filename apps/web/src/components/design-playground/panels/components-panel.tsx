@@ -3,7 +3,7 @@
 import { useId, useMemo, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { Boxes, ChevronRight, Search, type LucideIcon } from 'lucide-react';
-import { cn } from '@adysre/ui';
+import { cn } from 'adysre';
 import { COMPONENT_TEMPLATES, type CatalogueEntry } from '@/data/design-playground/component-templates';
 import { useDesignDocumentStore } from '@/stores/design-document-store';
 

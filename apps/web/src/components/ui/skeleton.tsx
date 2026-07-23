@@ -1,4 +1,4 @@
-import { cn } from '@adysre/ui';
+import { cn } from 'adysre';
 
 /**
  * A single shimmering placeholder block. Respects reduced-motion (the pulse is

@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { cn } from '@adysre/ui';
+import { cn } from 'adysre';
 
 /** Intrinsic aspect of the artwork (653 × 192 viewBox) - ~3.4:1. */
 const RATIO = 653 / 192;

@@ -4,7 +4,14 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+    /*
+     * This app type-checks `adysre` through its source exports, and that
+     * package's internal imports carry real source extensions so Turbopack can
+     * resolve them with no build step. See documents/NPM_LIBRARY.md §3.
+     * Safe here because this project never emits (`noEmit`).
+     */
+    "allowImportingTsExtensions": true
   },
   "include": ["next-env.d.ts", "src/**/*.ts", "src/**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["node_modules"]

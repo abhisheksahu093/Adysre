@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 import { Search, CircleHelp, SearchX } from 'lucide-react';
-import { Button, Input } from '@adysre/ui';
+import { Button, Input } from 'adysre';
 import {
   ICONS,
   ICON_CATEGORIES,

@@ -1,4 +1,4 @@
-import { cn } from '@adysre/ui';
+import { cn } from 'adysre';
 
 interface IconGlyphProps {
   /** The icon's authored SVG child elements (from our static data). */

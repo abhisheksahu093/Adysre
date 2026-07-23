@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { OAUTH_PROVIDERS, type OAuthProvider } from '@adysre/validators';
-import { Button } from '@adysre/ui';
+import { Button } from 'adysre';
 import { api } from '@/lib/api-client';
 import { oauthUrl } from '@/lib/auth';
 import { PROVIDER_ICONS } from './provider-icons';

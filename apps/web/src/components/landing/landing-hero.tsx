@@ -3,7 +3,7 @@
 import { motion, useReducedMotion, type Variants } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import { ArrowRight, Sparkles, Check, PenTool } from 'lucide-react';
-import { buttonVariants, cn } from '@adysre/ui';
+import { buttonVariants, cn } from 'adysre';
 import { Link } from '@/i18n/navigation';
 import { FEATURE_MODULES, LANDING_LINKS } from '@/data/landing';
 import { TRUSTED_BUILDERS } from '@/config/audience';

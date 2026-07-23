@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import { ArrowLeft, PanelRight, Redo2, Share2, Undo2 } from 'lucide-react';
-import { cn } from '@adysre/ui';
+import { cn } from 'adysre';
 import { Link } from '@/i18n/navigation';
 import {
   EDITOR_BREAKPOINTS,

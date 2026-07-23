@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { Menu, X, PenTool, ChevronDown } from 'lucide-react';
-import { buttonVariants, cn } from '@adysre/ui';
+import { buttonVariants, cn } from 'adysre';
 import { Link } from '@/i18n/navigation';
 import { Logo } from '@/components/logo';
 import { ThemeSwitcher } from '@/components/theme-switcher';

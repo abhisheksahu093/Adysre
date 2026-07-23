@@ -9,7 +9,7 @@
  * sources (for the categories the page builder can place) so the project
  * scaffold can emit working sections with default dummy content.
  *
- * Re-run after editing any preview or adding a section:
+ * Re-run after editing any block or adding a section:
  *   pnpm --filter @adysre/web gen:section-demos
  */
 
@@ -20,7 +20,11 @@ import { dirname, join } from 'node:path';
 const here = dirname(fileURLToPath(import.meta.url));
 const webRoot = join(here, '..');
 const dataDir = join(webRoot, 'src/data/components');
-const previewsDir = join(webRoot, 'src/components/components/previews');
+// The demo sources moved into the published package when the previews became
+// blocks (documents/NPM_LIBRARY.md §2). A block is the same file: the named
+// export is the library API, the default export is still the prop-free demo
+// this scaffold needs.
+const blocksDir = join(webRoot, '../../packages/ui/src/blocks');
 const outFile = join(webRoot, 'src/data/playground/section-demos.ts');
 
 /** Categories a playground page is assembled from (see data/playground/index.ts). */
@@ -94,15 +98,17 @@ const demos = {};
 const skipped = [];
 const chrome = [];
 
-for (const file of readdirSync(previewsDir)) {
-  if (!file.endsWith('-preview.tsx')) continue;
-  const slug = file.replace(/-preview\.tsx$/, '');
+for (const file of readdirSync(blocksDir)) {
+  if (!file.endsWith('.tsx')) continue;
+  const slug = file.replace(/\.tsx$/, '');
   const category = slugCategory.get(slug);
   if (!category || !EXPORTABLE_CATEGORIES.has(category)) continue;
 
-  const source = cleanSource(readFileSync(join(previewsDir, file), 'utf8'));
-  // The scaffold imports the demo as a default export; skip anything without one.
-  if (!/export\s+default\s+function/.test(source)) {
+  const source = cleanSource(readFileSync(join(blocksDir, file), 'utf8'));
+  // The scaffold imports the demo as a default export; skip anything without
+  // one. Two shapes are valid: a default-exported function, and (for blocks
+  // whose component *is* the demo) a named function re-exported as the default.
+  if (!/export\s+default\s+(function|\w+\s*;)/.test(source)) {
     skipped.push(`${slug} (no default export)`);
     continue;
   }

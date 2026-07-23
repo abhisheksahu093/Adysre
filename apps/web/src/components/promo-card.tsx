@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
-import { buttonVariants, cn } from '@adysre/ui';
+import { buttonVariants, cn } from 'adysre';
 import { Link } from '@/i18n/navigation';
 import { TRUSTED_USERS } from '@/config/audience';
 

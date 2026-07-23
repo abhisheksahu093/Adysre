@@ -3,7 +3,7 @@
 import { useCallback, useRef, useState, type DragEvent } from 'react';
 import { useTranslations } from 'next-intl';
 import { ImageUp, Sparkles, PencilRuler, AlertCircle } from 'lucide-react';
-import { Button, cn } from '@adysre/ui';
+import { Button, cn } from 'adysre';
 import { usePlaygroundStore } from '@/stores/playground-store';
 import { ACCEPTED_IMAGE_TYPES, MAX_IMAGE_BYTES } from '@/lib/playground/template-generator';
 

@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { Search, ChevronDown, CornerDownLeft } from 'lucide-react';
-import { cn } from '@adysre/ui';
+import { cn } from 'adysre';
 
 export interface JumpToItem {
   /** Stable id passed back to `onSelect`. */

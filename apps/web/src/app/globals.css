@@ -1,7 +1,7 @@
 @import 'tailwindcss';
 @import '@adysre/theme/tokens.css';
 
-/* @adysre/ui resolves through a workspace symlink into node_modules, which
+/* adysre resolves through a workspace symlink into node_modules, which
    Tailwind's auto-detection skips — without this, utilities used only inside
    the UI package (h-10, h-11, …) are never generated and its components
    silently collapse to content height. */

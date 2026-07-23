@@ -3,7 +3,7 @@
 import { useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { X } from 'lucide-react';
-import { cn } from '@adysre/ui';
+import { cn } from 'adysre';
 import { AVAILABLE_EDITOR_PANELS, EDITOR_LAYOUT } from '@/config/design-playground';
 import { useMediaQuery } from '@/hooks/use-media-query';
 import { useDesignPlaygroundStore } from '@/stores/design-playground-store';

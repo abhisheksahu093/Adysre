@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState, type CSSProperties } from 'react';
 import { createPortal } from 'react-dom';
 import { useTranslations } from 'next-intl';
-import { Button, cn } from '@adysre/ui';
+import { Button, cn } from 'adysre';
 import { tourStepsForStage } from '@/data/playground/tour';
 import { usePlaygroundStore } from '@/stores/playground-store';
 

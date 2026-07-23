@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { forgotPasswordSchema, type ForgotPasswordInput } from '@adysre/validators';
-import { Button, Card, CardContent, CardHeader, CardTitle, CardDescription } from '@adysre/ui';
+import { Button, Card, CardContent, CardHeader, CardTitle, CardDescription } from 'adysre';
 import { Link } from '@/i18n/navigation';
 import { FormField } from '@/components/auth/form-field';
 import { FormAlert } from '@/components/auth/form-alert';

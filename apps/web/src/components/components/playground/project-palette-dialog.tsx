@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { Sparkles, ImageDown, Trash2, Check, Loader2 } from 'lucide-react';
-import { Button, Dialog, cn } from '@adysre/ui';
+import { Button, Dialog, cn } from 'adysre';
 import { PALETTES } from '@/data/palettes';
 import { readableText } from '@/lib/palettes/color';
 import { localPaletteGenerator } from '@/lib/palettes/generator';

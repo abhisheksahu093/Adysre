@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useTranslations, useFormatter } from 'next-intl';
 import { ChevronDown, FilePlus2, Loader2, Pencil } from 'lucide-react';
-import { cn } from '@adysre/ui';
+import { cn } from 'adysre';
 import { listProjects, type ProjectSummary } from '@/lib/design-playground/project-client';
 import { useDesignDocumentStore } from '@/stores/design-document-store';
 

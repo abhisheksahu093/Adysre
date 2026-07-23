@@ -1,4 +1,17 @@
 {
   "extends": "@adysre/config/tsconfig/next",
-  "include": ["src"]
+  "compilerOptions": {
+    /*
+     * Relative imports inside this package carry their real source extension
+     * (`./catalog.ts`, `./icon.tsx`). That is what lets `apps/web` import the
+     * package's TypeScript directly with no build step — Turbopack resolves an
+     * explicit extension, and does NOT resolve the `.js`-pointing-at-`.ts`
+     * convention that spec-compliant ESM would otherwise require.
+     *
+     * `rewriteRelativeImportExtensions` (tsconfig.build.json) turns them back
+     * into `.js` on emit, so the published package is still correct ESM.
+     */
+    "allowImportingTsExtensions": true
+  },
+  "include": ["src", "scripts"]
 }

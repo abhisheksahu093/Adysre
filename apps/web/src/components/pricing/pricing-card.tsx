@@ -2,7 +2,7 @@
 
 import { useFormatter, useTranslations } from 'next-intl';
 import { Check, Plus } from 'lucide-react';
-import { Button, buttonVariants, cn } from '@adysre/ui';
+import { Button, buttonVariants, cn } from 'adysre';
 import { Link } from '@/i18n/navigation';
 import { isPurchasable, type PricingPlan } from '@/data/pricing';
 import { SUPPORT_MAILTO } from '@/config/site';

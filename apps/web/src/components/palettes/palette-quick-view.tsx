@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { Check, Copy, Lock, LockOpen, Shuffle, RotateCcw, ImageDown, BookmarkPlus } from 'lucide-react';
-import { Button } from '@adysre/ui';
+import { Button } from 'adysre';
 import { PALETTES, similarPalettes, type Palette } from '@/data/palettes';
 import { harmony, hslToHex, readableText } from '@/lib/palettes/color';
 import { downloadPalettePng } from '@/lib/palettes/export';

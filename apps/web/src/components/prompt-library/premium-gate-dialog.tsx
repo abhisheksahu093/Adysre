@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import { Lock, Check } from 'lucide-react';
-import { Button, Dialog, buttonVariants, cn } from '@adysre/ui';
+import { Button, Dialog, buttonVariants, cn } from 'adysre';
 import { Link } from '@/i18n/navigation';
 
 /** Reasons the gate can be shown - drives the verb in the copy. */

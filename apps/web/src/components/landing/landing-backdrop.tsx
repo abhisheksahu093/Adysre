@@ -1,4 +1,4 @@
-import { cn } from '@adysre/ui';
+import { cn } from 'adysre';
 
 /**
  * Decorative section background: two soft token-coloured glows over a faint

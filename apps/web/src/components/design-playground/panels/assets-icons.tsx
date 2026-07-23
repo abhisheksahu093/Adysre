@@ -3,7 +3,7 @@
 import { useId, useMemo, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { Search } from 'lucide-react';
-import { cn } from '@adysre/ui';
+import { cn } from 'adysre';
 import { ICONS, type Icon } from '@/data/icons';
 import { buildDataUri, DEFAULT_ICON_STYLE } from '@/lib/icons/svg';
 import { box } from '@/lib/design-playground/templates';

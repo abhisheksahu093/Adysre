@@ -40,7 +40,7 @@ const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts');
 const nextConfig = {
   reactStrictMode: true,
   // Compile workspace packages that ship raw TS/TSX.
-  transpilePackages: ['@adysre/ui', '@adysre/theme', '@adysre/sdk', '@adysre/types', '@adysre/validators'],
+  transpilePackages: ['adysre', '@adysre/theme', '@adysre/sdk', '@adysre/types', '@adysre/validators'],
   typedRoutes: true,
   // Barrel-optimise the icon library so a route only bundles the icons it uses
   // instead of pulling the whole package graph (lucide-react is imported across

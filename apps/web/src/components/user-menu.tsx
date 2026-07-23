@@ -4,7 +4,7 @@ import { useEffect, useRef, useState, useTransition } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useLocale, useTranslations } from 'next-intl';
 import { LogOut, ChevronRight, Check, ExternalLink, Loader2, type LucideIcon } from 'lucide-react';
-import { cn } from '@adysre/ui';
+import { cn } from 'adysre';
 import { Link, getPathname, usePathname, useRouter } from '@/i18n/navigation';
 import { LOCALE_LABELS, routing, type Locale } from '@/i18n/routing';
 import { USER_MENU_ITEMS, type UserMenuItem } from '@/config/user-menu';

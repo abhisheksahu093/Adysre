@@ -32,7 +32,7 @@ pnpm dev                        # web:3000  api:4000  worker
 | `apps/web`        | `@adysre/web`      | Next.js 16 dashboard                 |
 | `apps/api`        | `@adysre/api`      | NestJS modular monolith (`/api/v1`)  |
 | `apps/worker`     | `@adysre/worker`   | BullMQ background jobs               |
-| `packages/ui`     | `@adysre/ui`       | shadcn/ui component library          |
+| `packages/ui`     | `adysre`       | shadcn/ui component library          |
 | `packages/database` | `@adysre/database` | Prisma schema + client             |
 | `packages/sdk`    | `@adysre/sdk`      | Typed API client                     |
 | `packages/config` | `@adysre/config`   | Shared eslint/tsconfig/tailwind      |

@@ -455,4 +455,425 @@ export const SECTION_TEMPLATES: CatalogueEntry[] = [
       }),
     ]),
   },
+
+  /* ------------------------------------------------------------ navigation */
+
+  {
+    id: 'section-navbar-centered',
+    category: 'Navigation',
+    name: 'Navbar (centered)',
+    width: W,
+    height: 88,
+    spec: surface('Section / Navbar centered', box(W, 88), { fill: SURFACE }, [
+      label('Navbar / Product', at(GUTTER, centerY(88, 15), 90, 22), 'Product', {
+        size: 15,
+        color: MUTED,
+      }),
+      label('Navbar / Pricing', at(GUTTER + 110, centerY(88, 15), 90, 22), 'Pricing', {
+        size: 15,
+        color: MUTED,
+      }),
+      // Centred by arithmetic, not by a layout engine: the renderer positions
+      // absolutely, so the wordmark's own width has to come out of the span.
+      label('Navbar / Wordmark', at((W - 200) / 2, centerY(88, 20), 200, 28), 'Adysre', {
+        size: 20,
+        weight: 600,
+        align: 'center',
+      }),
+      label('Navbar / Docs', at(W - GUTTER - 320, centerY(88, 15), 90, 22), 'Docs', {
+        size: 15,
+        color: MUTED,
+      }),
+      {
+        ...button('Navbar / CTA', 'Start free', 150, 44, { fill: BRAND, text: ON_BRAND }),
+        transform: at(W - GUTTER - 150, 22, 150, 44),
+      },
+      block('Navbar / Rule', at(0, 87, W, 1), BORDER),
+    ]),
+  },
+
+  {
+    id: 'section-navbar-dark',
+    category: 'Navigation',
+    name: 'Navbar (dark)',
+    width: W,
+    height: 88,
+    spec: surface('Section / Navbar dark', box(W, 88), { fill: DARK }, [
+      label('Navbar / Wordmark', at(GUTTER, centerY(88, 20), 200, 28), 'Adysre', {
+        size: 20,
+        weight: 600,
+        color: SURFACE,
+      }),
+      ...['Product', 'Solutions', 'Pricing', 'Docs'].map((item, index) =>
+        label(`Navbar / ${item}`, at(GUTTER + 240 + index * 115, centerY(88, 15), 105, 22), item, {
+          size: 15,
+          color: ON_DARK,
+        }),
+      ),
+      {
+        ...button('Navbar / Sign in', 'Sign in', 110, 44, { fill: null, text: SURFACE }),
+        transform: at(W - GUTTER - 280, 22, 110, 44),
+      },
+      {
+        ...button('Navbar / CTA', 'Start free', 150, 44, { fill: BRAND, text: ON_BRAND }),
+        transform: at(W - GUTTER - 150, 22, 150, 44),
+      },
+    ]),
+  },
+
+  {
+    id: 'section-announcement',
+    category: 'Navigation',
+    name: 'Announcement bar',
+    width: W,
+    height: 48,
+    spec: surface('Section / Announcement', box(W, 48), { fill: BRAND }, [
+      label(
+        'Announcement / Message',
+        at(GUTTER, centerY(48, 14), COL, 20),
+        'Introducing AI workflows - now in open beta. Read the announcement →',
+        { size: 14, weight: 500, color: ON_BRAND, align: 'center' },
+      ),
+    ]),
+  },
+
+  /* --------------------------------------------------------------- heroes */
+
+  {
+    id: 'section-hero-centered',
+    category: 'Marketing',
+    name: 'Hero (centered)',
+    width: W,
+    height: 560,
+    spec: surface('Section / Hero centered', box(W, 560), { fill: SURFACE }, [
+      surface(
+        'Hero / Eyebrow',
+        at((W - 210) / 2, 88, 210, 30),
+        { fill: BRAND_SOFT, radius: 15 },
+        [
+          label('Hero / Eyebrow label', at(0, centerY(30, 12), 210, 18), 'TRUSTED BY 12,000 TEAMS', {
+            size: 12,
+            weight: 600,
+            color: BRAND,
+            align: 'center',
+          }),
+        ],
+      ),
+      label(
+        'Hero / Title',
+        at(GUTTER + 60, 152, COL - 120, 140),
+        'Everything your business runs on, in one place',
+        { size: 60, weight: 600, align: 'center', lineHeight: 1.12 },
+      ),
+      label(
+        'Hero / Body',
+        at(GUTTER + 260, 312, COL - 520, 60),
+        'CRM, operations and reporting on one data model - with AI built into every step.',
+        { size: 18, color: MUTED, align: 'center', lineHeight: 1.6 },
+      ),
+      {
+        ...button('Hero / Primary CTA', 'Start free trial', 190, 52, {
+          fill: BRAND,
+          text: ON_BRAND,
+        }),
+        transform: at((W - 380) / 2, 404, 190, 52),
+      },
+      {
+        ...button('Hero / Secondary CTA', 'Book a demo', 170, 52, {
+          fill: SURFACE,
+          stroke: BORDER,
+          text: INK,
+        }),
+        transform: at((W - 380) / 2 + 210, 404, 170, 52),
+      },
+    ]),
+  },
+
+  {
+    id: 'section-hero-dark',
+    category: 'Marketing',
+    name: 'Hero (dark)',
+    width: W,
+    height: 560,
+    spec: surface('Section / Hero dark', box(W, 560), { fill: DARK }, [
+      label(
+        'Hero / Title',
+        at(GUTTER, 140, 700, 150),
+        'Built for the teams who run the whole business',
+        { size: 56, weight: 600, color: SURFACE, lineHeight: 1.15 },
+      ),
+      label(
+        'Hero / Body',
+        at(GUTTER, 320, 560, 84),
+        'One platform, one data model, one bill. Deploy in a day and keep every workflow you already have.',
+        { size: 18, color: ON_DARK, lineHeight: 1.6 },
+      ),
+      {
+        ...button('Hero / Primary CTA', 'Start free trial', 190, 52, {
+          fill: BRAND,
+          text: ON_BRAND,
+        }),
+        transform: at(GUTTER, 436, 190, 52),
+      },
+      card('Hero / Panel', { x: 800, y: 96, width: 520, height: 368 }, [
+        block('Panel / Bar', at(1, 1, 518, 44), SUBTLE, 15),
+        block('Panel / Chart', at(32, 88, 456, 160), BRAND_SOFT, 12),
+        block('Panel / Row 1', at(32, 272, 456, 14), BORDER, 7),
+        block('Panel / Row 2', at(32, 302, 300, 14), BORDER, 7),
+      ]),
+    ]),
+  },
+
+  /* -------------------------------------------------------- main sections */
+
+  {
+    id: 'section-steps',
+    category: 'Marketing',
+    name: 'How it works (3 steps)',
+    width: W,
+    height: 460,
+    spec: surface('Section / Steps', box(W, 460), { fill: SURFACE }, [
+      ...heading('Steps', 80, 'Live in three steps', 'No migration project and no professional services engagement.'),
+      ...[
+        { n: '1', title: 'Connect your data', body: 'Point us at the systems you already run. Sync takes minutes.' },
+        { n: '2', title: 'Pick your modules', body: 'Turn on CRM, operations or reporting - or all three.' },
+        { n: '3', title: 'Invite the team', body: 'Roles and permissions come preset. Change what you need.' },
+      ].map((step, index) =>
+        stack(`Steps / ${step.n}`, at(GUTTER + index * (COL / 3), 244, COL / 3 - 40, 160), [
+          surface(`Steps / ${step.n} badge`, at(0, 0, 44, 44), { fill: BRAND_SOFT, radius: 22 }, [
+            label(`Steps / ${step.n} number`, at(0, centerY(44, 18), 44, 26), step.n, {
+              size: 18,
+              weight: 600,
+              color: BRAND,
+              align: 'center',
+            }),
+          ]),
+          label(`Steps / ${step.n} title`, at(0, 64, COL / 3 - 40, 26), step.title, {
+            size: 19,
+            weight: 600,
+          }),
+          label(`Steps / ${step.n} body`, at(0, 98, COL / 3 - 60, 52), step.body, {
+            size: 15,
+            color: MUTED,
+            lineHeight: 1.6,
+          }),
+        ]),
+      ),
+    ]),
+  },
+
+  {
+    id: 'section-team',
+    category: 'Marketing',
+    name: 'Team grid (4 up)',
+    width: W,
+    height: 520,
+    spec: surface('Section / Team', box(W, 520), { fill: SUBTLE }, [
+      ...heading('Team', 80, 'The people behind it', 'A small team with a long history of shipping operations software.'),
+      ...[
+        { name: 'Priya Raman', role: 'Chief Executive' },
+        { name: 'Daniel Okafor', role: 'Engineering' },
+        { name: 'Mei Tanaka', role: 'Design' },
+        { name: 'Luis Ferreira', role: 'Customer' },
+      ].map((person, index) =>
+        card(
+          `Team / ${person.name}`,
+          { x: GUTTER + index * (COL / 4), y: 244, width: COL / 4 - 24, height: 220 },
+          [
+            block('Avatar', at(24, 24, 72, 72), BRAND_SOFT, 36),
+            label('Name', at(24, 116, COL / 4 - 72, 24), person.name, { size: 17, weight: 600 }),
+            label('Role', at(24, 146, COL / 4 - 72, 22), person.role, { size: 14, color: MUTED }),
+          ],
+        ),
+      ),
+    ]),
+  },
+
+  {
+    id: 'section-metrics-dark',
+    category: 'Marketing',
+    name: 'Metrics band (dark)',
+    width: W,
+    height: 260,
+    spec: surface('Section / Metrics', box(W, 260), { fill: DARK }, [
+      ...[
+        { value: '99.99%', label: 'Uptime, measured' },
+        { value: '12k+', label: 'Teams running on it' },
+        { value: '840M', label: 'Records synced daily' },
+        { value: '< 40ms', label: 'Median query time' },
+      ].map((metric, index) =>
+        stack(`Metrics / ${metric.value}`, at(GUTTER + index * (COL / 4), 88, COL / 4 - 24, 90), [
+          label('Value', at(0, 0, COL / 4 - 24, 52), metric.value, {
+            size: 40,
+            weight: 600,
+            color: SURFACE,
+          }),
+          label('Label', at(0, 58, COL / 4 - 24, 22), metric.label, { size: 15, color: ON_DARK }),
+        ]),
+      ),
+    ]),
+  },
+
+  {
+    id: 'section-blog',
+    category: 'Content',
+    name: 'Blog cards (3 up)',
+    width: W,
+    height: 540,
+    spec: surface('Section / Blog', box(W, 540), { fill: SURFACE }, [
+      ...heading('Blog', 80, 'From the team', 'Notes on building, shipping and running the platform.'),
+      ...[0, 1, 2].map((index) =>
+        card(
+          `Blog / Post ${index + 1}`,
+          { x: GUTTER + index * (COL / 3), y: 244, width: COL / 3 - 28, height: 240 },
+          [
+            block('Cover', at(1, 1, COL / 3 - 30, 110), BRAND_SOFT, 15),
+            label('Category', at(24, 130, 120, 18), 'ENGINEERING', {
+              size: 11,
+              weight: 600,
+              color: BRAND,
+            }),
+            label('Title', at(24, 154, COL / 3 - 76, 48), 'Designing a token-first color system', {
+              size: 17,
+              weight: 600,
+              lineHeight: 1.3,
+            }),
+            label('Meta', at(24, 208, COL / 3 - 76, 20), '12 Jul 2026 · 8 min read', {
+              size: 13,
+              color: MUTED,
+            }),
+          ],
+        ),
+      ),
+    ]),
+  },
+
+  {
+    id: 'section-newsletter',
+    category: 'Content',
+    name: 'Newsletter band',
+    width: W,
+    height: 280,
+    spec: surface('Section / Newsletter', box(W, 280), { fill: SUBTLE }, [
+      label('Newsletter / Title', at(GUTTER, 96, 620, 44), 'Get the monthly changelog', {
+        size: 34,
+        weight: 600,
+      }),
+      label(
+        'Newsletter / Body',
+        at(GUTTER, 150, 560, 46),
+        'What shipped, what broke and what we learned. One email a month, no marketing.',
+        { size: 16, color: MUTED, lineHeight: 1.6 },
+      ),
+      surface(
+        'Newsletter / Field',
+        at(W - GUTTER - 460, 112, 300, 52),
+        { fill: SURFACE, stroke: BORDER, strokeWidth: 1, radius: 12 },
+        [
+          label('Field / Placeholder', at(18, centerY(52, 15), 260, 22), 'you@company.com', {
+            size: 15,
+            color: MUTED,
+          }),
+        ],
+      ),
+      {
+        ...button('Newsletter / Submit', 'Subscribe', 150, 52, { fill: BRAND, text: ON_BRAND }),
+        transform: at(W - GUTTER - 150, 112, 150, 52),
+      },
+    ]),
+  },
+
+  /* -------------------------------------------------------------- footers */
+
+  {
+    id: 'section-footer-simple',
+    category: 'Content',
+    name: 'Footer (simple)',
+    width: W,
+    height: 140,
+    spec: surface('Section / Footer simple', box(W, 140), { fill: SURFACE }, [
+      block('Footer / Rule', at(0, 0, W, 1), BORDER),
+      label('Footer / Wordmark', at(GUTTER, centerY(140, 18), 180, 26), 'Adysre', {
+        size: 18,
+        weight: 600,
+      }),
+      ...['Privacy', 'Terms', 'Status', 'Contact'].map((link, index) =>
+        label(`Footer / ${link}`, at(GUTTER + 340 + index * 120, centerY(140, 14), 110, 20), link, {
+          size: 14,
+          color: MUTED,
+        }),
+      ),
+      label(
+        'Footer / Legal',
+        at(W - GUTTER - 320, centerY(140, 13), 320, 20),
+        '© 2026 Adysre. All rights reserved.',
+        { size: 13, color: MUTED, align: 'right' },
+      ),
+    ]),
+  },
+
+  {
+    id: 'section-footer-newsletter',
+    category: 'Content',
+    name: 'Footer (with newsletter)',
+    width: W,
+    height: 420,
+    spec: surface('Section / Footer newsletter', box(W, 420), { fill: DARK }, [
+      label('Footer / Wordmark', at(GUTTER, 64, 220, 30), 'Adysre', {
+        size: 20,
+        weight: 600,
+        color: SURFACE,
+      }),
+      label(
+        'Footer / Tagline',
+        at(GUTTER, 104, 300, 60),
+        'The AI-first business operating system.',
+        { size: 14, color: MUTED, lineHeight: 1.6 },
+      ),
+      label('Footer / Signup title', at(GUTTER, 196, 320, 24), 'Monthly changelog', {
+        size: 15,
+        weight: 600,
+        color: SURFACE,
+      }),
+      surface(
+        'Footer / Field',
+        at(GUTTER, 230, 260, 48),
+        { fill: 'transparent', stroke: '#334155', strokeWidth: 1, radius: 10 },
+        [
+          label('Field / Placeholder', at(16, centerY(48, 14), 220, 20), 'you@company.com', {
+            size: 14,
+            color: MUTED,
+          }),
+        ],
+      ),
+      {
+        ...button('Footer / Submit', 'Subscribe', 130, 48, { fill: BRAND, text: ON_BRAND }),
+        transform: at(GUTTER + 272, 230, 130, 48),
+      },
+      ...[
+        { title: 'Product', links: ['Overview', 'Modules', 'Pricing'] },
+        { title: 'Company', links: ['About', 'Careers', 'Contact'] },
+        { title: 'Resources', links: ['Docs', 'Changelog', 'Status'] },
+      ].map((column, index) =>
+        stack(`Footer / ${column.title}`, at(GUTTER + 560 + index * 240, 64, 200, 160), [
+          label(`${column.title} / Heading`, at(0, 0, 200, 20), column.title, {
+            size: 13,
+            weight: 600,
+            color: SURFACE,
+          }),
+          ...column.links.map((link, row) =>
+            label(`${column.title} / ${link}`, at(0, 36 + row * 28, 200, 20), link, {
+              size: 14,
+              color: ON_DARK,
+            }),
+          ),
+        ]),
+      ),
+      block('Footer / Rule', at(GUTTER, 332, COL, 1), '#1e293b'),
+      label('Footer / Legal', at(GUTTER, 360, 400, 20), '© 2026 Adysre. All rights reserved.', {
+        size: 13,
+        color: MUTED,
+      }),
+    ]),
+  },
 ];

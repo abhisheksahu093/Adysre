@@ -29,6 +29,7 @@ import {
   Wand2,
   Rocket,
   Sparkles,
+  Users,
   type LucideIcon,
 } from 'lucide-react';
 import { APP_HOME } from '@/config/navigation';
@@ -84,6 +85,35 @@ export interface Stat {
   /** Optional suffix appended after the formatted number, e.g. "+". */
   suffix?: string;
 }
+
+/**
+ * The icon, destination and accent each headline metric is drawn with.
+ *
+ * Kept separate from `Stat` on purpose: the stats band is a Client Component and
+ * its figures are computed on the server, but a Lucide icon is a function and
+ * functions are not serialisable across the RSC boundary. So the numbers travel
+ * as props and the presentation is looked up here, client-side, by id.
+ *
+ * A metric with no entry still renders — it just gets no chip and no link, which
+ * is the right failure for a marketing figure with no page behind it (`teams`).
+ */
+export interface StatMeta {
+  icon: LucideIcon;
+  accent: Accent;
+  /** Where the metric leads. Omitted when the figure has no page of its own. */
+  href?: string;
+}
+
+export const STAT_META: Record<string, StatMeta> = {
+  components: { icon: Blocks, accent: 'primary', href: '/components' },
+  icons: { icon: Shapes, accent: 'secondary', href: '/icons' },
+  colors: { icon: Palette, accent: 'accent', href: '/palettes' },
+  gradients: { icon: Blend, accent: 'primary', href: '/gradients' },
+  patterns: { icon: Grid2x2, accent: 'secondary', href: '/patterns' },
+  textures: { icon: Waves, accent: 'accent', href: '/textures' },
+  prompts: { icon: Library, accent: 'primary', href: '/prompt-library' },
+  teams: { icon: Users, accent: 'secondary' },
+};
 
 // The headline metrics themselves now derive from the real catalogues - see
 // `LANDING_STATS` in `@/data/library-stats` (server-only). This file stays free

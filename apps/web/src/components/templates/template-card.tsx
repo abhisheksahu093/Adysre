@@ -1,20 +1,17 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { Files, Lock, Sparkles } from 'lucide-react';
-import { Badge } from '@adysre/ui';
+import { Badge } from 'adysre';
 import type { TemplateSummary } from '@/data/templates/types';
+import { TemplateThumbnail } from './template-thumbnail';
 
 /**
  * Gallery card: a live thumbnail on top, the template's name below.
  *
- * The thumbnail is a real iframe of the template's own preview route, scaled
- * down - not a screenshot. A template is judged on its layout, and a stale PNG
- * would start lying the first time a section changed. It only mounts once the
- * card nears the viewport, so a long gallery does not open twenty documents at
- * once, and it is inert (`pointer-events-none`) because the card itself is the
- * click target.
+ * The thumbnail itself lives in `TemplateThumbnail` — the landing showcase
+ * renders the same frame at a different scale, and one lazy-mount rule beats
+ * two.
  */
 export function TemplateCard({
   template,
@@ -24,47 +21,18 @@ export function TemplateCard({
   onOpen: (template: TemplateSummary) => void;
 }) {
   const t = useTranslations('templates');
-  const ref = useRef<HTMLButtonElement>(null);
-  const [near, setNear] = useState(false);
-
-  useEffect(() => {
-    const node = ref.current;
-    if (!node || near) return undefined;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries.some((entry) => entry.isIntersecting)) setNear(true);
-      },
-      { rootMargin: '300px' },
-    );
-
-    observer.observe(node);
-    return () => observer.disconnect();
-  }, [near]);
 
   const premium = template.tier === 'premium';
   const { locked } = template;
 
   return (
     <button
-      ref={ref}
       type="button"
       onClick={() => onOpen(template)}
       className="group flex h-full flex-col overflow-hidden rounded-lg border border-border bg-card/60 text-left transition-colors hover:border-primary/40 hover:bg-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
     >
       <div className="relative h-48 w-full overflow-hidden border-b border-border bg-muted/40">
-        {near ? (
-          <div className="pointer-events-none absolute left-0 top-0 h-[1000px] w-[1440px] origin-top-left scale-[0.32] sm:scale-[0.28]">
-            <iframe
-              src={`/template-preview/${template.slug}`}
-              title={template.name}
-              tabIndex={-1}
-              aria-hidden
-              loading="lazy"
-              className="h-full w-full border-0"
-            />
-          </div>
-        ) : null}
+        <TemplateThumbnail slug={template.slug} name={template.name} />
 
         <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-card/80 to-transparent" aria-hidden />
 

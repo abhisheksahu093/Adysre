@@ -1,0 +1,176 @@
+/*
+ * TAVOLA - the restaurant's own design tokens.
+ *
+ * Everything is scoped under `[data-template='tavola']` so the template can be
+ * mounted anywhere - the preview route, a card thumbnail, a downloaded project -
+ * without its palette leaking into the app around it, and without the app's
+ * theme reaching in. These are the TEMPLATE's colours, not the product's design
+ * tokens: a downloaded template is the visitor's to rewrite.
+ */
+
+[data-template='tavola'] {
+  --tv-paper: #ffffff;
+  --tv-paper-2: #fff8f6;
+  --tv-paper-3: #fff1ee;
+  --tv-blush: #ffe9e6;
+  --tv-ink: #14152b;
+  --tv-ink-soft: #61637d;
+  --tv-ink-faint: #9698ad;
+  --tv-accent: #f2564b;
+  --tv-accent-deep: #d93a2f;
+  --tv-accent-soft: #ffdedb;
+  --tv-gold: #f5a524;
+  --tv-navy: #1b1f3b;
+  --tv-navy-soft: #2b3054;
+  --tv-rule: #f0e3e0;
+  --tv-rule-strong: #e4d2ce;
+  --tv-radius: 18px;
+  --tv-radius-lg: 28px;
+  --tv-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  background: var(--tv-paper);
+  color: var(--tv-ink);
+  font-family: var(--tv-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+[data-template='tavola'] h1,
+[data-template='tavola'] h2,
+[data-template='tavola'] h3 {
+  letter-spacing: -0.03em;
+  line-height: 1.08;
+}
+
+/* Tabular figures so a price does not jitter as the currency changes. */
+[data-template='tavola'] .tv-num {
+  font-variant-numeric: tabular-nums;
+}
+
+[data-template='tavola'] .tv-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 999px;
+  padding: 0.75rem 1.5rem;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s, transform 0.2s;
+}
+
+[data-template='tavola'] .tv-btn:active {
+  transform: translateY(1px);
+}
+
+[data-template='tavola'] .tv-btn--solid {
+  background: var(--tv-accent);
+  color: #fff;
+  box-shadow: 0 14px 30px -14px rgb(242 86 75 / 70%);
+}
+
+[data-template='tavola'] .tv-btn--solid:hover {
+  background: var(--tv-accent-deep);
+}
+
+[data-template='tavola'] .tv-btn--ghost {
+  background: var(--tv-paper);
+  color: var(--tv-ink);
+  box-shadow: inset 0 0 0 1px var(--tv-rule-strong);
+}
+
+[data-template='tavola'] .tv-btn--ghost:hover {
+  box-shadow: inset 0 0 0 1px var(--tv-accent);
+  color: var(--tv-accent-deep);
+}
+
+[data-template='tavola'] .tv-card {
+  background: var(--tv-paper);
+  border-radius: var(--tv-radius-lg);
+  box-shadow: 0 1px 0 var(--tv-rule), 0 22px 50px -34px rgb(20 21 43 / 28%);
+}
+
+/* The blush wash behind the hero plate. */
+[data-template='tavola'] .tv-wash {
+  background:
+    radial-gradient(60% 60% at 50% 42%, var(--tv-blush) 0%, transparent 70%),
+    radial-gradient(40% 40% at 78% 22%, var(--tv-accent-soft) 0%, transparent 72%);
+}
+
+/*
+ * Plates are drawn, not photographed: the template ships with no image assets,
+ * so it renders identically offline and in a downloaded zip. Each palette is a
+ * different set of stops on the same three gradients.
+ */
+[data-template='tavola'] .tv-plate {
+  position: relative;
+  border-radius: 999px;
+  background: radial-gradient(circle at 50% 50%, #fff 0%, #fdf6f4 62%, #f4e6e2 100%);
+  box-shadow:
+    inset 0 0 0 1px rgb(20 21 43 / 6%),
+    0 30px 60px -30px rgb(20 21 43 / 35%);
+}
+
+/* The rim: a second ring inside the plate edge, so the china reads as china. */
+[data-template='tavola'] .tv-plate::before {
+  content: '';
+  position: absolute;
+  inset: 8%;
+  border-radius: 999px;
+  box-shadow: inset 0 0 0 1px rgb(20 21 43 / 5%);
+}
+
+/*
+ * The food itself. Layered rather than one gradient: a single radial reads as a
+ * ball, so a garnish scatter and a highlight sit over the base to suggest a
+ * dish. All CSS - the template ships no image assets.
+ */
+[data-template='tavola'] .tv-plate::after {
+  content: '';
+  position: absolute;
+  inset: 17%;
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 68% 30%, rgb(255 255 255 / 45%) 0%, transparent 18%),
+    radial-gradient(circle at 34% 62%, rgb(255 255 255 / 22%) 0%, transparent 14%),
+    radial-gradient(circle at 60% 72%, rgb(0 0 0 / 14%) 0%, transparent 20%),
+    var(--tv-food, radial-gradient(circle at 40% 35%, #f7a072, #e0563f 70%));
+  box-shadow:
+    inset 0 -10px 22px -10px rgb(0 0 0 / 38%),
+    inset 0 6px 14px -8px rgb(255 255 255 / 45%);
+}
+
+[data-template='tavola'] [data-food='tomato'] {
+  --tv-food: radial-gradient(circle at 38% 32%, #ff9e7d 0%, #ef5b43 55%, #c3341f 100%);
+}
+[data-template='tavola'] [data-food='herb'] {
+  --tv-food: radial-gradient(circle at 38% 32%, #b9e08d 0%, #6fae5a 55%, #3f7a3a 100%);
+}
+[data-template='tavola'] [data-food='saffron'] {
+  --tv-food: radial-gradient(circle at 38% 32%, #ffd88a 0%, #f2a93b 55%, #c97a17 100%);
+}
+[data-template='tavola'] [data-food='char'] {
+  --tv-food: radial-gradient(circle at 38% 32%, #a58e83 0%, #6b5348 55%, #3b2a24 100%);
+}
+[data-template='tavola'] [data-food='cream'] {
+  --tv-food: radial-gradient(circle at 38% 32%, #fff6e6 0%, #f0dcc2 55%, #d3b894 100%);
+}
+[data-template='tavola'] [data-food='berry'] {
+  --tv-food: radial-gradient(circle at 38% 32%, #e59ac0 0%, #b4497f 55%, #782b53 100%);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  [data-template='tavola'] .tv-rise {
+    animation: tv-rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+}
+
+@keyframes tv-rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}

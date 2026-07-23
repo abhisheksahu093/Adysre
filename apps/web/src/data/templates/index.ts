@@ -13,6 +13,7 @@ import { PINNACLE_CONTENT, PINNACLE_PROMPT } from './pinnacle-advisory-content';
 import { PULSE_CONTENT, PULSE_PROMPT } from './pulse-clinic-content';
 import { VERDANT_CONTENT, VERDANT_PROMPT } from './verdant-realty-content';
 import { SAFFRON_CONTENT, SAFFRON_PROMPT } from './saffron-table-content';
+import { TAVOLA_CONTENT, TAVOLA_PROMPT } from './tavola-kitchen-content';
 import {
   TEMPLATE_SECTIONS,
   type TemplateEntry,
@@ -273,6 +274,32 @@ export const TEMPLATES: TemplateEntry[] = [
       scope: 'cadence',
     },
     content: CADENCE_CONTENT,
+  },
+  {
+    slug: 'tavola-kitchen',
+    name: 'Tavola',
+    taglineKey: 'tavola',
+    tier: 'premium',
+    themeKey: 'restaurant',
+    sections: TEMPLATE_SECTIONS,
+    prompt: TAVOLA_PROMPT,
+    downloads: ['nextjs', 'react'],
+    addedOn: '2026-07-23',
+    pages: [
+      { id: 'home', label: 'Home' },
+      { id: 'menu', label: 'Menu' },
+      { id: 'services', label: 'Services' },
+      { id: 'blog', label: 'Blog' },
+      { id: 'contact', label: 'Contact' },
+      { id: 'cart', label: 'Cart' },
+    ],
+    entry: {
+      file: 'tavola-template',
+      symbol: 'TavolaTemplate',
+      stylesheet: 'tavola.css',
+      scope: 'tavola',
+    },
+    content: TAVOLA_CONTENT,
   },
   {
     slug: 'lumiere-salon',

@@ -219,24 +219,41 @@ cannot disagree about which utilities exist. Tokens are **copied** from
 
 ## 7. Publishing
 
+> **Always `pnpm publish`. Never `npm publish`.** This is not a style
+> preference — see below. A `prepublishOnly` guard now refuses any other client,
+> because the failure is silent and costs a version number.
+
 ```bash
-pnpm --filter adysre build
-pnpm --filter adysre pack          # inspect the tarball first
-npm publish --access public            # from packages/ui
+# from packages/ui
+pnpm publish --no-git-checks
 ```
 
 `prepack` runs the build, so a publish can never ship a stale `dist`.
+`--no-git-checks` is needed while releases are cut from a feature branch; pnpm
+otherwise insists on `main` and an up-to-date remote.
 
-### How the source/dist swap works
+### How the source/dist swap works, and why the client matters
 
-`exports` points at `src` for the workspace; `publishConfig.exports` points at
-`dist`. pnpm substitutes `publishConfig` fields into the published
-`package.json` at pack time. Verify after any change to either:
+`exports` points at `src` for the workspace, so `pnpm dev` needs no build step.
+`publishConfig.exports` points at `dist` for consumers. Substituting one for the
+other at pack time is a **pnpm feature**: `npm publish` ignores `publishConfig`
+entirely.
+
+So `npm publish` uploads a manifest whose `exports` reference `./src/index.ts`
+while `files` ships only `dist`. The source is not in the tarball. npm reports
+success, the tarball looks plausible, and every consumer gets
+`ERR_MODULE_NOT_FOUND` on the first import.
+
+**This happened to 0.1.0.** Versions cannot be reused, so the only remedy was
+0.1.1 plus a deprecation. `scripts/guard-publisher.mjs` now fails the publish
+instead.
+
+Verify the swap after any change to either field:
 
 ```bash
-pnpm --filter adysre pack --pack-destination /tmp
-tar -xzf /tmp/adysre-ui-*.tgz -C /tmp && node -e \
-  'console.log(require("/tmp/package/package.json").exports)'
+pnpm pack --pack-destination /tmp                    # from packages/ui
+tar -xzOf /tmp/adysre-*.tgz package/package.json | \
+  node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>console.log(JSON.parse(s).exports["."]))'
 ```
 
 It must print `dist` paths. If it prints `src`, the tarball is broken and every
@@ -250,6 +267,19 @@ consumer install fails.
    emitted file still imports a TypeScript extension
 4. Install the tarball in a scratch project and render something. A packaging bug
    is invisible to every check above; this is the one that catches it.
+
+### After every publish
+
+Install from the **registry**, not the local tarball, and import it:
+
+```bash
+mkdir /tmp/live && cd /tmp/live && npm init -y >/dev/null
+npm i adysre react react-dom
+node --input-type=module -e "import('adysre').then(()=>console.log('OK'))"
+```
+
+A local `pnpm pack` proves the build. Only this proves what the registry is
+actually serving — it is the step that would have caught 0.1.0 in seconds.
 
 ### Versioning
 

@@ -48,6 +48,9 @@ export const TEMPLATE_RENDERERS: Record<string, ComponentType<TemplateRendererPr
   'cadence-academy': dynamic(() =>
     import('./cadence-academy/cadence-template').then((mod) => ({ default: mod.CadenceTemplate })),
   ),
+  'tavola-kitchen': dynamic(() =>
+    import('./tavola-kitchen/tavola-template').then((mod) => ({ default: mod.TavolaTemplate })),
+  ),
   'lumiere-salon': dynamic(() =>
     import('./lumiere-salon/lumiere-template').then((mod) => ({ default: mod.LumiereTemplate })),
   ),

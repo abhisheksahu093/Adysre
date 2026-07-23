@@ -3,9 +3,9 @@
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { Pencil, Star, Flame, Sparkles, Lock } from 'lucide-react';
-import { Badge, Button } from '@adysre/ui';
+import { Badge, Button } from 'adysre';
 import { isNew, promptImage, type LocalizedPrompt } from '@/data/prompts';
-import { CopyButton } from './copy-button';
+import { CopyButton } from '@/components/ui/copy-button';
 import type { GateAction } from './premium-gate-dialog';
 
 interface PromptCardProps {

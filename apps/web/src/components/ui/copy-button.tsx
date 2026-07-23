@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import { Copy, Check } from 'lucide-react';
-import { Button, cn, type ButtonProps } from '@adysre/ui';
+import { Button, cn, type ButtonProps } from 'adysre';
 import { useClipboard } from '@/hooks/use-clipboard';
 
 interface CopyButtonProps extends Omit<ButtonProps, 'onClick' | 'children'> {

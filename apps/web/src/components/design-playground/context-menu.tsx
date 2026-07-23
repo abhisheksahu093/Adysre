@@ -13,8 +13,11 @@ import { useSelectionActions } from './selection-actions';
  * scroll - a menu that survives the thing it acted on is worse than no menu.
  */
 export interface ContextMenuState {
+  /** Viewport coordinates - where to draw the menu. */
   x: number;
   y: number;
+  /** The same point in canvas coordinates, so "paste here" means here. */
+  canvas: { x: number; y: number };
 }
 
 export function CanvasContextMenu({
@@ -51,7 +54,9 @@ export function CanvasContextMenu({
     };
   }, [state, onClose]);
 
-  if (!state) return null;
+  // Nothing to offer (empty canvas, empty clipboard) - show no menu rather than
+  // an empty box the user has to dismiss.
+  if (!state || actions.length === 0) return null;
 
   return (
     <div
@@ -61,15 +66,16 @@ export function CanvasContextMenu({
       // A pointer position is continuous, so it cannot be a class. Everything
       // else here is tokens.
       style={{ left: state.x, top: state.y }}
-      className="fixed z-50 min-w-44 rounded-lg border border-border bg-card p-1 shadow-lg"
+      className="fixed z-50 min-w-52 rounded-lg border border-border bg-card p-1 shadow-lg"
     >
-      {actions.map(({ id, icon: Icon, run, danger }) => (
+      {actions.map(({ id, icon: Icon, run, shortcut, danger }) => (
         <button
           key={id}
           type="button"
           role="menuitem"
           onClick={() => {
-            run();
+            // Paste lands where the menu was opened, so "paste here" means here.
+            run(state.canvas);
             onClose();
           }}
           className={cn(
@@ -81,7 +87,12 @@ export function CanvasContextMenu({
           )}
         >
           <Icon className="h-3.5 w-3.5 shrink-0" />
-          {t(`actions.${id}`)}
+          <span className="min-w-0 flex-1 truncate">{t(`actions.${id}`)}</span>
+          {shortcut && (
+            <span className="shrink-0 text-[11px] tabular-nums text-muted-foreground/70">
+              {shortcut}
+            </span>
+          )}
         </button>
       ))}
     </div>

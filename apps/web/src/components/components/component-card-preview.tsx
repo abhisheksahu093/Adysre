@@ -12,8 +12,15 @@ import { PREVIEWS, hasPreview } from './previews/registry';
  * from prose alone. Two things keep a big grid fast:
  *   - the preview module is loaded lazily, and only once the card scrolls near
  *     the viewport (IntersectionObserver), so an off-screen card costs nothing;
- *   - the whole thumbnail is `pointer-events-none` and `aria-hidden` - the card
- *     link and its heading carry all the interaction and meaning.
+ *   - the whole thumbnail is `inert` - the card link and its heading carry all
+ *     the interaction and meaning.
+ *
+ * `inert` rather than `aria-hidden` + `pointer-events-none`: previews render the
+ * real component, and hundreds of them contain their own links and buttons.
+ * Those two properties stop the MOUSE but leave every one of them in the tab
+ * order - so a keyboard user would tab through a wall of invisible `href="#"`
+ * anchors, and `aria-hidden` containing focusable nodes is an ARIA violation
+ * besides. `inert` takes the whole subtree out of both trees at once.
  *
  * Components without a registered preview fall back to a neutral placeholder.
  */
@@ -56,7 +63,7 @@ export function ComponentCardPreview({ slug }: { slug: string }) {
   return (
     <div
       ref={ref}
-      aria-hidden
+      inert
       className="relative mb-3 h-36 w-full overflow-hidden rounded-md border border-border bg-muted/30"
     >
       {available && inView ? (
@@ -76,6 +83,8 @@ function Preview({ slug }: { slug: string }) {
   const Rendered = previewComponent(slug);
   return (
     <div
+      // `inert` on the box already blocks the pointer; this keeps the cursor
+      // from changing over a link the click will never reach.
       className="pointer-events-none absolute left-0 top-0 origin-top-left"
       style={{ width: '200%', height: '200%', transform: 'scale(0.5)' }}
     >

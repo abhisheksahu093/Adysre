@@ -10,6 +10,7 @@ import {
 } from 'react';
 import dynamic from 'next/dynamic';
 import { useTranslations } from 'next-intl';
+import { Crosshair } from 'lucide-react';
 import { CANVAS_GRID, ZOOM } from '@/config/design-playground';
 import {
   DEFAULT_TEXT,
@@ -18,6 +19,7 @@ import {
   topLevelNodes,
 } from '@/lib/design-playground/document';
 import { nodesInMarquee } from '@/lib/design-playground/grouping';
+import { anyNodeVisible } from '@/lib/design-playground/placement';
 import type { NodeType, Transform } from '@/lib/design-playground/types';
 import { useDesignDocumentStore } from '@/stores/design-document-store';
 import { useDesignPlaygroundStore } from '@/stores/design-playground-store';
@@ -93,6 +95,18 @@ export function EditorWorkspace() {
   // reading state there can commit a rectangle one frame stale.
   const draftRef = useRef<DraftRect | null>(null);
   const panFrom = useRef<{ x: number; y: number; viewport: { x: number; y: number } } | null>(null);
+  // Touch points currently down on the surface. The browser's own pan and zoom
+  // are off here (`touch-none`, so a drag draws instead of scrolling the page),
+  // which means two fingers have to be read as a pinch by hand - otherwise a
+  // phone has no way to move around the canvas at all.
+  const touches = useRef(new Map<number, { x: number; y: number }>());
+  const pinch = useRef<{
+    /** Finger separation when the gesture began, in client pixels. */
+    distance: number;
+    zoom: number;
+    /** The canvas point the fingers grabbed; it stays under their midpoint. */
+    focus: { x: number; y: number };
+  } | null>(null);
   const [contextMenu, setContextMenu] = useState<ContextMenuState | null>(null);
   // Which node is being typed into, if any. Only the id lives in state - the
   // geometry and typography are read from the document below, so the overlay
@@ -244,13 +258,40 @@ export function EditorWorkspace() {
       }
       if (mod && event.key.toLowerCase() === 'g') {
         event.preventDefault();
-        if (event.shiftKey) store.ungroupSelection();
+        // ⌥⌘G frames the selection, ⇧⌘G dissolves - the same three-way split
+        // Figma uses, so the muscle memory transfers.
+        if (event.altKey) store.frameSelection();
+        else if (event.shiftKey) store.ungroupSelection();
         else store.groupSelection();
         return;
       }
       if (mod && event.key.toLowerCase() === 'd') {
         event.preventDefault();
         store.duplicateSelection();
+        return;
+      }
+      if (mod && event.key.toLowerCase() === 'c') {
+        event.preventDefault();
+        store.copySelection();
+        return;
+      }
+      if (mod && event.key.toLowerCase() === 'v') {
+        event.preventDefault();
+        store.pasteClipboard();
+        return;
+      }
+      // Lock and hide, on the shortcuts every design tool shares.
+      if (mod && event.shiftKey && /^[lh]$/i.test(event.key)) {
+        event.preventDefault();
+        const nodes = store.selection
+          .map((id) => store.document.nodes[id])
+          .filter((node) => node !== undefined);
+        if (nodes.length === 0) return;
+        if (event.key.toLowerCase() === 'l') {
+          store.patchSelection({ locked: !nodes.every((node) => node.locked) });
+        } else {
+          store.patchSelection({ hidden: !nodes.every((node) => node.hidden) });
+        }
         return;
       }
       if (event.key === 'Delete' || event.key === 'Backspace') {
@@ -264,6 +305,14 @@ export function EditorWorkspace() {
         setTool('select');
         return;
       }
+      // Bracket keys reorder, matching the context menu's hints.
+      if (!mod && (event.key === ']' || event.key === '[')) {
+        if (store.selection.length === 0) return;
+        event.preventDefault();
+        store.reorderSelection(event.key === ']' ? 'front' : 'back');
+        return;
+      }
+
       if (mod) return;
 
       // Enter opens the selected text node for typing - the same gesture as a
@@ -350,13 +399,73 @@ export function EditorWorkspace() {
     }));
   };
 
+  /** Midpoint and separation of the two active touches, in client coordinates. */
+  const pinchGeometry = (): { center: { x: number; y: number }; distance: number } | null => {
+    const [a, b] = [...touches.current.values()];
+    if (!a || !b) return null;
+    return {
+      center: { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 },
+      distance: Math.hypot(b.x - a.x, b.y - a.y),
+    };
+  };
+
+  /** Abandon whatever is being dragged out, committing nothing. */
+  const cancelDraw = (): void => {
+    drawFrom.current = null;
+    draftRef.current = null;
+    setDraft(null);
+  };
+
   const onPointerDown = (event: PointerEvent<HTMLDivElement>): void => {
+    if (event.pointerType === 'touch') {
+      touches.current.set(event.pointerId, { x: event.clientX, y: event.clientY });
+      if (touches.current.size === 2) {
+        // A second finger reclassifies the gesture as pinch-zoom, so whatever
+        // the first one started is abandoned rather than committed at whatever
+        // size the fingers happened to spread to.
+        cancelDraw();
+        panFrom.current = null;
+        const geometry = pinchGeometry();
+        if (geometry) {
+          pinch.current = {
+            distance: geometry.distance,
+            zoom,
+            focus: toCanvas(geometry.center.x, geometry.center.y),
+          };
+        }
+      }
+      // Only the first finger can pan; the rest are part of a pinch.
+      if (touches.current.size > 1) return;
+    }
     if (event.button !== 1 && !(event.button === 0 && tool === 'hand')) return;
     event.currentTarget.setPointerCapture(event.pointerId);
     panFrom.current = { x: event.clientX, y: event.clientY, viewport };
   };
 
   const onPointerMove = (event: PointerEvent<HTMLDivElement>): void => {
+    if (touches.current.has(event.pointerId)) {
+      touches.current.set(event.pointerId, { x: event.clientX, y: event.clientY });
+    }
+
+    const gesture = pinch.current;
+    if (gesture) {
+      const geometry = pinchGeometry();
+      const rect = surfaceRef.current?.getBoundingClientRect();
+      if (!geometry || !rect || gesture.distance === 0) return;
+      const next = Math.min(
+        ZOOM.max,
+        Math.max(ZOOM.min, gesture.zoom * (geometry.distance / gesture.distance)),
+      );
+      // The spread changing is the zoom; the midpoint moving is the pan. Pinning
+      // the grabbed point under the midpoint expresses both at once.
+      setViewport({
+        x: (geometry.center.x - rect.left) / next - gesture.focus.x,
+        y: (geometry.center.y - rect.top) / next - gesture.focus.y,
+      });
+      setZoom(next);
+      return;
+    }
+
     setPointer(toCanvas(event.clientX, event.clientY));
     const from = panFrom.current;
     if (!from) return;
@@ -366,13 +475,21 @@ export function EditorWorkspace() {
     });
   };
 
-  const endPan = (): void => {
+  /** End whatever this pointer was taking part in - a pan, or half a pinch. */
+  const endGesture = (event?: PointerEvent<HTMLDivElement>): void => {
+    if (event) touches.current.delete(event.pointerId);
+    // A pinch needs both fingers; lifting one ends it rather than degrading it
+    // into a one-finger zoom against a stale midpoint.
+    if (touches.current.size < 2) pinch.current = null;
     panFrom.current = null;
   };
 
   /* ------------------------------------------------------------- authoring */
 
   function beginDraw(point: { x: number; y: number }): void {
+    // Konva's `touchstart` fires AFTER our `pointerdown`, so the second finger of
+    // a pinch would otherwise start a marquee we have already cancelled.
+    if (touches.current.size > 1) return;
     if (!drawing) {
       // The select tool drags out a marquee. The band is the same draft rect the
       // drawing tools use, so the preview and the maths stay in one place.
@@ -452,6 +569,21 @@ export function EditorWorkspace() {
   const gridStep = CANVAS_GRID.size * CANVAS_GRID.majorEvery * zoom;
   const hasContent = page ? (doc.nodes[page.rootId]?.children.length ?? 0) > 0 : false;
 
+  // An infinite canvas will happily pan somewhere empty, and at that point the
+  // work looks lost - there is no scrollbar to say how far off it is and no edge
+  // to hit. So when nothing on the page is on screen, offer the way back rather
+  // than expecting the user to know the zoom-to-fit shortcut.
+  const adrift =
+    hasContent &&
+    page !== undefined &&
+    size.width > 0 &&
+    !anyNodeVisible(doc, page, {
+      x: -viewport.x,
+      y: -viewport.y,
+      width: size.width / zoom,
+      height: size.height / zoom,
+    });
+
   return (
     <div className="flex min-h-0 min-w-0 flex-1 flex-col">
       <div
@@ -459,21 +591,31 @@ export function EditorWorkspace() {
         onWheel={onWheel}
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
-        onPointerUp={endPan}
-        onPointerCancel={endPan}
-        onPointerLeave={() => {
+        onPointerUp={endGesture}
+        onPointerCancel={endGesture}
+        onPointerLeave={(event) => {
           setPointer(null);
-          endPan();
+          endGesture(event);
         }}
         onContextMenu={(event) => {
-          // Only offer the menu when it has something to act on; an empty-canvas
-          // right-click should still give the browser's own menu.
-          if (useDesignDocumentStore.getState().selection.length === 0) return;
+          // Offered on empty canvas too, now that paste applies there - the menu
+          // itself renders nothing when it has no entries, so a right-click with
+          // no selection AND no clipboard still falls through to the browser.
+          const store = useDesignDocumentStore.getState();
+          if (store.selection.length === 0 && !store.canPaste()) return;
           event.preventDefault();
-          setContextMenu({ x: event.clientX, y: event.clientY });
+          setContextMenu({
+            x: event.clientX,
+            y: event.clientY,
+            canvas: toCanvas(event.clientX, event.clientY),
+          });
         }}
         data-tool={tool}
-        className="relative min-h-0 flex-1 overflow-hidden bg-muted/30 data-[tool=hand]:cursor-grab data-[tool=ellipse]:cursor-crosshair data-[tool=frame]:cursor-crosshair data-[tool=rectangle]:cursor-crosshair data-[tool=text]:cursor-text"
+        // `touch-none` is what makes the canvas usable with a finger: without it
+        // a drag scrolls the page (or triggers pull-to-refresh) instead of
+        // drawing, and the browser's pinch zooms the whole document rather than
+        // the artwork. Everything it disables is re-implemented above.
+        className="relative min-h-0 flex-1 touch-none select-none overflow-hidden bg-muted/30 data-[tool=hand]:cursor-grab data-[tool=ellipse]:cursor-crosshair data-[tool=frame]:cursor-crosshair data-[tool=rectangle]:cursor-crosshair data-[tool=text]:cursor-text"
       >
         {/* The grid is generated, not an asset: its pitch follows the configured
             grid size and the live zoom, and its colour is the border token, so
@@ -528,6 +670,19 @@ export function EditorWorkspace() {
         )}
 
         {!hasContent && <EmptyState />}
+
+        {adrift && (
+          <div className="pointer-events-none absolute inset-x-0 top-3 flex justify-center">
+            <button
+              type="button"
+              onClick={fitToContent}
+              className="pointer-events-auto flex items-center gap-1.5 rounded-full border border-border bg-card/95 px-3 py-1.5 text-xs font-medium text-foreground shadow-lg backdrop-blur transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            >
+              <Crosshair className="h-3.5 w-3.5 text-muted-foreground" aria-hidden />
+              {t('canvas.backToContent')}
+            </button>
+          </div>
+        )}
       </div>
 
       <CanvasContextMenu state={contextMenu} onClose={() => setContextMenu(null)} />

@@ -13,7 +13,7 @@ import {
   Globe,
   Bookmark,
 } from 'lucide-react';
-import { Badge, Button, cn } from '@adysre/ui';
+import { Badge, Button, cn } from 'adysre';
 import { SectionHeading } from './section-heading';
 
 /** Icons shown in the icon-preview tile. Purely illustrative. */

@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { loginSchema, type LoginInput } from '@adysre/validators';
 import { ApiClientError } from '@adysre/sdk';
-import { Button, Card, CardContent, CardHeader, CardTitle, CardDescription } from '@adysre/ui';
+import { Button, Card, CardContent, CardHeader, CardTitle, CardDescription } from 'adysre';
 import { Link, useRouter } from '@/i18n/navigation';
 import { FormField } from '@/components/auth/form-field';
 import { FormAlert } from '@/components/auth/form-alert';

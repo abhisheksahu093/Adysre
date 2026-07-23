@@ -1,5 +1,5 @@
 import { AlertCircle, CheckCircle2 } from 'lucide-react';
-import { cn } from '@adysre/ui';
+import { cn } from 'adysre';
 
 /** Inline form-level status message (token-based colors, WCAG AA). */
 export function FormAlert({

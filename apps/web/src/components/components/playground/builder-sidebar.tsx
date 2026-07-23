@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { LayoutTemplate, Paintbrush, Pencil } from 'lucide-react';
-import { cn } from '@adysre/ui';
+import { cn } from 'adysre';
 import type { LocalizedComponent } from '@/data/components';
 import type { PlaygroundSlot, PlaygroundSlotId } from '@/data/playground';
 import { tourStepsForStage } from '@/data/playground/tour';

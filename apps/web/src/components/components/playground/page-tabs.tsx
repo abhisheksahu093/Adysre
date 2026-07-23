@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { Plus, X } from 'lucide-react';
-import { cn } from '@adysre/ui';
+import { cn } from 'adysre';
 import { usePlaygroundStore } from '@/stores/playground-store';
 
 /**

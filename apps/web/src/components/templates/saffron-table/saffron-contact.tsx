@@ -80,7 +80,7 @@ export function SaffronContact({ content }: { content: TemplateContent }) {
               aria-live="polite"
               className="mt-4 min-h-5 text-center text-[13px] text-[var(--saf-ink-faint)]"
             >
-              {sent ? 'Thank you — we will confirm your table within the day.' : ''}
+              {sent ? 'Thank you. We will confirm your table within the day.' : ''}
             </p>
           </form>
         </Reveal>

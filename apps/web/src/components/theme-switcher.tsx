@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useTheme } from 'next-themes';
 import { useTranslations } from 'next-intl';
 import { Moon, Sun } from 'lucide-react';
-import { Button } from '@adysre/ui';
+import { Button } from 'adysre';
 
 /**
  * Single light/dark toggle (UI_DESIGN_SYSTEM.md requires a theme switcher).

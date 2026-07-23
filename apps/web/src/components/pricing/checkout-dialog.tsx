@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { checkoutSchema, type CheckoutInput } from '@adysre/validators';
 import { ApiClientError } from '@adysre/sdk';
-import { Button, Dialog, Input, Label } from '@adysre/ui';
+import { Button, Dialog, Input, Label } from 'adysre';
 import { FormAlert } from '@/components/auth/form-alert';
 import { startCheckout } from '@/lib/checkout';
 import type { PricingPlan } from '@/data/pricing';

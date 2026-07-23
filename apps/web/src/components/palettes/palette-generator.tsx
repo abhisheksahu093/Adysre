@@ -3,7 +3,7 @@
 import { useRef, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { Palette as PaletteIcon, Type, ImageUp, Loader2, Sparkles } from 'lucide-react';
-import { Button, Input, Label, Select, Textarea, cn } from '@adysre/ui';
+import { Button, Input, Label, Select, Textarea, cn } from 'adysre';
 import type { Palette } from '@/data/palettes';
 import { readableText } from '@/lib/palettes/color';
 import {

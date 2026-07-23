@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useTheme } from 'next-themes';
 import { useTranslations } from 'next-intl';
 import { Sun, Moon, RotateCw, ExternalLink } from 'lucide-react';
-import { Button, cn } from '@adysre/ui';
+import { Button, cn } from 'adysre';
 import { usePreviewHeight } from '@/hooks/use-preview-height';
 import { PREVIEW_DEVICES, deviceWidth, type PreviewDeviceId } from './preview-devices';
 

@@ -3,7 +3,7 @@
 import { useId, useRef, useState, type ChangeEvent, type DragEvent } from 'react';
 import { useTranslations } from 'next-intl';
 import { ImagePlus, Loader2, Trash2, TriangleAlert } from 'lucide-react';
-import { cn } from '@adysre/ui';
+import { cn } from 'adysre';
 import { box, type TemplateSpec } from '@/lib/design-playground/templates';
 import {
   ACCEPTED_IMAGE_TYPES,

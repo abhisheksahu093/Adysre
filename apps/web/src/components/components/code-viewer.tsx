@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { Download, Check, Copy } from 'lucide-react';
-import { Button, cn } from '@adysre/ui';
+import { Button, cn } from 'adysre';
 import { useClipboard } from '@/hooks/use-clipboard';
 import type { Framework } from '@/data/components';
 

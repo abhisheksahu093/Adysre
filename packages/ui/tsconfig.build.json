@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    /*
+     * `tsc` is the whole build. No bundler, on purpose:
+     *  - one `.js` per source file, so a consumer's bundler tree-shakes at file
+     *    granularity (import one icon, ship one icon);
+     *  - `'use client'` directives survive verbatim, which is what Next.js's App
+     *    Router needs and what most JS bundlers quietly strip;
+     *  - declarations come out of the same pass, so types can never drift.
+     * Source files import each other by their real extension (`./catalog.ts`)
+     * so the workspace can consume this package without building it;
+     * `rewriteRelativeImportExtensions` turns those into `.js` here, so what
+     * ships to npm is spec-compliant ESM that Node can load directly.
+     */
+    "noEmit": false,
+    "rewriteRelativeImportExtensions": true,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "outDir": "dist",
+    "rootDir": "src",
+    "jsx": "react-jsx",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "tsBuildInfoFile": "dist/.tsbuildinfo"
+  },
+  "include": ["src"],
+  "exclude": ["src/**/*.test.ts", "src/**/*.test.tsx"]
+}

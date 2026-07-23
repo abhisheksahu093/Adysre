@@ -124,7 +124,7 @@ apps/api/src/modules/design/                 projects, pages, assets, sharing
 packages/database/                           Prisma models
 ```
 
-Shared primitives (buttons, dialogs, inputs) come from `@adysre/ui`. Colours come
+Shared primitives (buttons, dialogs, inputs) come from `adysre`. Colours come
 from `@adysre/theme` tokens — **no hex, no inline styles** in chrome. Canvas
 *content* is user data and carries its own literal colours; that is the one
 allowed exception, and it lives in the document model, never in a component.
@@ -327,7 +327,7 @@ quick insert `⌘/`. Defined once in `config/design-playground.ts`.
 ## 12. Stack
 
 Next.js App Router · TypeScript strict · Konva (canvas) · Zustand (state) ·
-Lexical (rich text) · Tailwind + `@adysre/ui` + `@adysre/theme` (chrome) ·
+Lexical (rich text) · Tailwind + `adysre` + `@adysre/theme` (chrome) ·
 Framer Motion (chrome animation only) · Prisma + PostgreSQL · Yjs (Phase 4
 realtime) · object storage for assets · Fuse.js (search) · html-to-image,
 custom SVG serialiser, jsPDF (export) · custom AST pipeline (code generation).

@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { Check, Copy, Download, ExternalLink, Loader2, Lock, Sparkles } from 'lucide-react';
-import { Button, Dialog } from '@adysre/ui';
+import { Button, Dialog } from 'adysre';
 import { Link } from '@/i18n/navigation';
 import { useClipboard } from '@/hooks/use-clipboard';
 import { TEMPLATE_DOWNLOADS, type TemplateDownloadId, type TemplateSummary } from '@/data/templates/types';

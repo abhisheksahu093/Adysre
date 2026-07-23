@@ -4,7 +4,7 @@ import { useMemo, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
 import { Check, Copy, Download, FileArchive } from 'lucide-react';
-import { Button, Dialog, cn } from '@adysre/ui';
+import { Button, Dialog, cn } from 'adysre';
 import type { Framework } from '@/data/components';
 import type { PlaygroundSection } from '@/data/playground';
 import type { Palette } from '@/data/palettes';

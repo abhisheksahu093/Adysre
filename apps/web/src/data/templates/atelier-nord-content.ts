@@ -24,7 +24,7 @@ export const ATELIER_CONTENT: TemplateContent = {
   ],
 
   hero: {
-    badge: 'Oslo — practising since 2009',
+    badge: 'Oslo, practising since 2009',
     title: 'An architecture of',
     titleAccent: 'quiet, exact rooms',
     subtitle:

@@ -17,7 +17,7 @@ import {
   Trash2,
   type LucideIcon,
 } from 'lucide-react';
-import { cn } from '@adysre/ui';
+import { cn } from 'adysre';
 import { useDesignDocumentStore } from '@/stores/design-document-store';
 
 /**

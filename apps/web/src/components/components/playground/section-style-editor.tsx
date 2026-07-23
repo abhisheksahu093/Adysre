@@ -3,7 +3,7 @@
 import { useState, type CSSProperties } from 'react';
 import { useTranslations } from 'next-intl';
 import { Ban, Paintbrush, RotateCcw } from 'lucide-react';
-import { Button, cn } from '@adysre/ui';
+import { Button, cn } from 'adysre';
 import type { PlaygroundSlot } from '@/data/playground';
 import { GRADIENTS, type Gradient } from '@/data/gradients';
 import { PATTERNS, type Pattern } from '@/data/patterns';

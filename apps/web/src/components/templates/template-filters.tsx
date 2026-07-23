@@ -1,7 +1,7 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { cn } from '@adysre/ui';
+import { cn } from 'adysre';
 import type { TemplateSummary } from '@/data/templates/types';
 
 /**

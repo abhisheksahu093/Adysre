@@ -2,7 +2,7 @@
 
 import { useQuery } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
-import { Badge, Card, CardContent, CardHeader, CardTitle, CardDescription, buttonVariants, cn } from '@adysre/ui';
+import { Badge, Card, CardContent, CardHeader, CardTitle, CardDescription, buttonVariants, cn } from 'adysre';
 import { Link } from '@/i18n/navigation';
 import { fetchProfile, initials, DEMO_USER } from '@/lib/session';
 import { isPremium, type AccessLevel } from '@/lib/access';

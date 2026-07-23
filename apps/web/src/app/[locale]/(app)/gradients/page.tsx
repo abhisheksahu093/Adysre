@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { GradientsView } from '@/components/gradients/gradients-view';
+import { NpmUsage } from '@/components/npm/npm-usage';
 
 export async function generateMetadata({
   params,
@@ -27,5 +28,10 @@ export default async function GradientsPage({
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
-  return <GradientsView />;
+  return (
+    <>
+      <GradientsView />
+      <NpmUsage module="gradients" />
+    </>
+  );
 }

@@ -2,7 +2,7 @@
 
 import type { ReactNode } from 'react';
 import { useTranslations } from 'next-intl';
-import { Dialog } from '@adysre/ui';
+import { Dialog } from 'adysre';
 import { PaletteCode } from './palette-code';
 
 /**

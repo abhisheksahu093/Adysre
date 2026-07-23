@@ -2,7 +2,7 @@
 
 import { useId, useState, type ComponentType, type KeyboardEvent } from 'react';
 import { useTranslations } from 'next-intl';
-import { cn } from '@adysre/ui';
+import { cn } from 'adysre';
 import { AssetsColors } from './assets-colors';
 import { AssetsGradients } from './assets-gradients';
 import { AssetsIcons } from './assets-icons';

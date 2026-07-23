@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Input, Label, cn, type InputProps } from '@adysre/ui';
+import { Input, Label, cn, type InputProps } from 'adysre';
 
 interface FormFieldProps extends InputProps {
   label: string;

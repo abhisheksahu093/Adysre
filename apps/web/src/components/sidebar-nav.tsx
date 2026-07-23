@@ -4,7 +4,7 @@ import { Suspense, useEffect, useMemo, useState } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 import { ChevronDown } from 'lucide-react';
-import { Tooltip, cn } from '@adysre/ui';
+import { Tooltip, cn } from 'adysre';
 import { Link, usePathname } from '@/i18n/navigation';
 import { NAV_ITEMS } from '@/config/navigation';
 import { NAV_SUBMENUS, type LabelMode, type ModuleSubmenu } from '@/config/nav-submenus';

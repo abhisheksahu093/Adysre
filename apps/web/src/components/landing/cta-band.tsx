@@ -1,6 +1,6 @@
 import { getTranslations } from 'next-intl/server';
 import { ArrowRight } from 'lucide-react';
-import { buttonVariants, cn } from '@adysre/ui';
+import { buttonVariants, cn } from 'adysre';
 import { Link } from '@/i18n/navigation';
 import { LANDING_LINKS } from '@/data/landing';
 import { LandingBackdrop } from './landing-backdrop';

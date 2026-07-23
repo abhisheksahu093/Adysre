@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { IconsView } from '@/components/icons/icons-view';
 import { ICON_COUNT } from '@/data/icons';
+import { NpmUsage } from '@/components/npm/npm-usage';
 
 export async function generateMetadata({
   params,
@@ -28,5 +29,10 @@ export default async function IconsPage({
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
-  return <IconsView />;
+  return (
+    <>
+      <IconsView />
+      <NpmUsage module="icons" />
+    </>
+  );
 }

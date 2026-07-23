@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import { PanelLeftClose, PanelLeftOpen } from 'lucide-react';
-import { cn } from '@adysre/ui';
+import { cn } from 'adysre';
 import { useAppShellStore } from '@/stores/app-shell-store';
 import { SidebarBrand, SidebarNav } from './sidebar-nav';
 import { PromoCard } from './promo-card';

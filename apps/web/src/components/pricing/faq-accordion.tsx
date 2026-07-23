@@ -3,7 +3,7 @@
 import { useId, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { ChevronDown } from 'lucide-react';
-import { cn } from '@adysre/ui';
+import { cn } from 'adysre';
 import { FAQ_KEYS } from '@/data/pricing';
 import { SUPPORT_EMAIL } from '@/config/site';
 

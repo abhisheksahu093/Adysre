@@ -3,7 +3,7 @@
 import { memo, useRef, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { Check, Copy } from 'lucide-react';
-import { cn } from '@adysre/ui';
+import { cn } from 'adysre';
 import type { Icon } from '@/data/icons';
 import { useClipboard } from '@/hooks/use-clipboard';
 import { buildSvgMarkup, DEFAULT_ICON_STYLE } from '@/lib/icons/svg';

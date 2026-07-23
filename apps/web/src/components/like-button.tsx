@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { Heart } from 'lucide-react';
-import { cn } from '@adysre/ui';
+import { cn } from 'adysre';
 import { useLikesStore } from '@/stores/likes-store';
 
 /**

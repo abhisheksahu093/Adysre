@@ -455,4 +455,811 @@ export const SECTION_TEMPLATES: CatalogueEntry[] = [
       }),
     ]),
   },
+
+  /* ------------------------------------------------------------ navigation */
+
+  {
+    id: 'section-navbar-centered',
+    category: 'Navigation',
+    name: 'Navbar (centered)',
+    width: W,
+    height: 88,
+    spec: surface('Section / Navbar centered', box(W, 88), { fill: SURFACE }, [
+      label('Navbar / Product', at(GUTTER, centerY(88, 15), 90, 22), 'Product', {
+        size: 15,
+        color: MUTED,
+      }),
+      label('Navbar / Pricing', at(GUTTER + 110, centerY(88, 15), 90, 22), 'Pricing', {
+        size: 15,
+        color: MUTED,
+      }),
+      // Centred by arithmetic, not by a layout engine: the renderer positions
+      // absolutely, so the wordmark's own width has to come out of the span.
+      label('Navbar / Wordmark', at((W - 200) / 2, centerY(88, 20), 200, 28), 'Adysre', {
+        size: 20,
+        weight: 600,
+        align: 'center',
+      }),
+      label('Navbar / Docs', at(W - GUTTER - 320, centerY(88, 15), 90, 22), 'Docs', {
+        size: 15,
+        color: MUTED,
+      }),
+      {
+        ...button('Navbar / CTA', 'Start free', 150, 44, { fill: BRAND, text: ON_BRAND }),
+        transform: at(W - GUTTER - 150, 22, 150, 44),
+      },
+      block('Navbar / Rule', at(0, 87, W, 1), BORDER),
+    ]),
+  },
+
+  {
+    id: 'section-navbar-dark',
+    category: 'Navigation',
+    name: 'Navbar (dark)',
+    width: W,
+    height: 88,
+    spec: surface('Section / Navbar dark', box(W, 88), { fill: DARK }, [
+      label('Navbar / Wordmark', at(GUTTER, centerY(88, 20), 200, 28), 'Adysre', {
+        size: 20,
+        weight: 600,
+        color: SURFACE,
+      }),
+      ...['Product', 'Solutions', 'Pricing', 'Docs'].map((item, index) =>
+        label(`Navbar / ${item}`, at(GUTTER + 240 + index * 115, centerY(88, 15), 105, 22), item, {
+          size: 15,
+          color: ON_DARK,
+        }),
+      ),
+      {
+        ...button('Navbar / Sign in', 'Sign in', 110, 44, { fill: null, text: SURFACE }),
+        transform: at(W - GUTTER - 280, 22, 110, 44),
+      },
+      {
+        ...button('Navbar / CTA', 'Start free', 150, 44, { fill: BRAND, text: ON_BRAND }),
+        transform: at(W - GUTTER - 150, 22, 150, 44),
+      },
+    ]),
+  },
+
+  {
+    id: 'section-announcement',
+    category: 'Navigation',
+    name: 'Announcement bar',
+    width: W,
+    height: 48,
+    spec: surface('Section / Announcement', box(W, 48), { fill: BRAND }, [
+      label(
+        'Announcement / Message',
+        at(GUTTER, centerY(48, 14), COL, 20),
+        'Introducing AI workflows - now in open beta. Read the announcement →',
+        { size: 14, weight: 500, color: ON_BRAND, align: 'center' },
+      ),
+    ]),
+  },
+
+  /* --------------------------------------------------------------- heroes */
+
+  {
+    id: 'section-hero-centered',
+    category: 'Marketing',
+    name: 'Hero (centered)',
+    width: W,
+    height: 560,
+    spec: surface('Section / Hero centered', box(W, 560), { fill: SURFACE }, [
+      surface(
+        'Hero / Eyebrow',
+        at((W - 210) / 2, 88, 210, 30),
+        { fill: BRAND_SOFT, radius: 15 },
+        [
+          label('Hero / Eyebrow label', at(0, centerY(30, 12), 210, 18), 'TRUSTED BY 12,000 TEAMS', {
+            size: 12,
+            weight: 600,
+            color: BRAND,
+            align: 'center',
+          }),
+        ],
+      ),
+      label(
+        'Hero / Title',
+        at(GUTTER + 60, 152, COL - 120, 140),
+        'Everything your business runs on, in one place',
+        { size: 60, weight: 600, align: 'center', lineHeight: 1.12 },
+      ),
+      label(
+        'Hero / Body',
+        at(GUTTER + 260, 312, COL - 520, 60),
+        'CRM, operations and reporting on one data model - with AI built into every step.',
+        { size: 18, color: MUTED, align: 'center', lineHeight: 1.6 },
+      ),
+      {
+        ...button('Hero / Primary CTA', 'Start free trial', 190, 52, {
+          fill: BRAND,
+          text: ON_BRAND,
+        }),
+        transform: at((W - 380) / 2, 404, 190, 52),
+      },
+      {
+        ...button('Hero / Secondary CTA', 'Book a demo', 170, 52, {
+          fill: SURFACE,
+          stroke: BORDER,
+          text: INK,
+        }),
+        transform: at((W - 380) / 2 + 210, 404, 170, 52),
+      },
+    ]),
+  },
+
+  {
+    id: 'section-hero-dark',
+    category: 'Marketing',
+    name: 'Hero (dark)',
+    width: W,
+    height: 560,
+    spec: surface('Section / Hero dark', box(W, 560), { fill: DARK }, [
+      label(
+        'Hero / Title',
+        at(GUTTER, 140, 700, 150),
+        'Built for the teams who run the whole business',
+        { size: 56, weight: 600, color: SURFACE, lineHeight: 1.15 },
+      ),
+      label(
+        'Hero / Body',
+        at(GUTTER, 320, 560, 84),
+        'One platform, one data model, one bill. Deploy in a day and keep every workflow you already have.',
+        { size: 18, color: ON_DARK, lineHeight: 1.6 },
+      ),
+      {
+        ...button('Hero / Primary CTA', 'Start free trial', 190, 52, {
+          fill: BRAND,
+          text: ON_BRAND,
+        }),
+        transform: at(GUTTER, 436, 190, 52),
+      },
+      card('Hero / Panel', { x: 800, y: 96, width: 520, height: 368 }, [
+        block('Panel / Bar', at(1, 1, 518, 44), SUBTLE, 15),
+        block('Panel / Chart', at(32, 88, 456, 160), BRAND_SOFT, 12),
+        block('Panel / Row 1', at(32, 272, 456, 14), BORDER, 7),
+        block('Panel / Row 2', at(32, 302, 300, 14), BORDER, 7),
+      ]),
+    ]),
+  },
+
+  /* -------------------------------------------------------- main sections */
+
+  {
+    id: 'section-steps',
+    category: 'Marketing',
+    name: 'How it works (3 steps)',
+    width: W,
+    height: 460,
+    spec: surface('Section / Steps', box(W, 460), { fill: SURFACE }, [
+      ...heading('Steps', 80, 'Live in three steps', 'No migration project and no professional services engagement.'),
+      ...[
+        { n: '1', title: 'Connect your data', body: 'Point us at the systems you already run. Sync takes minutes.' },
+        { n: '2', title: 'Pick your modules', body: 'Turn on CRM, operations or reporting - or all three.' },
+        { n: '3', title: 'Invite the team', body: 'Roles and permissions come preset. Change what you need.' },
+      ].map((step, index) =>
+        stack(`Steps / ${step.n}`, at(GUTTER + index * (COL / 3), 244, COL / 3 - 40, 160), [
+          surface(`Steps / ${step.n} badge`, at(0, 0, 44, 44), { fill: BRAND_SOFT, radius: 22 }, [
+            label(`Steps / ${step.n} number`, at(0, centerY(44, 18), 44, 26), step.n, {
+              size: 18,
+              weight: 600,
+              color: BRAND,
+              align: 'center',
+            }),
+          ]),
+          label(`Steps / ${step.n} title`, at(0, 64, COL / 3 - 40, 26), step.title, {
+            size: 19,
+            weight: 600,
+          }),
+          label(`Steps / ${step.n} body`, at(0, 98, COL / 3 - 60, 52), step.body, {
+            size: 15,
+            color: MUTED,
+            lineHeight: 1.6,
+          }),
+        ]),
+      ),
+    ]),
+  },
+
+  {
+    id: 'section-team',
+    category: 'Marketing',
+    name: 'Team grid (4 up)',
+    width: W,
+    height: 520,
+    spec: surface('Section / Team', box(W, 520), { fill: SUBTLE }, [
+      ...heading('Team', 80, 'The people behind it', 'A small team with a long history of shipping operations software.'),
+      ...[
+        { name: 'Priya Raman', role: 'Chief Executive' },
+        { name: 'Daniel Okafor', role: 'Engineering' },
+        { name: 'Mei Tanaka', role: 'Design' },
+        { name: 'Luis Ferreira', role: 'Customer' },
+      ].map((person, index) =>
+        card(
+          `Team / ${person.name}`,
+          { x: GUTTER + index * (COL / 4), y: 244, width: COL / 4 - 24, height: 220 },
+          [
+            block('Avatar', at(24, 24, 72, 72), BRAND_SOFT, 36),
+            label('Name', at(24, 116, COL / 4 - 72, 24), person.name, { size: 17, weight: 600 }),
+            label('Role', at(24, 146, COL / 4 - 72, 22), person.role, { size: 14, color: MUTED }),
+          ],
+        ),
+      ),
+    ]),
+  },
+
+  {
+    id: 'section-metrics-dark',
+    category: 'Marketing',
+    name: 'Metrics band (dark)',
+    width: W,
+    height: 260,
+    spec: surface('Section / Metrics', box(W, 260), { fill: DARK }, [
+      ...[
+        { value: '99.99%', label: 'Uptime, measured' },
+        { value: '12k+', label: 'Teams running on it' },
+        { value: '840M', label: 'Records synced daily' },
+        { value: '< 40ms', label: 'Median query time' },
+      ].map((metric, index) =>
+        stack(`Metrics / ${metric.value}`, at(GUTTER + index * (COL / 4), 88, COL / 4 - 24, 90), [
+          label('Value', at(0, 0, COL / 4 - 24, 52), metric.value, {
+            size: 40,
+            weight: 600,
+            color: SURFACE,
+          }),
+          label('Label', at(0, 58, COL / 4 - 24, 22), metric.label, { size: 15, color: ON_DARK }),
+        ]),
+      ),
+    ]),
+  },
+
+  {
+    id: 'section-blog',
+    category: 'Content',
+    name: 'Blog cards (3 up)',
+    width: W,
+    height: 540,
+    spec: surface('Section / Blog', box(W, 540), { fill: SURFACE }, [
+      ...heading('Blog', 80, 'From the team', 'Notes on building, shipping and running the platform.'),
+      ...[0, 1, 2].map((index) =>
+        card(
+          `Blog / Post ${index + 1}`,
+          { x: GUTTER + index * (COL / 3), y: 244, width: COL / 3 - 28, height: 240 },
+          [
+            block('Cover', at(1, 1, COL / 3 - 30, 110), BRAND_SOFT, 15),
+            label('Category', at(24, 130, 120, 18), 'ENGINEERING', {
+              size: 11,
+              weight: 600,
+              color: BRAND,
+            }),
+            label('Title', at(24, 154, COL / 3 - 76, 48), 'Designing a token-first color system', {
+              size: 17,
+              weight: 600,
+              lineHeight: 1.3,
+            }),
+            label('Meta', at(24, 208, COL / 3 - 76, 20), '12 Jul 2026 · 8 min read', {
+              size: 13,
+              color: MUTED,
+            }),
+          ],
+        ),
+      ),
+    ]),
+  },
+
+  {
+    id: 'section-newsletter',
+    category: 'Content',
+    name: 'Newsletter band',
+    width: W,
+    height: 280,
+    spec: surface('Section / Newsletter', box(W, 280), { fill: SUBTLE }, [
+      label('Newsletter / Title', at(GUTTER, 96, 620, 44), 'Get the monthly changelog', {
+        size: 34,
+        weight: 600,
+      }),
+      label(
+        'Newsletter / Body',
+        at(GUTTER, 150, 560, 46),
+        'What shipped, what broke and what we learned. One email a month, no marketing.',
+        { size: 16, color: MUTED, lineHeight: 1.6 },
+      ),
+      surface(
+        'Newsletter / Field',
+        at(W - GUTTER - 460, 112, 300, 52),
+        { fill: SURFACE, stroke: BORDER, strokeWidth: 1, radius: 12 },
+        [
+          label('Field / Placeholder', at(18, centerY(52, 15), 260, 22), 'you@company.com', {
+            size: 15,
+            color: MUTED,
+          }),
+        ],
+      ),
+      {
+        ...button('Newsletter / Submit', 'Subscribe', 150, 52, { fill: BRAND, text: ON_BRAND }),
+        transform: at(W - GUTTER - 150, 112, 150, 52),
+      },
+    ]),
+  },
+
+  /* -------------------------------------------------------------- footers */
+
+  {
+    id: 'section-footer-simple',
+    category: 'Content',
+    name: 'Footer (simple)',
+    width: W,
+    height: 140,
+    spec: surface('Section / Footer simple', box(W, 140), { fill: SURFACE }, [
+      block('Footer / Rule', at(0, 0, W, 1), BORDER),
+      label('Footer / Wordmark', at(GUTTER, centerY(140, 18), 180, 26), 'Adysre', {
+        size: 18,
+        weight: 600,
+      }),
+      ...['Privacy', 'Terms', 'Status', 'Contact'].map((link, index) =>
+        label(`Footer / ${link}`, at(GUTTER + 340 + index * 120, centerY(140, 14), 110, 20), link, {
+          size: 14,
+          color: MUTED,
+        }),
+      ),
+      label(
+        'Footer / Legal',
+        at(W - GUTTER - 320, centerY(140, 13), 320, 20),
+        '© 2026 Adysre. All rights reserved.',
+        { size: 13, color: MUTED, align: 'right' },
+      ),
+    ]),
+  },
+
+  {
+    id: 'section-footer-newsletter',
+    category: 'Content',
+    name: 'Footer (with newsletter)',
+    width: W,
+    height: 420,
+    spec: surface('Section / Footer newsletter', box(W, 420), { fill: DARK }, [
+      label('Footer / Wordmark', at(GUTTER, 64, 220, 30), 'Adysre', {
+        size: 20,
+        weight: 600,
+        color: SURFACE,
+      }),
+      label(
+        'Footer / Tagline',
+        at(GUTTER, 104, 300, 60),
+        'The AI-first business operating system.',
+        { size: 14, color: MUTED, lineHeight: 1.6 },
+      ),
+      label('Footer / Signup title', at(GUTTER, 196, 320, 24), 'Monthly changelog', {
+        size: 15,
+        weight: 600,
+        color: SURFACE,
+      }),
+      surface(
+        'Footer / Field',
+        at(GUTTER, 230, 260, 48),
+        { fill: 'transparent', stroke: '#334155', strokeWidth: 1, radius: 10 },
+        [
+          label('Field / Placeholder', at(16, centerY(48, 14), 220, 20), 'you@company.com', {
+            size: 14,
+            color: MUTED,
+          }),
+        ],
+      ),
+      {
+        ...button('Footer / Submit', 'Subscribe', 130, 48, { fill: BRAND, text: ON_BRAND }),
+        transform: at(GUTTER + 272, 230, 130, 48),
+      },
+      ...[
+        { title: 'Product', links: ['Overview', 'Modules', 'Pricing'] },
+        { title: 'Company', links: ['About', 'Careers', 'Contact'] },
+        { title: 'Resources', links: ['Docs', 'Changelog', 'Status'] },
+      ].map((column, index) =>
+        stack(`Footer / ${column.title}`, at(GUTTER + 560 + index * 240, 64, 200, 160), [
+          label(`${column.title} / Heading`, at(0, 0, 200, 20), column.title, {
+            size: 13,
+            weight: 600,
+            color: SURFACE,
+          }),
+          ...column.links.map((link, row) =>
+            label(`${column.title} / ${link}`, at(0, 36 + row * 28, 200, 20), link, {
+              size: 14,
+              color: ON_DARK,
+            }),
+          ),
+        ]),
+      ),
+      block('Footer / Rule', at(GUTTER, 332, COL, 1), '#1e293b'),
+      label('Footer / Legal', at(GUTTER, 360, 400, 20), '© 2026 Adysre. All rights reserved.', {
+        size: 13,
+        color: MUTED,
+      }),
+    ]),
+  },
+
+  /* -------------------------------------------------------------- pricing */
+
+  {
+    id: 'section-pricing-two',
+    category: 'Marketing',
+    name: 'Pricing (2 tiers)',
+    width: W,
+    height: 580,
+    spec: surface('Section / Pricing two', box(W, 580), { fill: SURFACE }, [
+      ...heading('Pricing', 72, 'Two ways to buy', 'Start on the team plan and move up when procurement asks you to.'),
+      ...[
+        { name: 'Team', price: '$49', note: 'Per seat, billed monthly', featured: false },
+        { name: 'Enterprise', price: 'Custom', note: 'Annual, with an SLA', featured: true },
+      ].map((tier, index) =>
+        card(
+          `Pricing / ${tier.name}`,
+          { x: GUTTER + 100 + index * 520, y: 224, width: 480, height: 300 },
+          [
+            label(`${tier.name} / Name`, at(36, 32, 400, 24), tier.name, {
+              size: 16,
+              weight: 600,
+              color: tier.featured ? BRAND : INK,
+            }),
+            label(
+              `${tier.name} / Price`,
+              at(36, 66, 400, 56),
+              tier.price === 'Custom' ? tier.price : `${tier.price}/mo`,
+              { size: 42, weight: 600 },
+            ),
+            label(`${tier.name} / Note`, at(36, 132, 400, 20), tier.note, {
+              size: 14,
+              color: MUTED,
+            }),
+            block(`${tier.name} / Rule`, at(36, 172, 408, 1), BORDER),
+            ...[0, 1].map((row) =>
+              label(
+                `${tier.name} / Feature ${row + 1}`,
+                at(36, 196 + row * 26, 400, 20),
+                ['Everything in the core platform', 'SSO, audit log and data residency'][row] ?? '',
+                { size: 14, color: MUTED },
+              ),
+            ),
+            {
+              ...button(
+                `${tier.name} / CTA`,
+                tier.featured ? 'Talk to sales' : 'Start free trial',
+                408,
+                48,
+                tier.featured
+                  ? { fill: BRAND, text: ON_BRAND }
+                  : { fill: SURFACE, stroke: BORDER, text: INK },
+              ),
+              transform: at(36, 244, 408, 48),
+            },
+          ],
+          tier.featured ? SUBTLE : SURFACE,
+        ),
+      ),
+    ]),
+  },
+
+  {
+    id: 'section-pricing-single',
+    category: 'Marketing',
+    name: 'Pricing (single plan)',
+    width: W,
+    height: 480,
+    spec: surface('Section / Pricing single', box(W, 480), { fill: SUBTLE }, [
+      ...heading('Pricing', 64, 'One plan, everything included', 'No feature gates and no per-module pricing.'),
+      card('Pricing / Plan', { x: (W - 720) / 2, y: 216, width: 720, height: 200 }, [
+        label('Plan / Name', at(40, 36, 320, 24), 'Complete', { size: 16, weight: 600, color: BRAND }),
+        label('Plan / Price', at(40, 68, 360, 60), '$79/mo', { size: 46, weight: 600 }),
+        label('Plan / Note', at(40, 136, 360, 22), 'Per seat · billed annually', {
+          size: 14,
+          color: MUTED,
+        }),
+        block('Plan / Divider', at(400, 36, 1, 128), BORDER),
+        ...[0, 1, 2, 3].map((row) =>
+          label(
+            `Plan / Feature ${row + 1}`,
+            at(440, 40 + row * 30, 240, 20),
+            ['Unlimited records', 'Every module', 'SSO and audit log', 'Priority support'][row] ?? '',
+            { size: 14, color: MUTED },
+          ),
+        ),
+      ]),
+    ]),
+  },
+
+  {
+    id: 'section-pricing-compare',
+    category: 'Marketing',
+    name: 'Pricing (comparison table)',
+    width: W,
+    height: 560,
+    spec: surface('Section / Pricing compare', box(W, 560), { fill: SURFACE }, [
+      ...heading('Compare', 64, 'Compare the plans', 'The differences that actually change how you work.'),
+      // Header row: the first column names the feature, the rest are plans.
+      ...['Feature', 'Starter', 'Growth', 'Scale'].map((title, column) =>
+        label(
+          `Compare / Head ${title}`,
+          at(GUTTER + (column === 0 ? 0 : 480 + (column - 1) * 240), 232, column === 0 ? 460 : 220, 22),
+          title,
+          { size: 13, weight: 600, color: column === 0 ? MUTED : INK },
+        ),
+      ),
+      block('Compare / Head rule', at(GUTTER, 264, COL, 1), BORDER),
+      ...[
+        { feature: 'Records', values: ['10k', 'Unlimited', 'Unlimited'] },
+        { feature: 'Roles and permissions', values: ['Basic', 'Custom', 'Custom'] },
+        { feature: 'Audit log retention', values: ['30 days', '1 year', '7 years'] },
+        { feature: 'Data residency', values: ['—', '—', 'Included'] },
+        { feature: 'Support', values: ['Email', 'Priority', 'Named engineer'] },
+      ].map((row, index) =>
+        stack(`Compare / Row ${index + 1}`, at(GUTTER, 284 + index * 52, COL, 52), [
+          label(`Row ${index + 1} / Feature`, at(0, 14, 460, 22), row.feature, {
+            size: 14,
+            weight: 500,
+          }),
+          ...row.values.map((value, column) =>
+            label(`Row ${index + 1} / ${column}`, at(480 + column * 240, 14, 220, 22), value, {
+              size: 14,
+              color: MUTED,
+            }),
+          ),
+          block(`Row ${index + 1} / Rule`, at(0, 51, COL, 1), BORDER),
+        ]),
+      ),
+    ]),
+  },
+
+  /* --------------------------------------------------------- testimonials */
+
+  {
+    id: 'section-testimonials-grid',
+    category: 'Marketing',
+    name: 'Testimonials (3 up)',
+    width: W,
+    height: 480,
+    spec: surface('Section / Testimonials grid', box(W, 480), { fill: SURFACE }, [
+      ...heading('Testimonials', 72, 'What teams say after a quarter', 'Not launch-week quotes - reviews from people a full quarter in.'),
+      ...[
+        {
+          quote: 'We replaced four tools with one. Onboarding a new region used to take a quarter.',
+          name: 'Rita Mensah',
+          role: 'COO, Northwind',
+        },
+        {
+          quote: 'The audit log alone got us through SOC 2 without hiring a consultant.',
+          name: 'Tom Alvarez',
+          role: 'Head of Ops, Kessel',
+        },
+        {
+          quote: 'Reporting that used to be a Friday job now runs itself before I am in.',
+          name: 'Ada Silva',
+          role: 'Finance Lead, Vero',
+        },
+      ].map((item, index) =>
+        card(
+          `Testimonials / ${item.name}`,
+          { x: GUTTER + index * (COL / 3), y: 232, width: COL / 3 - 28, height: 208 },
+          [
+            label(`${item.name} / Stars`, at(28, 26, 120, 20), '★★★★★', {
+              size: 14,
+              color: BRAND,
+            }),
+            label(`${item.name} / Quote`, at(28, 56, COL / 3 - 84, 76), item.quote, {
+              size: 15,
+              color: MUTED,
+              lineHeight: 1.6,
+            }),
+            block(`${item.name} / Avatar`, at(28, 148, 36, 36), BRAND_SOFT, 18),
+            label(`${item.name} / Name`, at(76, 150, 200, 20), item.name, {
+              size: 14,
+              weight: 600,
+            }),
+            label(`${item.name} / Role`, at(76, 170, 200, 18), item.role, {
+              size: 13,
+              color: MUTED,
+            }),
+          ],
+        ),
+      ),
+    ]),
+  },
+
+  {
+    id: 'section-testimonial-dark',
+    category: 'Marketing',
+    name: 'Testimonial (dark quote)',
+    width: W,
+    height: 400,
+    spec: surface('Section / Testimonial dark', box(W, 400), { fill: DARK }, [
+      label('Testimonial / Mark', at(GUTTER + 160, 72, 60, 60), '“', {
+        size: 72,
+        weight: 600,
+        color: BRAND,
+      }),
+      label(
+        'Testimonial / Quote',
+        at(GUTTER + 160, 132, COL - 320, 100),
+        'One data model meant the finance team and the ops team stopped arguing about whose number was right.',
+        { size: 30, weight: 600, color: SURFACE, lineHeight: 1.5 },
+      ),
+      block('Testimonial / Avatar', at(GUTTER + 160, 268, 44, 44), BRAND_SOFT, 22),
+      label('Testimonial / Name', at(GUTTER + 220, 272, 300, 20), 'Marcus Lindqvist', {
+        size: 15,
+        weight: 600,
+        color: SURFACE,
+      }),
+      label('Testimonial / Role', at(GUTTER + 220, 294, 300, 20), 'CFO, Halden Group', {
+        size: 13,
+        color: ON_DARK,
+      }),
+    ]),
+  },
+
+  {
+    id: 'section-testimonial-split',
+    category: 'Marketing',
+    name: 'Testimonial (with logo)',
+    width: W,
+    height: 360,
+    spec: surface('Section / Testimonial split', box(W, 360), { fill: SUBTLE }, [
+      card('Testimonial / Logo panel', { x: GUTTER, y: 72, width: 360, height: 216 }, [
+        block('Logo / Mark', at(140, 72, 80, 32), BORDER, 6),
+        label('Logo / Metric', at(24, 128, 312, 30), '38% less manual work', {
+          size: 18,
+          weight: 600,
+          align: 'center',
+        }),
+      ]),
+      label(
+        'Testimonial / Quote',
+        at(GUTTER + 420, 88, COL - 420, 120),
+        'We stopped reconciling spreadsheets in month two. The reporting module paid for the whole contract by the end of the quarter.',
+        { size: 24, weight: 600, lineHeight: 1.55 },
+      ),
+      block('Testimonial / Avatar', at(GUTTER + 420, 228, 44, 44), BRAND_SOFT, 22),
+      label('Testimonial / Name', at(GUTTER + 480, 232, 320, 20), 'Chidi Balogun', {
+        size: 15,
+        weight: 600,
+      }),
+      label('Testimonial / Role', at(GUTTER + 480, 254, 320, 20), 'Operations Director, Meridian', {
+        size: 13,
+        color: MUTED,
+      }),
+    ]),
+  },
+
+  /* ------------------------------------------------------------------ faq */
+
+  {
+    id: 'section-faq-two-column',
+    category: 'Content',
+    name: 'FAQ (two column)',
+    width: W,
+    height: 520,
+    spec: surface('Section / FAQ two column', box(W, 520), { fill: SURFACE }, [
+      ...heading('FAQ', 64, 'Questions, answered', 'The four things every team asks before they move over.'),
+      ...[
+        {
+          q: 'Can we migrate from our current CRM?',
+          a: 'Yes. Importers cover the common systems, and anything else lands through the API.',
+        },
+        {
+          q: 'How does role-based access work?',
+          a: 'Roles carry permissions in `module:resource:action` form. Deny by default.',
+        },
+        {
+          q: 'Where is our data stored?',
+          a: 'In the region you pick at signup. Enterprise plans can pin residency per entity.',
+        },
+        {
+          q: 'Do you offer a self-hosted option?',
+          a: 'Yes, on annual contracts, with the same release train as the hosted product.',
+        },
+      ].map((item, index) =>
+        stack(
+          `FAQ / Item ${index + 1}`,
+          at(GUTTER + (index % 2) * (COL / 2), 228 + Math.floor(index / 2) * 140, COL / 2 - 40, 130),
+          [
+            label(`Item ${index + 1} / Question`, at(0, 0, COL / 2 - 60, 26), item.q, {
+              size: 17,
+              weight: 600,
+            }),
+            label(`Item ${index + 1} / Answer`, at(0, 34, COL / 2 - 80, 72), item.a, {
+              size: 15,
+              color: MUTED,
+              lineHeight: 1.65,
+            }),
+          ],
+        ),
+      ),
+    ]),
+  },
+
+  {
+    id: 'section-faq-open',
+    category: 'Content',
+    name: 'FAQ (first open)',
+    width: W,
+    height: 560,
+    spec: surface('Section / FAQ open', box(W, 560), { fill: SUBTLE }, [
+      ...heading('FAQ', 64, 'Frequently asked questions', 'Everything teams ask before they move over.'),
+      // The first row is expanded, which is what tells a visitor the rest open
+      // too - a wall of closed rows reads as a list, not a control.
+      card('FAQ / Open item', { x: GUTTER + 200, y: 224, width: COL - 400, height: 150 }, [
+        label('Open / Question', at(28, 26, COL - 480, 26), 'Can we migrate from our current CRM?', {
+          size: 17,
+          weight: 600,
+        }),
+        label('Open / Toggle', at(COL - 464, 24, 24, 26), '–', {
+          size: 20,
+          color: BRAND,
+          align: 'center',
+        }),
+        label(
+          'Open / Answer',
+          at(28, 62, COL - 500, 70),
+          'Yes. Importers cover Salesforce, HubSpot and Pipedrive, and anything else lands through the API. Most teams are moved inside a week.',
+          { size: 15, color: MUTED, lineHeight: 1.65 },
+        ),
+      ]),
+      ...[
+        'How does role-based access work?',
+        'Where is our data stored?',
+        'Do you offer a self-hosted option?',
+      ].map((question, index) =>
+        stack(`FAQ / Closed ${index + 1}`, at(GUTTER + 200, 394 + index * 56, COL - 400, 56), [
+          label(`Closed ${index + 1} / Question`, at(28, 16, COL - 480, 24), question, {
+            size: 16,
+            weight: 500,
+          }),
+          label(`Closed ${index + 1} / Toggle`, at(COL - 464, 14, 24, 24), '+', {
+            size: 18,
+            color: MUTED,
+            align: 'center',
+          }),
+          block(`Closed ${index + 1} / Rule`, at(28, 55, COL - 456, 1), BORDER),
+        ]),
+      ),
+    ]),
+  },
+
+  {
+    id: 'section-faq-contact',
+    category: 'Content',
+    name: 'FAQ (with contact aside)',
+    width: W,
+    height: 500,
+    spec: surface('Section / FAQ contact', box(W, 500), { fill: SURFACE }, [
+      label('FAQ / Title', at(GUTTER, 80, 380, 48), 'Still deciding?', { size: 38, weight: 600 }),
+      label(
+        'FAQ / Body',
+        at(GUTTER, 144, 340, 80),
+        'The answers most teams need are here. If yours is not, an engineer will answer it directly.',
+        { size: 16, color: MUTED, lineHeight: 1.65 },
+      ),
+      {
+        ...button('FAQ / CTA', 'Talk to an engineer', 220, 50, { fill: BRAND, text: ON_BRAND }),
+        transform: at(GUTTER, 244, 220, 50),
+      },
+      ...[
+        'Can we migrate from our current CRM?',
+        'How does role-based access work?',
+        'Where is our data stored?',
+        'Do you offer a self-hosted option?',
+        'What happens to our data if we leave?',
+      ].map((question, index) =>
+        stack(`FAQ / Item ${index + 1}`, at(GUTTER + 520, 80 + index * 68, COL - 520, 68), [
+          label(`Item ${index + 1} / Question`, at(0, 20, COL - 600, 24), question, {
+            size: 16,
+            weight: 500,
+          }),
+          label(`Item ${index + 1} / Toggle`, at(COL - 584, 18, 24, 24), '+', {
+            size: 18,
+            color: MUTED,
+            align: 'center',
+          }),
+          block(`Item ${index + 1} / Rule`, at(0, 67, COL - 520, 1), BORDER),
+        ]),
+      ),
+    ]),
+  },
 ];

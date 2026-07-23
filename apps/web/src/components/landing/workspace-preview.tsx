@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import { Search } from 'lucide-react';
-import { cn } from '@adysre/ui';
+import { cn } from 'adysre';
 import type { FeatureModule } from '@/data/landing';
 import { ACCENT_ICON } from './accent';
 

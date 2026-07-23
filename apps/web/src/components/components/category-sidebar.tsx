@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import { ArrowLeft, ChevronRight } from 'lucide-react';
-import { cn } from '@adysre/ui';
+import { cn } from 'adysre';
 import { Link } from '@/i18n/navigation';
 import type { LocalizedComponent } from '@/data/components';
 

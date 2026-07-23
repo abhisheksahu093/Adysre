@@ -5,7 +5,7 @@ import { createPortal } from 'react-dom';
 import { usePathname } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { Menu, X } from 'lucide-react';
-import { Button } from '@adysre/ui';
+import { Button } from 'adysre';
 import { SidebarBrand, SidebarNav } from './sidebar-nav';
 
 /**

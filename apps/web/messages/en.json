@@ -1,2330 +1,2415 @@
 {
-	"app": {
-		"name": "ADYSRE",
-		"tagline": "Enterprise Business Operating System"
-	},
-	"common": {
-		"close": "Close",
-		"cancel": "Cancel",
-		"reset": "Reset",
-		"copy": "Copy",
-		"copied": "Copied",
-		"edit": "Edit",
-		"search": "Search",
-		"clearFilters": "Clear filters",
-		"jumpToPlaceholder": "Search and jump to…",
-		"noResults": "No results found",
-		"comingSoon": "Soon",
-		"inDevelopment": "In development",
-		"backToSignIn": "Back to sign in"
-	},
-	"nav": {
-		"dashboard": "Dashboard",
-		"promptLibrary": "Prompt Library",
-		"components": "Components",
-		"designPlayground": "Design Playground",
-		"templates": "Templates",
-		"settings": "Settings",
-		"mainLabel": "Main",
-		"openMenu": "Open navigation menu",
-		"closeMenu": "Close navigation menu",
-		"descriptions": {
-			"promptLibrary": "Browse, customise and copy prompts for your workspace.",
-			"components": "Browse the building blocks available to every module.",
-			"templates": "Start from a ready-made layout instead of a blank page.",
-			"settings": "Manage your organization, members and preferences.",
-			"palettes": "Browse, edit and export ready-made colour palettes - or generate your own.",
-			"gradients": "Browse, edit and export CSS gradients - or generate your own.",
-			"patterns": "Browse, edit and export CSS background patterns - or generate your own.",
-			"textures": "Browse, edit and export CSS surface textures - or generate your own.",
-			"icons": "Browse, customise and export original SVG icons in any format or size.",
-			"designPlayground": "Design pages, dashboards and graphics on an infinite canvas - no code."
-		},
-		"palettes": "Color Palettes",
-		"gradients": "Gradients",
-		"patterns": "Patterns",
-		"textures": "Textures",
-		"icons": "Icons",
-		"backToHome": "Back to home",
-		"groups": {
-			"essentials": "Essentials",
-			"marketing": "Marketing & Landing",
-			"navigation": "Navigation",
-			"forms": "Forms & Input",
-			"data": "Data & Tables",
-			"media": "Media & Content",
-			"feedback": "Feedback & Overlays",
-			"commerce": "Commerce"
-		},
-		"expandSection": "Expand {label}",
-		"collapseSection": "Collapse {label}",
-		"viewAll": "All {label}",
-		"collapseSidebar": "Collapse sidebar",
-		"expandSidebar": "Expand sidebar"
-	},
-	"topbar": {
-		"searchPlaceholder": "Search or jump to…",
-		"commandPalette": "Open command palette",
-		"notifications": "Notifications",
-		"groups": {
-			"page": "Page",
-			"category": "Category",
-			"tag": "Tag"
-		},
-		"noResults": "No results found"
-	},
-	"notifications": {
-		"label": "Notifications",
-		"title": "Notifications",
-		"open": "Notifications",
-		"openWithCount": "Notifications, {count} unread",
-		"unreadCount": "{count} new",
-		"markAllRead": "Mark all as read",
-		"clearAll": "Clear all",
-		"empty": "You're all caught up.",
-		"dismiss": "Dismiss {title}",
-		"markRead": "Mark {title} as read",
-		"items": {
-			"icons": {
-				"title": "Icons library is here",
-				"body": "300+ original, customizable line icons — copy as SVG, JSX or React, or download PNGs."
-			},
-			"playground": {
-				"title": "Build your own page",
-				"body": "Assemble a full page from library sections, then export the complete code."
-			},
-			"gradients": {
-				"title": "Gradients added",
-				"body": "Browse, edit and export CSS gradients — or generate your own."
-			},
-			"palettes": {
-				"title": "Colour palettes",
-				"body": "Ready-made palettes to copy, edit and export for your projects."
-			},
-			"components": {
-				"title": "Components library",
-				"body": "Copy-paste UI blocks in HTML, React, Next.js and more."
-			}
-		}
-	},
-	"theme": {
-		"toggle": "Toggle theme",
-		"switchToDark": "Switch to dark mode",
-		"switchToLight": "Switch to light mode"
-	},
-	"userMenu": {
-		"open": "Open profile menu",
-		"label": "Profile",
-		"profileBilling": "Profile & Billing",
-		"contactUs": "Contact Us",
-		"emailSupport": "Email support",
-		"helpCentre": "Help centre",
-		"document": "Document",
-		"gettingStarted": "Getting started",
-		"apiReference": "API reference",
-		"language": "Language",
-		"legal": "Legal",
-		"terms": "Terms of service",
-		"privacy": "Privacy policy",
-		"dmca": "DMCA",
-		"signOut": "Sign out"
-	},
-	"comingSoon": {
-		"heading": "{title} is coming soon",
-		"body": "We're building this page. It'll show up here as soon as it's ready."
-	},
-	"auth": {
-		"signIn": {
-			"title": "Sign in",
-			"description": "Welcome back. Enter your credentials to continue.",
-			"submit": "Sign in",
-			"submitting": "Signing in…",
-			"failed": "Login failed",
-			"noAccount": "Don't have an account?",
-			"createOne": "Create one",
-			"forgotPassword": "Forgot password?"
-		},
-		"register": {
-			"title": "Create your workspace",
-			"description": "You'll be the Owner of this organization.",
-			"submit": "Create workspace",
-			"submitting": "Creating…",
-			"failed": "Registration failed",
-			"haveAccount": "Already have an account?",
-			"signIn": "Sign in",
-			"organizationName": "Organization name",
-			"organizationSlug": "Workspace URL (slug)",
-			"yourName": "Your name"
-		},
-		"forgotPassword": {
-			"title": "Reset your password",
-			"description": "Enter your email and we'll send you a link to reset it.",
-			"submit": "Send reset link",
-			"submitting": "Sending…",
-			"sent": "If an account exists for that email, a reset link is on its way.",
-			"sendAgain": "Send again"
-		},
-		"resetPassword": {
-			"title": "Set a new password",
-			"description": "Choose a strong password you don't use elsewhere.",
-			"newPassword": "New password",
-			"confirmPassword": "Confirm new password",
-			"hint": "At least 12 characters, with an uppercase letter, a lowercase letter and a number.",
-			"submit": "Set new password",
-			"submitting": "Saving…",
-			"invalidLink": "This reset link is invalid or incomplete. Request a new one.",
-			"requestNew": "Request a new link",
-			"success": "Your password has been changed. You can now sign in with it.",
-			"continueToSignIn": "Continue to sign in",
-			"genericError": "Something went wrong. Check your connection and try again."
-		},
-		"fields": {
-			"email": "Email",
-			"emailPlaceholder": "you@company.com",
-			"password": "Password",
-			"passwordPlaceholder": "••••••••••••"
-		},
-		"oauth": {
-			"continueWith": "Continue with {provider}",
-			"dividerSignIn": "or continue with email",
-			"dividerSignUp": "or sign up with email",
-			"notConfigured": "{provider} sign-in is not set up yet",
-			"errors": {
-				"oauth": "We could not sign you in with {provider}. Please try again.",
-				"oauth_state": "Your sign-in session expired. Please try again.",
-				"oauth_not_configured": "{provider} sign-in is not set up yet. Use email instead.",
-				"oauth_no_email": "We could not get a verified email from {provider}. Use email instead.",
-				"oauth_invalid": "That sign-in option is not available."
-			}
-		}
-	},
-	"dashboard": {
-		"title": "Dashboard",
-		"welcome": "Welcome back to your workspace.",
-		"stats": {
-			"activeUsers": "Active users",
-			"openNotifications": "Open notifications",
-			"auditEvents": "Audit events",
-			"storageUsed": "Storage used",
-			"thisWeek": "this week",
-			"last24h": "last 24h",
-			"files": "files"
-		}
-	},
-	"promptLibrary": {
-		"searchPlaceholder": "Search by title, tag or keyword…",
-		"searchLabel": "Search prompts",
-		"collections": {
-			"all": "All",
-			"featured": "Featured",
-			"trending": "Trending",
-			"new": "New"
-		},
-		"filters": {
-			"collection": "Collection",
-			"category": "Category",
-			"allCategories": "All categories",
-			"allTiers": "All tiers",
-			"allModels": "All models",
-			"allRatios": "All ratios",
-			"byTier": "Filter by tier",
-			"byModel": "Filter by model",
-			"byRatio": "Filter by aspect ratio"
-		},
-		"count": "{count, plural, =1 {# prompt} other {# prompts}}",
-		"countFiltered": "{count} of {total} prompts",
-		"empty": {
-			"title": "No prompts match those filters",
-			"description": "Try a different search or clear the filters."
-		},
-		"card": {
-			"editAria": "Edit {title}",
-			"searchTag": "Search for {tag}",
-			"lockedAria": "Premium prompt - get premium access to use {title}"
-		},
-		"dialog": {
-			"description": "Tweak the wording, then copy it. Your changes aren't saved to the library.",
-			"promptLabel": "Prompt",
-			"copyPrompt": "Copy prompt",
-			"characters": "{count} characters",
-			"edited": "Edited",
-			"worksWellOn": "Works well on",
-			"aspectRatios": "Aspect ratios",
-			"tags": "Tags",
-			"englishOriginal": "Showing the English original - this prompt hasn't been translated yet."
-		},
-		"tiers": {
-			"free": "Free",
-			"premium": "Premium"
-		},
-		"categories": {
-			"portrait": "Portrait",
-			"headshot": "Headshot",
-			"business": "Business",
-			"fashion": "Fashion",
-			"lifestyle": "Lifestyle",
-			"cinematic": "Cinematic",
-			"travel": "Travel",
-			"nature": "Nature",
-			"fitness": "Fitness",
-			"automotive": "Automotive",
-			"editorial": "Editorial",
-			"fantasy": "Fantasy",
-			"sci-fi": "Sci-Fi",
-			"anime": "Anime",
-			"artistic": "Artistic"
-		},
-		"styles": {
-			"photorealistic": "Photorealistic",
-			"cinematic": "Cinematic",
-			"editorial": "Editorial",
-			"monochrome": "Monochrome",
-			"painterly": "Painterly",
-			"illustrated": "Illustrated",
-			"3d-render": "3D Render",
-			"anime": "Anime"
-		},
-		"ratios": {
-			"1:1": "1:1 Square",
-			"4:5": "4:5 Portrait",
-			"3:4": "3:4 Portrait",
-			"9:16": "9:16 Story",
-			"16:9": "16:9 Wide"
-		}
-	},
-	"pages": {
-		"profile": {
-			"title": "Profile",
-			"description": "Your account details.",
-			"fullName": "Full name",
-			"email": "Email",
-			"role": "Role",
-			"status": "Status",
-			"loading": "Loading…",
-			"active": "Active",
-			"plan": "Plan",
-			"planFree": "Free",
-			"planPremium": "Premium",
-			"planFreeHint": "You can use the 41 free prompts. Premium prompts are locked.",
-			"planPremiumHint": "You can copy and customise every prompt in the library.",
-			"upgrade": "Upgrade",
-			"devOnly": "Development only",
-			"devOnlyHint": "Switch access level to preview the paywall. Not shown in production."
-		},
-		"helpCentre": {
-			"title": "Help centre",
-			"description": "Find answers, reach support, and learn how to get the most out of Adysre.",
-			"channels": {
-				"email": {
-					"title": "Email support",
-					"body": "Reach our team directly — we usually reply within one business day.",
-					"cta": "Send an email"
-				},
-				"docs": {
-					"title": "Documentation",
-					"body": "Guides to get started and make the most of every feature.",
-					"cta": "Read the docs"
-				},
-				"api": {
-					"title": "API reference",
-					"body": "Endpoints, authentication and response formats for developers.",
-					"cta": "View the API"
-				},
-				"community": {
-					"title": "Browse the library",
-					"body": "Explore components, icons, palettes and gradients you can use today.",
-					"cta": "Open the library"
-				}
-			},
-			"emailTitle": "Still need help?",
-			"emailBody": "Email us and we'll get back to you as soon as we can.",
-			"faqTitle": "Frequently asked questions",
-			"faqs": [
-				{
-					"q": "Is Adysre free to use?",
-					"a": "The core library — components, icons, palettes and gradients — is free to browse, copy and use. Some premium content requires a paid plan."
-				},
-				{
-					"q": "Which frameworks are supported?",
-					"a": "Components ship with code for HTML, React, Next.js and more. Copy the format you need, or export a whole page from the playground."
-				},
-				{
-					"q": "Can I use the icons in commercial projects?",
-					"a": "Yes. The icons are original and free to use in personal and commercial projects — copy them as SVG, JSX or React, or download PNGs."
-				},
-				{
-					"q": "How do I build a full page?",
-					"a": "Open Components and choose ‘Customize your project’ to assemble a page from library sections, then export the complete code."
-				},
-				{
-					"q": "How do I change the language?",
-					"a": "Use the language option in the profile menu at the top right. Your choice is remembered across visits."
-				},
-				{
-					"q": "How do I report a problem?",
-					"a": "Email our support team with the details and a screenshot if you can — we investigate every report."
-				}
-			]
-		},
-		"gettingStarted": {
-			"title": "Getting started",
-			"description": "A quick tour of Adysre and everything you can build with it.",
-			"stepsTitle": "First steps",
-			"steps": [
-				{
-					"title": "Explore the library",
-					"body": "Browse ready-made components, icons, colour palettes and gradients from the sidebar."
-				},
-				{
-					"title": "Copy or customize",
-					"body": "Copy any snippet in your framework, or open an item to tweak it before you export."
-				},
-				{
-					"title": "Assemble a page",
-					"body": "In Components, choose ‘Customize your project’ to build a full page from sections."
-				},
-				{
-					"title": "Export the code",
-					"body": "Take the complete, production-ready code with you — copy it or download the files."
-				}
-			],
-			"exploreTitle": "Explore the library",
-			"resources": {
-				"components": {
-					"title": "Components",
-					"body": "Copy-paste UI blocks"
-				},
-				"icons": {
-					"title": "Icons",
-					"body": "300+ original line icons"
-				},
-				"palettes": {
-					"title": "Colour palettes",
-					"body": "Ready-made colour sets"
-				},
-				"gradients": {
-					"title": "Gradients",
-					"body": "CSS gradients to copy"
-				}
-			},
-			"apiCta": "Building an integration? Read the API reference"
-		},
-		"apiReference": {
-			"title": "API reference",
-			"description": "The Adysre REST API — conventions, authentication and endpoints.",
-			"baseUrlTitle": "Base URL",
-			"baseUrlNote": "All endpoints are served under a single, versioned base path. v1 is stable and will not break.",
-			"authTitle": "Authentication",
-			"authNote": "Requests are authenticated with a short-lived access token issued at sign-in and sent as an HTTP-only cookie. Expired tokens are refreshed automatically.",
-			"responseTitle": "Response format",
-			"responseNote": "Every response uses the same envelope. Successful responses carry a data payload (and meta for lists); errors carry a stable code and a human-readable message.",
-			"successLabel": "Success",
-			"errorLabel": "Error",
-			"conventionsTitle": "Conventions",
-			"pagination": "Pagination",
-			"filtering": "Filtering",
-			"sorting": "Sorting",
-			"endpointsTitle": "Common endpoints",
-			"endpoints": {
-				"login": "Sign in and start a session",
-				"me": "Get the current user",
-				"components": "List library components",
-				"component": "Get a single component",
-				"icons": "List icons",
-				"palettes": "List colour palettes"
-			},
-			"endpointsNote": "This is a representative subset. The full, always-current reference lands with the public API."
-		},
-		"terms": {
-			"title": "Terms of service",
-			"description": "The terms that govern your use of Adysre.",
-			"updated": "Last updated: 18 July 2026",
-			"sections": [
-				{
-					"heading": "Acceptance of terms",
-					"body": "By accessing or using Adysre, you agree to these terms. If you do not agree, please do not use the service."
-				},
-				{
-					"heading": "Using the service",
-					"body": "You may use Adysre to browse, copy and adapt library content for your own projects. You are responsible for how you use the code and assets you take."
-				},
-				{
-					"heading": "Accounts",
-					"body": "Some features require an account. Keep your credentials secure; you are responsible for activity under your account."
-				},
-				{
-					"heading": "Acceptable use",
-					"body": "Do not misuse the service — no unlawful activity, no attempts to disrupt or reverse-engineer the platform, and no reselling the library as your own."
-				},
-				{
-					"heading": "Intellectual property",
-					"body": "Library content may be used in your projects. The Adysre name, brand and platform remain our property."
-				},
-				{
-					"heading": "Changes and termination",
-					"body": "We may update these terms or the service over time. Continued use after changes means you accept the updated terms."
-				}
-			]
-		},
-		"privacy": {
-			"title": "Privacy policy",
-			"description": "How we handle your data at Adysre.",
-			"updated": "Last updated: 18 July 2026",
-			"sections": [
-				{
-					"heading": "Information we collect",
-					"body": "We collect the information you provide (such as your name and email) and basic usage data needed to run and improve the service."
-				},
-				{
-					"heading": "How we use information",
-					"body": "We use your information to provide the service, personalise your experience, respond to support requests, and keep the platform secure."
-				},
-				{
-					"heading": "Cookies",
-					"body": "We use essential cookies for authentication and preferences such as language and theme. We do not sell your data."
-				},
-				{
-					"heading": "Data sharing",
-					"body": "We do not sell personal data. We share it only with providers that help us run the service, under appropriate safeguards."
-				},
-				{
-					"heading": "Your rights",
-					"body": "You may request access to, correction of, or deletion of your personal data. Contact us to exercise these rights."
-				},
-				{
-					"heading": "Security",
-					"body": "We use industry-standard measures to protect your data. No system is perfectly secure, but we work to keep yours safe."
-				}
-			]
-		},
-		"dmca": {
-			"title": "DMCA policy",
-			"description": "How to report copyright concerns on Adysre.",
-			"updated": "Last updated: 18 July 2026",
-			"sections": [
-				{
-					"heading": "Reporting infringement",
-					"body": "If you believe content on Adysre infringes your copyright, send us a notice with the details below and we will review it promptly."
-				},
-				{
-					"heading": "What to include",
-					"body": "Identify the copyrighted work, the material you believe infringes it and where it appears, your contact details, and a good-faith statement."
-				},
-				{
-					"heading": "Our response",
-					"body": "On receiving a valid notice, we may remove or disable access to the material and notify the party who posted it."
-				},
-				{
-					"heading": "Counter-notice",
-					"body": "If you believe your content was removed in error, you may submit a counter-notice with your details and a statement made under penalty of perjury."
-				},
-				{
-					"heading": "Repeat infringers",
-					"body": "We may suspend or terminate accounts that repeatedly infringe the rights of others."
-				},
-				{
-					"heading": "Contact",
-					"body": "Send copyright notices to our support address. Please use ‘DMCA’ in the subject line so we can route it quickly."
-				}
-			]
-		}
-	},
-	"cart": {
-		"open": "Cart",
-		"label": "Cart",
-		"empty": "Your cart is empty",
-		"emptyHint": "Buy <b>All Access Pass</b> to get unlimited access to all products.",
-		"cta": "Get All Access Pass"
-	},
-	"premium": {
-		"cta": "Get premium access"
-	},
-	"promo": {
-		"title": "Build faster with All-Access",
-		"description": "Get access to all templates, components and blocks for a one-time payment.",
-		"cta": "Get Premium Access",
-		"trust": "Trusted by {count, number}+ users worldwide"
-	},
-	"pricing": {
-		"metaTitle": "Pricing",
-		"title": "Get instant access to every prompt in the library",
-		"subtitle": "One payment unlocks all 120+ prompts across 15 categories - plus every prompt we add, and the modules still to come.",
-		"mostPopular": "Most popular",
-		"priceAria": "{price} US dollars",
-		"questions": "Questions? <a>Email us</a>.",
-		"plans": {
-			"free": {
-				"name": "Free",
-				"billing": "No card required",
-				"cta": "Browse free prompts"
-			},
-			"annual": {
-				"name": "Annual Access",
-				"billing": "Billed yearly",
-				"cta": "Get Annual Access"
-			},
-			"lifetime": {
-				"name": "Lifetime Access",
-				"billing": "One-time purchase",
-				"cta": "Get Lifetime Access"
-			},
-			"team": {
-				"name": "Team",
-				"billing": "One-time purchase",
-				"cta": "Get Team Access"
-			}
-		},
-		"features": {
-			"freePrompts": "Access to all 41 free prompts",
-			"allPrompts": "Access to all 120+ premium prompts",
-			"allCategories": "All 15 categories, from Portrait to Sci-Fi",
-			"fourModels": "Tuned for GPT Image, FLUX, Midjourney and SDXL",
-			"copyPaste": "Copy and paste, no setup",
-			"noCard": "No card required",
-			"yearUpdates": "1 year of new prompts and updates",
-			"lifetimeUpdates": "Lifetime updates - every prompt we add",
-			"futureModules": "Components and Templates when they ship",
-			"earlyAccess": "Early access to new modules",
-			"promptEditor": "Customise any prompt before you copy it",
-			"emailSupport": "Email support",
-			"prioritySupport": "Priority support",
-			"cancelAnytime": "Cancel anytime",
-			"tenSeats": "10 team members included",
-			"sharedWorkspace": "Shared workspace for your team",
-			"rolesPermissions": "Roles and permissions",
-			"everythingAnnual": "Everything in Annual Access",
-			"everythingLifetime": "Everything in Lifetime Access"
-		},
-		"faq": {
-			"title": "Frequently asked questions",
-			"subtitle": "Pay once, create faster. If you don't find what you need here, reach us at <a>{email}</a>",
-			"items": {
-				"lifetimeIncludes": {
-					"q": "What does lifetime access include?",
-					"a": "Every one of the 120+ prompts across all 15 categories, plus every prompt added afterwards - at no extra cost. It also covers the Components and Templates modules once they ship. One payment, no renewal."
-				},
-				"purchaseFlow": {
-					"q": "How does the purchase and access flow work?",
-					"a": "Pick a plan, pay once, and your workspace is upgraded straight away. Premium prompts unlock across every device you sign in on - there is nothing to download or install."
-				},
-				"freeVsPremium": {
-					"q": "What's the difference between free and premium prompts?",
-					"a": "Free covers 41 prompts you can use immediately without a card. Premium unlocks the full library of 120+, including the more involved cinematic, editorial and fantasy setups, and the prompt editor for customising any of them."
-				},
-				"models": {
-					"q": "Which AI models do the prompts work with?",
-					"a": "Every prompt lists the models it is tuned for - GPT Image, FLUX, Midjourney and SDXL - and you can filter the library by model. Prompts keep their lens, lighting and colour-grade details, so they carry across generators."
-				},
-				"refunds": {
-					"q": "Do you offer refunds?",
-					"a": "We don't offer refunds because you get immediate, full access to every prompt in the library the moment you buy. Please review our refund policy for details."
-				},
-				"help": {
-					"q": "Need help or have a question?",
-					"a": "Email {email} and we will get back to you. Lifetime and Team plans get priority support with a faster turnaround."
-				}
-			}
-		}
-	},
-	"checkout": {
-		"emailLabel": "Email",
-		"emailPlaceholder": "Enter your email",
-		"recurring": "Pay <b>{price}</b> then <b>{price}</b> every 12 months until canceled. You may cancel your subscription at any time.",
-		"oneTime": "Pay <b>{price}</b> once. Lifetime access, no renewal.",
-		"disclaimer": "The above email will be used to create your account. You will be redirected to our payment provider to complete your purchase.",
-		"submit": "Checkout",
-		"submitting": "Redirecting…",
-		"unavailable": "Checkout isn't available yet. Please email support to purchase."
-	},
-	"premiumGate": {
-		"title": "This is a premium prompt",
-		"descriptionCopy": "“{title}” is part of the premium library. Get premium access to copy it.",
-		"descriptionEdit": "“{title}” is part of the premium library. Get premium access to customise it.",
-		"cta": "Get premium access",
-		"notNow": "Not now",
-		"benefits": {
-			"unlockAll": "Unlock all 120+ premium prompts",
-			"unlockEdit": "Customise any prompt before you copy it",
-			"unlockUpdates": "Every prompt we add, included"
-		}
-	},
-	"components": {
-		"metaTitle": "Components",
-		"title": "Components",
-		"subtitle": "Free, copy-paste components in HTML, CSS, Tailwind, React, Next.js and TypeScript. MIT licensed - use them anywhere.",
-		"searchPlaceholder": "Search components by name, tag or category…",
-		"searchLabel": "Search components",
-		"count": "{count, plural, =1 {# component} other {# components}}",
-		"countFiltered": "{count} of {total} components",
-		"frameworkCount": "{count, plural, =1 {# framework} other {# frameworks}}",
-		"frameworks": "Frameworks",
-		"featured": "Featured",
-		"new": "New",
-		"englishOriginal": "English",
-		"breadcrumb": "Breadcrumb",
-		"code": "Code",
-		"installation": "Installation",
-		"packageManager": "Package manager",
-		"props": "Props",
-		"variants": "Variants",
-		"customization": "Customization",
-		"details": "Details",
-		"related": "Related components",
-		"viewOnGithub": "View on GitHub",
-		"downloadFile": "Download .{ext} file",
-		"empty": {
-			"title": "No components match those filters",
-			"description": "Try a different search or clear the filters."
-		},
-		"filters": {
-			"category": "Category",
-			"allCategories": "All categories",
-			"allFrameworks": "All frameworks",
-			"allDifficulties": "All levels",
-			"byFramework": "Filter by framework",
-			"byDifficulty": "Filter by difficulty",
-			"sortBy": "Sort by"
-		},
-		"sort": {
-			"newest": "Newest",
-			"popular": "Popular",
-			"downloads": "Most downloaded",
-			"trending": "Trending",
-			"updated": "Recently updated",
-			"copied": "Most copied",
-			"alphabetical": "A-Z"
-		},
-		"difficulty": {
-			"beginner": "Beginner",
-			"intermediate": "Intermediate",
-			"advanced": "Advanced"
-		},
-		"meta": {
-			"author": "Author",
-			"version": "Version",
-			"created": "Created",
-			"updated": "Updated"
-		},
-		"propsTable": {
-			"name": "Prop",
-			"type": "Type",
-			"default": "Default",
-			"description": "Description",
-			"required": "required"
-		},
-		"categories": {
-			"buttons": "Buttons",
-			"cards": "Cards",
-			"hero": "Hero Sections",
-			"navbar": "Navbar",
-			"footer": "Footer",
-			"authentication": "Authentication",
-			"forms": "Forms",
-			"pricing": "Pricing",
-			"testimonials": "Testimonials",
-			"faq": "FAQ",
-			"features": "Features",
-			"dashboards": "Dashboards",
-			"tables": "Tables",
-			"modals": "Modals",
-			"loaders": "Loaders",
-			"timeline": "Timeline",
-			"calculators": "Pricing Calculators",
-			"ecommerce": "Ecommerce",
-			"ai": "AI Components",
-			"landing": "Landing Sections",
-			"marketing": "Marketing",
-			"animation": "Animation",
-			"backgrounds": "Backgrounds",
-			"charts": "Charts",
-			"admin": "Admin",
-			"tabs": "Tabs",
-			"carousel": "Carousel",
-			"services": "Services",
-			"about": "About",
-			"popover": "Popover",
-			"notifications": "Notifications",
-			"sidebars": "Sidebars",
-			"dropdowns": "Dropdowns",
-			"fab": "Floating Buttons",
-			"alerts": "Alerts",
-			"docks": "Docks",
-			"comparisons": "Comparisons",
-			"galleries": "Galleries",
-			"pagination": "Pagination",
-			"marquees": "Marquees",
-			"maps": "Maps",
-			"steppers": "Steppers",
-			"gradients": "Gradients",
-			"avatars": "Avatars",
-			"badges": "Badges",
-			"calendar": "Calendar",
-			"cursors": "Cursors",
-			"date-pickers": "Date Pickers",
-			"time-pickers": "Time Pickers",
-			"color-pickers": "Color Pickers",
-			"file-trees": "File Trees",
-			"file-uploads": "File Uploads",
-			"lists": "Lists",
-			"menus": "Menus",
-			"progress": "Progress",
-			"search-bars": "Search Bars",
-			"tags": "Tags",
-			"toggles": "Toggles",
-			"tooltips": "Tooltips",
-			"tour": "Tour Guide",
-			"cta": "CTA",
-			"sign-in": "Sign In",
-			"sign-up": "Sign Up",
-			"stats": "Stats & KPIs",
-			"team": "Team",
-			"error-pages": "Error Pages",
-			"globes": "Globes",
-			"bento": "Grids & Bentos",
-			"social": "Social Media",
-			"contact": "Contact Us",
-			"cart": "Cart",
-			"checkout": "Checkout",
-			"change-password": "Change Password",
-			"reset-password": "Reset Password",
-			"blog": "Blog",
-			"images": "Images",
-			"nature": "Nature"
-		},
-		"propDescriptions": {
-			"afterAlt": "Alternative text for the \"after\" image.",
-			"afterSrc": "The image shown on the \"after\" side.",
-			"allowMultiple": "Allows more than one item open at once.",
-			"ariaLabel": "The button's accessible name. Required for icon-only buttons.",
-			"authorAvatarSrc": "Image URL for the author's avatar.",
-			"authorName": "Name of the post's author.",
-			"autoDismissAfter": "How long before it dismisses itself, in seconds. Zero keeps it up.",
-			"avatarSrc": "Image URL for the avatar.",
-			"bandCopy": "A short line of supporting copy shown in the call-to-action band.",
-			"beforeAlt": "Alternative text for the \"before\" image.",
-			"beforeSrc": "The image shown on the \"before\" side.",
-			"bio": "Short biography paragraph.",
-			"buildHref": "Builds the URL for a page number, so pages stay real links.",
-			"calloutLabel": "The short heading above the callout, such as \"Note\".",
-			"caption": "The table's caption, announced to screen readers before its contents.",
-			"category": "Category label shown above the title.",
-			"children": "Content rendered inside the component.",
-			"className": "Additional classes merged onto the root element.",
-			"columns": "The columns being compared, in display order.",
-			"company": "Company shown beneath the name.",
-			"comparisonPeriod": "Comparison window shown beside the delta.",
-			"copy": "Body text shown under the title.",
-			"count": "Number shown in the badge; anything above 99 collapses to \"99+\".",
-			"coverSrc": "Image URL for the cover image.",
-			"ctaHref": "Destination for the call-to-action link.",
-			"ctaLabel": "Call-to-action button text.",
-			"currentPage": "The active page number, starting at 1.",
-			"danger": "Marks the item as destructive, so it reads as a warning.",
-			"date": "Machine-readable publication date.",
-			"dateLabel": "Human-readable publication date.",
-			"defaultAnnual": "Whether annual billing is selected on first render.",
-			"defaultCollapsed": "Whether the sidebar starts collapsed to its icon rail.",
-			"defaultFilter": "The filter applied on first render.",
-			"defaultOpenId": "Id of the item expanded on mount.",
-			"defaultOpenIds": "Ids of the items expanded on mount.",
-			"defaultOpenState": "Whether it starts open on first render.",
-			"defaultTabId": "The tab selected on first render.",
-			"delay": "Seconds to wait before animating in.",
-			"delta": "Change since the comparison period, pre-formatted.",
-			"direction": "Direction the element travels from as it appears.",
-			"disabled": "Prevents interaction and dims the control.",
-			"dismissLabel": "Accessible name for the dismiss button.",
-			"distance": "Distance in pixels the element travels.",
-			"duration": "Animation length in seconds.",
-			"email": "The signed-in account's email address.",
-			"eventCount": "How many events this summarises.",
-			"excerpt": "Short summary shown under the title.",
-			"features": "List of feature strings.",
-			"figureCaption": "The caption describing the figure's contents.",
-			"foundingLabel": "A short line beneath the founding year that gives it context.",
-			"foundingYear": "The year the story starts.",
-			"groupName": "Scopes the exclusive group. Pass a unique value per accordion on a page.",
-			"groups": "Feature groups, each with a heading and its own list.",
-			"hasMore": "Whether any items remain to load. When false the control retires.",
-			"highlighted": "Renders the accent treatment.",
-			"href": "Destination the card links to.",
-			"icon": "Icon element rendered alongside the content.",
-			"imageAlt": "Alternative text for the image. Empty when the title already names it.",
-			"imageSrc": "Image URL for the card's picture.",
-			"items": "The array of items to render.",
-			"kicker": "Small label shown above the title.",
-			"label": "Accessible label announced while loading.",
-			"lines": "Number of placeholder lines to render.",
-			"loading": "Shows a spinner and blocks input while true.",
-			"magnifyRange": "How far the magnification reaches, in pixels either side of the pointer.",
-			"maxScale": "How large the icon under the pointer grows, as a multiplier.",
-			"maxSeats": "The most seats the slider allows.",
-			"members": "The people shown in the grid.",
-			"message": "Body text of the notification.",
-			"meta": "Short supporting facts shown beneath the heading.",
-			"metrics": "The metrics to display, each with a value and label.",
-			"milestones": "The timeline entries, oldest first.",
-			"minSeats": "The fewest seats the slider allows.",
-			"name": "Plan name shown as the heading.",
-			"note": "A small qualifying line, such as what the price excludes.",
-			"onAddToCart": "Fired when the user adds the product to the cart.",
-			"once": "Animates only the first time it enters view.",
-			"onClick": "Fired when the user activates the control.",
-			"onClose": "Called when the component asks to close - Escape, the backdrop, or the close control.",
-			"onConfirm": "Fired once the destructive action is confirmed.",
-			"onDismiss": "Fired when the user dismisses the notification.",
-			"onLoadMore": "Called when the next batch is requested.",
-			"onPageSizeChange": "Called with the new page size when it changes.",
-			"onPeriodChange": "Called with the billing period when it is toggled.",
-			"onSelect": "Fired with the menu item the user chose.",
-			"onSignOut": "Called when the sign-out item is chosen.",
-			"onSubmit": "Called with the form's values when it is submitted.",
-			"open": "Whether the component is currently shown.",
-			"pageSize": "How many items each page shows.",
-			"paragraphs": "The body copy, one string per paragraph.",
-			"pathname": "The current path. The item matching it is marked as the active page.",
-			"period": "Billing period shown beside the price.",
-			"perSeatPrice": "The price charged for each seat.",
-			"personName": "Name of the person shown as the heading.",
-			"price": "Amount to display.",
-			"principles": "The values, each with a name and explanation.",
-			"progressValue": "How far along the task is, from 0 to 100.",
-			"quote": "Testimonial text, without surrounding quotation marks.",
-			"rating": "Star rating from 0 to 5.",
-			"reviewCount": "Number of reviews shown beside the rating.",
-			"role": "Job title shown beneath the name.",
-			"rows": "The alternating image-and-copy rows, in order.",
-			"secondaryHref": "Where the secondary action links to.",
-			"secondaryLabel": "The secondary action's visible text.",
-			"services": "The services to list, each with an icon, name and summary.",
-			"severity": "Tone of the notification - sets its colour and icon.",
-			"showAvatar": "Renders a circular avatar placeholder.",
-			"siblingCount": "How many page numbers to show either side of the current one.",
-			"sliderPosition": "Where the divider sits, as a percentage from the left.",
-			"socials": "Social profile links rendered as icons.",
-			"statLabel": "Name of the metric shown above the value.",
-			"steps": "The ordered steps of the process.",
-			"tabItems": "The tabs, each with a label and its panel content.",
-			"text": "String written to the clipboard when the button is pressed.",
-			"tiers": "The pricing tiers, in display order.",
-			"timestamp": "Pre-formatted time the notification arrived.",
-			"title": "Heading text for the card.",
-			"totalItems": "How many items exist across all pages.",
-			"totalPages": "How many pages exist in total.",
-			"trend": "Direction of the change - sets the delta's colour and arrow.",
-			"value": "The metric's current value, pre-formatted."
-		},
-		"variantLabels": {
-			"avatar": "Avatar",
-			"bordered": "Bordered",
-			"card": "Card",
-			"compact": "Compact",
-			"default": "Default",
-			"destructive": "Destructive",
-			"disabled": "Disabled",
-			"down": "From top",
-			"extended": "Extended",
-			"floating": "Floating",
-			"glow": "Glow",
-			"gradient": "Gradient",
-			"highlighted": "Highlighted",
-			"horizontal": "Horizontal",
-			"idle": "Idle",
-			"labeled": "Labelled",
-			"loading": "Loading",
-			"multiple": "Multi open",
-			"none": "No movement",
-			"primary": "Primary",
-			"scrollable": "Scrollable",
-			"single": "Single open",
-			"text": "Text",
-			"trendDown": "Trending down",
-			"trendUp": "Trending up",
-			"up": "From bottom",
-			"vertical": "Vertical"
-		},
-		"preview": {
-			"title": "Preview",
-			"device": "Preview size",
-			"desktop": "Desktop",
-			"tablet": "Tablet",
-			"mobile": "Mobile",
-			"toDark": "Preview in dark mode",
-			"toLight": "Preview in light mode",
-			"reset": "Restart the preview",
-			"fullscreen": "Open preview in a new tab"
-		},
-		"playground": {
-			"banner": {
-				"title": "Build your own page",
-				"description": "Assemble a page from library sections - header to footer - then copy or download the complete code.",
-				"cta": "Customize your project"
-			},
-			"title": "Playground",
-			"exit": "Back to library",
-			"restartTour": "Replay the tour",
-			"openExport": "Get the code",
-			"slots": {
-				"header": "Header",
-				"hero": "Hero",
-				"services": "Services",
-				"about": "About",
-				"gallery": "Gallery",
-				"pricing": "Pricing",
-				"comparison": "Comparison",
-				"faq": "FAQ",
-				"cta": "Call to action",
-				"footer": "Footer",
-				"logos": "Logo strip",
-				"features": "Feature grid",
-				"stats": "Stats",
-				"team": "Team",
-				"testimonials": "Testimonials",
-				"blog": "Blog",
-				"contact": "Contact"
-			},
-			"rail": {
-				"title": "Sections",
-				"empty": "Not added",
-				"add": "Add {slot}",
-				"remove": "Remove {slot}",
-				"reorder": "Drag to reorder, or Ctrl/Cmd + arrow keys"
-			},
-			"builder": {
-				"layout": "Layout",
-				"content": "Content",
-				"tabsLabel": "Section controls",
-				"style": "Style"
-			},
-			"variations": {
-				"of": "{slot} variations",
-				"empty": "No variations available yet",
-				"select": "Use {title}",
-				"count": "{current} / {total}",
-				"prev": "Previous variation",
-				"next": "Next variation"
-			},
-			"canvas": {
-				"empty": {
-					"title": "Nothing to preview",
-					"description": "Add at least one section from the list."
-				}
-			},
-			"export": {
-				"title": "Your page code",
-				"description": "Copy or download the code for your assembled page.",
-				"copyAll": "Copy code",
-				"downloadAll": "Download {file}",
-				"downloadSection": "Download {file}",
-				"files": "Files",
-				"missingSection": "{title} isn't available for {framework} yet.",
-				"coverage": "{available} / {total} sections",
-				"empty": "Add sections to export code.",
-				"paletteTitle": "Project palette",
-				"projectTitle": "Download full project",
-				"projectHint": "A ready-to-run project. Unzip it, then run npm install.",
-				"downloadProjectNext": "Next.js project",
-				"downloadProjectReact": "React project",
-				"stylesTitle": "Section styles",
-				"stylesHint": "Paste this alongside your markup — each rule targets one section by id."
-			},
-			"tour": {
-				"stepCount": "Step {current} of {total}",
-				"skip": "Skip tour",
-				"back": "Back",
-				"next": "Next",
-				"done": "Finish",
-				"steps": {
-					"welcome": {
-						"title": "Welcome to the Playground",
-						"body": "Assemble a full page from ready-made sections - from header to footer - then take the code with you."
-					},
-					"slots": {
-						"title": "Pick your sections",
-						"body": "Every section of your page lives here. Click one to work on it, or add and remove the optional ones."
-					},
-					"variations": {
-						"title": "Try variations",
-						"body": "Each section ships in several designs. Click any variation to swap it into your page instantly."
-					},
-					"canvas": {
-						"title": "Watch it come together",
-						"body": "This is your page, assembled live. Hover a section to switch variations right on the preview."
-					},
-					"device": {
-						"title": "Check every screen",
-						"body": "Preview your page at desktop, tablet and phone widths."
-					},
-					"export": {
-						"title": "Take the code",
-						"body": "When it looks right, copy or download the complete code for every section."
-					},
-					"upload": {
-						"title": "Start from a reference",
-						"body": "Drop in a sketch or a screenshot of a homepage you like and we'll assemble a matching template in seconds."
-					},
-					"scratch": {
-						"title": "Or build from scratch",
-						"body": "Prefer to choose everything yourself? Skip the upload and assemble the page section by section."
-					},
-					"result": {
-						"title": "Your generated template",
-						"body": "Here's your starting template. Download the code as-is, customize the sections, or start over with a new reference."
-					},
-					"content": {
-						"title": "Customise the copy",
-						"body": "Select any section, then edit its titles, text, labels and buttons here. Your changes show live and ship in the downloaded code."
-					}
-				}
-			},
-			"start": {
-				"title": "Customize your project",
-				"subtitle": "Upload a reference and we'll assemble a matching template - or start from a blank canvas.",
-				"or": "or",
-				"scratchTitle": "Build from scratch",
-				"scratchDescription": "Pick every section and variation yourself."
-			},
-			"upload": {
-				"title": "Drop a reference image here",
-				"hint": "A sketch, wireframe, or a screenshot of a homepage you like.",
-				"browse": "Choose image",
-				"formats": "PNG, JPG, WEBP or GIF · up to 12 MB",
-				"errorType": "That file isn't a supported image. Use PNG, JPG, WEBP or GIF.",
-				"errorSize": "That image is over 12 MB. Try a smaller file."
-			},
-			"generating": {
-				"title": "Building your template…",
-				"subtitle": "Analyzing your reference and assembling matching sections.",
-				"previewAlt": "Your uploaded reference",
-				"error": "We couldn't read that image. Please try another file."
-			},
-			"result": {
-				"title": "Your template is ready",
-				"subtitle": "{count} sections assembled from your reference. Download the code, or customize it further.",
-				"getCode": "Get the code",
-				"customize": "Customize",
-				"startOver": "Start over"
-			},
-			"palette": {
-				"button": "Palette",
-				"label": "Choose the project palette",
-				"title": "Project palette",
-				"description": "Choose the colour palette shipped with your generated code.",
-				"current": "Current palette",
-				"remove": "Remove palette",
-				"generateOwn": "Generate your own",
-				"useReference": "Use my reference colours",
-				"chooseLibrary": "Choose from library",
-				"referenceName": "Reference palette"
-			},
-			"content": {
-				"title": "Edit content",
-				"noneSlot": "No section selected",
-				"empty": "Add a section to edit its text, titles and labels.",
-				"reading": "Reading this section's content…",
-				"editedCount": "{count} edited",
-				"reset": "Reset to original",
-				"kind": {
-					"heading": "Heading",
-					"button": "Button",
-					"text": "Text",
-					"label": "Label",
-					"placeholder": "Placeholder",
-					"alt": "Alt text"
-				}
-			},
-			"style": {
-				"title": "Style",
-				"empty": "Select a section to style it.",
-				"background": "Background",
-				"kind": {
-					"none": "None",
-					"color": "Color",
-					"gradient": "Gradient",
-					"pattern": "Pattern",
-					"texture": "Texture"
-				},
-				"backgroundColor": "Background color",
-				"angle": "Angle",
-				"scale": "Scale",
-				"opacity": "Opacity",
-				"patternBg": "Pattern background",
-				"patternFg": "Pattern foreground",
-				"text": "Text",
-				"textColor": "Text color",
-				"textHint": "Overrides the section’s own text colors.",
-				"clearText": "Clear text color",
-				"border": "Border",
-				"borderWidth": "Border width",
-				"borderStyle": {
-					"solid": "Solid",
-					"dashed": "Dashed",
-					"dotted": "Dotted"
-				},
-				"borderColor": "Border color",
-				"clearBorder": "Clear border",
-				"radius": "Corner radius",
-				"reset": "Reset styles"
-			},
-			"pages": {
-				"title": "Pages",
-				"add": "Add page",
-				"newName": "New page",
-				"rename": "Double-click to rename",
-				"nameLabel": "Page name",
-				"remove": "Remove {name}"
-			}
-		},
-		"allComponents": "All components"
-	},
-	"templates": {
-		"title": "Templates",
-		"subtitle": "Complete, single-page websites you can preview live, clone with a prompt, or download as a runnable project. Every template ships with header, hero, about, services, why-us, FAQ, contact and footer.",
-		"meta": {
-			"title": "Website Templates",
-			"description": "Free and premium single-page website templates in React, Next.js, Tailwind and plain HTML."
-		},
-		"empty": "No templates yet.",
-		"tiers": {
-			"free": "Free",
-			"premium": "Premium"
-		},
-		"themes": {
-			"saas": "SaaS",
-			"restaurant": "Restaurant",
-			"fitness": "Fitness",
-			"health": "Health",
-			"architecture": "Architecture",
-			"legal": "Legal",
-			"realEstate": "Real estate",
-			"ecommerce": "E-commerce",
-			"finance": "Finance",
-			"agency": "Agency",
-			"beauty": "Beauty",
-			"payments": "Payments",
-			"consulting": "Consulting",
-			"education": "Education"
-		},
-		"taglines": {
-			"nova": "Dark, glassy analytics SaaS with a gradient mesh hero and animated counters.",
-			"saffron": "Warm, editorial fine dining in cream and forest green, with parallax plating and serif display type.",
-			"pulse": "Calm, rounded clinic site in medical blue and mint, built to reassure.",
-			"aurora": "High-energy gym landing page in acid lime on near-black, with condensed display type.",
-			"atelier": "Stark white architecture portfolio: hairline rules, huge whitespace, numbered project index.",
-			"verdant": "Forest-and-brass estate agency with a filterable listings grid across four pages.",
-			"meridian": "Navy-and-gold corporate law firm across four pages, formal and typographic.",
-			"lumen": "Seven-page lighting store: shop, product, cart, checkout, sign in and sign up.",
-			"kite": "Maximal creative agency in magenta-to-tangerine, with outlined display type and tilting case cards.",
-			"vanta": "Dark trading platform with CSS candlesticks, order book and a live-feel ticker, across five pages.",
-			"cadence": "Warm online academy with animated progress rings, a filterable catalogue and a curriculum accordion.",
-			"lumiere": "Blush-and-plum salon across seven pages: treatment categories, a filterable shop, cart and booking.",
-			"northgate": "Payments infrastructure across five pages, with a self-drawing flow diagram and a live pricing calculator.",
-			"pinnacle": "Sand-and-blue strategy consultancy: oversized type, a numbered process rail and measured outcomes.",
-			"tavola": "A bilingual, multi-currency restaurant: one menu, six pages, from the kitchen to the table."
-		},
-		"sections": {
-			"header": "Header",
-			"hero": "Hero",
-			"about": "About us",
-			"services": "Services",
-			"why": "Why choose us",
-			"faq": "FAQ",
-			"contact": "Contact",
-			"footer": "Footer"
-		},
-		"downloads": {
-			"nextjs": "Next.js",
-			"react": "React",
-			"tailwind": "Tailwind + HTML",
-			"html": "HTML & CSS"
-		},
-		"kinds": {
-			"project": "Project",
-			"static": "Static"
-		},
-		"detail": {
-			"sections": "Sections included",
-			"prompt": "Prompt",
-			"promptHint": "Copy this into any AI tool to generate a page in the same spirit.",
-			"download": "Download",
-			"downloadHint": "Every download is a ZIP with a README and no build step you have not asked for.",
-			"downloadFailed": "That download could not be built. Please try again.",
-			"pages": "Pages"
-		},
-		"actions": {
-			"openTab": "Open in new tab",
-			"copyPrompt": "Copy prompt",
-			"copied": "Copied",
-			"close": "Close"
-		},
-		"pagesCount": "{count} pages",
-		"filters": {
-			"tabsLabel": "Filter templates",
-			"theme": "Business",
-			"allThemes": "All",
-			"tabs": {
-				"all": "All",
-				"free": "Free",
-				"premium": "Premium",
-				"new": "New",
-				"multipage": "Multipage"
-			}
-		},
-		"locked": {
-			"title": "Premium template",
-			"body": "Preview it as much as you like. The prompt and the code downloads come with premium access.",
-			"cta": "Get premium access",
-			"included": {
-				"preview": "Live preview, in full, no account needed",
-				"prompt": "Copy the design prompt",
-				"download": "Download React, Next.js and static builds"
-			}
-		}
-	},
-	"palettes": {
-		"title": "Color Palettes",
-		"subtitle": "Browse curated palettes for websites, web, mobile and desktop apps - copy the code, edit and swap colours, or generate your own.",
-		"generateCta": "Generate palette",
-		"searchPlaceholder": "Search palettes by name, tag or colour…",
-		"filterByTag": "Filter by tag",
-		"allTags": "All",
-		"sortBy": "Sort by",
-		"sort": {
-			"trending": "Trending",
-			"name": "Name"
-		},
-		"savedTitle": "Your palettes",
-		"trendingTitle": "Trending",
-		"removeSaved": "Remove {name}",
-		"empty": "No palettes match your filters.",
-		"card": {
-			"swatches": "Colours in {name}",
-			"copyColor": "Copy {hex}",
-			"copyAll": "Copy all colours",
-			"open": "Open palette",
-			"like": "Like {name}"
-		},
-		"code": {
-			"formats": "Code formats",
-			"download": "Download .{ext}",
-			"title": "Code"
-		},
-		"quickView": {
-			"editColor": "Edit colour {index}",
-			"lock": "Lock colour",
-			"unlock": "Unlock colour",
-			"shuffle": "Shuffle",
-			"downloadImage": "Download PNG",
-			"save": "Save",
-			"saved": "Saved",
-			"similar": "Explore similar"
-		},
-		"generator": {
-			"title": "Generate a palette",
-			"subtitle": "From a brief, your own colours, or a reference image.",
-			"modeLabel": "Generation method",
-			"modes": {
-				"brief": "Brief",
-				"colors": "Colours",
-				"image": "Image"
-			},
-			"fields": {
-				"name": "Website / brand name",
-				"namePlaceholder": "e.g. Northwind Studio",
-				"business": "Business type",
-				"colors": "Colours you want (optional)",
-				"colorsPlaceholder": "e.g. teal, navy, #f4a261",
-				"comments": "Comments (optional)",
-				"commentsPlaceholder": "e.g. calm and premium, mostly light",
-				"hexes": "Your colours",
-				"hexesHint": "Enter hex codes or colour names, separated by commas.",
-				"imageTitle": "Upload a reference image",
-				"imageHint": "We’ll pull the palette from its colours. PNG, JPG, WEBP or GIF."
-			},
-			"business": {
-				"technology": "Technology",
-				"finance": "Finance",
-				"health": "Health & Wellness",
-				"food": "Food & Drink",
-				"fashion": "Fashion",
-				"education": "Education",
-				"realEstate": "Real Estate",
-				"travel": "Travel",
-				"creative": "Creative & Agency",
-				"eco": "Eco & Sustainability",
-				"fitness": "Fitness & Sports",
-				"beauty": "Beauty",
-				"luxury": "Luxury",
-				"other": "Other"
-			},
-			"preview": "Preview",
-			"cancel": "Cancel",
-			"generate": "Generate",
-			"regenerate": "Regenerate",
-			"use": "Use this palette",
-			"defaultName": "My palette",
-			"error": "Something went wrong. Please try again.",
-			"errorType": "Unsupported image. Use PNG, JPG, WEBP or GIF.",
-			"errorSize": "That image is over 12 MB."
-		},
-		"tour": {
-			"restart": "Replay the tour",
-			"stepOf": "Step {current} of {total}",
-			"back": "Back",
-			"next": "Next",
-			"done": "Finish",
-			"skip": "Skip tour",
-			"steps": {
-				"welcome": {
-					"title": "Welcome to Color Palettes",
-					"body": "Ready-made colour palettes for your website or app - copy, tweak, export, or generate your own."
-				},
-				"generate": {
-					"title": "Generate your own",
-					"body": "Describe your brand, type in colours, or upload a reference image and we’ll build a palette for you."
-				},
-				"browse": {
-					"title": "Browse and copy",
-					"body": "Click any colour to copy its hex, or copy the whole set. Search and filter by tag or colour."
-				},
-				"edit": {
-					"title": "Edit and swap",
-					"body": "Open a palette to recolour any swatch, lock the ones you like, and shuffle the rest."
-				},
-				"export": {
-					"title": "Export the code",
-					"body": "Copy or download the palette as CSS, SCSS, Tailwind, an array or JSON - or save it as a PNG."
-				},
-				"similar": {
-					"title": "Explore similar",
-					"body": "Jump to palettes with a matching mood to keep exploring."
-				}
-			}
-		}
-	},
-	"gradients": {
-		"title": "Gradients",
-		"subtitle": "Browse curated CSS gradients for websites and apps - copy the code, edit the stops, download as CSS or an image, or generate your own.",
-		"generateCta": "Generate gradient",
-		"searchPlaceholder": "Search gradients by name, tag or colour…",
-		"filterByTag": "Filter by tag",
-		"allTags": "All",
-		"sortBy": "Sort by",
-		"sort": {
-			"trending": "Trending",
-			"name": "Name"
-		},
-		"savedTitle": "Your gradients",
-		"trendingTitle": "Trending",
-		"removeSaved": "Remove {name}",
-		"empty": "No gradients match your filters.",
-		"card": {
-			"open": "Open {name}",
-			"edit": "Edit",
-			"copyCss": "Copy CSS",
-			"like": "Like {name}"
-		},
-		"code": {
-			"formats": "Code formats",
-			"download": "Download .{ext}",
-			"title": "Code"
-		},
-		"quickView": {
-			"preview": "Gradient preview",
-			"type": "Gradient type",
-			"types": {
-				"linear": "Linear",
-				"radial": "Radial",
-				"conic": "Conic"
-			},
-			"angle": "Angle",
-			"stops": "Colour stops",
-			"addStop": "Add stop",
-			"editStop": "Edit stop {index}",
-			"stopPosition": "Position of stop {index}",
-			"removeStop": "Remove stop {index}",
-			"shuffle": "Shuffle",
-			"downloadImage": "Download PNG",
-			"save": "Save",
-			"saved": "Saved",
-			"similar": "Explore similar"
-		},
-		"generator": {
-			"title": "Generate a gradient",
-			"subtitle": "From a brief, your own colours, or a reference image.",
-			"modeLabel": "Generation method",
-			"modes": {
-				"brief": "Brief",
-				"colors": "Colours",
-				"image": "Image"
-			},
-			"fields": {
-				"name": "Name (optional)",
-				"namePlaceholder": "e.g. Sunset Fade",
-				"style": "Style",
-				"colors": "Colours you want (optional)",
-				"colorsPlaceholder": "e.g. #6a11cb, blue",
-				"comments": "Comments (optional)",
-				"commentsPlaceholder": "e.g. soft and calm, top-to-bottom",
-				"hexes": "Your colours",
-				"hexesHint": "Enter 2-3 hex codes or colour names, separated by commas.",
-				"imageTitle": "Upload a reference image",
-				"imageHint": "We’ll pull a gradient from its colours. PNG, JPG, WEBP or GIF."
-			},
-			"styles": {
-				"vibrant": "Vibrant",
-				"sunset": "Sunset",
-				"ocean": "Ocean",
-				"forest": "Forest",
-				"pastel": "Pastel",
-				"neon": "Neon",
-				"dark": "Dark",
-				"warm": "Warm",
-				"cool": "Cool",
-				"monochrome": "Monochrome"
-			},
-			"preview": "Preview",
-			"cancel": "Cancel",
-			"generate": "Generate",
-			"regenerate": "Regenerate",
-			"use": "Use this gradient",
-			"error": "Something went wrong. Please try again.",
-			"errorType": "Unsupported image. Use PNG, JPG, WEBP or GIF.",
-			"errorSize": "That image is over 12 MB."
-		},
-		"tour": {
-			"restart": "Replay the tour",
-			"stepOf": "Step {current} of {total}",
-			"back": "Back",
-			"next": "Next",
-			"done": "Finish",
-			"skip": "Skip tour",
-			"steps": {
-				"welcome": {
-					"title": "Welcome to Gradients",
-					"body": "Ready-made CSS gradients for your site or app - copy, tweak, export, or generate your own."
-				},
-				"generate": {
-					"title": "Generate your own",
-					"body": "Describe the style you want, type in colours, or upload a reference image and we’ll build a gradient for you."
-				},
-				"browse": {
-					"title": "Browse and copy",
-					"body": "Click any gradient to open it, or copy its CSS straight from the card. Search and filter by tag or colour."
-				},
-				"edit": {
-					"title": "Edit it",
-					"body": "Switch between linear, radial and conic, change the angle, and recolour or add colour stops."
-				},
-				"export": {
-					"title": "Export it",
-					"body": "Copy or download the gradient as CSS, SCSS, Tailwind, an array or JSON - or save it as a PNG image."
-				},
-				"similar": {
-					"title": "Explore similar",
-					"body": "Jump to gradients with a matching mood to keep exploring."
-				}
-			}
-		}
-	},
-	"patterns": {
-		"title": "Patterns",
-		"subtitle": "Browse curated CSS background patterns for websites and apps - copy the code, recolour and resize, download as CSS or an image, or generate your own.",
-		"generateCta": "Generate pattern",
-		"searchPlaceholder": "Search patterns by name, tag or colour…",
-		"filterByTag": "Filter by tag",
-		"allTags": "All",
-		"sortBy": "Sort by",
-		"sort": {
-			"trending": "Trending",
-			"name": "Name"
-		},
-		"savedTitle": "Your patterns",
-		"trendingTitle": "Trending",
-		"removeSaved": "Remove {name}",
-		"empty": "No patterns match your filters.",
-		"card": {
-			"open": "Open {name}",
-			"edit": "Edit",
-			"copyCss": "Copy CSS",
-			"like": "Like {name}"
-		},
-		"code": {
-			"formats": "Code formats",
-			"download": "Download .{ext}",
-			"title": "Code"
-		},
-		"quickView": {
-			"preview": "Pattern preview",
-			"type": "Pattern type",
-			"types": {
-				"dots": "Dots",
-				"grid": "Grid",
-				"lines": "Lines",
-				"checkerboard": "Checkerboard",
-				"crosshatch": "Crosshatch"
-			},
-			"foreground": "Foreground",
-			"background": "Background",
-			"size": "Tile size",
-			"angle": "Angle",
-			"shuffle": "Shuffle",
-			"downloadImage": "Download PNG",
-			"save": "Save",
-			"saved": "Saved",
-			"similar": "Explore similar"
-		},
-		"generator": {
-			"title": "Generate a pattern",
-			"subtitle": "From a brief, your own colours, or a reference image.",
-			"modeLabel": "Generation method",
-			"modes": {
-				"brief": "Brief",
-				"colors": "Colours",
-				"image": "Image"
-			},
-			"fields": {
-				"name": "Name (optional)",
-				"namePlaceholder": "e.g. Blueprint Grid",
-				"style": "Style",
-				"colors": "Colours you want (optional)",
-				"colorsPlaceholder": "e.g. #0f172a, slate",
-				"comments": "Comments (optional)",
-				"commentsPlaceholder": "e.g. subtle and light",
-				"hexes": "Your colours",
-				"hexesHint": "Enter 1-2 hex codes or colour names, separated by commas.",
-				"imageTitle": "Upload a reference image",
-				"imageHint": "We'll pull the colours from it. PNG, JPG, WEBP or GIF."
-			},
-			"styles": {
-				"dots": "Dots",
-				"grid": "Grid",
-				"blueprint": "Blueprint",
-				"stripes": "Stripes",
-				"diagonal": "Diagonal",
-				"checker": "Checker",
-				"hatch": "Hatch",
-				"neon": "Neon",
-				"pastel": "Pastel",
-				"mono": "Mono"
-			},
-			"preview": "Preview",
-			"cancel": "Cancel",
-			"generate": "Generate",
-			"regenerate": "Regenerate",
-			"use": "Use this pattern",
-			"error": "Something went wrong. Please try again.",
-			"errorType": "Unsupported image. Use PNG, JPG, WEBP or GIF.",
-			"errorSize": "That image is over 12 MB."
-		},
-		"tour": {
-			"restart": "Replay the tour",
-			"stepOf": "Step {current} of {total}",
-			"back": "Back",
-			"next": "Next",
-			"done": "Finish",
-			"skip": "Skip tour",
-			"steps": {
-				"welcome": {
-					"title": "Welcome to Patterns",
-					"body": "Ready-made CSS background patterns for your site or app - copy, tweak, export, or generate your own."
-				},
-				"generate": {
-					"title": "Generate your own",
-					"body": "Describe the style you want, type in colours, or upload a reference image and we'll build a pattern for you."
-				},
-				"browse": {
-					"title": "Browse and copy",
-					"body": "Click any pattern to open it, or copy its CSS straight from the card. Search and filter by tag or colour."
-				},
-				"edit": {
-					"title": "Edit it",
-					"body": "Switch between dots, grid, lines, checkerboard and crosshatch, recolour, and resize the tile."
-				},
-				"export": {
-					"title": "Export it",
-					"body": "Copy or download the pattern as CSS, SCSS, Tailwind, an array or JSON - or save it as a PNG image."
-				},
-				"similar": {
-					"title": "Explore similar",
-					"body": "Jump to patterns with a matching mood to keep exploring."
-				}
-			}
-		}
-	},
-	"textures": {
-		"title": "Textures",
-		"subtitle": "Browse curated CSS surface textures for websites and apps - copy the code, recolour and adjust the grain, download as CSS or an image, or generate your own.",
-		"generateCta": "Generate texture",
-		"searchPlaceholder": "Search textures by name, tag or colour…",
-		"filterByTag": "Filter by tag",
-		"allTags": "All",
-		"sortBy": "Sort by",
-		"sort": {
-			"trending": "Trending",
-			"name": "Name"
-		},
-		"savedTitle": "Your textures",
-		"trendingTitle": "Trending",
-		"removeSaved": "Remove {name}",
-		"empty": "No textures match your filters.",
-		"card": {
-			"open": "Open {name}",
-			"edit": "Edit",
-			"copyCss": "Copy CSS",
-			"like": "Like {name}"
-		},
-		"code": {
-			"formats": "Code formats",
-			"download": "Download .{ext}",
-			"title": "Code"
-		},
-		"quickView": {
-			"preview": "Texture preview",
-			"type": "Texture type",
-			"types": {
-				"noise": "Noise",
-				"grain": "Grain",
-				"paper": "Paper",
-				"carbon": "Carbon",
-				"fabric": "Fabric"
-			},
-			"foreground": "Grain",
-			"background": "Background",
-			"opacity": "Strength",
-			"scale": "Scale",
-			"shuffle": "Shuffle",
-			"downloadImage": "Download PNG",
-			"save": "Save",
-			"saved": "Saved",
-			"similar": "Explore similar"
-		},
-		"generator": {
-			"title": "Generate a texture",
-			"subtitle": "From a brief, your own colours, or a reference image.",
-			"modeLabel": "Generation method",
-			"modes": {
-				"brief": "Brief",
-				"colors": "Colours",
-				"image": "Image"
-			},
-			"fields": {
-				"name": "Name (optional)",
-				"namePlaceholder": "e.g. Carbon Fiber",
-				"style": "Style",
-				"colors": "Colours you want (optional)",
-				"colorsPlaceholder": "e.g. #0f172a, slate",
-				"comments": "Comments (optional)",
-				"commentsPlaceholder": "e.g. subtle and dark",
-				"hexes": "Your colours",
-				"hexesHint": "Enter 1-2 hex codes or colour names, separated by commas.",
-				"imageTitle": "Upload a reference image",
-				"imageHint": "We'll pull the colours from it. PNG, JPG, WEBP or GIF."
-			},
-			"styles": {
-				"noise": "Noise",
-				"grain": "Grain",
-				"film": "Film",
-				"paper": "Paper",
-				"craft": "Craft",
-				"carbon": "Carbon",
-				"tech": "Tech",
-				"fabric": "Fabric",
-				"denim": "Denim",
-				"linen": "Linen"
-			},
-			"preview": "Preview",
-			"cancel": "Cancel",
-			"generate": "Generate",
-			"regenerate": "Regenerate",
-			"use": "Use this texture",
-			"error": "Something went wrong. Please try again.",
-			"errorType": "Unsupported image. Use PNG, JPG, WEBP or GIF.",
-			"errorSize": "That image is over 12 MB."
-		},
-		"tour": {
-			"restart": "Replay the tour",
-			"stepOf": "Step {current} of {total}",
-			"back": "Back",
-			"next": "Next",
-			"done": "Finish",
-			"skip": "Skip tour",
-			"steps": {
-				"welcome": {
-					"title": "Welcome to Textures",
-					"body": "Ready-made CSS surface textures for your site or app - copy, tweak, export, or generate your own."
-				},
-				"generate": {
-					"title": "Generate your own",
-					"body": "Describe the surface you want, type in colours, or upload a reference image and we'll build a texture for you."
-				},
-				"browse": {
-					"title": "Browse and copy",
-					"body": "Click any texture to open it, or copy its CSS straight from the card. Search and filter by tag or colour."
-				},
-				"edit": {
-					"title": "Edit it",
-					"body": "Switch between noise, grain, paper, carbon and fabric, recolour, and adjust the strength and scale."
-				},
-				"export": {
-					"title": "Export it",
-					"body": "Copy or download the texture as CSS, SCSS, Tailwind, an array or JSON - or save it as a PNG image."
-				},
-				"similar": {
-					"title": "Explore similar",
-					"body": "Jump to textures with a matching mood to keep exploring."
-				}
-			}
-		}
-	},
-	"icons": {
-		"title": "Icons",
-		"subtitle": "{count} original, open line icons for your product — search, recolour, resize, then copy or download as SVG, PNG, React or CSS.",
-		"weight": "Weight",
-		"searchPlaceholder": "Search icons by name, category or tag…",
-		"filterByCategory": "Filter by category",
-		"allCategories": "All",
-		"resultCount": "{count} icons",
-		"savedTitle": "Saved icons",
-		"empty": "No icons match your search.",
-		"categories": {
-			"interface": "Interface",
-			"arrows": "Arrows",
-			"communication": "Communication",
-			"media": "Media",
-			"files": "Files",
-			"commerce": "Commerce",
-			"devices": "Devices",
-			"weather": "Weather",
-			"social": "Social",
-			"editing": "Editing",
-			"maps": "Maps",
-			"status": "Status"
-		},
-		"card": {
-			"open": "Open {name}",
-			"copySvg": "Copy SVG"
-		},
-		"code": {
-			"formats": "Code formats",
-			"download": "Download .{ext}",
-			"title": "Copy & export"
-		},
-		"quickView": {
-			"colour": "Colour",
-			"themeColour": "Theme",
-			"customColour": "Custom colour",
-			"style": "Style",
-			"filled": "Filled",
-			"outline": "Outline",
-			"weight": "Weight",
-			"size": "Size",
-			"save": "Save",
-			"saved": "Saved",
-			"downloadSvg": "SVG",
-			"downloadPng": "Download PNG",
-			"similar": "Related icons"
-		},
-		"tour": {
-			"restart": "Replay the tour",
-			"stepOf": "Step {current} of {total}",
-			"back": "Back",
-			"next": "Next",
-			"done": "Finish",
-			"skip": "Skip tour",
-			"steps": {
-				"welcome": {
-					"title": "Welcome to Icons",
-					"body": "A library of original, open line icons — browse, customise, and take the code in any format."
-				},
-				"customize": {
-					"title": "Set the weight",
-					"body": "Drag to make every icon lighter or bolder. Your choice sticks across the whole library."
-				},
-				"browse": {
-					"title": "Find an icon",
-					"body": "Search by name, category or tag, or filter by theme. Hover any icon to copy its SVG instantly."
-				},
-				"edit": {
-					"title": "Make it yours",
-					"body": "Open an icon to recolour it, change its weight, resize it, or switch to a filled look — live."
-				},
-				"export": {
-					"title": "Copy or export",
-					"body": "Grab the icon as SVG, JSX, a React component, a data URI, or a CSS mask rule."
-				},
-				"download": {
-					"title": "Download anywhere",
-					"body": "Save a crisp SVG, or a PNG at any size from 16 up to 256 pixels."
-				}
-			}
-		}
-	},
-	"landing": {
-		"meta": {
-			"title": "ADYSRE - Design and ship in one workspace",
-			"description": "The workspace where product teams browse components, icons, palettes, gradients and prompts, then take them straight to production."
-		},
-		"nav": {
-			"pricing": "Pricing",
-			"openApp": "Open workspace",
-			"menu": "Open menu",
-			"closeMenu": "Close menu",
-			"skip": "Skip to content",
-			"menus": {
-				"styles": "Styles",
-				"library": "Library"
-			}
-		},
-		"hero": {
-			"badge": "New: gradient and palette generators",
-			"title": "Everything your team needs to design and ship",
-			"titleAccent": "in one calm workspace",
-			"subtitle": "ADYSRE brings components, icons, palettes, gradients and prompts together, so your team can move from idea to production without switching tools.",
-			"ctaComponents": "Explore components",
-			"ctaPlayground": "Open the playground",
-			"ctaWorkspace": "Open the workspace",
-			"trust": "Trusted by {count, number}+ builders worldwide",
-			"hint": "No card required to browse"
-		},
-		"marquee": {
-			"label": "Built for the way modern product teams work"
-		},
-		"features": {
-			"title": "One workspace, every building block",
-			"subtitle": "Each module is ready to browse, copy and drop into your product. Open any of them from the side menu once you are in.",
-			"explore": "Explore",
-			"items": {
-				"components": {
-					"title": "Components",
-					"desc": "Copy-paste UI blocks in HTML, Tailwind, React and Next.js, typed and ready for production."
-				},
-				"icons": {
-					"title": "Icons",
-					"desc": "A tuned icon set with adjustable weight, live preview and one-click copy in your format."
-				},
-				"palettes": {
-					"title": "Color palettes",
-					"desc": "Accessible palettes with token output, so brand colours stay consistent everywhere."
-				},
-				"gradients": {
-					"title": "Gradients",
-					"desc": "Layered, on-brand gradients with CSS you can paste straight into your styles."
-				},
-				"patterns": {
-					"title": "Patterns",
-					"desc": "Repeatable CSS background patterns you can paste straight into your styles."
-				},
-				"textures": {
-					"title": "Textures",
-					"desc": "Noise, grain, paper and woven surface textures in pure CSS - no image files."
-				},
-				"promptLibrary": {
-					"title": "Prompt library",
-					"desc": "A curated library of prompts across categories, tuned for the models your team already uses."
-				},
-				"templates": {
-					"title": "Templates",
-					"desc": "Full page and flow templates that assemble the modules into finished screens."
-				}
-			}
-		},
-		"workflow": {
-			"title": "From blank canvas to shipped, in three steps",
-			"subtitle": "The same loop for every module, so the whole team moves the same way.",
-			"steps": {
-				"browse": {
-					"title": "Browse",
-					"desc": "Search across every module and preview each result live before you commit."
-				},
-				"tailor": {
-					"title": "Tailor",
-					"desc": "Adjust colour, weight and framework, then copy output that matches your tokens."
-				},
-				"ship": {
-					"title": "Ship",
-					"desc": "Paste it into your product and keep moving, with no cleanup and no lock-in."
-				}
-			}
-		},
-		"showcase": {
-			"title": "See it work before you commit",
-			"subtitle": "Live previews built from the same design tokens your product uses.",
-			"palette": {
-				"label": "Palette",
-				"caption": "Token-ready colour sets"
-			},
-			"gradient": {
-				"label": "Gradient",
-				"caption": "Paste-ready CSS backgrounds"
-			},
-			"icons": {
-				"label": "Icons",
-				"caption": "Adjustable, copy in one click"
-			},
-			"components": {
-				"label": "Components",
-				"caption": "Typed and production ready"
-			}
-		},
-		"templates": {
-			"badge": "Coming soon",
-			"title": "Full templates are on the way",
-			"subtitle": "Complete pages and flows, assembled from the modules you already use and ready to make your own. Get told the moment they land.",
-			"cta": "Preview the roadmap",
-			"note": "Included with every plan, at no extra cost."
-		},
-		"stats": {
-			"title": "Growing every week",
-			"items": {
-				"components": "Components",
-				"icons": "Icons",
-				"colors": "Colors",
-				"gradients": "Gradients",
-				"patterns": "Patterns",
-				"textures": "Textures",
-				"prompts": "Prompts",
-				"teams": "Teams building"
-			}
-		},
-		"faq": {
-			"title": "Questions, answered",
-			"subtitle": "Everything else you might want to know before you start.",
-			"items": {
-				"what": {
-					"q": "What is ADYSRE?",
-					"a": "A single workspace for design and build resources: components, icons, palettes, gradients and prompts, ready to copy into your product."
-				},
-				"frameworks": {
-					"q": "Which frameworks do you support?",
-					"a": "Components ship as HTML, CSS, Tailwind, React, Next.js and TypeScript, so you can drop them into most modern stacks."
-				},
-				"templates": {
-					"q": "When do templates arrive?",
-					"a": "Templates are in active development. Open the templates page to preview what is coming and be first to know when it ships."
-				},
-				"pricing": {
-					"q": "Is there a free tier?",
-					"a": "Yes. You can browse and use a generous free selection with no card. One payment unlocks everything, including what we add later."
-				},
-				"team": {
-					"q": "Can my whole team use it?",
-					"a": "Yes. Team access shares one workspace across your organisation, with the same modules for everyone."
-				}
-			}
-		},
-		"cta": {
-			"title": "Ready to build with less friction?",
-			"subtitle": "Open the workspace and browse every module in the side menu. No setup, no cleanup.",
-			"primary": "Open the workspace",
-			"secondary": "See pricing"
-		},
-		"footer": {
-			"tagline": "The workspace where teams design and ship together.",
-			"product": "Product",
-			"resources": "Resources",
-			"legal": "Legal",
-			"contact": "Contact",
-			"docs": "Documentation",
-			"rights": "All rights reserved.",
-			"built": "Built for modern product teams."
-		},
-		"announcement": {
-			"region": "Announcement",
-			"badge": "New",
-			"label": "Icons, Gradients and Palettes are now live in the workspace",
-			"cta": "Explore",
-			"dismiss": "Dismiss announcement"
-		}
-	},
-	"designPlayground": {
-		"title": "Design Playground",
-		"subtitle": "A visual editor for pages, dashboards, mobile screens and graphics. Drag, edit and export - no code required.",
-		"backToApp": "Back to the app",
-		"toolbarLabel": "Tools",
-		"railLabel": "Editor panels",
-		"breakpointLabel": "Breakpoint",
-		"tools": {
-			"select": "Select",
-			"hand": "Hand",
-			"frame": "Frame",
-			"rectangle": "Rectangle",
-			"ellipse": "Ellipse",
-			"text": "Text",
-			"pen": "Pen"
-		},
-		"panels": {
-			"pages": {
-				"title": "Pages",
-				"description": "Every page in this project, each with its own infinite canvas.",
-				"add": "Add page",
-				"remove": "Delete page",
-				"nameLabel": "Page name"
-			},
-			"layers": {
-				"title": "Layers",
-				"description": "The layer tree: group, reorder, rename, lock and hide anything on the canvas.",
-				"empty": "No layers on this page yet.",
-				"expand": "Expand layer",
-				"collapse": "Collapse layer",
-				"nameLabel": "Layer name",
-				"hide": "Hide layer",
-				"show": "Show layer",
-				"lock": "Lock layer",
-				"unlock": "Unlock layer",
-				"remove": "Delete layer",
-				"moveUp": "Move up",
-				"moveDown": "Move down"
-			},
-			"sections": {
-				"title": "Sections",
-				"description": "Drop in ready-made headers, heroes, pricing, FAQ and footers from the component library.",
-				"search": "Search sections",
-				"empty": "No sections match that search.",
-				"insert": "Insert {name}"
-			},
-			"components": {
-				"title": "Components",
-				"description": "Buttons, inputs, cards, tables and the rest - insert once, reuse everywhere.",
-				"search": "Search components",
-				"empty": "No components match that search.",
-				"insert": "Insert {name}"
-			},
-			"assets": {
-				"title": "Assets",
-				"description": "Icons, illustrations, patterns, gradients and your uploads.",
-				"tablistLabel": "Asset groups",
-				"tabs": {
-					"colors": "Colours",
-					"gradients": "Gradients",
-					"icons": "Icons"
-				},
-				"colors": {
-					"applyHint": "Click a swatch to fill the selection.",
-					"placeHint": "Nothing selected - a swatch places a coloured square.",
-					"apply": "Apply {color} from {palette}",
-					"place": "Place {color} from {palette}",
-					"empty": "No colour palettes available."
-				},
-				"gradients": {
-					"hint": "Places a square in the gradient's first colour. Real gradient fills arrive with the effects work.",
-					"place": "Place {name}",
-					"empty": "No gradients available."
-				},
-				"icons": {
-					"searchLabel": "Search icons",
-					"searchPlaceholder": "Search icons",
-					"hint": "Click an icon to place it on the canvas.",
-					"place": "Place {name}",
-					"empty": "No icons match that search.",
-					"more": "Showing {shown} of {total}. Refine your search to see more."
-				}
-			},
-			"images": {
-				"title": "Images",
-				"description": "Upload your own images or pull from stock providers, then crop, mask and filter.",
-				"upload": "Upload images",
-				"uploadHint": "Drag files here, or click to browse. PNG, JPG, GIF, WebP or SVG.",
-				"importing": "Adding images…",
-				"empty": "No images yet. Upload one to place it on the canvas.",
-				"place": "Place on canvas",
-				"remove": "Remove from library",
-				"removeNamed": "Remove {name} from library",
-				"usage": "{used} of {total} used ({percent}%)",
-				"storageFailed": "These images could not be saved to this browser, so they will be gone after a reload. Remove a few to free space.",
-				"errors": {
-					"unsupported": "is not a supported image type.",
-					"unreadable": "could not be read. The file may be damaged.",
-					"tooLarge": "is too large to store, even after downscaling.",
-					"libraryFull": "does not fit - the image library is full. Remove some images and try again."
-				}
-			},
-			"ai": {
-				"title": "AI",
-				"description": "Describe a page and get editable frames back, or edit the current selection by prompt.",
-				"label": "Describe the section to generate",
-				"placeholder": "A dark pricing section with three tiers and a highlighted middle plan…",
-				"generate": "Generate section",
-				"working": "Generating…",
-				"examplesTitle": "Try one of these",
-				"examples": {
-					"hero": "A bold hero for a fintech app, dark background, headline, subtext and a primary button.",
-					"pricing": "A pricing section with three plan cards and the middle one highlighted.",
-					"features": "A three-column feature grid with an icon block, title and description in each.",
-					"cta": "A closing call-to-action band with a headline and one button, on an accent colour."
-				},
-				"errors": {
-					"not-configured": "AI generation is not configured on this deployment. Set ANTHROPIC_API_KEY on the server to enable it.",
-					"invalid-request": "Describe the section you want before generating.",
-					"refused": "That request was declined. Try describing the design differently.",
-					"rate-limited": "Too many requests right now. Wait a moment and try again.",
-					"empty": "The model returned nothing usable. Try again.",
-					"failed": "Generation failed. Try again in a moment."
-				}
-			}
-		},
-		"inspector": {
-			"title": "Properties",
-			"empty": "Select something on the canvas to edit its properties.",
-			"groups": {
-				"transform": "Transform",
-				"layout": "Layout",
-				"style": "Fill & stroke",
-				"effects": "Effects",
-				"typography": "Typography",
-				"export": "Export"
-			},
-			"mixed": "Mixed",
-			"multiple": "{count} layers selected",
-			"soon": "Arriving in a later phase.",
-			"colorNone": "None",
-			"colorPicker": "Colour picker",
-			"colorHex": "Hex",
-			"fields": {
-				"x": "X",
-				"y": "Y",
-				"width": "Width",
-				"height": "Height",
-				"rotation": "Rotation",
-				"mode": "Mode",
-				"direction": "Direction",
-				"gap": "Gap",
-				"padding": "Padding",
-				"fill": "Fill",
-				"stroke": "Stroke",
-				"strokeWidth": "Stroke width",
-				"radius": "Corner radius",
-				"opacity": "Opacity",
-				"text": "Content",
-				"fontSize": "Size",
-				"fontWeight": "Weight",
-				"lineHeight": "Line height",
-				"letterSpacing": "Letter spacing",
-				"align": "Alignment",
-				"shadow": "Shadow",
-				"shadowColor": "Shadow colour",
-				"shadowBlur": "Blur",
-				"shadowOffsetX": "Offset X",
-				"shadowOffsetY": "Offset Y",
-				"shadowOpacity": "Shadow opacity",
-				"blendMode": "Blend mode"
-			},
-			"options": {
-				"none": "None",
-				"flex": "Flex",
-				"row": "Row",
-				"column": "Column",
-				"left": "Left",
-				"center": "Center",
-				"right": "Right",
-				"dropShadow": "Drop shadow",
-				"normal": "Normal",
-				"multiply": "Multiply",
-				"screen": "Screen",
-				"overlay": "Overlay",
-				"darken": "Darken",
-				"lighten": "Lighten"
-			},
-			"tabs": "Sidebar tabs",
-			"tabLabels": {
-				"properties": "Properties",
-				"frames": "Frames"
-			}
-		},
-		"canvas": {
-			"empty": {
-				"title": "Start with a frame",
-				"description": "Frames are the artboards you design in. Pick a size to begin — or draw one with the frame tool (F).",
-				"cta": "Choose a frame size"
-			},
-			"editText": "Edit text",
-			"backToContent": "Back to content"
-		},
-		"frameGroups": {
-			"screens": "Screens",
-			"social": "Social",
-			"print": "Print & slides"
-		},
-		"frames": {
-			"desktop": "Desktop",
-			"laptop": "Laptop",
-			"tablet": "Tablet",
-			"mobile": "Mobile",
-			"instagram": "Instagram",
-			"facebook": "Facebook",
-			"twitter": "Twitter",
-			"youtube": "YouTube",
-			"presentation": "Presentation",
-			"a4": "A4",
-			"description": "Frames are the artboards you design in. Adding one places it beside your existing work."
-		},
-		"breakpoints": {
-			"desktop": "Desktop",
-			"laptop": "Laptop",
-			"tablet": "Tablet",
-			"mobile": "Mobile"
-		},
-		"status": {
-			"grid": "Grid",
-			"coordinates": "Pointer position"
-		},
-		"actions": {
-			"share": "Share",
-			"export": "Export",
-			"toggleInspector": "Toggle properties panel",
-			"closePanel": "Close panel",
-			"zoomIn": "Zoom in",
-			"zoomOut": "Zoom out",
-			"resetZoom": "Reset zoom to 100%",
-			"undo": "Undo",
-			"redo": "Redo",
-			"selectionLabel": "Selection actions",
-			"duplicate": "Duplicate",
-			"bringToFront": "Bring to front",
-			"sendToBack": "Send to back",
-			"lock": "Lock",
-			"unlock": "Unlock",
-			"hide": "Hide",
-			"show": "Show",
-			"delete": "Delete",
-			"group": "Group",
-			"ungroup": "Ungroup",
-			"zoomToFit": "Zoom to fit",
-			"copy": "Copy",
-			"paste": "Paste here",
-			"frame": "Frame selection"
-		},
-		"export": {
-			"working": "Working…",
-			"failed": "Export failed. Try a different format.",
-			"formats": {
-				"png": "PNG image",
-				"jpeg": "JPEG image",
-				"svg": "SVG vector",
-				"html": "HTML page",
-				"json": "Project file"
-			},
-			"import": "Open project file…",
-			"importFailed": "That file is not a valid ADYSRE project.",
-			"scale": "Scale",
-			"exportAs": "Export as {format}",
-			"selectFirst": "Select something on the canvas to export it on its own."
-		},
-		"sync": {
-			"saving": "Saving…",
-			"saved": "Saved",
-			"offline": "Offline — saved on this device only",
-			"error": "Couldn't save"
-		},
-		"projects": {
-			"menu": "Project",
-			"new": "New design",
-			"rename": "Rename design",
-			"nameLabel": "Design name",
-			"recent": "Previous designs",
-			"loading": "Loading…",
-			"empty": "No saved designs yet.",
-			"unavailable": "Saved designs are unavailable — storage is not reachable. Your work is still saved on this device."
-		}
-	}
+  "app": {
+    "name": "ADYSRE",
+    "tagline": "Enterprise Business Operating System"
+  },
+  "common": {
+    "close": "Close",
+    "cancel": "Cancel",
+    "reset": "Reset",
+    "copy": "Copy",
+    "copied": "Copied",
+    "edit": "Edit",
+    "search": "Search",
+    "clearFilters": "Clear filters",
+    "jumpToPlaceholder": "Search and jump to…",
+    "noResults": "No results found",
+    "comingSoon": "Soon",
+    "inDevelopment": "In development",
+    "backToSignIn": "Back to sign in"
+  },
+  "npm": {
+    "eyebrow": "Use it from npm",
+    "requirements": {
+      "react": {
+        "title": "React 18+",
+        "desc": "React 19 recommended. Next.js, Vite, Remix and Astro all work."
+      },
+      "styles": {
+        "title": "Styles, once",
+        "desc": "Tailwind v4, or import the pre-compiled stylesheet if you do not use it."
+      },
+      "esm": {
+        "title": "ESM only",
+        "desc": "Import, do not require. Node 20+ if you server-render."
+      }
+    },
+    "steps": {
+      "styles": {
+        "title": "Wire up the styles once",
+        "desc": "Brings the design tokens and tells Tailwind to scan the package. Skip it and import the pre-compiled stylesheet instead."
+      },
+      "use": {
+        "title": "Import from {specifier}",
+        "desc": "Its own entry point, so nothing else comes along for the ride."
+      }
+    },
+    "modules": {
+      "components": {
+        "title": "Every component, straight from npm",
+        "desc": "Prop-driven sections you import instead of paste. Typed, tree-shakeable, and upgradeable with a version bump."
+      },
+      "icons": {
+        "title": "Every icon, straight from npm",
+        "desc": "Import one and the bundler drops the other 447. They inherit currentColor, so colour stays in your CSS."
+      },
+      "gradients": {
+        "title": "Every gradient, straight from npm",
+        "desc": "Plain data and a component. No images to host, no runtime CSS injection."
+      },
+      "patterns": {
+        "title": "Every pattern, straight from npm",
+        "desc": "Built from CSS gradients, so a pattern renders anywhere with no image files."
+      },
+      "textures": {
+        "title": "Every texture, straight from npm",
+        "desc": "Inline SVG filters and layered gradients. A data URI, never a network request."
+      },
+      "palettes": {
+        "title": "Every palette, straight from npm",
+        "desc": "Colour sets plus the contrast, harmony and readability maths behind them."
+      }
+    }
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "promptLibrary": "Prompt Library",
+    "components": "Components",
+    "designPlayground": "Design Playground",
+    "templates": "Templates",
+    "settings": "Settings",
+    "mainLabel": "Main",
+    "openMenu": "Open navigation menu",
+    "closeMenu": "Close navigation menu",
+    "descriptions": {
+      "promptLibrary": "Browse, customise and copy prompts for your workspace.",
+      "components": "Browse the building blocks available to every module.",
+      "templates": "Start from a ready-made layout instead of a blank page.",
+      "settings": "Manage your organization, members and preferences.",
+      "palettes": "Browse, edit and export ready-made colour palettes, or generate your own.",
+      "gradients": "Browse, edit and export CSS gradients, or generate your own.",
+      "patterns": "Browse, edit and export CSS background patterns, or generate your own.",
+      "textures": "Browse, edit and export CSS surface textures, or generate your own.",
+      "icons": "Browse, customise and export original SVG icons in any format or size.",
+      "designPlayground": "Design pages, dashboards and graphics on an infinite canvas. No code."
+    },
+    "palettes": "Color Palettes",
+    "gradients": "Gradients",
+    "patterns": "Patterns",
+    "textures": "Textures",
+    "icons": "Icons",
+    "backToHome": "Back to home",
+    "groups": {
+      "essentials": "Essentials",
+      "marketing": "Marketing & Landing",
+      "navigation": "Navigation",
+      "forms": "Forms & Input",
+      "data": "Data & Tables",
+      "media": "Media & Content",
+      "feedback": "Feedback & Overlays",
+      "commerce": "Commerce"
+    },
+    "expandSection": "Expand {label}",
+    "collapseSection": "Collapse {label}",
+    "viewAll": "All {label}",
+    "collapseSidebar": "Collapse sidebar",
+    "expandSidebar": "Expand sidebar"
+  },
+  "topbar": {
+    "searchPlaceholder": "Search or jump to…",
+    "commandPalette": "Open command palette",
+    "notifications": "Notifications",
+    "groups": {
+      "page": "Page",
+      "category": "Category",
+      "tag": "Tag"
+    },
+    "noResults": "No results found"
+  },
+  "notifications": {
+    "label": "Notifications",
+    "title": "Notifications",
+    "open": "Notifications",
+    "openWithCount": "Notifications, {count} unread",
+    "unreadCount": "{count} new",
+    "markAllRead": "Mark all as read",
+    "clearAll": "Clear all",
+    "empty": "You're all caught up.",
+    "dismiss": "Dismiss {title}",
+    "markRead": "Mark {title} as read",
+    "items": {
+      "icons": {
+        "title": "Icons library is here",
+        "body": "300+ original, customizable line icons. Copy as SVG, JSX or React, or download PNGs."
+      },
+      "playground": {
+        "title": "Build your own page",
+        "body": "Assemble a full page from library sections, then export the complete code."
+      },
+      "gradients": {
+        "title": "Gradients added",
+        "body": "Browse, edit and export CSS gradients, or generate your own."
+      },
+      "palettes": {
+        "title": "Colour palettes",
+        "body": "Ready-made palettes to copy, edit and export for your projects."
+      },
+      "components": {
+        "title": "Components library",
+        "body": "Copy-paste UI blocks in HTML, React, Next.js and more."
+      }
+    }
+  },
+  "theme": {
+    "toggle": "Toggle theme",
+    "switchToDark": "Switch to dark mode",
+    "switchToLight": "Switch to light mode"
+  },
+  "userMenu": {
+    "open": "Open profile menu",
+    "label": "Profile",
+    "profileBilling": "Profile & Billing",
+    "contactUs": "Contact Us",
+    "emailSupport": "Email support",
+    "helpCentre": "Help centre",
+    "document": "Document",
+    "gettingStarted": "Getting started",
+    "apiReference": "API reference",
+    "language": "Language",
+    "legal": "Legal",
+    "terms": "Terms of service",
+    "privacy": "Privacy policy",
+    "dmca": "DMCA",
+    "signOut": "Sign out"
+  },
+  "comingSoon": {
+    "heading": "{title} is coming soon",
+    "body": "We're building this page. It'll show up here as soon as it's ready."
+  },
+  "auth": {
+    "signIn": {
+      "title": "Sign in",
+      "description": "Welcome back. Enter your credentials to continue.",
+      "submit": "Sign in",
+      "submitting": "Signing in…",
+      "failed": "Login failed",
+      "noAccount": "Don't have an account?",
+      "createOne": "Create one",
+      "forgotPassword": "Forgot password?"
+    },
+    "register": {
+      "title": "Create your workspace",
+      "description": "You'll be the Owner of this organization.",
+      "submit": "Create workspace",
+      "submitting": "Creating…",
+      "failed": "Registration failed",
+      "haveAccount": "Already have an account?",
+      "signIn": "Sign in",
+      "organizationName": "Organization name",
+      "organizationSlug": "Workspace URL (slug)",
+      "yourName": "Your name"
+    },
+    "forgotPassword": {
+      "title": "Reset your password",
+      "description": "Enter your email and we'll send you a link to reset it.",
+      "submit": "Send reset link",
+      "submitting": "Sending…",
+      "sent": "If an account exists for that email, a reset link is on its way.",
+      "sendAgain": "Send again"
+    },
+    "resetPassword": {
+      "title": "Set a new password",
+      "description": "Choose a strong password you don't use elsewhere.",
+      "newPassword": "New password",
+      "confirmPassword": "Confirm new password",
+      "hint": "At least 12 characters, with an uppercase letter, a lowercase letter and a number.",
+      "submit": "Set new password",
+      "submitting": "Saving…",
+      "invalidLink": "This reset link is invalid or incomplete. Request a new one.",
+      "requestNew": "Request a new link",
+      "success": "Your password has been changed. You can now sign in with it.",
+      "continueToSignIn": "Continue to sign in",
+      "genericError": "Something went wrong. Check your connection and try again."
+    },
+    "fields": {
+      "email": "Email",
+      "emailPlaceholder": "you@company.com",
+      "password": "Password",
+      "passwordPlaceholder": "••••••••••••"
+    },
+    "oauth": {
+      "continueWith": "Continue with {provider}",
+      "dividerSignIn": "or continue with email",
+      "dividerSignUp": "or sign up with email",
+      "notConfigured": "{provider} sign-in is not set up yet",
+      "errors": {
+        "oauth": "We could not sign you in with {provider}. Please try again.",
+        "oauth_state": "Your sign-in session expired. Please try again.",
+        "oauth_not_configured": "{provider} sign-in is not set up yet. Use email instead.",
+        "oauth_no_email": "We could not get a verified email from {provider}. Use email instead.",
+        "oauth_invalid": "That sign-in option is not available."
+      }
+    }
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "welcome": "Welcome back to your workspace.",
+    "stats": {
+      "activeUsers": "Active users",
+      "openNotifications": "Open notifications",
+      "auditEvents": "Audit events",
+      "storageUsed": "Storage used",
+      "thisWeek": "this week",
+      "last24h": "last 24h",
+      "files": "files"
+    }
+  },
+  "promptLibrary": {
+    "searchPlaceholder": "Search by title, tag or keyword…",
+    "searchLabel": "Search prompts",
+    "collections": {
+      "all": "All",
+      "featured": "Featured",
+      "trending": "Trending",
+      "new": "New"
+    },
+    "filters": {
+      "collection": "Collection",
+      "category": "Category",
+      "allCategories": "All categories",
+      "allTiers": "All tiers",
+      "allModels": "All models",
+      "allRatios": "All ratios",
+      "byTier": "Filter by tier",
+      "byModel": "Filter by model",
+      "byRatio": "Filter by aspect ratio"
+    },
+    "count": "{count, plural, =1 {# prompt} other {# prompts}}",
+    "countFiltered": "{count} of {total} prompts",
+    "empty": {
+      "title": "No prompts match those filters",
+      "description": "Try a different search or clear the filters."
+    },
+    "card": {
+      "editAria": "Edit {title}",
+      "searchTag": "Search for {tag}",
+      "lockedAria": "Premium prompt: get premium access to use {title}"
+    },
+    "dialog": {
+      "description": "Tweak the wording, then copy it. Your changes aren't saved to the library.",
+      "promptLabel": "Prompt",
+      "copyPrompt": "Copy prompt",
+      "characters": "{count} characters",
+      "edited": "Edited",
+      "worksWellOn": "Works well on",
+      "aspectRatios": "Aspect ratios",
+      "tags": "Tags",
+      "englishOriginal": "Showing the English original. This prompt hasn't been translated yet."
+    },
+    "tiers": {
+      "free": "Free",
+      "premium": "Premium"
+    },
+    "categories": {
+      "portrait": "Portrait",
+      "headshot": "Headshot",
+      "business": "Business",
+      "fashion": "Fashion",
+      "lifestyle": "Lifestyle",
+      "cinematic": "Cinematic",
+      "travel": "Travel",
+      "nature": "Nature",
+      "fitness": "Fitness",
+      "automotive": "Automotive",
+      "editorial": "Editorial",
+      "fantasy": "Fantasy",
+      "sci-fi": "Sci-Fi",
+      "anime": "Anime",
+      "artistic": "Artistic"
+    },
+    "styles": {
+      "photorealistic": "Photorealistic",
+      "cinematic": "Cinematic",
+      "editorial": "Editorial",
+      "monochrome": "Monochrome",
+      "painterly": "Painterly",
+      "illustrated": "Illustrated",
+      "3d-render": "3D Render",
+      "anime": "Anime"
+    },
+    "ratios": {
+      "1:1": "1:1 Square",
+      "4:5": "4:5 Portrait",
+      "3:4": "3:4 Portrait",
+      "9:16": "9:16 Story",
+      "16:9": "16:9 Wide"
+    }
+  },
+  "pages": {
+    "profile": {
+      "title": "Profile",
+      "description": "Your account details.",
+      "fullName": "Full name",
+      "email": "Email",
+      "role": "Role",
+      "status": "Status",
+      "loading": "Loading…",
+      "active": "Active",
+      "plan": "Plan",
+      "planFree": "Free",
+      "planPremium": "Premium",
+      "planFreeHint": "You can use the 41 free prompts. Premium prompts are locked.",
+      "planPremiumHint": "You can copy and customise every prompt in the library.",
+      "upgrade": "Upgrade",
+      "devOnly": "Development only",
+      "devOnlyHint": "Switch access level to preview the paywall. Not shown in production."
+    },
+    "helpCentre": {
+      "title": "Help centre",
+      "description": "Find answers, reach support, and learn how to get the most out of Adysre.",
+      "channels": {
+        "email": {
+          "title": "Email support",
+          "body": "Reach our team directly. We usually reply within one business day.",
+          "cta": "Send an email"
+        },
+        "docs": {
+          "title": "Documentation",
+          "body": "Guides to get started and make the most of every feature.",
+          "cta": "Read the docs"
+        },
+        "api": {
+          "title": "API reference",
+          "body": "Endpoints, authentication and response formats for developers.",
+          "cta": "View the API"
+        },
+        "community": {
+          "title": "Browse the library",
+          "body": "Explore components, icons, palettes and gradients you can use today.",
+          "cta": "Open the library"
+        }
+      },
+      "emailTitle": "Still need help?",
+      "emailBody": "Email us and we'll get back to you as soon as we can.",
+      "faqTitle": "Frequently asked questions",
+      "faqs": [
+        {
+          "q": "Is Adysre free to use?",
+          "a": "The core library (components, icons, palettes and gradients) is free to browse, copy and use. Some premium content requires a paid plan."
+        },
+        {
+          "q": "Which frameworks are supported?",
+          "a": "Components ship with code for HTML, React, Next.js and more. Copy the format you need, or export a whole page from the playground."
+        },
+        {
+          "q": "Can I use the icons in commercial projects?",
+          "a": "Yes. The icons are original and free to use in personal and commercial projects. Copy them as SVG, JSX or React, or download PNGs."
+        },
+        {
+          "q": "How do I build a full page?",
+          "a": "Open Components and choose ‘Customize your project’ to assemble a page from library sections, then export the complete code."
+        },
+        {
+          "q": "How do I change the language?",
+          "a": "Use the language option in the profile menu at the top right. Your choice is remembered across visits."
+        },
+        {
+          "q": "How do I report a problem?",
+          "a": "Email our support team with the details and a screenshot if you can. We investigate every report."
+        }
+      ]
+    },
+    "gettingStarted": {
+      "title": "Getting started",
+      "description": "A quick tour of Adysre and everything you can build with it.",
+      "stepsTitle": "First steps",
+      "steps": [
+        {
+          "title": "Explore the library",
+          "body": "Browse ready-made components, icons, colour palettes and gradients from the sidebar."
+        },
+        {
+          "title": "Copy or customize",
+          "body": "Copy any snippet in your framework, or open an item to tweak it before you export."
+        },
+        {
+          "title": "Assemble a page",
+          "body": "In Components, choose ‘Customize your project’ to build a full page from sections."
+        },
+        {
+          "title": "Export the code",
+          "body": "Take the complete, production-ready code with you. Copy it or download the files."
+        }
+      ],
+      "exploreTitle": "Explore the library",
+      "resources": {
+        "components": {
+          "title": "Components",
+          "body": "Copy-paste UI blocks"
+        },
+        "icons": {
+          "title": "Icons",
+          "body": "300+ original line icons"
+        },
+        "palettes": {
+          "title": "Colour palettes",
+          "body": "Ready-made colour sets"
+        },
+        "gradients": {
+          "title": "Gradients",
+          "body": "CSS gradients to copy"
+        }
+      },
+      "apiCta": "Building an integration? Read the API reference"
+    },
+    "apiReference": {
+      "title": "API reference",
+      "description": "The Adysre REST API: conventions, authentication and endpoints.",
+      "baseUrlTitle": "Base URL",
+      "baseUrlNote": "All endpoints are served under a single, versioned base path. v1 is stable and will not break.",
+      "authTitle": "Authentication",
+      "authNote": "Requests are authenticated with a short-lived access token issued at sign-in and sent as an HTTP-only cookie. Expired tokens are refreshed automatically.",
+      "responseTitle": "Response format",
+      "responseNote": "Every response uses the same envelope. Successful responses carry a data payload (and meta for lists); errors carry a stable code and a human-readable message.",
+      "successLabel": "Success",
+      "errorLabel": "Error",
+      "conventionsTitle": "Conventions",
+      "pagination": "Pagination",
+      "filtering": "Filtering",
+      "sorting": "Sorting",
+      "endpointsTitle": "Common endpoints",
+      "endpoints": {
+        "login": "Sign in and start a session",
+        "me": "Get the current user",
+        "components": "List library components",
+        "component": "Get a single component",
+        "icons": "List icons",
+        "palettes": "List colour palettes"
+      },
+      "endpointsNote": "This is a representative subset. The full, always-current reference lands with the public API."
+    },
+    "terms": {
+      "title": "Terms of service",
+      "description": "The terms that govern your use of Adysre.",
+      "updated": "Last updated: 18 July 2026",
+      "sections": [
+        {
+          "heading": "Acceptance of terms",
+          "body": "By accessing or using Adysre, you agree to these terms. If you do not agree, please do not use the service."
+        },
+        {
+          "heading": "Using the service",
+          "body": "You may use Adysre to browse, copy and adapt library content for your own projects. You are responsible for how you use the code and assets you take."
+        },
+        {
+          "heading": "Accounts",
+          "body": "Some features require an account. Keep your credentials secure; you are responsible for activity under your account."
+        },
+        {
+          "heading": "Acceptable use",
+          "body": "Do not misuse the service. No unlawful activity, no attempts to disrupt or reverse-engineer the platform, and no reselling the library as your own."
+        },
+        {
+          "heading": "Intellectual property",
+          "body": "Library content may be used in your projects. The Adysre name, brand and platform remain our property."
+        },
+        {
+          "heading": "Changes and termination",
+          "body": "We may update these terms or the service over time. Continued use after changes means you accept the updated terms."
+        }
+      ]
+    },
+    "privacy": {
+      "title": "Privacy policy",
+      "description": "How we handle your data at Adysre.",
+      "updated": "Last updated: 18 July 2026",
+      "sections": [
+        {
+          "heading": "Information we collect",
+          "body": "We collect the information you provide (such as your name and email) and basic usage data needed to run and improve the service."
+        },
+        {
+          "heading": "How we use information",
+          "body": "We use your information to provide the service, personalise your experience, respond to support requests, and keep the platform secure."
+        },
+        {
+          "heading": "Cookies",
+          "body": "We use essential cookies for authentication and preferences such as language and theme. We do not sell your data."
+        },
+        {
+          "heading": "Data sharing",
+          "body": "We do not sell personal data. We share it only with providers that help us run the service, under appropriate safeguards."
+        },
+        {
+          "heading": "Your rights",
+          "body": "You may request access to, correction of, or deletion of your personal data. Contact us to exercise these rights."
+        },
+        {
+          "heading": "Security",
+          "body": "We use industry-standard measures to protect your data. No system is perfectly secure, but we work to keep yours safe."
+        }
+      ]
+    },
+    "dmca": {
+      "title": "DMCA policy",
+      "description": "How to report copyright concerns on Adysre.",
+      "updated": "Last updated: 18 July 2026",
+      "sections": [
+        {
+          "heading": "Reporting infringement",
+          "body": "If you believe content on Adysre infringes your copyright, send us a notice with the details below and we will review it promptly."
+        },
+        {
+          "heading": "What to include",
+          "body": "Identify the copyrighted work, the material you believe infringes it and where it appears, your contact details, and a good-faith statement."
+        },
+        {
+          "heading": "Our response",
+          "body": "On receiving a valid notice, we may remove or disable access to the material and notify the party who posted it."
+        },
+        {
+          "heading": "Counter-notice",
+          "body": "If you believe your content was removed in error, you may submit a counter-notice with your details and a statement made under penalty of perjury."
+        },
+        {
+          "heading": "Repeat infringers",
+          "body": "We may suspend or terminate accounts that repeatedly infringe the rights of others."
+        },
+        {
+          "heading": "Contact",
+          "body": "Send copyright notices to our support address. Please use ‘DMCA’ in the subject line so we can route it quickly."
+        }
+      ]
+    }
+  },
+  "cart": {
+    "open": "Cart",
+    "label": "Cart",
+    "empty": "Your cart is empty",
+    "emptyHint": "Buy <b>All Access Pass</b> to get unlimited access to all products.",
+    "cta": "Get All Access Pass"
+  },
+  "premium": {
+    "cta": "Get premium access"
+  },
+  "promo": {
+    "title": "Build faster with All-Access",
+    "description": "Get access to all templates, components and blocks for a one-time payment.",
+    "cta": "Get Premium Access",
+    "trust": "Trusted by {count, number}+ users worldwide"
+  },
+  "pricing": {
+    "metaTitle": "Pricing",
+    "title": "Get instant access to every prompt in the library",
+    "subtitle": "One payment unlocks all 120+ prompts across 15 categories, plus every prompt we add, and the modules still to come.",
+    "mostPopular": "Most popular",
+    "priceAria": "{price} US dollars",
+    "questions": "Questions? <a>Email us</a>.",
+    "plans": {
+      "free": {
+        "name": "Free",
+        "billing": "No card required",
+        "cta": "Browse free prompts"
+      },
+      "annual": {
+        "name": "Annual Access",
+        "billing": "Billed yearly",
+        "cta": "Get Annual Access"
+      },
+      "lifetime": {
+        "name": "Lifetime Access",
+        "billing": "One-time purchase",
+        "cta": "Get Lifetime Access"
+      },
+      "team": {
+        "name": "Team",
+        "billing": "One-time purchase",
+        "cta": "Get Team Access"
+      }
+    },
+    "features": {
+      "freePrompts": "Access to all 41 free prompts",
+      "allPrompts": "Access to all 120+ premium prompts",
+      "allCategories": "All 15 categories, from Portrait to Sci-Fi",
+      "fourModels": "Tuned for GPT Image, FLUX, Midjourney and SDXL",
+      "copyPaste": "Copy and paste, no setup",
+      "noCard": "No card required",
+      "yearUpdates": "1 year of new prompts and updates",
+      "lifetimeUpdates": "Lifetime updates: every prompt we add",
+      "futureModules": "Components and Templates when they ship",
+      "earlyAccess": "Early access to new modules",
+      "promptEditor": "Customise any prompt before you copy it",
+      "emailSupport": "Email support",
+      "prioritySupport": "Priority support",
+      "cancelAnytime": "Cancel anytime",
+      "tenSeats": "10 team members included",
+      "sharedWorkspace": "Shared workspace for your team",
+      "rolesPermissions": "Roles and permissions",
+      "everythingAnnual": "Everything in Annual Access",
+      "everythingLifetime": "Everything in Lifetime Access"
+    },
+    "faq": {
+      "title": "Frequently asked questions",
+      "subtitle": "Pay once, create faster. If you don't find what you need here, reach us at <a>{email}</a>",
+      "items": {
+        "lifetimeIncludes": {
+          "q": "What does lifetime access include?",
+          "a": "Every one of the 120+ prompts across all 15 categories, plus every prompt added afterwards, at no extra cost. It also covers the Components and Templates modules once they ship. One payment, no renewal."
+        },
+        "purchaseFlow": {
+          "q": "How does the purchase and access flow work?",
+          "a": "Pick a plan, pay once, and your workspace is upgraded straight away. Premium prompts unlock across every device you sign in on. There is nothing to download or install."
+        },
+        "freeVsPremium": {
+          "q": "What's the difference between free and premium prompts?",
+          "a": "Free covers 41 prompts you can use immediately without a card. Premium unlocks the full library of 120+, including the more involved cinematic, editorial and fantasy setups, and the prompt editor for customising any of them."
+        },
+        "models": {
+          "q": "Which AI models do the prompts work with?",
+          "a": "Every prompt lists the models it is tuned for (GPT Image, FLUX, Midjourney and SDXL), and you can filter the library by model. Prompts keep their lens, lighting and colour-grade details, so they carry across generators."
+        },
+        "refunds": {
+          "q": "Do you offer refunds?",
+          "a": "We don't offer refunds because you get immediate, full access to every prompt in the library the moment you buy. Please review our refund policy for details."
+        },
+        "help": {
+          "q": "Need help or have a question?",
+          "a": "Email {email} and we will get back to you. Lifetime and Team plans get priority support with a faster turnaround."
+        }
+      }
+    }
+  },
+  "checkout": {
+    "emailLabel": "Email",
+    "emailPlaceholder": "Enter your email",
+    "recurring": "Pay <b>{price}</b> then <b>{price}</b> every 12 months until canceled. You may cancel your subscription at any time.",
+    "oneTime": "Pay <b>{price}</b> once. Lifetime access, no renewal.",
+    "disclaimer": "The above email will be used to create your account. You will be redirected to our payment provider to complete your purchase.",
+    "submit": "Checkout",
+    "submitting": "Redirecting…",
+    "unavailable": "Checkout isn't available yet. Please email support to purchase."
+  },
+  "premiumGate": {
+    "title": "This is a premium prompt",
+    "descriptionCopy": "“{title}” is part of the premium library. Get premium access to copy it.",
+    "descriptionEdit": "“{title}” is part of the premium library. Get premium access to customise it.",
+    "cta": "Get premium access",
+    "notNow": "Not now",
+    "benefits": {
+      "unlockAll": "Unlock all 120+ premium prompts",
+      "unlockEdit": "Customise any prompt before you copy it",
+      "unlockUpdates": "Every prompt we add, included"
+    }
+  },
+  "components": {
+    "metaTitle": "Components",
+    "title": "Components",
+    "subtitle": "Free, copy-paste components in HTML, CSS, Tailwind, React, Next.js and TypeScript. MIT licensed, so use them anywhere.",
+    "searchPlaceholder": "Search components by name, tag or category…",
+    "searchLabel": "Search components",
+    "count": "{count, plural, =1 {# component} other {# components}}",
+    "countFiltered": "{count} of {total} components",
+    "frameworkCount": "{count, plural, =1 {# framework} other {# frameworks}}",
+    "frameworks": "Frameworks",
+    "featured": "Featured",
+    "new": "New",
+    "englishOriginal": "English",
+    "breadcrumb": "Breadcrumb",
+    "code": "Code",
+    "installation": "Installation",
+    "packageManager": "Package manager",
+    "props": "Props",
+    "variants": "Variants",
+    "customization": "Customization",
+    "details": "Details",
+    "related": "Related components",
+    "viewOnGithub": "View on GitHub",
+    "downloadFile": "Download .{ext} file",
+    "empty": {
+      "title": "No components match those filters",
+      "description": "Try a different search or clear the filters."
+    },
+    "filters": {
+      "category": "Category",
+      "allCategories": "All categories",
+      "allFrameworks": "All frameworks",
+      "allDifficulties": "All levels",
+      "byFramework": "Filter by framework",
+      "byDifficulty": "Filter by difficulty",
+      "sortBy": "Sort by"
+    },
+    "sort": {
+      "newest": "Newest",
+      "popular": "Popular",
+      "downloads": "Most downloaded",
+      "trending": "Trending",
+      "updated": "Recently updated",
+      "copied": "Most copied",
+      "alphabetical": "A-Z"
+    },
+    "difficulty": {
+      "beginner": "Beginner",
+      "intermediate": "Intermediate",
+      "advanced": "Advanced"
+    },
+    "meta": {
+      "author": "Author",
+      "version": "Version",
+      "created": "Created",
+      "updated": "Updated"
+    },
+    "propsTable": {
+      "name": "Prop",
+      "type": "Type",
+      "default": "Default",
+      "description": "Description",
+      "required": "required"
+    },
+    "categories": {
+      "buttons": "Buttons",
+      "cards": "Cards",
+      "hero": "Hero Sections",
+      "navbar": "Navbar",
+      "footer": "Footer",
+      "authentication": "Authentication",
+      "forms": "Forms",
+      "pricing": "Pricing",
+      "testimonials": "Testimonials",
+      "faq": "FAQ",
+      "features": "Features",
+      "dashboards": "Dashboards",
+      "tables": "Tables",
+      "modals": "Modals",
+      "loaders": "Loaders",
+      "timeline": "Timeline",
+      "calculators": "Pricing Calculators",
+      "ecommerce": "Ecommerce",
+      "ai": "AI Components",
+      "landing": "Landing Sections",
+      "marketing": "Marketing",
+      "animation": "Animation",
+      "backgrounds": "Backgrounds",
+      "charts": "Charts",
+      "admin": "Admin",
+      "tabs": "Tabs",
+      "carousel": "Carousel",
+      "services": "Services",
+      "about": "About",
+      "popover": "Popover",
+      "notifications": "Notifications",
+      "sidebars": "Sidebars",
+      "dropdowns": "Dropdowns",
+      "fab": "Floating Buttons",
+      "alerts": "Alerts",
+      "docks": "Docks",
+      "comparisons": "Comparisons",
+      "galleries": "Galleries",
+      "pagination": "Pagination",
+      "marquees": "Marquees",
+      "maps": "Maps",
+      "steppers": "Steppers",
+      "gradients": "Gradients",
+      "avatars": "Avatars",
+      "badges": "Badges",
+      "calendar": "Calendar",
+      "cursors": "Cursors",
+      "date-pickers": "Date Pickers",
+      "time-pickers": "Time Pickers",
+      "color-pickers": "Color Pickers",
+      "file-trees": "File Trees",
+      "file-uploads": "File Uploads",
+      "lists": "Lists",
+      "menus": "Menus",
+      "progress": "Progress",
+      "search-bars": "Search Bars",
+      "tags": "Tags",
+      "toggles": "Toggles",
+      "tooltips": "Tooltips",
+      "tour": "Tour Guide",
+      "cta": "CTA",
+      "sign-in": "Sign In",
+      "sign-up": "Sign Up",
+      "stats": "Stats & KPIs",
+      "team": "Team",
+      "error-pages": "Error Pages",
+      "globes": "Globes",
+      "bento": "Grids & Bentos",
+      "social": "Social Media",
+      "contact": "Contact Us",
+      "cart": "Cart",
+      "checkout": "Checkout",
+      "change-password": "Change Password",
+      "reset-password": "Reset Password",
+      "blog": "Blog",
+      "images": "Images",
+      "nature": "Nature"
+    },
+    "propDescriptions": {
+      "afterAlt": "Alternative text for the \"after\" image.",
+      "afterSrc": "The image shown on the \"after\" side.",
+      "allowMultiple": "Allows more than one item open at once.",
+      "ariaLabel": "The button's accessible name. Required for icon-only buttons.",
+      "authorAvatarSrc": "Image URL for the author's avatar.",
+      "authorName": "Name of the post's author.",
+      "autoDismissAfter": "How long before it dismisses itself, in seconds. Zero keeps it up.",
+      "avatarSrc": "Image URL for the avatar.",
+      "bandCopy": "A short line of supporting copy shown in the call-to-action band.",
+      "beforeAlt": "Alternative text for the \"before\" image.",
+      "beforeSrc": "The image shown on the \"before\" side.",
+      "bio": "Short biography paragraph.",
+      "buildHref": "Builds the URL for a page number, so pages stay real links.",
+      "calloutLabel": "The short heading above the callout, such as \"Note\".",
+      "caption": "The table's caption, announced to screen readers before its contents.",
+      "category": "Category label shown above the title.",
+      "children": "Content rendered inside the component.",
+      "className": "Additional classes merged onto the root element.",
+      "columns": "The columns being compared, in display order.",
+      "company": "Company shown beneath the name.",
+      "comparisonPeriod": "Comparison window shown beside the delta.",
+      "copy": "Body text shown under the title.",
+      "count": "Number shown in the badge; anything above 99 collapses to \"99+\".",
+      "coverSrc": "Image URL for the cover image.",
+      "ctaHref": "Destination for the call-to-action link.",
+      "ctaLabel": "Call-to-action button text.",
+      "currentPage": "The active page number, starting at 1.",
+      "danger": "Marks the item as destructive, so it reads as a warning.",
+      "date": "Machine-readable publication date.",
+      "dateLabel": "Human-readable publication date.",
+      "defaultAnnual": "Whether annual billing is selected on first render.",
+      "defaultCollapsed": "Whether the sidebar starts collapsed to its icon rail.",
+      "defaultFilter": "The filter applied on first render.",
+      "defaultOpenId": "Id of the item expanded on mount.",
+      "defaultOpenIds": "Ids of the items expanded on mount.",
+      "defaultOpenState": "Whether it starts open on first render.",
+      "defaultTabId": "The tab selected on first render.",
+      "delay": "Seconds to wait before animating in.",
+      "delta": "Change since the comparison period, pre-formatted.",
+      "direction": "Direction the element travels from as it appears.",
+      "disabled": "Prevents interaction and dims the control.",
+      "dismissLabel": "Accessible name for the dismiss button.",
+      "distance": "Distance in pixels the element travels.",
+      "duration": "Animation length in seconds.",
+      "email": "The signed-in account's email address.",
+      "eventCount": "How many events this summarises.",
+      "excerpt": "Short summary shown under the title.",
+      "features": "List of feature strings.",
+      "figureCaption": "The caption describing the figure's contents.",
+      "foundingLabel": "A short line beneath the founding year that gives it context.",
+      "foundingYear": "The year the story starts.",
+      "groupName": "Scopes the exclusive group. Pass a unique value per accordion on a page.",
+      "groups": "Feature groups, each with a heading and its own list.",
+      "hasMore": "Whether any items remain to load. When false the control retires.",
+      "highlighted": "Renders the accent treatment.",
+      "href": "Destination the card links to.",
+      "icon": "Icon element rendered alongside the content.",
+      "imageAlt": "Alternative text for the image. Empty when the title already names it.",
+      "imageSrc": "Image URL for the card's picture.",
+      "items": "The array of items to render.",
+      "kicker": "Small label shown above the title.",
+      "label": "Accessible label announced while loading.",
+      "lines": "Number of placeholder lines to render.",
+      "loading": "Shows a spinner and blocks input while true.",
+      "magnifyRange": "How far the magnification reaches, in pixels either side of the pointer.",
+      "maxScale": "How large the icon under the pointer grows, as a multiplier.",
+      "maxSeats": "The most seats the slider allows.",
+      "members": "The people shown in the grid.",
+      "message": "Body text of the notification.",
+      "meta": "Short supporting facts shown beneath the heading.",
+      "metrics": "The metrics to display, each with a value and label.",
+      "milestones": "The timeline entries, oldest first.",
+      "minSeats": "The fewest seats the slider allows.",
+      "name": "Plan name shown as the heading.",
+      "note": "A small qualifying line, such as what the price excludes.",
+      "onAddToCart": "Fired when the user adds the product to the cart.",
+      "once": "Animates only the first time it enters view.",
+      "onClick": "Fired when the user activates the control.",
+      "onClose": "Called when the component asks to close: Escape, the backdrop, or the close control.",
+      "onConfirm": "Fired once the destructive action is confirmed.",
+      "onDismiss": "Fired when the user dismisses the notification.",
+      "onLoadMore": "Called when the next batch is requested.",
+      "onPageSizeChange": "Called with the new page size when it changes.",
+      "onPeriodChange": "Called with the billing period when it is toggled.",
+      "onSelect": "Fired with the menu item the user chose.",
+      "onSignOut": "Called when the sign-out item is chosen.",
+      "onSubmit": "Called with the form's values when it is submitted.",
+      "open": "Whether the component is currently shown.",
+      "pageSize": "How many items each page shows.",
+      "paragraphs": "The body copy, one string per paragraph.",
+      "pathname": "The current path. The item matching it is marked as the active page.",
+      "period": "Billing period shown beside the price.",
+      "perSeatPrice": "The price charged for each seat.",
+      "personName": "Name of the person shown as the heading.",
+      "price": "Amount to display.",
+      "principles": "The values, each with a name and explanation.",
+      "progressValue": "How far along the task is, from 0 to 100.",
+      "quote": "Testimonial text, without surrounding quotation marks.",
+      "rating": "Star rating from 0 to 5.",
+      "reviewCount": "Number of reviews shown beside the rating.",
+      "role": "Job title shown beneath the name.",
+      "rows": "The alternating image-and-copy rows, in order.",
+      "secondaryHref": "Where the secondary action links to.",
+      "secondaryLabel": "The secondary action's visible text.",
+      "services": "The services to list, each with an icon, name and summary.",
+      "severity": "Tone of the notification. Sets its colour and icon.",
+      "showAvatar": "Renders a circular avatar placeholder.",
+      "siblingCount": "How many page numbers to show either side of the current one.",
+      "sliderPosition": "Where the divider sits, as a percentage from the left.",
+      "socials": "Social profile links rendered as icons.",
+      "statLabel": "Name of the metric shown above the value.",
+      "steps": "The ordered steps of the process.",
+      "tabItems": "The tabs, each with a label and its panel content.",
+      "text": "String written to the clipboard when the button is pressed.",
+      "tiers": "The pricing tiers, in display order.",
+      "timestamp": "Pre-formatted time the notification arrived.",
+      "title": "Heading text for the card.",
+      "totalItems": "How many items exist across all pages.",
+      "totalPages": "How many pages exist in total.",
+      "trend": "Direction of the change. Sets the delta's colour and arrow.",
+      "value": "The metric's current value, pre-formatted."
+    },
+    "variantLabels": {
+      "avatar": "Avatar",
+      "bordered": "Bordered",
+      "card": "Card",
+      "compact": "Compact",
+      "default": "Default",
+      "destructive": "Destructive",
+      "disabled": "Disabled",
+      "down": "From top",
+      "extended": "Extended",
+      "floating": "Floating",
+      "glow": "Glow",
+      "gradient": "Gradient",
+      "highlighted": "Highlighted",
+      "horizontal": "Horizontal",
+      "idle": "Idle",
+      "labeled": "Labelled",
+      "loading": "Loading",
+      "multiple": "Multi open",
+      "none": "No movement",
+      "primary": "Primary",
+      "scrollable": "Scrollable",
+      "single": "Single open",
+      "text": "Text",
+      "trendDown": "Trending down",
+      "trendUp": "Trending up",
+      "up": "From bottom",
+      "vertical": "Vertical"
+    },
+    "preview": {
+      "title": "Preview",
+      "device": "Preview size",
+      "desktop": "Desktop",
+      "tablet": "Tablet",
+      "mobile": "Mobile",
+      "toDark": "Preview in dark mode",
+      "toLight": "Preview in light mode",
+      "reset": "Restart the preview",
+      "fullscreen": "Open preview in a new tab"
+    },
+    "playground": {
+      "banner": {
+        "title": "Build your own page",
+        "description": "Assemble a page from library sections, header to footer, then copy or download the complete code.",
+        "cta": "Customize your project"
+      },
+      "title": "Playground",
+      "exit": "Back to library",
+      "restartTour": "Replay the tour",
+      "openExport": "Get the code",
+      "slots": {
+        "header": "Header",
+        "hero": "Hero",
+        "services": "Services",
+        "about": "About",
+        "gallery": "Gallery",
+        "pricing": "Pricing",
+        "comparison": "Comparison",
+        "faq": "FAQ",
+        "cta": "Call to action",
+        "footer": "Footer",
+        "logos": "Logo strip",
+        "features": "Feature grid",
+        "stats": "Stats",
+        "team": "Team",
+        "testimonials": "Testimonials",
+        "blog": "Blog",
+        "contact": "Contact"
+      },
+      "rail": {
+        "title": "Sections",
+        "empty": "Not added",
+        "add": "Add {slot}",
+        "remove": "Remove {slot}",
+        "reorder": "Drag to reorder, or Ctrl/Cmd + arrow keys"
+      },
+      "builder": {
+        "layout": "Layout",
+        "content": "Content",
+        "tabsLabel": "Section controls",
+        "style": "Style"
+      },
+      "variations": {
+        "of": "{slot} variations",
+        "empty": "No variations available yet",
+        "select": "Use {title}",
+        "count": "{current} / {total}",
+        "prev": "Previous variation",
+        "next": "Next variation"
+      },
+      "canvas": {
+        "empty": {
+          "title": "Nothing to preview",
+          "description": "Add at least one section from the list."
+        }
+      },
+      "export": {
+        "title": "Your page code",
+        "description": "Copy or download the code for your assembled page.",
+        "copyAll": "Copy code",
+        "downloadAll": "Download {file}",
+        "downloadSection": "Download {file}",
+        "files": "Files",
+        "missingSection": "{title} isn't available for {framework} yet.",
+        "coverage": "{available} / {total} sections",
+        "empty": "Add sections to export code.",
+        "paletteTitle": "Project palette",
+        "projectTitle": "Download full project",
+        "projectHint": "A ready-to-run project. Unzip it, then run npm install.",
+        "downloadProjectNext": "Next.js project",
+        "downloadProjectReact": "React project",
+        "stylesTitle": "Section styles",
+        "stylesHint": "Paste this alongside your markup. Each rule targets one section by id."
+      },
+      "tour": {
+        "stepCount": "Step {current} of {total}",
+        "skip": "Skip tour",
+        "back": "Back",
+        "next": "Next",
+        "done": "Finish",
+        "steps": {
+          "welcome": {
+            "title": "Welcome to the Playground",
+            "body": "Assemble a full page from ready-made sections, header to footer, then take the code with you."
+          },
+          "slots": {
+            "title": "Pick your sections",
+            "body": "Every section of your page lives here. Click one to work on it, or add and remove the optional ones."
+          },
+          "variations": {
+            "title": "Try variations",
+            "body": "Each section ships in several designs. Click any variation to swap it into your page instantly."
+          },
+          "canvas": {
+            "title": "Watch it come together",
+            "body": "This is your page, assembled live. Hover a section to switch variations right on the preview."
+          },
+          "device": {
+            "title": "Check every screen",
+            "body": "Preview your page at desktop, tablet and phone widths."
+          },
+          "export": {
+            "title": "Take the code",
+            "body": "When it looks right, copy or download the complete code for every section."
+          },
+          "upload": {
+            "title": "Start from a reference",
+            "body": "Drop in a sketch or a screenshot of a homepage you like and we'll assemble a matching template in seconds."
+          },
+          "scratch": {
+            "title": "Or build from scratch",
+            "body": "Prefer to choose everything yourself? Skip the upload and assemble the page section by section."
+          },
+          "result": {
+            "title": "Your generated template",
+            "body": "Here's your starting template. Download the code as-is, customize the sections, or start over with a new reference."
+          },
+          "content": {
+            "title": "Customise the copy",
+            "body": "Select any section, then edit its titles, text, labels and buttons here. Your changes show live and ship in the downloaded code."
+          }
+        }
+      },
+      "start": {
+        "title": "Customize your project",
+        "subtitle": "Upload a reference and we'll assemble a matching template, or start from a blank canvas.",
+        "or": "or",
+        "scratchTitle": "Build from scratch",
+        "scratchDescription": "Pick every section and variation yourself."
+      },
+      "upload": {
+        "title": "Drop a reference image here",
+        "hint": "A sketch, wireframe, or a screenshot of a homepage you like.",
+        "browse": "Choose image",
+        "formats": "PNG, JPG, WEBP or GIF · up to 12 MB",
+        "errorType": "That file isn't a supported image. Use PNG, JPG, WEBP or GIF.",
+        "errorSize": "That image is over 12 MB. Try a smaller file."
+      },
+      "generating": {
+        "title": "Building your template…",
+        "subtitle": "Analyzing your reference and assembling matching sections.",
+        "previewAlt": "Your uploaded reference",
+        "error": "We couldn't read that image. Please try another file."
+      },
+      "result": {
+        "title": "Your template is ready",
+        "subtitle": "{count} sections assembled from your reference. Download the code, or customize it further.",
+        "getCode": "Get the code",
+        "customize": "Customize",
+        "startOver": "Start over"
+      },
+      "palette": {
+        "button": "Palette",
+        "label": "Choose the project palette",
+        "title": "Project palette",
+        "description": "Choose the colour palette shipped with your generated code.",
+        "current": "Current palette",
+        "remove": "Remove palette",
+        "generateOwn": "Generate your own",
+        "useReference": "Use my reference colours",
+        "chooseLibrary": "Choose from library",
+        "referenceName": "Reference palette"
+      },
+      "content": {
+        "title": "Edit content",
+        "noneSlot": "No section selected",
+        "empty": "Add a section to edit its text, titles and labels.",
+        "reading": "Reading this section's content…",
+        "editedCount": "{count} edited",
+        "reset": "Reset to original",
+        "kind": {
+          "heading": "Heading",
+          "button": "Button",
+          "text": "Text",
+          "label": "Label",
+          "placeholder": "Placeholder",
+          "alt": "Alt text"
+        }
+      },
+      "style": {
+        "title": "Style",
+        "empty": "Select a section to style it.",
+        "background": "Background",
+        "kind": {
+          "none": "None",
+          "color": "Color",
+          "gradient": "Gradient",
+          "pattern": "Pattern",
+          "texture": "Texture"
+        },
+        "backgroundColor": "Background color",
+        "angle": "Angle",
+        "scale": "Scale",
+        "opacity": "Opacity",
+        "patternBg": "Pattern background",
+        "patternFg": "Pattern foreground",
+        "text": "Text",
+        "textColor": "Text color",
+        "textHint": "Overrides the section’s own text colors.",
+        "clearText": "Clear text color",
+        "border": "Border",
+        "borderWidth": "Border width",
+        "borderStyle": {
+          "solid": "Solid",
+          "dashed": "Dashed",
+          "dotted": "Dotted"
+        },
+        "borderColor": "Border color",
+        "clearBorder": "Clear border",
+        "radius": "Corner radius",
+        "reset": "Reset styles"
+      },
+      "pages": {
+        "title": "Pages",
+        "add": "Add page",
+        "newName": "New page",
+        "rename": "Double-click to rename",
+        "nameLabel": "Page name",
+        "remove": "Remove {name}"
+      }
+    },
+    "allComponents": "All components"
+  },
+  "templates": {
+    "title": "Templates",
+    "subtitle": "Complete, single-page websites you can preview live, clone with a prompt, or download as a runnable project. Every template ships with header, hero, about, services, why-us, FAQ, contact and footer.",
+    "meta": {
+      "title": "Website Templates",
+      "description": "Free and premium single-page website templates in React, Next.js, Tailwind and plain HTML."
+    },
+    "empty": "No templates yet.",
+    "tiers": {
+      "free": "Free",
+      "premium": "Premium"
+    },
+    "themes": {
+      "saas": "SaaS",
+      "restaurant": "Restaurant",
+      "fitness": "Fitness",
+      "health": "Health",
+      "architecture": "Architecture",
+      "legal": "Legal",
+      "realEstate": "Real estate",
+      "ecommerce": "E-commerce",
+      "finance": "Finance",
+      "agency": "Agency",
+      "beauty": "Beauty",
+      "payments": "Payments",
+      "consulting": "Consulting",
+      "education": "Education"
+    },
+    "taglines": {
+      "nova": "Dark, glassy analytics SaaS with a gradient mesh hero and animated counters.",
+      "saffron": "Warm, editorial fine dining in cream and forest green, with parallax plating and serif display type.",
+      "pulse": "Calm, rounded clinic site in medical blue and mint, built to reassure.",
+      "aurora": "High-energy gym landing page in acid lime on near-black, with condensed display type.",
+      "atelier": "Stark white architecture portfolio: hairline rules, huge whitespace, numbered project index.",
+      "verdant": "Forest-and-brass estate agency with a filterable listings grid across four pages.",
+      "meridian": "Navy-and-gold corporate law firm across four pages, formal and typographic.",
+      "lumen": "Seven-page lighting store: shop, product, cart, checkout, sign in and sign up.",
+      "kite": "Maximal creative agency in magenta-to-tangerine, with outlined display type and tilting case cards.",
+      "vanta": "Dark trading platform with CSS candlesticks, order book and a live-feel ticker, across five pages.",
+      "cadence": "Warm online academy with animated progress rings, a filterable catalogue and a curriculum accordion.",
+      "lumiere": "Blush-and-plum salon across seven pages: treatment categories, a filterable shop, cart and booking.",
+      "northgate": "Payments infrastructure across five pages, with a self-drawing flow diagram and a live pricing calculator.",
+      "pinnacle": "Sand-and-blue strategy consultancy: oversized type, a numbered process rail and measured outcomes.",
+      "tavola": "A bilingual, multi-currency restaurant: one menu, six pages, from the kitchen to the table."
+    },
+    "sections": {
+      "header": "Header",
+      "hero": "Hero",
+      "about": "About us",
+      "services": "Services",
+      "why": "Why choose us",
+      "faq": "FAQ",
+      "contact": "Contact",
+      "footer": "Footer"
+    },
+    "downloads": {
+      "nextjs": "Next.js",
+      "react": "React",
+      "tailwind": "Tailwind + HTML",
+      "html": "HTML & CSS"
+    },
+    "kinds": {
+      "project": "Project",
+      "static": "Static"
+    },
+    "detail": {
+      "sections": "Sections included",
+      "prompt": "Prompt",
+      "promptHint": "Copy this into any AI tool to generate a page in the same spirit.",
+      "download": "Download",
+      "downloadHint": "Every download is a ZIP with a README and no build step you have not asked for.",
+      "downloadFailed": "That download could not be built. Please try again.",
+      "pages": "Pages"
+    },
+    "actions": {
+      "openTab": "Open in new tab",
+      "copyPrompt": "Copy prompt",
+      "copied": "Copied",
+      "close": "Close"
+    },
+    "pagesCount": "{count} pages",
+    "filters": {
+      "tabsLabel": "Filter templates",
+      "theme": "Business",
+      "allThemes": "All",
+      "tabs": {
+        "all": "All",
+        "free": "Free",
+        "premium": "Premium",
+        "new": "New",
+        "multipage": "Multipage"
+      }
+    },
+    "locked": {
+      "title": "Premium template",
+      "body": "Preview it as much as you like. The prompt and the code downloads come with premium access.",
+      "cta": "Get premium access",
+      "included": {
+        "preview": "Live preview, in full, no account needed",
+        "prompt": "Copy the design prompt",
+        "download": "Download React, Next.js and static builds"
+      }
+    }
+  },
+  "palettes": {
+    "title": "Color Palettes",
+    "subtitle": "Browse curated palettes for websites, web, mobile and desktop apps. Copy the code, edit and swap colours, or generate your own.",
+    "generateCta": "Generate palette",
+    "searchPlaceholder": "Search palettes by name, tag or colour…",
+    "filterByTag": "Filter by tag",
+    "allTags": "All",
+    "sortBy": "Sort by",
+    "sort": {
+      "trending": "Trending",
+      "name": "Name"
+    },
+    "savedTitle": "Your palettes",
+    "trendingTitle": "Trending",
+    "removeSaved": "Remove {name}",
+    "empty": "No palettes match your filters.",
+    "card": {
+      "swatches": "Colours in {name}",
+      "copyColor": "Copy {hex}",
+      "copyAll": "Copy all colours",
+      "open": "Open palette",
+      "like": "Like {name}"
+    },
+    "code": {
+      "formats": "Code formats",
+      "download": "Download .{ext}",
+      "title": "Code"
+    },
+    "quickView": {
+      "editColor": "Edit colour {index}",
+      "lock": "Lock colour",
+      "unlock": "Unlock colour",
+      "shuffle": "Shuffle",
+      "downloadImage": "Download PNG",
+      "save": "Save",
+      "saved": "Saved",
+      "similar": "Explore similar"
+    },
+    "generator": {
+      "title": "Generate a palette",
+      "subtitle": "From a brief, your own colours, or a reference image.",
+      "modeLabel": "Generation method",
+      "modes": {
+        "brief": "Brief",
+        "colors": "Colours",
+        "image": "Image"
+      },
+      "fields": {
+        "name": "Website / brand name",
+        "namePlaceholder": "e.g. Northwind Studio",
+        "business": "Business type",
+        "colors": "Colours you want (optional)",
+        "colorsPlaceholder": "e.g. teal, navy, #f4a261",
+        "comments": "Comments (optional)",
+        "commentsPlaceholder": "e.g. calm and premium, mostly light",
+        "hexes": "Your colours",
+        "hexesHint": "Enter hex codes or colour names, separated by commas.",
+        "imageTitle": "Upload a reference image",
+        "imageHint": "We’ll pull the palette from its colours. PNG, JPG, WEBP or GIF."
+      },
+      "business": {
+        "technology": "Technology",
+        "finance": "Finance",
+        "health": "Health & Wellness",
+        "food": "Food & Drink",
+        "fashion": "Fashion",
+        "education": "Education",
+        "realEstate": "Real Estate",
+        "travel": "Travel",
+        "creative": "Creative & Agency",
+        "eco": "Eco & Sustainability",
+        "fitness": "Fitness & Sports",
+        "beauty": "Beauty",
+        "luxury": "Luxury",
+        "other": "Other"
+      },
+      "preview": "Preview",
+      "cancel": "Cancel",
+      "generate": "Generate",
+      "regenerate": "Regenerate",
+      "use": "Use this palette",
+      "defaultName": "My palette",
+      "error": "Something went wrong. Please try again.",
+      "errorType": "Unsupported image. Use PNG, JPG, WEBP or GIF.",
+      "errorSize": "That image is over 12 MB."
+    },
+    "tour": {
+      "restart": "Replay the tour",
+      "stepOf": "Step {current} of {total}",
+      "back": "Back",
+      "next": "Next",
+      "done": "Finish",
+      "skip": "Skip tour",
+      "steps": {
+        "welcome": {
+          "title": "Welcome to Color Palettes",
+          "body": "Ready-made colour palettes for your website or app. Copy, tweak, export, or generate your own."
+        },
+        "generate": {
+          "title": "Generate your own",
+          "body": "Describe your brand, type in colours, or upload a reference image and we’ll build a palette for you."
+        },
+        "browse": {
+          "title": "Browse and copy",
+          "body": "Click any colour to copy its hex, or copy the whole set. Search and filter by tag or colour."
+        },
+        "edit": {
+          "title": "Edit and swap",
+          "body": "Open a palette to recolour any swatch, lock the ones you like, and shuffle the rest."
+        },
+        "export": {
+          "title": "Export the code",
+          "body": "Copy or download the palette as CSS, SCSS, Tailwind, an array or JSON, or save it as a PNG."
+        },
+        "similar": {
+          "title": "Explore similar",
+          "body": "Jump to palettes with a matching mood to keep exploring."
+        }
+      }
+    }
+  },
+  "gradients": {
+    "title": "Gradients",
+    "subtitle": "Browse curated CSS gradients for websites and apps. Copy the code, edit the stops, download as CSS or an image, or generate your own.",
+    "generateCta": "Generate gradient",
+    "searchPlaceholder": "Search gradients by name, tag or colour…",
+    "filterByTag": "Filter by tag",
+    "allTags": "All",
+    "sortBy": "Sort by",
+    "sort": {
+      "trending": "Trending",
+      "name": "Name"
+    },
+    "savedTitle": "Your gradients",
+    "trendingTitle": "Trending",
+    "removeSaved": "Remove {name}",
+    "empty": "No gradients match your filters.",
+    "card": {
+      "open": "Open {name}",
+      "edit": "Edit",
+      "copyCss": "Copy CSS",
+      "like": "Like {name}"
+    },
+    "code": {
+      "formats": "Code formats",
+      "download": "Download .{ext}",
+      "title": "Code"
+    },
+    "quickView": {
+      "preview": "Gradient preview",
+      "type": "Gradient type",
+      "types": {
+        "linear": "Linear",
+        "radial": "Radial",
+        "conic": "Conic"
+      },
+      "angle": "Angle",
+      "stops": "Colour stops",
+      "addStop": "Add stop",
+      "editStop": "Edit stop {index}",
+      "stopPosition": "Position of stop {index}",
+      "removeStop": "Remove stop {index}",
+      "shuffle": "Shuffle",
+      "downloadImage": "Download PNG",
+      "save": "Save",
+      "saved": "Saved",
+      "similar": "Explore similar"
+    },
+    "generator": {
+      "title": "Generate a gradient",
+      "subtitle": "From a brief, your own colours, or a reference image.",
+      "modeLabel": "Generation method",
+      "modes": {
+        "brief": "Brief",
+        "colors": "Colours",
+        "image": "Image"
+      },
+      "fields": {
+        "name": "Name (optional)",
+        "namePlaceholder": "e.g. Sunset Fade",
+        "style": "Style",
+        "colors": "Colours you want (optional)",
+        "colorsPlaceholder": "e.g. #6a11cb, blue",
+        "comments": "Comments (optional)",
+        "commentsPlaceholder": "e.g. soft and calm, top-to-bottom",
+        "hexes": "Your colours",
+        "hexesHint": "Enter 2-3 hex codes or colour names, separated by commas.",
+        "imageTitle": "Upload a reference image",
+        "imageHint": "We’ll pull a gradient from its colours. PNG, JPG, WEBP or GIF."
+      },
+      "styles": {
+        "vibrant": "Vibrant",
+        "sunset": "Sunset",
+        "ocean": "Ocean",
+        "forest": "Forest",
+        "pastel": "Pastel",
+        "neon": "Neon",
+        "dark": "Dark",
+        "warm": "Warm",
+        "cool": "Cool",
+        "monochrome": "Monochrome"
+      },
+      "preview": "Preview",
+      "cancel": "Cancel",
+      "generate": "Generate",
+      "regenerate": "Regenerate",
+      "use": "Use this gradient",
+      "error": "Something went wrong. Please try again.",
+      "errorType": "Unsupported image. Use PNG, JPG, WEBP or GIF.",
+      "errorSize": "That image is over 12 MB."
+    },
+    "tour": {
+      "restart": "Replay the tour",
+      "stepOf": "Step {current} of {total}",
+      "back": "Back",
+      "next": "Next",
+      "done": "Finish",
+      "skip": "Skip tour",
+      "steps": {
+        "welcome": {
+          "title": "Welcome to Gradients",
+          "body": "Ready-made CSS gradients for your site or app. Copy, tweak, export, or generate your own."
+        },
+        "generate": {
+          "title": "Generate your own",
+          "body": "Describe the style you want, type in colours, or upload a reference image and we’ll build a gradient for you."
+        },
+        "browse": {
+          "title": "Browse and copy",
+          "body": "Click any gradient to open it, or copy its CSS straight from the card. Search and filter by tag or colour."
+        },
+        "edit": {
+          "title": "Edit it",
+          "body": "Switch between linear, radial and conic, change the angle, and recolour or add colour stops."
+        },
+        "export": {
+          "title": "Export it",
+          "body": "Copy or download the gradient as CSS, SCSS, Tailwind, an array or JSON, or save it as a PNG image."
+        },
+        "similar": {
+          "title": "Explore similar",
+          "body": "Jump to gradients with a matching mood to keep exploring."
+        }
+      }
+    }
+  },
+  "patterns": {
+    "title": "Patterns",
+    "subtitle": "Browse curated CSS background patterns for websites and apps. Copy the code, recolour and resize, download as CSS or an image, or generate your own.",
+    "generateCta": "Generate pattern",
+    "searchPlaceholder": "Search patterns by name, tag or colour…",
+    "filterByTag": "Filter by tag",
+    "allTags": "All",
+    "sortBy": "Sort by",
+    "sort": {
+      "trending": "Trending",
+      "name": "Name"
+    },
+    "savedTitle": "Your patterns",
+    "trendingTitle": "Trending",
+    "removeSaved": "Remove {name}",
+    "empty": "No patterns match your filters.",
+    "card": {
+      "open": "Open {name}",
+      "edit": "Edit",
+      "copyCss": "Copy CSS",
+      "like": "Like {name}"
+    },
+    "code": {
+      "formats": "Code formats",
+      "download": "Download .{ext}",
+      "title": "Code"
+    },
+    "quickView": {
+      "preview": "Pattern preview",
+      "type": "Pattern type",
+      "types": {
+        "dots": "Dots",
+        "grid": "Grid",
+        "lines": "Lines",
+        "checkerboard": "Checkerboard",
+        "crosshatch": "Crosshatch"
+      },
+      "foreground": "Foreground",
+      "background": "Background",
+      "size": "Tile size",
+      "angle": "Angle",
+      "shuffle": "Shuffle",
+      "downloadImage": "Download PNG",
+      "save": "Save",
+      "saved": "Saved",
+      "similar": "Explore similar"
+    },
+    "generator": {
+      "title": "Generate a pattern",
+      "subtitle": "From a brief, your own colours, or a reference image.",
+      "modeLabel": "Generation method",
+      "modes": {
+        "brief": "Brief",
+        "colors": "Colours",
+        "image": "Image"
+      },
+      "fields": {
+        "name": "Name (optional)",
+        "namePlaceholder": "e.g. Blueprint Grid",
+        "style": "Style",
+        "colors": "Colours you want (optional)",
+        "colorsPlaceholder": "e.g. #0f172a, slate",
+        "comments": "Comments (optional)",
+        "commentsPlaceholder": "e.g. subtle and light",
+        "hexes": "Your colours",
+        "hexesHint": "Enter 1-2 hex codes or colour names, separated by commas.",
+        "imageTitle": "Upload a reference image",
+        "imageHint": "We'll pull the colours from it. PNG, JPG, WEBP or GIF."
+      },
+      "styles": {
+        "dots": "Dots",
+        "grid": "Grid",
+        "blueprint": "Blueprint",
+        "stripes": "Stripes",
+        "diagonal": "Diagonal",
+        "checker": "Checker",
+        "hatch": "Hatch",
+        "neon": "Neon",
+        "pastel": "Pastel",
+        "mono": "Mono"
+      },
+      "preview": "Preview",
+      "cancel": "Cancel",
+      "generate": "Generate",
+      "regenerate": "Regenerate",
+      "use": "Use this pattern",
+      "error": "Something went wrong. Please try again.",
+      "errorType": "Unsupported image. Use PNG, JPG, WEBP or GIF.",
+      "errorSize": "That image is over 12 MB."
+    },
+    "tour": {
+      "restart": "Replay the tour",
+      "stepOf": "Step {current} of {total}",
+      "back": "Back",
+      "next": "Next",
+      "done": "Finish",
+      "skip": "Skip tour",
+      "steps": {
+        "welcome": {
+          "title": "Welcome to Patterns",
+          "body": "Ready-made CSS background patterns for your site or app. Copy, tweak, export, or generate your own."
+        },
+        "generate": {
+          "title": "Generate your own",
+          "body": "Describe the style you want, type in colours, or upload a reference image and we'll build a pattern for you."
+        },
+        "browse": {
+          "title": "Browse and copy",
+          "body": "Click any pattern to open it, or copy its CSS straight from the card. Search and filter by tag or colour."
+        },
+        "edit": {
+          "title": "Edit it",
+          "body": "Switch between dots, grid, lines, checkerboard and crosshatch, recolour, and resize the tile."
+        },
+        "export": {
+          "title": "Export it",
+          "body": "Copy or download the pattern as CSS, SCSS, Tailwind, an array or JSON, or save it as a PNG image."
+        },
+        "similar": {
+          "title": "Explore similar",
+          "body": "Jump to patterns with a matching mood to keep exploring."
+        }
+      }
+    }
+  },
+  "textures": {
+    "title": "Textures",
+    "subtitle": "Browse curated CSS surface textures for websites and apps. Copy the code, recolour and adjust the grain, download as CSS or an image, or generate your own.",
+    "generateCta": "Generate texture",
+    "searchPlaceholder": "Search textures by name, tag or colour…",
+    "filterByTag": "Filter by tag",
+    "allTags": "All",
+    "sortBy": "Sort by",
+    "sort": {
+      "trending": "Trending",
+      "name": "Name"
+    },
+    "savedTitle": "Your textures",
+    "trendingTitle": "Trending",
+    "removeSaved": "Remove {name}",
+    "empty": "No textures match your filters.",
+    "card": {
+      "open": "Open {name}",
+      "edit": "Edit",
+      "copyCss": "Copy CSS",
+      "like": "Like {name}"
+    },
+    "code": {
+      "formats": "Code formats",
+      "download": "Download .{ext}",
+      "title": "Code"
+    },
+    "quickView": {
+      "preview": "Texture preview",
+      "type": "Texture type",
+      "types": {
+        "noise": "Noise",
+        "grain": "Grain",
+        "paper": "Paper",
+        "carbon": "Carbon",
+        "fabric": "Fabric"
+      },
+      "foreground": "Grain",
+      "background": "Background",
+      "opacity": "Strength",
+      "scale": "Scale",
+      "shuffle": "Shuffle",
+      "downloadImage": "Download PNG",
+      "save": "Save",
+      "saved": "Saved",
+      "similar": "Explore similar"
+    },
+    "generator": {
+      "title": "Generate a texture",
+      "subtitle": "From a brief, your own colours, or a reference image.",
+      "modeLabel": "Generation method",
+      "modes": {
+        "brief": "Brief",
+        "colors": "Colours",
+        "image": "Image"
+      },
+      "fields": {
+        "name": "Name (optional)",
+        "namePlaceholder": "e.g. Carbon Fiber",
+        "style": "Style",
+        "colors": "Colours you want (optional)",
+        "colorsPlaceholder": "e.g. #0f172a, slate",
+        "comments": "Comments (optional)",
+        "commentsPlaceholder": "e.g. subtle and dark",
+        "hexes": "Your colours",
+        "hexesHint": "Enter 1-2 hex codes or colour names, separated by commas.",
+        "imageTitle": "Upload a reference image",
+        "imageHint": "We'll pull the colours from it. PNG, JPG, WEBP or GIF."
+      },
+      "styles": {
+        "noise": "Noise",
+        "grain": "Grain",
+        "film": "Film",
+        "paper": "Paper",
+        "craft": "Craft",
+        "carbon": "Carbon",
+        "tech": "Tech",
+        "fabric": "Fabric",
+        "denim": "Denim",
+        "linen": "Linen"
+      },
+      "preview": "Preview",
+      "cancel": "Cancel",
+      "generate": "Generate",
+      "regenerate": "Regenerate",
+      "use": "Use this texture",
+      "error": "Something went wrong. Please try again.",
+      "errorType": "Unsupported image. Use PNG, JPG, WEBP or GIF.",
+      "errorSize": "That image is over 12 MB."
+    },
+    "tour": {
+      "restart": "Replay the tour",
+      "stepOf": "Step {current} of {total}",
+      "back": "Back",
+      "next": "Next",
+      "done": "Finish",
+      "skip": "Skip tour",
+      "steps": {
+        "welcome": {
+          "title": "Welcome to Textures",
+          "body": "Ready-made CSS surface textures for your site or app. Copy, tweak, export, or generate your own."
+        },
+        "generate": {
+          "title": "Generate your own",
+          "body": "Describe the surface you want, type in colours, or upload a reference image and we'll build a texture for you."
+        },
+        "browse": {
+          "title": "Browse and copy",
+          "body": "Click any texture to open it, or copy its CSS straight from the card. Search and filter by tag or colour."
+        },
+        "edit": {
+          "title": "Edit it",
+          "body": "Switch between noise, grain, paper, carbon and fabric, recolour, and adjust the strength and scale."
+        },
+        "export": {
+          "title": "Export it",
+          "body": "Copy or download the texture as CSS, SCSS, Tailwind, an array or JSON, or save it as a PNG image."
+        },
+        "similar": {
+          "title": "Explore similar",
+          "body": "Jump to textures with a matching mood to keep exploring."
+        }
+      }
+    }
+  },
+  "icons": {
+    "title": "Icons",
+    "subtitle": "{count} original, open line icons for your product. Search, recolour, resize, then copy or download as SVG, PNG, React or CSS.",
+    "weight": "Weight",
+    "searchPlaceholder": "Search icons by name, category or tag…",
+    "filterByCategory": "Filter by category",
+    "allCategories": "All",
+    "resultCount": "{count} icons",
+    "savedTitle": "Saved icons",
+    "empty": "No icons match your search.",
+    "categories": {
+      "interface": "Interface",
+      "arrows": "Arrows",
+      "communication": "Communication",
+      "media": "Media",
+      "files": "Files",
+      "commerce": "Commerce",
+      "devices": "Devices",
+      "weather": "Weather",
+      "social": "Social",
+      "editing": "Editing",
+      "maps": "Maps",
+      "status": "Status"
+    },
+    "card": {
+      "open": "Open {name}",
+      "copySvg": "Copy SVG"
+    },
+    "code": {
+      "formats": "Code formats",
+      "download": "Download .{ext}",
+      "title": "Copy & export"
+    },
+    "quickView": {
+      "colour": "Colour",
+      "themeColour": "Theme",
+      "customColour": "Custom colour",
+      "style": "Style",
+      "filled": "Filled",
+      "outline": "Outline",
+      "weight": "Weight",
+      "size": "Size",
+      "save": "Save",
+      "saved": "Saved",
+      "downloadSvg": "SVG",
+      "downloadPng": "Download PNG",
+      "similar": "Related icons"
+    },
+    "tour": {
+      "restart": "Replay the tour",
+      "stepOf": "Step {current} of {total}",
+      "back": "Back",
+      "next": "Next",
+      "done": "Finish",
+      "skip": "Skip tour",
+      "steps": {
+        "welcome": {
+          "title": "Welcome to Icons",
+          "body": "A library of original, open line icons. Browse, customise, and take the code in any format."
+        },
+        "customize": {
+          "title": "Set the weight",
+          "body": "Drag to make every icon lighter or bolder. Your choice sticks across the whole library."
+        },
+        "browse": {
+          "title": "Find an icon",
+          "body": "Search by name, category or tag, or filter by theme. Hover any icon to copy its SVG instantly."
+        },
+        "edit": {
+          "title": "Make it yours",
+          "body": "Open an icon to recolour it, change its weight, resize it, or switch to a filled look, all live."
+        },
+        "export": {
+          "title": "Copy or export",
+          "body": "Grab the icon as SVG, JSX, a React component, a data URI, or a CSS mask rule."
+        },
+        "download": {
+          "title": "Download anywhere",
+          "body": "Save a crisp SVG, or a PNG at any size from 16 up to 256 pixels."
+        }
+      }
+    }
+  },
+  "landing": {
+    "meta": {
+      "title": "ADYSRE: Design and ship in one workspace",
+      "description": "The workspace where product teams browse components, icons, palettes, gradients and prompts, then take them straight to production."
+    },
+    "nav": {
+      "pricing": "Pricing",
+      "openApp": "Open workspace",
+      "menu": "Open menu",
+      "closeMenu": "Close menu",
+      "skip": "Skip to content",
+      "menus": {
+        "styles": "Styles",
+        "library": "Library"
+      }
+    },
+    "hero": {
+      "badge": "New: gradient and palette generators",
+      "title": "Everything your team needs to design and ship",
+      "titleAccent": "in one calm workspace",
+      "subtitle": "ADYSRE brings components, icons, palettes, gradients and prompts together, so your team can move from idea to production without switching tools.",
+      "ctaComponents": "Explore components",
+      "ctaPlayground": "Open the playground",
+      "ctaWorkspace": "Open the workspace",
+      "trust": "Trusted by {count, number}+ builders worldwide",
+      "hint": "No card required to browse"
+    },
+    "marquee": {
+      "label": "Built for the way modern product teams work"
+    },
+    "features": {
+      "title": "One workspace, every building block",
+      "subtitle": "Each module is ready to browse, copy and drop into your product. Open any of them from the side menu once you are in.",
+      "explore": "Explore",
+      "items": {
+        "components": {
+          "title": "Components",
+          "desc": "Copy-paste UI blocks in HTML, Tailwind, React and Next.js, typed and ready for production."
+        },
+        "icons": {
+          "title": "Icons",
+          "desc": "A tuned icon set with adjustable weight, live preview and one-click copy in your format."
+        },
+        "palettes": {
+          "title": "Color palettes",
+          "desc": "Accessible palettes with token output, so brand colours stay consistent everywhere."
+        },
+        "gradients": {
+          "title": "Gradients",
+          "desc": "Layered, on-brand gradients with CSS you can paste straight into your styles."
+        },
+        "patterns": {
+          "title": "Patterns",
+          "desc": "Repeatable CSS background patterns you can paste straight into your styles."
+        },
+        "textures": {
+          "title": "Textures",
+          "desc": "Noise, grain, paper and woven surface textures in pure CSS. No image files."
+        },
+        "promptLibrary": {
+          "title": "Prompt library",
+          "desc": "A curated library of prompts across categories, tuned for the models your team already uses."
+        },
+        "templates": {
+          "title": "Templates",
+          "desc": "Full page and flow templates that assemble the modules into finished screens."
+        }
+      }
+    },
+    "workflow": {
+      "title": "From blank canvas to shipped, in three steps",
+      "subtitle": "The same loop for every module, so the whole team moves the same way.",
+      "steps": {
+        "browse": {
+          "title": "Browse",
+          "desc": "Search across every module and preview each result live before you commit."
+        },
+        "tailor": {
+          "title": "Tailor",
+          "desc": "Adjust colour, weight and framework, then copy output that matches your tokens."
+        },
+        "ship": {
+          "title": "Ship",
+          "desc": "Paste it into your product and keep moving, with no cleanup and no lock-in."
+        }
+      }
+    },
+    "showcase": {
+      "title": "See it work before you commit",
+      "subtitle": "Live previews built from the same design tokens your product uses.",
+      "palette": {
+        "label": "Palette",
+        "caption": "Token-ready colour sets"
+      },
+      "gradient": {
+        "label": "Gradient",
+        "caption": "Paste-ready CSS backgrounds"
+      },
+      "icons": {
+        "label": "Icons",
+        "caption": "Adjustable, copy in one click"
+      },
+      "components": {
+        "label": "Components",
+        "caption": "Typed and production ready"
+      }
+    },
+    "templates": {
+      "badge": "Templates",
+      "title": "Complete sites, not just sections",
+      "subtitle": "{count} full templates. Every page designed together, every section yours to edit. Preview one live, clone it with a prompt, or download a runnable project.",
+      "cta": "Browse all {count} templates",
+      "note": "Included with every plan, at no extra cost."
+    },
+    "stats": {
+      "title": "Growing every week",
+      "items": {
+        "components": "Components",
+        "icons": "Icons",
+        "colors": "Colors",
+        "gradients": "Gradients",
+        "patterns": "Patterns",
+        "textures": "Textures",
+        "prompts": "Prompts",
+        "teams": "Teams building"
+      }
+    },
+    "install": {
+      "eyebrow": "Open source",
+      "title": "Ship it from npm, not from a copy-paste",
+      "subtitle": "Every block, icon, gradient, pattern and texture on this site is one install away: typed, tree-shakeable, and yours to use in any React or Next.js project.",
+      "license": "{license} licensed",
+      "tabsLabel": "Package manager",
+      "copy": "Copy command",
+      "copied": "Copied",
+      "steps": {
+        "styles": {
+          "title": "Wire up the styles once",
+          "desc": "One import brings the design tokens and tells Tailwind to scan the package. Not using Tailwind? Import the pre-compiled stylesheet instead."
+        },
+        "use": {
+          "title": "Then import anything",
+          "desc": "Each area has its own entry point, so a button never drags the whole catalogue into your bundle."
+        }
+      },
+      "entriesTitle": "What you get",
+      "entries": {
+        "blocks": "Section and page components",
+        "icons": "Original 24px line icons",
+        "palettes": "Curated colour sets",
+        "gradients": "Linear, radial and conic",
+        "patterns": "Pure-CSS backgrounds",
+        "textures": "Noise, grain and weave"
+      },
+      "cta": {
+        "npm": "View on npm",
+        "browse": "Browse the catalogue"
+      }
+    },
+    "faq": {
+      "title": "Questions, answered",
+      "subtitle": "Everything else you might want to know before you start.",
+      "items": {
+        "what": {
+          "q": "What is ADYSRE?",
+          "a": "A single workspace for design and build resources: components, icons, palettes, gradients and prompts, ready to copy into your product."
+        },
+        "frameworks": {
+          "q": "Which frameworks do you support?",
+          "a": "Components ship as HTML, CSS, Tailwind, React, Next.js and TypeScript, so you can drop them into most modern stacks."
+        },
+        "templates": {
+          "q": "When do templates arrive?",
+          "a": "Templates are in active development. Open the templates page to preview what is coming and be first to know when it ships."
+        },
+        "pricing": {
+          "q": "Is there a free tier?",
+          "a": "Yes. You can browse and use a generous free selection with no card. One payment unlocks everything, including what we add later."
+        },
+        "team": {
+          "q": "Can my whole team use it?",
+          "a": "Yes. Team access shares one workspace across your organisation, with the same modules for everyone."
+        }
+      }
+    },
+    "cta": {
+      "title": "Ready to build with less friction?",
+      "subtitle": "Open the workspace and browse every module in the side menu. No setup, no cleanup.",
+      "primary": "Open the workspace",
+      "secondary": "See pricing"
+    },
+    "footer": {
+      "tagline": "The workspace where teams design and ship together.",
+      "product": "Product",
+      "resources": "Resources",
+      "legal": "Legal",
+      "contact": "Contact",
+      "docs": "Documentation",
+      "rights": "All rights reserved.",
+      "built": "Built for modern product teams."
+    },
+    "announcement": {
+      "region": "Announcement",
+      "badge": "New",
+      "label": "Icons, Gradients and Palettes are now live in the workspace",
+      "cta": "Explore",
+      "dismiss": "Dismiss announcement"
+    }
+  },
+  "designPlayground": {
+    "title": "Design Playground",
+    "subtitle": "A visual editor for pages, dashboards, mobile screens and graphics. Drag, edit and export. No code required.",
+    "backToApp": "Back to the app",
+    "toolbarLabel": "Tools",
+    "railLabel": "Editor panels",
+    "breakpointLabel": "Breakpoint",
+    "tools": {
+      "select": "Select",
+      "hand": "Hand",
+      "frame": "Frame",
+      "rectangle": "Rectangle",
+      "ellipse": "Ellipse",
+      "text": "Text",
+      "pen": "Pen"
+    },
+    "panels": {
+      "pages": {
+        "title": "Pages",
+        "description": "Every page in this project, each with its own infinite canvas.",
+        "add": "Add page",
+        "remove": "Delete page",
+        "nameLabel": "Page name"
+      },
+      "layers": {
+        "title": "Layers",
+        "description": "The layer tree: group, reorder, rename, lock and hide anything on the canvas.",
+        "empty": "No layers on this page yet.",
+        "expand": "Expand layer",
+        "collapse": "Collapse layer",
+        "nameLabel": "Layer name",
+        "hide": "Hide layer",
+        "show": "Show layer",
+        "lock": "Lock layer",
+        "unlock": "Unlock layer",
+        "remove": "Delete layer",
+        "moveUp": "Move up",
+        "moveDown": "Move down"
+      },
+      "sections": {
+        "title": "Sections",
+        "description": "Drop in ready-made headers, heroes, pricing, FAQ and footers from the component library.",
+        "search": "Search sections",
+        "empty": "No sections match that search.",
+        "insert": "Insert {name}"
+      },
+      "components": {
+        "title": "Components",
+        "description": "Buttons, inputs, cards, tables and the rest. Insert once, reuse everywhere.",
+        "search": "Search components",
+        "empty": "No components match that search.",
+        "insert": "Insert {name}"
+      },
+      "assets": {
+        "title": "Assets",
+        "description": "Icons, illustrations, patterns, gradients and your uploads.",
+        "tablistLabel": "Asset groups",
+        "tabs": {
+          "colors": "Colours",
+          "gradients": "Gradients",
+          "icons": "Icons"
+        },
+        "colors": {
+          "applyHint": "Click a swatch to fill the selection.",
+          "placeHint": "Nothing selected. A swatch places a coloured square.",
+          "apply": "Apply {color} from {palette}",
+          "place": "Place {color} from {palette}",
+          "empty": "No colour palettes available."
+        },
+        "gradients": {
+          "hint": "Places a square in the gradient's first colour. Real gradient fills arrive with the effects work.",
+          "place": "Place {name}",
+          "empty": "No gradients available."
+        },
+        "icons": {
+          "searchLabel": "Search icons",
+          "searchPlaceholder": "Search icons",
+          "hint": "Click an icon to place it on the canvas.",
+          "place": "Place {name}",
+          "empty": "No icons match that search.",
+          "more": "Showing {shown} of {total}. Refine your search to see more."
+        }
+      },
+      "images": {
+        "title": "Images",
+        "description": "Upload your own images or pull from stock providers, then crop, mask and filter.",
+        "upload": "Upload images",
+        "uploadHint": "Drag files here, or click to browse. PNG, JPG, GIF, WebP or SVG.",
+        "importing": "Adding images…",
+        "empty": "No images yet. Upload one to place it on the canvas.",
+        "place": "Place on canvas",
+        "remove": "Remove from library",
+        "removeNamed": "Remove {name} from library",
+        "usage": "{used} of {total} used ({percent}%)",
+        "storageFailed": "These images could not be saved to this browser, so they will be gone after a reload. Remove a few to free space.",
+        "errors": {
+          "unsupported": "is not a supported image type.",
+          "unreadable": "could not be read. The file may be damaged.",
+          "tooLarge": "is too large to store, even after downscaling.",
+          "libraryFull": "does not fit. The image library is full, so remove some images and try again."
+        }
+      },
+      "ai": {
+        "title": "AI",
+        "description": "Describe a page and get editable frames back, or edit the current selection by prompt.",
+        "label": "Describe the section to generate",
+        "placeholder": "A dark pricing section with three tiers and a highlighted middle plan…",
+        "generate": "Generate section",
+        "working": "Generating…",
+        "examplesTitle": "Try one of these",
+        "examples": {
+          "hero": "A bold hero for a fintech app, dark background, headline, subtext and a primary button.",
+          "pricing": "A pricing section with three plan cards and the middle one highlighted.",
+          "features": "A three-column feature grid with an icon block, title and description in each.",
+          "cta": "A closing call-to-action band with a headline and one button, on an accent colour."
+        },
+        "errors": {
+          "not-configured": "AI generation is not configured on this deployment. Set ANTHROPIC_API_KEY on the server to enable it.",
+          "invalid-request": "Describe the section you want before generating.",
+          "refused": "That request was declined. Try describing the design differently.",
+          "rate-limited": "Too many requests right now. Wait a moment and try again.",
+          "empty": "The model returned nothing usable. Try again.",
+          "failed": "Generation failed. Try again in a moment."
+        }
+      }
+    },
+    "inspector": {
+      "title": "Properties",
+      "empty": "Select something on the canvas to edit its properties.",
+      "groups": {
+        "transform": "Transform",
+        "layout": "Layout",
+        "style": "Fill & stroke",
+        "effects": "Effects",
+        "typography": "Typography",
+        "export": "Export"
+      },
+      "mixed": "Mixed",
+      "multiple": "{count} layers selected",
+      "soon": "Arriving in a later phase.",
+      "colorNone": "None",
+      "colorPicker": "Colour picker",
+      "colorHex": "Hex",
+      "fields": {
+        "x": "X",
+        "y": "Y",
+        "width": "Width",
+        "height": "Height",
+        "rotation": "Rotation",
+        "mode": "Mode",
+        "direction": "Direction",
+        "gap": "Gap",
+        "padding": "Padding",
+        "fill": "Fill",
+        "stroke": "Stroke",
+        "strokeWidth": "Stroke width",
+        "radius": "Corner radius",
+        "opacity": "Opacity",
+        "text": "Content",
+        "fontSize": "Size",
+        "fontWeight": "Weight",
+        "lineHeight": "Line height",
+        "letterSpacing": "Letter spacing",
+        "align": "Alignment",
+        "shadow": "Shadow",
+        "shadowColor": "Shadow colour",
+        "shadowBlur": "Blur",
+        "shadowOffsetX": "Offset X",
+        "shadowOffsetY": "Offset Y",
+        "shadowOpacity": "Shadow opacity",
+        "blendMode": "Blend mode"
+      },
+      "options": {
+        "none": "None",
+        "flex": "Flex",
+        "row": "Row",
+        "column": "Column",
+        "left": "Left",
+        "center": "Center",
+        "right": "Right",
+        "dropShadow": "Drop shadow",
+        "normal": "Normal",
+        "multiply": "Multiply",
+        "screen": "Screen",
+        "overlay": "Overlay",
+        "darken": "Darken",
+        "lighten": "Lighten"
+      },
+      "tabs": "Sidebar tabs",
+      "tabLabels": {
+        "properties": "Properties",
+        "frames": "Frames"
+      }
+    },
+    "canvas": {
+      "empty": {
+        "title": "Start with a frame",
+        "description": "Frames are the artboards you design in. Pick a size to begin, or draw one with the frame tool (F).",
+        "cta": "Choose a frame size"
+      },
+      "editText": "Edit text",
+      "backToContent": "Back to content"
+    },
+    "frameGroups": {
+      "screens": "Screens",
+      "social": "Social",
+      "print": "Print & slides"
+    },
+    "frames": {
+      "desktop": "Desktop",
+      "laptop": "Laptop",
+      "tablet": "Tablet",
+      "mobile": "Mobile",
+      "instagram": "Instagram",
+      "facebook": "Facebook",
+      "twitter": "Twitter",
+      "youtube": "YouTube",
+      "presentation": "Presentation",
+      "a4": "A4",
+      "description": "Frames are the artboards you design in. Adding one places it beside your existing work."
+    },
+    "breakpoints": {
+      "desktop": "Desktop",
+      "laptop": "Laptop",
+      "tablet": "Tablet",
+      "mobile": "Mobile"
+    },
+    "status": {
+      "grid": "Grid",
+      "coordinates": "Pointer position"
+    },
+    "actions": {
+      "share": "Share",
+      "export": "Export",
+      "toggleInspector": "Toggle properties panel",
+      "closePanel": "Close panel",
+      "zoomIn": "Zoom in",
+      "zoomOut": "Zoom out",
+      "resetZoom": "Reset zoom to 100%",
+      "undo": "Undo",
+      "redo": "Redo",
+      "selectionLabel": "Selection actions",
+      "duplicate": "Duplicate",
+      "bringToFront": "Bring to front",
+      "sendToBack": "Send to back",
+      "lock": "Lock",
+      "unlock": "Unlock",
+      "hide": "Hide",
+      "show": "Show",
+      "delete": "Delete",
+      "group": "Group",
+      "ungroup": "Ungroup",
+      "zoomToFit": "Zoom to fit",
+      "copy": "Copy",
+      "paste": "Paste here",
+      "frame": "Frame selection"
+    },
+    "export": {
+      "working": "Working…",
+      "failed": "Export failed. Try a different format.",
+      "formats": {
+        "png": "PNG image",
+        "jpeg": "JPEG image",
+        "svg": "SVG vector",
+        "html": "HTML page",
+        "json": "Project file"
+      },
+      "import": "Open project file…",
+      "importFailed": "That file is not a valid ADYSRE project.",
+      "scale": "Scale",
+      "exportAs": "Export as {format}",
+      "selectFirst": "Select something on the canvas to export it on its own."
+    },
+    "sync": {
+      "saving": "Saving…",
+      "saved": "Saved",
+      "offline": "Offline. Saved on this device only",
+      "error": "Couldn't save"
+    },
+    "projects": {
+      "menu": "Project",
+      "new": "New design",
+      "rename": "Rename design",
+      "nameLabel": "Design name",
+      "recent": "Previous designs",
+      "loading": "Loading…",
+      "empty": "No saved designs yet.",
+      "unavailable": "Saved designs are unavailable because storage is not reachable. Your work is still saved on this device."
+    }
+  }
 }

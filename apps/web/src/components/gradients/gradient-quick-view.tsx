@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { Shuffle, RotateCcw, ImageDown, BookmarkPlus, Check, Plus, Trash2 } from 'lucide-react';
-import { Button, Dialog, cn } from '@adysre/ui';
+import { Button, Dialog, cn } from 'adysre';
 import { GRADIENTS, similarGradients, type Gradient, type GradientStop, type GradientType } from '@/data/gradients';
 import { gradientToCss, downloadGradientPng } from '@/lib/gradients/css';
 import { harmony, hslToHex } from '@/lib/palettes/color';

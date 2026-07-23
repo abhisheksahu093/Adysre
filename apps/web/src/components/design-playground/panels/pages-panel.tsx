@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { Plus, Trash2 } from 'lucide-react';
-import { cn } from '@adysre/ui';
+import { cn } from 'adysre';
 import { useDesignDocumentStore } from '@/stores/design-document-store';
 import { InlineRename } from './layers-panel';
 

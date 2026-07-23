@@ -7,6 +7,7 @@ import { FeatureGrid } from '@/components/landing/feature-grid';
 import { WorkflowSteps } from '@/components/landing/workflow-steps';
 import { Showcase } from '@/components/landing/showcase';
 import { StatsBand } from '@/components/landing/stats-band';
+import { InstallSection } from '@/components/landing/install-section';
 import { LANDING_STATS } from '@/data/library-stats';
 import { TemplatesTeaser } from '@/components/landing/templates-teaser';
 import { Faq } from '@/components/landing/faq';
@@ -52,6 +53,9 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
       <main id="main">
         <LandingHero />
         <FeatureGrid />
+        {/* Third: a visitor who has just seen what the modules are should be
+            told they can install the whole thing before being asked to browse. */}
+        <InstallSection />
         <WorkflowSteps />
         <Showcase />
         <StatsBand stats={LANDING_STATS} />

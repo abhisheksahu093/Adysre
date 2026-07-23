@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import { Search, X, Star, Flame, Sparkles, LayoutGrid } from 'lucide-react';
-import { Button, Input, Select, cn } from '@adysre/ui';
+import { Button, Input, Select, cn } from 'adysre';
 import {
   ASPECT_RATIOS,
   PROMPT_MODELS,

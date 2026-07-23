@@ -3,7 +3,7 @@
 import { useRef, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { Sparkles, Type, ImageUp, Loader2, Wand2 } from 'lucide-react';
-import { Button, Input, Label, Select, Textarea, cn } from '@adysre/ui';
+import { Button, Input, Label, Select, Textarea, cn } from 'adysre';
 import type { Gradient } from '@/data/gradients';
 import { gradientToCss } from '@/lib/gradients/css';
 import {

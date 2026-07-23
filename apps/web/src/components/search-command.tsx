@@ -4,7 +4,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useTranslations } from 'next-intl';
 import { Search, Blocks, Shapes, Palette, Blend, Grid2x2, Waves, Library, LayoutTemplate, CornerDownLeft } from 'lucide-react';
-import { cn } from '@adysre/ui';
+import { cn } from 'adysre';
 import { useRouter } from '@/i18n/navigation';
 import { NAV_SUBMENUS } from '@/config/nav-submenus';
 import { humanizeKey } from '@/lib/humanize';

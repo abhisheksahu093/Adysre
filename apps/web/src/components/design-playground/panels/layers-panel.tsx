@@ -19,7 +19,7 @@ import {
   Type,
   type LucideIcon,
 } from 'lucide-react';
-import { cn } from '@adysre/ui';
+import { cn } from 'adysre';
 import { topLevelNodes } from '@/lib/design-playground/document';
 import type { Document, Node, NodeType } from '@/lib/design-playground/types';
 import { useDesignDocumentStore } from '@/stores/design-document-store';

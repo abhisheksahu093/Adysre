@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { Download, FolderOpen } from 'lucide-react';
-import { cn } from '@adysre/ui';
+import { cn } from 'adysre';
 import {
   MIME,
   download,

@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { Github, ChevronRight } from 'lucide-react';
-import { Badge } from '@adysre/ui';
+import { Badge } from 'adysre';
 import { Link } from '@/i18n/navigation';
 import { routing } from '@/i18n/routing';
 import {

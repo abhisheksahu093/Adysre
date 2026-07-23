@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
 import { Bell, BellOff, Check, X, CheckCheck, Trash2 } from 'lucide-react';
-import { Button, cn } from '@adysre/ui';
+import { Button, cn } from 'adysre';
 import { Link } from '@/i18n/navigation';
 import { useDismissable } from '@/hooks/use-dismissable';
 import { NOTIFICATIONS } from '@/data/notifications';

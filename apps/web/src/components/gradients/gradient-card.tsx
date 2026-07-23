@@ -3,7 +3,7 @@
 import { useRef, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { Check, Copy, Maximize2 } from 'lucide-react';
-import { cn } from '@adysre/ui';
+import { cn } from 'adysre';
 import type { Gradient } from '@/data/gradients';
 import { gradientToCss } from '@/lib/gradients/css';
 import { useClipboard } from '@/hooks/use-clipboard';

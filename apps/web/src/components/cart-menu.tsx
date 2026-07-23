@@ -3,7 +3,7 @@
 import { useCallback, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { ShoppingCart } from 'lucide-react';
-import { Button, buttonVariants, cn } from '@adysre/ui';
+import { Button, buttonVariants, cn } from 'adysre';
 import { Link } from '@/i18n/navigation';
 import { useDismissable } from '@/hooks/use-dismissable';
 

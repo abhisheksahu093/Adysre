@@ -795,7 +795,7 @@ export const LUMIERE_CONTENT_JA: TemplateContent = {
   ],
 
   hero: {
-    badge: 'メリルボーン、チルターン・ストリート — 火曜から土曜まで営業',
+    badge: 'メリルボーン、チルターン・ストリート。火曜から土曜まで営業',
     title: '急がない美しさを、',
     titleAccent: '次のご来店まで',
     subtitle:

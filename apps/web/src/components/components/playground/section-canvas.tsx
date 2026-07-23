@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useTheme } from 'next-themes';
 import { useTranslations } from 'next-intl';
 import { ChevronLeft, ChevronRight, LayoutTemplate } from 'lucide-react';
-import { cn } from '@adysre/ui';
+import { cn } from 'adysre';
 import type { LocalizedComponent } from '@/data/components';
 import {
   adjacentVariation,

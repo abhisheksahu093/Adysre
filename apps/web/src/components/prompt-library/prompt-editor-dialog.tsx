@@ -3,9 +3,9 @@
 import { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { RotateCcw, Languages } from 'lucide-react';
-import { Badge, Button, Dialog, Label, Textarea } from '@adysre/ui';
+import { Badge, Button, Dialog, Label, Textarea } from 'adysre';
 import { ASPECT_RATIOS, PROMPT_MODELS, isNew, type LocalizedPrompt } from '@/data/prompts';
-import { CopyButton } from './copy-button';
+import { CopyButton } from '@/components/ui/copy-button';
 
 interface PromptEditorDialogProps {
   /** The prompt being edited, or null when the dialog is closed. */

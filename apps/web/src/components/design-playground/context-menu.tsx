@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 import { useTranslations } from 'next-intl';
-import { cn } from '@adysre/ui';
+import { cn } from 'adysre';
 import { useSelectionActions } from './selection-actions';
 
 /**

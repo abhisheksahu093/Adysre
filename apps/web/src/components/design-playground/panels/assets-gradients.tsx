@@ -1,7 +1,7 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { cn } from '@adysre/ui';
+import { cn } from 'adysre';
 import { GRADIENTS, type Gradient } from '@/data/gradients';
 import { gradientToCss } from '@/lib/gradients/css';
 import { box } from '@/lib/design-playground/templates';

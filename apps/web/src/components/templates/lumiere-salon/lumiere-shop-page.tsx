@@ -84,7 +84,7 @@ export function LumiereShopPage() {
             className="mt-8 text-center text-[15px] leading-[1.8] text-[var(--lumi-ink-soft)]"
           >
             {visible.length} {visible.length === 1 ? shop.countOne : shop.countMany}
-            {description === undefined ? '' : ` — ${description.description}`}
+            {description === undefined ? '' : `, ${description.description}`}
           </p>
         </Reveal>
 

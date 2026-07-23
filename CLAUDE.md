@@ -19,6 +19,11 @@ files, audit, and AI. See [`documents/BOOTSTRAP_PROJECT.md`](./documents/BOOTSTR
 **Module specs:** [Design Playground](./documents/DESIGN_PLAYGROUND_PRD.md) —
 the visual design editor at `/design-playground` (Phase 1: shell only).
 
+**Published library:** [`documents/NPM_LIBRARY.md`](./documents/NPM_LIBRARY.md) —
+`adysre` on npm (blocks, icons, gradients, patterns, textures, palettes).
+`packages/ui` is the source of truth; `apps/web` imports from it. Read that spec
+before editing anything under `packages/ui` or adding an asset family.
+
 ## 2. Stack (do not deviate without updating the docs)
 
 - **Monorepo:** pnpm + Turborepo
@@ -38,7 +43,7 @@ apps/
   api      NestJS modular monolith (REST /api/v1)
   worker   BullMQ background jobs
 packages/
-  ui         shadcn/ui component library (@adysre/ui)
+  ui         shadcn/ui component library (adysre)
   database   Prisma schema + client (@adysre/database)
   sdk        Typed API client for web/worker (@adysre/sdk)
   config     Shared eslint/tsconfig/tailwind/prettier (@adysre/config)

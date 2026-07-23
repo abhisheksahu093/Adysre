@@ -6,7 +6,7 @@ export const contactContent: ComponentContentMap = {
     title: 'Simple Contact Form',
     description: 'A centred name, email and message form with inline validation and no chrome.',
     customization:
-      'The React and TypeScript tabs run their own validation (`noValidate` hands it over) so errors render inline as `role="alert"` text wired by `aria-invalid` + `aria-describedby`; the static HTML tab keeps the browser\'s native validation. Every field has a real `<label>` and the message is a `<textarea>`. Wire `onSubmit` to your backend — by default it is a no-op.',
+      'The React and TypeScript tabs run their own validation (`noValidate` hands it over) so errors render inline as `role="alert"` text wired by `aria-invalid` + `aria-describedby`; the static HTML tab keeps the browser\'s native validation. Every field has a real `<label>` and the message is a `<textarea>`. Wire `onSubmit` to your backend; by default it is a no-op.',
     seoTitle: 'Simple Contact Form - Free Tailwind CSS Component',
     seoDescription:
       'An accessible centred contact form with inline validation, in Tailwind, React and TypeScript. WCAG AA and MIT licensed.',
@@ -56,7 +56,7 @@ export const contactContent: ComponentContentMap = {
     title: 'Support Options Contact',
     description: 'A department/topic radio-card picker above the contact form.',
     customization:
-      'The picker is a real radio group inside a `<fieldset>`/`<legend>`, so it is announced as one labelled group and arrow keys move between options. The card styling is pure CSS — the native radio is `sr-only` and `has-[:checked]` / `has-[:focus-visible]` on the label paint the selected and focused states. Pass your own `topics`.',
+      'The picker is a real radio group inside a `<fieldset>`/`<legend>`, so it is announced as one labelled group and arrow keys move between options. The card styling is pure CSS: the native radio is `sr-only` and `has-[:checked]` / `has-[:focus-visible]` on the label paint the selected and focused states. Pass your own `topics`.',
     seoTitle: 'Support Options Contact Form - Free Tailwind CSS Component',
     seoDescription:
       'A contact form with an accessible department/topic radio-card picker, in Tailwind, React and TypeScript. MIT licensed.',
@@ -86,7 +86,7 @@ export const contactContent: ComponentContentMap = {
     title: 'Contact With FAQ',
     description: 'A contact form beside a short native-details FAQ, stacked on mobile.',
     customization:
-      'The FAQ is native `<details>`/`<summary>` — it opens and closes with zero JS, is keyboard-operable and announced out of the box, with the default disclosure triangle hidden and a chevron that rotates on `group-open`. Pass your own `faqs`; the columns stack below `md`.',
+      'The FAQ is native `<details>`/`<summary>`, so it opens and closes with zero JS, is keyboard-operable and announced out of the box, with the default disclosure triangle hidden and a chevron that rotates on `group-open`. Pass your own `faqs`; the columns stack below `md`.',
     seoTitle: 'Contact Form With FAQ - Free Tailwind CSS Component',
     seoDescription:
       'A contact form paired with a native-details FAQ, in Tailwind, React and TypeScript. Accessible and MIT licensed.',

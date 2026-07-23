@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { ComponentsView } from '@/components/components/playground/components-view';
+import { NpmUsage } from '@/components/npm/npm-usage';
 import { getComponents } from '@/data/components';
 
 export async function generateMetadata({
@@ -36,14 +37,17 @@ export default async function ComponentsPage({
   ]);
 
   return (
-    <ComponentsView
-      components={components}
-      header={
-        <header className="space-y-2">
-          <h1 className="text-xl font-semibold tracking-tight sm:text-2xl">{t('title')}</h1>
-          <p className="max-w-2xl text-sm text-muted-foreground">{t('subtitle')}</p>
-        </header>
-      }
-    />
+    <>
+      <ComponentsView
+        components={components}
+        header={
+          <header className="space-y-2">
+            <h1 className="text-xl font-semibold tracking-tight sm:text-2xl">{t('title')}</h1>
+            <p className="max-w-2xl text-sm text-muted-foreground">{t('subtitle')}</p>
+          </header>
+        }
+      />
+      <NpmUsage module="components" />
+    </>
   );
 }

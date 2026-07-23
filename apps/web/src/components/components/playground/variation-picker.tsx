@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import { Check, Trash2 } from 'lucide-react';
-import { Button, cn } from '@adysre/ui';
+import { Button, cn } from 'adysre';
 import type { LocalizedComponent } from '@/data/components';
 import type { PlaygroundSlot, PlaygroundSlotId } from '@/data/playground';
 

@@ -49,7 +49,7 @@ export function LumiereBookingPage() {
                     <optgroup key={category.id} label={category.name}>
                       {category.treatments.map((treatment) => (
                         <option key={treatment.id} value={treatment.id}>
-                          {treatment.name} — {formatLumiereDuration(treatment.duration)},{' '}
+                          {treatment.name}, {formatLumiereDuration(treatment.duration)},{' '}
                           {formatPrice(treatment.price)}
                         </option>
                       ))}
@@ -60,7 +60,7 @@ export function LumiereBookingPage() {
                 <LumiereField field={booking.stylistField}>
                   {data.stylists.map((stylist) => (
                     <option key={stylist.id} value={stylist.id}>
-                      {stylist.name} — {stylist.role}
+                      {stylist.name}, {stylist.role}
                     </option>
                   ))}
                 </LumiereField>

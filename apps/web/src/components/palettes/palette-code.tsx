@@ -3,7 +3,7 @@
 import { useMemo, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { Check, Copy, Download } from 'lucide-react';
-import { Button, cn } from '@adysre/ui';
+import { Button, cn } from 'adysre';
 import { useClipboard } from '@/hooks/use-clipboard';
 import { downloadText } from '@/lib/playground-export';
 import {

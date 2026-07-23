@@ -3,7 +3,7 @@
 import { useMemo, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { GripVertical, Plus, Minus } from 'lucide-react';
-import { Button, cn } from '@adysre/ui';
+import { Button, cn } from 'adysre';
 import type { LocalizedComponent } from '@/data/components';
 import {
   PLAYGROUND_SLOTS,

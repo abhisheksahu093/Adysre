@@ -19,7 +19,7 @@ export const SAFFRON_CONTENT: TemplateContent = {
   ],
 
   hero: {
-    badge: 'Winter tasting menu — now serving',
+    badge: 'Winter tasting menu, now serving',
     title: 'Twelve courses,',
     titleAccent: 'one long evening',
     subtitle:
@@ -35,7 +35,7 @@ export const SAFFRON_CONTENT: TemplateContent = {
 
   marquee: [
     'Michelin Guide',
-    'World’s 50 Best — Discovery',
+    'World’s 50 Best: Discovery',
     'Good Food Award',
     'Slow Food Alliance',
     'Terroir Prize',

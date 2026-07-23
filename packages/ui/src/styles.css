@@ -1,2 +1,25 @@
-/* UI package styles — pulls in the design tokens. Apps import this once. */
+/*
+ * `adysre/styles.css` — the Tailwind v4 entry for consumers.
+ *
+ *   @import "tailwindcss";
+ *   @import "adysre/styles.css";
+ *
+ * It brings two things: the ADYSRE design tokens (so `bg-background`,
+ * `text-primary` and `rounded-lg` resolve), and an `@source` line pointing
+ * Tailwind at this package's own files — without which Tailwind never sees the
+ * utility classes baked into our components and they render unstyled.
+ *
+ * Not using Tailwind at all? Import `adysre/dist.css` instead: same styles,
+ * pre-compiled, no build step.
+ *
+ * NOTE: this is the in-repo version. `scripts/build-assets.mjs` emits the
+ * published one (`dist/styles.css`), which imports the bundled `./tokens.css`
+ * and scans `./` instead of reaching back into the workspace.
+ */
+
 @import '@adysre/theme/tokens.css';
+
+@source '../src';
+
+/* Components use `dark:` utilities; next-themes and most setups toggle a class. */
+@custom-variant dark (&:where(.dark, .dark *));

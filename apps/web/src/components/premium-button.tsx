@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import { Sparkles } from 'lucide-react';
-import { buttonVariants, cn } from '@adysre/ui';
+import { buttonVariants, cn } from 'adysre';
 import { Link } from '@/i18n/navigation';
 
 /** Topbar upsell. The label collapses to the icon on narrow viewports. */

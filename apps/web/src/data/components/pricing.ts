@@ -5289,7 +5289,7 @@ export function PricingHighlightPopular({ tiers = TIERS, ctaLabel = 'Get started
         <li>
           <details class="group rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
             <summary class="flex cursor-pointer list-none items-center justify-between gap-2 text-sm font-medium text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 dark:text-gray-100">Is there a free trial?<svg class="h-4 w-4 flex-none text-gray-500 transition-transform group-open:rotate-180 motion-reduce:transition-none dark:text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M5.3 7.3a1 1 0 0 1 1.4 0L10 10.6l3.3-3.3a1 1 0 1 1 1.4 1.4l-4 4a1 1 0 0 1-1.4 0l-4-4a1 1 0 0 1 0-1.4Z" /></svg></summary>
-            <p class="mt-2 text-sm leading-relaxed text-gray-600 dark:text-gray-400">Yes — 14 days, no card required. Cancel any time before it ends and you are not charged.</p>
+            <p class="mt-2 text-sm leading-relaxed text-gray-600 dark:text-gray-400">Yes. 14 days, no card required. Cancel any time before it ends and you are not charged.</p>
           </details>
         </li>
         <li>
@@ -5311,7 +5311,7 @@ export function PricingHighlightPopular({ tiers = TIERS, ctaLabel = 'Get started
       react: `const FEATURES = ['Unlimited projects', 'All integrations', 'Priority support'];
 
 const FAQS = [
-  { id: 'trial', question: 'Is there a free trial?', answer: 'Yes — 14 days, no card required. Cancel any time before it ends and you are not charged.' },
+  { id: 'trial', question: 'Is there a free trial?', answer: 'Yes. 14 days, no card required. Cancel any time before it ends and you are not charged.' },
   { id: 'switch', question: 'Can I change plans later?', answer: 'Upgrade or downgrade whenever you like. Changes are prorated to the day.' },
   { id: 'refund', question: 'Do you offer refunds?', answer: 'We refund annual plans in full within 30 days of purchase, no questions asked.' },
 ];
@@ -5386,7 +5386,7 @@ export interface PricingFaqCombinedProps {
 const FEATURES = ['Unlimited projects', 'All integrations', 'Priority support'];
 
 const FAQS: Faq[] = [
-  { id: 'trial', question: 'Is there a free trial?', answer: 'Yes — 14 days, no card required. Cancel any time before it ends and you are not charged.' },
+  { id: 'trial', question: 'Is there a free trial?', answer: 'Yes. 14 days, no card required. Cancel any time before it ends and you are not charged.' },
   { id: 'switch', question: 'Can I change plans later?', answer: 'Upgrade or downgrade whenever you like. Changes are prorated to the day.' },
   { id: 'refund', question: 'Do you offer refunds?', answer: 'We refund annual plans in full within 30 days of purchase, no questions asked.' },
 ];

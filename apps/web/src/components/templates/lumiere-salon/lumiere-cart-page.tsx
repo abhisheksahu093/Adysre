@@ -68,7 +68,7 @@ export function LumiereCartPage({ cart }: { cart: LumiereCart }) {
                       <div className="min-w-0 flex-1">
                         <h2 className="text-[17px] font-medium tracking-[-0.01em]">{entry.name}</h2>
                         <p className="lumi-label mt-2">
-                          {entry.variantLabel} — {entry.size}
+                          {entry.variantLabel}, {entry.size}
                         </p>
                         <p className="lumi-num mt-3 text-[15px] text-[var(--lumi-ink-soft)]">
                           {formatPrice(entry.price)}

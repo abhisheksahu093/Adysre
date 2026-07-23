@@ -92,7 +92,7 @@ export function AuroraContact({ content }: { content: TemplateContent }) {
               aria-live="polite"
               className="aurora-tag mt-4 min-h-4 text-center text-[10px] text-[var(--aurora-acid)]"
             >
-              {sent && reply ? `${reply.label} — ${reply.value}` : ''}
+              {sent && reply ? `${reply.label}: ${reply.value}` : ''}
             </p>
           </form>
         </Reveal>

@@ -99,11 +99,11 @@ export const MERIDIAN_CONTENT: TemplateContent = {
   },
 
   marquee: [
-    'Chambers USA — Band 1, Corporate/M&A',
-    'The Legal 500 — Leading Firm',
-    'Benchmark Litigation — Highly Recommended',
-    'IFLR1000 — Notable Practitioners',
-    'Best Lawyers — Firm of the Year, Securities',
+    'Chambers USA: Band 1, Corporate/M&A',
+    'The Legal 500: Leading Firm',
+    'Benchmark Litigation: Highly Recommended',
+    'IFLR1000: Notable Practitioners',
+    'Best Lawyers: Firm of the Year, Securities',
     'Massachusetts Bar Association',
   ],
 

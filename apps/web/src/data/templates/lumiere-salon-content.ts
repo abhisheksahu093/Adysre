@@ -928,7 +928,7 @@ export const LUMIERE_SALON: LumiereSalonCopy = {
       type: 'select',
       autoComplete: 'off',
       placeholder: 'Choose a treatment',
-      hint: 'Not sure which one — choose the closest and we will advise.',
+      hint: 'Not sure which one? Choose the closest and we will advise.',
       /* No `options`: the treatment list is derived from the menu itself, so a
          second copy here could disagree with the page that prices it. */
     },
@@ -1078,7 +1078,7 @@ export const LUMIERE_CONTENT: TemplateContent = {
   ],
 
   hero: {
-    badge: 'Chiltern Street, Marylebone — open Tuesday to Saturday',
+    badge: 'Chiltern Street, Marylebone. Open Tuesday to Saturday',
     title: 'Unhurried beauty,',
     titleAccent: 'kept between visits',
     subtitle:

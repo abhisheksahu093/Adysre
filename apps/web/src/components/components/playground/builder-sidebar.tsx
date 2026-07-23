@@ -7,10 +7,11 @@ import { cn } from '@adysre/ui';
 import type { LocalizedComponent } from '@/data/components';
 import type { PlaygroundSlot, PlaygroundSlotId } from '@/data/playground';
 import { tourStepsForStage } from '@/data/playground/tour';
-import { usePlaygroundStore } from '@/stores/playground-store';
+import { sectionStyleOf, usePlaygroundStore } from '@/stores/playground-store';
 import { overrideCount } from '@/lib/playground/content';
 import { sectionStyleEditCount } from '@/lib/playground/section-style';
 import { SlotRail } from './slot-rail';
+import { PageTabs } from './page-tabs';
 import { VariationPicker } from './variation-picker';
 import { ContentEditor } from './content-editor';
 import { SectionStyleEditor } from './section-style-editor';
@@ -58,7 +59,9 @@ export function BuilderSidebar({
     activeComponent ? s.contentOverrides[activeComponent.slug] : undefined,
   );
   const editedCount = overrideCount(overrides);
-  const styledCount = usePlaygroundStore((s) => sectionStyleEditCount(s.sectionStyles[activeSlot.id]));
+  const styledCount = usePlaygroundStore((s) =>
+    sectionStyleEditCount(sectionStyleOf(s, activeSlot.id)),
+  );
 
   // Keep the tour's spotlight target mounted by opening the tab it lives in.
   useEffect(() => {
@@ -76,6 +79,10 @@ export function BuilderSidebar({
 
   return (
     <div className="min-w-0 space-y-3 lg:sticky lg:top-4 lg:flex lg:h-[calc(100dvh-10.5rem)] lg:flex-col lg:space-y-3">
+      <div className="lg:shrink-0">
+        <PageTabs />
+      </div>
+
       <div className="lg:shrink-0">
         <SlotRail
           resolved={resolved}

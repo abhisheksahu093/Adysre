@@ -58,7 +58,9 @@
 		},
 		"expandSection": "{label} खोलें",
 		"collapseSection": "{label} बंद करें",
-		"viewAll": "सभी {label}"
+		"viewAll": "सभी {label}",
+		"collapseSidebar": "साइडबार संक्षिप्त करें",
+		"expandSidebar": "साइडबार विस्तृत करें"
 	},
 	"topbar": {
 		"searchPlaceholder": "खोजें या सीधे जाएँ…",
@@ -972,18 +974,27 @@
 				"comparison": "तुलना",
 				"faq": "सामान्य प्रश्न",
 				"cta": "कॉल टू एक्शन",
-				"footer": "फुटर"
+				"footer": "फुटर",
+				"logos": "लोगो पट्टी",
+				"features": "फ़ीचर ग्रिड",
+				"stats": "आँकड़े",
+				"team": "टीम",
+				"testimonials": "प्रशंसापत्र",
+				"blog": "ब्लॉग",
+				"contact": "संपर्क"
 			},
 			"rail": {
 				"title": "सेक्शन",
 				"empty": "नहीं जोड़ा गया",
 				"add": "{slot} जोड़ें",
-				"remove": "{slot} हटाएं"
+				"remove": "{slot} हटाएं",
+				"reorder": "क्रम बदलने के लिए खींचें, या Ctrl/Cmd + तीर कुंजियाँ"
 			},
 			"builder": {
 				"layout": "लेआउट",
 				"content": "सामग्री",
-				"tabsLabel": "सेक्शन नियंत्रण"
+				"tabsLabel": "सेक्शन नियंत्रण",
+				"style": "स्टाइल"
 			},
 			"variations": {
 				"of": "{slot} के वेरिएशन",
@@ -1013,7 +1024,9 @@
 				"projectTitle": "पूरा प्रोजेक्ट डाउनलोड करें",
 				"projectHint": "चलने के लिए तैयार प्रोजेक्ट। अनज़िप करें, फिर npm install चलाएँ।",
 				"downloadProjectNext": "Next.js प्रोजेक्ट",
-				"downloadProjectReact": "React प्रोजेक्ट"
+				"downloadProjectReact": "React प्रोजेक्ट",
+				"stylesTitle": "सेक्शन स्टाइल",
+				"stylesHint": "इसे अपने मार्कअप के साथ पेस्ट करें — हर नियम एक सेक्शन को उसकी id से लक्षित करता है।"
 			},
 			"tour": {
 				"stepCount": "चरण {current} / {total}",
@@ -1119,6 +1132,47 @@
 					"placeholder": "प्लेसहोल्डर",
 					"alt": "वैकल्पिक टेक्स्ट"
 				}
+			},
+			"style": {
+				"title": "स्टाइल",
+				"empty": "स्टाइल करने के लिए कोई सेक्शन चुनें।",
+				"background": "बैकग्राउंड",
+				"kind": {
+					"none": "कोई नहीं",
+					"color": "रंग",
+					"gradient": "ग्रेडिएंट",
+					"pattern": "पैटर्न",
+					"texture": "टेक्सचर"
+				},
+				"backgroundColor": "बैकग्राउंड रंग",
+				"angle": "कोण",
+				"scale": "स्केल",
+				"opacity": "अपारदर्शिता",
+				"patternBg": "पैटर्न बैकग्राउंड",
+				"patternFg": "पैटर्न अग्रभूमि",
+				"text": "टेक्स्ट",
+				"textColor": "टेक्स्ट रंग",
+				"textHint": "सेक्शन के अपने टेक्स्ट रंगों को बदल देता है।",
+				"clearText": "टेक्स्ट रंग हटाएँ",
+				"border": "बॉर्डर",
+				"borderWidth": "बॉर्डर चौड़ाई",
+				"borderStyle": {
+					"solid": "ठोस",
+					"dashed": "डैश",
+					"dotted": "बिंदुदार"
+				},
+				"borderColor": "बॉर्डर रंग",
+				"clearBorder": "बॉर्डर हटाएँ",
+				"radius": "कोना त्रिज्या",
+				"reset": "स्टाइल रीसेट करें"
+			},
+			"pages": {
+				"title": "पेज",
+				"add": "पेज जोड़ें",
+				"newName": "नया पेज",
+				"rename": "नाम बदलने के लिए डबल-क्लिक करें",
+				"nameLabel": "पेज का नाम",
+				"remove": "{name} हटाएँ"
 			}
 		},
 		"allComponents": "सभी कंपोनेंट"
@@ -2182,7 +2236,8 @@
 				"description": "फ़्रेम वे आर्टबोर्ड हैं जिनमें आप डिज़ाइन करते हैं। शुरू करने के लिए साइज़ चुनें — या फ़्रेम टूल (F) से बनाएँ।",
 				"cta": "फ़्रेम साइज़ चुनें"
 			},
-			"editText": "टेक्स्ट संपादित करें"
+			"editText": "टेक्स्ट संपादित करें",
+			"backToContent": "सामग्री पर वापस जाएँ"
 		},
 		"frameGroups": {
 			"screens": "स्क्रीन",
@@ -2216,6 +2271,7 @@
 			"share": "शेयर",
 			"export": "एक्सपोर्ट",
 			"toggleInspector": "प्रॉपर्टीज़ पैनल टॉगल करें",
+			"closePanel": "पैनल बंद करें",
 			"zoomIn": "ज़ूम इन",
 			"zoomOut": "ज़ूम आउट",
 			"resetZoom": "ज़ूम 100% पर रीसेट करें",
@@ -2232,7 +2288,10 @@
 			"delete": "हटाएँ",
 			"group": "ग्रुप करें",
 			"ungroup": "ग्रुप हटाएँ",
-			"zoomToFit": "फ़िट करने के लिए ज़ूम करें"
+			"zoomToFit": "फ़िट करने के लिए ज़ूम करें",
+			"copy": "कॉपी करें",
+			"paste": "यहाँ पेस्ट करें",
+			"frame": "फ़्रेम में लपेटें"
 		},
 		"export": {
 			"working": "चल रहा है…",

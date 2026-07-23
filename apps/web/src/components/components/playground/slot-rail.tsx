@@ -1,11 +1,17 @@
 'use client';
 
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { Plus, Minus } from 'lucide-react';
+import { GripVertical, Plus, Minus } from 'lucide-react';
 import { Button, cn } from '@adysre/ui';
 import type { LocalizedComponent } from '@/data/components';
-import { PLAYGROUND_SLOTS, type PlaygroundSlotId } from '@/data/playground';
+import {
+  PLAYGROUND_SLOTS,
+  isSiteSlot,
+  type PlaygroundSlot,
+  type PlaygroundSlotId,
+} from '@/data/playground';
+import { useActiveOrder, usePlaygroundStore } from '@/stores/playground-store';
 
 interface SlotRailProps {
   resolved: Record<PlaygroundSlotId, string | null>;
@@ -25,6 +31,14 @@ interface SlotRailProps {
  * The page's sections in render order. Horizontal scroller on small screens,
  * vertical list beside the canvas from `lg` up - one component, two layouts,
  * so the two can't drift apart.
+ *
+ * Body sections are draggable: this rail IS the page's running order, so
+ * rearranging here is the most direct way to say "put the pricing above the
+ * about". Reordering is also on the keyboard (Ctrl/⌘ + arrows) - drag-and-drop
+ * alone would put page structure out of reach for anyone not using a mouse.
+ *
+ * Header and footer are the SITE's, shared by every page, so they are pinned
+ * top and bottom and cannot be dragged into the middle of one page's body.
  */
 export function SlotRail({
   resolved,
@@ -38,8 +52,31 @@ export function SlotRail({
   const t = useTranslations('components');
   const bySlug = useMemo(() => new Map(components.map((c) => [c.slug, c])), [components]);
 
+  const order = useActiveOrder();
+  const moveSection = usePlaygroundStore((s) => s.moveSection);
+  /** Index being dragged, and the gap it is hovering over. */
+  const [dragFrom, setDragFrom] = useState<number | null>(null);
+  const [dragOver, setDragOver] = useState<number | null>(null);
+
+  const bySlot = useMemo(() => new Map(PLAYGROUND_SLOTS.map((slot) => [slot.id, slot])), []);
+  const header = PLAYGROUND_SLOTS.find((slot) => slot.id === 'header');
+  const footer = PLAYGROUND_SLOTS.find((slot) => slot.id === 'footer');
+  const body = order
+    .map((id) => bySlot.get(id))
+    .filter((slot): slot is PlaygroundSlot => slot !== undefined);
+
   // Sections currently included in the page (a non-null resolved slug).
   const includedCount = PLAYGROUND_SLOTS.filter((slot) => resolved[slot.id] !== null).length;
+
+  const endDrag = (): void => {
+    setDragFrom(null);
+    setDragOver(null);
+  };
+
+  const drop = (to: number): void => {
+    if (dragFrom !== null) moveSection(dragFrom, to);
+    endDrag();
+  };
 
   return (
     <div
@@ -60,25 +97,74 @@ export function SlotRail({
           fill ? 'lg:max-h-[15rem] lg:overflow-y-auto' : 'lg:overflow-visible',
         )}
       >
-        {PLAYGROUND_SLOTS.map((slot) => {
+        {[header, ...body, footer]
+          .filter((slot): slot is PlaygroundSlot => slot !== undefined)
+          .map((slot) => {
           const slug = resolved[slot.id];
           const selection = slug !== null ? bySlug.get(slug) : undefined;
           const firstAvailable = variationsBySlot.get(slot.id)?.[0]?.slug;
           const active = slot.id === activeSlotId;
           const slotLabel = t(`playground.slots.${slot.id}`);
+          // Only body sections move; the shared chrome is pinned.
+          const index = isSiteSlot(slot.id) ? -1 : body.indexOf(slot);
+          const movable = index !== -1;
 
           return (
             <li
               key={slot.id}
+              draggable={movable}
+              onDragStart={movable ? () => setDragFrom(index) : undefined}
+              onDragEnd={endDrag}
+              onDragOver={
+                movable
+                  ? (event) => {
+                      // Without preventDefault the browser refuses the drop.
+                      event.preventDefault();
+                      setDragOver(index);
+                    }
+                  : undefined
+              }
+              onDrop={movable ? () => drop(index) : undefined}
               className={cn(
                 'group/slot flex shrink-0 items-stretch gap-0.5 rounded-lg transition-colors lg:w-full',
                 active ? 'bg-primary shadow-sm' : 'hover:bg-muted',
+                movable && dragFrom === index && 'opacity-40',
+                movable &&
+                  dragOver === index &&
+                  dragFrom !== index &&
+                  'ring-2 ring-inset ring-primary/60',
               )}
             >
+              {movable && (
+                <span
+                  aria-hidden
+                  title={t('playground.rail.reorder')}
+                  className={cn(
+                    'flex w-4 shrink-0 cursor-grab items-center justify-center active:cursor-grabbing',
+                    active ? 'text-primary-foreground/50' : 'text-muted-foreground/40',
+                  )}
+                >
+                  <GripVertical className="h-3.5 w-3.5" />
+                </span>
+              )}
               <button
                 type="button"
                 onClick={() => onSelectSlot(slot.id)}
                 aria-current={active ? 'true' : undefined}
+                onKeyDown={(event) => {
+                  // Ctrl/Cmd + arrows reorder; bare arrows stay with the browser
+                  // so the list can still be read through.
+                  if (!movable || !(event.metaKey || event.ctrlKey)) return;
+                  const delta =
+                    event.key === 'ArrowUp' || event.key === 'ArrowLeft'
+                      ? -1
+                      : event.key === 'ArrowDown' || event.key === 'ArrowRight'
+                        ? 1
+                        : 0;
+                  if (delta === 0) return;
+                  event.preventDefault();
+                  moveSection(index, index + delta);
+                }}
                 className={cn(
                   'flex min-w-0 flex-1 flex-col items-start gap-0.5 rounded-lg px-3 py-2 text-left',
                   'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset',

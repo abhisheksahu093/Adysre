@@ -58,7 +58,9 @@
 		},
 		"expandSection": "展开{label}",
 		"collapseSection": "收起{label}",
-		"viewAll": "全部{label}"
+		"viewAll": "全部{label}",
+		"collapseSidebar": "收起侧边栏",
+		"expandSidebar": "展开侧边栏"
 	},
 	"topbar": {
 		"searchPlaceholder": "搜索或快速跳转…",
@@ -972,18 +974,27 @@
 				"comparison": "对比",
 				"faq": "常见问题",
 				"cta": "行动号召",
-				"footer": "页脚"
+				"footer": "页脚",
+				"logos": "品牌标识",
+				"features": "功能网格",
+				"stats": "数据",
+				"team": "团队",
+				"testimonials": "客户评价",
+				"blog": "博客",
+				"contact": "联系我们"
 			},
 			"rail": {
 				"title": "区块",
 				"empty": "未添加",
 				"add": "添加{slot}",
-				"remove": "移除{slot}"
+				"remove": "移除{slot}",
+				"reorder": "拖动排序，或使用 Ctrl/Cmd + 方向键"
 			},
 			"builder": {
 				"layout": "布局",
 				"content": "内容",
-				"tabsLabel": "版块控制"
+				"tabsLabel": "版块控制",
+				"style": "样式"
 			},
 			"variations": {
 				"of": "{slot}的样式",
@@ -1013,7 +1024,9 @@
 				"projectTitle": "下载完整项目",
 				"projectHint": "开箱即用的项目。解压后运行 npm install。",
 				"downloadProjectNext": "Next.js 项目",
-				"downloadProjectReact": "React 项目"
+				"downloadProjectReact": "React 项目",
+				"stylesTitle": "区块样式",
+				"stylesHint": "请与标记一起粘贴 —— 每条规则通过 id 指向一个区块。"
 			},
 			"tour": {
 				"stepCount": "第 {current} / {total} 步",
@@ -1119,6 +1132,47 @@
 					"placeholder": "占位符",
 					"alt": "替代文本"
 				}
+			},
+			"style": {
+				"title": "样式",
+				"empty": "请选择要设置样式的区块。",
+				"background": "背景",
+				"kind": {
+					"none": "无",
+					"color": "纯色",
+					"gradient": "渐变",
+					"pattern": "图案",
+					"texture": "纹理"
+				},
+				"backgroundColor": "背景颜色",
+				"angle": "角度",
+				"scale": "缩放",
+				"opacity": "不透明度",
+				"patternBg": "图案背景色",
+				"patternFg": "图案前景色",
+				"text": "文字",
+				"textColor": "文字颜色",
+				"textHint": "覆盖区块自带的文字颜色。",
+				"clearText": "清除文字颜色",
+				"border": "边框",
+				"borderWidth": "边框宽度",
+				"borderStyle": {
+					"solid": "实线",
+					"dashed": "虚线",
+					"dotted": "点线"
+				},
+				"borderColor": "边框颜色",
+				"clearBorder": "清除边框",
+				"radius": "圆角半径",
+				"reset": "重置样式"
+			},
+			"pages": {
+				"title": "页面",
+				"add": "添加页面",
+				"newName": "新页面",
+				"rename": "双击重命名",
+				"nameLabel": "页面名称",
+				"remove": "删除 {name}"
 			}
 		},
 		"allComponents": "全部组件"
@@ -2182,7 +2236,8 @@
 				"description": "画框就是你设计所用的画板。选择一个尺寸，或用画框工具（F）绘制。",
 				"cta": "选择画框尺寸"
 			},
-			"editText": "编辑文本"
+			"editText": "编辑文本",
+			"backToContent": "返回内容"
 		},
 		"frameGroups": {
 			"screens": "屏幕",
@@ -2216,6 +2271,7 @@
 			"share": "分享",
 			"export": "导出",
 			"toggleInspector": "切换属性面板",
+			"closePanel": "关闭面板",
 			"zoomIn": "放大",
 			"zoomOut": "缩小",
 			"resetZoom": "缩放重置为 100%",
@@ -2232,7 +2288,10 @@
 			"delete": "删除",
 			"group": "编组",
 			"ungroup": "取消编组",
-			"zoomToFit": "缩放以适应"
+			"zoomToFit": "缩放以适应",
+			"copy": "复制",
+			"paste": "粘贴到此处",
+			"frame": "为所选创建框架"
 		},
 		"export": {
 			"working": "处理中…",

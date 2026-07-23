@@ -12,7 +12,7 @@ import {
   type PlaygroundSlotId,
 } from '@/data/playground';
 import { usePreviewHeight } from '@/hooks/use-preview-height';
-import { usePlaygroundStore } from '@/stores/playground-store';
+import { sectionStyleOf, usePlaygroundStore } from '@/stores/playground-store';
 import { encodePaletteParam } from '@/lib/palettes/apply-to-preview';
 import type { PreviewContentMessage, PreviewFieldsMessage } from '@/lib/playground/content';
 import type { PreviewStyleMessage } from '@/lib/playground/section-style';
@@ -119,7 +119,7 @@ function CanvasSection({
   const setSectionFields = usePlaygroundStore((s) => s.setSectionFields);
   const overrides = usePlaygroundStore((s) => s.contentOverrides[component.slug]);
   // Styling belongs to the slot, so it survives a variation swap.
-  const sectionStyle = usePlaygroundStore((s) => s.sectionStyles[slot.id]);
+  const sectionStyle = usePlaygroundStore((s) => sectionStyleOf(s, slot.id));
 
   /** Push the current edits into this section's frame (once it can receive). */
   function postOverrides(target: Window | null): void {

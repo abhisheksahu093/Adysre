@@ -1,10 +1,10 @@
 'use client';
 
-import { Suspense, useEffect, useState } from 'react';
-import { useTranslations } from 'next-intl';
+import { Suspense, useEffect, useMemo, useState } from 'react';
+import { useLocale, useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 import { ChevronDown } from 'lucide-react';
-import { cn } from '@adysre/ui';
+import { Tooltip, cn } from '@adysre/ui';
 import { Link, usePathname } from '@/i18n/navigation';
 import { NAV_ITEMS } from '@/config/navigation';
 import { NAV_SUBMENUS, type LabelMode, type ModuleSubmenu } from '@/config/nav-submenus';
@@ -36,6 +36,14 @@ export function SidebarBrand() {
 /**
  * Sidebar navigation, rendered from NAV_ITEMS.
  *
+ * Every list here - modules, submenu groups and the filters inside them - is
+ * ordered alphabetically by the label the user actually reads, not by the order
+ * the config happens to declare. The sort therefore happens at RENDER time,
+ * against the translated string and the active locale's collation, so a Japanese
+ * or Hindi sidebar is alphabetical in its own alphabet rather than in English's.
+ * `NAV_ITEMS` stays in declaration order because `APP_HOME` (and the marketing
+ * links that point at it) is defined as its first entry.
+ *
  * Modules that expose a submenu (components, prompts, icons, gradients,
  * palettes) render as expandable dropdowns whose items are the categories/tags
  * that used to sit as filter chips on the page. Each item links to the module
@@ -46,16 +54,33 @@ export function SidebarBrand() {
  * rendered routes, so it lives behind a Suspense boundary; the fallback renders
  * the same tree with no active-item highlight until hydration.
  */
-export function SidebarNav({ onNavigate = () => {} }: { onNavigate?: () => void }) {
+export function SidebarNav({
+  onNavigate = () => {},
+  collapsed = false,
+}: {
+  onNavigate?: () => void;
+  /** Icon-rail mode. Never set by the mobile drawer, which always has room. */
+  collapsed?: boolean;
+}) {
   return (
-    <Suspense fallback={<SidebarNavInner onNavigate={onNavigate} activeValue={null} />}>
-      <SidebarNavWithParams onNavigate={onNavigate} />
+    <Suspense
+      fallback={
+        <SidebarNavInner onNavigate={onNavigate} activeValue={null} collapsed={collapsed} />
+      }
+    >
+      <SidebarNavWithParams onNavigate={onNavigate} collapsed={collapsed} />
     </Suspense>
   );
 }
 
 /** Reads the active filter value off the URL and hands it to the renderer. */
-function SidebarNavWithParams({ onNavigate }: { onNavigate: () => void }) {
+function SidebarNavWithParams({
+  onNavigate,
+  collapsed,
+}: {
+  onNavigate: () => void;
+  collapsed: boolean;
+}) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
 
@@ -65,22 +90,35 @@ function SidebarNavWithParams({ onNavigate }: { onNavigate: () => void }) {
   );
   const activeValue = activeModule ? searchParams.get(activeModule.param) : null;
 
-  return <SidebarNavInner onNavigate={onNavigate} activeValue={activeValue} />;
+  return (
+    <SidebarNavInner onNavigate={onNavigate} activeValue={activeValue} collapsed={collapsed} />
+  );
 }
 
 function SidebarNavInner({
   onNavigate,
   activeValue,
+  collapsed,
 }: {
   onNavigate: () => void;
   activeValue: string | null;
+  collapsed: boolean;
 }) {
   const pathname = usePathname();
+  const locale = useLocale();
   const t = useTranslations('nav');
   const tCommon = useTranslations('common');
   const tComponents = useTranslations('components');
   const tIcons = useTranslations('icons');
   const tPrompts = useTranslations('promptLibrary');
+
+  // One collator for the whole tree: `localeCompare` rebuilds the collation
+  // table on every call, and the submenus sort a few hundred labels between
+  // them. `numeric` so "Heading 2" sorts before "Heading 10".
+  const collator = useMemo(
+    () => new Intl.Collator(locale, { sensitivity: 'base', numeric: true }),
+    [locale],
+  );
 
   // The module whose page we're on (drives which submenu auto-opens).
   const activeModuleKey =
@@ -109,6 +147,13 @@ function SidebarNavInner({
     return translate.has(key) ? translate(key) : humanizeKey(value);
   }
 
+  /** Filter values, A-Z by the label they render as. Never mutates the config. */
+  function sortedValues(mode: LabelMode, values: readonly string[]): string[] {
+    return [...values].sort((a, b) =>
+      collator.compare(resolveLabel(mode, a), resolveLabel(mode, b)),
+    );
+  }
+
   /** One filter link (a submenu leaf). */
   function Leaf({ submenu, value }: { submenu: ModuleSubmenu; value: string }) {
     const isActive = activeModuleKey === submenu.navKey && activeValue === value;
@@ -130,13 +175,53 @@ function SidebarNavInner({
     );
   }
 
+  const items = [...NAV_ITEMS].sort((a, b) => collator.compare(t(a.key), t(b.key)));
+
   return (
-    <nav aria-label={t('mainLabel')} className="flex-1 space-y-1 overflow-y-auto p-3">
-      {NAV_ITEMS.map((item) => {
+    <nav
+      aria-label={t('mainLabel')}
+      className={cn('flex-1 space-y-1 overflow-y-auto', collapsed ? 'px-2 py-3' : 'p-3')}
+    >
+      {items.map((item) => {
         const { key, href, icon: Icon, comingSoon } = item;
         const submenu = NAV_SUBMENUS[key];
+        const sortedGroups = submenu?.groups
+          ? [...submenu.groups].sort((a, b) =>
+              collator.compare(t(`groups.${a.groupKey}`), t(`groups.${b.groupKey}`)),
+            )
+          : undefined;
         // usePathname is locale-stripped, so it compares cleanly to hrefs.
         const active = pathname === href || pathname.startsWith(`${href}/`);
+
+        // Collapsed, every item is the same thing: one icon that navigates.
+        // A 4rem rail has no room for a label, a badge or an expanding submenu,
+        // and a chevron that opens a panel with nowhere to draw it would be a
+        // control that lies. The module page carries the same filters.
+        if (collapsed) {
+          return (
+            // The label is the only thing naming this icon, so it is a real
+            // tooltip rather than `title`: it appears at once, on focus as well
+            // as hover, and escapes the rail's own scroll clipping.
+            <Tooltip key={href} label={t(key)} side="right">
+              <Link
+                href={href}
+                onClick={onNavigate}
+                aria-current={active ? 'page' : undefined}
+                className={cn(
+                  'flex h-10 items-center justify-center rounded-md transition-colors',
+                  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
+                  active
+                    ? 'bg-primary/10 text-primary'
+                    : 'text-muted-foreground hover:bg-muted hover:text-foreground',
+                )}
+              >
+                <Icon className="h-4 w-4 shrink-0" aria-hidden />
+                {/* The accessible name. The tooltip is aria-hidden decoration. */}
+                <span className="sr-only">{t(key)}</span>
+              </Link>
+            </Tooltip>
+          );
+        }
 
         if (!submenu) {
           return (
@@ -224,16 +309,14 @@ function SidebarNavInner({
                 >
                   {t('viewAll', { label: t(key) })}
                 </Link>
-                {submenu.groups
-                  ? submenu.groups.map((group) => {
+                {sortedGroups
+                  ? sortedGroups.map((group) => {
                       const groupOpen = openGroup === group.groupKey;
                       return (
                         <div key={group.groupKey}>
                           <button
                             type="button"
-                            onClick={() =>
-                              setOpenGroup(groupOpen ? null : group.groupKey)
-                            }
+                            onClick={() => setOpenGroup(groupOpen ? null : group.groupKey)}
                             aria-expanded={groupOpen}
                             className={cn(
                               'flex w-full items-center justify-between gap-2 rounded-md px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider transition-colors',
@@ -252,7 +335,7 @@ function SidebarNavInner({
                           </button>
                           {groupOpen && (
                             <div className="mt-0.5 space-y-0.5 pl-1">
-                              {group.values.map((value) => (
+                              {sortedValues(submenu.labelMode, group.values).map((value) => (
                                 <Leaf key={value} submenu={submenu} value={value} />
                               ))}
                             </div>
@@ -260,7 +343,7 @@ function SidebarNavInner({
                         </div>
                       );
                     })
-                  : submenu.values?.map((value) => (
+                  : sortedValues(submenu.labelMode, submenu.values ?? []).map((value) => (
                       <Leaf key={value} submenu={submenu} value={value} />
                     ))}
               </div>

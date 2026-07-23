@@ -58,7 +58,9 @@
 		},
 		"expandSection": "Expand {label}",
 		"collapseSection": "Collapse {label}",
-		"viewAll": "All {label}"
+		"viewAll": "All {label}",
+		"collapseSidebar": "Collapse sidebar",
+		"expandSidebar": "Expand sidebar"
 	},
 	"topbar": {
 		"searchPlaceholder": "Search or jump to…",
@@ -972,18 +974,27 @@
 				"comparison": "Comparison",
 				"faq": "FAQ",
 				"cta": "Call to action",
-				"footer": "Footer"
+				"footer": "Footer",
+				"logos": "Logo strip",
+				"features": "Feature grid",
+				"stats": "Stats",
+				"team": "Team",
+				"testimonials": "Testimonials",
+				"blog": "Blog",
+				"contact": "Contact"
 			},
 			"rail": {
 				"title": "Sections",
 				"empty": "Not added",
 				"add": "Add {slot}",
-				"remove": "Remove {slot}"
+				"remove": "Remove {slot}",
+				"reorder": "Drag to reorder, or Ctrl/Cmd + arrow keys"
 			},
 			"builder": {
 				"layout": "Layout",
 				"content": "Content",
-				"tabsLabel": "Section controls"
+				"tabsLabel": "Section controls",
+				"style": "Style"
 			},
 			"variations": {
 				"of": "{slot} variations",
@@ -1013,7 +1024,9 @@
 				"projectTitle": "Download full project",
 				"projectHint": "A ready-to-run project. Unzip it, then run npm install.",
 				"downloadProjectNext": "Next.js project",
-				"downloadProjectReact": "React project"
+				"downloadProjectReact": "React project",
+				"stylesTitle": "Section styles",
+				"stylesHint": "Paste this alongside your markup — each rule targets one section by id."
 			},
 			"tour": {
 				"stepCount": "Step {current} of {total}",
@@ -1119,6 +1132,47 @@
 					"placeholder": "Placeholder",
 					"alt": "Alt text"
 				}
+			},
+			"style": {
+				"title": "Style",
+				"empty": "Select a section to style it.",
+				"background": "Background",
+				"kind": {
+					"none": "None",
+					"color": "Color",
+					"gradient": "Gradient",
+					"pattern": "Pattern",
+					"texture": "Texture"
+				},
+				"backgroundColor": "Background color",
+				"angle": "Angle",
+				"scale": "Scale",
+				"opacity": "Opacity",
+				"patternBg": "Pattern background",
+				"patternFg": "Pattern foreground",
+				"text": "Text",
+				"textColor": "Text color",
+				"textHint": "Overrides the section’s own text colors.",
+				"clearText": "Clear text color",
+				"border": "Border",
+				"borderWidth": "Border width",
+				"borderStyle": {
+					"solid": "Solid",
+					"dashed": "Dashed",
+					"dotted": "Dotted"
+				},
+				"borderColor": "Border color",
+				"clearBorder": "Clear border",
+				"radius": "Corner radius",
+				"reset": "Reset styles"
+			},
+			"pages": {
+				"title": "Pages",
+				"add": "Add page",
+				"newName": "New page",
+				"rename": "Double-click to rename",
+				"nameLabel": "Page name",
+				"remove": "Remove {name}"
 			}
 		},
 		"allComponents": "All components"
@@ -2182,7 +2236,8 @@
 				"description": "Frames are the artboards you design in. Pick a size to begin — or draw one with the frame tool (F).",
 				"cta": "Choose a frame size"
 			},
-			"editText": "Edit text"
+			"editText": "Edit text",
+			"backToContent": "Back to content"
 		},
 		"frameGroups": {
 			"screens": "Screens",
@@ -2216,6 +2271,7 @@
 			"share": "Share",
 			"export": "Export",
 			"toggleInspector": "Toggle properties panel",
+			"closePanel": "Close panel",
 			"zoomIn": "Zoom in",
 			"zoomOut": "Zoom out",
 			"resetZoom": "Reset zoom to 100%",
@@ -2232,7 +2288,10 @@
 			"delete": "Delete",
 			"group": "Group",
 			"ungroup": "Ungroup",
-			"zoomToFit": "Zoom to fit"
+			"zoomToFit": "Zoom to fit",
+			"copy": "Copy",
+			"paste": "Paste here",
+			"frame": "Frame selection"
 		},
 		"export": {
 			"working": "Working…",

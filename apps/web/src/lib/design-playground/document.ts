@@ -62,10 +62,24 @@ export const DEFAULT_TEXT: TextSpec = {
   align: 'left',
 };
 
+/**
+ * Overrides accepted by `createNode`.
+ *
+ * The spec groups are PARTIAL because the constructor merges them over the
+ * type's defaults - a caller that only wants a different fill should not have to
+ * restate stroke, radius, opacity, shadow and blend mode to say so.
+ */
+export type NodeOverrides = Partial<Omit<Node, 'style' | 'layout' | 'text' | 'image'>> & {
+  style?: Partial<StyleSpec>;
+  layout?: Partial<LayoutSpec>;
+  text?: Partial<TextSpec>;
+  image?: Partial<ImageSpec>;
+};
+
 export function createNode(
   type: NodeType,
   transform: Transform,
-  overrides: Partial<Node> = {},
+  overrides: NodeOverrides = {},
 ): Node {
   return {
     id: createId(),

@@ -3,7 +3,9 @@
 import { useEffect, useRef } from 'react';
 import { Layer, Rect, Stage, Transformer } from 'react-konva';
 import type Konva from 'konva';
+import { useMediaQuery } from '@/hooks/use-media-query';
 import { topLevelNodes } from '@/lib/design-playground/document';
+import { topSelectable } from '@/lib/design-playground/placement';
 import type { Document, Node, Page } from '@/lib/design-playground/types';
 import { NodeView } from './node-view';
 import { registerStage } from './stage-registry';
@@ -72,6 +74,10 @@ export function CanvasStage({
   const stageRef = useRef<Konva.Stage>(null);
   const transformerRef = useRef<Konva.Transformer>(null);
 
+  // A 7px anchor is a comfortable mouse target and an impossible finger one, so
+  // the handles grow on a touch screen rather than staying honest to the pixel.
+  const coarsePointer = useMediaQuery('(pointer: coarse)') === true;
+
   // Hand the stage to the exporter, which needs the real renderer to rasterise.
   useEffect(() => {
     registerStage(stageRef.current);
@@ -123,13 +129,42 @@ export function CanvasStage({
     return { x: point.x / zoom - viewport.x, y: point.y / zoom - viewport.y };
   }
 
+  /**
+   * Turn a hit on a shape into a selection.
+   *
+   * A click resolves UP to the outermost node inside the artboard, so clicking a
+   * heading inside a hero hands the user the hero and one drag moves the whole
+   * section. Once something inside that subtree is already selected the click
+   * stops resolving and picks the exact node - which is how a second click
+   * drills in without needing a modifier, the same bargain Figma makes.
+   */
   function handleSelect(id: string, additive: boolean): void {
     if (drawing) return;
+
+    const inside = selection.some(
+      (selected) => selected === id || isWithin(selected, id),
+    );
+    const target = inside ? id : topSelectable(doc, page, id);
+
     if (!additive) {
-      onSelect([id]);
+      onSelect([target]);
       return;
     }
-    onSelect(selection.includes(id) ? selection.filter((s) => s !== id) : [...selection, id]);
+    onSelect(
+      selection.includes(target)
+        ? selection.filter((s) => s !== target)
+        : [...selection, target],
+    );
+  }
+
+  /** True when `id` sits at or under `ancestorId` in the current document. */
+  function isWithin(ancestorId: string, id: string): boolean {
+    let current = doc.nodes[id]?.parentId ?? null;
+    while (current) {
+      if (current === ancestorId) return true;
+      current = doc.nodes[current]?.parentId ?? null;
+    }
+    return false;
   }
 
   /**
@@ -188,6 +223,20 @@ export function CanvasStage({
         if (point) onPointerMove(point);
       }}
       onMouseUp={onPointerUp}
+      // Konva does not synthesise mouse events from touch, so the same three
+      // intents have to be wired twice. Without these a finger could neither
+      // draw a shape nor drag out a selection - the canvas looked inert on a
+      // phone even though every panel around it worked.
+      onTouchStart={(event) => {
+        if (event.target !== event.target.getStage()) return;
+        const point = pointerPosition();
+        if (point) onBackgroundPointerDown(point);
+      }}
+      onTouchMove={() => {
+        const point = pointerPosition();
+        if (point) onPointerMove(point);
+      }}
+      onTouchEnd={onPointerUp}
       onDblClick={(event) => {
         // Konva events bubble to the stage, so one handler here covers every
         // node without the recursive renderer having to know about editing.
@@ -208,6 +257,9 @@ export function CanvasStage({
             onSelect={handleSelect}
             onDragEnd={onNodeMoved}
             drawing={drawing}
+            // Only top-level frames are titled - a nested frame's tag would sit
+            // inside its parent's content and read as artwork.
+            {...(node.type === 'frame' ? { labelScale: 1 / zoom } : {})}
           />
         ))}
       </Layer>
@@ -220,7 +272,7 @@ export function CanvasStage({
           rotateEnabled
           ignoreStroke
           padding={2}
-          anchorSize={7}
+          anchorSize={coarsePointer ? 14 : 7}
           onTransformEnd={handleTransformEnd}
           boundBoxFunc={(oldBox, newBox) =>
             // Refuse degenerate boxes; a zero-size node cannot be grabbed again.

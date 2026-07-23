@@ -29,8 +29,10 @@ export function EditorStatusBar({
   const toggleGrid = useDesignPlaygroundStore((s) => s.toggleGrid);
 
   return (
-    <div className="flex h-8 shrink-0 items-center gap-3 border-t border-border bg-card px-3 text-xs text-muted-foreground">
-      <span className="tabular-nums" aria-label={label}>
+    <div className="flex h-8 shrink-0 items-center gap-2 border-t border-border bg-card px-2 text-xs text-muted-foreground sm:gap-3 sm:px-3">
+      {/* Coordinates track a hovering pointer, which a touch screen does not
+          have - so they only earn their width where there is a cursor. */}
+      <span className="hidden tabular-nums sm:inline" aria-label={label}>
         {pointer ? `${Math.round(pointer.x)}, ${Math.round(pointer.y)}` : '—'}
       </span>
 
@@ -39,16 +41,17 @@ export function EditorStatusBar({
         onClick={toggleGrid}
         aria-pressed={gridVisible}
         className={cn(
-          'flex items-center gap-1.5 rounded-md px-1.5 py-0.5 transition-colors',
+          'flex shrink-0 items-center gap-1.5 rounded-md px-1.5 py-0.5 transition-colors',
           'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
           gridVisible ? 'text-foreground' : 'hover:text-foreground',
         )}
       >
-        <Grid2x2 className="h-3.5 w-3.5" />
-        {t('status.grid')}
+        <Grid2x2 className="h-3.5 w-3.5" aria-hidden />
+        <span className="hidden sm:inline">{t('status.grid')}</span>
+        <span className="sr-only sm:hidden">{t('status.grid')}</span>
       </button>
 
-      <div className="ml-auto flex items-center gap-0.5">
+      <div className="ml-auto flex shrink-0 items-center gap-0.5">
         <button
           type="button"
           onClick={onFit}

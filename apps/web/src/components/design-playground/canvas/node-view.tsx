@@ -6,6 +6,9 @@ import { DEFAULT_TEXT } from '@/lib/design-playground/document';
 import { useImage } from './use-image';
 import type { BlendMode, Document, Node, ShadowSpec } from '@/lib/design-playground/types';
 
+/** On-screen size of an artboard's name tag, in CSS pixels at any zoom. */
+const FRAME_LABEL_SIZE = 12;
+
 /**
  * Konva's prop types reject an explicit `undefined` (the repo compiles with
  * `exactOptionalPropertyTypes`), and the model uses `null` for "no paint". So
@@ -68,6 +71,7 @@ export function NodeView({
   onSelect,
   onDragEnd,
   drawing = false,
+  labelScale,
 }: {
   doc: Document;
   node: Node;
@@ -75,6 +79,11 @@ export function NodeView({
   /** True while a drawing tool is armed; shapes must not intercept the press. */
   drawing?: boolean;
   onDragEnd: (id: string, position: { x: number; y: number }) => void;
+  /**
+   * Canvas units per screen pixel (1/zoom) for a top-level frame's name tag.
+   * Absent for everything else - only artboards are titled.
+   */
+  labelScale?: number;
 }) {
   if (node.hidden) return null;
 
@@ -104,6 +113,15 @@ export function NodeView({
       event.cancelBubble = true;
       onSelect(node.id, event.evt.shiftKey || event.evt.metaKey || event.evt.ctrlKey);
     },
+    // Konva raises touch and mouse separately, so a tap needs its own handler or
+    // nothing on the canvas is selectable with a finger. Touch has no modifier
+    // keys, so a tap is always a fresh selection rather than an additive one -
+    // multi-select on a phone is the rail's Layers panel.
+    onTouchStart: (event: Konva.KonvaEventObject<TouchEvent>) => {
+      if (drawing) return;
+      event.cancelBubble = true;
+      onSelect(node.id, false);
+    },
     onDragEnd: (event: Konva.KonvaEventObject<DragEvent>) => {
       onDragEnd(node.id, { x: event.target.x(), y: event.target.y() });
     },
@@ -129,7 +147,13 @@ export function NodeView({
         <Group {...common}>
           {/* The frame's own background is a sibling of the clip, not a child of
               it: clipping must contain the frame's CONTENT, while the backdrop -
-              and the shadow it casts - has to be free to paint outside the box. */}
+              and the shadow it casts - has to be free to paint outside the box.
+
+              It LISTENS, unlike every other decorative shape here, because it is
+              the only part of an empty frame there is to grab: with it inert a
+              frame could be moved only by dragging something inside it, which is
+              impossible while it is empty. Children paint after it, so they still
+              take the hit first wherever they cover it. */}
           <Rect
             width={width}
             height={height}
@@ -137,8 +161,23 @@ export function NodeView({
             {...effect}
             strokeWidth={strokeWidth}
             cornerRadius={radius}
-            listening={false}
           />
+          {/* The name tag above an artboard: Figma's handle for "grab the whole
+              frame". It is a child of the draggable group, so pressing it drags
+              the frame; `labelScale` cancels the stage zoom so the tag stays the
+              same size on screen at any magnification. */}
+          {labelScale !== undefined && (
+            <Text
+              text={node.name}
+              x={0}
+              y={-(FRAME_LABEL_SIZE + 4) * labelScale}
+              fontSize={FRAME_LABEL_SIZE * labelScale}
+              fontFamily={DEFAULT_TEXT.fontFamily}
+              // Canvas chrome cannot read a CSS token, so this is a literal - the
+              // same compromise the marquee rectangle makes in `canvas-stage`.
+              fill="#94a3b8"
+            />
+          )}
           <Group clipX={0} clipY={0} clipWidth={width} clipHeight={height}>
             {children}
           </Group>

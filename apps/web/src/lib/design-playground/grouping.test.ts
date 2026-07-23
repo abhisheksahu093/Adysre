@@ -107,9 +107,69 @@ describe('grouping', () => {
     assert.deepEqual(restored, doc);
   });
 
-  it('ignores a selection with no groups in it', () => {
+  it('ignores a selection with no containers in it', () => {
     const { doc, ids } = seed(2);
     assert.equal(planUngroup(doc, ids), null);
+  });
+});
+
+describe('framing a selection', () => {
+  it('sizes the frame to the bounds of what it wraps', () => {
+    const { doc, ids } = seed(2);
+    const framed = planGroup(doc, ids, 'frame')!.apply(doc);
+    const frame = addedNode(doc, framed);
+
+    // seed() lays rectangles at (100,50) and (300,150), each 100×100.
+    assert.equal(frame.type, 'frame');
+    assert.deepEqual(
+      { x: frame.transform.x, y: frame.transform.y },
+      { x: 100, y: 50 },
+      'the frame starts at the top-left of the selection',
+    );
+    assert.deepEqual(
+      { width: frame.transform.width, height: frame.transform.height },
+      { width: 300, height: 200 },
+      'and spans to its bottom-right',
+    );
+  });
+
+  it('does not paint over what it wraps', () => {
+    const { doc, ids } = seed(2);
+    const frame = addedNode(doc, planGroup(doc, ids, 'frame')!.apply(doc));
+    assert.equal(frame.style.fill, null);
+  });
+
+  it('wraps a single node, where grouping one would be meaningless', () => {
+    const { doc, ids } = seed(2);
+    assert.equal(planGroup(doc, [ids[0]!], 'group'), null);
+    assert.notEqual(planGroup(doc, [ids[0]!], 'frame'), null);
+  });
+
+  it('rebases members so nothing moves on screen', () => {
+    const { doc, ids } = seed(2);
+    const framed = planGroup(doc, ids, 'frame')!.apply(doc);
+    const frame = addedNode(doc, framed);
+
+    for (const id of ids) {
+      const before = doc.nodes[id]!.transform;
+      const after = framed.nodes[id]!.transform;
+      assert.deepEqual(
+        { x: after.x + frame.transform.x, y: after.y + frame.transform.y },
+        { x: before.x, y: before.y },
+      );
+    }
+  });
+
+  it('unwraps again, so framing is not a one-way door', () => {
+    const { doc, ids } = seed(2);
+    const framed = planGroup(doc, ids, 'frame')!.apply(doc);
+    const frame = addedNode(doc, framed);
+
+    const unwrapped = planUngroup(framed, [frame.id])!.apply(framed);
+    assert.equal(unwrapped.nodes[frame.id], undefined);
+    for (const id of ids) {
+      assert.deepEqual(unwrapped.nodes[id]?.transform, doc.nodes[id]?.transform);
+    }
   });
 });
 

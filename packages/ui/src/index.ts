@@ -13,3 +13,4 @@ export { Textarea, type TextareaProps } from './components/textarea';
 export { Select, type SelectProps } from './components/select';
 export { Badge, badgeVariants, type BadgeProps } from './components/badge';
 export { Dialog, type DialogProps } from './components/dialog';
+export { Tooltip, type TooltipProps, type TooltipSide } from './components/tooltip';

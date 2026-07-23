@@ -8,7 +8,6 @@ import {
   Waves,
   PenTool,
   LayoutTemplate,
-  Settings,
   type LucideIcon,
 } from 'lucide-react';
 
@@ -86,14 +85,17 @@ export const NAV_ITEMS: NavItem[] = [
     icon: LayoutTemplate,
     descriptionKey: 'templates',
   },
-  {
-    key: 'settings',
-    href: '/settings',
-    icon: Settings,
-    permission: 'org:setting:manage',
-    comingSoon: true,
-    descriptionKey: 'settings',
-  },
+  // Settings is hidden until the module lands - re-add this entry to bring it
+  // back. The route, its translations and its permission are all still in place,
+  // so this is the only line that has to change:
+  // {
+  //   key: 'settings',
+  //   href: '/settings',
+  //   icon: Settings,
+  //   permission: 'org:setting:manage',
+  //   comingSoon: true,
+  //   descriptionKey: 'settings',
+  // },
 ];
 
 /** Look up a nav entry by route - lets a page derive its own title and icon. */

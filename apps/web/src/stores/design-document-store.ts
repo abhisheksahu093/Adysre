@@ -14,8 +14,14 @@ import {
   descendantsOf,
   frameAt,
 } from '@/lib/design-playground/document';
-import { materialize, type TemplateSpec } from '@/lib/design-playground/templates';
+import {
+  fitFactor,
+  materialize,
+  scaleTemplate,
+  type TemplateSpec,
+} from '@/lib/design-playground/templates';
 import { planGroup, planUngroup } from '@/lib/design-playground/grouping';
+import { activeFrame, grownHeight, stackPosition } from '@/lib/design-playground/placement';
 import { commit, emptyHistory, redo, undo, type History } from '@/lib/design-playground/history';
 import { deserializeDocument, serializeDocument } from '@/lib/design-playground/schema';
 import {
@@ -97,10 +103,22 @@ interface DesignDocumentStore {
   reorderSelection: (direction: 'front' | 'back') => void;
   /** Move a node one step up or down within its parent's paint order. */
   nudgeOrder: (id: string, direction: 'up' | 'down') => void;
-  /** Wrap the selected siblings in a group, or dissolve selected groups. */
+  /** Wrap the selected siblings in a group, or dissolve selected containers. */
   groupSelection: () => void;
+  /** Wrap the selection in a frame sized to its bounds. */
+  frameSelection: () => void;
   ungroupSelection: () => void;
   reparent: (id: string, parentId: string, index: number) => void;
+
+  /** Put the selected subtrees on the editor clipboard. */
+  copySelection: () => void;
+  /**
+   * Paste the clipboard as fresh nodes and select them. Without a point they
+   * stack under the content already in the active frame, like a panel insert.
+   */
+  pasteClipboard: (at?: { x: number; y: number }) => void;
+  /** True when there is something to paste - drives the menu entry. */
+  canPaste: () => boolean;
 
   /** Replace the open document with a parsed `.adysre` file. */
   importDocument: (json: string) => boolean;
@@ -264,18 +282,35 @@ export const useDesignDocumentStore = create<DesignDocumentStore>()((set, get) =
       const page = state.document.pages.find((p) => p.id === state.pageId);
       if (!page) return;
 
-      // Drop into the frame under the point when there is one, so a component
-      // placed over an artboard becomes part of it rather than floating beside.
-      const point = at ?? { x: 0, y: 0 };
-      const frame = frameAt(state.document, page, point);
+      // Two very different gestures share this path. A DROP has a point, so it
+      // goes exactly where the user put it, inside whatever frame is under it. A
+      // PANEL CLICK has no point, so the editor has to choose - and stacking
+      // under the content already in the working frame is the only choice that
+      // makes clicking three components in a row build a page rather than pile
+      // three things on the origin.
+      const frame = at
+        ? frameAt(state.document, page, at)
+        : activeFrame(state.document, page, state.selection);
       const target = frame?.id ?? page.rootId;
-      const origin = frame
-        ? { x: point.x - frame.transform.x, y: point.y - frame.transform.y }
-        : point;
 
-      const { nodes, rootId } = materialize(spec, target, origin);
+      // A section authored for a 1440 artboard must not hang off a 1280 one.
+      // Fitting happens before placement, so the stack maths sees the size the
+      // section will actually be.
+      const placed = frame
+        ? scaleTemplate(spec, fitFactor(spec.transform.width, frame.transform.width))
+        : spec;
+
+      const origin = at
+        ? frame
+          ? { x: at.x - frame.transform.x, y: at.y - frame.transform.y }
+          : at
+        : stackPosition(state.document, target, placed.transform);
+
+      const { nodes, rootId } = materialize(placed, target, origin);
       const index = state.document.nodes[target]?.children.length ?? 0;
-      state.dispatch(insertNodes(nodes, [rootId], target, index));
+      state.dispatch(
+        withFrameGrown(state.document, insertNodes(nodes, [rootId], target, index), frame?.id),
+      );
       set({ selection: [rootId] });
     },
 
@@ -309,38 +344,26 @@ export const useDesignDocumentStore = create<DesignDocumentStore>()((set, get) =
         const source = state.document.nodes[id];
         if (!source?.parentId) continue;
 
-        // Copy the whole subtree with fresh ids, keeping parent/child links.
-        const idMap = new Map<string, string>();
-        const subtree = descendantsOf(state.document, id);
-        for (const node of subtree) idMap.set(node.id, createId());
+        const clone = cloneSubtrees(state.document, [id]);
+        const copyRootId = clone.rootIds[0];
+        const copyRoot = copyRootId ? clone.nodes[copyRootId] : undefined;
+        if (!copyRootId || !copyRoot) continue;
 
-        const copies: Record<string, Node> = {};
-        for (const node of subtree) {
-          const copyId = idMap.get(node.id);
-          if (!copyId) continue;
-          copies[copyId] = {
-            ...node,
-            id: copyId,
-            parentId: node.parentId ? (idMap.get(node.parentId) ?? node.parentId) : null,
-            children: node.children.map((child) => idMap.get(child) ?? child),
-            // Offset the copy so it does not hide under the original.
-            ...(node.id === id
-              ? {
-                  transform: {
-                    ...node.transform,
-                    x: node.transform.x + DUPLICATE_OFFSET,
-                    y: node.transform.y + DUPLICATE_OFFSET,
-                  },
-                }
-              : {}),
-          };
-        }
+        // Offset the copy so it does not hide under the original, and re-attach
+        // its root: the clone leaves the root parentless for the caller to place.
+        clone.nodes[copyRootId] = {
+          ...copyRoot,
+          parentId: source.parentId,
+          transform: {
+            ...copyRoot.transform,
+            x: copyRoot.transform.x + DUPLICATE_OFFSET,
+            y: copyRoot.transform.y + DUPLICATE_OFFSET,
+          },
+        };
 
-        const copyRootId = idMap.get(id);
-        if (!copyRootId) continue;
         const parent = state.document.nodes[source.parentId];
         commands.push(
-          insertNodes(copies, [copyRootId], source.parentId, parent?.children.length ?? 0),
+          insertNodes(clone.nodes, [copyRootId], source.parentId, parent?.children.length ?? 0),
         );
         newRootIds.push(copyRootId);
       }
@@ -374,6 +397,84 @@ export const useDesignDocumentStore = create<DesignDocumentStore>()((set, get) =
       // command added, and it is what the user now wants to move.
       const created = Object.keys(get().document.nodes).find((id) => !before.has(id));
       if (created) set({ selection: [created] });
+    },
+
+    frameSelection: () => {
+      const state = get();
+      const command = planGroup(state.document, state.selection, 'frame');
+      if (!command) return;
+      const before = new Set(Object.keys(state.document.nodes));
+      state.dispatch(command);
+      const created = Object.keys(get().document.nodes).find((id) => !before.has(id));
+      if (created) set({ selection: [created] });
+    },
+
+    copySelection: () => {
+      const state = get();
+      if (state.selection.length === 0) return;
+      // Cloned at COPY time, not at paste: pasting must reproduce what was
+      // copied, even if the original has been edited or deleted since.
+      clipboard = cloneSubtrees(state.document, state.selection);
+    },
+
+    canPaste: () => clipboard !== null && clipboard.rootIds.length > 0,
+
+    pasteClipboard: (at) => {
+      const source = clipboard;
+      const state = get();
+      const page = state.document.pages.find((p) => p.id === state.pageId);
+      if (!source || source.rootIds.length === 0 || !page) return;
+
+      // Re-clone on every paste so pasting twice yields two independent copies
+      // rather than two references to one set of ids.
+      const fresh = cloneSubtrees(
+        { ...state.document, nodes: { ...state.document.nodes, ...source.nodes } },
+        source.rootIds,
+      );
+
+      const frame = at
+        ? frameAt(state.document, page, at)
+        : activeFrame(state.document, page, state.selection);
+      const target = frame?.id ?? page.rootId;
+
+      const nodes: Record<string, Node> = {};
+      for (const [id, node] of Object.entries(fresh.nodes)) {
+        nodes[id] = fresh.rootIds.includes(id) ? { ...node, parentId: target } : node;
+      }
+
+      // Every root is offset by the same delta, so a multi-node paste keeps the
+      // relative layout the copy had.
+      const first = fresh.rootIds[0] ? nodes[fresh.rootIds[0]] : undefined;
+      if (!first) return;
+      const landing = at
+        ? frame
+          ? { x: at.x - frame.transform.x, y: at.y - frame.transform.y }
+          : at
+        : stackPosition(state.document, target, first.transform);
+      // A pointer position is continuous; node coordinates are not. Rounding the
+      // DELTA (not each node) keeps a multi-node paste pixel-identical to what
+      // was copied - rounding per node would shear the layout apart.
+      const dx = Math.round(landing.x - first.transform.x);
+      const dy = Math.round(landing.y - first.transform.y);
+
+      for (const id of fresh.rootIds) {
+        const node = nodes[id];
+        if (!node) continue;
+        nodes[id] = {
+          ...node,
+          transform: { ...node.transform, x: node.transform.x + dx, y: node.transform.y + dy },
+        };
+      }
+
+      const index = state.document.nodes[target]?.children.length ?? 0;
+      state.dispatch(
+        withFrameGrown(
+          state.document,
+          insertNodes(nodes, fresh.rootIds, target, index),
+          frame?.id,
+        ),
+      );
+      set({ selection: fresh.rootIds });
     },
 
     ungroupSelection: () => {
@@ -544,3 +645,68 @@ export const useDesignDocumentStore = create<DesignDocumentStore>()((set, get) =
 
 /** How far a duplicate is nudged from its original, in canvas pixels. */
 const DUPLICATE_OFFSET = 16;
+
+/**
+ * The editor clipboard: whole subtrees, detached from the document.
+ *
+ * Module scope rather than store state because it is not part of the user's
+ * WORK - it must not be autosaved, serialised into a `.adysre` file, or undone.
+ * It is a session-scoped side channel, which is exactly what a clipboard is.
+ * (It is deliberately not the OS clipboard: writing nodes there would put
+ * unreadable JSON in the way of the user's actual copy buffer.)
+ */
+let clipboard: { nodes: Record<string, Node>; rootIds: string[] } | null = null;
+
+/**
+ * Follow `command` with a resize of `frameId`, when what the command added no
+ * longer fits inside it.
+ *
+ * Batched with the insert so the pair is ONE undo step: a user who undoes an
+ * accidental section expects the frame to go back to the height it had, not to
+ * undo twice.
+ */
+function withFrameGrown(doc: Document, command: Command, frameId: string | undefined): Command {
+  if (!frameId) return command;
+  const after = command.apply(doc);
+  const height = grownHeight(after, frameId);
+  if (height === null) return command;
+  return batch([command, updateNode(frameId, { transform: { height } })], command.type);
+}
+
+/**
+ * Copy a set of subtrees with fresh ids, preserving parent/child links.
+ *
+ * Shared by duplicate and paste: both need "the same shape, new identities", and
+ * two implementations of id remapping is two chances to leave a dangling child
+ * reference behind.
+ */
+function cloneSubtrees(
+  doc: Document,
+  rootIds: readonly string[],
+): { nodes: Record<string, Node>; rootIds: string[] } {
+  const nodes: Record<string, Node> = {};
+  const roots: string[] = [];
+
+  for (const rootId of rootIds) {
+    if (!doc.nodes[rootId]) continue;
+    const subtree = descendantsOf(doc, rootId);
+    const idMap = new Map(subtree.map((node) => [node.id, createId()]));
+
+    for (const node of subtree) {
+      const copyId = idMap.get(node.id);
+      if (!copyId) continue;
+      nodes[copyId] = {
+        ...node,
+        id: copyId,
+        // The root's parent is resolved by the paste site, not here.
+        parentId: node.parentId ? (idMap.get(node.parentId) ?? null) : null,
+        children: node.children.map((child) => idMap.get(child) ?? child),
+      };
+    }
+
+    const copyRoot = idMap.get(rootId);
+    if (copyRoot) roots.push(copyRoot);
+  }
+
+  return { nodes, rootIds: roots };
+}

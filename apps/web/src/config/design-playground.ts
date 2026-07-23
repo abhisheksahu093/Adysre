@@ -87,6 +87,27 @@ export const AVAILABLE_EDITOR_PANELS: EditorPanel[] = EDITOR_PANELS.filter(
   (panel) => panel.enabled !== false,
 );
 
+/**
+ * Where the editor's chrome stops floating and starts docking, in CSS pixels.
+ *
+ * A phone cannot give a 16rem rail panel AND a 16rem inspector a column of their
+ * own - that is the whole viewport, with nothing left to draw on. Below these
+ * widths the panels open as sheets over the canvas instead, and the toolbar
+ * splits its context controls onto a second row.
+ *
+ * The values are Tailwind's `md` and `lg` on purpose: the components pair a
+ * `md:`/`lg:` class with the matching query here, so the CSS and the JS switch
+ * at the same pixel. Change one, change the other.
+ */
+export const EDITOR_LAYOUT = {
+  /** The rail's panel docks beside the canvas from here up (Tailwind `md`). */
+  panelDock: 768,
+  /** The inspector docks beside the canvas from here up (Tailwind `lg`). */
+  inspectorDock: 1024,
+  /** The toolbar fits on one row from here up (Tailwind `md`). */
+  toolbarSingleRow: 768,
+} as const;
+
 /** Inspector groups in the right panel, in render order. */
 export const INSPECTOR_GROUPS = [
   'transform',

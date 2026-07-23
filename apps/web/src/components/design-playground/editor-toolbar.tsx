@@ -4,7 +4,12 @@ import { useTranslations } from 'next-intl';
 import { ArrowLeft, PanelRight, Redo2, Share2, Undo2 } from 'lucide-react';
 import { cn } from '@adysre/ui';
 import { Link } from '@/i18n/navigation';
-import { EDITOR_BREAKPOINTS, EDITOR_TOOLS } from '@/config/design-playground';
+import {
+  EDITOR_BREAKPOINTS,
+  EDITOR_LAYOUT,
+  EDITOR_TOOLS,
+} from '@/config/design-playground';
+import { useMediaQuery } from '@/hooks/use-media-query';
 import { useDesignDocumentStore } from '@/stores/design-document-store';
 import { useDesignPlaygroundStore } from '@/stores/design-playground-store';
 import { ExportMenu } from './export-menu';
@@ -19,6 +24,12 @@ import { SaveStatus } from './save-status';
  * tool is an entry there, never a button added here. Tools whose engine has not
  * landed render disabled rather than absent, so the shape of the finished editor
  * is legible while it is being built.
+ *
+ * Below `EDITOR_LAYOUT.toolbarSingleRow` the row cannot hold everything, so the
+ * context controls (project, save state, breakpoint) move to a second row rather
+ * than being dropped - they used to be `hidden sm:flex`, which left a phone with
+ * no way to switch project or breakpoint at all. `EditorContext` is rendered in
+ * exactly one of the two rows, never both.
  */
 export function EditorToolbar() {
   const t = useTranslations('designPlayground');
@@ -26,69 +37,95 @@ export function EditorToolbar() {
 
   const tool = useDesignPlaygroundStore((s) => s.tool);
   const setTool = useDesignPlaygroundStore((s) => s.setTool);
-  const breakpoint = useDesignPlaygroundStore((s) => s.breakpoint);
-  const setBreakpoint = useDesignPlaygroundStore((s) => s.setBreakpoint);
-  const inspectorOpen = useDesignPlaygroundStore((s) => s.inspectorOpen);
-  const toggleInspector = useDesignPlaygroundStore((s) => s.toggleInspector);
 
-  // Subscribing to the history itself (not to canUndo()) is what re-renders the
-  // buttons when a command lands - a selector over a function would never
-  // change identity.
-  const history = useDesignDocumentStore((s) => s.history);
-  const undo = useDesignDocumentStore((s) => s.undo);
-  const redo = useDesignDocumentStore((s) => s.redo);
+  const singleRow = useMediaQuery(`(min-width: ${EDITOR_LAYOUT.toolbarSingleRow}px)`);
+  const stacked = singleRow === false;
 
   return (
-    <header className="flex h-12 shrink-0 items-center gap-2 border-b border-border bg-card px-2">
-      <Link
-        href="/components"
-        aria-label={t('backToApp')}
-        title={t('backToApp')}
-        className="flex h-8 w-8 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-      >
-        <ArrowLeft className="h-4 w-4" />
-      </Link>
+    <header className="shrink-0 border-b border-border bg-card">
+      <div className="flex h-12 items-center gap-1 px-1.5 sm:gap-2 sm:px-2">
+        <Link
+          href="/components"
+          aria-label={t('backToApp')}
+          title={t('backToApp')}
+          className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        >
+          <ArrowLeft className="h-4 w-4" />
+        </Link>
 
-      <div className="hidden min-w-0 items-center gap-2 sm:flex">
-        <ProjectsMenu />
-        <SaveStatus />
+        {!stacked && (
+          <div className="flex min-w-0 items-center gap-2">
+            <EditorContext />
+          </div>
+        )}
+
+        {/* Tool group - centred once there is room for it to be centred. Narrow,
+            it takes the leftover width and scrolls, so a seventh tool can never
+            push the undo and export buttons off the edge of a phone. */}
+        <div
+          role="toolbar"
+          aria-label={t('toolbarLabel')}
+          className={cn(
+            'flex min-w-0 flex-1 items-center gap-0.5 overflow-x-auto rounded-lg border border-border bg-background p-0.5',
+            'md:mx-auto md:flex-none md:overflow-x-visible',
+          )}
+        >
+          {EDITOR_TOOLS.map(({ id, icon: Icon, shortcut, ready }) => {
+            const active = tool === id;
+            const label = t(`tools.${id}`);
+            return (
+              <button
+                key={id}
+                type="button"
+                disabled={!ready}
+                aria-pressed={active}
+                aria-keyshortcuts={shortcut}
+                title={ready ? `${label} (${shortcut})` : `${label} - ${tCommon('comingSoon')}`}
+                onClick={() => setTool(id)}
+                className={cn(
+                  'flex h-8 w-8 shrink-0 items-center justify-center rounded-md transition-colors',
+                  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
+                  'disabled:cursor-not-allowed disabled:opacity-40',
+                  active
+                    ? 'bg-primary/10 text-primary'
+                    : 'text-muted-foreground hover:bg-muted hover:text-foreground',
+                )}
+              >
+                <Icon className="h-4 w-4" />
+                <span className="sr-only">{label}</span>
+              </button>
+            );
+          })}
+        </div>
+
+        <ToolbarActions />
       </div>
 
-      {/* Tool group - centred on wide viewports, inline on narrow ones. */}
-      <div
-        role="toolbar"
-        aria-label={t('toolbarLabel')}
-        className="mx-auto flex items-center gap-0.5 rounded-lg border border-border bg-background p-0.5"
-      >
-        {EDITOR_TOOLS.map(({ id, icon: Icon, shortcut, ready }) => {
-          const active = tool === id;
-          const label = t(`tools.${id}`);
-          return (
-            <button
-              key={id}
-              type="button"
-              disabled={!ready}
-              aria-pressed={active}
-              aria-keyshortcuts={shortcut}
-              title={ready ? `${label} (${shortcut})` : `${label} - ${tCommon('comingSoon')}`}
-              onClick={() => setTool(id)}
-              className={cn(
-                'flex h-8 w-8 items-center justify-center rounded-md transition-colors',
-                'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
-                'disabled:cursor-not-allowed disabled:opacity-40',
-                active
-                  ? 'bg-primary/10 text-primary'
-                  : 'text-muted-foreground hover:bg-muted hover:text-foreground',
-              )}
-            >
-              <Icon className="h-4 w-4" />
-              <span className="sr-only">{label}</span>
-            </button>
-          );
-        })}
-      </div>
+      {stacked && (
+        <div className="flex h-10 items-center gap-2 border-t border-border px-2">
+          <EditorContext />
+        </div>
+      )}
+    </header>
+  );
+}
 
-      <label className="hidden items-center gap-1.5 text-xs text-muted-foreground md:flex">
+/**
+ * What is being edited: the project, whether it is saved, and the breakpoint.
+ *
+ * Its own component so the toolbar can place it in either row without two
+ * instances of the same controls existing at once.
+ */
+function EditorContext() {
+  const t = useTranslations('designPlayground');
+  const breakpoint = useDesignPlaygroundStore((s) => s.breakpoint);
+  const setBreakpoint = useDesignPlaygroundStore((s) => s.setBreakpoint);
+
+  return (
+    <>
+      <ProjectsMenu />
+      <SaveStatus />
+      <label className="ml-auto flex shrink-0 items-center gap-1.5 text-xs text-muted-foreground md:ml-0">
         <span className="sr-only sm:not-sr-only">{t('breakpointLabel')}</span>
         <select
           value={breakpoint}
@@ -102,41 +139,78 @@ export function EditorToolbar() {
           ))}
         </select>
       </label>
+    </>
+  );
+}
 
-      <div className="ml-auto flex items-center gap-0.5">
-        <IconButton
-          icon={Undo2}
-          label={t('actions.undo')}
-          disabled={history.past.length === 0}
-          onClick={undo}
-        />
-        <IconButton
-          icon={Redo2}
-          label={t('actions.redo')}
-          disabled={history.future.length === 0}
-          onClick={redo}
-        />
-        <div className="mx-1 h-5 w-px bg-border" aria-hidden />
+/**
+ * The right-hand action cluster: history, share, export, inspector.
+ *
+ * Everything here stays reachable at every width - undo is the one control a
+ * touch user needs most, because a fat-fingered drag is easy to make and
+ * impossible to take back without it.
+ */
+function ToolbarActions() {
+  const t = useTranslations('designPlayground');
+  const tCommon = useTranslations('common');
+
+  const inspectorOpen = useDesignPlaygroundStore((s) => s.inspectorOpen);
+  const toggleInspector = useDesignPlaygroundStore((s) => s.toggleInspector);
+  const closePanel = useDesignPlaygroundStore((s) => s.closePanel);
+
+  // Only where the rail panel is ALSO a sheet: between the two dock widths the
+  // panel is a real column and closing it for an inspector that floats over the
+  // canvas would take away something the inspector never covers.
+  const panelFloating = useMediaQuery(`(min-width: ${EDITOR_LAYOUT.panelDock}px)`) === false;
+
+  // Subscribing to the history itself (not to canUndo()) is what re-renders the
+  // buttons when a command lands - a selector over a function would never
+  // change identity.
+  const history = useDesignDocumentStore((s) => s.history);
+  const undo = useDesignDocumentStore((s) => s.undo);
+  const redo = useDesignDocumentStore((s) => s.redo);
+
+  return (
+    <div className="ml-auto flex shrink-0 items-center gap-0.5">
+      <IconButton
+        icon={Undo2}
+        label={t('actions.undo')}
+        disabled={history.past.length === 0}
+        onClick={undo}
+      />
+      <IconButton
+        icon={Redo2}
+        label={t('actions.redo')}
+        disabled={history.future.length === 0}
+        onClick={redo}
+      />
+      <div className="mx-1 hidden h-5 w-px bg-border sm:block" aria-hidden />
+      {/* Disabled until Phase 3. It is the one control worth spending no width
+          on, so a narrow toolbar drops it rather than a working one. */}
+      <div className="hidden sm:block">
         <ToolbarAction icon={Share2} label={t('actions.share')} hint={tCommon('comingSoon')} />
-        <ExportMenu />
-        <button
-          type="button"
-          onClick={toggleInspector}
-          aria-pressed={inspectorOpen}
-          title={t('actions.toggleInspector')}
-          className={cn(
-            'flex h-8 w-8 items-center justify-center rounded-md transition-colors',
-            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
-            inspectorOpen
-              ? 'bg-primary/10 text-primary'
-              : 'text-muted-foreground hover:bg-muted hover:text-foreground',
-          )}
-        >
-          <PanelRight className="h-4 w-4" />
-          <span className="sr-only">{t('actions.toggleInspector')}</span>
-        </button>
       </div>
-    </header>
+      <ExportMenu />
+      <button
+        type="button"
+        onClick={() => {
+          if (panelFloating && !inspectorOpen) closePanel();
+          toggleInspector();
+        }}
+        aria-pressed={inspectorOpen}
+        title={t('actions.toggleInspector')}
+        className={cn(
+          'flex h-8 w-8 items-center justify-center rounded-md transition-colors',
+          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
+          inspectorOpen
+            ? 'bg-primary/10 text-primary'
+            : 'text-muted-foreground hover:bg-muted hover:text-foreground',
+        )}
+      >
+        <PanelRight className="h-4 w-4" />
+        <span className="sr-only">{t('actions.toggleInspector')}</span>
+      </button>
+    </div>
   );
 }
 

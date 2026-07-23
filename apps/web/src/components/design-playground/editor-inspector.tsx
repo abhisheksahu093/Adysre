@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useTranslations } from 'next-intl';
 import {
   AlignCenter,
@@ -9,8 +9,14 @@ import {
   ArrowDown,
   ArrowRight,
   MousePointerSquareDashed,
+  X,
 } from 'lucide-react';
-import { INSPECTOR_GROUPS, type InspectorGroupId } from '@/config/design-playground';
+import {
+  EDITOR_LAYOUT,
+  INSPECTOR_GROUPS,
+  type InspectorGroupId,
+} from '@/config/design-playground';
+import { useMediaQuery } from '@/hooks/use-media-query';
 import { DEFAULT_SHADOW } from '@/lib/design-playground/document';
 import {
   BLEND_MODES,
@@ -49,12 +55,28 @@ import {
  * Which groups appear is decided by the selection's types, but their ORDER is
  * the config's - a new group is an entry in `INSPECTOR_GROUPS`, not a block
  * moved around in here.
+ *
+ * Below `EDITOR_LAYOUT.inspectorDock` it floats over the canvas as a sheet
+ * rather than taking a column. It used to be `hidden lg:flex`, which meant a
+ * phone or a tablet had no way to reach a node's fill, size or export at all.
  */
 export function EditorInspector() {
   const t = useTranslations('designPlayground');
   const open = useDesignPlaygroundStore((s) => s.inspectorOpen);
+  const setOpen = useDesignPlaygroundStore((s) => s.setInspectorOpen);
   const tab = useDesignPlaygroundStore((s) => s.inspectorTab);
   const setTab = useDesignPlaygroundStore((s) => s.setInspectorTab);
+
+  const docked = useMediaQuery(`(min-width: ${EDITOR_LAYOUT.inspectorDock}px)`);
+  const floating = docked === false;
+
+  // Open is the persisted default, which is right for a desk and wrong for a
+  // phone: as a sheet it would cover the canvas before the user has done
+  // anything. Entering the floating layout collapses it; the toolbar's panel
+  // button brings it back.
+  useEffect(() => {
+    if (floating) setOpen(false);
+  }, [floating, setOpen]);
 
   const doc = useDesignDocumentStore((s) => s.document);
   const selection = useDesignDocumentStore((s) => s.selection);
@@ -75,83 +97,112 @@ export function EditorInspector() {
   const mixed = t('inspector.mixed');
 
   return (
-    <aside
-      aria-label={t('inspector.title')}
-      className="hidden w-64 shrink-0 flex-col overflow-y-auto border-l border-border bg-card lg:flex"
-    >
-      <div role="tablist" aria-label={t('inspector.tabs')} className="flex border-b border-border">
-        {(['properties', 'frames'] as const).map((id) => (
-          <button
-            key={id}
-            type="button"
-            role="tab"
-            id={`inspector-tab-${id}`}
-            aria-selected={tab === id}
-            aria-controls={`inspector-panel-${id}`}
-            // Only the active tab is in the tab order; arrow keys move between
-            // them, which is the tablist pattern screen-reader users expect.
-            tabIndex={tab === id ? 0 : -1}
-            onClick={() => setTab(id)}
-            onKeyDown={(event) => {
-              if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
-              event.preventDefault();
-              setTab(id === 'properties' ? 'frames' : 'properties');
-            }}
-            className={cn(
-              'flex-1 border-b-2 px-3 py-2 text-xs font-medium transition-colors',
-              'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring',
-              tab === id
-                ? 'border-primary text-foreground'
-                : 'border-transparent text-muted-foreground hover:text-foreground',
-            )}
-          >
-            {t(`inspector.tabLabels.${id}`)}
-          </button>
-        ))}
-      </div>
-
-      {tab === 'frames' ? (
-        <div role="tabpanel" id="inspector-panel-frames" aria-labelledby="inspector-tab-frames">
-          <FramesPanel />
-        </div>
-      ) : (
-        <div
-          role="tabpanel"
-          id="inspector-panel-properties"
-          aria-labelledby="inspector-tab-properties"
-        >
-          {nodes.length > 0 && (
-            <p className="truncate border-b border-border px-3 py-1.5 text-[11px] text-muted-foreground">
-              {nodes.length === 1 && nodes[0]
-                ? nodes[0].name
-                : t('inspector.multiple', { count: nodes.length })}
-            </p>
-          )}
-
-          <SelectionActions />
-
-          {nodes.length === 0 ? (
-        <div className="p-3">
-          <div className="rounded-lg border border-dashed border-border p-3 text-center">
-            <MousePointerSquareDashed
-              className="mx-auto h-5 w-5 text-muted-foreground"
-              aria-hidden
-            />
-            <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
-              {t('inspector.empty')}
-            </p>
-          </div>
-        </div>
-          ) : (
-            INSPECTOR_GROUPS.filter((groupId) => appliesTo(groupId, nodes)).map((groupId) => (
-              <InspectorSection key={groupId} title={t(`inspector.groups.${groupId}`)}>
-                {renderGroup({ groupId, nodes, patchSelection, t, mixed })}
-              </InspectorSection>
-            ))
-          )}
-        </div>
+    <>
+      {floating && (
+        // Same affordance as the rail's sheet: tapping the canvas dismisses it.
+        <button
+          type="button"
+          aria-label={t('actions.closePanel')}
+          onClick={() => setOpen(false)}
+          className="absolute inset-0 z-20 cursor-default bg-foreground/30 backdrop-blur-[1px]"
+        />
       )}
-    </aside>
+
+      <aside
+        aria-label={t('inspector.title')}
+        className={cn(
+          'flex w-64 shrink-0 flex-col overflow-y-auto border-l border-border bg-card',
+          floating && 'absolute inset-y-0 right-0 z-30 max-w-[calc(100%-3rem)] shadow-xl',
+        )}
+      >
+        <div className="flex shrink-0 items-center border-b border-border">
+          <div role="tablist" aria-label={t('inspector.tabs')} className="flex min-w-0 flex-1">
+            {(['properties', 'frames'] as const).map((id) => (
+              <button
+                key={id}
+                type="button"
+                role="tab"
+                id={`inspector-tab-${id}`}
+                aria-selected={tab === id}
+                aria-controls={`inspector-panel-${id}`}
+                // Only the active tab is in the tab order; arrow keys move between
+                // them, which is the tablist pattern screen-reader users expect.
+                tabIndex={tab === id ? 0 : -1}
+                onClick={() => setTab(id)}
+                onKeyDown={(event) => {
+                  if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+                  event.preventDefault();
+                  setTab(id === 'properties' ? 'frames' : 'properties');
+                }}
+                className={cn(
+                  'flex-1 border-b-2 px-3 py-2 text-xs font-medium transition-colors',
+                  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring',
+                  tab === id
+                    ? 'border-primary text-foreground'
+                    : 'border-transparent text-muted-foreground hover:text-foreground',
+                )}
+              >
+                {t(`inspector.tabLabels.${id}`)}
+              </button>
+            ))}
+          </div>
+          {/* The sheet covers the canvas, so it carries its own dismissal. Docked,
+              the toolbar's panel button is already in view and does the job. */}
+          {floating && (
+            <button
+              type="button"
+              onClick={() => setOpen(false)}
+              aria-label={t('actions.closePanel')}
+              className="mr-1 flex h-7 w-7 shrink-0 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            >
+              <X className="h-4 w-4" aria-hidden />
+            </button>
+          )}
+        </div>
+
+        {tab === 'frames' ? (
+          <div role="tabpanel" id="inspector-panel-frames" aria-labelledby="inspector-tab-frames">
+            <FramesPanel />
+          </div>
+        ) : (
+          <div
+            role="tabpanel"
+            id="inspector-panel-properties"
+            aria-labelledby="inspector-tab-properties"
+          >
+            {nodes.length > 0 && (
+              <p className="truncate border-b border-border px-3 py-1.5 text-[11px] text-muted-foreground">
+                {nodes.length === 1 && nodes[0]
+                  ? nodes[0].name
+                  : t('inspector.multiple', { count: nodes.length })}
+              </p>
+            )}
+
+            <SelectionActions />
+
+            {nodes.length === 0 ? (
+              <div className="p-3">
+                <div className="rounded-lg border border-dashed border-border p-3 text-center">
+                  <MousePointerSquareDashed
+                    className="mx-auto h-5 w-5 text-muted-foreground"
+                    aria-hidden
+                  />
+                  <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
+                    {t('inspector.empty')}
+                  </p>
+                </div>
+              </div>
+            ) : (
+              INSPECTOR_GROUPS.filter((groupId) => appliesTo(groupId, nodes)).map((groupId) => (
+                <InspectorSection key={groupId} title={t(`inspector.groups.${groupId}`)}>
+                  {renderGroup({ groupId, nodes, patchSelection, t, mixed })}
+                </InspectorSection>
+              ))
+            )}
+          </div>
+        )}
+      </aside>
+    </>
   );
 }
 

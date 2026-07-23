@@ -41,7 +41,11 @@ interface DesignPlaygroundStore {
   setTool: (tool: string) => void;
   /** Selecting the open panel closes the rail (a toggle, like Figma). */
   togglePanel: (panel: string) => void;
+  /** Collapse the rail outright - what a sheet's backdrop and close button do. */
+  closePanel: () => void;
   toggleInspector: () => void;
+  /** Set the inspector open state directly, rather than flipping it. */
+  setInspectorOpen: (open: boolean) => void;
   setInspectorTab: (tab: InspectorTab) => void;
   setZoom: (zoom: number) => void;
   /** Step to the next/previous configured zoom stop. */
@@ -69,7 +73,9 @@ export const useDesignPlaygroundStore = create<DesignPlaygroundStore>()(
 
       setTool: (tool) => set({ tool }),
       togglePanel: (panel) => set((s) => ({ panel: s.panel === panel ? null : panel })),
+      closePanel: () => set({ panel: null }),
       toggleInspector: () => set((s) => ({ inspectorOpen: !s.inspectorOpen })),
+      setInspectorOpen: (inspectorOpen) => set({ inspectorOpen }),
       setInspectorTab: (inspectorTab) => set({ inspectorTab }),
       setZoom: (zoom) => set({ zoom: clampZoom(zoom) }),
       stepZoom: (direction) =>

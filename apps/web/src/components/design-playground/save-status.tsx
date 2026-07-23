@@ -36,10 +36,22 @@ export function SaveStatus() {
       // Polite, not assertive: a save indicator must never interrupt a screen
       // reader mid-sentence while someone is drawing.
       aria-live="polite"
-      className={cn('hidden items-center gap-1.5 text-[11px] md:flex', state.tone)}
+      // Truncation hides the detail, so the full message stays available on hover.
+      title={t(`sync.${state.key}`)}
+      // Visibility is the toolbar's call, not this component's: it moves the
+      // whole context cluster between rows depending on the width available.
+      // `min-w-0` so the message gives way on a phone row rather than shouldering
+      // the project name and the breakpoint select off the edge - "Offline -
+      // saved on this device only" is the longest string in the toolbar.
+      className={cn('flex min-w-0 items-center gap-1.5 text-[11px]', state.tone)}
     >
-      <Icon className={cn('h-3.5 w-3.5', state.spin && 'animate-spin motion-reduce:animate-none')} />
-      {t(`sync.${state.key}`)}
+      <Icon
+        className={cn(
+          'h-3.5 w-3.5 shrink-0',
+          state.spin && 'animate-spin motion-reduce:animate-none',
+        )}
+      />
+      <span className="truncate">{t(`sync.${state.key}`)}</span>
     </span>
   );
 }

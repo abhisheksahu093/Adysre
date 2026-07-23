@@ -58,7 +58,9 @@
 		},
 		"expandSection": "{label}を展開",
 		"collapseSection": "{label}を折りたたむ",
-		"viewAll": "すべての{label}"
+		"viewAll": "すべての{label}",
+		"collapseSidebar": "サイドバーを折りたたむ",
+		"expandSidebar": "サイドバーを展開"
 	},
 	"topbar": {
 		"searchPlaceholder": "検索またはページへ移動…",
@@ -972,18 +974,27 @@
 				"comparison": "比較",
 				"faq": "FAQ",
 				"cta": "CTA",
-				"footer": "フッター"
+				"footer": "フッター",
+				"logos": "ロゴ一覧",
+				"features": "機能グリッド",
+				"stats": "実績",
+				"team": "チーム",
+				"testimonials": "お客様の声",
+				"blog": "ブログ",
+				"contact": "お問い合わせ"
 			},
 			"rail": {
 				"title": "セクション",
 				"empty": "未追加",
 				"add": "{slot}を追加",
-				"remove": "{slot}を削除"
+				"remove": "{slot}を削除",
+				"reorder": "ドラッグ、または Ctrl/Cmd + 矢印キーで並べ替え"
 			},
 			"builder": {
 				"layout": "レイアウト",
 				"content": "コンテンツ",
-				"tabsLabel": "セクション操作"
+				"tabsLabel": "セクション操作",
+				"style": "スタイル"
 			},
 			"variations": {
 				"of": "{slot}のバリエーション",
@@ -1013,7 +1024,9 @@
 				"projectTitle": "プロジェクト一式をダウンロード",
 				"projectHint": "そのまま実行できるプロジェクト。展開して npm install を実行してください。",
 				"downloadProjectNext": "Next.js プロジェクト",
-				"downloadProjectReact": "React プロジェクト"
+				"downloadProjectReact": "React プロジェクト",
+				"stylesTitle": "セクションのスタイル",
+				"stylesHint": "マークアップと一緒に貼り付けてください。各ルールは id で 1 つのセクションを指定します。"
 			},
 			"tour": {
 				"stepCount": "ステップ {current} / {total}",
@@ -1119,6 +1132,47 @@
 					"placeholder": "プレースホルダー",
 					"alt": "代替テキスト"
 				}
+			},
+			"style": {
+				"title": "スタイル",
+				"empty": "スタイルを設定するセクションを選択してください。",
+				"background": "背景",
+				"kind": {
+					"none": "なし",
+					"color": "カラー",
+					"gradient": "グラデーション",
+					"pattern": "パターン",
+					"texture": "テクスチャ"
+				},
+				"backgroundColor": "背景色",
+				"angle": "角度",
+				"scale": "スケール",
+				"opacity": "不透明度",
+				"patternBg": "パターンの背景",
+				"patternFg": "パターンの前景",
+				"text": "テキスト",
+				"textColor": "テキスト色",
+				"textHint": "セクション本来のテキスト色を上書きします。",
+				"clearText": "テキスト色をクリア",
+				"border": "境界線",
+				"borderWidth": "線の太さ",
+				"borderStyle": {
+					"solid": "実線",
+					"dashed": "破線",
+					"dotted": "点線"
+				},
+				"borderColor": "線の色",
+				"clearBorder": "境界線をクリア",
+				"radius": "角の丸み",
+				"reset": "スタイルをリセット"
+			},
+			"pages": {
+				"title": "ページ",
+				"add": "ページを追加",
+				"newName": "新しいページ",
+				"rename": "ダブルクリックで名前を変更",
+				"nameLabel": "ページ名",
+				"remove": "{name} を削除"
 			}
 		},
 		"allComponents": "すべてのコンポーネント"
@@ -2182,7 +2236,8 @@
 				"description": "フレームはデザインするアートボードです。サイズを選ぶか、フレームツール（F）で描いてください。",
 				"cta": "フレームサイズを選ぶ"
 			},
-			"editText": "テキストを編集"
+			"editText": "テキストを編集",
+			"backToContent": "コンテンツに戻る"
 		},
 		"frameGroups": {
 			"screens": "画面",
@@ -2216,6 +2271,7 @@
 			"share": "共有",
 			"export": "書き出し",
 			"toggleInspector": "プロパティパネルの表示切替",
+			"closePanel": "パネルを閉じる",
 			"zoomIn": "ズームイン",
 			"zoomOut": "ズームアウト",
 			"resetZoom": "ズームを100%に戻す",
@@ -2232,7 +2288,10 @@
 			"delete": "削除",
 			"group": "グループ化",
 			"ungroup": "グループ解除",
-			"zoomToFit": "全体を表示"
+			"zoomToFit": "全体を表示",
+			"copy": "コピー",
+			"paste": "ここに貼り付け",
+			"frame": "選択範囲をフレーム化"
 		},
 		"export": {
 			"working": "処理中…",

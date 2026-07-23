@@ -876,4 +876,390 @@ export const SECTION_TEMPLATES: CatalogueEntry[] = [
       }),
     ]),
   },
+
+  /* -------------------------------------------------------------- pricing */
+
+  {
+    id: 'section-pricing-two',
+    category: 'Marketing',
+    name: 'Pricing (2 tiers)',
+    width: W,
+    height: 580,
+    spec: surface('Section / Pricing two', box(W, 580), { fill: SURFACE }, [
+      ...heading('Pricing', 72, 'Two ways to buy', 'Start on the team plan and move up when procurement asks you to.'),
+      ...[
+        { name: 'Team', price: '$49', note: 'Per seat, billed monthly', featured: false },
+        { name: 'Enterprise', price: 'Custom', note: 'Annual, with an SLA', featured: true },
+      ].map((tier, index) =>
+        card(
+          `Pricing / ${tier.name}`,
+          { x: GUTTER + 100 + index * 520, y: 224, width: 480, height: 300 },
+          [
+            label(`${tier.name} / Name`, at(36, 32, 400, 24), tier.name, {
+              size: 16,
+              weight: 600,
+              color: tier.featured ? BRAND : INK,
+            }),
+            label(
+              `${tier.name} / Price`,
+              at(36, 66, 400, 56),
+              tier.price === 'Custom' ? tier.price : `${tier.price}/mo`,
+              { size: 42, weight: 600 },
+            ),
+            label(`${tier.name} / Note`, at(36, 132, 400, 20), tier.note, {
+              size: 14,
+              color: MUTED,
+            }),
+            block(`${tier.name} / Rule`, at(36, 172, 408, 1), BORDER),
+            ...[0, 1].map((row) =>
+              label(
+                `${tier.name} / Feature ${row + 1}`,
+                at(36, 196 + row * 26, 400, 20),
+                ['Everything in the core platform', 'SSO, audit log and data residency'][row] ?? '',
+                { size: 14, color: MUTED },
+              ),
+            ),
+            {
+              ...button(
+                `${tier.name} / CTA`,
+                tier.featured ? 'Talk to sales' : 'Start free trial',
+                408,
+                48,
+                tier.featured
+                  ? { fill: BRAND, text: ON_BRAND }
+                  : { fill: SURFACE, stroke: BORDER, text: INK },
+              ),
+              transform: at(36, 244, 408, 48),
+            },
+          ],
+          tier.featured ? SUBTLE : SURFACE,
+        ),
+      ),
+    ]),
+  },
+
+  {
+    id: 'section-pricing-single',
+    category: 'Marketing',
+    name: 'Pricing (single plan)',
+    width: W,
+    height: 480,
+    spec: surface('Section / Pricing single', box(W, 480), { fill: SUBTLE }, [
+      ...heading('Pricing', 64, 'One plan, everything included', 'No feature gates and no per-module pricing.'),
+      card('Pricing / Plan', { x: (W - 720) / 2, y: 216, width: 720, height: 200 }, [
+        label('Plan / Name', at(40, 36, 320, 24), 'Complete', { size: 16, weight: 600, color: BRAND }),
+        label('Plan / Price', at(40, 68, 360, 60), '$79/mo', { size: 46, weight: 600 }),
+        label('Plan / Note', at(40, 136, 360, 22), 'Per seat · billed annually', {
+          size: 14,
+          color: MUTED,
+        }),
+        block('Plan / Divider', at(400, 36, 1, 128), BORDER),
+        ...[0, 1, 2, 3].map((row) =>
+          label(
+            `Plan / Feature ${row + 1}`,
+            at(440, 40 + row * 30, 240, 20),
+            ['Unlimited records', 'Every module', 'SSO and audit log', 'Priority support'][row] ?? '',
+            { size: 14, color: MUTED },
+          ),
+        ),
+      ]),
+    ]),
+  },
+
+  {
+    id: 'section-pricing-compare',
+    category: 'Marketing',
+    name: 'Pricing (comparison table)',
+    width: W,
+    height: 560,
+    spec: surface('Section / Pricing compare', box(W, 560), { fill: SURFACE }, [
+      ...heading('Compare', 64, 'Compare the plans', 'The differences that actually change how you work.'),
+      // Header row: the first column names the feature, the rest are plans.
+      ...['Feature', 'Starter', 'Growth', 'Scale'].map((title, column) =>
+        label(
+          `Compare / Head ${title}`,
+          at(GUTTER + (column === 0 ? 0 : 480 + (column - 1) * 240), 232, column === 0 ? 460 : 220, 22),
+          title,
+          { size: 13, weight: 600, color: column === 0 ? MUTED : INK },
+        ),
+      ),
+      block('Compare / Head rule', at(GUTTER, 264, COL, 1), BORDER),
+      ...[
+        { feature: 'Records', values: ['10k', 'Unlimited', 'Unlimited'] },
+        { feature: 'Roles and permissions', values: ['Basic', 'Custom', 'Custom'] },
+        { feature: 'Audit log retention', values: ['30 days', '1 year', '7 years'] },
+        { feature: 'Data residency', values: ['—', '—', 'Included'] },
+        { feature: 'Support', values: ['Email', 'Priority', 'Named engineer'] },
+      ].map((row, index) =>
+        stack(`Compare / Row ${index + 1}`, at(GUTTER, 284 + index * 52, COL, 52), [
+          label(`Row ${index + 1} / Feature`, at(0, 14, 460, 22), row.feature, {
+            size: 14,
+            weight: 500,
+          }),
+          ...row.values.map((value, column) =>
+            label(`Row ${index + 1} / ${column}`, at(480 + column * 240, 14, 220, 22), value, {
+              size: 14,
+              color: MUTED,
+            }),
+          ),
+          block(`Row ${index + 1} / Rule`, at(0, 51, COL, 1), BORDER),
+        ]),
+      ),
+    ]),
+  },
+
+  /* --------------------------------------------------------- testimonials */
+
+  {
+    id: 'section-testimonials-grid',
+    category: 'Marketing',
+    name: 'Testimonials (3 up)',
+    width: W,
+    height: 480,
+    spec: surface('Section / Testimonials grid', box(W, 480), { fill: SURFACE }, [
+      ...heading('Testimonials', 72, 'What teams say after a quarter', 'Not launch-week quotes - reviews from people a full quarter in.'),
+      ...[
+        {
+          quote: 'We replaced four tools with one. Onboarding a new region used to take a quarter.',
+          name: 'Rita Mensah',
+          role: 'COO, Northwind',
+        },
+        {
+          quote: 'The audit log alone got us through SOC 2 without hiring a consultant.',
+          name: 'Tom Alvarez',
+          role: 'Head of Ops, Kessel',
+        },
+        {
+          quote: 'Reporting that used to be a Friday job now runs itself before I am in.',
+          name: 'Ada Silva',
+          role: 'Finance Lead, Vero',
+        },
+      ].map((item, index) =>
+        card(
+          `Testimonials / ${item.name}`,
+          { x: GUTTER + index * (COL / 3), y: 232, width: COL / 3 - 28, height: 208 },
+          [
+            label(`${item.name} / Stars`, at(28, 26, 120, 20), '★★★★★', {
+              size: 14,
+              color: BRAND,
+            }),
+            label(`${item.name} / Quote`, at(28, 56, COL / 3 - 84, 76), item.quote, {
+              size: 15,
+              color: MUTED,
+              lineHeight: 1.6,
+            }),
+            block(`${item.name} / Avatar`, at(28, 148, 36, 36), BRAND_SOFT, 18),
+            label(`${item.name} / Name`, at(76, 150, 200, 20), item.name, {
+              size: 14,
+              weight: 600,
+            }),
+            label(`${item.name} / Role`, at(76, 170, 200, 18), item.role, {
+              size: 13,
+              color: MUTED,
+            }),
+          ],
+        ),
+      ),
+    ]),
+  },
+
+  {
+    id: 'section-testimonial-dark',
+    category: 'Marketing',
+    name: 'Testimonial (dark quote)',
+    width: W,
+    height: 400,
+    spec: surface('Section / Testimonial dark', box(W, 400), { fill: DARK }, [
+      label('Testimonial / Mark', at(GUTTER + 160, 72, 60, 60), '“', {
+        size: 72,
+        weight: 600,
+        color: BRAND,
+      }),
+      label(
+        'Testimonial / Quote',
+        at(GUTTER + 160, 132, COL - 320, 100),
+        'One data model meant the finance team and the ops team stopped arguing about whose number was right.',
+        { size: 30, weight: 600, color: SURFACE, lineHeight: 1.5 },
+      ),
+      block('Testimonial / Avatar', at(GUTTER + 160, 268, 44, 44), BRAND_SOFT, 22),
+      label('Testimonial / Name', at(GUTTER + 220, 272, 300, 20), 'Marcus Lindqvist', {
+        size: 15,
+        weight: 600,
+        color: SURFACE,
+      }),
+      label('Testimonial / Role', at(GUTTER + 220, 294, 300, 20), 'CFO, Halden Group', {
+        size: 13,
+        color: ON_DARK,
+      }),
+    ]),
+  },
+
+  {
+    id: 'section-testimonial-split',
+    category: 'Marketing',
+    name: 'Testimonial (with logo)',
+    width: W,
+    height: 360,
+    spec: surface('Section / Testimonial split', box(W, 360), { fill: SUBTLE }, [
+      card('Testimonial / Logo panel', { x: GUTTER, y: 72, width: 360, height: 216 }, [
+        block('Logo / Mark', at(140, 72, 80, 32), BORDER, 6),
+        label('Logo / Metric', at(24, 128, 312, 30), '38% less manual work', {
+          size: 18,
+          weight: 600,
+          align: 'center',
+        }),
+      ]),
+      label(
+        'Testimonial / Quote',
+        at(GUTTER + 420, 88, COL - 420, 120),
+        'We stopped reconciling spreadsheets in month two. The reporting module paid for the whole contract by the end of the quarter.',
+        { size: 24, weight: 600, lineHeight: 1.55 },
+      ),
+      block('Testimonial / Avatar', at(GUTTER + 420, 228, 44, 44), BRAND_SOFT, 22),
+      label('Testimonial / Name', at(GUTTER + 480, 232, 320, 20), 'Chidi Balogun', {
+        size: 15,
+        weight: 600,
+      }),
+      label('Testimonial / Role', at(GUTTER + 480, 254, 320, 20), 'Operations Director, Meridian', {
+        size: 13,
+        color: MUTED,
+      }),
+    ]),
+  },
+
+  /* ------------------------------------------------------------------ faq */
+
+  {
+    id: 'section-faq-two-column',
+    category: 'Content',
+    name: 'FAQ (two column)',
+    width: W,
+    height: 520,
+    spec: surface('Section / FAQ two column', box(W, 520), { fill: SURFACE }, [
+      ...heading('FAQ', 64, 'Questions, answered', 'The four things every team asks before they move over.'),
+      ...[
+        {
+          q: 'Can we migrate from our current CRM?',
+          a: 'Yes. Importers cover the common systems, and anything else lands through the API.',
+        },
+        {
+          q: 'How does role-based access work?',
+          a: 'Roles carry permissions in `module:resource:action` form. Deny by default.',
+        },
+        {
+          q: 'Where is our data stored?',
+          a: 'In the region you pick at signup. Enterprise plans can pin residency per entity.',
+        },
+        {
+          q: 'Do you offer a self-hosted option?',
+          a: 'Yes, on annual contracts, with the same release train as the hosted product.',
+        },
+      ].map((item, index) =>
+        stack(
+          `FAQ / Item ${index + 1}`,
+          at(GUTTER + (index % 2) * (COL / 2), 228 + Math.floor(index / 2) * 140, COL / 2 - 40, 130),
+          [
+            label(`Item ${index + 1} / Question`, at(0, 0, COL / 2 - 60, 26), item.q, {
+              size: 17,
+              weight: 600,
+            }),
+            label(`Item ${index + 1} / Answer`, at(0, 34, COL / 2 - 80, 72), item.a, {
+              size: 15,
+              color: MUTED,
+              lineHeight: 1.65,
+            }),
+          ],
+        ),
+      ),
+    ]),
+  },
+
+  {
+    id: 'section-faq-open',
+    category: 'Content',
+    name: 'FAQ (first open)',
+    width: W,
+    height: 560,
+    spec: surface('Section / FAQ open', box(W, 560), { fill: SUBTLE }, [
+      ...heading('FAQ', 64, 'Frequently asked questions', 'Everything teams ask before they move over.'),
+      // The first row is expanded, which is what tells a visitor the rest open
+      // too - a wall of closed rows reads as a list, not a control.
+      card('FAQ / Open item', { x: GUTTER + 200, y: 224, width: COL - 400, height: 150 }, [
+        label('Open / Question', at(28, 26, COL - 480, 26), 'Can we migrate from our current CRM?', {
+          size: 17,
+          weight: 600,
+        }),
+        label('Open / Toggle', at(COL - 464, 24, 24, 26), '–', {
+          size: 20,
+          color: BRAND,
+          align: 'center',
+        }),
+        label(
+          'Open / Answer',
+          at(28, 62, COL - 500, 70),
+          'Yes. Importers cover Salesforce, HubSpot and Pipedrive, and anything else lands through the API. Most teams are moved inside a week.',
+          { size: 15, color: MUTED, lineHeight: 1.65 },
+        ),
+      ]),
+      ...[
+        'How does role-based access work?',
+        'Where is our data stored?',
+        'Do you offer a self-hosted option?',
+      ].map((question, index) =>
+        stack(`FAQ / Closed ${index + 1}`, at(GUTTER + 200, 394 + index * 56, COL - 400, 56), [
+          label(`Closed ${index + 1} / Question`, at(28, 16, COL - 480, 24), question, {
+            size: 16,
+            weight: 500,
+          }),
+          label(`Closed ${index + 1} / Toggle`, at(COL - 464, 14, 24, 24), '+', {
+            size: 18,
+            color: MUTED,
+            align: 'center',
+          }),
+          block(`Closed ${index + 1} / Rule`, at(28, 55, COL - 456, 1), BORDER),
+        ]),
+      ),
+    ]),
+  },
+
+  {
+    id: 'section-faq-contact',
+    category: 'Content',
+    name: 'FAQ (with contact aside)',
+    width: W,
+    height: 500,
+    spec: surface('Section / FAQ contact', box(W, 500), { fill: SURFACE }, [
+      label('FAQ / Title', at(GUTTER, 80, 380, 48), 'Still deciding?', { size: 38, weight: 600 }),
+      label(
+        'FAQ / Body',
+        at(GUTTER, 144, 340, 80),
+        'The answers most teams need are here. If yours is not, an engineer will answer it directly.',
+        { size: 16, color: MUTED, lineHeight: 1.65 },
+      ),
+      {
+        ...button('FAQ / CTA', 'Talk to an engineer', 220, 50, { fill: BRAND, text: ON_BRAND }),
+        transform: at(GUTTER, 244, 220, 50),
+      },
+      ...[
+        'Can we migrate from our current CRM?',
+        'How does role-based access work?',
+        'Where is our data stored?',
+        'Do you offer a self-hosted option?',
+        'What happens to our data if we leave?',
+      ].map((question, index) =>
+        stack(`FAQ / Item ${index + 1}`, at(GUTTER + 520, 80 + index * 68, COL - 520, 68), [
+          label(`Item ${index + 1} / Question`, at(0, 20, COL - 600, 24), question, {
+            size: 16,
+            weight: 500,
+          }),
+          label(`Item ${index + 1} / Toggle`, at(COL - 584, 18, 24, 24), '+', {
+            size: 18,
+            color: MUTED,
+            align: 'center',
+          }),
+          block(`Item ${index + 1} / Rule`, at(0, 67, COL - 520, 1), BORDER),
+        ]),
+      ),
+    ]),
+  },
 ];

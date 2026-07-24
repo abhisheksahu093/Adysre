@@ -3,17 +3,12 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { Radar } from 'lucide-react';
 import { redirect } from '@/i18n/navigation';
 import { getSession } from '@/lib/website-intel/auth/session';
-import { cn } from 'adysre';
-import {
-  INTEL_DASHBOARD_SECTIONS,
-  INTEL_REPORT_FORMATS,
-  INTEL_STACK,
-  INTEL_STATS,
-} from '@/data/website-intelligence';
+import { INTEL_DASHBOARD_SECTIONS, INTEL_STATS } from '@/data/website-intelligence';
 import { IntelCapabilitiesGrid } from '@/components/website-intelligence/capabilities-grid';
 import { ScanConsole } from '@/components/website-intelligence/scan-console';
 import { ScheduleManager } from '@/components/website-intelligence/schedule-manager';
 import { NotificationChannels } from '@/components/website-intelligence/notification-channels';
+import { ReportExport } from '@/components/website-intelligence/report-export';
 
 export async function generateMetadata({
   params,
@@ -74,10 +69,9 @@ export default async function WebsiteIntelligencePage({
 
         {/* The working scan console: SEO, security, HTML, assets and best
             practices run today; the browser-driven analyses land in a later
-            phase (the console says so under the score). */}
-        <div className="max-w-2xl">
-          <ScanConsole placeholder={t('scan.placeholder')} />
-        </div>
+            phase (the console says so under the score). Full-width so the score
+            card, findings and history use the space rather than a narrow column. */}
+        <ScanConsole placeholder={t('scan.placeholder')} />
 
         {/* Stats */}
         <dl className="grid grid-cols-2 gap-4 pt-2 sm:grid-cols-4">
@@ -142,51 +136,16 @@ export default async function WebsiteIntelligencePage({
         </ul>
       </section>
 
-      {/* ── Reports + stack ───────────────────────────────────────────────── */}
-      <section className="grid gap-10 lg:grid-cols-2">
-        <div>
-          <header className="space-y-2">
-            <h2 className="text-xl font-bold tracking-tight sm:text-2xl">{t('reportsTitle')}</h2>
-            <p className="text-sm text-muted-foreground">{t('reportsSubtitle')}</p>
-          </header>
-          <ul className="mt-6 flex flex-wrap gap-2">
-            {INTEL_REPORT_FORMATS.map((fmt) => (
-              <li
-                key={fmt}
-                className="rounded-lg border border-border bg-card px-3.5 py-2 font-mono text-sm text-muted-foreground"
-              >
-                {fmt}
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div>
-          <header className="space-y-2">
-            <h2 className="text-xl font-bold tracking-tight sm:text-2xl">{t('stackTitle')}</h2>
-          </header>
-          <dl className="mt-6 space-y-4">
-            {INTEL_STACK.map((group) => (
-              <div key={group.id} className="grid gap-2 sm:grid-cols-[8rem_1fr] sm:items-baseline">
-                <dt className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
-                  {t(`stack.${group.id}`)}
-                </dt>
-                <dd className="flex flex-wrap gap-2">
-                  {group.items.map((item) => (
-                    <span
-                      key={item}
-                      className={cn(
-                        'rounded-md border border-border bg-card px-2.5 py-1 font-mono text-xs text-muted-foreground',
-                      )}
-                    >
-                      {item}
-                    </span>
-                  ))}
-                </dd>
-              </div>
-            ))}
-          </dl>
-        </div>
+      {/* ── Export any report ─────────────────────────────────────────────── */}
+      <section>
+        <header className="max-w-2xl space-y-2">
+          <h2 className="text-xl font-bold tracking-tight sm:text-2xl">{t('reportsTitle')}</h2>
+          <p className="text-sm text-muted-foreground">{t('reportsSubtitle')}</p>
+        </header>
+        {/* Working buttons: they export the most recent scan (PDF opens the
+            printable report, the rest download) — the same wiring the scan
+            result offers up top. */}
+        <ReportExport />
       </section>
     </div>
   );

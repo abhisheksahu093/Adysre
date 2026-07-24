@@ -125,7 +125,7 @@ export function ScanConsole({ placeholder }: { placeholder: string }) {
 
   return (
     <div className="space-y-6">
-      <form onSubmit={onSubmit} className="flex flex-col gap-2 sm:flex-row">
+      <form onSubmit={onSubmit} className="flex max-w-2xl flex-col gap-2 sm:flex-row">
         <div className="flex flex-1 items-center gap-2 rounded-xl border border-border bg-card px-3 focus-within:border-primary/50">
           <Search className="h-4 w-4 shrink-0 text-muted-foreground" aria-hidden />
           <label htmlFor="wi-scan-url" className="sr-only">
@@ -189,16 +189,21 @@ export function ScanConsole({ placeholder }: { placeholder: string }) {
               </div>
             </div>
 
-            <dl className="grid grid-cols-2 gap-x-6 gap-y-3 sm:grid-cols-3">
+            <dl className="grid grid-cols-2 gap-x-6 gap-y-4 sm:grid-cols-3">
               {result.categories.map((category) => {
                 const tone = scoreTone(category.score);
                 return (
                   <div key={category.category}>
-                    <div className="flex items-baseline justify-between gap-2">
-                      <dt className="text-xs text-muted-foreground">{t(`categories.${category.category}`)}</dt>
+                    {/* Fixed min-height reserves room for a two-line label ("Best
+                        practices"), so every bar below sits on the same line and
+                        the row stays aligned whether a label wraps or not. */}
+                    <div className="flex min-h-[2.25rem] items-start justify-between gap-2">
+                      <dt className="text-xs leading-snug text-muted-foreground">
+                        {t(`categories.${category.category}`)}
+                      </dt>
                       <dd className={cn('text-sm font-semibold tabular-nums', tone.text)}>{category.score}</dd>
                     </div>
-                    <div className="mt-1.5 h-1.5 overflow-hidden rounded-full bg-muted">
+                    <div className="h-1.5 overflow-hidden rounded-full bg-muted">
                       <div className={cn('h-full rounded-full', tone.bar)} style={{ width: `${category.score}%` }} />
                     </div>
                   </div>
@@ -269,7 +274,7 @@ export function ScanConsole({ placeholder }: { placeholder: string }) {
                 {t('noFindings')}
               </p>
             ) : (
-              <ul className="mt-3 space-y-3">
+              <ul className="mt-3 grid gap-3 lg:grid-cols-2">
                 {result.findings.map((finding) => (
                   <li key={finding.ruleId} className="rounded-xl border border-border bg-card p-4">
                     <div className="flex flex-wrap items-center gap-2">

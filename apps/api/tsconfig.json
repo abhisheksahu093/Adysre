@@ -3,7 +3,11 @@
   "compilerOptions": {
     "baseUrl": ".",
     "outDir": "./dist",
-    "rootDir": "./src"
+    "rootDir": "./src",
+    // Keep the incremental cache inside dist so `nest build`'s deleteOutDir
+    // clears it too; otherwise a stale buildinfo makes tsc skip emitting after
+    // the outDir was wiped, and `nest build` silently produces no dist.
+    "tsBuildInfoFile": "./dist/tsconfig.tsbuildinfo"
   },
   "include": ["src"]
 }

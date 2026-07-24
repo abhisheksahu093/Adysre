@@ -15,6 +15,21 @@ import type { ComponentType } from 'react';
 export type TemplateRendererProps = { page?: string };
 
 export const TEMPLATE_RENDERERS: Record<string, ComponentType<TemplateRendererProps>> = {
+  'astra-portfolio': dynamic(() =>
+    import('./astra-portfolio/astra-template').then((mod) => ({ default: mod.AstraTemplate })),
+  ),
+  'marlowe-portfolio': dynamic(() =>
+    import('./marlowe-portfolio/marlowe-template').then((mod) => ({ default: mod.MarloweTemplate })),
+  ),
+  'noctis-folio': dynamic(() =>
+    import('./noctis-folio/noctis-template').then((mod) => ({ default: mod.NoctisTemplate })),
+  ),
+  'vesper-portfolio': dynamic(() =>
+    import('./vesper-portfolio/vesper-template').then((mod) => ({ default: mod.VesperTemplate })),
+  ),
+  'marfa-studio': dynamic(() =>
+    import('./marfa-studio/marfa-template').then((mod) => ({ default: mod.MarfaTemplate })),
+  ),
   'prism-studio': dynamic(() =>
     import('./prism-studio/prism-template').then((mod) => ({ default: mod.PrismTemplate })),
   ),

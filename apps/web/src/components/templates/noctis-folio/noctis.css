@@ -1,0 +1,155 @@
+/*
+ * NOCTIS - template-scoped design tokens.
+ *
+ * A template is a standalone artifact with its own brand, so it cannot inherit
+ * the app's tokens. The whole palette lives here, scoped to
+ * `[data-template='noctis']`, and every section references these variables only
+ * - no raw colour in markup (Rule 6).
+ *
+ * ─── Cinematic, not just dark ──────────────────────────────────────────────
+ * Prism and Halcyon are also dark, so this one earns its darkness differently.
+ * Where Prism is flat and Halcyon is glassy, Noctis is PHOTOGRAPHIC: the page
+ * is a gallery wall, so the ground is a warm near-black, the "images" are
+ * full-bleed duotone fields with grain, and the only saturated colour on the
+ * page is a single amber accent that stands in for a warm light source.
+ *
+ * Bone white rather than #fff for type: pure white on this ground glares next
+ * to the muted plates. The amber is rationed - one accent per band, never a
+ * large fill.
+ */
+
+[data-template='noctis'] {
+  --noc-bg: #0b0c0f;
+  --noc-bg-2: #121319;
+  --noc-bg-3: #1a1c24;
+
+  --noc-ink: #eceae3;
+  --noc-ink-soft: rgb(236 234 227 / 70%);
+  --noc-ink-faint: rgb(236 234 227 / 46%);
+  --noc-rule: rgb(236 234 227 / 12%);
+  --noc-rule-strong: rgb(236 234 227 / 26%);
+
+  /* The warm light source. ~9:1 on the ground; one use per band. */
+  --noc-amber: #f5a623;
+  --noc-amber-deep: #c47f12;
+
+  /* The cool counterpart, for duotone shadows only - never for type. */
+  --noc-indigo: #2b3557;
+
+  --noc-radius: 3px;
+
+  color: var(--noc-ink);
+  background-color: var(--noc-bg);
+  font-family: 'Inter Variable', Inter, system-ui, -apple-system, sans-serif;
+  font-feature-settings: 'ss01', 'cv11';
+}
+
+/* ── Type ────────────────────────────────────────────────────────────────── */
+
+/*
+ * Display only. The negative tracking and sub-1 leading here are wrong at any
+ * size below ~2.5rem, which is why they are not on a shared heading class.
+ */
+[data-template='noctis'] .noc-display {
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  line-height: 0.94;
+}
+
+[data-template='noctis'] .noc-serif-accent {
+  font-family: 'Iowan Old Style', Palatino, Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+
+[data-template='noctis'] .noc-mono {
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+/* ── Duotone plates ──────────────────────────────────────────────────────── */
+
+/*
+ * The stand-in for photography. A template ships no binary assets, so each
+ * plate is a duotone field - a cool base with a warm gradient and grain, the
+ * shape a night photograph takes. They are decorative and marked `aria-hidden`;
+ * `.noc-plate` is where a real `<img>` goes in a real build.
+ */
+[data-template='noctis'] .noc-plate-a {
+  background-color: var(--noc-bg-2);
+  background-image:
+    radial-gradient(120% 90% at 20% 15%, rgb(245 166 35 / 22%), transparent 55%),
+    linear-gradient(200deg, var(--noc-indigo), transparent 70%);
+}
+
+[data-template='noctis'] .noc-plate-b {
+  background-color: var(--noc-bg-2);
+  background-image:
+    radial-gradient(120% 100% at 80% 85%, rgb(43 53 87 / 70%), transparent 60%),
+    linear-gradient(150deg, rgb(245 166 35 / 12%), transparent 55%);
+}
+
+[data-template='noctis'] .noc-plate-c {
+  background-color: var(--noc-bg-3);
+  background-image:
+    radial-gradient(90% 90% at 50% 0%, rgb(245 166 35 / 26%), transparent 60%),
+    linear-gradient(180deg, transparent 40%, rgb(11 12 15 / 80%));
+}
+
+[data-template='noctis'] .noc-grain::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+  opacity: 0.2;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+}
+
+/* ── Focus ───────────────────────────────────────────────────────────────── */
+
+[data-template='noctis'] :focus-visible {
+  outline: 2px solid var(--noc-amber);
+  outline-offset: 3px;
+}
+
+/* ── Motion primitives' resting state ────────────────────────────────────── */
+
+/*
+ * Applied by JS on mount and never in the SSR markup - a server-rendered
+ * `opacity: 0` is content that never appears if the script fails. See
+ * noctis-motion.tsx.
+ */
+[data-template='noctis'] [data-noc-reveal='pending'] {
+  opacity: 0;
+}
+
+/* Clipped wrappers, so display lines and letters rise out of the baseline. */
+[data-template='noctis'] .noc-clip {
+  display: block;
+  overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-template='noctis'] [data-noc-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  /*
+   * The film strip is scroll-linked, so with motion off it must stay reachable
+   * some other way - it becomes an ordinary horizontally scrollable row.
+   */
+  [data-template='noctis'] .noc-strip {
+    transform: none !important;
+    overflow-x: auto !important;
+  }
+
+  /* Any curtain must resolve to fully open, or the image never appears. */
+  [data-template='noctis'] * {
+    clip-path: none !important;
+  }
+}

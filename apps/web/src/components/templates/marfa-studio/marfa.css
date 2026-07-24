@@ -1,0 +1,150 @@
+/*
+ * MARFA - template-scoped design tokens.
+ *
+ * A template is a standalone artifact with its own brand, so it cannot inherit
+ * the app's tokens. The whole palette lives here, scoped to
+ * `[data-template='marfa']`, and every section references these variables only
+ * - no raw colour in markup (Rule 6).
+ *
+ * ─── The light one ─────────────────────────────────────────────────────────
+ * Three of this library's portfolios are dark; Marfa is the counter-argument. A
+ * warm ivory ground, near-black ink, and a single muted terracotta accent used
+ * as sparingly as a good editor uses italics. The whole thing should read like
+ * a well-set magazine that happens to be a website: huge whitespace, hairline
+ * rules, a large elegant serif for display against a clean grotesque for body.
+ *
+ * The serif is the identity here and carries the big sizes; its tight tracking
+ * and near-1 leading are wrong at body size, which is why they live on
+ * `.mar-display` and nowhere else.
+ */
+
+[data-template='marfa'] {
+  --mar-paper: #f6f2ea;
+  --mar-paper-2: #efe9dd;
+  --mar-panel: #fbf9f4;
+
+  --mar-ink: #1c1a17;
+  --mar-ink-soft: rgb(28 26 23 / 72%);
+  --mar-ink-faint: rgb(28 26 23 / 52%);
+  --mar-rule: rgb(28 26 23 / 14%);
+  --mar-rule-strong: rgb(28 26 23 / 26%);
+
+  /* The one accent. Muted terracotta; used like italics, never as a fill. */
+  --mar-terra: #b0533a;
+  --mar-terra-soft: rgb(176 83 58 / 12%);
+
+  --mar-radius: 4px;
+
+  color: var(--mar-ink);
+  background-color: var(--mar-paper);
+  font-family: 'Inter Variable', Inter, system-ui, -apple-system, sans-serif;
+  font-feature-settings: 'ss01', 'cv11';
+}
+
+/* ── Type ────────────────────────────────────────────────────────────────── */
+
+/*
+ * The serif display face. The tracking and leading here are wrong below
+ * ~2rem, which is why they are not on a shared heading class.
+ */
+[data-template='marfa'] .mar-display {
+  font-family: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, 'Times New Roman', serif;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+[data-template='marfa'] .mar-italic {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--mar-terra);
+}
+
+[data-template='marfa'] .mar-mono {
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+/* ── Duotone plates (project stand-ins) ──────────────────────────────────── */
+
+/*
+ * The stand-in for photography. A template ships no binary assets, so each
+ * plate is a soft two-tone field on paper; `.mar-plate` is where a real `<img>`
+ * goes in a real build.
+ */
+[data-template='marfa'] .mar-plate-a {
+  background-color: var(--mar-paper-2);
+  background-image:
+    radial-gradient(90% 90% at 25% 20%, rgb(176 83 58 / 20%), transparent 55%),
+    linear-gradient(160deg, rgb(28 26 23 / 8%), transparent 60%);
+}
+
+[data-template='marfa'] .mar-plate-b {
+  background-color: var(--mar-paper-2);
+  background-image:
+    radial-gradient(90% 90% at 80% 80%, rgb(28 26 23 / 12%), transparent 55%),
+    linear-gradient(200deg, rgb(176 83 58 / 14%), transparent 60%);
+}
+
+[data-template='marfa'] .mar-plate-c {
+  background-color: var(--mar-paper-2);
+  background-image:
+    radial-gradient(100% 80% at 50% 0%, rgb(176 83 58 / 18%), transparent 60%),
+    linear-gradient(180deg, transparent 45%, rgb(28 26 23 / 10%));
+}
+
+/* ── Parallax frame ──────────────────────────────────────────────────────── */
+
+/*
+ * The inner sits taller than the frame and starts pulled up, so the drift the
+ * Parallax primitive applies never exposes a hard edge. With motion off the
+ * inner simply stays where the markup puts it - fully covering the frame.
+ */
+[data-template='marfa'] .mar-parallax-inner {
+  position: absolute;
+  inset: -18% 0;
+  height: 136%;
+  width: 100%;
+}
+
+/* ── Magnetic thumbnails settle with a short transition ──────────────────── */
+
+[data-template='marfa'] .mar-magnetic {
+  display: block;
+  transition: transform 200ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+/* ── Focus ───────────────────────────────────────────────────────────────── */
+
+[data-template='marfa'] :focus-visible {
+  outline: 2px solid var(--mar-terra);
+  outline-offset: 3px;
+}
+
+/* ── Motion primitives' resting state ────────────────────────────────────── */
+
+[data-template='marfa'] [data-mar-reveal='pending'] {
+  opacity: 0;
+}
+
+[data-template='marfa'] .mar-clip {
+  display: block;
+  overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-template='marfa'] [data-mar-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  /* Parallax and magnetic settle to no movement. */
+  [data-template='marfa'] .mar-parallax-inner,
+  [data-template='marfa'] .mar-magnetic {
+    transform: none !important;
+    transition: none !important;
+  }
+}

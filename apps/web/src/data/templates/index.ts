@@ -14,6 +14,11 @@ import { PULSE_CONTENT, PULSE_PROMPT } from './pulse-clinic-content';
 import { VERDANT_CONTENT, VERDANT_PROMPT } from './verdant-realty-content';
 import { SAFFRON_CONTENT, SAFFRON_PROMPT } from './saffron-table-content';
 import { TAVOLA_CONTENT, TAVOLA_PROMPT } from './tavola-kitchen-content';
+import { HALCYON_CONTENT, HALCYON_NAV, HALCYON_PROMPT } from './halcyon-ai-content';
+import { SCULPT_CONTENT, SCULPT_NAV, SCULPT_PROMPT } from './sculpt-audio-content';
+import { SOLSTICE_CONTENT, SOLSTICE_NAV, SOLSTICE_PROMPT } from './solstice-hotel-content';
+import { CIRRUS_CONTENT, CIRRUS_NAV, CIRRUS_PROMPT } from './cirrus-analytics-content';
+import { PRISM_CONTENT, PRISM_NAV, PRISM_PROMPT } from './prism-studio-content';
 import {
   TEMPLATE_SECTIONS,
   type TemplateEntry,
@@ -35,6 +40,112 @@ import {
  * the downloads are all driven by this list.
  */
 export const TEMPLATES: TemplateEntry[] = [
+  {
+    slug: 'prism-studio',
+    name: 'Prism',
+    taglineKey: 'prism',
+    tier: 'free',
+    themeKey: 'agency',
+    sections: TEMPLATE_SECTIONS,
+    prompt: PRISM_PROMPT,
+    // React targets only: the work rail and the motion path are scrubbed to
+    // the scrollbar, which a hand-authored static build cannot reproduce.
+    downloads: ['nextjs', 'react'],
+    addedOn: '2026-07-23',
+    pages: PRISM_NAV.map((item) => ({ id: item.id, label: item.label })),
+    entry: {
+      file: 'prism-template',
+      symbol: 'PrismTemplate',
+      stylesheet: 'prism.css',
+      scope: 'prism',
+    },
+    content: PRISM_CONTENT,
+  },
+  {
+    slug: 'cirrus-analytics',
+    name: 'Cirrus',
+    taglineKey: 'cirrus',
+    tier: 'free',
+    themeKey: 'finance',
+    sections: TEMPLATE_SECTIONS,
+    prompt: CIRRUS_PROMPT,
+    // React targets only: the charts are scrubbed to the scrollbar, which a
+    // hand-authored static build cannot reproduce.
+    downloads: ['nextjs', 'react'],
+    addedOn: '2026-07-23',
+    pages: CIRRUS_NAV.map((item) => ({ id: item.id, label: item.label })),
+    entry: {
+      file: 'cirrus-template',
+      symbol: 'CirrusTemplate',
+      stylesheet: 'cirrus.css',
+      scope: 'cirrus',
+    },
+    content: CIRRUS_CONTENT,
+  },
+  {
+    slug: 'solstice-hotel',
+    name: 'Solstice',
+    taglineKey: 'solstice',
+    tier: 'free',
+    themeKey: 'hospitality',
+    sections: TEMPLATE_SECTIONS,
+    prompt: SOLSTICE_PROMPT,
+    // React targets only: the line-splitting rewrites markup at runtime, which
+    // a hand-authored static build cannot reproduce.
+    downloads: ['nextjs', 'react'],
+    addedOn: '2026-07-23',
+    pages: SOLSTICE_NAV.map((item) => ({ id: item.id, label: item.label })),
+    entry: {
+      file: 'solstice-template',
+      symbol: 'SolsticeTemplate',
+      stylesheet: 'solstice.css',
+      scope: 'solstice',
+    },
+    content: SOLSTICE_CONTENT,
+  },
+  {
+    slug: 'sculpt-audio',
+    name: 'Sculpt',
+    taglineKey: 'sculpt',
+    tier: 'free',
+    themeKey: 'hardware',
+    sections: TEMPLATE_SECTIONS,
+    prompt: SCULPT_PROMPT,
+    // React targets only: this template's character is its spring physics and
+    // its draggable control, neither of which survives a no-script build.
+    downloads: ['nextjs', 'react'],
+    addedOn: '2026-07-23',
+    pages: SCULPT_NAV.map((item) => ({ id: item.id, label: item.label })),
+    entry: {
+      file: 'sculpt-template',
+      symbol: 'SculptTemplate',
+      stylesheet: 'sculpt.css',
+      scope: 'sculpt',
+    },
+    content: SCULPT_CONTENT,
+  },
+  {
+    slug: 'halcyon-ai',
+    name: 'Halcyon',
+    taglineKey: 'halcyon',
+    tier: 'free',
+    themeKey: 'saas',
+    sections: TEMPLATE_SECTIONS,
+    prompt: HALCYON_PROMPT,
+    // React targets only. The static builds are hand-authored HTML with no
+    // script, and this template's whole character is its anime.js motion -
+    // a no-JS build would be a different, worse template wearing its name.
+    downloads: ['nextjs', 'react'],
+    addedOn: '2026-07-23',
+    pages: HALCYON_NAV.map((item) => ({ id: item.id, label: item.label })),
+    entry: {
+      file: 'halcyon-template',
+      symbol: 'HalcyonTemplate',
+      stylesheet: 'halcyon.css',
+      scope: 'halcyon',
+    },
+    content: HALCYON_CONTENT,
+  },
   {
     slug: 'nova-analytics',
     name: 'Nova',

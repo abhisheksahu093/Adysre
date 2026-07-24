@@ -15,6 +15,21 @@ import type { ComponentType } from 'react';
 export type TemplateRendererProps = { page?: string };
 
 export const TEMPLATE_RENDERERS: Record<string, ComponentType<TemplateRendererProps>> = {
+  'prism-studio': dynamic(() =>
+    import('./prism-studio/prism-template').then((mod) => ({ default: mod.PrismTemplate })),
+  ),
+  'cirrus-analytics': dynamic(() =>
+    import('./cirrus-analytics/cirrus-template').then((mod) => ({ default: mod.CirrusTemplate })),
+  ),
+  'solstice-hotel': dynamic(() =>
+    import('./solstice-hotel/solstice-template').then((mod) => ({ default: mod.SolsticeTemplate })),
+  ),
+  'sculpt-audio': dynamic(() =>
+    import('./sculpt-audio/sculpt-template').then((mod) => ({ default: mod.SculptTemplate })),
+  ),
+  'halcyon-ai': dynamic(() =>
+    import('./halcyon-ai/halcyon-template').then((mod) => ({ default: mod.HalcyonTemplate })),
+  ),
   'nova-analytics': dynamic(() =>
     import('./nova-analytics/nova-template').then((mod) => ({ default: mod.NovaTemplate })),
   ),

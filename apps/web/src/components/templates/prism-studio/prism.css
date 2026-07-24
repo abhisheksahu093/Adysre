@@ -1,0 +1,172 @@
+/*
+ * PRISM - template-scoped design tokens.
+ *
+ * A template is a standalone artifact with its own brand, so it cannot inherit
+ * the app's tokens. The whole palette lives here, scoped to
+ * `[data-template='prism']`, and every section references these variables only
+ * - no raw colour in markup (Rule 6).
+ *
+ * ─── Flat black, deliberately ──────────────────────────────────────────────
+ * Halcyon is also dark, so this template has to earn its darkness differently.
+ * It does it by being FLAT: no glass, no blur, no gradient panels, no shadow.
+ * Structure comes from type size and from full-bleed colour fields. Where
+ * Halcyon has depth, this has scale.
+ *
+ * One acid accent, at 16.2:1 on the ground, which is the loudest thing on the
+ * page and is therefore rationed: one use per viewport, and never as a large
+ * fill behind dark type.
+ *
+ * ─── Type is the layout ────────────────────────────────────────────────────
+ * Display sizes run to 12vw. At that scale two things break and both are fixed
+ * here rather than per section: tracking has to go sharply negative or the
+ * words fall apart, and line-height has to drop below 1 or the lines stop
+ * reading as a block. Neither is safe at body size, which is why they live on
+ * `.pri-display` and nowhere else.
+ *
+ * CAUTION, as in the other templates: a scoped selector such as
+ * `[data-template='prism'] .pri-x` outranks Tailwind's single-class utilities,
+ * so nothing here may set `position`, `display` or spacing on an element
+ * Tailwind also positions.
+ */
+
+[data-template='prism'] {
+  --pri-bg: #0a0a0b;
+  --pri-bg-2: #131316;
+  --pri-bg-3: #1c1c20;
+
+  /* Bone rather than white: pure #fff on flat black vibrates at display size. */
+  --pri-ink: #f2f0eb;
+  --pri-ink-soft: rgb(242 240 235 / 72%);
+  --pri-ink-faint: rgb(242 240 235 / 50%);
+  --pri-rule: rgb(242 240 235 / 14%);
+  --pri-rule-strong: rgb(242 240 235 / 30%);
+
+  /* The acid. 16.2:1 on the ground. One use per viewport. */
+  --pri-acid: #ccff2f;
+  --pri-acid-deep: #9fcc12;
+
+  --pri-radius: 4px;
+
+  color: var(--pri-ink);
+  background-color: var(--pri-bg);
+  font-family: 'Inter Variable', Inter, system-ui, -apple-system, sans-serif;
+  font-feature-settings: 'ss01', 'cv11';
+}
+
+/* ── Type ────────────────────────────────────────────────────────────────── */
+
+/*
+ * Display only. The tracking and leading here are wrong at any size below
+ * ~2.5rem, which is why they are not on a shared heading class.
+ */
+[data-template='prism'] .pri-display {
+  font-weight: 620;
+  letter-spacing: -0.045em;
+  line-height: 0.92;
+  text-transform: uppercase;
+}
+
+[data-template='prism'] .pri-serif-accent {
+  font-family: 'Iowan Old Style', Palatino, Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: -0.02em;
+}
+
+[data-template='prism'] .pri-mono {
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+/* ── Fields ──────────────────────────────────────────────────────────────── */
+
+/*
+ * The stand-in for photography. A template ships no binary assets, so each
+ * plate is a flat two-colour field with grain. They are decorative and marked
+ * `aria-hidden`; `.pri-plate` is where a real `<img>` goes.
+ */
+[data-template='prism'] .pri-plate {
+  background-color: var(--pri-bg-2);
+  background-image: linear-gradient(135deg, rgb(204 255 47 / 16%), transparent 58%);
+}
+
+[data-template='prism'] .pri-plate-b {
+  background-image: linear-gradient(200deg, rgb(242 240 235 / 14%), transparent 62%);
+}
+
+[data-template='prism'] .pri-plate-c {
+  background-image: linear-gradient(20deg, rgb(204 255 47 / 24%), rgb(242 240 235 / 6%) 60%, transparent);
+}
+
+[data-template='prism'] .pri-grain::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='130' height='130'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E");
+  opacity: 0.18;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+}
+
+/* ── The process path ────────────────────────────────────────────────────── */
+
+[data-template='prism'] .pri-path {
+  fill: none;
+  stroke: var(--pri-rule-strong);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+
+[data-template='prism'] .pri-path-lit {
+  stroke: var(--pri-acid);
+}
+
+/* ── Focus ───────────────────────────────────────────────────────────────── */
+
+[data-template='prism'] :focus-visible {
+  outline: 2px solid var(--pri-acid);
+  outline-offset: 3px;
+}
+
+/* ── Motion ──────────────────────────────────────────────────────────────── */
+
+/*
+ * The resting state, applied by JS on mount and never in the SSR markup - a
+ * server-rendered `opacity: 0` is content that never appears if the script
+ * fails. See prism-motion.tsx.
+ */
+[data-template='prism'] [data-pri-reveal='pending'] {
+  opacity: 0;
+}
+
+/* Clipped wrappers, so display lines rise out of the baseline. */
+[data-template='prism'] .pri-clip {
+  display: block;
+  overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-template='prism'] [data-pri-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  /*
+   * The horizontal gallery is scroll-linked, so with motion off it must be
+   * reachable some other way - it becomes an ordinary scrollable row.
+   */
+  [data-template='prism'] .pri-rail {
+    transform: none !important;
+    overflow-x: auto !important;
+  }
+
+  /* The process marker sits at the start rather than travelling. */
+  [data-template='prism'] .pri-path-lit {
+    stroke-dasharray: none !important;
+    stroke-dashoffset: 0 !important;
+  }
+}

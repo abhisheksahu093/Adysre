@@ -73,7 +73,6 @@
   },
   "nav": {
     "dashboard": "ダッシュボード",
-    "promptLibrary": "プロンプトライブラリ",
     "components": "コンポーネント",
     "designPlayground": "デザインプレイグラウンド",
     "templates": "テンプレート",
@@ -82,7 +81,6 @@
     "openMenu": "ナビゲーションメニューを開く",
     "closeMenu": "ナビゲーションメニューを閉じる",
     "descriptions": {
-      "promptLibrary": "ワークスペースで使うプロンプトを検索・編集・コピーできます。",
       "components": "すべてのモジュールで利用できる構成要素を確認できます。",
       "templates": "白紙からではなく、既成のレイアウトから始められます。",
       "settings": "組織・メンバー・環境設定を管理します。",
@@ -91,7 +89,13 @@
       "patterns": "CSS背景パターンを閲覧・編集・エクスポート、または自分で生成。",
       "textures": "CSSサーフェステクスチャを閲覧・編集・エクスポート、または自分で生成。",
       "icons": "オリジナルの SVG アイコンを閲覧・カスタマイズし、任意の形式やサイズで書き出せます。",
-      "designPlayground": "無限キャンバスでページ・ダッシュボード・グラフィックをコードなしでデザイン。"
+      "designPlayground": "無限キャンバスでページ・ダッシュボード・グラフィックをコードなしでデザイン。",
+      "websiteIntelligence": "任意の公開サイトをパフォーマンス・SEO・アクセシビリティ・セキュリティなどでスキャンします。",
+      "qrCode": "リンク・WiFi・連絡先・決済などに対応したカスタマイズ可能なQRコードを作成します。",
+      "barcode": "ライブプレビューとPNG/SVG出力でEAN・UPC・Code 128・Code 39バーコードを作成します。",
+      "documents": "ライブプレビュー、テンプレート、PDF出力で請求書・見積書・領収書・給与明細を作成します。",
+      "resume": "求人票と照合してATSスコアを算出。キーワードとスキルの一致も表示。",
+      "codes": "QRコードとバーコード（EAN、UPC、Code 128）を1つのページで生成。ライブプレビューとPNG/SVGエクスポートに対応。"
     },
     "palettes": "カラーパレット",
     "gradients": "グラデーション",
@@ -113,7 +117,63 @@
     "collapseSection": "{label}を折りたたむ",
     "viewAll": "すべての{label}",
     "collapseSidebar": "サイドバーを折りたたむ",
-    "expandSidebar": "サイドバーを展開"
+    "expandSidebar": "サイドバーを展開",
+    "websiteIntelligence": "ウェブサイトインテリジェンス",
+    "qrCode": "QRコードジェネレーター",
+    "barcode": "バーコードジェネレーター",
+    "documents": "ドキュメントジェネレーター",
+    "resume": "履歴書・ATS",
+    "codes": "コードジェネレーター"
+  },
+  "tools": {
+    "qr": {
+      "badge": "ツール",
+      "title": "QRコードジェネレーター",
+      "subtitle": "リンク・WiFi・連絡先・イベント・決済向けのカスタマイズ可能なQRコードを作成。ライブでデザインし、PNGまたはSVGでダウンロード, すべてブラウザ内で完結します。"
+    },
+    "invoice": {
+      "badge": "ツール",
+      "title": "請求書・ドキュメントジェネレーター",
+      "subtitle": "ライブプレビュー、洗練されたテンプレート、ワンクリックのPDF出力で請求書・見積書・領収書・注文書を作成。JSON/CSV出力とCSV取り込みにも対応、すべてオフラインで動作します。"
+    },
+    "barcode": {
+      "badge": "ツール",
+      "title": "バーコードジェネレーター",
+      "subtitle": "スキャン可能なEAN-13・EAN-8・UPC-A・ITF-14・Code 128・Code 39バーコードを作成。チェックデジットを自動計算し、ライブでデザインしてPNGまたはSVGで出力, すべてブラウザ内で完結します。"
+    },
+    "salary": {
+      "badge": "ツール",
+      "title": "給与明細ジェネレーター",
+      "subtitle": "従業員情報、支給と控除の明細、自動計算された差引支給額を備えたプロ仕様の給与明細を作成。ライブでプレビューしPDFに印刷、すべてオフラインで動作します。"
+    },
+    "documents": {
+      "badge": "ツール",
+      "title": "ドキュメントジェネレーター",
+      "subtitle": "ライブプレビュー、洗練されたテンプレート、PDF印刷で請求書・見積書・領収書・給与明細を作成。すべてオフラインで動作します。",
+      "tabs": {
+        "invoice": "請求書",
+        "salary": "給与明細",
+        "signature": "メール署名"
+      }
+    },
+    "resume": {
+      "badge": "ツール",
+      "title": "履歴書とATS",
+      "subtitle": "ルールベースのATSスコアのために履歴書を求人内容と照合したり、ライブテンプレートで印刷対応の履歴書を作成したりできます。AIは使わず、すべてブラウザ内で処理されます。",
+      "tabs": {
+        "scanner": "ATSスキャナー",
+        "builder": "履歴書ビルダー"
+      }
+    },
+    "codes": {
+      "badge": "ツール",
+      "title": "コードジェネレーター",
+      "subtitle": "QRコードとバーコードを1つのページで作成できます。リンク、WiFi、連絡先、決済用のQRを設計したり、スキャン可能なEAN、UPC、Code 128、Code 39バーコードを作成したりでき、すべてブラウザ内でライブプレビューし、PNGまたはSVGとして書き出せます。",
+      "tabs": {
+        "qr": "QRコード",
+        "barcode": "バーコード"
+      }
+    }
   },
   "topbar": {
     "searchPlaceholder": "検索またはページへ移動…",
@@ -262,87 +322,6 @@
       "thisWeek": "今週",
       "last24h": "過去 24 時間",
       "files": "ファイル"
-    }
-  },
-  "promptLibrary": {
-    "searchPlaceholder": "タイトル・タグ・キーワードで検索…",
-    "searchLabel": "プロンプトを検索",
-    "collections": {
-      "all": "すべて",
-      "featured": "おすすめ",
-      "trending": "人気",
-      "new": "新着"
-    },
-    "filters": {
-      "collection": "コレクション",
-      "category": "カテゴリ",
-      "allCategories": "すべてのカテゴリ",
-      "allTiers": "すべてのプラン",
-      "allModels": "すべてのモデル",
-      "allRatios": "すべての比率",
-      "byTier": "プランで絞り込む",
-      "byModel": "モデルで絞り込む",
-      "byRatio": "アスペクト比で絞り込む"
-    },
-    "count": "{count, plural, other {# 件のプロンプト}}",
-    "countFiltered": "{total} 件中 {count} 件のプロンプト",
-    "empty": {
-      "title": "条件に一致するプロンプトがありません",
-      "description": "検索条件を変えるか、フィルターをクリアしてください。"
-    },
-    "card": {
-      "editAria": "{title} を編集",
-      "searchTag": "{tag} を検索",
-      "lockedAria": "プレミアムプロンプト：{title} を使うにはプレミアムアクセスが必要です"
-    },
-    "dialog": {
-      "description": "文言を調整してからコピーできます。変更内容はライブラリには保存されません。",
-      "promptLabel": "プロンプト",
-      "copyPrompt": "プロンプトをコピー",
-      "characters": "{count} 文字",
-      "edited": "編集済み",
-      "worksWellOn": "相性の良いモデル",
-      "aspectRatios": "アスペクト比",
-      "tags": "タグ",
-      "englishOriginal": "英語の原文を表示しています、このプロンプトはまだ翻訳されていません。"
-    },
-    "tiers": {
-      "free": "無料",
-      "premium": "プレミアム"
-    },
-    "categories": {
-      "portrait": "ポートレート",
-      "headshot": "ヘッドショット",
-      "business": "ビジネス",
-      "fashion": "ファッション",
-      "lifestyle": "ライフスタイル",
-      "cinematic": "シネマティック",
-      "travel": "トラベル",
-      "nature": "ネイチャー",
-      "fitness": "フィットネス",
-      "automotive": "自動車",
-      "editorial": "エディトリアル",
-      "fantasy": "ファンタジー",
-      "sci-fi": "SF",
-      "anime": "アニメ",
-      "artistic": "アート"
-    },
-    "styles": {
-      "photorealistic": "フォトリアル",
-      "cinematic": "シネマティック",
-      "editorial": "エディトリアル",
-      "monochrome": "モノクロ",
-      "painterly": "絵画調",
-      "illustrated": "イラスト",
-      "3d-render": "3D レンダー",
-      "anime": "アニメ"
-    },
-    "ratios": {
-      "1:1": "1:1 スクエア",
-      "4:5": "4:5 ポートレート",
-      "3:4": "3:4 ポートレート",
-      "9:16": "9:16 ストーリー",
-      "16:9": "16:9 ワイド"
     }
   },
   "pages": {
@@ -688,18 +667,6 @@
     "submit": "購入手続きへ",
     "submitting": "リダイレクト中…",
     "unavailable": "決済はまだご利用いただけません。ご購入はサポートまでご連絡ください。"
-  },
-  "premiumGate": {
-    "title": "これはプレミアムプロンプトです",
-    "descriptionCopy": "「{title}」はプレミアムライブラリの一部です。コピーするにはプレミアムアクセスが必要です。",
-    "descriptionEdit": "「{title}」はプレミアムライブラリの一部です。カスタマイズするにはプレミアムアクセスが必要です。",
-    "cta": "プレミアムを利用する",
-    "notNow": "後で",
-    "benefits": {
-      "unlockAll": "120以上のプレミアムプロンプトをすべて利用",
-      "unlockEdit": "コピー前にどのプロンプトもカスタマイズ可能",
-      "unlockUpdates": "今後追加されるプロンプトもすべて含む"
-    }
   },
   "components": {
     "metaTitle": "コンポーネント",
@@ -1258,9 +1225,15 @@
       "consulting": "コンサルティング",
       "education": "教育",
       "hardware": "ハードウェア",
-      "hospitality": "ホスピタリティ"
+      "hospitality": "ホスピタリティ",
+      "portfolio": "ポートフォリオ"
     },
     "taglines": {
+      "noctis": "ニアブラックのシネマティックな写真ポートフォリオ。アンバーのアクセント、カーテンワイプの画像リビール、スクロール連動のフィルムストリップレール。",
+      "vesper": "インディゴとバイオレットのガラス調によるダークな開発者ポートフォリオ。ポインター追従のスポットライト、3Dチルトの作品カード、マグネティックボタン。",
+      "marfa": "アイボリーとインクの明るいエディトリアルなアートディレクター向けポートフォリオ。テラコッタのアクセント、パララックスの版面、テキストマスクのリビール。",
+      "marlowe": "ニアブラックのシングルページなフリーランサー向けポートフォリオ。コーラルのアクセント、漂うヒーローの光球、カウントアップ数値、アニメーションするスキルバー、絞り込み可能な作品グリッド。",
+      "astra": "温かみのあるオフホワイトに、太字で明るいシングルページのポートフォリオ。コバルトのアクセントと星のモチーフ、ベントー型の作品グリッド、星のマーキー、カウントアップ数値。",
       "nova": "グラデーションメッシュのヒーローとアニメーションカウンターを備えたダークで透明感のある分析 SaaS。",
       "saffron": "クリームとフォレストグリーンの温かみあるエディトリアルなファインダイニング。パララックスの盛り付けとセリフ書体。",
       "pulse": "メディカルブルーとミントの落ち着いた丸みのあるクリニックサイト。安心感を第一に。",
@@ -1923,7 +1896,7 @@
   "landing": {
     "meta": {
       "title": "ADYSRE：デザインとリリースを一つのワークスペースで",
-      "description": "プロダクトチームがコンポーネント、アイコン、パレット、グラデーション、プロンプトを一か所で扱い、そのまま本番へ届けられるワークスペース。"
+      "description": "プロダクトチームがコンポーネント、アイコン、パレット、グラデーション、テンプレートを一か所で扱い、そのまま本番へ届けられるワークスペース。"
     },
     "nav": {
       "pricing": "料金",
@@ -1933,14 +1906,15 @@
       "skip": "本文へスキップ",
       "menus": {
         "styles": "スタイル",
-        "library": "ライブラリ"
+        "library": "ライブラリ",
+        "tools": "ツール"
       }
     },
     "hero": {
       "badge": "新機能: グラデーションとパレットのジェネレーター",
       "title": "チームのデザインとリリースに必要なすべて",
       "titleAccent": "を、静かな一つのワークスペースに",
-      "subtitle": "ADYSRE はコンポーネント、アイコン、パレット、グラデーション、プロンプトを一つにまとめ、ツールを切り替えずにアイデアから本番まで進められます。",
+      "subtitle": "ADYSRE はコンポーネント、アイコン、パレット、グラデーション、テンプレートを一つにまとめ、ツールを切り替えずにアイデアから本番まで進められます。",
       "ctaComponents": "コンポーネントを見る",
       "ctaPlayground": "プレイグラウンドを開く",
       "ctaWorkspace": "ワークスペースを開く",
@@ -1978,10 +1952,6 @@
         "textures": {
           "title": "テクスチャ",
           "desc": "純粋なCSSによるノイズ・グレイン・紙・織りのサーフェステクスチャ、画像ファイル不要。"
-        },
-        "promptLibrary": {
-          "title": "プロンプトライブラリ",
-          "desc": "カテゴリー別に厳選したプロンプト集。チームが使うモデルに合わせて調整済み。"
         },
         "templates": {
           "title": "テンプレート",
@@ -2043,7 +2013,6 @@
         "gradients": "グラデーション",
         "patterns": "パターン",
         "textures": "テクスチャ",
-        "prompts": "プロンプト",
         "teams": "利用中のチーム"
       }
     },
@@ -2085,7 +2054,7 @@
       "items": {
         "what": {
           "q": "ADYSRE とは？",
-          "a": "コンポーネント、アイコン、パレット、グラデーション、プロンプトを一つにまとめ、プロダクトにコピーできるデザインと開発のワークスペースです。"
+          "a": "コンポーネント、アイコン、パレット、グラデーション、テンプレートを一つにまとめ、プロダクトにコピーできるデザインと開発のワークスペースです。"
         },
         "frameworks": {
           "q": "対応フレームワークは？",
@@ -2417,6 +2386,207 @@
       "loading": "読み込み中…",
       "empty": "保存されたデザインはまだありません。",
       "unavailable": "保存済みデザインを表示できません、ストレージに接続できません。作業内容はこの端末に保存されています。"
+    }
+  },
+  "websiteIntel": {
+    "meta": {
+      "title": "ウェブサイトインテリジェンス",
+      "description": "任意の公開ウェブサイトを、パフォーマンス・SEO・アクセシビリティ・セキュリティなどにわたり1つのレポートでスキャンします。"
+    },
+    "badge": "ウェブサイトインテリジェンス",
+    "title": "どんなサイトの問題も正確に把握",
+    "subtitle": "任意の公開URLを指定すると、パフォーマンス・SEO・アクセシビリティ・セキュリティ・Core Web Vitals などを1つのレポートに。500以上のルールに基づき、有料AIは不要です。",
+    "comingSoon": "開発中",
+    "scan": {
+      "placeholder": "https://example.com",
+      "button": "スキャン",
+      "note": "スキャンエンジンは現在開発中です。これは実行予定の解析のプレビューです。"
+    },
+    "stats": {
+      "analyses": "1スキャンあたりの解析",
+      "rules": "ルールベースの検査",
+      "formats": "エクスポート形式",
+      "paidAi": "有料AI API"
+    },
+    "capabilitiesTitle": "11の解析、1回のスキャン",
+    "capabilitiesSubtitle": "すべてのスキャンで全項目を実行し、結果を総合スコアにまとめます。",
+    "capabilities": {
+      "performance": {
+        "title": "パフォーマンス",
+        "desc": "Lighthouse品質のタイミング、レンダリングを妨げるリソース、読み込みの流れ。"
+      },
+      "seo": {
+        "title": "SEO",
+        "desc": "メタタグ、見出し、canonical、サイトマップ、構造化データ、ソーシャルカード。"
+      },
+      "accessibility": {
+        "title": "アクセシビリティ",
+        "desc": "コントラスト・ロール・ラベル・キーボード順序を axe-core で監査。"
+      },
+      "bestPractices": {
+        "title": "ベストプラクティス",
+        "desc": "モダンWebの検査：doctype、コンソールエラー、非推奨API。"
+      },
+      "security": {
+        "title": "セキュリティ",
+        "desc": "HTTPS、セキュリティヘッダー、CSP、HSTS、Cookieフラグ。"
+      },
+      "webVitals": {
+        "title": "Core Web Vitals",
+        "desc": "フィールドしきい値に対して測定した LCP・CLS・INP。"
+      },
+      "technology": {
+        "title": "技術検出",
+        "desc": "使用中のフレームワーク、CMS、解析ツール、ライブラリ。"
+      },
+      "assets": {
+        "title": "アセット最適化",
+        "desc": "画像・CSS・JS・フォントの重量、遅延読み込み、圧縮。"
+      },
+      "html": {
+        "title": "HTML構造",
+        "desc": "文書アウトライン、ランドマーク、リンクの健全性、マークアップの妥当性。"
+      },
+      "network": {
+        "title": "ネットワーク",
+        "desc": "DNS、TTFB、HTTP/2 と HTTP/3、キャッシュ、CDN。"
+      },
+      "recommendations": {
+        "title": "AIレコメンド",
+        "desc": "影響度と推定削減量で並べた500以上のルールベース修正。"
+      },
+      "history": {
+        "title": "履歴比較",
+        "desc": "スコアの推移を追跡し、2つのスキャンを差分表示。"
+      }
+    },
+    "dashboardTitle": "あらゆる観点のダッシュボード",
+    "dashboardSubtitle": "一目でわかる概要から、レコメンドのタイムラインまで10セクション。",
+    "dashboard": {
+      "overview": "概要",
+      "performance": "パフォーマンス",
+      "seo": "SEO",
+      "accessibility": "アクセシビリティ",
+      "security": "セキュリティ",
+      "assets": "アセット",
+      "network": "ネットワーク",
+      "technologies": "技術",
+      "recommendations": "レコメンド",
+      "timeline": "タイムライン"
+    },
+    "reportsTitle": "レポートをエクスポート",
+    "reportsSubtitle": "ワークフローに合う形式で、結果をどこへでも。",
+    "reportsEmpty": "上でスキャンを実行すると、そのレポートを任意の形式でここからエクスポートできます。",
+    "stackTitle": "本番向けスタックで構築",
+    "stack": {
+      "frontend": "フロントエンド",
+      "backend": "バックエンド",
+      "scanning": "スキャン",
+      "infra": "キューとインフラ"
+    },
+    "home": {
+      "cta": "プラットフォームを見る",
+      "secondary": "スキャン内容を見る",
+      "moreFindings": "完全なレポートで{count}件すべての検出結果を見る"
+    },
+    "console": {
+      "label": "ウェブサイトをスキャン",
+      "scanning": "スキャン中…",
+      "overall": "総合スコア",
+      "technologiesTitle": "検出された技術",
+      "noTechnologies": "既知の技術は検出されませんでした。",
+      "findingsTitle": "推奨事項",
+      "noFindings": "今回の検査では問題は見つかりませんでした。",
+      "scannedIn": "{ms} ms でスキャン",
+      "browserNote": "パフォーマンス・アクセシビリティ・Core Web Vitals はブラウザエンジンが必要で、後のフェーズで対応します。",
+      "categories": {
+        "seo": "SEO",
+        "security": "セキュリティ",
+        "html": "HTML",
+        "assets": "アセット",
+        "bestPractices": "ベストプラクティス",
+        "accessibility": "アクセシビリティ",
+        "performance": "パフォーマンス"
+      },
+      "severity": {
+        "critical": "重大",
+        "serious": "深刻",
+        "moderate": "中程度",
+        "minor": "軽微",
+        "info": "情報"
+      },
+      "errors": {
+        "generic": "問題が発生しました。もう一度お試しください。",
+        "url_required": "スキャンするURLを入力してください。",
+        "url_invalid": "有効なURLではありません。",
+        "url_scheme": "http と https のURLのみスキャンできます。",
+        "url_hostname": "完全なドメインを入力してください（例：example.com）。",
+        "url_blocked": "このアドレスは許可されていません。",
+        "url_too_long": "URLが長すぎます。",
+        "timeout": "サイトの応答に時間がかかりすぎました。",
+        "unreachable": "サイトに到達できませんでした。",
+        "too_many_redirects": "リダイレクトが多すぎます。",
+        "bad_redirect": "無効なリダイレクトが返されました。",
+        "rate_limited": "スキャンが多すぎます。1分後に再試行してください。",
+        "bad_json": "リクエストを読み取れませんでした。",
+        "server_error": "スキャンが予期せず失敗しました。"
+      },
+      "history": {
+        "title": "最近のスキャン",
+        "empty": "まだスキャンがありません。上で実行してください。",
+        "view": "表示",
+        "vsPrevious": "前回のスキャンとの比較",
+        "fixed": "{count} 件解消",
+        "appeared": "{count} 件新規"
+      },
+      "webVitalsTitle": "Core Web Vitals",
+      "export": "エクスポート"
+    },
+    "report": {
+      "title": "ウェブサイトインテリジェンス レポート",
+      "print": "PDFとして保存",
+      "scanned": "{date} にスキャン",
+      "generatedBy": "ADYSRE Website Intelligence により生成",
+      "notFound": "そのスキャンは見つかりませんでした。"
+    },
+    "schedule": {
+      "title": "スケジュールされたスキャン",
+      "subtitle": "URLを自動で再スキャンし、履歴を積み上げます。",
+      "urlPlaceholder": "https://example.com",
+      "add": "スケジュール",
+      "runDue": "期限分を実行",
+      "empty": "スケジュールはまだありません。",
+      "next": "次回",
+      "delete": "削除",
+      "ranNone": "実行対象はありませんでした。",
+      "ranSome": "{count} 件実行しました。",
+      "cadences": {
+        "hourly": "毎時",
+        "daily": "毎日",
+        "weekly": "毎週"
+      }
+    },
+    "notify": {
+      "title": "通知",
+      "subtitle": "スケジュールされたスキャンの完了を、Webhook・Slack・Discord で受け取れます。",
+      "targetPlaceholder": "https://hooks.slack.com/... または you@company.com",
+      "add": "チャンネルを追加",
+      "empty": "チャンネルはまだありません。",
+      "delete": "削除",
+      "test": "テスト",
+      "testOk": "送信しました。",
+      "testFail": "送信できませんでした。",
+      "emailNote": "メール送信にはプロバイダーが必要で、まだ送信されません。チャンネルは保存されます。",
+      "types": {
+        "webhook": "Webhook",
+        "slack": "Slack",
+        "discord": "Discord",
+        "email": "メール"
+      }
+    },
+    "tabs": {
+      "website": "サイトスキャン",
+      "seo": "SEO監査"
     }
   }
 }

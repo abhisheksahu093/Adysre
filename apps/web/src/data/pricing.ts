@@ -45,7 +45,7 @@ export const PRICING_PLANS: PricingPlan[] = [
     id: 'free',
     price: 0,
     originalPrice: 0,
-    href: '/prompt-library',
+    href: '/components',
     featureKeys: ['freePrompts', 'copyPaste', 'allCategories', 'fourModels', 'noCard'],
   },
   {

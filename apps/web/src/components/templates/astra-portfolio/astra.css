@@ -1,0 +1,184 @@
+/*
+ * ASTRA - template-scoped design tokens.
+ *
+ * A template is a standalone artifact with its own brand, so it cannot inherit
+ * the app's tokens. The whole palette lives here, scoped to
+ * `[data-template='astra']`, and every section references these variables only
+ * - no raw colour in markup (Rule 6).
+ *
+ * ─── Light, bold, block-modular ────────────────────────────────────────────
+ * Marfa is the library's other light portfolio, but it is a quiet serif
+ * magazine. Astra is the opposite kind of light: warm off-white, BIG tight
+ * sans-serif display, one confident cobalt accent, and a recurring star motif.
+ * The work is a bento of differently-sized blocks rather than a uniform grid,
+ * so the page reads as curated rather than dense.
+ *
+ * CAUTION, as in the other templates: a scoped selector such as
+ * `[data-template='astra'] .ast-x` outranks Tailwind's single-class utilities,
+ * so nothing here may set `position`, `display` or spacing on an element
+ * Tailwind also positions.
+ */
+
+[data-template='astra'] {
+  --ast-paper: #f4f2ec;
+  --ast-paper-2: #eae7dd;
+  --ast-panel: #fbfaf6;
+
+  --ast-ink: #16150f;
+  --ast-ink-soft: rgb(22 21 15 / 72%);
+  --ast-ink-faint: rgb(22 21 15 / 52%);
+  --ast-line: rgb(22 21 15 / 14%);
+  --ast-line-strong: rgb(22 21 15 / 26%);
+
+  /* The cobalt. Used for the accent word, the star, and the primary button. */
+  --ast-blue: #324bff;
+  --ast-blue-deep: #2438cc;
+
+  --ast-radius: 20px;
+
+  color: var(--ast-ink);
+  background-color: var(--ast-paper);
+  font-family: 'Inter Variable', Inter, system-ui, -apple-system, sans-serif;
+  font-feature-settings: 'ss01', 'cv11';
+}
+
+/* ── Type ────────────────────────────────────────────────────────────────── */
+
+[data-template='astra'] .ast-display {
+  font-weight: 680;
+  letter-spacing: -0.04em;
+  line-height: 0.96;
+}
+
+[data-template='astra'] .ast-accent {
+  color: var(--ast-blue);
+}
+
+[data-template='astra'] .ast-mono {
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+/* ── The star ────────────────────────────────────────────────────────────── */
+
+/*
+ * A slowly rotating star badge. Decorative and `aria-hidden`; the spin is
+ * paused entirely under reduced motion.
+ */
+[data-template='astra'] .ast-star-spin {
+  animation: ast-spin 14s linear infinite;
+}
+
+@keyframes ast-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* ── Bento blocks ────────────────────────────────────────────────────────── */
+
+/*
+ * The work grid. On a wide viewport it is a 12-column, 2-row bento; the spans
+ * give each block its footprint. Below `lg` everything collapses to a single
+ * column and the spans no longer apply.
+ */
+[data-template='astra'] .ast-bento {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+@media (min-width: 1024px) {
+  [data-template='astra'] .ast-bento {
+    grid-template-columns: repeat(12, 1fr);
+    grid-auto-rows: 15rem;
+  }
+
+  [data-template='astra'] .ast-span-lg { grid-column: span 6; grid-row: span 2; }
+  [data-template='astra'] .ast-span-wide { grid-column: span 6; grid-row: span 1; }
+  [data-template='astra'] .ast-span-tall { grid-column: span 3; grid-row: span 2; }
+  [data-template='astra'] .ast-span-sm { grid-column: span 3; grid-row: span 1; }
+}
+
+/*
+ * The imagery inside a block scales up gently on hover. The transform is on an
+ * inner layer so the block itself (and its overlaid text) stays put.
+ */
+[data-template='astra'] .ast-bento-img {
+  transition: transform 600ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (hover: hover) {
+  [data-template='astra'] .ast-bento-block:hover .ast-bento-img {
+    transform: scale(1.06);
+  }
+}
+
+/* ── Duotone plates (project & portrait stand-ins) ───────────────────────── */
+
+[data-template='astra'] .ast-plate-a {
+  background-color: var(--ast-paper-2);
+  background-image:
+    radial-gradient(90% 90% at 20% 15%, rgb(50 75 255 / 30%), transparent 55%),
+    linear-gradient(160deg, rgb(22 21 15 / 8%), transparent 60%);
+}
+
+[data-template='astra'] .ast-plate-b {
+  background-color: var(--ast-paper-2);
+  background-image:
+    radial-gradient(90% 90% at 80% 85%, rgb(50 75 255 / 22%), transparent 55%),
+    linear-gradient(200deg, rgb(22 21 15 / 10%), transparent 60%);
+}
+
+[data-template='astra'] .ast-plate-c {
+  background-color: var(--ast-paper-2);
+  background-image:
+    radial-gradient(100% 80% at 50% 0%, rgb(50 75 255 / 26%), transparent 60%),
+    linear-gradient(180deg, transparent 45%, rgb(22 21 15 / 12%));
+}
+
+/* ── Marquee ─────────────────────────────────────────────────────────────── */
+
+[data-template='astra'] .ast-marquee {
+  animation: ast-marquee 34s linear infinite;
+}
+
+@keyframes ast-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* ── Focus ───────────────────────────────────────────────────────────────── */
+
+[data-template='astra'] :focus-visible {
+  outline: 2px solid var(--ast-blue);
+  outline-offset: 3px;
+}
+
+/* ── Motion primitives' resting state ────────────────────────────────────── */
+
+[data-template='astra'] [data-ast-reveal='pending'] {
+  opacity: 0;
+}
+
+[data-template='astra'] .ast-clip {
+  display: block;
+  overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-template='astra'] [data-ast-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  [data-template='astra'] .ast-star-spin,
+  [data-template='astra'] .ast-marquee {
+    animation: none !important;
+  }
+
+  [data-template='astra'] .ast-bento-img {
+    transition: none !important;
+  }
+}

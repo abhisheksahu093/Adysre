@@ -19,6 +19,11 @@ import { SCULPT_CONTENT, SCULPT_NAV, SCULPT_PROMPT } from './sculpt-audio-conten
 import { SOLSTICE_CONTENT, SOLSTICE_NAV, SOLSTICE_PROMPT } from './solstice-hotel-content';
 import { CIRRUS_CONTENT, CIRRUS_NAV, CIRRUS_PROMPT } from './cirrus-analytics-content';
 import { PRISM_CONTENT, PRISM_NAV, PRISM_PROMPT } from './prism-studio-content';
+import { ASTRA_CONTENT, ASTRA_PROMPT } from './astra-portfolio-content';
+import { MARLOWE_CONTENT, MARLOWE_PROMPT } from './marlowe-portfolio-content';
+import { NOCTIS_CONTENT, NOCTIS_NAV, NOCTIS_PROMPT } from './noctis-folio-content';
+import { VESPER_CONTENT, VESPER_NAV, VESPER_PROMPT } from './vesper-portfolio-content';
+import { MARFA_CONTENT, MARFA_NAV, MARFA_PROMPT } from './marfa-studio-content';
 import {
   TEMPLATE_SECTIONS,
   type TemplateEntry,
@@ -40,6 +45,114 @@ import {
  * the downloads are all driven by this list.
  */
 export const TEMPLATES: TemplateEntry[] = [
+  {
+    slug: 'astra-portfolio',
+    name: 'Astra',
+    taglineKey: 'astra',
+    tier: 'premium',
+    themeKey: 'portfolio',
+    sections: TEMPLATE_SECTIONS,
+    prompt: ASTRA_PROMPT,
+    // React targets only: the count-up stats and the reveal system are runtime
+    // behaviour a hand-authored static build cannot reproduce. Single-page, so
+    // no `pages`.
+    downloads: ['nextjs', 'react'],
+    addedOn: '2026-07-24',
+    entry: {
+      file: 'astra-template',
+      symbol: 'AstraTemplate',
+      stylesheet: 'astra.css',
+      scope: 'astra',
+    },
+    content: ASTRA_CONTENT,
+  },
+  {
+    slug: 'marlowe-portfolio',
+    name: 'Marlowe',
+    taglineKey: 'marlowe',
+    tier: 'premium',
+    themeKey: 'portfolio',
+    sections: TEMPLATE_SECTIONS,
+    prompt: MARLOWE_PROMPT,
+    // React targets only: the scroll-filled skill bars, count-up stats and the
+    // interactive tag filter are all runtime behaviour a hand-authored static
+    // build cannot reproduce. Single-page, so no `pages`.
+    downloads: ['nextjs', 'react'],
+    addedOn: '2026-07-24',
+    entry: {
+      file: 'marlowe-template',
+      symbol: 'MarloweTemplate',
+      stylesheet: 'marlowe.css',
+      scope: 'marlowe',
+    },
+    content: MARLOWE_CONTENT,
+  },
+  {
+    slug: 'noctis-folio',
+    name: 'Noctis',
+    taglineKey: 'noctis',
+    tier: 'free',
+    themeKey: 'portfolio',
+    sections: TEMPLATE_SECTIONS,
+    prompt: NOCTIS_PROMPT,
+    // React targets only: the curtain-wipe reveals and the scroll-scrubbed film
+    // strip rewrite clip-paths and transforms at runtime, which a hand-authored
+    // static build cannot reproduce.
+    downloads: ['nextjs', 'react'],
+    addedOn: '2026-07-24',
+    pages: NOCTIS_NAV.map((item) => ({ id: item.id, label: item.label })),
+    entry: {
+      file: 'noctis-template',
+      symbol: 'NoctisTemplate',
+      stylesheet: 'noctis.css',
+      scope: 'noctis',
+    },
+    content: NOCTIS_CONTENT,
+  },
+  {
+    slug: 'vesper-portfolio',
+    name: 'Vesper',
+    taglineKey: 'vesper',
+    tier: 'premium',
+    themeKey: 'portfolio',
+    sections: TEMPLATE_SECTIONS,
+    prompt: VESPER_PROMPT,
+    // React targets only: the pointer spotlight, 3D-tilt cards and magnetic
+    // buttons are driven by live pointer events, which a no-script build cannot
+    // reproduce.
+    downloads: ['nextjs', 'react'],
+    addedOn: '2026-07-24',
+    pages: VESPER_NAV.map((item) => ({ id: item.id, label: item.label })),
+    entry: {
+      file: 'vesper-template',
+      symbol: 'VesperTemplate',
+      stylesheet: 'vesper.css',
+      scope: 'vesper',
+    },
+    content: VESPER_CONTENT,
+  },
+  {
+    slug: 'marfa-studio',
+    name: 'Marfa',
+    taglineKey: 'marfa',
+    tier: 'premium',
+    themeKey: 'portfolio',
+    sections: TEMPLATE_SECTIONS,
+    prompt: MARFA_PROMPT,
+    // React targets only: the scroll-linked parallax and the word-by-word mask
+    // reveal rewrite transforms at runtime, which a hand-authored static build
+    // cannot reproduce.
+    downloads: ['nextjs', 'react'],
+    addedOn: '2026-07-24',
+    pages: MARFA_NAV.map((item) => ({ id: item.id, label: item.label })),
+    entry: {
+      file: 'marfa-template',
+      symbol: 'MarfaTemplate',
+      stylesheet: 'marfa.css',
+      scope: 'marfa',
+    },
+    content: MARFA_CONTENT,
+  },
   {
     slug: 'prism-studio',
     name: 'Prism',

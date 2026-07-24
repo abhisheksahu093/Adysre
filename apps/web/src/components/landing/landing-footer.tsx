@@ -27,8 +27,11 @@ export async function LandingFooter() {
         { href: LANDING_LINKS.icons, label: tNav('icons') },
         { href: LANDING_LINKS.palettes, label: tNav('palettes') },
         { href: LANDING_LINKS.gradients, label: tNav('gradients') },
-        { href: LANDING_LINKS.promptLibrary, label: tNav('promptLibrary') },
         { href: LANDING_LINKS.templates, label: tNav('templates') },
+        { href: LANDING_LINKS.codes, label: tNav('codes') },
+        { href: LANDING_LINKS.documents, label: tNav('documents') },
+        { href: LANDING_LINKS.websiteIntelligence, label: tNav('websiteIntelligence') },
+        { href: LANDING_LINKS.resume, label: tNav('resume') },
       ],
     },
     {

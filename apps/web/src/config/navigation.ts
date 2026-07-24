@@ -1,5 +1,4 @@
 import {
-  Library,
   Blocks,
   Shapes,
   Palette,
@@ -8,6 +7,10 @@ import {
   Waves,
   PenTool,
   LayoutTemplate,
+  Radar,
+  QrCode,
+  FileText,
+  FileSearch,
   type LucideIcon,
 } from 'lucide-react';
 
@@ -32,12 +35,6 @@ export interface NavItem {
 export const NAV_ITEMS: NavItem[] = [
   // Dashboard is hidden for now - re-add this entry to bring it back:
   // { key: 'dashboard', href: '/dashboard', icon: LayoutDashboard },
-  {
-    key: 'promptLibrary',
-    href: '/prompt-library',
-    icon: Library,
-    descriptionKey: 'promptLibrary',
-  },
   {
     key: 'components',
     href: '/components',
@@ -85,6 +82,32 @@ export const NAV_ITEMS: NavItem[] = [
     icon: LayoutTemplate,
     descriptionKey: 'templates',
   },
+  {
+    key: 'websiteIntelligence',
+    href: '/website-intelligence',
+    icon: Radar,
+    descriptionKey: 'websiteIntelligence',
+  },
+  // Tools module. The Code Generator pairs the QR and barcode generators on one
+  // page; the document generator and the rest of the spec extend this section.
+  {
+    key: 'codes',
+    href: '/tools/codes',
+    icon: QrCode,
+    descriptionKey: 'codes',
+  },
+  {
+    key: 'documents',
+    href: '/tools/documents',
+    icon: FileText,
+    descriptionKey: 'documents',
+  },
+  {
+    key: 'resume',
+    href: '/tools/resume',
+    icon: FileSearch,
+    descriptionKey: 'resume',
+  },
   // Settings is hidden until the module lands - re-add this entry to bring it
   // back. The route, its translations and its permission are all still in place,
   // so this is the only line that has to change:
@@ -110,4 +133,4 @@ export function getNavItem(href: string): NavItem | undefined {
  * here rather than hardcoding a route, so hiding or reordering the menu moves
  * the entry point with it. (Dashboard used to be home; it's hidden for now.)
  */
-export const APP_HOME: string = NAV_ITEMS[0]?.href ?? '/prompt-library';
+export const APP_HOME: string = NAV_ITEMS[0]?.href ?? '/components';

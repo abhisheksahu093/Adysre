@@ -18,6 +18,8 @@ files, audit, and AI. See [`documents/BOOTSTRAP_PROJECT.md`](./documents/BOOTSTR
 
 **Module specs:** [Design Playground](./documents/DESIGN_PLAYGROUND_PRD.md) —
 the visual design editor at `/design-playground` (Phase 1: shell only).
+[Tool Suite](./documents/TOOL_SUITE.md) — four local-only, no-AI tools
+(email signature, SEO audit, ATS scanner, resume builder).
 
 **Published library:** [`documents/NPM_LIBRARY.md`](./documents/NPM_LIBRARY.md) —
 `adysre` on npm (blocks, icons, gradients, patterns, textures, palettes).

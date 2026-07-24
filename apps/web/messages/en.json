@@ -73,7 +73,6 @@
   },
   "nav": {
     "dashboard": "Dashboard",
-    "promptLibrary": "Prompt Library",
     "components": "Components",
     "designPlayground": "Design Playground",
     "templates": "Templates",
@@ -82,7 +81,6 @@
     "openMenu": "Open navigation menu",
     "closeMenu": "Close navigation menu",
     "descriptions": {
-      "promptLibrary": "Browse, customise and copy prompts for your workspace.",
       "components": "Browse the building blocks available to every module.",
       "templates": "Start from a ready-made layout instead of a blank page.",
       "settings": "Manage your organization, members and preferences.",
@@ -91,7 +89,13 @@
       "patterns": "Browse, edit and export CSS background patterns, or generate your own.",
       "textures": "Browse, edit and export CSS surface textures, or generate your own.",
       "icons": "Browse, customise and export original SVG icons in any format or size.",
-      "designPlayground": "Design pages, dashboards and graphics on an infinite canvas. No code."
+      "designPlayground": "Design pages, dashboards and graphics on an infinite canvas. No code.",
+      "websiteIntelligence": "Scan any public site for performance, SEO, accessibility, security and more.",
+      "qrCode": "Generate customizable QR codes for links, WiFi, contacts, payments and more.",
+      "barcode": "Generate EAN, UPC, Code 128 and Code 39 barcodes with live preview and PNG/SVG export.",
+      "documents": "Create invoices, quotes, receipts and salary slips with live preview, templates and PDF export.",
+      "resume": "Scan a resume against a job description for an ATS score, with keyword and skills match.",
+      "codes": "Generate QR codes and barcodes (EAN, UPC, Code 128) on one page, with live preview and PNG/SVG export."
     },
     "palettes": "Color Palettes",
     "gradients": "Gradients",
@@ -113,7 +117,63 @@
     "collapseSection": "Collapse {label}",
     "viewAll": "All {label}",
     "collapseSidebar": "Collapse sidebar",
-    "expandSidebar": "Expand sidebar"
+    "expandSidebar": "Expand sidebar",
+    "websiteIntelligence": "Website Intelligence",
+    "qrCode": "QR Code Generator",
+    "barcode": "Barcode Generator",
+    "documents": "Document Generator",
+    "resume": "Resume & ATS",
+    "codes": "Code Generator"
+  },
+  "tools": {
+    "qr": {
+      "badge": "Tools",
+      "title": "QR Code Generator",
+      "subtitle": "Create customizable QR codes for links, WiFi, contacts, events and payments, designed live and downloaded as PNG or SVG, all in your browser."
+    },
+    "invoice": {
+      "badge": "Tools",
+      "title": "Invoice & Document Generator",
+      "subtitle": "Build invoices, quotes, receipts and orders with a live preview, polished templates and one-click print-to-PDF, plus JSON/CSV export and CSV import, all offline."
+    },
+    "barcode": {
+      "badge": "Tools",
+      "title": "Barcode Generator",
+      "subtitle": "Generate scannable EAN-13, EAN-8, UPC-A, ITF-14, Code 128 and Code 39 barcodes, check digits computed, designed live and exported as PNG or SVG, all in your browser."
+    },
+    "salary": {
+      "badge": "Tools",
+      "title": "Salary Slip Generator",
+      "subtitle": "Build professional payslips with employee details, earnings and deductions ledgers and an auto-calculated net salary. Preview live and print to PDF, all offline."
+    },
+    "documents": {
+      "badge": "Tools",
+      "title": "Document Generator",
+      "subtitle": "Create invoices, quotes, receipts and salary slips with a live preview, polished templates and print to PDF, all offline.",
+      "tabs": {
+        "invoice": "Invoice",
+        "salary": "Salary Slip",
+        "signature": "Email Signature"
+      }
+    },
+    "resume": {
+      "badge": "Tools",
+      "title": "Resume & ATS",
+      "subtitle": "Scan a resume against a job description for a rule-based ATS score, or build a print-ready resume with live templates. No AI, processed entirely in your browser.",
+      "tabs": {
+        "scanner": "ATS Scanner",
+        "builder": "Resume Builder"
+      }
+    },
+    "codes": {
+      "badge": "Tools",
+      "title": "Code Generator",
+      "subtitle": "Create QR codes and barcodes on one page. Design a QR for links, WiFi, contacts and payments, or a scannable EAN, UPC, Code 128 or Code 39 barcode, all previewed live and exported as PNG or SVG in your browser.",
+      "tabs": {
+        "qr": "QR Code",
+        "barcode": "Barcode"
+      }
+    }
   },
   "topbar": {
     "searchPlaceholder": "Search or jump to…",
@@ -262,87 +322,6 @@
       "thisWeek": "this week",
       "last24h": "last 24h",
       "files": "files"
-    }
-  },
-  "promptLibrary": {
-    "searchPlaceholder": "Search by title, tag or keyword…",
-    "searchLabel": "Search prompts",
-    "collections": {
-      "all": "All",
-      "featured": "Featured",
-      "trending": "Trending",
-      "new": "New"
-    },
-    "filters": {
-      "collection": "Collection",
-      "category": "Category",
-      "allCategories": "All categories",
-      "allTiers": "All tiers",
-      "allModels": "All models",
-      "allRatios": "All ratios",
-      "byTier": "Filter by tier",
-      "byModel": "Filter by model",
-      "byRatio": "Filter by aspect ratio"
-    },
-    "count": "{count, plural, =1 {# prompt} other {# prompts}}",
-    "countFiltered": "{count} of {total} prompts",
-    "empty": {
-      "title": "No prompts match those filters",
-      "description": "Try a different search or clear the filters."
-    },
-    "card": {
-      "editAria": "Edit {title}",
-      "searchTag": "Search for {tag}",
-      "lockedAria": "Premium prompt: get premium access to use {title}"
-    },
-    "dialog": {
-      "description": "Tweak the wording, then copy it. Your changes aren't saved to the library.",
-      "promptLabel": "Prompt",
-      "copyPrompt": "Copy prompt",
-      "characters": "{count} characters",
-      "edited": "Edited",
-      "worksWellOn": "Works well on",
-      "aspectRatios": "Aspect ratios",
-      "tags": "Tags",
-      "englishOriginal": "Showing the English original. This prompt hasn't been translated yet."
-    },
-    "tiers": {
-      "free": "Free",
-      "premium": "Premium"
-    },
-    "categories": {
-      "portrait": "Portrait",
-      "headshot": "Headshot",
-      "business": "Business",
-      "fashion": "Fashion",
-      "lifestyle": "Lifestyle",
-      "cinematic": "Cinematic",
-      "travel": "Travel",
-      "nature": "Nature",
-      "fitness": "Fitness",
-      "automotive": "Automotive",
-      "editorial": "Editorial",
-      "fantasy": "Fantasy",
-      "sci-fi": "Sci-Fi",
-      "anime": "Anime",
-      "artistic": "Artistic"
-    },
-    "styles": {
-      "photorealistic": "Photorealistic",
-      "cinematic": "Cinematic",
-      "editorial": "Editorial",
-      "monochrome": "Monochrome",
-      "painterly": "Painterly",
-      "illustrated": "Illustrated",
-      "3d-render": "3D Render",
-      "anime": "Anime"
-    },
-    "ratios": {
-      "1:1": "1:1 Square",
-      "4:5": "4:5 Portrait",
-      "3:4": "3:4 Portrait",
-      "9:16": "9:16 Story",
-      "16:9": "16:9 Wide"
     }
   },
   "pages": {
@@ -688,18 +667,6 @@
     "submit": "Checkout",
     "submitting": "Redirecting…",
     "unavailable": "Checkout isn't available yet. Please email support to purchase."
-  },
-  "premiumGate": {
-    "title": "This is a premium prompt",
-    "descriptionCopy": "“{title}” is part of the premium library. Get premium access to copy it.",
-    "descriptionEdit": "“{title}” is part of the premium library. Get premium access to customise it.",
-    "cta": "Get premium access",
-    "notNow": "Not now",
-    "benefits": {
-      "unlockAll": "Unlock all 120+ premium prompts",
-      "unlockEdit": "Customise any prompt before you copy it",
-      "unlockUpdates": "Every prompt we add, included"
-    }
   },
   "components": {
     "metaTitle": "Components",
@@ -1258,9 +1225,15 @@
       "consulting": "Consulting",
       "education": "Education",
       "hardware": "Hardware",
-      "hospitality": "Hospitality"
+      "hospitality": "Hospitality",
+      "portfolio": "Portfolio"
     },
     "taglines": {
+      "noctis": "Cinematic photography portfolio on near-black with an amber accent, curtain-wipe image reveals and a scroll-scrubbed film-strip rail.",
+      "vesper": "Dark developer portfolio in indigo and violet glass, with a pointer-tracked spotlight, 3D-tilt project cards and magnetic buttons.",
+      "marfa": "Light editorial art-director portfolio in ivory and ink with a terracotta accent, parallax plates and text-mask reveals.",
+      "marlowe": "Single-page freelancer portfolio on near-black with a coral accent, drifting hero orbs, count-up stats, animated skill bars and a filterable work grid.",
+      "astra": "Light, bold single-page portfolio in warm off-white with a cobalt accent and star motifs, a bento work grid, a star marquee and count-up stats.",
       "nova": "Dark, glassy analytics SaaS with a gradient mesh hero and animated counters.",
       "saffron": "Warm, editorial fine dining in cream and forest green, with parallax plating and serif display type.",
       "pulse": "Calm, rounded clinic site in medical blue and mint, built to reassure.",
@@ -1923,7 +1896,7 @@
   "landing": {
     "meta": {
       "title": "ADYSRE: Design and ship in one workspace",
-      "description": "The workspace where product teams browse components, icons, palettes, gradients and prompts, then take them straight to production."
+      "description": "The workspace where product teams browse components, icons, palettes, gradients and templates, then take them straight to production."
     },
     "nav": {
       "pricing": "Pricing",
@@ -1933,14 +1906,15 @@
       "skip": "Skip to content",
       "menus": {
         "styles": "Styles",
-        "library": "Library"
+        "library": "Library",
+        "tools": "Tools"
       }
     },
     "hero": {
       "badge": "New: gradient and palette generators",
       "title": "Everything your team needs to design and ship",
       "titleAccent": "in one calm workspace",
-      "subtitle": "ADYSRE brings components, icons, palettes, gradients and prompts together, so your team can move from idea to production without switching tools.",
+      "subtitle": "ADYSRE brings components, icons, palettes, gradients and templates together, so your team can move from idea to production without switching tools.",
       "ctaComponents": "Explore components",
       "ctaPlayground": "Open the playground",
       "ctaWorkspace": "Open the workspace",
@@ -1978,10 +1952,6 @@
         "textures": {
           "title": "Textures",
           "desc": "Noise, grain, paper and woven surface textures in pure CSS. No image files."
-        },
-        "promptLibrary": {
-          "title": "Prompt library",
-          "desc": "A curated library of prompts across categories, tuned for the models your team already uses."
         },
         "templates": {
           "title": "Templates",
@@ -2043,7 +2013,6 @@
         "gradients": "Gradients",
         "patterns": "Patterns",
         "textures": "Textures",
-        "prompts": "Prompts",
         "teams": "Teams building"
       }
     },
@@ -2085,7 +2054,7 @@
       "items": {
         "what": {
           "q": "What is ADYSRE?",
-          "a": "A single workspace for design and build resources: components, icons, palettes, gradients and prompts, ready to copy into your product."
+          "a": "A single workspace for design and build resources: components, icons, palettes, gradients and templates, ready to copy into your product."
         },
         "frameworks": {
           "q": "Which frameworks do you support?",
@@ -2417,6 +2386,207 @@
       "loading": "Loading…",
       "empty": "No saved designs yet.",
       "unavailable": "Saved designs are unavailable because storage is not reachable. Your work is still saved on this device."
+    }
+  },
+  "websiteIntel": {
+    "meta": {
+      "title": "Website Intelligence",
+      "description": "Scan any public website for performance, SEO, accessibility, security and more, in one report."
+    },
+    "badge": "Website Intelligence",
+    "title": "Know exactly what is wrong with any website",
+    "subtitle": "Point it at any public URL and get one report across performance, SEO, accessibility, security, Core Web Vitals and more, backed by 500+ rules and no paid AI.",
+    "comingSoon": "In development",
+    "scan": {
+      "placeholder": "https://example.com",
+      "button": "Scan",
+      "note": "The scanning engine is in active development. This is a preview of the analyses it will run."
+    },
+    "stats": {
+      "analyses": "Analyses per scan",
+      "rules": "Rule-based checks",
+      "formats": "Export formats",
+      "paidAi": "Paid AI APIs"
+    },
+    "capabilitiesTitle": "Eleven analyses, one scan",
+    "capabilitiesSubtitle": "Every scan runs the full suite and rolls the findings into an overall score.",
+    "capabilities": {
+      "performance": {
+        "title": "Performance",
+        "desc": "Lighthouse-grade timing, render-blocking resources and the load waterfall."
+      },
+      "seo": {
+        "title": "SEO",
+        "desc": "Meta tags, headings, canonical, sitemap, structured data and social cards."
+      },
+      "accessibility": {
+        "title": "Accessibility",
+        "desc": "An axe-core audit of contrast, roles, labels and keyboard order."
+      },
+      "bestPractices": {
+        "title": "Best practices",
+        "desc": "Modern-web checks: doctype, console errors and deprecated APIs."
+      },
+      "security": {
+        "title": "Security",
+        "desc": "HTTPS, security headers, CSP, HSTS and cookie flags."
+      },
+      "webVitals": {
+        "title": "Core Web Vitals",
+        "desc": "LCP, CLS and INP measured against the field thresholds."
+      },
+      "technology": {
+        "title": "Technology detection",
+        "desc": "Frameworks, CMS, analytics and libraries in use."
+      },
+      "assets": {
+        "title": "Asset optimization",
+        "desc": "Image, CSS, JS and font weight, lazy-loading and compression."
+      },
+      "html": {
+        "title": "HTML structure",
+        "desc": "Document outline, landmarks, link health and markup validity."
+      },
+      "network": {
+        "title": "Network",
+        "desc": "DNS, TTFB, HTTP/2 and HTTP/3, caching and CDN."
+      },
+      "recommendations": {
+        "title": "AI recommendations",
+        "desc": "500+ rule-based fixes, ranked by impact and estimated savings."
+      },
+      "history": {
+        "title": "Historical comparison",
+        "desc": "Track every score over time and diff two scans."
+      }
+    },
+    "dashboardTitle": "A dashboard for every angle",
+    "dashboardSubtitle": "Ten sections, from an at-a-glance overview to a full recommendation timeline.",
+    "dashboard": {
+      "overview": "Overview",
+      "performance": "Performance",
+      "seo": "SEO",
+      "accessibility": "Accessibility",
+      "security": "Security",
+      "assets": "Assets",
+      "network": "Network",
+      "technologies": "Technologies",
+      "recommendations": "Recommendations",
+      "timeline": "Timeline"
+    },
+    "reportsTitle": "Export any report",
+    "reportsSubtitle": "Take the findings anywhere, in the format your workflow expects.",
+    "reportsEmpty": "Run a scan above and its report exports here in any format.",
+    "stackTitle": "Built on a production stack",
+    "stack": {
+      "frontend": "Frontend",
+      "backend": "Backend",
+      "scanning": "Scanning",
+      "infra": "Queue & infra"
+    },
+    "home": {
+      "cta": "Explore the platform",
+      "secondary": "See what it scans",
+      "moreFindings": "See all {count} findings in the full report"
+    },
+    "console": {
+      "label": "Scan a website",
+      "scanning": "Scanning…",
+      "overall": "Overall score",
+      "technologiesTitle": "Technologies detected",
+      "noTechnologies": "No known technologies detected.",
+      "findingsTitle": "Recommendations",
+      "noFindings": "No issues found in this pass. Nice.",
+      "scannedIn": "Scanned in {ms} ms",
+      "browserNote": "Performance, accessibility and Core Web Vitals need the browser engine, which is a later phase.",
+      "categories": {
+        "seo": "SEO",
+        "security": "Security",
+        "html": "HTML",
+        "assets": "Assets",
+        "bestPractices": "Best practices",
+        "accessibility": "Accessibility",
+        "performance": "Performance"
+      },
+      "severity": {
+        "critical": "Critical",
+        "serious": "Serious",
+        "moderate": "Moderate",
+        "minor": "Minor",
+        "info": "Info"
+      },
+      "errors": {
+        "generic": "Something went wrong. Please try again.",
+        "url_required": "Enter a URL to scan.",
+        "url_invalid": "That is not a valid URL.",
+        "url_scheme": "Only http and https URLs can be scanned.",
+        "url_hostname": "Enter a full domain, e.g. example.com.",
+        "url_blocked": "That address is not allowed.",
+        "url_too_long": "That URL is too long.",
+        "timeout": "The site took too long to respond.",
+        "unreachable": "The site could not be reached.",
+        "too_many_redirects": "The site redirected too many times.",
+        "bad_redirect": "The site sent an invalid redirect.",
+        "rate_limited": "Too many scans. Try again in a minute.",
+        "bad_json": "The request could not be read.",
+        "server_error": "The scan failed unexpectedly."
+      },
+      "history": {
+        "title": "Recent scans",
+        "empty": "No scans yet. Run one above.",
+        "view": "View",
+        "vsPrevious": "vs previous scan",
+        "fixed": "{count} fixed",
+        "appeared": "{count} new"
+      },
+      "webVitalsTitle": "Core Web Vitals",
+      "export": "Export"
+    },
+    "report": {
+      "title": "Website Intelligence report",
+      "print": "Save as PDF",
+      "scanned": "Scanned {date}",
+      "generatedBy": "Generated by ADYSRE Website Intelligence",
+      "notFound": "That scan was not found."
+    },
+    "schedule": {
+      "title": "Scheduled scans",
+      "subtitle": "Rescan a URL automatically and keep its history growing.",
+      "urlPlaceholder": "https://example.com",
+      "add": "Schedule",
+      "runDue": "Run due now",
+      "empty": "No schedules yet.",
+      "next": "Next",
+      "delete": "Delete",
+      "ranNone": "Nothing was due.",
+      "ranSome": "Ran {count}.",
+      "cadences": {
+        "hourly": "Hourly",
+        "daily": "Daily",
+        "weekly": "Weekly"
+      }
+    },
+    "notify": {
+      "title": "Notifications",
+      "subtitle": "Get told when a scheduled scan finishes, via webhook, Slack or Discord.",
+      "targetPlaceholder": "https://hooks.slack.com/... or you@company.com",
+      "add": "Add channel",
+      "empty": "No channels yet.",
+      "delete": "Delete",
+      "test": "Test",
+      "testOk": "Delivered.",
+      "testFail": "Not delivered.",
+      "emailNote": "Email delivery needs a provider and is not sent yet; the channel is saved.",
+      "types": {
+        "webhook": "Webhook",
+        "slack": "Slack",
+        "discord": "Discord",
+        "email": "Email"
+      }
+    },
+    "tabs": {
+      "website": "Website Scan",
+      "seo": "SEO Audit"
     }
   }
 }

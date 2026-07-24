@@ -44,7 +44,7 @@ export function SidebarBrand() {
  * `NAV_ITEMS` stays in declaration order because `APP_HOME` (and the marketing
  * links that point at it) is defined as its first entry.
  *
- * Modules that expose a submenu (components, prompts, icons, gradients,
+ * Modules that expose a submenu (components, icons, gradients,
  * palettes) render as expandable dropdowns whose items are the categories/tags
  * that used to sit as filter chips on the page. Each item links to the module
  * with a `?category=` / `?tag=` query the page reads, so choosing a filter is a
@@ -110,7 +110,6 @@ function SidebarNavInner({
   const tCommon = useTranslations('common');
   const tComponents = useTranslations('components');
   const tIcons = useTranslations('icons');
-  const tPrompts = useTranslations('promptLibrary');
 
   // One collator for the whole tree: `localeCompare` rebuilds the collation
   // table on every call, and the submenus sort a few hundred labels between
@@ -142,7 +141,7 @@ function SidebarNavInner({
   /** Resolve a filter value to its sidebar label. */
   function resolveLabel(mode: LabelMode, value: string): string {
     if (mode === 'humanize') return humanizeKey(value);
-    const translate = mode.ns === 'components' ? tComponents : mode.ns === 'icons' ? tIcons : tPrompts;
+    const translate = mode.ns === 'components' ? tComponents : tIcons;
     const key = `${mode.prefix}${value}`;
     return translate.has(key) ? translate(key) : humanizeKey(value);
   }

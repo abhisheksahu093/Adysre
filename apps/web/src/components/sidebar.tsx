@@ -5,7 +5,8 @@ import { PanelLeftClose, PanelLeftOpen } from 'lucide-react';
 import { cn } from 'adysre';
 import { useAppShellStore } from '@/stores/app-shell-store';
 import { SidebarBrand, SidebarNav } from './sidebar-nav';
-import { PromoCard } from './promo-card';
+// Promo card temporarily hidden (see below).
+// import { PromoCard } from './promo-card';
 
 /**
  * Persistent sidebar (UI_DESIGN_SYSTEM.md). Desktop only - below `md` the
@@ -49,12 +50,14 @@ export function Sidebar() {
         </div>
       )}
 
-      {/* SidebarNav takes flex-1 and scrolls, so the promo stays pinned to the
+      {/* SidebarNav takes flex-1 and scrolls, so the footer stays pinned to the
           bottom no matter how many nav items exist. */}
       <SidebarNav collapsed={collapsed} />
-      {/* The upsell is all copy and artwork; there is nothing of it to show in a
-          4rem rail, so it steps aside rather than being squeezed. */}
-      {!collapsed && <PromoCard />}
+      {/* Promo card hidden for now; pinned copyright takes the bottom slot. */}
+      {/* {!collapsed && <PromoCard />} */}
+      <div className="shrink-0 border-t border-border px-4 py-3 text-center text-[11px] text-muted-foreground">
+        {collapsed ? '©' : `© ${new Date().getFullYear()} Adysre. All rights reserved.`}
+      </div>
     </aside>
   );
 }

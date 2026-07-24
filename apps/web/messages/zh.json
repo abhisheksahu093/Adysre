@@ -73,7 +73,6 @@
   },
   "nav": {
     "dashboard": "仪表板",
-    "promptLibrary": "提示词库",
     "components": "组件",
     "designPlayground": "设计工作台",
     "templates": "模板",
@@ -82,7 +81,6 @@
     "openMenu": "打开导航菜单",
     "closeMenu": "关闭导航菜单",
     "descriptions": {
-      "promptLibrary": "浏览、调整并复制适用于你的工作区的提示词。",
       "components": "浏览所有模块均可使用的构建模块。",
       "templates": "从现成布局开始，无需从空白页起步。",
       "settings": "管理你的组织、成员与偏好设置。",
@@ -91,7 +89,13 @@
       "patterns": "浏览、编辑并导出 CSS 背景图案，或自己生成。",
       "textures": "浏览、编辑并导出 CSS 表面纹理，或自己生成。",
       "icons": "浏览、自定义并以任意格式或尺寸导出原创 SVG 图标。",
-      "designPlayground": "在无限画布上设计页面、仪表板和图形，无需编写代码。"
+      "designPlayground": "在无限画布上设计页面、仪表板和图形，无需编写代码。",
+      "websiteIntelligence": "扫描任意公开网站的性能、SEO、无障碍、安全等各项指标。",
+      "qrCode": "为链接、WiFi、联系人、支付等生成可自定义的二维码。",
+      "barcode": "通过实时预览和 PNG/SVG 导出生成 EAN、UPC、Code 128 和 Code 39 条形码。",
+      "documents": "通过实时预览、模板和 PDF 导出创建发票、报价单、收据和工资单。",
+      "resume": "将简历与职位描述比对，生成 ATS 分数，含关键词与技能匹配。",
+      "codes": "在一个页面上生成二维码和条形码（EAN、UPC、Code 128），支持实时预览和 PNG/SVG 导出。"
     },
     "palettes": "调色板",
     "gradients": "渐变",
@@ -113,7 +117,63 @@
     "collapseSection": "收起{label}",
     "viewAll": "全部{label}",
     "collapseSidebar": "收起侧边栏",
-    "expandSidebar": "展开侧边栏"
+    "expandSidebar": "展开侧边栏",
+    "websiteIntelligence": "网站智能分析",
+    "qrCode": "二维码生成器",
+    "barcode": "条形码生成器",
+    "documents": "单据生成器",
+    "resume": "简历与 ATS",
+    "codes": "代码生成器"
+  },
+  "tools": {
+    "qr": {
+      "badge": "工具",
+      "title": "二维码生成器",
+      "subtitle": "为链接、WiFi、联系人、活动和支付创建可自定义的二维码, 实时设计并导出为 PNG 或 SVG，全部在浏览器中完成。"
+    },
+    "invoice": {
+      "badge": "工具",
+      "title": "发票与单据生成器",
+      "subtitle": "通过实时预览、精美模板和一键打印为 PDF，创建发票、报价单、收据和订单, 还支持 JSON/CSV 导出和 CSV 导入，全部离线完成。"
+    },
+    "barcode": {
+      "badge": "工具",
+      "title": "条形码生成器",
+      "subtitle": "生成可扫描的 EAN-13、EAN-8、UPC-A、ITF-14、Code 128 和 Code 39 条形码, 自动计算校验位，实时设计并导出为 PNG 或 SVG，全部在浏览器中完成。"
+    },
+    "salary": {
+      "badge": "工具",
+      "title": "工资单生成器",
+      "subtitle": "创建包含员工信息、收入与扣除明细以及自动计算实发工资的专业工资单。实时预览并打印为 PDF，全部离线完成。"
+    },
+    "documents": {
+      "badge": "工具",
+      "title": "单据生成器",
+      "subtitle": "通过实时预览、精美模板和打印为 PDF，创建发票、报价单、收据和工资单，全部离线完成。",
+      "tabs": {
+        "invoice": "发票",
+        "salary": "工资单",
+        "signature": "邮件签名"
+      }
+    },
+    "resume": {
+      "badge": "工具",
+      "title": "简历与 ATS",
+      "subtitle": "根据职位描述扫描简历以获得基于规则的 ATS 评分，或使用实时模板创建可打印的简历。无 AI，完全在您的浏览器中处理。",
+      "tabs": {
+        "scanner": "ATS 扫描器",
+        "builder": "简历生成器"
+      }
+    },
+    "codes": {
+      "badge": "工具",
+      "title": "代码生成器",
+      "subtitle": "在一个页面上创建二维码和条形码。为链接、WiFi、联系人和支付设计二维码，或创建可扫描的 EAN、UPC、Code 128 或 Code 39 条形码，全部在您的浏览器中实时预览并导出为 PNG 或 SVG。",
+      "tabs": {
+        "qr": "二维码",
+        "barcode": "条形码"
+      }
+    }
   },
   "topbar": {
     "searchPlaceholder": "搜索或快速跳转…",
@@ -262,87 +322,6 @@
       "thisWeek": "本周",
       "last24h": "近 24 小时",
       "files": "个文件"
-    }
-  },
-  "promptLibrary": {
-    "searchPlaceholder": "按标题、标签或关键词搜索…",
-    "searchLabel": "搜索提示词",
-    "collections": {
-      "all": "全部",
-      "featured": "精选",
-      "trending": "热门",
-      "new": "最新"
-    },
-    "filters": {
-      "collection": "合集",
-      "category": "分类",
-      "allCategories": "全部分类",
-      "allTiers": "全部等级",
-      "allModels": "全部模型",
-      "allRatios": "全部比例",
-      "byTier": "按等级筛选",
-      "byModel": "按模型筛选",
-      "byRatio": "按画面比例筛选"
-    },
-    "count": "{count, plural, other {# 个提示词}}",
-    "countFiltered": "{total} 个提示词中的 {count} 个",
-    "empty": {
-      "title": "没有符合筛选条件的提示词",
-      "description": "换个关键词搜索，或清除筛选条件。"
-    },
-    "card": {
-      "editAria": "编辑 {title}",
-      "searchTag": "搜索 {tag}",
-      "lockedAria": "高级提示词：开通高级版后才能使用“{title}”"
-    },
-    "dialog": {
-      "description": "调整措辞后再复制。你的改动不会保存到提示词库。",
-      "promptLabel": "提示词",
-      "copyPrompt": "复制提示词",
-      "characters": "{count} 个字符",
-      "edited": "已编辑",
-      "worksWellOn": "适用模型",
-      "aspectRatios": "画面比例",
-      "tags": "标签",
-      "englishOriginal": "当前显示英文原文 -- 该提示词尚未翻译。"
-    },
-    "tiers": {
-      "free": "免费",
-      "premium": "高级"
-    },
-    "categories": {
-      "portrait": "人像",
-      "headshot": "头像",
-      "business": "商务",
-      "fashion": "时尚",
-      "lifestyle": "生活方式",
-      "cinematic": "电影感",
-      "travel": "旅行",
-      "nature": "自然",
-      "fitness": "健身",
-      "automotive": "汽车",
-      "editorial": "杂志大片",
-      "fantasy": "奇幻",
-      "sci-fi": "科幻",
-      "anime": "动漫",
-      "artistic": "艺术"
-    },
-    "styles": {
-      "photorealistic": "写实摄影",
-      "cinematic": "电影感",
-      "editorial": "杂志大片",
-      "monochrome": "黑白",
-      "painterly": "绘画感",
-      "illustrated": "插画",
-      "3d-render": "3D 渲染",
-      "anime": "动漫"
-    },
-    "ratios": {
-      "1:1": "1:1 方形",
-      "4:5": "4:5 竖版",
-      "3:4": "3:4 竖版",
-      "9:16": "9:16 竖屏",
-      "16:9": "16:9 宽屏"
     }
   },
   "pages": {
@@ -688,18 +667,6 @@
     "submit": "去结算",
     "submitting": "正在跳转…",
     "unavailable": "结算功能尚未开放，如需购买请联系支持团队。"
-  },
-  "premiumGate": {
-    "title": "这是高级提示词",
-    "descriptionCopy": "“{title}”属于高级提示词库。开通高级版后即可复制。",
-    "descriptionEdit": "“{title}”属于高级提示词库。开通高级版后即可调整。",
-    "cta": "获取高级版",
-    "notNow": "暂不",
-    "benefits": {
-      "unlockAll": "解锁全部 120+ 条高级提示词",
-      "unlockEdit": "复制前可随意调整任意提示词",
-      "unlockUpdates": "后续新增的提示词全部包含"
-    }
   },
   "components": {
     "metaTitle": "组件",
@@ -1258,9 +1225,15 @@
       "consulting": "咨询",
       "education": "教育",
       "hardware": "硬件",
-      "hospitality": "住宿"
+      "hospitality": "住宿",
+      "portfolio": "作品集"
     },
     "taglines": {
+      "noctis": "近黑背景上的电影感摄影作品集，配以琥珀色点缀、幕帘式图像揭示，以及随滚动移动的胶片轨道。",
+      "vesper": "靛蓝与紫罗兰玻璃质感的深色开发者作品集，配以随指针移动的聚光、3D 倾斜项目卡片与磁吸按钮。",
+      "marfa": "象牙白与墨黑的浅色编辑风艺术总监作品集，配以陶土色点缀、视差版面与文字遮罩揭示。",
+      "marlowe": "近黑背景的单页自由职业者作品集，配以珊瑚色点缀、漂浮的英雄光球、数字滚动统计、动态技能条与可筛选的作品网格。",
+      "astra": "暖调米白背景上明亮、粗体的单页作品集，配以钴蓝点缀与星形元素、便当式作品网格、星形跑马灯与数字滚动统计。",
       "nova": "深色玻璃质感的分析 SaaS，配渐变网格主视觉与动态计数器。",
       "saffron": "奶油色与森林绿的温暖编辑风高级餐饮，配视差摆盘与衬线标题字体。",
       "pulse": "医疗蓝与薄荷绿的平静圆润诊所网站，以令人安心为设计目标。",
@@ -1923,7 +1896,7 @@
   "landing": {
     "meta": {
       "title": "ADYSRE：在同一工作区里设计并交付",
-      "description": "让产品团队在同一处浏览组件、图标、调色板、渐变和提示词，并直接带到生产环境的工作区。"
+      "description": "让产品团队在同一处浏览组件、图标、调色板、渐变和模板，并直接带到生产环境的工作区。"
     },
     "nav": {
       "pricing": "价格",
@@ -1933,14 +1906,15 @@
       "skip": "跳到内容",
       "menus": {
         "styles": "样式",
-        "library": "资源库"
+        "library": "资源库",
+        "tools": "工具"
       }
     },
     "hero": {
       "badge": "新功能：渐变与调色板生成器",
       "title": "团队设计与交付所需的一切",
       "titleAccent": "都在一个从容的工作区里",
-      "subtitle": "ADYSRE 将组件、图标、调色板、渐变和提示词汇聚一处，让团队无需切换工具，就能从想法走到生产。",
+      "subtitle": "ADYSRE 将组件、图标、调色板、渐变和模板汇聚一处，让团队无需切换工具，就能从想法走到生产。",
       "ctaComponents": "浏览组件",
       "ctaPlayground": "打开设计工作台",
       "ctaWorkspace": "打开工作区",
@@ -1978,10 +1952,6 @@
         "textures": {
           "title": "纹理",
           "desc": "纯 CSS 的噪点、颗粒、纸张和织物表面纹理，无需图片文件。"
-        },
-        "promptLibrary": {
-          "title": "提示词库",
-          "desc": "按类别精选的提示词库，为团队所用的模型做过调校。"
         },
         "templates": {
           "title": "模板",
@@ -2043,7 +2013,6 @@
         "gradients": "渐变",
         "patterns": "图案",
         "textures": "纹理",
-        "prompts": "提示词",
         "teams": "在建团队"
       }
     },
@@ -2085,7 +2054,7 @@
       "items": {
         "what": {
           "q": "ADYSRE 是什么？",
-          "a": "一个集设计与开发资源于一体的工作区：组件、图标、调色板、渐变和提示词，随时复制进你的产品。"
+          "a": "一个集设计与开发资源于一体的工作区：组件、图标、调色板、渐变和模板，随时复制进你的产品。"
         },
         "frameworks": {
           "q": "支持哪些框架？",
@@ -2417,6 +2386,207 @@
       "loading": "加载中…",
       "empty": "还没有已保存的设计。",
       "unavailable": "无法显示已保存的设计，存储不可用。你的工作仍保存在此设备上。"
+    }
+  },
+  "websiteIntel": {
+    "meta": {
+      "title": "网站智能分析",
+      "description": "在一份报告中扫描任意公开网站的性能、SEO、无障碍、安全等各项指标。"
+    },
+    "badge": "网站智能分析",
+    "title": "精准掌握任意网站的问题所在",
+    "subtitle": "指向任意公开网址，即可获得一份涵盖性能、SEO、无障碍、安全、Core Web Vitals 等的报告——由 500+ 条规则驱动，且无需任何付费 AI。",
+    "comingSoon": "开发中",
+    "scan": {
+      "placeholder": "https://example.com",
+      "button": "扫描",
+      "note": "扫描引擎正在积极开发中。这里是它将运行的分析项预览。"
+    },
+    "stats": {
+      "analyses": "每次扫描的分析项",
+      "rules": "规则检查",
+      "formats": "导出格式",
+      "paidAi": "付费 AI 接口"
+    },
+    "capabilitiesTitle": "十一项分析，一次扫描",
+    "capabilitiesSubtitle": "每次扫描都运行全部项目，并将结果汇总为总体评分。",
+    "capabilities": {
+      "performance": {
+        "title": "性能",
+        "desc": "Lighthouse 级的加载时序、阻塞渲染的资源与加载瀑布。"
+      },
+      "seo": {
+        "title": "SEO",
+        "desc": "元标签、标题、canonical、站点地图、结构化数据与社交卡片。"
+      },
+      "accessibility": {
+        "title": "无障碍",
+        "desc": "使用 axe-core 审查对比度、角色、标签与键盘顺序。"
+      },
+      "bestPractices": {
+        "title": "最佳实践",
+        "desc": "现代 Web 检查：doctype、控制台错误与已弃用 API。"
+      },
+      "security": {
+        "title": "安全",
+        "desc": "HTTPS、安全响应头、CSP、HSTS 与 Cookie 标记。"
+      },
+      "webVitals": {
+        "title": "Core Web Vitals",
+        "desc": "对照现场阈值测量的 LCP、CLS 与 INP。"
+      },
+      "technology": {
+        "title": "技术识别",
+        "desc": "所用的框架、CMS、分析工具与库。"
+      },
+      "assets": {
+        "title": "资源优化",
+        "desc": "图片、CSS、JS 与字体体积、懒加载与压缩。"
+      },
+      "html": {
+        "title": "HTML 结构",
+        "desc": "文档大纲、地标、链接健康度与标记有效性。"
+      },
+      "network": {
+        "title": "网络",
+        "desc": "DNS、TTFB、HTTP/2 与 HTTP/3、缓存与 CDN。"
+      },
+      "recommendations": {
+        "title": "AI 建议",
+        "desc": "按影响与预估收益排序的 500+ 条规则化修复。"
+      },
+      "history": {
+        "title": "历史对比",
+        "desc": "追踪每项评分的变化，并对比两次扫描。"
+      }
+    },
+    "dashboardTitle": "面面俱到的仪表盘",
+    "dashboardSubtitle": "十个板块，从一目了然的概览到完整的建议时间线。",
+    "dashboard": {
+      "overview": "概览",
+      "performance": "性能",
+      "seo": "SEO",
+      "accessibility": "无障碍",
+      "security": "安全",
+      "assets": "资源",
+      "network": "网络",
+      "technologies": "技术",
+      "recommendations": "建议",
+      "timeline": "时间线"
+    },
+    "reportsTitle": "导出任意报告",
+    "reportsSubtitle": "以你工作流所需的格式，把结果带到任何地方。",
+    "reportsEmpty": "在上方运行一次扫描，其报告即可在此以任意格式导出。",
+    "stackTitle": "基于生产级技术栈构建",
+    "stack": {
+      "frontend": "前端",
+      "backend": "后端",
+      "scanning": "扫描",
+      "infra": "队列与基础设施"
+    },
+    "home": {
+      "cta": "进入平台",
+      "secondary": "查看扫描内容",
+      "moreFindings": "在完整报告中查看全部 {count} 项发现"
+    },
+    "console": {
+      "label": "扫描网站",
+      "scanning": "扫描中…",
+      "overall": "总体评分",
+      "technologiesTitle": "检测到的技术",
+      "noTechnologies": "未检测到已知技术。",
+      "findingsTitle": "改进建议",
+      "noFindings": "本次未发现问题，很好。",
+      "scannedIn": "用时 {ms} ms",
+      "browserNote": "性能、无障碍与 Core Web Vitals 需要浏览器引擎，将在后续阶段提供。",
+      "categories": {
+        "seo": "SEO",
+        "security": "安全",
+        "html": "HTML",
+        "assets": "资源",
+        "bestPractices": "最佳实践",
+        "accessibility": "无障碍",
+        "performance": "性能"
+      },
+      "severity": {
+        "critical": "严重",
+        "serious": "重要",
+        "moderate": "中等",
+        "minor": "轻微",
+        "info": "信息"
+      },
+      "errors": {
+        "generic": "出了点问题，请重试。",
+        "url_required": "请输入要扫描的网址。",
+        "url_invalid": "这不是有效的网址。",
+        "url_scheme": "仅可扫描 http 与 https 网址。",
+        "url_hostname": "请输入完整域名，例如 example.com。",
+        "url_blocked": "该地址不被允许。",
+        "url_too_long": "该网址过长。",
+        "timeout": "站点响应超时。",
+        "unreachable": "无法访问该站点。",
+        "too_many_redirects": "站点重定向次数过多。",
+        "bad_redirect": "站点返回了无效的重定向。",
+        "rate_limited": "扫描过于频繁，请一分钟后再试。",
+        "bad_json": "无法读取请求。",
+        "server_error": "扫描意外失败。"
+      },
+      "history": {
+        "title": "最近的扫描",
+        "empty": "还没有扫描，请在上方运行一次。",
+        "view": "查看",
+        "vsPrevious": "与上次扫描相比",
+        "fixed": "已修复 {count} 项",
+        "appeared": "新增 {count} 项"
+      },
+      "webVitalsTitle": "Core Web Vitals",
+      "export": "导出"
+    },
+    "report": {
+      "title": "网站智能分析报告",
+      "print": "保存为 PDF",
+      "scanned": "扫描于 {date}",
+      "generatedBy": "由 ADYSRE Website Intelligence 生成",
+      "notFound": "未找到该扫描。"
+    },
+    "schedule": {
+      "title": "计划扫描",
+      "subtitle": "自动重新扫描某个网址，持续积累其历史。",
+      "urlPlaceholder": "https://example.com",
+      "add": "计划",
+      "runDue": "运行到期项",
+      "empty": "还没有计划。",
+      "next": "下次",
+      "delete": "删除",
+      "ranNone": "没有到期的项。",
+      "ranSome": "已运行 {count} 项。",
+      "cadences": {
+        "hourly": "每小时",
+        "daily": "每天",
+        "weekly": "每周"
+      }
+    },
+    "notify": {
+      "title": "通知",
+      "subtitle": "当计划扫描完成时，通过 Webhook、Slack 或 Discord 收到提醒。",
+      "targetPlaceholder": "https://hooks.slack.com/... 或 you@company.com",
+      "add": "添加渠道",
+      "empty": "还没有渠道。",
+      "delete": "删除",
+      "test": "测试",
+      "testOk": "已送达。",
+      "testFail": "未送达。",
+      "emailNote": "邮件发送需要服务商，目前尚未发送；渠道已保存。",
+      "types": {
+        "webhook": "Webhook",
+        "slack": "Slack",
+        "discord": "Discord",
+        "email": "邮件"
+      }
+    },
+    "tabs": {
+      "website": "网站扫描",
+      "seo": "SEO 审计"
     }
   }
 }

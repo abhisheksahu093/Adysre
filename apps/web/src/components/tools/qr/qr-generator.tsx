@@ -164,7 +164,9 @@ export function QrGenerator() {
   return (
     <div className="grid gap-8 lg:grid-cols-[1fr_22rem]">
       {/* ── Left: content + design ─────────────────────────────────────────── */}
-      <div className="space-y-8">
+      {/* `relative` contains the sr-only logo input (absolute); otherwise it
+          escapes to <html> and adds a stray body scroll. */}
+      <div className="relative space-y-8">
         {/* Category tabs */}
         <div className="flex flex-wrap gap-2" role="tablist" aria-label="QR category">
           {QR_CATEGORIES.map((id) => (

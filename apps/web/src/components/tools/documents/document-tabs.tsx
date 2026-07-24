@@ -26,8 +26,8 @@ export function DocumentTabs() {
   const [active, setActive] = useState<TabId>('invoice');
 
   return (
-    <div className="flex min-h-0 flex-1 flex-col gap-5">
-      <div role="tablist" aria-label={t('title')} className="flex shrink-0 gap-1 border-b border-border">
+    <div className="flex flex-col gap-5 lg:grid lg:min-h-0 lg:grid-rows-[auto_minmax(0,1fr)]">
+      <div role="tablist" aria-label={t('title')} className="flex gap-1 border-b border-border">
         {TABS.map(({ id, icon: Icon }) => (
           <button
             key={id}
@@ -48,7 +48,7 @@ export function DocumentTabs() {
         ))}
       </div>
 
-      <div className="flex min-h-0 flex-1">
+      <div className="lg:min-h-0">
         {active === 'invoice' ? <InvoiceGenerator /> : <SalaryGenerator />}
       </div>
     </div>

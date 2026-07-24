@@ -28,8 +28,8 @@ export default async function DocumentsPage({
   const t = await getTranslations({ locale, namespace: 'tools.documents' });
 
   return (
-    <div className="mx-auto flex max-w-7xl flex-col gap-6 py-4 sm:py-6 lg:h-[calc(100dvh-6.5rem)]">
-      <header className="shrink-0 space-y-3">
+    <div className="mx-auto flex max-w-7xl flex-col gap-6 py-4 sm:py-6 lg:grid lg:h-full lg:min-h-0 lg:grid-rows-[auto_minmax(0,1fr)]">
+      <header className="space-y-3">
         <span className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-3 py-1 text-xs font-medium text-muted-foreground">
           <FileText className="h-3.5 w-3.5 text-primary" aria-hidden />
           {t('badge')}

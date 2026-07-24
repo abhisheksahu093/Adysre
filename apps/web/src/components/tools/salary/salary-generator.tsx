@@ -60,11 +60,13 @@ export function SalaryGenerator() {
 }`;
 
   return (
-    <div className="flex flex-col gap-8 lg:min-h-0 lg:flex-1 lg:flex-row">
+    <div className="flex flex-col gap-8 lg:grid lg:h-full lg:min-h-0 lg:grid-cols-[24rem_1fr] lg:gap-8">
       <style dangerouslySetInnerHTML={{ __html: pageCss }} />
 
-      {/* Editor: internal scroll on desktop so the page never grows. */}
-      <div className="space-y-6 lg:w-[24rem] lg:shrink-0 lg:min-h-0 lg:overflow-y-auto lg:pr-2">
+      {/* Editor: internal scroll on desktop so the page never grows. `relative`
+          contains the sr-only file inputs (absolute) so they don't escape the
+          overflow and stretch the document. */}
+      <div className="relative space-y-6 lg:min-h-0 lg:overflow-y-auto lg:pr-2">
         <Panel title="Payslip">
           <div className="grid grid-cols-2 gap-3">
             <Field label="Company" value={slip.company} onChange={(v) => update({ company: v })} className="col-span-2" />
@@ -147,7 +149,7 @@ export function SalaryGenerator() {
       </div>
 
       {/* Preview + actions */}
-      <div className="space-y-4 lg:min-h-0 lg:flex-1 lg:overflow-y-auto">
+      <div className="relative space-y-4 lg:min-h-0 lg:overflow-y-auto">
         <div className="flex flex-wrap gap-2">
           <Button type="button" size="sm" onClick={() => window.print()}>
             <Printer className="mr-1.5 h-3.5 w-3.5" aria-hidden />

@@ -84,12 +84,14 @@ export function InvoiceGenerator() {
 }`;
 
   return (
-    <div className="flex flex-col gap-8 lg:min-h-0 lg:flex-1 lg:flex-row">
+    <div className="flex flex-col gap-8 lg:grid lg:h-full lg:min-h-0 lg:grid-cols-[24rem_1fr] lg:gap-8">
       <style dangerouslySetInnerHTML={{ __html: pageCss }} />
 
-      {/* Editor: fixed-width column that scrolls internally on desktop, so a long
-          form never grows the page and leaves dead space beside the preview. */}
-      <div className="space-y-6 lg:w-[24rem] lg:shrink-0 lg:min-h-0 lg:overflow-y-auto lg:pr-2">
+      {/* Editor: scrolls internally on desktop so a long form never grows the
+          page. `relative` makes it the containing block for the sr-only file
+          inputs (absolute); without it they escape the overflow and stretch the
+          whole document. The grid cell gives it a definite height. */}
+      <div className="relative space-y-6 lg:min-h-0 lg:overflow-y-auto lg:pr-2">
         {/* Document setup */}
         <Panel title="Document">
           <div className="grid grid-cols-2 gap-3">
@@ -127,11 +129,20 @@ export function InvoiceGenerator() {
               <option value="landscape">Landscape</option>
             </FieldSelect>
           </div>
-          <label className="mt-3 inline-flex cursor-pointer items-center gap-2 rounded-lg border border-border bg-background px-3 py-2 text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground">
-            <ImagePlus className="h-4 w-4" aria-hidden />
-            {doc.logo ? 'Replace logo' : 'Upload logo'}
-            <input type="file" accept="image/*" className="sr-only" onChange={onLogo} />
-          </label>
+          <div className="mt-3 flex flex-wrap items-center gap-2">
+            <label className="inline-flex cursor-pointer items-center gap-2 rounded-lg border border-border bg-background px-3 py-2 text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground">
+              <ImagePlus className="h-4 w-4" aria-hidden />
+              {doc.logo ? 'Replace logo' : 'Upload logo'}
+              <input type="file" accept="image/*" className="sr-only" onChange={onLogo} />
+            </label>
+            {doc.logo && (
+              <Button type="button" variant="outline" size="sm" onClick={() => update({ logo: null })}>
+                <Trash2 className="mr-1.5 h-3.5 w-3.5" aria-hidden />
+                Remove logo
+              </Button>
+            )}
+          </div>
+          <p className="text-xs text-muted-foreground">The logo sits with the company name. Keep either or both.</p>
         </Panel>
 
         <Panel title="From (your company)">
@@ -231,7 +242,7 @@ export function InvoiceGenerator() {
       </div>
 
       {/* Preview: fills the rest and scrolls the paper independently. */}
-      <div className="space-y-4 lg:min-h-0 lg:flex-1 lg:overflow-y-auto">
+      <div className="relative space-y-4 lg:min-h-0 lg:overflow-y-auto">
         <div className="flex flex-wrap gap-2">
           <Button type="button" size="sm" onClick={() => window.print()}>
             <Printer className="mr-1.5 h-3.5 w-3.5" aria-hidden />

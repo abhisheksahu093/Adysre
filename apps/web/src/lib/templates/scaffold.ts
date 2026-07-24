@@ -21,6 +21,51 @@ const CONTENT_TYPES_NOTE = `/*
  */
 `;
 
+/**
+ * Runtime packages a template may import, with the version a download pins.
+ *
+ * Adding a library to a template means adding it here once; which templates get
+ * it is worked out from their source, not declared twice.
+ */
+const KNOWN_DEPENDENCIES: Record<string, string> = {
+  'framer-motion': '^12.0.0',
+  'lucide-react': '^0.451.0',
+  animejs: '^4.5.0',
+};
+
+/**
+ * The third-party packages THIS template actually imports.
+ *
+ * Read from the template's own source rather than declared on the entry,
+ * because a declared list is a second source of truth that silently rots: a
+ * section starts importing something, nobody updates the manifest, and the
+ * download fails at `npm install` for the one person who tried it. Scanning is
+ * always right by construction.
+ *
+ * React itself is always present and is added by the target's package builder.
+ */
+function templateDependencies(slug: string): Record<string, string> {
+  const files = TEMPLATE_SOURCES[slug] ?? {};
+  const found = new Set<string>();
+
+  for (const [path, source] of Object.entries(files)) {
+    if (!path.endsWith('.tsx') && !path.endsWith('.ts')) continue;
+    for (const match of source.matchAll(/(?:from|import)\s*['"]([^'".][^'"]*)['"]/g)) {
+      const specifier = match[1];
+      if (!specifier) continue;
+      // `animejs/svg` and the like still resolve to the root package.
+      const pkg = specifier.startsWith('@')
+        ? specifier.split('/').slice(0, 2).join('/')
+        : (specifier.split('/')[0] ?? '');
+      if (KNOWN_DEPENDENCIES[pkg]) found.add(pkg);
+    }
+  }
+
+  return Object.fromEntries(
+    [...found].sort().map((pkg) => [pkg, KNOWN_DEPENDENCIES[pkg] as string]),
+  );
+}
+
 /** Rewrite repo-internal aliases to the paths used inside the download. */
 function rewriteImports(source: string, prefix: string): string {
   return source
@@ -90,7 +135,7 @@ Yours to use in personal and commercial projects.
 }
 
 /** package.json for the Next.js target. */
-const NEXT_PACKAGE = (name: string) =>
+const NEXT_PACKAGE = (name: string, deps: Record<string, string>) =>
   JSON.stringify(
     {
       name,
@@ -101,8 +146,7 @@ const NEXT_PACKAGE = (name: string) =>
         next: '^15.0.0',
         react: '^19.0.0',
         'react-dom': '^19.0.0',
-        'framer-motion': '^12.0.0',
-        'lucide-react': '^0.451.0',
+        ...deps,
       },
       devDependencies: {
         '@types/node': '^22.0.0',
@@ -117,7 +161,7 @@ const NEXT_PACKAGE = (name: string) =>
     2,
   ) + '\n';
 
-const VITE_PACKAGE = (name: string) =>
+const VITE_PACKAGE = (name: string, deps: Record<string, string>) =>
   JSON.stringify(
     {
       name,
@@ -128,8 +172,7 @@ const VITE_PACKAGE = (name: string) =>
       dependencies: {
         react: '^19.0.0',
         'react-dom': '^19.0.0',
-        'framer-motion': '^12.0.0',
-        'lucide-react': '^0.451.0',
+        ...deps,
       },
       devDependencies: {
         '@types/react': '^19.0.0',
@@ -196,7 +239,7 @@ export function buildTemplateDownload(slug: string, target: TemplateDownloadId):
   if (target === 'nextjs') {
     const prefix = 'components/';
     return [
-      { path: 'package.json', content: NEXT_PACKAGE(name) },
+      { path: 'package.json', content: NEXT_PACKAGE(name, templateDependencies(template.slug)) },
       { path: 'next.config.mjs', content: 'export default {};\n' },
       { path: 'tsconfig.json', content: TSCONFIG('preserve', { plugins: [{ name: 'next' }], incremental: true }) },
       { path: 'tailwind.config.mjs', content: TAILWIND_CONFIG("'./app/**/*.{ts,tsx}', './components/**/*.{ts,tsx}'") },
@@ -240,7 +283,7 @@ export default function Page() {
   if (target === 'react') {
     const prefix = 'src/components/';
     return [
-      { path: 'package.json', content: VITE_PACKAGE(name) },
+      { path: 'package.json', content: VITE_PACKAGE(name, templateDependencies(template.slug)) },
       { path: 'tsconfig.json', content: TSCONFIG('react-jsx') },
       { path: 'tailwind.config.mjs', content: TAILWIND_CONFIG("'./index.html', './src/**/*.{ts,tsx}'") },
       { path: 'postcss.config.mjs', content: POSTCSS_CONFIG },

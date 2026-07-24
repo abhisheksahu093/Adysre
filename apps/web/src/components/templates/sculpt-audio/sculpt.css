@@ -1,0 +1,181 @@
+/*
+ * SCULPT - template-scoped design tokens.
+ *
+ * A template is a standalone artifact with its own brand, so it cannot inherit
+ * the app's tokens. The whole palette lives here, scoped to
+ * `[data-template='sculpt']`, and every section references these variables only
+ * - no raw colour in markup (Rule 6).
+ *
+ * ─── The soft surface, and the two ways it goes wrong ──────────────────────
+ * Neumorphism is one idea: a surface the same colour as its ground, lifted by a
+ * light shadow on one side and a dark one on the other. It fails twice, and
+ * both failures are guarded here rather than left to each section.
+ *
+ * 1. CONTRAST. A raised panel is the SAME colour as the page, so it contributes
+ *    nothing to text legibility. Every neumorphic gallery on the internet has
+ *    grey-on-grey body copy for exactly this reason. So `--scu-ink` is near
+ *    black (14.9:1 on the ground) and is used for all body text; the soft
+ *    shades are structural only and never carry type.
+ *
+ * 2. AFFORDANCE. A button lifted by shadow alone is invisible to anyone who
+ *    cannot perceive the shadow - low vision, high-contrast mode, a phone in
+ *    sunlight. Every interactive surface here therefore also carries a real
+ *    1px border, and `:focus-visible` draws a solid ring rather than relying on
+ *    the extrusion inverting.
+ *
+ * CAUTION, same trap as the other templates: a scoped selector such as
+ * `[data-template='sculpt'] .scu-x` outranks Tailwind's single-class utilities,
+ * so nothing here may set `position`, `display` or spacing on an element
+ * Tailwind also positions.
+ */
+
+[data-template='sculpt'] {
+  /*
+   * The ground. Neumorphism needs a mid-tone: pure white has no room for a
+   * light highlight, pure black none for a dark one.
+   */
+  --scu-bg: #e9ebf1;
+  --scu-bg-2: #e3e6ee;
+  --scu-bg-sunk: #dfe2eb;
+
+  /* The two lights. Every raised surface is these two shadows and nothing else. */
+  --scu-light: #ffffff;
+  --scu-shade: #bcc1d1;
+
+  /* Ink. 14.9:1 on the ground - the extrusion is never asked to carry type. */
+  --scu-ink: #171a23;
+  --scu-ink-soft: rgb(23 26 35 / 72%);
+  --scu-ink-faint: rgb(23 26 35 / 55%);
+
+  /* The hairline that keeps a control visible without shadows. */
+  --scu-edge: rgb(23 26 35 / 9%);
+  --scu-edge-strong: rgb(23 26 35 / 18%);
+
+  /*
+   * Copper. 4.7:1 on the ground, so it is safe on UI text and large type but
+   * never for long body copy - that stays ink.
+   */
+  --scu-accent: #a85a25;
+  --scu-accent-soft: #c4763f;
+  --scu-accent-wash: rgb(168 90 37 / 10%);
+
+  --scu-radius: 18px;
+  --scu-radius-lg: 30px;
+  --scu-radius-pill: 999px;
+
+  color: var(--scu-ink);
+  background-color: var(--scu-bg);
+  font-family: 'Inter Variable', Inter, system-ui, -apple-system, sans-serif;
+  font-feature-settings: 'ss01', 'cv11';
+}
+
+/* ── Surfaces ────────────────────────────────────────────────────────────── */
+
+/* Raised: the default. Light from the top-left, as it is everywhere else. */
+[data-template='sculpt'] .scu-raised {
+  background-color: var(--scu-bg);
+  border: 1px solid var(--scu-edge);
+  border-radius: var(--scu-radius);
+  box-shadow:
+    7px 7px 16px var(--scu-shade),
+    -7px -7px 16px var(--scu-light);
+}
+
+/* Higher, for the one card per band that should read as the subject. */
+[data-template='sculpt'] .scu-raised-lg {
+  border-radius: var(--scu-radius-lg);
+  box-shadow:
+    12px 12px 28px var(--scu-shade),
+    -12px -12px 28px var(--scu-light);
+}
+
+/* Sunk: for wells, inputs and anything the eye should read as recessed. */
+[data-template='sculpt'] .scu-sunk {
+  background-color: var(--scu-bg-sunk);
+  border: 1px solid var(--scu-edge);
+  border-radius: var(--scu-radius);
+  box-shadow:
+    inset 5px 5px 12px var(--scu-shade),
+    inset -5px -5px 12px var(--scu-light);
+}
+
+/*
+ * The press. Applied by JS on pointer-down (see sculpt-motion.tsx) so the
+ * spring can overshoot on release; the class only owns the resting inset.
+ */
+[data-template='sculpt'] .scu-pressed {
+  box-shadow:
+    inset 5px 5px 12px var(--scu-shade),
+    inset -5px -5px 12px var(--scu-light);
+}
+
+/* ── Type ────────────────────────────────────────────────────────────────── */
+
+[data-template='sculpt'] .scu-display {
+  font-weight: 600;
+  letter-spacing: -0.032em;
+  line-height: 1.05;
+}
+
+[data-template='sculpt'] .scu-mono {
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+/* ── Controls ────────────────────────────────────────────────────────────── */
+
+/*
+ * The focus ring. Solid and offset, never a shadow: on a surface built entirely
+ * from shadows, one more shadow is not a state change anybody can see.
+ */
+[data-template='sculpt'] :focus-visible {
+  outline: 2px solid var(--scu-accent);
+  outline-offset: 3px;
+  border-radius: 8px;
+}
+
+/* The draggable handle. `touch-action` stops the browser scrolling the page
+   instead of moving the knob on a phone. */
+[data-template='sculpt'] .scu-handle {
+  touch-action: none;
+  cursor: grab;
+}
+
+[data-template='sculpt'] .scu-handle:active {
+  cursor: grabbing;
+}
+
+/* ── Motion ──────────────────────────────────────────────────────────────── */
+
+/*
+ * The reveal's resting state, applied by JS on mount and never in the SSR
+ * markup - a server-rendered `opacity: 0` is content that never appears if the
+ * script fails. See sculpt-motion.tsx.
+ */
+[data-template='sculpt'] [data-scu-reveal='pending'] {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-template='sculpt'] [data-scu-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* ── Forced colours ──────────────────────────────────────────────────────── */
+
+/*
+ * In Windows high-contrast mode every shadow is dropped, which would leave this
+ * template as unstyled text on a flat field. The borders above are what keeps
+ * it navigable; here they are made explicit so panels stay distinguishable.
+ */
+@media (forced-colors: active) {
+  [data-template='sculpt'] .scu-raised,
+  [data-template='sculpt'] .scu-raised-lg,
+  [data-template='sculpt'] .scu-sunk {
+    border: 1px solid CanvasText;
+  }
+}

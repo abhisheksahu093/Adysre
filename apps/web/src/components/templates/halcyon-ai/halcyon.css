@@ -1,0 +1,195 @@
+/*
+ * HALCYON - template-scoped design tokens.
+ *
+ * A template is a standalone artifact with its own brand, so it cannot inherit
+ * the app's tokens. The whole palette lives here, scoped to
+ * `[data-template='halcyon']`, and every section references these variables
+ * only - no raw colour in markup (Rule 6).
+ *
+ * ─── The glass ─────────────────────────────────────────────────────────────
+ * Glassmorphism fails in two specific ways, and both are guarded here rather
+ * than left to each section:
+ *
+ * 1. Text on frosted panels drops below contrast the moment the backdrop moves.
+ *    So the panel tint is opaque enough to carry AA on its own (--hal-glass is
+ *    12% white over a dark ground, not 4%), and body copy never sits directly
+ *    on the animated mesh - only on a panel.
+ * 2. `backdrop-filter` is expensive and, stacked, will drop a page to single
+ *    figures on a laptop. Panels are capped at one blur layer deep, and the
+ *    mesh behind them is a static gradient that TRANSFORMS rather than
+ *    re-rendering, so the compositor does the work.
+ *
+ * CAUTION, same trap as northgate.css: a scoped selector like
+ * `[data-template='halcyon'] .hal-x` outranks Tailwind's single-class utilities,
+ * so nothing here may set `position`, `display` or spacing on an element that
+ * Tailwind also positions. Only pseudo-elements are positioned from CSS.
+ */
+
+[data-template='halcyon'] {
+  /* Ground. Deep blue-black; the mesh and the glass both read against it. */
+  --hal-bg: #05060f;
+  --hal-bg-2: #0a0c1c;
+  --hal-bg-3: #101433;
+
+  /* Type on the ground. Alphas chosen to clear WCAG AA at their used sizes. */
+  --hal-ink: #f2f4ff;
+  --hal-ink-soft: rgb(242 244 255 / 76%);
+  --hal-ink-faint: rgb(242 244 255 / 58%);
+
+  /*
+   * The glass. `--hal-glass` is the fill, `--hal-glass-line` the 1px top edge
+   * that makes a panel read as a pane rather than a rectangle of fog.
+   */
+  --hal-glass: rgb(255 255 255 / 7%);
+  --hal-glass-strong: rgb(255 255 255 / 11%);
+  --hal-glass-line: rgb(255 255 255 / 14%);
+  --hal-glass-line-strong: rgb(255 255 255 / 26%);
+  --hal-blur: 18px;
+
+  /*
+   * Accents. Violet is the brand; cyan and magenta exist for the mesh and for
+   * gradient text. Only --hal-violet-bright is safe as TYPE on the ground
+   * (7.1:1); the others live in gradients and glows.
+   */
+  --hal-violet: #6d5cff;
+  --hal-violet-bright: #a99bff;
+  --hal-cyan: #22d3ee;
+  --hal-cyan-bright: #7ee7f7;
+  --hal-magenta: #f45cc4;
+
+  --hal-ring: rgb(169 155 255 / 55%);
+
+  --hal-radius: 20px;
+  --hal-radius-lg: 28px;
+
+  color: var(--hal-ink);
+  background-color: var(--hal-bg);
+  font-family: 'Inter Variable', Inter, system-ui, -apple-system, sans-serif;
+  font-feature-settings: 'ss01', 'cv11';
+}
+
+/* ── Glass panes ─────────────────────────────────────────────────────────── */
+
+[data-template='halcyon'] .hal-glass {
+  background-color: var(--hal-glass);
+  border: 1px solid var(--hal-glass-line);
+  backdrop-filter: blur(var(--hal-blur)) saturate(140%);
+  -webkit-backdrop-filter: blur(var(--hal-blur)) saturate(140%);
+  border-radius: var(--hal-radius);
+}
+
+[data-template='halcyon'] .hal-glass-strong {
+  background-color: var(--hal-glass-strong);
+  border-color: var(--hal-glass-line-strong);
+}
+
+/*
+ * The specular edge: a hairline of light along the top of a pane, which is what
+ * sells the material. A pseudo-element, so Tailwind never fights it for
+ * `position`.
+ */
+[data-template='halcyon'] .hal-glass::after {
+  content: '';
+  position: absolute;
+  inset-inline: 12%;
+  top: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgb(255 255 255 / 55%),
+    transparent
+  );
+  pointer-events: none;
+}
+
+/* ── The mesh ────────────────────────────────────────────────────────────── */
+
+/*
+ * Four colour fields on one element. Animated by transform only (see
+ * halcyon-motion.tsx), so the browser never repaints the gradient.
+ */
+[data-template='halcyon'] .hal-mesh {
+  background-image:
+    radial-gradient(38rem 30rem at 18% 22%, rgb(109 92 255 / 55%), transparent 62%),
+    radial-gradient(34rem 28rem at 82% 14%, rgb(34 211 238 / 40%), transparent 60%),
+    radial-gradient(30rem 30rem at 70% 78%, rgb(244 92 196 / 34%), transparent 62%),
+    radial-gradient(40rem 34rem at 28% 88%, rgb(109 92 255 / 34%), transparent 64%);
+  filter: blur(30px);
+  will-change: transform;
+}
+
+/* Grain over the mesh, so the gradients read as film rather than as CSS. */
+[data-template='halcyon'] .hal-grain::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  opacity: 0.16;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+}
+
+/* ── Type ────────────────────────────────────────────────────────────────── */
+
+[data-template='halcyon'] .hal-display {
+  font-weight: 600;
+  letter-spacing: -0.035em;
+  line-height: 1.02;
+}
+
+[data-template='halcyon'] .hal-gradient-text {
+  background-image: linear-gradient(
+    100deg,
+    var(--hal-ink) 10%,
+    var(--hal-violet-bright) 46%,
+    var(--hal-cyan-bright) 78%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+[data-template='halcyon'] .hal-mono {
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* ── Focus ───────────────────────────────────────────────────────────────── */
+
+/*
+ * One visible focus ring for the whole template. Glass panels swallow the
+ * default outline, so it is drawn as a shadow that sits above the blur.
+ */
+[data-template='halcyon'] :focus-visible {
+  outline: 2px solid var(--hal-ring);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* ── Motion ──────────────────────────────────────────────────────────────── */
+
+/*
+ * The reveal's resting state. Applied by JS on mount, never in the SSR markup:
+ * a server-rendered `opacity: 0` is content that never appears if the script
+ * fails. See halcyon-motion.tsx.
+ */
+[data-template='halcyon'] [data-hal-reveal='pending'] {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-template='halcyon'] .hal-mesh {
+    /* The mesh keeps its colour and stops moving. */
+    animation: none !important;
+    transform: none !important;
+  }
+
+  [data-template='halcyon'] [data-hal-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+  }
+}

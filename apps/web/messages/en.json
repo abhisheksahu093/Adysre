@@ -1256,7 +1256,9 @@
       "beauty": "Beauty",
       "payments": "Payments",
       "consulting": "Consulting",
-      "education": "Education"
+      "education": "Education",
+      "hardware": "Hardware",
+      "hospitality": "Hospitality"
     },
     "taglines": {
       "nova": "Dark, glassy analytics SaaS with a gradient mesh hero and animated counters.",
@@ -1273,7 +1275,12 @@
       "lumiere": "Blush-and-plum salon across seven pages: treatment categories, a filterable shop, cart and booking.",
       "northgate": "Payments infrastructure across five pages, with a self-drawing flow diagram and a live pricing calculator.",
       "pinnacle": "Sand-and-blue strategy consultancy: oversized type, a numbered process rail and measured outcomes.",
-      "tavola": "A bilingual, multi-currency restaurant: one menu, six pages, from the kitchen to the table."
+      "tavola": "A bilingual, multi-currency restaurant: one menu, six pages, from the kitchen to the table.",
+      "halcyon": "Glassmorphic AI platform in violet and cyan, with a drifting gradient mesh and anime.js reveals across five pages.",
+      "sculpt": "Neumorphic smart-audio hardware in cool grey and copper, with spring physics and a genuinely draggable control.",
+      "solstice": "Elegant editorial hotel in ivory and clay, with a system serif, generous space and anime.js line-by-line reveals.",
+      "cirrus": "Precise fintech analytics in white and indigo, with hairline structure and SVG charts that draw as you scroll.",
+      "prism": "Flat-black studio portfolio with acid green, poster-scale type, a scroll-driven work rail and a motion-path process track."
     },
     "sections": {
       "header": "Header",

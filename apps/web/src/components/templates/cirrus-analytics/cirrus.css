@@ -1,0 +1,182 @@
+/*
+ * CIRRUS - template-scoped design tokens.
+ *
+ * A template is a standalone artifact with its own brand, so it cannot inherit
+ * the app's tokens. The whole palette lives here, scoped to
+ * `[data-template='cirrus']`, and every section references these variables only
+ * - no raw colour in markup (Rule 6).
+ *
+ * ─── What "clean and sleek" is made of ─────────────────────────────────────
+ * The other three templates in this family are built from a material - glass,
+ * soft plastic, paper. This one is built from ALIGNMENT, and it is the hardest
+ * of the four to keep honest:
+ *
+ * 1. HAIRLINES, NOT SHADOWS. Structure comes from 1px rules at 8% ink. There is
+ *    exactly one shadow token and it is used on one element per page. A crisp
+ *    interface that starts collecting shadows stops being crisp.
+ * 2. NUMBERS ARE THE SUBJECT. Every figure is tabular-lining so columns of
+ *    digits align, and financial deltas get their own two colours which are
+ *    used for NOTHING else.
+ * 3. SMALL RADII. 6px, everywhere, including the charts. A 20px radius on a
+ *    data panel reads as a consumer app, not an instrument.
+ *
+ * ─── Colour and meaning ────────────────────────────────────────────────────
+ * `--cir-up` and `--cir-down` are the only greens and reds in the template, and
+ * they are never decorative. Both also clear 4.5:1 on the ground, because a
+ * number whose sign is only carried by hue is unreadable to roughly one man in
+ * twelve - so the markup pairs them with an arrow glyph as well.
+ *
+ * CAUTION, as in the other templates: a scoped selector such as
+ * `[data-template='cirrus'] .cir-x` outranks Tailwind's single-class utilities,
+ * so nothing here may set `position`, `display` or spacing on an element
+ * Tailwind also positions.
+ */
+
+[data-template='cirrus'] {
+  /* Ground. White, with one step down for panels and one for wells. */
+  --cir-bg: #ffffff;
+  --cir-bg-2: #fafbfc;
+  --cir-bg-3: #f4f6f8;
+  --cir-deep: #0a0c11;
+  --cir-deep-2: #12151c;
+
+  /* Ink. 18.4:1 on white. */
+  --cir-ink: #0a0c11;
+  --cir-ink-soft: rgb(10 12 17 / 70%);
+  --cir-ink-faint: rgb(10 12 17 / 52%);
+
+  /* On the dark band. */
+  --cir-on-deep: #f5f7fa;
+  --cir-on-deep-soft: rgb(245 247 250 / 72%);
+  --cir-on-deep-rule: rgb(245 247 250 / 14%);
+
+  /* Structure. Everything is one of these two rules. */
+  --cir-rule: rgb(10 12 17 / 9%);
+  --cir-rule-strong: rgb(10 12 17 / 16%);
+
+  /* Brand. 7.8:1 on white, so it is safe as type as well as fill. */
+  --cir-accent: #3538cd;
+  --cir-accent-soft: #6366f1;
+  --cir-accent-wash: rgb(53 56 205 / 7%);
+
+  /* Direction. The ONLY green and red in the template. Both ≥4.5:1 on white. */
+  --cir-up: #067647;
+  --cir-down: #b42318;
+
+  /* The one shadow. One element per page may use it. */
+  --cir-lift: 0 1px 2px rgb(10 12 17 / 6%), 0 12px 32px rgb(10 12 17 / 8%);
+
+  --cir-radius: 6px;
+  --cir-radius-lg: 10px;
+
+  color: var(--cir-ink);
+  background-color: var(--cir-bg);
+  font-family: 'Inter Variable', Inter, system-ui, -apple-system, sans-serif;
+  font-feature-settings: 'ss01', 'cv11', 'tnum';
+}
+
+/* ── Type ────────────────────────────────────────────────────────────────── */
+
+[data-template='cirrus'] .cir-display {
+  font-weight: 590;
+  letter-spacing: -0.028em;
+  line-height: 1.08;
+}
+
+/* Every figure in the template. Tabular so columns of digits line up. */
+[data-template='cirrus'] .cir-figure {
+  font-variant-numeric: tabular-nums lining-nums;
+  letter-spacing: -0.02em;
+}
+
+[data-template='cirrus'] .cir-mono {
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* ── Surfaces ────────────────────────────────────────────────────────────── */
+
+[data-template='cirrus'] .cir-panel {
+  background-color: var(--cir-bg);
+  border: 1px solid var(--cir-rule);
+  border-radius: var(--cir-radius-lg);
+}
+
+[data-template='cirrus'] .cir-well {
+  background-color: var(--cir-bg-2);
+  border: 1px solid var(--cir-rule);
+  border-radius: var(--cir-radius);
+}
+
+/* The one lifted element per page. */
+[data-template='cirrus'] .cir-lift {
+  box-shadow: var(--cir-lift);
+}
+
+/* The dotted measure grid behind the charts. Pure CSS, no image. */
+[data-template='cirrus'] .cir-grid {
+  background-image:
+    linear-gradient(to right, var(--cir-rule) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--cir-rule) 1px, transparent 1px);
+  background-size: 44px 44px;
+}
+
+/* ── Charts ──────────────────────────────────────────────────────────────── */
+
+/*
+ * The drawn line. `pathLength` is normalised to 1 in the markup, so anime.js's
+ * `draw` values are fractions regardless of the path's real length - which
+ * means the same animation works whatever data is plotted.
+ */
+[data-template='cirrus'] .cir-line {
+  fill: none;
+  stroke: var(--cir-accent);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+[data-template='cirrus'] .cir-area {
+  fill: var(--cir-accent-wash);
+  stroke: none;
+}
+
+/* ── Focus ───────────────────────────────────────────────────────────────── */
+
+[data-template='cirrus'] :focus-visible {
+  outline: 2px solid var(--cir-accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ── Motion ──────────────────────────────────────────────────────────────── */
+
+/*
+ * The reveal's resting state, applied by JS on mount and never in the SSR
+ * markup - a server-rendered `opacity: 0` is content that never appears if the
+ * script fails. See cirrus-motion.tsx.
+ */
+[data-template='cirrus'] [data-cir-reveal='pending'] {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-template='cirrus'] [data-cir-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  /*
+   * A chart that never finishes drawing is a chart with missing data. Under
+   * reduced motion the line is simply complete.
+   */
+  [data-template='cirrus'] .cir-line,
+  [data-template='cirrus'] .cir-area {
+    stroke-dasharray: none !important;
+    stroke-dashoffset: 0 !important;
+    opacity: 1 !important;
+  }
+}

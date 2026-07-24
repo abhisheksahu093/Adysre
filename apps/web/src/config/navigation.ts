@@ -12,6 +12,7 @@ import {
   QrCode,
   FileText,
   Barcode,
+  FileSearch,
   type LucideIcon,
 } from 'lucide-react';
 
@@ -114,6 +115,12 @@ export const NAV_ITEMS: NavItem[] = [
     href: '/tools/barcode',
     icon: Barcode,
     descriptionKey: 'barcode',
+  },
+  {
+    key: 'resume',
+    href: '/tools/resume',
+    icon: FileSearch,
+    descriptionKey: 'resume',
   },
   // Settings is hidden until the module lands - re-add this entry to bring it
   // back. The route, its translations and its permission are all still in place,

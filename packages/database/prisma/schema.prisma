@@ -40,6 +40,11 @@ model Organization {
   designProjects DesignProject[]
   qrFolders      QrFolder[]
   qrCodes        QrCode[]
+  signatureTemplates SignatureTemplate[]
+  emailSignatures    EmailSignature[]
+  atsReports         AtsReport[]
+  resumes            Resume[]
+  resumeVersions     ResumeVersion[]
 
   @@index([deletedAt])
   @@map("organizations")
@@ -352,4 +357,114 @@ model QrScan {
   @@index([qrCodeId, scannedAt])
   @@index([tenantId, scannedAt])
   @@map("qr_scans")
+}
+
+// ---------------------------------------------------------------------------
+// Tools — Email signatures
+// ---------------------------------------------------------------------------
+
+model SignatureTemplate {
+  id        String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  tenantId  String    @map("tenant_id") @db.Uuid
+  name      String
+  /// A SignatureDesign preset (see lib/tools/signature/themes).
+  design    Json
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  createdBy String?   @map("created_by") @db.Uuid
+  updatedBy String?   @map("updated_by") @db.Uuid
+  deletedAt DateTime? @map("deleted_at")
+
+  organization Organization @relation(fields: [tenantId], references: [id])
+
+  @@index([tenantId, deletedAt])
+  @@map("signature_templates")
+}
+
+model EmailSignature {
+  id        String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  tenantId  String    @map("tenant_id") @db.Uuid
+  name      String
+  /// The full SignatureData (fields + socials + theme + design).
+  data      Json
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  createdBy String?   @map("created_by") @db.Uuid
+  updatedBy String?   @map("updated_by") @db.Uuid
+  deletedAt DateTime? @map("deleted_at")
+
+  organization Organization @relation(fields: [tenantId], references: [id])
+
+  @@index([tenantId, deletedAt, updatedAt])
+  @@map("email_signatures")
+}
+
+// ---------------------------------------------------------------------------
+// Tools — ATS resume reports
+// ---------------------------------------------------------------------------
+
+model AtsReport {
+  id        String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  tenantId  String    @map("tenant_id") @db.Uuid
+  /// Resume file name or a label for the scan.
+  name      String
+  /// Overall ATS score 0-100 (denormalised for list/sort).
+  score     Int
+  /// The full AtsReport (breakdown, matched/missing, sections, suggestions).
+  report    Json
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  createdBy String?   @map("created_by") @db.Uuid
+  updatedBy String?   @map("updated_by") @db.Uuid
+  deletedAt DateTime? @map("deleted_at")
+
+  organization Organization @relation(fields: [tenantId], references: [id])
+
+  @@index([tenantId, deletedAt, createdAt])
+  @@map("ats_reports")
+}
+
+/// A resume composed in the Resume Builder. The full ResumeData (contact,
+/// sections, design) lives in `data`; `templateId` and `name` are denormalised
+/// for list/sort. Versions are snapshots kept for history.
+model Resume {
+  id         String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  tenantId   String    @map("tenant_id") @db.Uuid
+  /// Resume label (defaults to the person's name).
+  name       String
+  /// Resume template id (minimal, modern, corporate, creative, elegant).
+  templateId String    @map("template_id")
+  /// The full ResumeData document (contact, sections, design).
+  data       Json
+  createdAt  DateTime  @default(now()) @map("created_at")
+  updatedAt  DateTime  @updatedAt @map("updated_at")
+  createdBy  String?   @map("created_by") @db.Uuid
+  updatedBy  String?   @map("updated_by") @db.Uuid
+  deletedAt  DateTime? @map("deleted_at")
+
+  organization Organization    @relation(fields: [tenantId], references: [id])
+  versions     ResumeVersion[]
+
+  @@index([tenantId, deletedAt, updatedAt])
+  @@map("resumes")
+}
+
+/// An immutable snapshot of a resume, captured on save/export.
+model ResumeVersion {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  tenantId  String   @map("tenant_id") @db.Uuid
+  resumeId  String   @map("resume_id") @db.Uuid
+  /// Monotonic version number within the resume.
+  version   Int
+  /// The ResumeData snapshot at this version.
+  data      Json
+  createdAt DateTime @default(now()) @map("created_at")
+  createdBy String?  @map("created_by") @db.Uuid
+
+  organization Organization @relation(fields: [tenantId], references: [id])
+  resume       Resume       @relation(fields: [resumeId], references: [id], onDelete: Cascade)
+
+  @@unique([resumeId, version])
+  @@index([tenantId, resumeId])
+  @@map("resume_versions")
 }

@@ -95,7 +95,8 @@
       "websiteIntelligence": "扫描任意公开网站的性能、SEO、无障碍、安全等各项指标。",
       "qrCode": "为链接、WiFi、联系人、支付等生成可自定义的二维码。",
       "barcode": "通过实时预览和 PNG/SVG 导出生成 EAN、UPC、Code 128 和 Code 39 条形码。",
-      "documents": "通过实时预览、模板和 PDF 导出创建发票、报价单、收据和工资单。"
+      "documents": "通过实时预览、模板和 PDF 导出创建发票、报价单、收据和工资单。",
+      "resume": "将简历与职位描述比对，生成 ATS 分数，含关键词与技能匹配。"
     },
     "palettes": "调色板",
     "gradients": "渐变",
@@ -121,7 +122,8 @@
     "websiteIntelligence": "网站智能分析",
     "qrCode": "二维码生成器",
     "barcode": "条形码生成器",
-    "documents": "单据生成器"
+    "documents": "单据生成器",
+    "resume": "简历与 ATS"
   },
   "tools": {
     "qr": {
@@ -150,7 +152,17 @@
       "subtitle": "通过实时预览、精美模板和打印为 PDF，创建发票、报价单、收据和工资单，全部离线完成。",
       "tabs": {
         "invoice": "发票",
-        "salary": "工资单"
+        "salary": "工资单",
+        "signature": "邮件签名"
+      }
+    },
+    "resume": {
+      "badge": "工具",
+      "title": "简历与 ATS",
+      "subtitle": "根据职位描述扫描简历以获得基于规则的 ATS 评分，或使用实时模板创建可打印的简历。无 AI，完全在您的浏览器中处理。",
+      "tabs": {
+        "scanner": "ATS 扫描器",
+        "builder": "简历生成器"
       }
     }
   },
@@ -2659,6 +2671,10 @@
         "discord": "Discord",
         "email": "邮件"
       }
+    },
+    "tabs": {
+      "website": "网站扫描",
+      "seo": "SEO 审计"
     }
   }
 }

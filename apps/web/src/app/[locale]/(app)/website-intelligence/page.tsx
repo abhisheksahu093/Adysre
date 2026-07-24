@@ -9,6 +9,8 @@ import { ScanConsole } from '@/components/website-intelligence/scan-console';
 import { ScheduleManager } from '@/components/website-intelligence/schedule-manager';
 import { NotificationChannels } from '@/components/website-intelligence/notification-channels';
 import { ReportExport } from '@/components/website-intelligence/report-export';
+import { WebsiteIntelTabs } from '@/components/website-intelligence/website-intel-tabs';
+import { SeoAudit } from '@/components/website-intelligence/seo-audit';
 
 export async function generateMetadata({
   params,
@@ -49,29 +51,29 @@ export default async function WebsiteIntelligencePage({
   const t = await getTranslations({ locale, namespace: 'websiteIntel' });
 
   return (
-    <div className="mx-auto max-w-6xl space-y-16 py-4 sm:py-8">
-      {/* ── Header + scan-bar preview ─────────────────────────────────────── */}
-      <section className="space-y-6">
+    <div className="mx-auto max-w-6xl space-y-8 py-4 sm:py-8">
+      {/* Header */}
+      <div className="space-y-6">
         <div className="flex flex-wrap items-center gap-3">
           <span className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-3 py-1 text-xs font-medium text-muted-foreground">
             <Radar className="h-3.5 w-3.5 text-primary" aria-hidden />
             {t('badge')}
           </span>
-          <span className="inline-flex items-center rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
-            {t('comingSoon')}
-          </span>
         </div>
-
         <div className="max-w-3xl space-y-3">
           <h1 className="text-2xl font-bold tracking-tight sm:text-4xl">{t('title')}</h1>
           <p className="text-sm leading-relaxed text-muted-foreground sm:text-base">{t('subtitle')}</p>
         </div>
+      </div>
 
-        {/* The working scan console: SEO, security, HTML, assets and best
-            practices run today; the browser-driven analyses land in a later
-            phase (the console says so under the score). Full-width so the score
-            card, findings and history use the space rather than a narrow column. */}
-        <ScanConsole placeholder={t('scan.placeholder')} />
+      {/* Two tabs: the working site scanner, and the SEO audit. */}
+      <WebsiteIntelTabs
+        seo={<SeoAudit placeholder={t('scan.placeholder')} />}
+        website={
+          <div className="space-y-16">
+            {/* ── Scanner + stats ─────────────────────────────────────────── */}
+            <section className="space-y-6">
+              <ScanConsole placeholder={t('scan.placeholder')} />
 
         {/* Stats */}
         <dl className="grid grid-cols-2 gap-4 pt-2 sm:grid-cols-4">
@@ -147,6 +149,9 @@ export default async function WebsiteIntelligencePage({
             result offers up top. */}
         <ReportExport />
       </section>
+          </div>
+        }
+      />
     </div>
   );
 }

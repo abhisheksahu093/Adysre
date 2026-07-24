@@ -95,7 +95,8 @@
       "websiteIntelligence": "Scan any public site for performance, SEO, accessibility, security and more.",
       "qrCode": "Generate customizable QR codes for links, WiFi, contacts, payments and more.",
       "barcode": "Generate EAN, UPC, Code 128 and Code 39 barcodes with live preview and PNG/SVG export.",
-      "documents": "Create invoices, quotes, receipts and salary slips with live preview, templates and PDF export."
+      "documents": "Create invoices, quotes, receipts and salary slips with live preview, templates and PDF export.",
+      "resume": "Scan a resume against a job description for an ATS score, with keyword and skills match."
     },
     "palettes": "Color Palettes",
     "gradients": "Gradients",
@@ -121,7 +122,8 @@
     "websiteIntelligence": "Website Intelligence",
     "qrCode": "QR Code Generator",
     "barcode": "Barcode Generator",
-    "documents": "Document Generator"
+    "documents": "Document Generator",
+    "resume": "Resume & ATS"
   },
   "tools": {
     "qr": {
@@ -150,7 +152,17 @@
       "subtitle": "Create invoices, quotes, receipts and salary slips with a live preview, polished templates and print to PDF, all offline.",
       "tabs": {
         "invoice": "Invoice",
-        "salary": "Salary Slip"
+        "salary": "Salary Slip",
+        "signature": "Email Signature"
+      }
+    },
+    "resume": {
+      "badge": "Tools",
+      "title": "Resume & ATS",
+      "subtitle": "Scan a resume against a job description for a rule-based ATS score, or build a print-ready resume with live templates. No AI, processed entirely in your browser.",
+      "tabs": {
+        "scanner": "ATS Scanner",
+        "builder": "Resume Builder"
       }
     }
   },
@@ -2659,6 +2671,10 @@
         "discord": "Discord",
         "email": "Email"
       }
+    },
+    "tabs": {
+      "website": "Website Scan",
+      "seo": "SEO Audit"
     }
   }
 }

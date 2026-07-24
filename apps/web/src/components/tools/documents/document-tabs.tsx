@@ -2,10 +2,11 @@
 
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { FileText, ReceiptText } from 'lucide-react';
+import { FileText, Mail, ReceiptText } from 'lucide-react';
 import { cn } from 'adysre';
 import { InvoiceGenerator } from '@/components/tools/invoice/invoice-generator';
 import { SalaryGenerator } from '@/components/tools/salary/salary-generator';
+import { SignatureGenerator } from '@/components/tools/signature/signature-generator';
 
 /**
  * Document Generator tabs. One page, two document tools: the invoice/quote/
@@ -17,6 +18,7 @@ import { SalaryGenerator } from '@/components/tools/salary/salary-generator';
 const TABS = [
   { id: 'invoice', icon: FileText },
   { id: 'salary', icon: ReceiptText },
+  { id: 'signature', icon: Mail },
 ] as const;
 
 type TabId = (typeof TABS)[number]['id'];
@@ -49,7 +51,13 @@ export function DocumentTabs() {
       </div>
 
       <div className="lg:min-h-0">
-        {active === 'invoice' ? <InvoiceGenerator /> : <SalaryGenerator />}
+        {active === 'invoice' ? (
+          <InvoiceGenerator />
+        ) : active === 'salary' ? (
+          <SalaryGenerator />
+        ) : (
+          <SignatureGenerator />
+        )}
       </div>
     </div>
   );

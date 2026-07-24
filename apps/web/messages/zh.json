@@ -91,7 +91,8 @@
       "patterns": "浏览、编辑并导出 CSS 背景图案，或自己生成。",
       "textures": "浏览、编辑并导出 CSS 表面纹理，或自己生成。",
       "icons": "浏览、自定义并以任意格式或尺寸导出原创 SVG 图标。",
-      "designPlayground": "在无限画布上设计页面、仪表板和图形，无需编写代码。"
+      "designPlayground": "在无限画布上设计页面、仪表板和图形，无需编写代码。",
+      "websiteIntelligence": "扫描任意公开网站的性能、SEO、无障碍、安全等各项指标。"
     },
     "palettes": "调色板",
     "gradients": "渐变",
@@ -113,7 +114,8 @@
     "collapseSection": "收起{label}",
     "viewAll": "全部{label}",
     "collapseSidebar": "收起侧边栏",
-    "expandSidebar": "展开侧边栏"
+    "expandSidebar": "展开侧边栏",
+    "websiteIntelligence": "网站智能分析"
   },
   "topbar": {
     "searchPlaceholder": "搜索或快速跳转…",
@@ -2423,6 +2425,202 @@
       "loading": "加载中…",
       "empty": "还没有已保存的设计。",
       "unavailable": "无法显示已保存的设计，存储不可用。你的工作仍保存在此设备上。"
+    }
+  },
+  "websiteIntel": {
+    "meta": {
+      "title": "网站智能分析",
+      "description": "在一份报告中扫描任意公开网站的性能、SEO、无障碍、安全等各项指标。"
+    },
+    "badge": "网站智能分析",
+    "title": "精准掌握任意网站的问题所在",
+    "subtitle": "指向任意公开网址，即可获得一份涵盖性能、SEO、无障碍、安全、Core Web Vitals 等的报告——由 500+ 条规则驱动，且无需任何付费 AI。",
+    "comingSoon": "开发中",
+    "scan": {
+      "placeholder": "https://example.com",
+      "button": "扫描",
+      "note": "扫描引擎正在积极开发中。这里是它将运行的分析项预览。"
+    },
+    "stats": {
+      "analyses": "每次扫描的分析项",
+      "rules": "规则检查",
+      "formats": "导出格式",
+      "paidAi": "付费 AI 接口"
+    },
+    "capabilitiesTitle": "十一项分析，一次扫描",
+    "capabilitiesSubtitle": "每次扫描都运行全部项目，并将结果汇总为总体评分。",
+    "capabilities": {
+      "performance": {
+        "title": "性能",
+        "desc": "Lighthouse 级的加载时序、阻塞渲染的资源与加载瀑布。"
+      },
+      "seo": {
+        "title": "SEO",
+        "desc": "元标签、标题、canonical、站点地图、结构化数据与社交卡片。"
+      },
+      "accessibility": {
+        "title": "无障碍",
+        "desc": "使用 axe-core 审查对比度、角色、标签与键盘顺序。"
+      },
+      "bestPractices": {
+        "title": "最佳实践",
+        "desc": "现代 Web 检查：doctype、控制台错误与已弃用 API。"
+      },
+      "security": {
+        "title": "安全",
+        "desc": "HTTPS、安全响应头、CSP、HSTS 与 Cookie 标记。"
+      },
+      "webVitals": {
+        "title": "Core Web Vitals",
+        "desc": "对照现场阈值测量的 LCP、CLS 与 INP。"
+      },
+      "technology": {
+        "title": "技术识别",
+        "desc": "所用的框架、CMS、分析工具与库。"
+      },
+      "assets": {
+        "title": "资源优化",
+        "desc": "图片、CSS、JS 与字体体积、懒加载与压缩。"
+      },
+      "html": {
+        "title": "HTML 结构",
+        "desc": "文档大纲、地标、链接健康度与标记有效性。"
+      },
+      "network": {
+        "title": "网络",
+        "desc": "DNS、TTFB、HTTP/2 与 HTTP/3、缓存与 CDN。"
+      },
+      "recommendations": {
+        "title": "AI 建议",
+        "desc": "按影响与预估收益排序的 500+ 条规则化修复。"
+      },
+      "history": {
+        "title": "历史对比",
+        "desc": "追踪每项评分的变化，并对比两次扫描。"
+      }
+    },
+    "dashboardTitle": "面面俱到的仪表盘",
+    "dashboardSubtitle": "十个板块，从一目了然的概览到完整的建议时间线。",
+    "dashboard": {
+      "overview": "概览",
+      "performance": "性能",
+      "seo": "SEO",
+      "accessibility": "无障碍",
+      "security": "安全",
+      "assets": "资源",
+      "network": "网络",
+      "technologies": "技术",
+      "recommendations": "建议",
+      "timeline": "时间线"
+    },
+    "reportsTitle": "导出任意报告",
+    "reportsSubtitle": "以你工作流所需的格式，把结果带到任何地方。",
+    "stackTitle": "基于生产级技术栈构建",
+    "stack": {
+      "frontend": "前端",
+      "backend": "后端",
+      "scanning": "扫描",
+      "infra": "队列与基础设施"
+    },
+    "home": {
+      "cta": "进入平台",
+      "secondary": "查看扫描内容",
+      "moreFindings": "在完整报告中查看全部 {count} 项发现"
+    },
+    "console": {
+      "label": "扫描网站",
+      "scanning": "扫描中…",
+      "overall": "总体评分",
+      "technologiesTitle": "检测到的技术",
+      "noTechnologies": "未检测到已知技术。",
+      "findingsTitle": "改进建议",
+      "noFindings": "本次未发现问题，很好。",
+      "scannedIn": "用时 {ms} ms",
+      "browserNote": "性能、无障碍与 Core Web Vitals 需要浏览器引擎，将在后续阶段提供。",
+      "categories": {
+        "seo": "SEO",
+        "security": "安全",
+        "html": "HTML",
+        "assets": "资源",
+        "bestPractices": "最佳实践",
+        "accessibility": "无障碍",
+        "performance": "性能"
+      },
+      "severity": {
+        "critical": "严重",
+        "serious": "重要",
+        "moderate": "中等",
+        "minor": "轻微",
+        "info": "信息"
+      },
+      "errors": {
+        "generic": "出了点问题，请重试。",
+        "url_required": "请输入要扫描的网址。",
+        "url_invalid": "这不是有效的网址。",
+        "url_scheme": "仅可扫描 http 与 https 网址。",
+        "url_hostname": "请输入完整域名，例如 example.com。",
+        "url_blocked": "该地址不被允许。",
+        "url_too_long": "该网址过长。",
+        "timeout": "站点响应超时。",
+        "unreachable": "无法访问该站点。",
+        "too_many_redirects": "站点重定向次数过多。",
+        "bad_redirect": "站点返回了无效的重定向。",
+        "rate_limited": "扫描过于频繁，请一分钟后再试。",
+        "bad_json": "无法读取请求。",
+        "server_error": "扫描意外失败。"
+      },
+      "history": {
+        "title": "最近的扫描",
+        "empty": "还没有扫描，请在上方运行一次。",
+        "view": "查看",
+        "vsPrevious": "与上次扫描相比",
+        "fixed": "已修复 {count} 项",
+        "appeared": "新增 {count} 项"
+      },
+      "webVitalsTitle": "Core Web Vitals",
+      "export": "导出"
+    },
+    "report": {
+      "title": "网站智能分析报告",
+      "print": "保存为 PDF",
+      "scanned": "扫描于 {date}",
+      "generatedBy": "由 ADYSRE Website Intelligence 生成",
+      "notFound": "未找到该扫描。"
+    },
+    "schedule": {
+      "title": "计划扫描",
+      "subtitle": "自动重新扫描某个网址，持续积累其历史。",
+      "urlPlaceholder": "https://example.com",
+      "add": "计划",
+      "runDue": "运行到期项",
+      "empty": "还没有计划。",
+      "next": "下次",
+      "delete": "删除",
+      "ranNone": "没有到期的项。",
+      "ranSome": "已运行 {count} 项。",
+      "cadences": {
+        "hourly": "每小时",
+        "daily": "每天",
+        "weekly": "每周"
+      }
+    },
+    "notify": {
+      "title": "通知",
+      "subtitle": "当计划扫描完成时，通过 Webhook、Slack 或 Discord 收到提醒。",
+      "targetPlaceholder": "https://hooks.slack.com/... 或 you@company.com",
+      "add": "添加渠道",
+      "empty": "还没有渠道。",
+      "delete": "删除",
+      "test": "测试",
+      "testOk": "已送达。",
+      "testFail": "未送达。",
+      "emailNote": "邮件发送需要服务商，目前尚未发送；渠道已保存。",
+      "types": {
+        "webhook": "Webhook",
+        "slack": "Slack",
+        "discord": "Discord",
+        "email": "邮件"
+      }
     }
   }
 }

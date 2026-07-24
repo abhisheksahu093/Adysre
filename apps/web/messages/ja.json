@@ -91,7 +91,8 @@
       "patterns": "CSS背景パターンを閲覧・編集・エクスポート、または自分で生成。",
       "textures": "CSSサーフェステクスチャを閲覧・編集・エクスポート、または自分で生成。",
       "icons": "オリジナルの SVG アイコンを閲覧・カスタマイズし、任意の形式やサイズで書き出せます。",
-      "designPlayground": "無限キャンバスでページ・ダッシュボード・グラフィックをコードなしでデザイン。"
+      "designPlayground": "無限キャンバスでページ・ダッシュボード・グラフィックをコードなしでデザイン。",
+      "websiteIntelligence": "任意の公開サイトをパフォーマンス・SEO・アクセシビリティ・セキュリティなどでスキャンします。"
     },
     "palettes": "カラーパレット",
     "gradients": "グラデーション",
@@ -113,7 +114,8 @@
     "collapseSection": "{label}を折りたたむ",
     "viewAll": "すべての{label}",
     "collapseSidebar": "サイドバーを折りたたむ",
-    "expandSidebar": "サイドバーを展開"
+    "expandSidebar": "サイドバーを展開",
+    "websiteIntelligence": "ウェブサイトインテリジェンス"
   },
   "topbar": {
     "searchPlaceholder": "検索またはページへ移動…",
@@ -2423,6 +2425,202 @@
       "loading": "読み込み中…",
       "empty": "保存されたデザインはまだありません。",
       "unavailable": "保存済みデザインを表示できません、ストレージに接続できません。作業内容はこの端末に保存されています。"
+    }
+  },
+  "websiteIntel": {
+    "meta": {
+      "title": "ウェブサイトインテリジェンス",
+      "description": "任意の公開ウェブサイトを、パフォーマンス・SEO・アクセシビリティ・セキュリティなどにわたり1つのレポートでスキャンします。"
+    },
+    "badge": "ウェブサイトインテリジェンス",
+    "title": "どんなサイトの問題も正確に把握",
+    "subtitle": "任意の公開URLを指定すると、パフォーマンス・SEO・アクセシビリティ・セキュリティ・Core Web Vitals などを1つのレポートに。500以上のルールに基づき、有料AIは不要です。",
+    "comingSoon": "開発中",
+    "scan": {
+      "placeholder": "https://example.com",
+      "button": "スキャン",
+      "note": "スキャンエンジンは現在開発中です。これは実行予定の解析のプレビューです。"
+    },
+    "stats": {
+      "analyses": "1スキャンあたりの解析",
+      "rules": "ルールベースの検査",
+      "formats": "エクスポート形式",
+      "paidAi": "有料AI API"
+    },
+    "capabilitiesTitle": "11の解析、1回のスキャン",
+    "capabilitiesSubtitle": "すべてのスキャンで全項目を実行し、結果を総合スコアにまとめます。",
+    "capabilities": {
+      "performance": {
+        "title": "パフォーマンス",
+        "desc": "Lighthouse品質のタイミング、レンダリングを妨げるリソース、読み込みの流れ。"
+      },
+      "seo": {
+        "title": "SEO",
+        "desc": "メタタグ、見出し、canonical、サイトマップ、構造化データ、ソーシャルカード。"
+      },
+      "accessibility": {
+        "title": "アクセシビリティ",
+        "desc": "コントラスト・ロール・ラベル・キーボード順序を axe-core で監査。"
+      },
+      "bestPractices": {
+        "title": "ベストプラクティス",
+        "desc": "モダンWebの検査：doctype、コンソールエラー、非推奨API。"
+      },
+      "security": {
+        "title": "セキュリティ",
+        "desc": "HTTPS、セキュリティヘッダー、CSP、HSTS、Cookieフラグ。"
+      },
+      "webVitals": {
+        "title": "Core Web Vitals",
+        "desc": "フィールドしきい値に対して測定した LCP・CLS・INP。"
+      },
+      "technology": {
+        "title": "技術検出",
+        "desc": "使用中のフレームワーク、CMS、解析ツール、ライブラリ。"
+      },
+      "assets": {
+        "title": "アセット最適化",
+        "desc": "画像・CSS・JS・フォントの重量、遅延読み込み、圧縮。"
+      },
+      "html": {
+        "title": "HTML構造",
+        "desc": "文書アウトライン、ランドマーク、リンクの健全性、マークアップの妥当性。"
+      },
+      "network": {
+        "title": "ネットワーク",
+        "desc": "DNS、TTFB、HTTP/2 と HTTP/3、キャッシュ、CDN。"
+      },
+      "recommendations": {
+        "title": "AIレコメンド",
+        "desc": "影響度と推定削減量で並べた500以上のルールベース修正。"
+      },
+      "history": {
+        "title": "履歴比較",
+        "desc": "スコアの推移を追跡し、2つのスキャンを差分表示。"
+      }
+    },
+    "dashboardTitle": "あらゆる観点のダッシュボード",
+    "dashboardSubtitle": "一目でわかる概要から、レコメンドのタイムラインまで10セクション。",
+    "dashboard": {
+      "overview": "概要",
+      "performance": "パフォーマンス",
+      "seo": "SEO",
+      "accessibility": "アクセシビリティ",
+      "security": "セキュリティ",
+      "assets": "アセット",
+      "network": "ネットワーク",
+      "technologies": "技術",
+      "recommendations": "レコメンド",
+      "timeline": "タイムライン"
+    },
+    "reportsTitle": "レポートをエクスポート",
+    "reportsSubtitle": "ワークフローに合う形式で、結果をどこへでも。",
+    "stackTitle": "本番向けスタックで構築",
+    "stack": {
+      "frontend": "フロントエンド",
+      "backend": "バックエンド",
+      "scanning": "スキャン",
+      "infra": "キューとインフラ"
+    },
+    "home": {
+      "cta": "プラットフォームを見る",
+      "secondary": "スキャン内容を見る",
+      "moreFindings": "完全なレポートで{count}件すべての検出結果を見る"
+    },
+    "console": {
+      "label": "ウェブサイトをスキャン",
+      "scanning": "スキャン中…",
+      "overall": "総合スコア",
+      "technologiesTitle": "検出された技術",
+      "noTechnologies": "既知の技術は検出されませんでした。",
+      "findingsTitle": "推奨事項",
+      "noFindings": "今回の検査では問題は見つかりませんでした。",
+      "scannedIn": "{ms} ms でスキャン",
+      "browserNote": "パフォーマンス・アクセシビリティ・Core Web Vitals はブラウザエンジンが必要で、後のフェーズで対応します。",
+      "categories": {
+        "seo": "SEO",
+        "security": "セキュリティ",
+        "html": "HTML",
+        "assets": "アセット",
+        "bestPractices": "ベストプラクティス",
+        "accessibility": "アクセシビリティ",
+        "performance": "パフォーマンス"
+      },
+      "severity": {
+        "critical": "重大",
+        "serious": "深刻",
+        "moderate": "中程度",
+        "minor": "軽微",
+        "info": "情報"
+      },
+      "errors": {
+        "generic": "問題が発生しました。もう一度お試しください。",
+        "url_required": "スキャンするURLを入力してください。",
+        "url_invalid": "有効なURLではありません。",
+        "url_scheme": "http と https のURLのみスキャンできます。",
+        "url_hostname": "完全なドメインを入力してください（例：example.com）。",
+        "url_blocked": "このアドレスは許可されていません。",
+        "url_too_long": "URLが長すぎます。",
+        "timeout": "サイトの応答に時間がかかりすぎました。",
+        "unreachable": "サイトに到達できませんでした。",
+        "too_many_redirects": "リダイレクトが多すぎます。",
+        "bad_redirect": "無効なリダイレクトが返されました。",
+        "rate_limited": "スキャンが多すぎます。1分後に再試行してください。",
+        "bad_json": "リクエストを読み取れませんでした。",
+        "server_error": "スキャンが予期せず失敗しました。"
+      },
+      "history": {
+        "title": "最近のスキャン",
+        "empty": "まだスキャンがありません。上で実行してください。",
+        "view": "表示",
+        "vsPrevious": "前回のスキャンとの比較",
+        "fixed": "{count} 件解消",
+        "appeared": "{count} 件新規"
+      },
+      "webVitalsTitle": "Core Web Vitals",
+      "export": "エクスポート"
+    },
+    "report": {
+      "title": "ウェブサイトインテリジェンス レポート",
+      "print": "PDFとして保存",
+      "scanned": "{date} にスキャン",
+      "generatedBy": "ADYSRE Website Intelligence により生成",
+      "notFound": "そのスキャンは見つかりませんでした。"
+    },
+    "schedule": {
+      "title": "スケジュールされたスキャン",
+      "subtitle": "URLを自動で再スキャンし、履歴を積み上げます。",
+      "urlPlaceholder": "https://example.com",
+      "add": "スケジュール",
+      "runDue": "期限分を実行",
+      "empty": "スケジュールはまだありません。",
+      "next": "次回",
+      "delete": "削除",
+      "ranNone": "実行対象はありませんでした。",
+      "ranSome": "{count} 件実行しました。",
+      "cadences": {
+        "hourly": "毎時",
+        "daily": "毎日",
+        "weekly": "毎週"
+      }
+    },
+    "notify": {
+      "title": "通知",
+      "subtitle": "スケジュールされたスキャンの完了を、Webhook・Slack・Discord で受け取れます。",
+      "targetPlaceholder": "https://hooks.slack.com/... または you@company.com",
+      "add": "チャンネルを追加",
+      "empty": "チャンネルはまだありません。",
+      "delete": "削除",
+      "test": "テスト",
+      "testOk": "送信しました。",
+      "testFail": "送信できませんでした。",
+      "emailNote": "メール送信にはプロバイダーが必要で、まだ送信されません。チャンネルは保存されます。",
+      "types": {
+        "webhook": "Webhook",
+        "slack": "Slack",
+        "discord": "Discord",
+        "email": "メール"
+      }
     }
   }
 }

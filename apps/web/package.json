@@ -25,6 +25,7 @@
     "adysre": "workspace:*",
     "animejs": "^4.5.0",
     "framer-motion": "^12.42.2",
+    "jose": "^5.9.6",
     "konva": "^10.3.0",
     "lucide-react": "^0.451.0",
     "next": "^16.0.0",

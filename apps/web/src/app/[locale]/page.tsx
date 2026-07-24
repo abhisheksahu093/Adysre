@@ -10,6 +10,7 @@ import { StatsBand } from '@/components/landing/stats-band';
 import { InstallSection } from '@/components/landing/install-section';
 import { LANDING_STATS } from '@/data/library-stats';
 import { TemplatesTeaser } from '@/components/landing/templates-teaser';
+import { IntelligenceSection } from '@/components/landing/intelligence-section';
 import { Faq } from '@/components/landing/faq';
 import { CtaBand } from '@/components/landing/cta-band';
 import { LandingFooter } from '@/components/landing/landing-footer';
@@ -52,9 +53,13 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
 
       <main id="main">
         <LandingHero />
+        {/* Second: the working website checker is the strongest interactive
+            hook, so it sits right below the hero - a visitor can scan a real URL
+            before scrolling anything else. */}
+        <IntelligenceSection />
         <FeatureGrid />
-        {/* Third: a visitor who has just seen what the modules are should be
-            told they can install the whole thing before being asked to browse. */}
+        {/* A visitor who has just seen what the modules are should be told they
+            can install the whole thing before being asked to browse. */}
         <InstallSection />
         <WorkflowSteps />
         <Showcase />

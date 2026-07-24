@@ -5,8 +5,10 @@ import { routing } from './i18n/routing';
  * Resolves the active locale for every page request (URL prefix → cookie →
  * Accept-Language → default) and rewrites to the matching /[locale] route.
  *
- * NOTE: this app still has no auth route protection. When that lands it must
- * compose with this middleware rather than replace it - Next.js runs a single
+ * NOTE: auth is enforced per-route/per-page, not here (Website Intelligence
+ * gates its endpoints via `lib/website-intel/auth` and its pages via a session
+ * redirect). If app-wide auth ever moves into middleware it must COMPOSE with
+ * this i18n middleware rather than replace it - Next.js runs a single
  * middleware, so a second `export default` here would silently disable i18n.
  */
 export default createMiddleware(routing);

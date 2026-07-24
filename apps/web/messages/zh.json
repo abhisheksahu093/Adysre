@@ -73,7 +73,6 @@
   },
   "nav": {
     "dashboard": "仪表板",
-    "promptLibrary": "提示词库",
     "components": "组件",
     "designPlayground": "设计工作台",
     "templates": "模板",
@@ -82,7 +81,6 @@
     "openMenu": "打开导航菜单",
     "closeMenu": "关闭导航菜单",
     "descriptions": {
-      "promptLibrary": "浏览、调整并复制适用于你的工作区的提示词。",
       "components": "浏览所有模块均可使用的构建模块。",
       "templates": "从现成布局开始，无需从空白页起步。",
       "settings": "管理你的组织、成员与偏好设置。",
@@ -324,87 +322,6 @@
       "thisWeek": "本周",
       "last24h": "近 24 小时",
       "files": "个文件"
-    }
-  },
-  "promptLibrary": {
-    "searchPlaceholder": "按标题、标签或关键词搜索…",
-    "searchLabel": "搜索提示词",
-    "collections": {
-      "all": "全部",
-      "featured": "精选",
-      "trending": "热门",
-      "new": "最新"
-    },
-    "filters": {
-      "collection": "合集",
-      "category": "分类",
-      "allCategories": "全部分类",
-      "allTiers": "全部等级",
-      "allModels": "全部模型",
-      "allRatios": "全部比例",
-      "byTier": "按等级筛选",
-      "byModel": "按模型筛选",
-      "byRatio": "按画面比例筛选"
-    },
-    "count": "{count, plural, other {# 个提示词}}",
-    "countFiltered": "{total} 个提示词中的 {count} 个",
-    "empty": {
-      "title": "没有符合筛选条件的提示词",
-      "description": "换个关键词搜索，或清除筛选条件。"
-    },
-    "card": {
-      "editAria": "编辑 {title}",
-      "searchTag": "搜索 {tag}",
-      "lockedAria": "高级提示词：开通高级版后才能使用“{title}”"
-    },
-    "dialog": {
-      "description": "调整措辞后再复制。你的改动不会保存到提示词库。",
-      "promptLabel": "提示词",
-      "copyPrompt": "复制提示词",
-      "characters": "{count} 个字符",
-      "edited": "已编辑",
-      "worksWellOn": "适用模型",
-      "aspectRatios": "画面比例",
-      "tags": "标签",
-      "englishOriginal": "当前显示英文原文 -- 该提示词尚未翻译。"
-    },
-    "tiers": {
-      "free": "免费",
-      "premium": "高级"
-    },
-    "categories": {
-      "portrait": "人像",
-      "headshot": "头像",
-      "business": "商务",
-      "fashion": "时尚",
-      "lifestyle": "生活方式",
-      "cinematic": "电影感",
-      "travel": "旅行",
-      "nature": "自然",
-      "fitness": "健身",
-      "automotive": "汽车",
-      "editorial": "杂志大片",
-      "fantasy": "奇幻",
-      "sci-fi": "科幻",
-      "anime": "动漫",
-      "artistic": "艺术"
-    },
-    "styles": {
-      "photorealistic": "写实摄影",
-      "cinematic": "电影感",
-      "editorial": "杂志大片",
-      "monochrome": "黑白",
-      "painterly": "绘画感",
-      "illustrated": "插画",
-      "3d-render": "3D 渲染",
-      "anime": "动漫"
-    },
-    "ratios": {
-      "1:1": "1:1 方形",
-      "4:5": "4:5 竖版",
-      "3:4": "3:4 竖版",
-      "9:16": "9:16 竖屏",
-      "16:9": "16:9 宽屏"
     }
   },
   "pages": {
@@ -750,18 +667,6 @@
     "submit": "去结算",
     "submitting": "正在跳转…",
     "unavailable": "结算功能尚未开放，如需购买请联系支持团队。"
-  },
-  "premiumGate": {
-    "title": "这是高级提示词",
-    "descriptionCopy": "“{title}”属于高级提示词库。开通高级版后即可复制。",
-    "descriptionEdit": "“{title}”属于高级提示词库。开通高级版后即可调整。",
-    "cta": "获取高级版",
-    "notNow": "暂不",
-    "benefits": {
-      "unlockAll": "解锁全部 120+ 条高级提示词",
-      "unlockEdit": "复制前可随意调整任意提示词",
-      "unlockUpdates": "后续新增的提示词全部包含"
-    }
   },
   "components": {
     "metaTitle": "组件",
@@ -1991,7 +1896,7 @@
   "landing": {
     "meta": {
       "title": "ADYSRE：在同一工作区里设计并交付",
-      "description": "让产品团队在同一处浏览组件、图标、调色板、渐变和提示词，并直接带到生产环境的工作区。"
+      "description": "让产品团队在同一处浏览组件、图标、调色板、渐变和模板，并直接带到生产环境的工作区。"
     },
     "nav": {
       "pricing": "价格",
@@ -2001,14 +1906,15 @@
       "skip": "跳到内容",
       "menus": {
         "styles": "样式",
-        "library": "资源库"
+        "library": "资源库",
+        "tools": "工具"
       }
     },
     "hero": {
       "badge": "新功能：渐变与调色板生成器",
       "title": "团队设计与交付所需的一切",
       "titleAccent": "都在一个从容的工作区里",
-      "subtitle": "ADYSRE 将组件、图标、调色板、渐变和提示词汇聚一处，让团队无需切换工具，就能从想法走到生产。",
+      "subtitle": "ADYSRE 将组件、图标、调色板、渐变和模板汇聚一处，让团队无需切换工具，就能从想法走到生产。",
       "ctaComponents": "浏览组件",
       "ctaPlayground": "打开设计工作台",
       "ctaWorkspace": "打开工作区",
@@ -2046,10 +1952,6 @@
         "textures": {
           "title": "纹理",
           "desc": "纯 CSS 的噪点、颗粒、纸张和织物表面纹理，无需图片文件。"
-        },
-        "promptLibrary": {
-          "title": "提示词库",
-          "desc": "按类别精选的提示词库，为团队所用的模型做过调校。"
         },
         "templates": {
           "title": "模板",
@@ -2111,7 +2013,6 @@
         "gradients": "渐变",
         "patterns": "图案",
         "textures": "纹理",
-        "prompts": "提示词",
         "teams": "在建团队"
       }
     },
@@ -2153,7 +2054,7 @@
       "items": {
         "what": {
           "q": "ADYSRE 是什么？",
-          "a": "一个集设计与开发资源于一体的工作区：组件、图标、调色板、渐变和提示词，随时复制进你的产品。"
+          "a": "一个集设计与开发资源于一体的工作区：组件、图标、调色板、渐变和模板，随时复制进你的产品。"
         },
         "frameworks": {
           "q": "支持哪些框架？",

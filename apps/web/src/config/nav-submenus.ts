@@ -11,12 +11,11 @@
  * page reads that param and filters itself. Keep the ids in step with the data:
  *   - components: category ids in `data/components/types.ts`
  *   - icons:      `ICON_CATEGORY_IDS` in `data/icons`
- *   - prompts:    `PROMPT_CATEGORIES` in `data/prompts/types`
  *   - tags:       derived from the gradient/palette datasets
  */
 
 export type LabelMode =
-  | { ns: 'components' | 'icons' | 'promptLibrary'; prefix: string }
+  | { ns: 'components' | 'icons'; prefix: string }
   | 'humanize';
 
 export interface SubmenuGroup {
@@ -139,25 +138,6 @@ const ICON_CATEGORIES = [
   'status',
 ];
 
-/** Prompt categories (mirrors `PROMPT_CATEGORIES`). */
-const PROMPT_CATEGORY_IDS = [
-  'portrait',
-  'headshot',
-  'business',
-  'fashion',
-  'lifestyle',
-  'cinematic',
-  'travel',
-  'nature',
-  'fitness',
-  'automotive',
-  'editorial',
-  'fantasy',
-  'sci-fi',
-  'anime',
-  'artistic',
-];
-
 /** Gradient filter tags (derived from the gradient dataset). */
 const GRADIENT_TAGS = [
   'blue', 'brown', 'conic', 'contrast', 'cool', 'corporate', 'dark', 'fire', 'fresh',
@@ -195,13 +175,6 @@ export const NAV_SUBMENUS: Record<string, ModuleSubmenu> = {
     param: 'category',
     labelMode: { ns: 'components', prefix: 'categories.' },
     groups: COMPONENT_GROUPS,
-  },
-  promptLibrary: {
-    navKey: 'promptLibrary',
-    href: '/prompt-library',
-    param: 'category',
-    labelMode: { ns: 'promptLibrary', prefix: 'categories.' },
-    values: PROMPT_CATEGORY_IDS,
   },
   icons: {
     navKey: 'icons',

@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useTranslations } from 'next-intl';
-import { Search, Blocks, Shapes, Palette, Blend, Grid2x2, Waves, Library, LayoutTemplate, CornerDownLeft } from 'lucide-react';
+import { Search, Blocks, Shapes, Palette, Blend, Grid2x2, Waves, LayoutTemplate, CornerDownLeft } from 'lucide-react';
 import { cn } from 'adysre';
 import { useRouter } from '@/i18n/navigation';
 import { NAV_SUBMENUS } from '@/config/nav-submenus';
@@ -25,7 +25,6 @@ const PAGE_LINKS: { key: string; href: string; icon: typeof Blocks }[] = [
   { key: 'gradients', href: '/gradients', icon: Blend },
   { key: 'patterns', href: '/patterns', icon: Grid2x2 },
   { key: 'textures', href: '/textures', icon: Waves },
-  { key: 'promptLibrary', href: '/prompt-library', icon: Library },
   { key: 'templates', href: '/templates', icon: LayoutTemplate },
 ];
 
@@ -44,7 +43,6 @@ export function SearchCommand({ open, onClose }: { open: boolean; onClose: () =>
   const t = useTranslations('nav');
   const tComponents = useTranslations('components');
   const tIcons = useTranslations('icons');
-  const tPrompts = useTranslations('promptLibrary');
   const tTopbar = useTranslations('topbar');
 
   const [mounted, setMounted] = useState(false);
@@ -87,12 +85,11 @@ export function SearchCommand({ open, onClose }: { open: boolean; onClose: () =>
     (moduleKey: string, value: string): string => {
       const mode = NAV_SUBMENUS[moduleKey]?.labelMode;
       if (!mode || mode === 'humanize') return humanizeKey(value);
-      const translate =
-        mode.ns === 'components' ? tComponents : mode.ns === 'icons' ? tIcons : tPrompts;
+      const translate = mode.ns === 'components' ? tComponents : tIcons;
       const key = `${mode.prefix}${value}`;
       return translate.has(key) ? translate(key) : humanizeKey(value);
     },
-    [tComponents, tIcons, tPrompts],
+    [tComponents, tIcons],
   );
 
   // Every searchable destination, built once (cheap for pages/categories).

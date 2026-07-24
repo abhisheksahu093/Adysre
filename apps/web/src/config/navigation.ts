@@ -1,5 +1,4 @@
 import {
-  Library,
   Blocks,
   Shapes,
   Palette,
@@ -36,12 +35,6 @@ export interface NavItem {
 export const NAV_ITEMS: NavItem[] = [
   // Dashboard is hidden for now - re-add this entry to bring it back:
   // { key: 'dashboard', href: '/dashboard', icon: LayoutDashboard },
-  {
-    key: 'promptLibrary',
-    href: '/prompt-library',
-    icon: Library,
-    descriptionKey: 'promptLibrary',
-  },
   {
     key: 'components',
     href: '/components',
@@ -140,4 +133,4 @@ export function getNavItem(href: string): NavItem | undefined {
  * here rather than hardcoding a route, so hiding or reordering the menu moves
  * the entry point with it. (Dashboard used to be home; it's hidden for now.)
  */
-export const APP_HOME: string = NAV_ITEMS[0]?.href ?? '/prompt-library';
+export const APP_HOME: string = NAV_ITEMS[0]?.href ?? '/components';

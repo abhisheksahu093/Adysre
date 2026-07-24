@@ -16,6 +16,6 @@ export default createMiddleware(routing);
 export const config = {
   // Skip API routes, the public dynamic-QR redirect (/q/<slug> must resolve
   // without a locale prefix), Next internals and anything with a file extension
-  // (/prompts/categories/portrait.svg must not be locale-rewritten).
+  // (/logo/adysre.svg must not be locale-rewritten).
   matcher: '/((?!api|q/|_next|_vercel|.*\\..*).*)',
 };

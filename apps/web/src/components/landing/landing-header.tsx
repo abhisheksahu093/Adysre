@@ -30,7 +30,6 @@ const NAV_MENUS: { key: string; items: NavItem[] }[] = [
     items: [
       { href: LANDING_LINKS.components, navKey: 'components' },
       { href: LANDING_LINKS.icons, navKey: 'icons' },
-      { href: LANDING_LINKS.promptLibrary, navKey: 'promptLibrary' },
     ],
   },
   {
@@ -40,6 +39,15 @@ const NAV_MENUS: { key: string; items: NavItem[] }[] = [
       { href: LANDING_LINKS.gradients, navKey: 'gradients' },
       { href: LANDING_LINKS.patterns, navKey: 'patterns' },
       { href: LANDING_LINKS.textures, navKey: 'textures' },
+    ],
+  },
+  {
+    key: 'tools',
+    items: [
+      { href: LANDING_LINKS.codes, navKey: 'codes' },
+      { href: LANDING_LINKS.documents, navKey: 'documents' },
+      { href: LANDING_LINKS.websiteIntelligence, navKey: 'websiteIntelligence' },
+      { href: LANDING_LINKS.resume, navKey: 'resume' },
     ],
   },
 ];

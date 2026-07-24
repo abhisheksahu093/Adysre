@@ -73,7 +73,6 @@
   },
   "nav": {
     "dashboard": "Dashboard",
-    "promptLibrary": "Prompt Library",
     "components": "Components",
     "designPlayground": "Design Playground",
     "templates": "Templates",
@@ -82,7 +81,6 @@
     "openMenu": "Open navigation menu",
     "closeMenu": "Close navigation menu",
     "descriptions": {
-      "promptLibrary": "Browse, customise and copy prompts for your workspace.",
       "components": "Browse the building blocks available to every module.",
       "templates": "Start from a ready-made layout instead of a blank page.",
       "settings": "Manage your organization, members and preferences.",
@@ -324,87 +322,6 @@
       "thisWeek": "this week",
       "last24h": "last 24h",
       "files": "files"
-    }
-  },
-  "promptLibrary": {
-    "searchPlaceholder": "Search by title, tag or keyword…",
-    "searchLabel": "Search prompts",
-    "collections": {
-      "all": "All",
-      "featured": "Featured",
-      "trending": "Trending",
-      "new": "New"
-    },
-    "filters": {
-      "collection": "Collection",
-      "category": "Category",
-      "allCategories": "All categories",
-      "allTiers": "All tiers",
-      "allModels": "All models",
-      "allRatios": "All ratios",
-      "byTier": "Filter by tier",
-      "byModel": "Filter by model",
-      "byRatio": "Filter by aspect ratio"
-    },
-    "count": "{count, plural, =1 {# prompt} other {# prompts}}",
-    "countFiltered": "{count} of {total} prompts",
-    "empty": {
-      "title": "No prompts match those filters",
-      "description": "Try a different search or clear the filters."
-    },
-    "card": {
-      "editAria": "Edit {title}",
-      "searchTag": "Search for {tag}",
-      "lockedAria": "Premium prompt: get premium access to use {title}"
-    },
-    "dialog": {
-      "description": "Tweak the wording, then copy it. Your changes aren't saved to the library.",
-      "promptLabel": "Prompt",
-      "copyPrompt": "Copy prompt",
-      "characters": "{count} characters",
-      "edited": "Edited",
-      "worksWellOn": "Works well on",
-      "aspectRatios": "Aspect ratios",
-      "tags": "Tags",
-      "englishOriginal": "Showing the English original. This prompt hasn't been translated yet."
-    },
-    "tiers": {
-      "free": "Free",
-      "premium": "Premium"
-    },
-    "categories": {
-      "portrait": "Portrait",
-      "headshot": "Headshot",
-      "business": "Business",
-      "fashion": "Fashion",
-      "lifestyle": "Lifestyle",
-      "cinematic": "Cinematic",
-      "travel": "Travel",
-      "nature": "Nature",
-      "fitness": "Fitness",
-      "automotive": "Automotive",
-      "editorial": "Editorial",
-      "fantasy": "Fantasy",
-      "sci-fi": "Sci-Fi",
-      "anime": "Anime",
-      "artistic": "Artistic"
-    },
-    "styles": {
-      "photorealistic": "Photorealistic",
-      "cinematic": "Cinematic",
-      "editorial": "Editorial",
-      "monochrome": "Monochrome",
-      "painterly": "Painterly",
-      "illustrated": "Illustrated",
-      "3d-render": "3D Render",
-      "anime": "Anime"
-    },
-    "ratios": {
-      "1:1": "1:1 Square",
-      "4:5": "4:5 Portrait",
-      "3:4": "3:4 Portrait",
-      "9:16": "9:16 Story",
-      "16:9": "16:9 Wide"
     }
   },
   "pages": {
@@ -750,18 +667,6 @@
     "submit": "Checkout",
     "submitting": "Redirecting…",
     "unavailable": "Checkout isn't available yet. Please email support to purchase."
-  },
-  "premiumGate": {
-    "title": "This is a premium prompt",
-    "descriptionCopy": "“{title}” is part of the premium library. Get premium access to copy it.",
-    "descriptionEdit": "“{title}” is part of the premium library. Get premium access to customise it.",
-    "cta": "Get premium access",
-    "notNow": "Not now",
-    "benefits": {
-      "unlockAll": "Unlock all 120+ premium prompts",
-      "unlockEdit": "Customise any prompt before you copy it",
-      "unlockUpdates": "Every prompt we add, included"
-    }
   },
   "components": {
     "metaTitle": "Components",
@@ -1991,7 +1896,7 @@
   "landing": {
     "meta": {
       "title": "ADYSRE: Design and ship in one workspace",
-      "description": "The workspace where product teams browse components, icons, palettes, gradients and prompts, then take them straight to production."
+      "description": "The workspace where product teams browse components, icons, palettes, gradients and templates, then take them straight to production."
     },
     "nav": {
       "pricing": "Pricing",
@@ -2001,14 +1906,15 @@
       "skip": "Skip to content",
       "menus": {
         "styles": "Styles",
-        "library": "Library"
+        "library": "Library",
+        "tools": "Tools"
       }
     },
     "hero": {
       "badge": "New: gradient and palette generators",
       "title": "Everything your team needs to design and ship",
       "titleAccent": "in one calm workspace",
-      "subtitle": "ADYSRE brings components, icons, palettes, gradients and prompts together, so your team can move from idea to production without switching tools.",
+      "subtitle": "ADYSRE brings components, icons, palettes, gradients and templates together, so your team can move from idea to production without switching tools.",
       "ctaComponents": "Explore components",
       "ctaPlayground": "Open the playground",
       "ctaWorkspace": "Open the workspace",
@@ -2046,10 +1952,6 @@
         "textures": {
           "title": "Textures",
           "desc": "Noise, grain, paper and woven surface textures in pure CSS. No image files."
-        },
-        "promptLibrary": {
-          "title": "Prompt library",
-          "desc": "A curated library of prompts across categories, tuned for the models your team already uses."
         },
         "templates": {
           "title": "Templates",
@@ -2111,7 +2013,6 @@
         "gradients": "Gradients",
         "patterns": "Patterns",
         "textures": "Textures",
-        "prompts": "Prompts",
         "teams": "Teams building"
       }
     },
@@ -2153,7 +2054,7 @@
       "items": {
         "what": {
           "q": "What is ADYSRE?",
-          "a": "A single workspace for design and build resources: components, icons, palettes, gradients and prompts, ready to copy into your product."
+          "a": "A single workspace for design and build resources: components, icons, palettes, gradients and templates, ready to copy into your product."
         },
         "frameworks": {
           "q": "Which frameworks do you support?",

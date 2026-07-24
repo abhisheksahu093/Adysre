@@ -73,7 +73,6 @@
   },
   "nav": {
     "dashboard": "ダッシュボード",
-    "promptLibrary": "プロンプトライブラリ",
     "components": "コンポーネント",
     "designPlayground": "デザインプレイグラウンド",
     "templates": "テンプレート",
@@ -82,7 +81,6 @@
     "openMenu": "ナビゲーションメニューを開く",
     "closeMenu": "ナビゲーションメニューを閉じる",
     "descriptions": {
-      "promptLibrary": "ワークスペースで使うプロンプトを検索・編集・コピーできます。",
       "components": "すべてのモジュールで利用できる構成要素を確認できます。",
       "templates": "白紙からではなく、既成のレイアウトから始められます。",
       "settings": "組織・メンバー・環境設定を管理します。",
@@ -324,87 +322,6 @@
       "thisWeek": "今週",
       "last24h": "過去 24 時間",
       "files": "ファイル"
-    }
-  },
-  "promptLibrary": {
-    "searchPlaceholder": "タイトル・タグ・キーワードで検索…",
-    "searchLabel": "プロンプトを検索",
-    "collections": {
-      "all": "すべて",
-      "featured": "おすすめ",
-      "trending": "人気",
-      "new": "新着"
-    },
-    "filters": {
-      "collection": "コレクション",
-      "category": "カテゴリ",
-      "allCategories": "すべてのカテゴリ",
-      "allTiers": "すべてのプラン",
-      "allModels": "すべてのモデル",
-      "allRatios": "すべての比率",
-      "byTier": "プランで絞り込む",
-      "byModel": "モデルで絞り込む",
-      "byRatio": "アスペクト比で絞り込む"
-    },
-    "count": "{count, plural, other {# 件のプロンプト}}",
-    "countFiltered": "{total} 件中 {count} 件のプロンプト",
-    "empty": {
-      "title": "条件に一致するプロンプトがありません",
-      "description": "検索条件を変えるか、フィルターをクリアしてください。"
-    },
-    "card": {
-      "editAria": "{title} を編集",
-      "searchTag": "{tag} を検索",
-      "lockedAria": "プレミアムプロンプト：{title} を使うにはプレミアムアクセスが必要です"
-    },
-    "dialog": {
-      "description": "文言を調整してからコピーできます。変更内容はライブラリには保存されません。",
-      "promptLabel": "プロンプト",
-      "copyPrompt": "プロンプトをコピー",
-      "characters": "{count} 文字",
-      "edited": "編集済み",
-      "worksWellOn": "相性の良いモデル",
-      "aspectRatios": "アスペクト比",
-      "tags": "タグ",
-      "englishOriginal": "英語の原文を表示しています、このプロンプトはまだ翻訳されていません。"
-    },
-    "tiers": {
-      "free": "無料",
-      "premium": "プレミアム"
-    },
-    "categories": {
-      "portrait": "ポートレート",
-      "headshot": "ヘッドショット",
-      "business": "ビジネス",
-      "fashion": "ファッション",
-      "lifestyle": "ライフスタイル",
-      "cinematic": "シネマティック",
-      "travel": "トラベル",
-      "nature": "ネイチャー",
-      "fitness": "フィットネス",
-      "automotive": "自動車",
-      "editorial": "エディトリアル",
-      "fantasy": "ファンタジー",
-      "sci-fi": "SF",
-      "anime": "アニメ",
-      "artistic": "アート"
-    },
-    "styles": {
-      "photorealistic": "フォトリアル",
-      "cinematic": "シネマティック",
-      "editorial": "エディトリアル",
-      "monochrome": "モノクロ",
-      "painterly": "絵画調",
-      "illustrated": "イラスト",
-      "3d-render": "3D レンダー",
-      "anime": "アニメ"
-    },
-    "ratios": {
-      "1:1": "1:1 スクエア",
-      "4:5": "4:5 ポートレート",
-      "3:4": "3:4 ポートレート",
-      "9:16": "9:16 ストーリー",
-      "16:9": "16:9 ワイド"
     }
   },
   "pages": {
@@ -750,18 +667,6 @@
     "submit": "購入手続きへ",
     "submitting": "リダイレクト中…",
     "unavailable": "決済はまだご利用いただけません。ご購入はサポートまでご連絡ください。"
-  },
-  "premiumGate": {
-    "title": "これはプレミアムプロンプトです",
-    "descriptionCopy": "「{title}」はプレミアムライブラリの一部です。コピーするにはプレミアムアクセスが必要です。",
-    "descriptionEdit": "「{title}」はプレミアムライブラリの一部です。カスタマイズするにはプレミアムアクセスが必要です。",
-    "cta": "プレミアムを利用する",
-    "notNow": "後で",
-    "benefits": {
-      "unlockAll": "120以上のプレミアムプロンプトをすべて利用",
-      "unlockEdit": "コピー前にどのプロンプトもカスタマイズ可能",
-      "unlockUpdates": "今後追加されるプロンプトもすべて含む"
-    }
   },
   "components": {
     "metaTitle": "コンポーネント",
@@ -1991,7 +1896,7 @@
   "landing": {
     "meta": {
       "title": "ADYSRE：デザインとリリースを一つのワークスペースで",
-      "description": "プロダクトチームがコンポーネント、アイコン、パレット、グラデーション、プロンプトを一か所で扱い、そのまま本番へ届けられるワークスペース。"
+      "description": "プロダクトチームがコンポーネント、アイコン、パレット、グラデーション、テンプレートを一か所で扱い、そのまま本番へ届けられるワークスペース。"
     },
     "nav": {
       "pricing": "料金",
@@ -2001,14 +1906,15 @@
       "skip": "本文へスキップ",
       "menus": {
         "styles": "スタイル",
-        "library": "ライブラリ"
+        "library": "ライブラリ",
+        "tools": "ツール"
       }
     },
     "hero": {
       "badge": "新機能: グラデーションとパレットのジェネレーター",
       "title": "チームのデザインとリリースに必要なすべて",
       "titleAccent": "を、静かな一つのワークスペースに",
-      "subtitle": "ADYSRE はコンポーネント、アイコン、パレット、グラデーション、プロンプトを一つにまとめ、ツールを切り替えずにアイデアから本番まで進められます。",
+      "subtitle": "ADYSRE はコンポーネント、アイコン、パレット、グラデーション、テンプレートを一つにまとめ、ツールを切り替えずにアイデアから本番まで進められます。",
       "ctaComponents": "コンポーネントを見る",
       "ctaPlayground": "プレイグラウンドを開く",
       "ctaWorkspace": "ワークスペースを開く",
@@ -2046,10 +1952,6 @@
         "textures": {
           "title": "テクスチャ",
           "desc": "純粋なCSSによるノイズ・グレイン・紙・織りのサーフェステクスチャ、画像ファイル不要。"
-        },
-        "promptLibrary": {
-          "title": "プロンプトライブラリ",
-          "desc": "カテゴリー別に厳選したプロンプト集。チームが使うモデルに合わせて調整済み。"
         },
         "templates": {
           "title": "テンプレート",
@@ -2111,7 +2013,6 @@
         "gradients": "グラデーション",
         "patterns": "パターン",
         "textures": "テクスチャ",
-        "prompts": "プロンプト",
         "teams": "利用中のチーム"
       }
     },
@@ -2153,7 +2054,7 @@
       "items": {
         "what": {
           "q": "ADYSRE とは？",
-          "a": "コンポーネント、アイコン、パレット、グラデーション、プロンプトを一つにまとめ、プロダクトにコピーできるデザインと開発のワークスペースです。"
+          "a": "コンポーネント、アイコン、パレット、グラデーション、テンプレートを一つにまとめ、プロダクトにコピーできるデザインと開発のワークスペースです。"
         },
         "frameworks": {
           "q": "対応フレームワークは？",

@@ -23,7 +23,6 @@ import {
   Blend,
   Grid2x2,
   Waves,
-  Library,
   LayoutTemplate,
   MousePointerClick,
   Wand2,
@@ -60,7 +59,6 @@ export const FEATURE_MODULES: FeatureModule[] = [
   { id: 'gradients', href: '/gradients', icon: Blend, accent: 'primary' },
   { id: 'patterns', href: '/patterns', icon: Grid2x2, accent: 'secondary' },
   { id: 'textures', href: '/textures', icon: Waves, accent: 'accent' },
-  { id: 'promptLibrary', href: '/prompt-library', icon: Library, accent: 'primary' },
   { id: 'templates', href: '/templates', icon: LayoutTemplate, accent: 'primary' },
 ];
 
@@ -111,7 +109,6 @@ export const STAT_META: Record<string, StatMeta> = {
   gradients: { icon: Blend, accent: 'primary', href: '/gradients' },
   patterns: { icon: Grid2x2, accent: 'secondary', href: '/patterns' },
   textures: { icon: Waves, accent: 'accent', href: '/textures' },
-  prompts: { icon: Library, accent: 'primary', href: '/prompt-library' },
   teams: { icon: Users, accent: 'secondary' },
 };
 
@@ -131,8 +128,12 @@ export const LANDING_LINKS = {
   gradients: '/gradients',
   patterns: '/patterns',
   textures: '/textures',
-  promptLibrary: '/prompt-library',
   templates: '/templates',
+  // Tools module destinations, surfaced in the header "Tools" menu.
+  codes: '/tools/codes',
+  documents: '/tools/documents',
+  websiteIntelligence: '/website-intelligence',
+  resume: '/tools/resume',
   pricing: '/pricing',
   contact: '/contact',
   docs: '/docs',

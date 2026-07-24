@@ -86,7 +86,7 @@ export function PricingCard({ plan, onCheckout }: PricingCardProps) {
           </Button>
         ) : (
           <Link
-            href={plan.href ?? '/prompt-library'}
+            href={plan.href ?? '/components'}
             className={cn(
               buttonVariants({ variant: plan.highlighted ? 'primary' : 'outline' }),
               'w-full',

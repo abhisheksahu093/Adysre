@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
-import { Barcode } from 'lucide-react';
-import { BarcodeGenerator } from '@/components/tools/barcode/barcode-generator';
+import { QrCode } from 'lucide-react';
+import { CodeTabs } from '@/components/tools/codes/code-tabs';
 
 export async function generateMetadata({
   params,
@@ -9,29 +9,30 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: 'tools.barcode' });
+  const t = await getTranslations({ locale, namespace: 'tools.codes' });
   return { title: t('title'), description: t('subtitle') };
 }
 
 /**
- * Barcode Generator - Tools module. Server shell around the client
- * `BarcodeGenerator`, whose JsBarcode rendering is a client-only bundle scoped
- * to this route.
+ * Code Generator - QR codes and barcodes on one page, switched by a tab bar.
+ * Server shell (header + copy from `tools.codes.*`) around the client
+ * `CodeTabs`; each generator's rendering library (qr-code-styling, JsBarcode)
+ * is a client bundle loaded only when its tab is active.
  */
-export default async function BarcodePage({
+export default async function CodesPage({
   params,
 }: {
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
-  const t = await getTranslations({ locale, namespace: 'tools.barcode' });
+  const t = await getTranslations({ locale, namespace: 'tools.codes' });
 
   return (
     <div className="mx-auto max-w-6xl space-y-8 py-4 sm:py-8">
       <header className="space-y-3">
         <span className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-3 py-1 text-xs font-medium text-muted-foreground">
-          <Barcode className="h-3.5 w-3.5 text-primary" aria-hidden />
+          <QrCode className="h-3.5 w-3.5 text-primary" aria-hidden />
           {t('badge')}
         </span>
         <div className="max-w-3xl space-y-2">
@@ -40,7 +41,7 @@ export default async function BarcodePage({
         </div>
       </header>
 
-      <BarcodeGenerator />
+      <CodeTabs />
     </div>
   );
 }

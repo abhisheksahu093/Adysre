@@ -96,7 +96,8 @@
       "qrCode": "为链接、WiFi、联系人、支付等生成可自定义的二维码。",
       "barcode": "通过实时预览和 PNG/SVG 导出生成 EAN、UPC、Code 128 和 Code 39 条形码。",
       "documents": "通过实时预览、模板和 PDF 导出创建发票、报价单、收据和工资单。",
-      "resume": "将简历与职位描述比对，生成 ATS 分数，含关键词与技能匹配。"
+      "resume": "将简历与职位描述比对，生成 ATS 分数，含关键词与技能匹配。",
+      "codes": "在一个页面上生成二维码和条形码（EAN、UPC、Code 128），支持实时预览和 PNG/SVG 导出。"
     },
     "palettes": "调色板",
     "gradients": "渐变",
@@ -123,7 +124,8 @@
     "qrCode": "二维码生成器",
     "barcode": "条形码生成器",
     "documents": "单据生成器",
-    "resume": "简历与 ATS"
+    "resume": "简历与 ATS",
+    "codes": "代码生成器"
   },
   "tools": {
     "qr": {
@@ -163,6 +165,15 @@
       "tabs": {
         "scanner": "ATS 扫描器",
         "builder": "简历生成器"
+      }
+    },
+    "codes": {
+      "badge": "工具",
+      "title": "代码生成器",
+      "subtitle": "在一个页面上创建二维码和条形码。为链接、WiFi、联系人和支付设计二维码，或创建可扫描的 EAN、UPC、Code 128 或 Code 39 条形码，全部在您的浏览器中实时预览并导出为 PNG 或 SVG。",
+      "tabs": {
+        "qr": "二维码",
+        "barcode": "条形码"
       }
     }
   },

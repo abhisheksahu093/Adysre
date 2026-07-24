@@ -96,7 +96,8 @@
       "qrCode": "Generate customizable QR codes for links, WiFi, contacts, payments and more.",
       "barcode": "Generate EAN, UPC, Code 128 and Code 39 barcodes with live preview and PNG/SVG export.",
       "documents": "Create invoices, quotes, receipts and salary slips with live preview, templates and PDF export.",
-      "resume": "Scan a resume against a job description for an ATS score, with keyword and skills match."
+      "resume": "Scan a resume against a job description for an ATS score, with keyword and skills match.",
+      "codes": "Generate QR codes and barcodes (EAN, UPC, Code 128) on one page, with live preview and PNG/SVG export."
     },
     "palettes": "Color Palettes",
     "gradients": "Gradients",
@@ -123,7 +124,8 @@
     "qrCode": "QR Code Generator",
     "barcode": "Barcode Generator",
     "documents": "Document Generator",
-    "resume": "Resume & ATS"
+    "resume": "Resume & ATS",
+    "codes": "Code Generator"
   },
   "tools": {
     "qr": {
@@ -163,6 +165,15 @@
       "tabs": {
         "scanner": "ATS Scanner",
         "builder": "Resume Builder"
+      }
+    },
+    "codes": {
+      "badge": "Tools",
+      "title": "Code Generator",
+      "subtitle": "Create QR codes and barcodes on one page. Design a QR for links, WiFi, contacts and payments, or a scannable EAN, UPC, Code 128 or Code 39 barcode, all previewed live and exported as PNG or SVG in your browser.",
+      "tabs": {
+        "qr": "QR Code",
+        "barcode": "Barcode"
       }
     }
   },

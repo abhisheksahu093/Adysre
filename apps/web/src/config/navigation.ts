@@ -11,7 +11,6 @@ import {
   Radar,
   QrCode,
   FileText,
-  Barcode,
   FileSearch,
   type LucideIcon,
 } from 'lucide-react';
@@ -96,25 +95,19 @@ export const NAV_ITEMS: NavItem[] = [
     icon: Radar,
     descriptionKey: 'websiteIntelligence',
   },
-  // Tools module — the QR generator is its first tool; the document generator,
-  // barcode engine and the rest of the spec extend this section.
+  // Tools module. The Code Generator pairs the QR and barcode generators on one
+  // page; the document generator and the rest of the spec extend this section.
   {
-    key: 'qrCode',
-    href: '/tools/qr-code',
+    key: 'codes',
+    href: '/tools/codes',
     icon: QrCode,
-    descriptionKey: 'qrCode',
+    descriptionKey: 'codes',
   },
   {
     key: 'documents',
     href: '/tools/documents',
     icon: FileText,
     descriptionKey: 'documents',
-  },
-  {
-    key: 'barcode',
-    href: '/tools/barcode',
-    icon: Barcode,
-    descriptionKey: 'barcode',
   },
   {
     key: 'resume',

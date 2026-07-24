@@ -92,7 +92,10 @@
       "textures": "Browse, edit and export CSS surface textures, or generate your own.",
       "icons": "Browse, customise and export original SVG icons in any format or size.",
       "designPlayground": "Design pages, dashboards and graphics on an infinite canvas. No code.",
-      "websiteIntelligence": "Scan any public site for performance, SEO, accessibility, security and more."
+      "websiteIntelligence": "Scan any public site for performance, SEO, accessibility, security and more.",
+      "qrCode": "Generate customizable QR codes for links, WiFi, contacts, payments and more.",
+      "barcode": "Generate EAN, UPC, Code 128 and Code 39 barcodes with live preview and PNG/SVG export.",
+      "documents": "Create invoices, quotes, receipts and salary slips with live preview, templates and PDF export."
     },
     "palettes": "Color Palettes",
     "gradients": "Gradients",
@@ -115,7 +118,41 @@
     "viewAll": "All {label}",
     "collapseSidebar": "Collapse sidebar",
     "expandSidebar": "Expand sidebar",
-    "websiteIntelligence": "Website Intelligence"
+    "websiteIntelligence": "Website Intelligence",
+    "qrCode": "QR Code Generator",
+    "barcode": "Barcode Generator",
+    "documents": "Document Generator"
+  },
+  "tools": {
+    "qr": {
+      "badge": "Tools",
+      "title": "QR Code Generator",
+      "subtitle": "Create customizable QR codes for links, WiFi, contacts, events and payments, designed live and downloaded as PNG or SVG, all in your browser."
+    },
+    "invoice": {
+      "badge": "Tools",
+      "title": "Invoice & Document Generator",
+      "subtitle": "Build invoices, quotes, receipts and orders with a live preview, polished templates and one-click print-to-PDF, plus JSON/CSV export and CSV import, all offline."
+    },
+    "barcode": {
+      "badge": "Tools",
+      "title": "Barcode Generator",
+      "subtitle": "Generate scannable EAN-13, EAN-8, UPC-A, ITF-14, Code 128 and Code 39 barcodes, check digits computed, designed live and exported as PNG or SVG, all in your browser."
+    },
+    "salary": {
+      "badge": "Tools",
+      "title": "Salary Slip Generator",
+      "subtitle": "Build professional payslips with employee details, earnings and deductions ledgers and an auto-calculated net salary. Preview live and print to PDF, all offline."
+    },
+    "documents": {
+      "badge": "Tools",
+      "title": "Document Generator",
+      "subtitle": "Create invoices, quotes, receipts and salary slips with a live preview, polished templates and print to PDF, all offline.",
+      "tabs": {
+        "invoice": "Invoice",
+        "salary": "Salary Slip"
+      }
+    }
   },
   "topbar": {
     "searchPlaceholder": "Search or jump to…",
@@ -2515,6 +2552,7 @@
     },
     "reportsTitle": "Export any report",
     "reportsSubtitle": "Take the findings anywhere, in the format your workflow expects.",
+    "reportsEmpty": "Run a scan above and its report exports here in any format.",
     "stackTitle": "Built on a production stack",
     "stack": {
       "frontend": "Frontend",

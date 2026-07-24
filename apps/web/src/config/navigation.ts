@@ -9,6 +9,9 @@ import {
   PenTool,
   LayoutTemplate,
   Radar,
+  QrCode,
+  FileText,
+  Barcode,
   type LucideIcon,
 } from 'lucide-react';
 
@@ -91,6 +94,26 @@ export const NAV_ITEMS: NavItem[] = [
     href: '/website-intelligence',
     icon: Radar,
     descriptionKey: 'websiteIntelligence',
+  },
+  // Tools module — the QR generator is its first tool; the document generator,
+  // barcode engine and the rest of the spec extend this section.
+  {
+    key: 'qrCode',
+    href: '/tools/qr-code',
+    icon: QrCode,
+    descriptionKey: 'qrCode',
+  },
+  {
+    key: 'documents',
+    href: '/tools/documents',
+    icon: FileText,
+    descriptionKey: 'documents',
+  },
+  {
+    key: 'barcode',
+    href: '/tools/barcode',
+    icon: Barcode,
+    descriptionKey: 'barcode',
   },
   // Settings is hidden until the module lands - re-add this entry to bring it
   // back. The route, its translations and its permission are all still in place,

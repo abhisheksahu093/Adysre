@@ -92,7 +92,10 @@
       "textures": "浏览、编辑并导出 CSS 表面纹理，或自己生成。",
       "icons": "浏览、自定义并以任意格式或尺寸导出原创 SVG 图标。",
       "designPlayground": "在无限画布上设计页面、仪表板和图形，无需编写代码。",
-      "websiteIntelligence": "扫描任意公开网站的性能、SEO、无障碍、安全等各项指标。"
+      "websiteIntelligence": "扫描任意公开网站的性能、SEO、无障碍、安全等各项指标。",
+      "qrCode": "为链接、WiFi、联系人、支付等生成可自定义的二维码。",
+      "barcode": "通过实时预览和 PNG/SVG 导出生成 EAN、UPC、Code 128 和 Code 39 条形码。",
+      "documents": "通过实时预览、模板和 PDF 导出创建发票、报价单、收据和工资单。"
     },
     "palettes": "调色板",
     "gradients": "渐变",
@@ -115,7 +118,41 @@
     "viewAll": "全部{label}",
     "collapseSidebar": "收起侧边栏",
     "expandSidebar": "展开侧边栏",
-    "websiteIntelligence": "网站智能分析"
+    "websiteIntelligence": "网站智能分析",
+    "qrCode": "二维码生成器",
+    "barcode": "条形码生成器",
+    "documents": "单据生成器"
+  },
+  "tools": {
+    "qr": {
+      "badge": "工具",
+      "title": "二维码生成器",
+      "subtitle": "为链接、WiFi、联系人、活动和支付创建可自定义的二维码, 实时设计并导出为 PNG 或 SVG，全部在浏览器中完成。"
+    },
+    "invoice": {
+      "badge": "工具",
+      "title": "发票与单据生成器",
+      "subtitle": "通过实时预览、精美模板和一键打印为 PDF，创建发票、报价单、收据和订单, 还支持 JSON/CSV 导出和 CSV 导入，全部离线完成。"
+    },
+    "barcode": {
+      "badge": "工具",
+      "title": "条形码生成器",
+      "subtitle": "生成可扫描的 EAN-13、EAN-8、UPC-A、ITF-14、Code 128 和 Code 39 条形码, 自动计算校验位，实时设计并导出为 PNG 或 SVG，全部在浏览器中完成。"
+    },
+    "salary": {
+      "badge": "工具",
+      "title": "工资单生成器",
+      "subtitle": "创建包含员工信息、收入与扣除明细以及自动计算实发工资的专业工资单。实时预览并打印为 PDF，全部离线完成。"
+    },
+    "documents": {
+      "badge": "工具",
+      "title": "单据生成器",
+      "subtitle": "通过实时预览、精美模板和打印为 PDF，创建发票、报价单、收据和工资单，全部离线完成。",
+      "tabs": {
+        "invoice": "发票",
+        "salary": "工资单"
+      }
+    }
   },
   "topbar": {
     "searchPlaceholder": "搜索或快速跳转…",
@@ -2515,6 +2552,7 @@
     },
     "reportsTitle": "导出任意报告",
     "reportsSubtitle": "以你工作流所需的格式，把结果带到任何地方。",
+    "reportsEmpty": "在上方运行一次扫描，其报告即可在此以任意格式导出。",
     "stackTitle": "基于生产级技术栈构建",
     "stack": {
       "frontend": "前端",

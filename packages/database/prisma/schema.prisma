@@ -38,6 +38,8 @@ model Organization {
   files          File[]
   settings       Setting[]
   designProjects DesignProject[]
+  qrFolders      QrFolder[]
+  qrCodes        QrCode[]
 
   @@index([deletedAt])
   @@map("organizations")
@@ -269,4 +271,85 @@ model DesignProject {
   // The list view is always "this tenant's live projects, newest first".
   @@index([tenantId, deletedAt, updatedAt])
   @@map("design_projects")
+}
+
+// ---------------------------------------------------------------------------
+// Tools — QR codes (dynamic QR + scan analytics)
+// ---------------------------------------------------------------------------
+
+model QrFolder {
+  id        String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  tenantId  String    @map("tenant_id") @db.Uuid
+  name      String
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  createdBy String?   @map("created_by") @db.Uuid
+  updatedBy String?   @map("updated_by") @db.Uuid
+  deletedAt DateTime? @map("deleted_at")
+
+  organization Organization @relation(fields: [tenantId], references: [id])
+  qrCodes      QrCode[]
+
+  @@index([tenantId, deletedAt])
+  @@map("qr_folders")
+}
+
+model QrCode {
+  id       String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  tenantId String @map("tenant_id") @db.Uuid
+  /// Short, public, URL-safe code the dynamic QR encodes: /q/<slug>.
+  slug     String @unique
+  /// Registry type id (url, wifi, vcard, …). See lib/tools/qr/registry.
+  type     String
+  /// Human label shown in the saved-codes list.
+  name     String
+  /// The type's field values, as entered.
+  payload  Json
+  /// The QrDesign (colors, styles, logo reference).
+  design   Json
+  /// Where a scan redirects. Null for static payloads (wifi/vcard/text) that
+  /// encode content directly and are not tracked.
+  targetUrl String?  @map("target_url")
+  favorite  Boolean  @default(false)
+  tags      String[]
+  folderId  String?  @map("folder_id") @db.Uuid
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  createdBy String?   @map("created_by") @db.Uuid
+  updatedBy String?   @map("updated_by") @db.Uuid
+  deletedAt DateTime? @map("deleted_at")
+
+  organization Organization @relation(fields: [tenantId], references: [id])
+  folder       QrFolder?    @relation(fields: [folderId], references: [id])
+  scans        QrScan[]
+
+  @@index([tenantId, deletedAt, updatedAt])
+  @@index([tenantId, folderId])
+  @@map("qr_codes")
+}
+
+// Append-only scan events. No soft-delete/audit columns by design: a scan is an
+// immutable fact, not an editable record (mirrors an audit log).
+model QrScan {
+  id       String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  tenantId String @map("tenant_id") @db.Uuid
+  qrCodeId String @map("qr_code_id") @db.Uuid
+  /// Coarse device class parsed from the User-Agent (mobile/tablet/desktop).
+  device   String?
+  browser  String?
+  os       String?
+  /// Referrer host, when the scanner sent one.
+  referrer String?
+  /// Best-effort region from Accept-Language (no external geo-IP service).
+  country  String?
+  city     String?
+  /// UTM parameters captured off the scan URL.
+  utm       Json?
+  scannedAt DateTime @default(now()) @map("scanned_at")
+
+  qrCode QrCode @relation(fields: [qrCodeId], references: [id])
+
+  @@index([qrCodeId, scannedAt])
+  @@index([tenantId, scannedAt])
+  @@map("qr_scans")
 }

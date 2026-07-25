@@ -67,6 +67,35 @@ function resample(src: Float32Array, mw: number, mh: number, tw: number, th: num
   return out;
 }
 
+export interface Box {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
+
+/** Tight bounding box of foreground pixels above `threshold`, or null if none. */
+export function foregroundBounds(foreground: Float32Array, width: number, height: number, threshold = 0.5): Box | null {
+  let minX = width;
+  let minY = height;
+  let maxX = 0;
+  let maxY = 0;
+  let found = false;
+  for (let y = 0; y < height; y++) {
+    for (let x = 0; x < width; x++) {
+      if (foreground[y * width + x]! > threshold) {
+        found = true;
+        if (x < minX) minX = x;
+        if (x > maxX) maxX = x;
+        if (y < minY) minY = y;
+        if (y > maxY) maxY = y;
+      }
+    }
+  }
+  if (!found) return null;
+  return { x: minX, y: minY, width: maxX - minX + 1, height: maxY - minY + 1 };
+}
+
 /** Foreground probability (0..1) per pixel, at the given target size. */
 export async function segmentForeground(
   source: HTMLCanvasElement | ImageBitmap,

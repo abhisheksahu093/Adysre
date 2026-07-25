@@ -10,6 +10,7 @@ import { EnhancerPanel, enhancerDefaults, enhancerProcess } from './enhancer';
 import { ocrDefaults, ocrProcess } from './ocr';
 import { FaceBlurPanel, faceBlurDefaults, faceBlurProcess } from './face-blur';
 import { BackgroundRemoverPanel, backgroundRemoverDefaults, backgroundRemoverProcess } from './background-remover';
+import { SmartCropPanel, smartCropDefaults, smartCropProcess } from './smart-crop';
 
 /**
  * The tool registry: the single source of truth for the module. Ready tools
@@ -122,7 +123,16 @@ export const AI_TOOLS: RegistryTool[] = [
     process: faceBlurProcess,
     panel: FaceBlurPanel,
   },
-  { id: 'smart-crop', status: 'soon', phase: 2, icon: 'Crop', accept: IMAGE_ACCEPT, defaultSettings: {} },
+  {
+    id: 'smart-crop',
+    status: 'ready',
+    phase: 2,
+    icon: 'Crop',
+    accept: IMAGE_ACCEPT,
+    defaultSettings: smartCropDefaults,
+    process: smartCropProcess,
+    panel: SmartCropPanel,
+  },
 ];
 
 export const AI_TOOL_BY_ID: Record<string, RegistryTool> = Object.fromEntries(AI_TOOLS.map((t) => [t.id, t]));

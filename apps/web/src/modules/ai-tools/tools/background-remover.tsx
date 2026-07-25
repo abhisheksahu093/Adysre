@@ -3,9 +3,8 @@
 import { Input, Label, cn } from 'adysre';
 import type { ProcessContext, ToolResult } from '../types';
 import { canvasToBlob, drawToCanvas, loadImage } from '../engine/image';
-import { segmentForeground } from '../engine/segment';
+import { foregroundBounds, segmentForeground } from '../engine/segment';
 import { withExtension } from '../engine/format';
-import type { FaceBox } from '../engine/face-detect';
 
 type BackgroundMode = 'transparent' | 'white' | 'black' | 'color' | 'gradient';
 
@@ -37,31 +36,6 @@ function fillBackground(ctx: CanvasRenderingContext2D, s: BgSettings, w: number,
     ctx.fillStyle = s.background === 'white' ? '#ffffff' : s.background === 'black' ? '#000000' : s.color;
   }
   ctx.fillRect(0, 0, w, h);
-}
-
-/** Bounding box of pixels above the alpha threshold, for auto crop. */
-function foregroundBounds(alpha: Float32Array, w: number, h: number): FaceBox | null {
-  let minX = w;
-  let minY = h;
-  let maxX = 0;
-  let maxY = 0;
-  let found = false;
-  for (let y = 0; y < h; y++) {
-    for (let x = 0; x < w; x++) {
-      if (alpha[y * w + x]! > 0.5) {
-        found = true;
-        if (x < minX) minX = x;
-        if (x > maxX) maxX = x;
-        if (y < minY) minY = y;
-        if (y > maxY) maxY = y;
-      }
-    }
-  }
-  if (!found) return null;
-  const pad = Math.round(Math.max(w, h) * 0.02);
-  const x = Math.max(0, minX - pad);
-  const y = Math.max(0, minY - pad);
-  return { x, y, width: Math.min(w, maxX + pad) - x, height: Math.min(h, maxY + pad) - y };
 }
 
 export async function backgroundRemoverProcess(ctx: ProcessContext): Promise<ToolResult> {

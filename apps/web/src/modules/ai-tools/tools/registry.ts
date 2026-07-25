@@ -11,6 +11,7 @@ import { ocrDefaults, ocrProcess } from './ocr';
 import { FaceBlurPanel, faceBlurDefaults, faceBlurProcess } from './face-blur';
 import { BackgroundRemoverPanel, backgroundRemoverDefaults, backgroundRemoverProcess } from './background-remover';
 import { SmartCropPanel, smartCropDefaults, smartCropProcess } from './smart-crop';
+import { UpscalerPanel, upscalerDefaults, upscalerProcess } from './upscaler';
 
 /**
  * The tool registry: the single source of truth for the module. Ready tools
@@ -102,7 +103,16 @@ export const AI_TOOLS: RegistryTool[] = [
     process: ocrProcess,
     textOutput: true,
   },
-  { id: 'upscaler', status: 'soon', phase: 2, icon: 'Maximize', accept: IMAGE_ACCEPT, defaultSettings: {} },
+  {
+    id: 'upscaler',
+    status: 'ready',
+    phase: 2,
+    icon: 'Maximize',
+    accept: IMAGE_ACCEPT,
+    defaultSettings: upscalerDefaults,
+    process: upscalerProcess,
+    panel: UpscalerPanel,
+  },
   {
     id: 'enhancer',
     status: 'ready',

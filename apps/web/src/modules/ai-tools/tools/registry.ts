@@ -4,6 +4,9 @@ import { IMAGE_ACCEPT } from '../types';
 import { CompressorPanel, compressorDefaults, compressorProcess } from './compressor';
 import { ConverterPanel, converterDefaults, converterProcess } from './converter';
 import { ResizerPanel, resizerDefaults, resizerProcess } from './resizer';
+import { qrReaderDefaults, qrReaderProcess } from './qr-reader';
+import { barcodeReaderDefaults, barcodeReaderProcess } from './barcode-reader';
+import { EnhancerPanel, enhancerDefaults, enhancerProcess } from './enhancer';
 
 /**
  * The tool registry: the single source of truth for the module. Ready tools
@@ -56,11 +59,38 @@ export const AI_TOOLS: RegistryTool[] = [
     panel: ResizerPanel,
   },
   { id: 'background-remover', status: 'soon', phase: 1, icon: 'Eraser', accept: IMAGE_ACCEPT, defaultSettings: {} },
-  { id: 'qr-reader', status: 'soon', phase: 1, icon: 'QrCode', accept: IMAGE_ACCEPT, defaultSettings: {}, textOutput: true },
-  { id: 'barcode-reader', status: 'soon', phase: 1, icon: 'Barcode', accept: IMAGE_ACCEPT, defaultSettings: {}, textOutput: true },
+  {
+    id: 'qr-reader',
+    status: 'ready',
+    phase: 1,
+    icon: 'QrCode',
+    accept: IMAGE_ACCEPT,
+    defaultSettings: qrReaderDefaults,
+    process: qrReaderProcess,
+    textOutput: true,
+  },
+  {
+    id: 'barcode-reader',
+    status: 'ready',
+    phase: 1,
+    icon: 'Barcode',
+    accept: IMAGE_ACCEPT,
+    defaultSettings: barcodeReaderDefaults,
+    process: barcodeReaderProcess,
+    textOutput: true,
+  },
   { id: 'ocr', status: 'soon', phase: 1, icon: 'ScanText', accept: [...IMAGE_ACCEPT, 'application/pdf'], defaultSettings: {}, textOutput: true },
   { id: 'upscaler', status: 'soon', phase: 2, icon: 'Maximize', accept: IMAGE_ACCEPT, defaultSettings: {} },
-  { id: 'enhancer', status: 'soon', phase: 2, icon: 'Wand2', accept: IMAGE_ACCEPT, defaultSettings: {} },
+  {
+    id: 'enhancer',
+    status: 'ready',
+    phase: 2,
+    icon: 'Wand2',
+    accept: IMAGE_ACCEPT,
+    defaultSettings: enhancerDefaults,
+    process: enhancerProcess,
+    panel: EnhancerPanel,
+  },
   { id: 'face-blur', status: 'soon', phase: 2, icon: 'Contrast', accept: IMAGE_ACCEPT, defaultSettings: {} },
   { id: 'smart-crop', status: 'soon', phase: 2, icon: 'Crop', accept: IMAGE_ACCEPT, defaultSettings: {} },
 ];

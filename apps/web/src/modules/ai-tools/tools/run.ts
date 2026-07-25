@@ -47,3 +47,18 @@ export function safeFormatId(sourceMime: string): string {
   if (sourceMime === 'image/webp') return 'webp';
   return 'png';
 }
+
+/** Build a text result (readers, OCR): downloads as .txt and shows in a panel. */
+export function textResult(item: MediaItem, text: string): ToolResult {
+  const blob = new Blob([text], { type: 'text/plain' });
+  return {
+    blob,
+    url: URL.createObjectURL(blob),
+    size: blob.size,
+    width: item.width,
+    height: item.height,
+    filename: withExtension(item.name, 'txt'),
+    text,
+    mime: 'text/plain',
+  };
+}

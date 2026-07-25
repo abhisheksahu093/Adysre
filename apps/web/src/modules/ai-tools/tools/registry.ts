@@ -8,6 +8,7 @@ import { qrReaderDefaults, qrReaderProcess } from './qr-reader';
 import { barcodeReaderDefaults, barcodeReaderProcess } from './barcode-reader';
 import { EnhancerPanel, enhancerDefaults, enhancerProcess } from './enhancer';
 import { ocrDefaults, ocrProcess } from './ocr';
+import { FaceBlurPanel, faceBlurDefaults, faceBlurProcess } from './face-blur';
 
 /**
  * The tool registry: the single source of truth for the module. Ready tools
@@ -101,7 +102,16 @@ export const AI_TOOLS: RegistryTool[] = [
     process: enhancerProcess,
     panel: EnhancerPanel,
   },
-  { id: 'face-blur', status: 'soon', phase: 2, icon: 'Contrast', accept: IMAGE_ACCEPT, defaultSettings: {} },
+  {
+    id: 'face-blur',
+    status: 'ready',
+    phase: 2,
+    icon: 'Contrast',
+    accept: IMAGE_ACCEPT,
+    defaultSettings: faceBlurDefaults,
+    process: faceBlurProcess,
+    panel: FaceBlurPanel,
+  },
   { id: 'smart-crop', status: 'soon', phase: 2, icon: 'Crop', accept: IMAGE_ACCEPT, defaultSettings: {} },
 ];
 

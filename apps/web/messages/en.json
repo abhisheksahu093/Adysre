@@ -1919,7 +1919,7 @@
   "landing": {
     "meta": {
       "title": "ADYSRE: Design and ship in one workspace",
-      "description": "The workspace where product teams browse components, icons, palettes, gradients and templates, then take them straight to production."
+      "description": "The workspace where product teams browse components, icons, colours, surfaces, templates and tools, then take them straight to production."
     },
     "nav": {
       "pricing": "Pricing",
@@ -1935,9 +1935,9 @@
     },
     "hero": {
       "badge": "New: gradient and palette generators",
-      "title": "Everything your team needs to design and ship",
+      "title": "Every block, colour and tool your team needs",
       "titleAccent": "in one calm workspace",
-      "subtitle": "ADYSRE brings components, icons, palettes, gradients and templates together, so your team can move from idea to production without switching tools.",
+      "subtitle": "ADYSRE brings your components, icons, colours, surfaces, templates and tools into one workspace, so your team can move from idea to production without switching apps.",
       "ctaComponents": "Explore components",
       "ctaPlayground": "Open the playground",
       "ctaWorkspace": "Open the workspace",

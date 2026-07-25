@@ -9,6 +9,7 @@ import { barcodeReaderDefaults, barcodeReaderProcess } from './barcode-reader';
 import { EnhancerPanel, enhancerDefaults, enhancerProcess } from './enhancer';
 import { ocrDefaults, ocrProcess } from './ocr';
 import { FaceBlurPanel, faceBlurDefaults, faceBlurProcess } from './face-blur';
+import { BackgroundRemoverPanel, backgroundRemoverDefaults, backgroundRemoverProcess } from './background-remover';
 
 /**
  * The tool registry: the single source of truth for the module. Ready tools
@@ -60,7 +61,16 @@ export const AI_TOOLS: RegistryTool[] = [
     process: resizerProcess,
     panel: ResizerPanel,
   },
-  { id: 'background-remover', status: 'soon', phase: 1, icon: 'Eraser', accept: IMAGE_ACCEPT, defaultSettings: {} },
+  {
+    id: 'background-remover',
+    status: 'ready',
+    phase: 1,
+    icon: 'Eraser',
+    accept: IMAGE_ACCEPT,
+    defaultSettings: backgroundRemoverDefaults,
+    process: backgroundRemoverProcess,
+    panel: BackgroundRemoverPanel,
+  },
   {
     id: 'qr-reader',
     status: 'ready',

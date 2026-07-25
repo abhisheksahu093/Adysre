@@ -2727,7 +2727,7 @@
       },
       "ocr": {
         "name": "文字识别 OCR",
-        "desc": "从图像和 PDF 中提取文字为 TXT、DOCX、JSON 或 CSV。"
+        "desc": "在设备上从图像中提取文字，然后复制或下载为 TXT。"
       },
       "upscaler": {
         "name": "图像放大器",

@@ -7,6 +7,7 @@ import { ResizerPanel, resizerDefaults, resizerProcess } from './resizer';
 import { qrReaderDefaults, qrReaderProcess } from './qr-reader';
 import { barcodeReaderDefaults, barcodeReaderProcess } from './barcode-reader';
 import { EnhancerPanel, enhancerDefaults, enhancerProcess } from './enhancer';
+import { ocrDefaults, ocrProcess } from './ocr';
 
 /**
  * The tool registry: the single source of truth for the module. Ready tools
@@ -79,7 +80,16 @@ export const AI_TOOLS: RegistryTool[] = [
     process: barcodeReaderProcess,
     textOutput: true,
   },
-  { id: 'ocr', status: 'soon', phase: 1, icon: 'ScanText', accept: [...IMAGE_ACCEPT, 'application/pdf'], defaultSettings: {}, textOutput: true },
+  {
+    id: 'ocr',
+    status: 'ready',
+    phase: 1,
+    icon: 'ScanText',
+    accept: IMAGE_ACCEPT,
+    defaultSettings: ocrDefaults,
+    process: ocrProcess,
+    textOutput: true,
+  },
   { id: 'upscaler', status: 'soon', phase: 2, icon: 'Maximize', accept: IMAGE_ACCEPT, defaultSettings: {} },
   {
     id: 'enhancer',

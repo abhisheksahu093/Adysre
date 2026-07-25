@@ -96,7 +96,8 @@
       "documents": "通过实时预览、模板和 PDF 导出创建发票、报价单、收据和工资单。",
       "resume": "将简历与职位描述比对，生成 ATS 分数，含关键词与技能匹配。",
       "codes": "在一个页面上生成二维码和条形码（EAN、UPC、Code 128），支持实时预览和 PNG/SVG 导出。",
-      "codeStudio": "在浏览器 IDE 中编写 HTML、CSS、JS、TypeScript、React 和 Vue，并实时预览。"
+      "codeStudio": "在浏览器 IDE 中编写 HTML、CSS、JS、TypeScript、React 和 Vue，并实时预览。",
+      "aiTools": "在浏览器中压缩、转换、调整图像大小，读取二维码和条形码等。"
     },
     "palettes": "调色板",
     "gradients": "渐变",
@@ -126,7 +127,8 @@
     "resume": "简历与 ATS",
     "codes": "代码生成器",
     "codeStudio": "代码工作室",
-    "customize": "定制你的项目"
+    "customize": "定制你的项目",
+    "aiTools": "AI 工具"
   },
   "tools": {
     "qr": {
@@ -2680,6 +2682,69 @@
       "toggleTheme": "切换主题",
       "toggleWordWrap": "切换自动换行",
       "toggleMinimap": "切换缩略图"
+    }
+  },
+  "aiTools": {
+    "badge": "AI 工具",
+    "title": "图像与实用工具",
+    "subtitle": "压缩、转换、调整大小等。全部在浏览器中运行，你的文件不会离开 ADYSRE，并且可离线使用。",
+    "phase": "阶段 {phase}",
+    "soon": "即将推出",
+    "soonHint": "该工具已在路线图中。其引擎正在打包，以便像现有工具一样完全离线运行。",
+    "backToTools": "所有 AI 工具",
+    "dropHint": "添加图像",
+    "settings": "设置",
+    "processAll": "全部处理",
+    "cancel": "取消",
+    "reprocess": "重新处理",
+    "downloadAll": "全部下载",
+    "clear": "清除",
+    "emptyPreview": "上传图像即可在此预览。",
+    "tools": {
+      "compressor": {
+        "name": "图像压缩器",
+        "desc": "在浏览器中以可调质量压缩 JPG、PNG 和 WEBP 文件。"
+      },
+      "converter": {
+        "name": "图像转换器",
+        "desc": "无需上传即可在 PNG、JPG、WEBP 和 AVIF 之间转换。"
+      },
+      "resizer": {
+        "name": "图像尺寸调整器",
+        "desc": "按宽度、高度或百分比调整大小，并保持宽高比。"
+      },
+      "background-remover": {
+        "name": "背景移除器",
+        "desc": "抠出主体并导出透明 PNG 或新背景。"
+      },
+      "qr-reader": {
+        "name": "二维码读取器",
+        "desc": "从图像中扫描二维码，读取链接、WiFi、联系人等。"
+      },
+      "barcode-reader": {
+        "name": "条形码读取器",
+        "desc": "从图像中读取 Code 128、EAN、UPC 等条形码。"
+      },
+      "ocr": {
+        "name": "文字识别 OCR",
+        "desc": "从图像和 PDF 中提取文字为 TXT、DOCX、JSON 或 CSV。"
+      },
+      "upscaler": {
+        "name": "图像放大器",
+        "desc": "在保留细节的同时将图像放大 2 倍、4 倍或 8 倍。"
+      },
+      "enhancer": {
+        "name": "图像增强器",
+        "desc": "锐化、降噪，并调整亮度、对比度和色彩。"
+      },
+      "face-blur": {
+        "name": "人脸模糊",
+        "desc": "为保护隐私自动检测并模糊人脸。"
+      },
+      "smart-crop": {
+        "name": "智能主体裁剪",
+        "desc": "检测主要主体并裁剪为社交平台尺寸。"
+      }
     }
   }
 }

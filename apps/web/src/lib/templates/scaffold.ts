@@ -1,4 +1,8 @@
-import type { ZipEntry } from '@/lib/zip';
+/** A generated text file in a template download. */
+export interface ScaffoldFile {
+  path: string;
+  content: string;
+}
 import { TEMPLATE_DATA_SOURCES, TEMPLATE_SOURCES } from '@/data/templates/generated/template-sources';
 import { getTemplate } from '@/data/templates';
 import type { TemplateDownloadId, TemplateEntry } from '@/data/templates/types';
@@ -74,7 +78,7 @@ function rewriteImports(source: string, prefix: string): string {
 }
 
 /** Files common to both React targets: sections, content, styles. */
-function reactSources(slug: string, prefix: string): ZipEntry[] {
+function reactSources(slug: string, prefix: string): ScaffoldFile[] {
   const files = TEMPLATE_SOURCES[slug] ?? {};
 
   return Object.entries(files)
@@ -218,7 +222,7 @@ const TSCONFIG = (jsx: string, extra: Record<string, unknown> = {}) =>
  * Pure - the caller zips and saves - so the file list can be asserted in a test
  * without touching the DOM.
  */
-export function buildTemplateDownload(slug: string, target: TemplateDownloadId): ZipEntry[] {
+export function buildTemplateDownload(slug: string, target: TemplateDownloadId): ScaffoldFile[] {
   const template = getTemplate(slug);
   if (!template) throw new Error(`Unknown template: ${slug}`);
 
@@ -226,7 +230,7 @@ export function buildTemplateDownload(slug: string, target: TemplateDownloadId):
   const name = `${template.slug}-${target}`;
 
   /** The content module and its types, flattened beside the sections. */
-  const withContent = (prefix: string): ZipEntry[] => {
+  const withContent = (prefix: string): ScaffoldFile[] => {
     const typesSource = TEMPLATE_DATA_SOURCES['types.ts'] ?? '';
     const contentSource = TEMPLATE_DATA_SOURCES[`${template.slug}-content.ts`] ?? '';
 
@@ -366,4 +370,3 @@ createRoot(document.getElementById('root')!).render(
   ];
 }
 
-export type { ZipEntry };

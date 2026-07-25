@@ -96,7 +96,8 @@
       "documents": "Create invoices, quotes, receipts and salary slips with live preview, templates and PDF export.",
       "resume": "Scan a resume against a job description for an ATS score, with keyword and skills match.",
       "codes": "Generate QR codes and barcodes (EAN, UPC, Code 128) on one page, with live preview and PNG/SVG export.",
-      "codeStudio": "Write HTML, CSS, JS, TypeScript, React and Vue with a live preview, in a browser IDE."
+      "codeStudio": "Write HTML, CSS, JS, TypeScript, React and Vue with a live preview, in a browser IDE.",
+      "aiTools": "Compress, convert, resize, read QR and barcodes and more, entirely in your browser."
     },
     "palettes": "Color Palettes",
     "gradients": "Gradients",
@@ -126,7 +127,8 @@
     "resume": "Resume & ATS",
     "codes": "Code Generator",
     "codeStudio": "Code Studio",
-    "customize": "Customize your project"
+    "customize": "Customize your project",
+    "aiTools": "AI Tools"
   },
   "tools": {
     "qr": {
@@ -2680,6 +2682,69 @@
       "toggleTheme": "Toggle theme",
       "toggleWordWrap": "Toggle word wrap",
       "toggleMinimap": "Toggle minimap"
+    }
+  },
+  "aiTools": {
+    "badge": "AI Tools",
+    "title": "Image & Utility Tools",
+    "subtitle": "Compress, convert, resize and more. Everything runs in your browser, so your files never leave ADYSRE and it works offline.",
+    "phase": "Phase {phase}",
+    "soon": "Soon",
+    "soonHint": "This tool is on the roadmap. Its engine is being bundled so it runs fully offline, like the tools already live.",
+    "backToTools": "All AI tools",
+    "dropHint": "Add images",
+    "settings": "Settings",
+    "processAll": "Process all",
+    "cancel": "Cancel",
+    "reprocess": "Reprocess",
+    "downloadAll": "Download all",
+    "clear": "Clear",
+    "emptyPreview": "Upload an image to preview it here.",
+    "tools": {
+      "compressor": {
+        "name": "Image Compressor",
+        "desc": "Shrink JPG, PNG and WEBP files with adjustable quality, in your browser."
+      },
+      "converter": {
+        "name": "Image Converter",
+        "desc": "Convert between PNG, JPG, WEBP and AVIF without uploading anywhere."
+      },
+      "resizer": {
+        "name": "Image Resizer",
+        "desc": "Resize by width, height or percentage, keeping the aspect ratio."
+      },
+      "background-remover": {
+        "name": "Background Remover",
+        "desc": "Cut out the subject and export a transparent PNG or a new background."
+      },
+      "qr-reader": {
+        "name": "QR Reader",
+        "desc": "Scan QR codes from images and read links, WiFi, contacts and more."
+      },
+      "barcode-reader": {
+        "name": "Barcode Reader",
+        "desc": "Read Code 128, EAN, UPC and other barcodes from images."
+      },
+      "ocr": {
+        "name": "OCR",
+        "desc": "Extract text from images and PDFs into TXT, DOCX, JSON or CSV."
+      },
+      "upscaler": {
+        "name": "Image Upscaler",
+        "desc": "Enlarge images 2x, 4x or 8x while keeping detail."
+      },
+      "enhancer": {
+        "name": "Image Enhancer",
+        "desc": "Sharpen, denoise and tune brightness, contrast and color."
+      },
+      "face-blur": {
+        "name": "Face Blur",
+        "desc": "Detect and blur faces automatically for privacy."
+      },
+      "smart-crop": {
+        "name": "Smart Object Crop",
+        "desc": "Detect the main subject and crop to social sizes."
+      }
     }
   }
 }

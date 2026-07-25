@@ -96,7 +96,8 @@
       "documents": "ライブプレビュー、テンプレート、PDF出力で請求書・見積書・領収書・給与明細を作成します。",
       "resume": "求人票と照合してATSスコアを算出。キーワードとスキルの一致も表示。",
       "codes": "QRコードとバーコード（EAN、UPC、Code 128）を1つのページで生成。ライブプレビューとPNG/SVGエクスポートに対応。",
-      "codeStudio": "ブラウザIDEで、ライブプレビュー付きでHTML・CSS・JS・TypeScript・React・Vueを書けます。"
+      "codeStudio": "ブラウザIDEで、ライブプレビュー付きでHTML・CSS・JS・TypeScript・React・Vueを書けます。",
+      "aiTools": "ブラウザ内で画像の圧縮・変換・リサイズ、QRやバーコードの読み取りなどを行えます。"
     },
     "palettes": "カラーパレット",
     "gradients": "グラデーション",
@@ -126,7 +127,8 @@
     "resume": "履歴書・ATS",
     "codes": "コードジェネレーター",
     "codeStudio": "コードスタジオ",
-    "customize": "プロジェクトをカスタマイズ"
+    "customize": "プロジェクトをカスタマイズ",
+    "aiTools": "AIツール"
   },
   "tools": {
     "qr": {
@@ -2680,6 +2682,69 @@
       "toggleTheme": "テーマを切り替え",
       "toggleWordWrap": "行の折り返しを切り替え",
       "toggleMinimap": "ミニマップを切り替え"
+    }
+  },
+  "aiTools": {
+    "badge": "AIツール",
+    "title": "画像・ユーティリティツール",
+    "subtitle": "圧縮・変換・リサイズなど。すべてブラウザ内で動作するため、ファイルがADYSREの外に出ることはなく、オフラインでも使えます。",
+    "phase": "フェーズ{phase}",
+    "soon": "近日公開",
+    "soonHint": "このツールはロードマップに含まれています。既存のツールと同様に完全オフラインで動くよう、エンジンを同梱中です。",
+    "backToTools": "すべてのAIツール",
+    "dropHint": "画像を追加",
+    "settings": "設定",
+    "processAll": "すべて処理",
+    "cancel": "キャンセル",
+    "reprocess": "再処理",
+    "downloadAll": "すべてダウンロード",
+    "clear": "クリア",
+    "emptyPreview": "ここでプレビューするには画像をアップロードしてください。",
+    "tools": {
+      "compressor": {
+        "name": "画像コンプレッサー",
+        "desc": "ブラウザ内で品質を調整しながらJPG・PNG・WEBPを圧縮します。"
+      },
+      "converter": {
+        "name": "画像コンバーター",
+        "desc": "どこにもアップロードせずにPNG・JPG・WEBP・AVIFを相互変換します。"
+      },
+      "resizer": {
+        "name": "画像リサイザー",
+        "desc": "縦横比を保ちつつ、幅・高さ・割合でリサイズします。"
+      },
+      "background-remover": {
+        "name": "背景リムーバー",
+        "desc": "被写体を切り抜き、透過PNGや新しい背景で書き出します。"
+      },
+      "qr-reader": {
+        "name": "QRリーダー",
+        "desc": "画像からQRコードを読み取り、リンクやWiFi、連絡先などを取得します。"
+      },
+      "barcode-reader": {
+        "name": "バーコードリーダー",
+        "desc": "画像からCode 128・EAN・UPCなどのバーコードを読み取ります。"
+      },
+      "ocr": {
+        "name": "OCR",
+        "desc": "画像やPDFからテキストを抽出し、TXT・DOCX・JSON・CSVに書き出します。"
+      },
+      "upscaler": {
+        "name": "画像アップスケーラー",
+        "desc": "ディテールを保ちながら画像を2x・4x・8xに拡大します。"
+      },
+      "enhancer": {
+        "name": "画像エンハンサー",
+        "desc": "シャープ化・ノイズ除去、明るさ・コントラスト・色の調整を行います。"
+      },
+      "face-blur": {
+        "name": "顔ぼかし",
+        "desc": "プライバシー保護のため顔を自動検出してぼかします。"
+      },
+      "smart-crop": {
+        "name": "スマート被写体クロップ",
+        "desc": "主要な被写体を検出し、SNSサイズにクロップします。"
+      }
     }
   }
 }

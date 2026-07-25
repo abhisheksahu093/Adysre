@@ -45,6 +45,7 @@ model Organization {
   atsReports         AtsReport[]
   resumes            Resume[]
   resumeVersions     ResumeVersion[]
+  mediaJobs          MediaJob[]
 
   @@index([deletedAt])
   @@map("organizations")
@@ -467,4 +468,29 @@ model ResumeVersion {
   @@unique([resumeId, version])
   @@index([tenantId, resumeId])
   @@map("resume_versions")
+}
+
+/// Optional saved history for an AI Tools run. The image work happens entirely
+/// in the browser (files never leave ADYSRE); this only records the job for a
+/// signed-in user who opts to keep it. Inputs/outputs are metadata, not blobs.
+model MediaJob {
+  id        String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  tenantId  String    @map("tenant_id") @db.Uuid
+  /// Tool id from the registry (compressor, converter, resizer, ...).
+  tool      String
+  /// Original file name / label.
+  name      String
+  /// The settings used for the run.
+  settings  Json
+  /// Result summary: sizes, dimensions, format, percent saved.
+  summary   Json
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  createdBy String?   @map("created_by") @db.Uuid
+  deletedAt DateTime? @map("deleted_at")
+
+  organization Organization @relation(fields: [tenantId], references: [id])
+
+  @@index([tenantId, deletedAt, createdAt])
+  @@map("media_jobs")
 }

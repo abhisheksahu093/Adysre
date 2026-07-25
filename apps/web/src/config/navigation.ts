@@ -12,6 +12,7 @@ import {
   FileText,
   FileSearch,
   SquareCode,
+  Wand2,
   type LucideIcon,
 } from 'lucide-react';
 
@@ -96,6 +97,12 @@ export const NAV_ITEMS: NavItem[] = [
     href: '/code-studio',
     icon: SquareCode,
     descriptionKey: 'codeStudio',
+  },
+  {
+    key: 'aiTools',
+    href: '/ai-tools',
+    icon: Wand2,
+    descriptionKey: 'aiTools',
   },
   {
     key: 'codes',

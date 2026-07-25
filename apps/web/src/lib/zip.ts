@@ -27,10 +27,11 @@ function crc32(bytes: Uint8Array): number {
 export interface ZipEntry {
   /** Forward-slash path inside the archive, e.g. `src/App.tsx`. */
   path: string;
-  content: string;
+  /** Text (UTF-8 encoded) or raw bytes for binary files like images. */
+  content: string | Uint8Array;
 }
 
-/** Build a .zip Blob from a set of text files. */
+/** Build a .zip Blob from a set of files (text or binary). */
 export function createZip(entries: ZipEntry[]): Blob {
   const encoder = new TextEncoder();
   const chunks: Uint8Array[] = [];
@@ -39,7 +40,7 @@ export function createZip(entries: ZipEntry[]): Blob {
 
   for (const entry of entries) {
     const nameBytes = encoder.encode(entry.path);
-    const data = encoder.encode(entry.content);
+    const data = typeof entry.content === 'string' ? encoder.encode(entry.content) : entry.content;
     const crc = crc32(data);
 
     // Local file header (30 bytes + name).

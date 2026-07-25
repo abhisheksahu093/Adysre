@@ -18,6 +18,9 @@ export const TEMPLATE_RENDERERS: Record<string, ComponentType<TemplateRendererPr
   'astra-portfolio': dynamic(() =>
     import('./astra-portfolio/astra-template').then((mod) => ({ default: mod.AstraTemplate })),
   ),
+  'crestline-advisory': dynamic(() =>
+    import('./crestline-advisory/crestline-template').then((mod) => ({ default: mod.CrestlineTemplate })),
+  ),
   'marlowe-portfolio': dynamic(() =>
     import('./marlowe-portfolio/marlowe-template').then((mod) => ({ default: mod.MarloweTemplate })),
   ),

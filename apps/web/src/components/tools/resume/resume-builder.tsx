@@ -99,11 +99,11 @@ export function ResumeBuilder() {
   const rmLink = (id: string) => set({ links: data.links.filter((x) => x.id !== id) });
 
   return (
-    <div className="grid gap-8 lg:grid-cols-[24rem_1fr]">
+    <div id="resume-shell" className="grid gap-8 lg:grid-cols-[24rem_1fr]">
       <style dangerouslySetInnerHTML={{ __html: PRINT_CSS(data.design.pageSize) }} />
 
       {/* Editor */}
-      <div className="relative space-y-6">
+      <div id="resume-editor" className="relative space-y-6">
         <Panel title="Template & design">
           <div className="grid grid-cols-2 gap-3">
             <FieldSelect
@@ -252,7 +252,7 @@ export function ResumeBuilder() {
       </div>
 
       {/* Preview + actions */}
-      <div className="relative space-y-4 lg:sticky lg:top-4 lg:self-start">
+      <div id="resume-preview-col" className="relative space-y-4 lg:sticky lg:top-4 lg:self-start">
         <div className="flex flex-wrap items-center gap-2">
           <Button type="button" size="sm" onClick={() => window.print()}><Printer className="mr-1.5 h-3.5 w-3.5" aria-hidden /> Print / PDF</Button>
           <Button type="button" variant="outline" size="sm" onClick={() => download(`resume-${data.contact.name || 'me'}.json`.replace(/\s+/g, '-'), toJson(data), 'application/json')}>
@@ -289,9 +289,34 @@ function SectionRow({ section, onToggle }: { section: ResumeSection; onToggle: (
 
 const PRINT_CSS = (size: string) => `@page { size: ${size} portrait; margin: 12mm; }
 @media print {
+  /* Let the document grow to as many pages as the resume needs. */
+  html, body { height: auto !important; overflow: visible !important; }
+
+  /* Paint only the resume paper, hiding the rest of the app shell. */
   body * { visibility: hidden !important; }
   #resume-print, #resume-print * { visibility: visible !important; }
-  #resume-print { position: absolute; left: 0; top: 0; width: 100%; border: 0 !important; box-shadow: none !important; }
+
+  /* Drop the editor and neutralize the sticky/relative preview column so the
+     paper anchors to the page origin instead of a pushed-down container - this
+     is what otherwise produced blank leading pages. */
+  #resume-editor { display: none !important; }
+  #resume-shell, #resume-preview-col { position: static !important; display: block !important; }
+
+  #resume-print {
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    margin: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    overflow: visible !important;
+    /* Keep template backgrounds and inverse (white-on-accent) text, which
+       browsers drop from print by default. */
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
 }`;
 
 // ── Primitives ───────────────────────────────────────────────────────────────

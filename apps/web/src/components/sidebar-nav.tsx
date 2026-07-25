@@ -9,7 +9,7 @@ import { Link, usePathname } from '@/i18n/navigation';
 import { NAV_ITEMS } from '@/config/navigation';
 import { NAV_SUBMENUS, type LabelMode, type ModuleSubmenu } from '@/config/nav-submenus';
 import { humanizeKey } from '@/lib/humanize';
-import { Logo } from './logo';
+import { Logo, LogoIcon } from './logo';
 
 /** Brand mark - shared by the desktop sidebar and the mobile drawer. */
 export function SidebarBrand() {
@@ -28,6 +28,22 @@ export function SidebarBrand() {
         className="rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
       >
         <Logo height={34} priority />
+      </Link>
+    </div>
+  );
+}
+
+/** Collapsed-rail brand: the compact icon mark, still a link home. */
+export function SidebarBrandIcon() {
+  const t = useTranslations('nav');
+  return (
+    <div className="flex h-14 shrink-0 items-center justify-center border-b border-border">
+      <Link
+        href="/"
+        aria-label={t('backToHome')}
+        className="rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+      >
+        <LogoIcon height={26} priority />
       </Link>
     </div>
   );

@@ -3,6 +3,8 @@ import { cn } from 'adysre';
 
 /** Intrinsic aspect of the artwork (653 × 192 viewBox) - ~3.4:1. */
 const RATIO = 653 / 192;
+/** Intrinsic aspect of the compact icon mark (218 × 120 viewBox). */
+const ICON_RATIO = 218 / 120;
 
 interface LogoProps {
   /** Rendered height in px; width follows the logo's aspect ratio. */
@@ -35,6 +37,27 @@ export function Logo({ height = 34, priority = false, className }: LogoProps) {
       height={height}
       priority={priority}
       // Asset is white: invert to black on light surfaces, leave it alone on dark.
+      className={cn('shrink-0 invert dark:invert-0', className)}
+      style={{ width, height }}
+    />
+  );
+}
+
+/**
+ * Compact ADYSRE icon mark, for the collapsed sidebar rail where the full
+ * wordmark does not fit. Same monochrome-white artwork as the wordmark, so it
+ * gets the same light-mode invert.
+ */
+export function LogoIcon({ height = 28, priority = false, className }: LogoProps) {
+  const width = Math.round(height * ICON_RATIO);
+
+  return (
+    <Image
+      src="/logo/adysre-icon.svg"
+      alt="ADYSRE"
+      width={width}
+      height={height}
+      priority={priority}
       className={cn('shrink-0 invert dark:invert-0', className)}
       style={{ width, height }}
     />

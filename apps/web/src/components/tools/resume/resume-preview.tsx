@@ -8,8 +8,8 @@ import { orderedVisibleSections } from '@/lib/tools/resume/serialize';
  * The rendered resume — the paper artifact. Colors come from the template
  * (inline, so print keeps them), and the `sections` order/visibility drives what
  * renders and where. Three layouts: classic (one column), modern (accent header
- * band) and sidebar (accent rail with contact/skills). `id="resume-paper"` is
- * the print target.
+ * band) and sidebar (accent rail with contact/skills). This paper sits inside
+ * the `#resume-print` wrapper, which is what the print stylesheet isolates.
  */
 export function ResumePreview({ data }: { data: ResumeData }) {
   const t = RESUME_TEMPLATES_BY_ID[data.templateId] ?? RESUME_TEMPLATES_BY_ID.minimal!;

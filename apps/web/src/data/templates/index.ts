@@ -26,6 +26,7 @@ import { VESPER_CONTENT, VESPER_NAV, VESPER_PROMPT } from './vesper-portfolio-co
 import { MARFA_CONTENT, MARFA_NAV, MARFA_PROMPT } from './marfa-studio-content';
 import { CRESTLINE_CONTENT, CRESTLINE_NAV, CRESTLINE_PROMPT } from './crestline-advisory-content';
 import { NEBULA_CONTENT, NEBULA_PAGE_META, NEBULA_PROMPT } from './ai-saas-content';
+import { SOLENE_CONTENT, SOLENE_PAGE_META, SOLENE_PROMPT } from './interior-content';
 import {
   TEMPLATE_SECTIONS,
   type TemplateEntry,
@@ -109,6 +110,27 @@ export const TEMPLATES: TemplateEntry[] = [
       scope: 'nebula',
     },
     content: NEBULA_CONTENT,
+  },
+  {
+    slug: 'interior',
+    name: 'Solène',
+    taglineKey: 'solene',
+    tier: 'premium',
+    themeKey: 'architecture',
+    sections: TEMPLATE_SECTIONS,
+    prompt: SOLENE_PROMPT,
+    // React targets only: Lenis smooth scroll, clip-path image reveals, count-ups
+    // and the reveal system are runtime behaviour a static build cannot reproduce.
+    downloads: ['nextjs', 'react'],
+    addedOn: '2026-07-25',
+    pages: SOLENE_PAGE_META.map((item) => ({ id: item.id, label: item.label })),
+    entry: {
+      file: 'solene-template',
+      symbol: 'SoleneTemplate',
+      stylesheet: 'solene.css',
+      scope: 'solene',
+    },
+    content: SOLENE_CONTENT,
   },
   {
     slug: 'marlowe-portfolio',

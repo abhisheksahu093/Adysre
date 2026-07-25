@@ -24,6 +24,9 @@ export const TEMPLATE_RENDERERS: Record<string, ComponentType<TemplateRendererPr
   'ai-saas': dynamic(() =>
     import('./ai-saas/nebula-template').then((mod) => ({ default: mod.NebulaTemplate })),
   ),
+  interior: dynamic(() =>
+    import('./interior/solene-template').then((mod) => ({ default: mod.SoleneTemplate })),
+  ),
   'marlowe-portfolio': dynamic(() =>
     import('./marlowe-portfolio/marlowe-template').then((mod) => ({ default: mod.MarloweTemplate })),
   ),

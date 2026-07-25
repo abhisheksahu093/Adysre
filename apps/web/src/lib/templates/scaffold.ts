@@ -35,6 +35,7 @@ const KNOWN_DEPENDENCIES: Record<string, string> = {
   'framer-motion': '^12.0.0',
   'lucide-react': '^0.451.0',
   animejs: '^4.5.0',
+  lenis: '^1.3.25',
 };
 
 /**

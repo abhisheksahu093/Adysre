@@ -21,6 +21,9 @@ export const TEMPLATE_RENDERERS: Record<string, ComponentType<TemplateRendererPr
   'crestline-advisory': dynamic(() =>
     import('./crestline-advisory/crestline-template').then((mod) => ({ default: mod.CrestlineTemplate })),
   ),
+  'ai-saas': dynamic(() =>
+    import('./ai-saas/nebula-template').then((mod) => ({ default: mod.NebulaTemplate })),
+  ),
   'marlowe-portfolio': dynamic(() =>
     import('./marlowe-portfolio/marlowe-template').then((mod) => ({ default: mod.MarloweTemplate })),
   ),

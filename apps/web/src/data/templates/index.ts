@@ -25,6 +25,7 @@ import { NOCTIS_CONTENT, NOCTIS_NAV, NOCTIS_PROMPT } from './noctis-folio-conten
 import { VESPER_CONTENT, VESPER_NAV, VESPER_PROMPT } from './vesper-portfolio-content';
 import { MARFA_CONTENT, MARFA_NAV, MARFA_PROMPT } from './marfa-studio-content';
 import { CRESTLINE_CONTENT, CRESTLINE_NAV, CRESTLINE_PROMPT } from './crestline-advisory-content';
+import { NEBULA_CONTENT, NEBULA_PAGE_META, NEBULA_PROMPT } from './ai-saas-content';
 import {
   TEMPLATE_SECTIONS,
   type TemplateEntry,
@@ -87,6 +88,27 @@ export const TEMPLATES: TemplateEntry[] = [
       scope: 'crestline',
     },
     content: CRESTLINE_CONTENT,
+  },
+  {
+    slug: 'ai-saas',
+    name: 'Nebula',
+    taglineKey: 'nebula',
+    tier: 'free',
+    themeKey: 'saas',
+    sections: TEMPLATE_SECTIONS,
+    prompt: NEBULA_PROMPT,
+    // React targets only: the mesh, Lenis smooth scroll, count-ups and reveal
+    // system are runtime behaviour a hand-authored static build cannot reproduce.
+    downloads: ['nextjs', 'react'],
+    addedOn: '2026-07-25',
+    pages: NEBULA_PAGE_META.map((item) => ({ id: item.id, label: item.label })),
+    entry: {
+      file: 'nebula-template',
+      symbol: 'NebulaTemplate',
+      stylesheet: 'nebula.css',
+      scope: 'nebula',
+    },
+    content: NEBULA_CONTENT,
   },
   {
     slug: 'marlowe-portfolio',

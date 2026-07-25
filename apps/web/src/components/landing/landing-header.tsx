@@ -47,6 +47,7 @@ const NAV_MENUS: { key: string; items: NavItem[] }[] = [
       { href: LANDING_LINKS.codeStudio, navKey: 'codeStudio' },
       { href: LANDING_LINKS.designPlayground, navKey: 'designPlayground' },
       { href: LANDING_LINKS.customize, navKey: 'customize' },
+      { href: LANDING_LINKS.aiTools, navKey: 'aiTools' },
       { href: LANDING_LINKS.codes, navKey: 'codes' },
       { href: LANDING_LINKS.documents, navKey: 'documents' },
       { href: LANDING_LINKS.websiteIntelligence, navKey: 'websiteIntelligence' },

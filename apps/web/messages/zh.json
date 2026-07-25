@@ -133,7 +133,7 @@
     "codes": "代码生成器",
     "codeStudio": "代码工作室",
     "customize": "定制你的项目",
-    "aiTools": "AI 工具"
+    "aiTools": "图像与实用工具"
   },
   "tools": {
     "qr": {
@@ -2010,6 +2010,14 @@
       "gradient": {
         "label": "渐变",
         "caption": "可粘贴的 CSS 背景"
+      },
+      "patterns": {
+        "label": "图案",
+        "caption": "CSS 背景，无需图片文件"
+      },
+      "textures": {
+        "label": "纹理",
+        "caption": "颗粒与表面质感"
       },
       "icons": {
         "label": "图标",

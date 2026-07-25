@@ -48,6 +48,7 @@ export const AI_TOOLS: RegistryTool[] = [
     defaultSettings: compressorDefaults,
     process: compressorProcess,
     panel: CompressorPanel,
+    livePreview: true,
   },
   {
     id: 'converter',
@@ -58,6 +59,7 @@ export const AI_TOOLS: RegistryTool[] = [
     defaultSettings: converterDefaults,
     process: converterProcess,
     panel: ConverterPanel,
+    livePreview: true,
   },
   {
     id: 'resizer',
@@ -68,6 +70,7 @@ export const AI_TOOLS: RegistryTool[] = [
     defaultSettings: resizerDefaults,
     process: resizerProcess,
     panel: ResizerPanel,
+    livePreview: true,
   },
   {
     id: 'background-remover',

@@ -134,6 +134,7 @@ export const LANDING_LINKS = {
   // The components page leads with its "Customize your project" playground CTA.
   customize: '/components',
   // Tools module destinations, surfaced in the header "Tools" menu.
+  aiTools: '/ai-tools',
   codes: '/tools/codes',
   documents: '/tools/documents',
   websiteIntelligence: '/website-intelligence',

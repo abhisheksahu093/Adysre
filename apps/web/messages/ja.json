@@ -133,7 +133,7 @@
     "codes": "コードジェネレーター",
     "codeStudio": "コードスタジオ",
     "customize": "プロジェクトをカスタマイズ",
-    "aiTools": "AIツール"
+    "aiTools": "画像・ユーティリティツール"
   },
   "tools": {
     "qr": {
@@ -2010,6 +2010,14 @@
       "gradient": {
         "label": "グラデーション",
         "caption": "貼り付け対応の CSS 背景"
+      },
+      "patterns": {
+        "label": "パターン",
+        "caption": "画像ファイル不要の CSS 背景"
+      },
+      "textures": {
+        "label": "テクスチャ",
+        "caption": "グレインとサーフェス仕上げ"
       },
       "icons": {
         "label": "アイコン",

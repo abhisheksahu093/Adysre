@@ -78,6 +78,22 @@ export async function Showcase() {
           </div>
         </Tile>
 
+        {/* Patterns tile - dot grid and diagonal lines from CSS, token-coloured. */}
+        <Tile label={t('showcase.patterns.label')} caption={t('showcase.patterns.caption')}>
+          <div className="grid h-40 grid-cols-2 gap-2" aria-hidden>
+            <span className="rounded-lg bg-card text-primary/70 [background-image:radial-gradient(currentColor_1.5px,transparent_1.6px)] [background-size:12px_12px]" />
+            <span className="rounded-lg bg-card text-secondary/60 [background-image:repeating-linear-gradient(45deg,currentColor_0,currentColor_2px,transparent_2px,transparent_10px)]" />
+          </div>
+        </Tile>
+
+        {/* Textures tile - fine grain and cross-hatch, from CSS over a token surface. */}
+        <Tile label={t('showcase.textures.label')} caption={t('showcase.textures.caption')}>
+          <div className="grid h-40 grid-cols-2 gap-2" aria-hidden>
+            <span className="rounded-lg bg-muted text-foreground/20 [background-image:radial-gradient(currentColor_0.5px,transparent_0.6px)] [background-size:3px_3px]" />
+            <span className="rounded-lg bg-muted text-foreground/15 [background-image:repeating-linear-gradient(45deg,currentColor_0,currentColor_1px,transparent_1px,transparent_5px),repeating-linear-gradient(-45deg,currentColor_0,currentColor_1px,transparent_1px,transparent_5px)]" />
+          </div>
+        </Tile>
+
         {/* Icons tile */}
         <Tile label={t('showcase.icons.label')} caption={t('showcase.icons.caption')}>
           <div className="grid h-40 grid-cols-4 place-items-center gap-2" aria-hidden>

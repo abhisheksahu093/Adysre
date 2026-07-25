@@ -133,7 +133,7 @@
     "codes": "Code Generator",
     "codeStudio": "Code Studio",
     "customize": "Customize your project",
-    "aiTools": "AI Tools"
+    "aiTools": "Image & Utility Tools"
   },
   "tools": {
     "qr": {
@@ -2010,6 +2010,14 @@
       "gradient": {
         "label": "Gradient",
         "caption": "Paste-ready CSS backgrounds"
+      },
+      "patterns": {
+        "label": "Patterns",
+        "caption": "CSS backgrounds, no image files"
+      },
+      "textures": {
+        "label": "Textures",
+        "caption": "Grain and surface finishes"
       },
       "icons": {
         "label": "Icons",

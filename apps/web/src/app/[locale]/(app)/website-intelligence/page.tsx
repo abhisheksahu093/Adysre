@@ -8,7 +8,6 @@ import { IntelCapabilitiesGrid } from '@/components/website-intelligence/capabil
 import { ScanConsole } from '@/components/website-intelligence/scan-console';
 import { ScheduleManager } from '@/components/website-intelligence/schedule-manager';
 import { NotificationChannels } from '@/components/website-intelligence/notification-channels';
-import { ReportExport } from '@/components/website-intelligence/report-export';
 import { WebsiteIntelTabs } from '@/components/website-intelligence/website-intel-tabs';
 import { SeoAudit } from '@/components/website-intelligence/seo-audit';
 
@@ -76,7 +75,7 @@ export default async function WebsiteIntelligencePage({
               <ScanConsole placeholder={t('scan.placeholder')} />
 
         {/* Stats */}
-        <dl className="grid grid-cols-2 gap-4 pt-2 sm:grid-cols-4">
+        <dl className="grid grid-cols-3 gap-4 pt-2">
           {INTEL_STATS.map((stat) => (
             <div key={stat.id} className="rounded-xl border border-border bg-card p-4">
               <dd className="text-2xl font-bold tabular-nums sm:text-3xl">
@@ -138,17 +137,6 @@ export default async function WebsiteIntelligencePage({
         </ul>
       </section>
 
-      {/* ── Export any report ─────────────────────────────────────────────── */}
-      <section>
-        <header className="max-w-2xl space-y-2">
-          <h2 className="text-xl font-bold tracking-tight sm:text-2xl">{t('reportsTitle')}</h2>
-          <p className="text-sm text-muted-foreground">{t('reportsSubtitle')}</p>
-        </header>
-        {/* Working buttons: they export the most recent scan (PDF opens the
-            printable report, the rest download) — the same wiring the scan
-            result offers up top. */}
-        <ReportExport />
-      </section>
           </div>
         }
       />

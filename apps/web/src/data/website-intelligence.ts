@@ -87,7 +87,6 @@ export const INTEL_STATS = [
   { value: INTEL_CAPABILITIES.length, suffix: '', id: 'analyses' },
   { value: 500, suffix: '+', id: 'rules' },
   { value: 4, suffix: '', id: 'formats' },
-  { value: 0, suffix: '', id: 'paidAi' },
 ];
 
 /** Report export formats offered. Extensions are proper nouns. */

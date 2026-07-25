@@ -95,7 +95,8 @@
       "barcode": "ライブプレビューとPNG/SVG出力でEAN・UPC・Code 128・Code 39バーコードを作成します。",
       "documents": "ライブプレビュー、テンプレート、PDF出力で請求書・見積書・領収書・給与明細を作成します。",
       "resume": "求人票と照合してATSスコアを算出。キーワードとスキルの一致も表示。",
-      "codes": "QRコードとバーコード（EAN、UPC、Code 128）を1つのページで生成。ライブプレビューとPNG/SVGエクスポートに対応。"
+      "codes": "QRコードとバーコード（EAN、UPC、Code 128）を1つのページで生成。ライブプレビューとPNG/SVGエクスポートに対応。",
+      "codeStudio": "ブラウザIDEで、ライブプレビュー付きでHTML・CSS・JS・TypeScript・React・Vueを書けます。"
     },
     "palettes": "カラーパレット",
     "gradients": "グラデーション",
@@ -123,7 +124,8 @@
     "barcode": "バーコードジェネレーター",
     "documents": "ドキュメントジェネレーター",
     "resume": "履歴書・ATS",
-    "codes": "コードジェネレーター"
+    "codes": "コードジェネレーター",
+    "codeStudio": "コードスタジオ"
   },
   "tools": {
     "qr": {
@@ -2601,6 +2603,38 @@
     "tabs": {
       "website": "サイトスキャン",
       "seo": "SEO監査"
+    }
+  },
+  "codeStudio": {
+    "title": "コードスタジオ",
+    "subtitle": "Monaco、ライブプレビュー、コンソールを備えたブラウザIDE。インストール不要、サーバー不要。",
+    "projectName": "プロジェクト名",
+    "newProject": "新規",
+    "templatesLabel": "テンプレート",
+    "run": "実行",
+    "reset": "リセット",
+    "save": "保存",
+    "saving": "保存中",
+    "saved": "保存しました",
+    "downloadZip": "ZIPをダウンロード",
+    "settings": "設定",
+    "theme": "テーマ",
+    "fontSize": "フォントサイズ",
+    "tabSize": "タブ幅",
+    "wordWrap": "行の折り返し",
+    "minimap": "ミニマップ",
+    "autosave": "自動保存",
+    "themes": {
+      "dark": "ダーク",
+      "light": "ライト",
+      "system": "システム"
+    },
+    "templates": {
+      "html": "空のHTML",
+      "typescript": "TypeScript",
+      "react": "Reactアプリ",
+      "reactTs": "React + TypeScript",
+      "vue": "Vueアプリ"
     }
   }
 }

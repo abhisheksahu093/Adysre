@@ -11,6 +11,7 @@ import {
   QrCode,
   FileText,
   FileSearch,
+  SquareCode,
   type LucideIcon,
 } from 'lucide-react';
 
@@ -90,6 +91,12 @@ export const NAV_ITEMS: NavItem[] = [
   },
   // Tools module. The Code Generator pairs the QR and barcode generators on one
   // page; the document generator and the rest of the spec extend this section.
+  {
+    key: 'codeStudio',
+    href: '/code-studio',
+    icon: SquareCode,
+    descriptionKey: 'codeStudio',
+  },
   {
     key: 'codes',
     href: '/tools/codes',

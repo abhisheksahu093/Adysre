@@ -95,7 +95,8 @@
       "barcode": "Generate EAN, UPC, Code 128 and Code 39 barcodes with live preview and PNG/SVG export.",
       "documents": "Create invoices, quotes, receipts and salary slips with live preview, templates and PDF export.",
       "resume": "Scan a resume against a job description for an ATS score, with keyword and skills match.",
-      "codes": "Generate QR codes and barcodes (EAN, UPC, Code 128) on one page, with live preview and PNG/SVG export."
+      "codes": "Generate QR codes and barcodes (EAN, UPC, Code 128) on one page, with live preview and PNG/SVG export.",
+      "codeStudio": "Write HTML, CSS, JS, TypeScript, React and Vue with a live preview, in a browser IDE."
     },
     "palettes": "Color Palettes",
     "gradients": "Gradients",
@@ -123,7 +124,8 @@
     "barcode": "Barcode Generator",
     "documents": "Document Generator",
     "resume": "Resume & ATS",
-    "codes": "Code Generator"
+    "codes": "Code Generator",
+    "codeStudio": "Code Studio"
   },
   "tools": {
     "qr": {
@@ -2601,6 +2603,38 @@
     "tabs": {
       "website": "Website Scan",
       "seo": "SEO Audit"
+    }
+  },
+  "codeStudio": {
+    "title": "Code Studio",
+    "subtitle": "A browser IDE with Monaco, live preview and console. No install, no server.",
+    "projectName": "Project name",
+    "newProject": "New",
+    "templatesLabel": "Templates",
+    "run": "Run",
+    "reset": "Reset",
+    "save": "Save",
+    "saving": "Saving",
+    "saved": "Saved",
+    "downloadZip": "Download ZIP",
+    "settings": "Settings",
+    "theme": "Theme",
+    "fontSize": "Font size",
+    "tabSize": "Tab size",
+    "wordWrap": "Word wrap",
+    "minimap": "Minimap",
+    "autosave": "Autosave",
+    "themes": {
+      "dark": "Dark",
+      "light": "Light",
+      "system": "System"
+    },
+    "templates": {
+      "html": "Blank HTML",
+      "typescript": "TypeScript",
+      "react": "React App",
+      "reactTs": "React + TypeScript",
+      "vue": "Vue App"
     }
   }
 }

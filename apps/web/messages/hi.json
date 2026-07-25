@@ -95,7 +95,8 @@
       "barcode": "लाइव प्रीव्यू और PNG/SVG निर्यात के साथ EAN, UPC, Code 128 और Code 39 बारकोड बनाएँ।",
       "documents": "लाइव प्रीव्यू, टेम्पलेट और PDF निर्यात के साथ इनवॉइस, कोटेशन, रसीद और सैलरी स्लिप बनाएँ।",
       "resume": "ATS स्कोर के लिए रिज़्यूमे को जॉब विवरण से मिलाएँ, कीवर्ड और स्किल मैच के साथ।",
-      "codes": "एक ही पेज पर QR कोड और बारकोड (EAN, UPC, Code 128) बनाएं, लाइव प्रीव्यू और PNG/SVG एक्सपोर्ट के साथ."
+      "codes": "एक ही पेज पर QR कोड और बारकोड (EAN, UPC, Code 128) बनाएं, लाइव प्रीव्यू और PNG/SVG एक्सपोर्ट के साथ.",
+      "codeStudio": "ब्राउज़र IDE में लाइव प्रीव्यू के साथ HTML, CSS, JS, TypeScript, React और Vue लिखें।"
     },
     "palettes": "कलर पैलेट",
     "gradients": "ग्रेडिएंट",
@@ -123,7 +124,8 @@
     "barcode": "बारकोड जनरेटर",
     "documents": "दस्तावेज़ जनरेटर",
     "resume": "रिज़्यूमे और ATS",
-    "codes": "कोड जनरेटर"
+    "codes": "कोड जनरेटर",
+    "codeStudio": "कोड स्टूडियो"
   },
   "tools": {
     "qr": {
@@ -2601,6 +2603,38 @@
     "tabs": {
       "website": "वेबसाइट स्कैन",
       "seo": "SEO ऑडिट"
+    }
+  },
+  "codeStudio": {
+    "title": "कोड स्टूडियो",
+    "subtitle": "Monaco, लाइव प्रीव्यू और कंसोल वाला ब्राउज़र IDE. कोई इंस्टॉल नहीं, कोई सर्वर नहीं.",
+    "projectName": "प्रोजेक्ट नाम",
+    "newProject": "नया",
+    "templatesLabel": "टेम्पलेट",
+    "run": "चलाएँ",
+    "reset": "रीसेट",
+    "save": "सेव",
+    "saving": "सेव हो रहा है",
+    "saved": "सेव हो गया",
+    "downloadZip": "ZIP डाउनलोड करें",
+    "settings": "सेटिंग्स",
+    "theme": "थीम",
+    "fontSize": "फ़ॉन्ट आकार",
+    "tabSize": "टैब आकार",
+    "wordWrap": "वर्ड रैप",
+    "minimap": "मिनीमैप",
+    "autosave": "ऑटोसेव",
+    "themes": {
+      "dark": "डार्क",
+      "light": "लाइट",
+      "system": "सिस्टम"
+    },
+    "templates": {
+      "html": "खाली HTML",
+      "typescript": "TypeScript",
+      "react": "React ऐप",
+      "reactTs": "React + TypeScript",
+      "vue": "Vue ऐप"
     }
   }
 }

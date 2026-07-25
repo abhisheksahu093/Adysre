@@ -95,7 +95,8 @@
       "barcode": "通过实时预览和 PNG/SVG 导出生成 EAN、UPC、Code 128 和 Code 39 条形码。",
       "documents": "通过实时预览、模板和 PDF 导出创建发票、报价单、收据和工资单。",
       "resume": "将简历与职位描述比对，生成 ATS 分数，含关键词与技能匹配。",
-      "codes": "在一个页面上生成二维码和条形码（EAN、UPC、Code 128），支持实时预览和 PNG/SVG 导出。"
+      "codes": "在一个页面上生成二维码和条形码（EAN、UPC、Code 128），支持实时预览和 PNG/SVG 导出。",
+      "codeStudio": "在浏览器 IDE 中编写 HTML、CSS、JS、TypeScript、React 和 Vue，并实时预览。"
     },
     "palettes": "调色板",
     "gradients": "渐变",
@@ -123,7 +124,8 @@
     "barcode": "条形码生成器",
     "documents": "单据生成器",
     "resume": "简历与 ATS",
-    "codes": "代码生成器"
+    "codes": "代码生成器",
+    "codeStudio": "代码工作室"
   },
   "tools": {
     "qr": {
@@ -2601,6 +2603,38 @@
     "tabs": {
       "website": "网站扫描",
       "seo": "SEO 审计"
+    }
+  },
+  "codeStudio": {
+    "title": "代码工作室",
+    "subtitle": "带 Monaco、实时预览和控制台的浏览器 IDE。无需安装，无需服务器。",
+    "projectName": "项目名称",
+    "newProject": "新建",
+    "templatesLabel": "模板",
+    "run": "运行",
+    "reset": "重置",
+    "save": "保存",
+    "saving": "保存中",
+    "saved": "已保存",
+    "downloadZip": "下载 ZIP",
+    "settings": "设置",
+    "theme": "主题",
+    "fontSize": "字体大小",
+    "tabSize": "制表符宽度",
+    "wordWrap": "自动换行",
+    "minimap": "缩略图",
+    "autosave": "自动保存",
+    "themes": {
+      "dark": "深色",
+      "light": "浅色",
+      "system": "跟随系统"
+    },
+    "templates": {
+      "html": "空白 HTML",
+      "typescript": "TypeScript",
+      "react": "React 应用",
+      "reactTs": "React + TypeScript",
+      "vue": "Vue 应用"
     }
   }
 }

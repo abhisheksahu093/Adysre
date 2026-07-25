@@ -13,6 +13,9 @@ import {
   CRESTLINE_STATS,
   CRESTLINE_STEP_ICONS,
   CRESTLINE_STEPS,
+  CRESTLINE_VALUES,
+  type CrestlineMasthead as CrestlineMastheadData,
+  type CrestlinePageId,
 } from '@/data/templates/crestline-advisory-content';
 import { Counter, Line, LiftLines, Reveal, RevealGroup } from './crestline-motion';
 
@@ -66,7 +69,7 @@ function Band({
 /** The brand lockup: a green peak mark beside the wordmark. */
 function BrandMark() {
   return (
-    <a href="#top" className="flex items-center gap-2.5">
+    <a href="?page=home" className="flex items-center gap-2.5">
       <span className="inline-flex h-9 w-9 items-center justify-center rounded-[10px] bg-[var(--crl-green)]" aria-hidden>
         <Triangle className="h-4 w-4 fill-white text-white" />
       </span>
@@ -79,7 +82,7 @@ function BrandMark() {
 }
 
 /** The header. */
-export function CrestlineHeader() {
+export function CrestlineHeader({ page }: { page: CrestlinePageId }) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -103,24 +106,28 @@ export function CrestlineHeader() {
         <BrandMark />
 
         <nav aria-label="Primary" className="hidden items-center gap-1 md:flex">
-          {CRESTLINE_NAV.map((item, i) => (
-            <a
-              key={item.id}
-              href={`#${item.id}`}
-              className={[
-                'rounded-full px-3.5 py-1.5 text-[13.5px] transition-colors',
-                i === 0
-                  ? 'bg-[var(--crl-green-soft)] text-[var(--crl-green)]'
-                  : 'text-[var(--crl-ink-soft)] hover:text-[var(--crl-ink)]',
-              ].join(' ')}
-            >
-              {item.label}
-            </a>
-          ))}
+          {CRESTLINE_NAV.map((item) => {
+            const active = item.id === page;
+            return (
+              <a
+                key={item.id}
+                href={`?page=${item.id}`}
+                aria-current={active ? 'page' : undefined}
+                className={[
+                  'rounded-full px-3.5 py-1.5 text-[13.5px] transition-colors',
+                  active
+                    ? 'bg-[var(--crl-green-soft)] text-[var(--crl-green)]'
+                    : 'text-[var(--crl-ink-soft)] hover:text-[var(--crl-ink)]',
+                ].join(' ')}
+              >
+                {item.label}
+              </a>
+            );
+          })}
         </nav>
 
         <a
-          href="#contact"
+          href="?page=contact"
           className="hidden items-center gap-2 rounded-full bg-[var(--crl-green)] px-5 py-2.5 text-[13.5px] font-medium text-white transition-colors hover:bg-[var(--crl-green-deep)] md:inline-flex"
         >
           {CRESTLINE_LABELS.cta}
@@ -148,7 +155,7 @@ export function CrestlineHeader() {
           {CRESTLINE_NAV.map((item) => (
             <a
               key={item.id}
-              href={`#${item.id}`}
+              href={`?page=${item.id}`}
               onClick={() => setOpen(false)}
               className="block py-3 text-[15px] text-[var(--crl-ink-soft)]"
             >
@@ -156,7 +163,7 @@ export function CrestlineHeader() {
             </a>
           ))}
           <a
-            href="#contact"
+            href="?page=contact"
             onClick={() => setOpen(false)}
             className="my-2 inline-flex items-center gap-2 rounded-full bg-[var(--crl-green)] px-5 py-2.5 text-[14px] font-medium text-white"
           >
@@ -239,14 +246,14 @@ export function CrestlineHero() {
           <Reveal delay={0.26}>
             <div className="mt-8 flex flex-wrap gap-3">
               <a
-                href="#contact"
+                href="?page=contact"
                 className="inline-flex items-center gap-2 rounded-full bg-[var(--crl-green)] px-6 py-3.5 text-[14.5px] font-medium text-white transition-colors hover:bg-[var(--crl-green-deep)]"
               >
                 {hero.ctaPrimary}
                 <ArrowRight className="h-4 w-4" aria-hidden />
               </a>
               <a
-                href="#services"
+                href="?page=services"
                 className="inline-flex items-center gap-2 rounded-full border border-[var(--crl-line-strong)] px-6 py-3.5 text-[14.5px] font-medium transition-colors hover:bg-[var(--crl-panel)]"
               >
                 {hero.ctaSecondary}
@@ -291,6 +298,50 @@ export function CrestlineMarquee() {
         </div>
       </div>
     </section>
+  );
+}
+
+/** The page header that opens every page except home. */
+export function CrestlineMasthead({ masthead }: { masthead: CrestlineMastheadData }) {
+  return (
+    <section id="top" className="crl-particles relative isolate overflow-hidden px-5 pb-14 pt-36 sm:px-8 sm:pb-16 sm:pt-44">
+      <div className="mx-auto max-w-6xl">
+        <Reveal>
+          <p className="crl-mono inline-flex items-center gap-2 rounded-full border border-[var(--crl-line)] bg-[color-mix(in_srgb,var(--crl-panel)_70%,transparent)] px-3.5 py-1.5 text-[var(--crl-green)]">
+            <span className="h-1.5 w-1.5 rounded-full bg-[var(--crl-green)]" aria-hidden />
+            {masthead.eyebrow}
+          </p>
+        </Reveal>
+        <LiftLines as="h1" className="crl-display mt-6 max-w-4xl text-[clamp(2.4rem,6vw,4.2rem)]" delay={0.04}>
+          <Line>{masthead.title}</Line>
+        </LiftLines>
+        <Reveal delay={0.14}>
+          <p className="mt-6 max-w-[62ch] text-[17px] leading-[1.75] text-[var(--crl-ink-soft)]">{masthead.subtitle}</p>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+/** The four principles, for the About page. */
+export function CrestlineValues() {
+  return (
+    <Band eyebrow="Our values" title="Four principles that shape every engagement.">
+      <RevealGroup className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4" step={0.07}>
+        {CRESTLINE_VALUES.map((value) => {
+          const Icon = value.icon;
+          return (
+            <div key={value.title} className="rounded-[var(--crl-radius)] border border-[var(--crl-line)] bg-[var(--crl-panel)] p-6">
+              <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-[var(--crl-green-soft)]">
+                <Icon className="h-5 w-5 text-[var(--crl-green)]" aria-hidden />
+              </span>
+              <h3 className="crl-display mt-5 text-[1.3rem]">{value.title}</h3>
+              <p className="mt-2 text-[14px] leading-[1.7] text-[var(--crl-ink-soft)]">{value.body}</p>
+            </div>
+          );
+        })}
+      </RevealGroup>
+    </Band>
   );
 }
 
@@ -347,7 +398,7 @@ export function CrestlineServices() {
           return (
             <a
               key={service.title}
-              href="#contact"
+              href="?page=contact"
               className="group flex flex-col rounded-[var(--crl-radius)] border border-[var(--crl-line)] bg-[var(--crl-panel)] p-7 transition-colors hover:border-[var(--crl-green)]"
             >
               <div className="flex items-center justify-between">
@@ -545,7 +596,7 @@ export function CrestlineFooter() {
               <ul className="mt-4 space-y-2.5">
                 {column.links.map((link) => (
                   <li key={link}>
-                    <a href="#top" className="text-[14px] text-[var(--crl-ink-soft)] hover:text-[var(--crl-ink)]">
+                    <a href="?page=home" className="text-[14px] text-[var(--crl-ink-soft)] hover:text-[var(--crl-ink)]">
                       {link}
                     </a>
                   </li>

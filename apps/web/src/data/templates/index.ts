@@ -24,7 +24,7 @@ import { MARLOWE_CONTENT, MARLOWE_PROMPT } from './marlowe-portfolio-content';
 import { NOCTIS_CONTENT, NOCTIS_NAV, NOCTIS_PROMPT } from './noctis-folio-content';
 import { VESPER_CONTENT, VESPER_NAV, VESPER_PROMPT } from './vesper-portfolio-content';
 import { MARFA_CONTENT, MARFA_NAV, MARFA_PROMPT } from './marfa-studio-content';
-import { CRESTLINE_CONTENT, CRESTLINE_PROMPT } from './crestline-advisory-content';
+import { CRESTLINE_CONTENT, CRESTLINE_NAV, CRESTLINE_PROMPT } from './crestline-advisory-content';
 import {
   TEMPLATE_SECTIONS,
   type TemplateEntry,
@@ -77,9 +77,9 @@ export const TEMPLATES: TemplateEntry[] = [
     prompt: CRESTLINE_PROMPT,
     // React targets only: the count-up stats, orbit and reveal system are
     // runtime behaviour a hand-authored static build cannot reproduce.
-    // Single-page, so no `pages`.
     downloads: ['nextjs', 'react'],
     addedOn: '2026-07-25',
+    pages: CRESTLINE_NAV.map((item) => ({ id: item.id, label: item.label })),
     entry: {
       file: 'crestline-template',
       symbol: 'CrestlineTemplate',

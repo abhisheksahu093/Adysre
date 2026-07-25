@@ -55,12 +55,12 @@ export async function Showcase() {
     <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-28">
       <SectionHeading title={t('showcase.title')} subtitle={t('showcase.subtitle')} />
 
-      <div className="mt-12 grid grid-cols-1 gap-4 md:grid-cols-3">
+      <div className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {/* Gradient tile - spans two columns on desktop. */}
         <Tile
           label={t('showcase.gradient.label')}
           caption={t('showcase.gradient.caption')}
-          className="md:col-span-2"
+          className="sm:col-span-2"
         >
           <div
             className="h-40 w-full rounded-lg bg-gradient-to-br from-primary via-secondary to-accent"
@@ -75,6 +75,20 @@ export async function Showcase() {
             <span className="rounded-lg bg-secondary" />
             <span className="rounded-lg bg-accent" />
             <span className="rounded-lg bg-success" />
+          </div>
+        </Tile>
+
+        {/* Icons tile */}
+        <Tile label={t('showcase.icons.label')} caption={t('showcase.icons.caption')}>
+          <div className="grid h-40 grid-cols-4 place-items-center gap-2" aria-hidden>
+            {PREVIEW_ICONS.map((Icon, i) => (
+              <span
+                key={i}
+                className="flex h-full w-full items-center justify-center rounded-md bg-muted/60 text-muted-foreground"
+              >
+                <Icon className="h-5 w-5" />
+              </span>
+            ))}
           </div>
         </Tile>
 
@@ -94,25 +108,11 @@ export async function Showcase() {
           </div>
         </Tile>
 
-        {/* Icons tile */}
-        <Tile label={t('showcase.icons.label')} caption={t('showcase.icons.caption')}>
-          <div className="grid h-40 grid-cols-4 place-items-center gap-2" aria-hidden>
-            {PREVIEW_ICONS.map((Icon, i) => (
-              <span
-                key={i}
-                className="flex h-full w-full items-center justify-center rounded-md bg-muted/60 text-muted-foreground"
-              >
-                <Icon className="h-5 w-5" />
-              </span>
-            ))}
-          </div>
-        </Tile>
-
         {/* Components tile - spans two columns; renders real UI primitives. */}
         <Tile
           label={t('showcase.components.label')}
           caption={t('showcase.components.caption')}
-          className="md:col-span-2"
+          className="sm:col-span-2"
         >
           <div
             className="flex h-40 flex-col justify-center gap-3 pointer-events-none"

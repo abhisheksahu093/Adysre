@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from 'react';
 import { AlertTriangle, Ban, Copy, Info, Terminal, TriangleAlert } from 'lucide-react';
-import { cn } from 'adysre';
+import { Tooltip, cn } from 'adysre';
 import { useStudioStore } from '../store/use-studio-store';
 import type { ConsoleLevel } from '../types';
 
@@ -89,12 +89,16 @@ export function ConsolePanel() {
               <option value="error">Errors</option>
               <option value="info">Info</option>
             </select>
-            <button type="button" aria-label="Copy console" onClick={copyAll} className="rounded p-1 text-muted-foreground hover:bg-muted hover:text-foreground">
-              <Copy className="h-3.5 w-3.5" aria-hidden />
-            </button>
-            <button type="button" aria-label="Clear console" onClick={clearConsole} className="rounded p-1 text-muted-foreground hover:bg-muted hover:text-foreground">
-              <Ban className="h-3.5 w-3.5" aria-hidden />
-            </button>
+            <Tooltip label="Copy console" side="top">
+              <button type="button" aria-label="Copy console" onClick={copyAll} className="rounded p-1 text-muted-foreground hover:bg-muted hover:text-foreground">
+                <Copy className="h-3.5 w-3.5" aria-hidden />
+              </button>
+            </Tooltip>
+            <Tooltip label="Clear console" side="top">
+              <button type="button" aria-label="Clear console" onClick={clearConsole} className="rounded p-1 text-muted-foreground hover:bg-muted hover:text-foreground">
+                <Ban className="h-3.5 w-3.5" aria-hidden />
+              </button>
+            </Tooltip>
           </div>
         )}
       </div>

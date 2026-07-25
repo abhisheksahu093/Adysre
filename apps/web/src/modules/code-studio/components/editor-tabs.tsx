@@ -1,7 +1,7 @@
 'use client';
 
 import { X } from 'lucide-react';
-import { cn } from 'adysre';
+import { Tooltip, cn } from 'adysre';
 import { useStudioStore } from '../store/use-studio-store';
 import { baseName } from '../utils/files';
 
@@ -39,14 +39,16 @@ export function EditorTabs() {
             <button type="button" onClick={() => setActiveFile(file.id)} className="max-w-40 truncate">
               {baseName(file.path)}
             </button>
-            <button
-              type="button"
-              aria-label={`Close ${baseName(file.path)}`}
-              onClick={() => closeTab(file.id)}
-              className="rounded p-0.5 opacity-0 transition-opacity hover:bg-muted group-hover:opacity-100"
-            >
-              <X className="h-3 w-3" aria-hidden />
-            </button>
+            <Tooltip label={`Close ${baseName(file.path)}`} side="bottom">
+              <button
+                type="button"
+                aria-label={`Close ${baseName(file.path)}`}
+                onClick={() => closeTab(file.id)}
+                className="rounded p-0.5 opacity-0 transition-opacity hover:bg-muted group-hover:opacity-100"
+              >
+                <X className="h-3 w-3" aria-hidden />
+              </button>
+            </Tooltip>
           </div>
         );
       })}

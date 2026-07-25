@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 import { Loader2, Maximize2, Minimize2, Monitor, RotateCw, Smartphone, Tablet, Laptop } from 'lucide-react';
-import { cn } from 'adysre';
+import { Tooltip, cn } from 'adysre';
 import { useStudioStore } from '../store/use-studio-store';
 import { PREVIEW_VIEWPORTS, type PreviewDevice } from '../types';
 
@@ -42,41 +42,47 @@ export function PreviewPane({ srcdoc, building, onRebuild }: { srcdoc: string; b
         <div className="flex items-center gap-0.5">
           {PREVIEW_VIEWPORTS.map((v) => {
             const Icon = DEVICE_ICON[v.id];
+            const label = `${v.id.charAt(0).toUpperCase()}${v.id.slice(1)}`;
             return (
-              <button
-                key={v.id}
-                type="button"
-                aria-label={v.id}
-                aria-pressed={device === v.id}
-                onClick={() => setDevice(v.id)}
-                className={cn(
-                  'rounded p-1.5 transition-colors',
-                  device === v.id ? 'bg-primary/15 text-primary' : 'text-muted-foreground hover:bg-muted hover:text-foreground',
-                )}
-              >
-                <Icon className="h-4 w-4" aria-hidden />
-              </button>
+              <Tooltip key={v.id} label={label} side="bottom">
+                <button
+                  type="button"
+                  aria-label={label}
+                  aria-pressed={device === v.id}
+                  onClick={() => setDevice(v.id)}
+                  className={cn(
+                    'rounded p-1.5 transition-colors',
+                    device === v.id ? 'bg-primary/15 text-primary' : 'text-muted-foreground hover:bg-muted hover:text-foreground',
+                  )}
+                >
+                  <Icon className="h-4 w-4" aria-hidden />
+                </button>
+              </Tooltip>
             );
           })}
         </div>
         <div className="ml-auto flex items-center gap-0.5">
           {building && <Loader2 className="mr-1 h-3.5 w-3.5 animate-spin text-muted-foreground" aria-hidden />}
-          <button
-            type="button"
-            aria-label="Reload preview"
-            onClick={onRebuild}
-            className="rounded p-1.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-          >
-            <RotateCw className="h-4 w-4" aria-hidden />
-          </button>
-          <button
-            type="button"
-            aria-label={fullscreen ? 'Exit fullscreen' : 'Fullscreen preview'}
-            onClick={toggleFullscreen}
-            className="rounded p-1.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-          >
-            {fullscreen ? <Minimize2 className="h-4 w-4" aria-hidden /> : <Maximize2 className="h-4 w-4" aria-hidden />}
-          </button>
+          <Tooltip label="Reload preview" side="bottom">
+            <button
+              type="button"
+              aria-label="Reload preview"
+              onClick={onRebuild}
+              className="rounded p-1.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+            >
+              <RotateCw className="h-4 w-4" aria-hidden />
+            </button>
+          </Tooltip>
+          <Tooltip label={fullscreen ? 'Exit fullscreen' : 'Fullscreen preview'} side="bottom">
+            <button
+              type="button"
+              aria-label={fullscreen ? 'Exit fullscreen' : 'Fullscreen preview'}
+              onClick={toggleFullscreen}
+              className="rounded p-1.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+            >
+              {fullscreen ? <Minimize2 className="h-4 w-4" aria-hidden /> : <Maximize2 className="h-4 w-4" aria-hidden />}
+            </button>
+          </Tooltip>
         </div>
       </div>
 

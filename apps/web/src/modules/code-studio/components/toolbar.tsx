@@ -17,7 +17,7 @@ import {
   SquareCode,
   Upload,
 } from 'lucide-react';
-import { cn } from 'adysre';
+import { Tooltip, cn } from 'adysre';
 import { useStudioStore } from '../store/use-studio-store';
 import { TEMPLATES, templateFiles, type StudioTemplate } from '../templates';
 import { downloadProjectZip } from '../services/download';
@@ -161,14 +161,16 @@ export function Toolbar({ saveState, onSave, onRun }: { saveState: SaveState; on
           <span className="hidden md:inline">{t('run')}</span>
         </button>
 
-        <button
-          type="button"
-          onClick={reset}
-          aria-label={t('reset')}
-          className="rounded-md p-1.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-        >
-          <RotateCcw className="h-4 w-4" aria-hidden />
-        </button>
+        <Tooltip label={t('reset')} side="bottom">
+          <button
+            type="button"
+            onClick={reset}
+            aria-label={t('reset')}
+            className="rounded-md p-1.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+          >
+            <RotateCcw className="h-4 w-4" aria-hidden />
+          </button>
+        </Tooltip>
 
         <button
           type="button"
@@ -179,31 +181,37 @@ export function Toolbar({ saveState, onSave, onRun }: { saveState: SaveState; on
           <span className="hidden md:inline">{saveState === 'saving' ? t('saving') : saveState === 'saved' ? t('saved') : t('save')}</span>
         </button>
 
-        <button
-          type="button"
-          onClick={() => zipInputRef.current?.click()}
-          aria-label={t('importZip')}
-          className="rounded-md p-1.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-        >
-          <Upload className="h-4 w-4" aria-hidden />
-        </button>
-        <button
-          type="button"
-          onClick={() => folderInputRef.current?.click()}
-          aria-label={t('importFolder')}
-          className="rounded-md p-1.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-        >
-          <FolderUp className="h-4 w-4" aria-hidden />
-        </button>
+        <Tooltip label={t('importZip')} side="bottom">
+          <button
+            type="button"
+            onClick={() => zipInputRef.current?.click()}
+            aria-label={t('importZip')}
+            className="rounded-md p-1.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+          >
+            <Upload className="h-4 w-4" aria-hidden />
+          </button>
+        </Tooltip>
+        <Tooltip label={t('importFolder')} side="bottom">
+          <button
+            type="button"
+            onClick={() => folderInputRef.current?.click()}
+            aria-label={t('importFolder')}
+            className="rounded-md p-1.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+          >
+            <FolderUp className="h-4 w-4" aria-hidden />
+          </button>
+        </Tooltip>
 
-        <button
-          type="button"
-          onClick={() => project && downloadProjectZip(project)}
-          aria-label={t('downloadZip')}
-          className="rounded-md p-1.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-        >
-          <Download className="h-4 w-4" aria-hidden />
-        </button>
+        <Tooltip label={t('downloadZip')} side="bottom">
+          <button
+            type="button"
+            onClick={() => project && downloadProjectZip(project)}
+            aria-label={t('downloadZip')}
+            className="rounded-md p-1.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+          >
+            <Download className="h-4 w-4" aria-hidden />
+          </button>
+        </Tooltip>
 
         <button
           type="button"
@@ -215,18 +223,20 @@ export function Toolbar({ saveState, onSave, onRun }: { saveState: SaveState; on
         </button>
 
         <div ref={settingsMenu.ref} onBlur={settingsMenu.onBlur} className="relative">
-          <button
-            type="button"
-            aria-label={t('settings')}
-            aria-expanded={settingsOpen}
-            onClick={() => setSettingsOpen((v) => !v)}
-            className={cn(
-              'rounded-md p-1.5 transition-colors',
-              settingsOpen ? 'bg-muted text-foreground' : 'text-muted-foreground hover:bg-muted hover:text-foreground',
-            )}
-          >
-            <Settings2 className="h-4 w-4" aria-hidden />
-          </button>
+          <Tooltip label={t('settings')} side="bottom">
+            <button
+              type="button"
+              aria-label={t('settings')}
+              aria-expanded={settingsOpen}
+              onClick={() => setSettingsOpen((v) => !v)}
+              className={cn(
+                'rounded-md p-1.5 transition-colors',
+                settingsOpen ? 'bg-muted text-foreground' : 'text-muted-foreground hover:bg-muted hover:text-foreground',
+              )}
+            >
+              <Settings2 className="h-4 w-4" aria-hidden />
+            </button>
+          </Tooltip>
           {settingsOpen && (
             <div className="absolute right-0 top-full z-30 mt-1 w-72 rounded-lg border border-border bg-card p-3 shadow-lg">
               <SettingsPanel />

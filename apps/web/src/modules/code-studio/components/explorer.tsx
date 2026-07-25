@@ -14,7 +14,7 @@ import {
   Pencil,
   Trash2,
 } from 'lucide-react';
-import { cn } from 'adysre';
+import { Tooltip, cn } from 'adysre';
 import { useStudioStore } from '../store/use-studio-store';
 import type { ProjectFile } from '../types';
 import { baseName, dirName, languageOf } from '../utils/files';
@@ -110,33 +110,39 @@ function TreeRow({ node, depth }: { node: TreeNode; depth: number }) {
             </button>
           )}
           <span className="flex shrink-0 items-center opacity-0 transition-opacity group-hover:opacity-100">
-            <button
-              type="button"
-              aria-label="Rename"
-              onClick={() => {
-                setDraft(baseName(file.path));
-                setRenaming(true);
-              }}
-              className="rounded p-1 hover:bg-background hover:text-foreground"
-            >
-              <Pencil className="h-3.5 w-3.5" aria-hidden />
-            </button>
-            <button
-              type="button"
-              aria-label="Duplicate"
-              onClick={() => duplicateFile(file.id)}
-              className="rounded p-1 hover:bg-background hover:text-foreground"
-            >
-              <Copy className="h-3.5 w-3.5" aria-hidden />
-            </button>
-            <button
-              type="button"
-              aria-label="Delete"
-              onClick={() => deleteFile(file.id)}
-              className="rounded p-1 hover:bg-background hover:text-danger"
-            >
-              <Trash2 className="h-3.5 w-3.5" aria-hidden />
-            </button>
+            <Tooltip label="Rename" side="top">
+              <button
+                type="button"
+                aria-label="Rename"
+                onClick={() => {
+                  setDraft(baseName(file.path));
+                  setRenaming(true);
+                }}
+                className="rounded p-1 hover:bg-background hover:text-foreground"
+              >
+                <Pencil className="h-3.5 w-3.5" aria-hidden />
+              </button>
+            </Tooltip>
+            <Tooltip label="Duplicate" side="top">
+              <button
+                type="button"
+                aria-label="Duplicate"
+                onClick={() => duplicateFile(file.id)}
+                className="rounded p-1 hover:bg-background hover:text-foreground"
+              >
+                <Copy className="h-3.5 w-3.5" aria-hidden />
+              </button>
+            </Tooltip>
+            <Tooltip label="Delete" side="top">
+              <button
+                type="button"
+                aria-label="Delete"
+                onClick={() => deleteFile(file.id)}
+                className="rounded p-1 hover:bg-background hover:text-danger"
+              >
+                <Trash2 className="h-3.5 w-3.5" aria-hidden />
+              </button>
+            </Tooltip>
           </span>
         </div>
       </li>
@@ -184,14 +190,16 @@ export function Explorer() {
     <div className="flex h-full flex-col">
       <div className="flex items-center justify-between px-3 py-2">
         <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Explorer</span>
-        <button
-          type="button"
-          aria-label="New file"
-          onClick={() => setAdding(true)}
-          className="rounded p-1 text-muted-foreground hover:bg-muted hover:text-foreground"
-        >
-          <FilePlus className="h-4 w-4" aria-hidden />
-        </button>
+        <Tooltip label="New file" side="bottom">
+          <button
+            type="button"
+            aria-label="New file"
+            onClick={() => setAdding(true)}
+            className="rounded p-1 text-muted-foreground hover:bg-muted hover:text-foreground"
+          >
+            <FilePlus className="h-4 w-4" aria-hidden />
+          </button>
+        </Tooltip>
       </div>
 
       {adding && (

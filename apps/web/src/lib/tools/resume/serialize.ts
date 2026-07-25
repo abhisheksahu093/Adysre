@@ -1,5 +1,17 @@
-import type { ResumeData, ResumeSection } from './types';
+import type { ResumeData, ResumeSection, SkillItem } from './types';
 import { SAMPLE_RESUME } from './sample';
+
+/** Accept a skill as a plain name (older files) or a `{name, level}` object. */
+function normalizeSkill(value: unknown): SkillItem | null {
+  if (typeof value === 'string') return value.trim() ? { name: value.trim() } : null;
+  if (value && typeof value === 'object' && 'name' in value) {
+    const skill = value as { name?: unknown; level?: unknown };
+    if (typeof skill.name !== 'string' || !skill.name.trim()) return null;
+    const level = typeof skill.level === 'number' && skill.level >= 1 && skill.level <= 5 ? Math.round(skill.level) : undefined;
+    return level ? { name: skill.name.trim(), level } : { name: skill.name.trim() };
+  }
+  return null;
+}
 
 /**
  * Resume export/import. JSON is the loss-less round-trip; importing merges onto
@@ -37,6 +49,6 @@ export function fromJson(raw: string): ResumeData | null {
     projects: Array.isArray(p.projects) ? p.projects : [],
     certifications: Array.isArray(p.certifications) ? p.certifications : [],
     links: Array.isArray(p.links) ? p.links : [],
-    skills: Array.isArray(p.skills) ? p.skills.filter((s): s is string => typeof s === 'string') : [],
+    skills: Array.isArray(p.skills) ? p.skills.map(normalizeSkill).filter((s): s is SkillItem => s !== null) : [],
   };
 }

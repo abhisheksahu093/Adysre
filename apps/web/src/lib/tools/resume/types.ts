@@ -70,6 +70,16 @@ export interface LinkItem {
   url: string;
 }
 
+/**
+ * A skill, with an optional 1-5 proficiency. Templates that show a meter (bars
+ * or dots) render the level; without one, the skill shows as a plain tag, so a
+ * rating is never invented.
+ */
+export interface SkillItem {
+  name: string;
+  level?: number;
+}
+
 export interface ResumeDesign {
   accent: string;
   font: string;
@@ -84,7 +94,7 @@ export interface ResumeData {
   summary: string;
   experience: ExperienceItem[];
   education: EducationItem[];
-  skills: string[];
+  skills: SkillItem[];
   projects: ProjectItem[];
   certifications: CertItem[];
   links: LinkItem[];

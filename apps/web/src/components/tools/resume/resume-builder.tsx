@@ -6,7 +6,7 @@ import { Eye, EyeOff, FileJson, GripVertical, ImagePlus, Plus, Printer, Trash2, 
 import { Button, Input, Label, Select, cn } from 'adysre';
 import type { CertItem, EducationItem, ExperienceItem, LinkItem, ProjectItem, ResumeData, ResumeSection } from '@/lib/tools/resume/types';
 import { SAMPLE_RESUME } from '@/lib/tools/resume/sample';
-import { RESUME_FONTS, RESUME_TEMPLATES } from '@/lib/tools/resume/templates';
+import { RESUME_FONTS, RESUME_TEMPLATES, RESUME_TEMPLATES_BY_ID } from '@/lib/tools/resume/templates';
 import { fromJson, toJson } from '@/lib/tools/resume/serialize';
 import { ResumePreview } from './resume-preview';
 
@@ -106,7 +106,18 @@ export function ResumeBuilder() {
       <div className="relative space-y-6">
         <Panel title="Template & design">
           <div className="grid grid-cols-2 gap-3">
-            <FieldSelect label="Template" value={data.templateId} onChange={(v) => set({ templateId: v })}>
+            <FieldSelect
+              label="Template"
+              value={data.templateId}
+              onChange={(v) =>
+                set({
+                  templateId: v,
+                  // Adopt the template's signature accent so each variant looks
+                  // like itself; the accent field still lets you override it.
+                  design: { ...data.design, accent: RESUME_TEMPLATES_BY_ID[v]?.accent ?? data.design.accent },
+                })
+              }
+            >
               {RESUME_TEMPLATES.map((t) => <option key={t.id} value={t.id}>{t.label}</option>)}
             </FieldSelect>
             <FieldSelect label="Font" value={data.design.font} onChange={(v) => setDesign({ font: v })}>
@@ -157,7 +168,25 @@ export function ResumeBuilder() {
         </Panel>
 
         <Panel title="Skills">
-          <FieldArea value={data.skills.join(', ')} onChange={(v) => set({ skills: v.split(',').map((s) => s.trim()).filter(Boolean) })} rows={2} placeholder="Comma separated" />
+          <FieldArea
+            value={data.skills.map((s) => (s.level ? `${s.name}:${s.level}` : s.name)).join(', ')}
+            onChange={(v) =>
+              set({
+                skills: v
+                  .split(',')
+                  .map((part) => {
+                    const [rawName, rawLevel] = part.split(':');
+                    const name = (rawName ?? '').trim();
+                    if (!name) return null;
+                    const level = Number(rawLevel);
+                    return level >= 1 && level <= 5 ? { name, level } : { name };
+                  })
+                  .filter((s): s is { name: string; level?: number } => s !== null),
+              })
+            }
+            rows={2}
+            placeholder="Comma separated, optional level 1-5 (e.g. React:5, Figma:4)"
+          />
         </Panel>
 
         <ListPanel title="Experience" onAdd={addExp}>

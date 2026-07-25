@@ -1,5 +1,6 @@
+import { Globe, Mail, MapPin, Phone } from 'lucide-react';
 import { cn } from 'adysre';
-import type { ResumeData, SectionType } from '@/lib/tools/resume/types';
+import type { ResumeData, SectionType, SkillItem } from '@/lib/tools/resume/types';
 import { RESUME_TEMPLATES_BY_ID, type ResumeTemplate } from '@/lib/tools/resume/templates';
 import { orderedVisibleSections } from '@/lib/tools/resume/serialize';
 
@@ -58,40 +59,125 @@ function Stacked({ data, t, order, banner }: { data: ResumeData; t: ResumeTempla
 
 function Sidebar({ data, t, types, order }: { data: ResumeData; t: ResumeTemplate; types: Set<SectionType>; order: SectionType[] }) {
   const mainOrder = order.filter((x) => x !== 'skills' && x !== 'links');
+  const railBg = t.sidebar ?? t.accent;
+  const railText = t.sidebarText ?? t.accentText;
+  const railMuted = t.sidebarMuted ?? railText;
+  const railTitle = { color: railText } as const;
+  const contact = data.contact;
+
   return (
-    <div className="grid grid-cols-[11rem_1fr]">
-      <aside className="space-y-5 p-6" style={{ background: t.accent, color: t.accentText }}>
+    <div className="grid grid-cols-[12rem_1fr]">
+      <aside className="space-y-5 p-6" style={{ background: railBg, color: railText }}>
         {data.photo && (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img src={data.photo} alt="" className="h-24 w-24 rounded-full object-cover" />
-        )}
-        <div>
-          <p className="text-lg font-bold leading-tight">{data.contact.name || 'Your Name'}</p>
-          <p className="text-xs opacity-90">{data.contact.headline}</p>
-        </div>
-        <div className="space-y-1 text-[11px] opacity-90">
-          {data.contact.email && <p>{data.contact.email}</p>}
-          {data.contact.phone && <p>{data.contact.phone}</p>}
-          {data.contact.location && <p>{data.contact.location}</p>}
-          {data.contact.website && <p>{data.contact.website}</p>}
-        </div>
-        {types.has('skills') && data.skills.length > 0 && (
-          <div>
-            <p className="mb-1 text-[11px] font-bold uppercase tracking-widest">Skills</p>
-            <ul className="space-y-0.5 text-[11px] opacity-90">{data.skills.map((s) => <li key={s}>{s}</li>)}</ul>
+          <div className="flex justify-center">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={data.photo}
+              alt=""
+              className="h-24 w-24 rounded-full object-cover ring-2"
+              style={{ borderColor: t.accent }}
+            />
           </div>
         )}
+        <div className={data.photo ? 'text-center' : ''}>
+          <p className="text-lg font-bold leading-tight">{contact.name || 'Your Name'}</p>
+          <p className="text-xs" style={{ color: t.accent }}>{contact.headline}</p>
+        </div>
+
+        <div className="space-y-1.5 text-[11px]" style={{ color: railMuted }}>
+          <ContactLine icon={<Mail className="h-3 w-3" aria-hidden />} value={contact.email} show={t.contactIcons} />
+          <ContactLine icon={<Phone className="h-3 w-3" aria-hidden />} value={contact.phone} show={t.contactIcons} />
+          <ContactLine icon={<MapPin className="h-3 w-3" aria-hidden />} value={contact.location} show={t.contactIcons} />
+          <ContactLine icon={<Globe className="h-3 w-3" aria-hidden />} value={contact.website} show={t.contactIcons} />
+        </div>
+
+        {types.has('skills') && data.skills.length > 0 && (
+          <div>
+            <p className="mb-2 text-[11px] font-bold uppercase tracking-widest" style={railTitle}>
+              {data.sections.find((s) => s.type === 'skills')?.title ?? 'Skills'}
+            </p>
+            <SidebarSkills skills={data.skills} t={t} railMuted={railMuted} />
+          </div>
+        )}
+
         {types.has('links') && data.links.length > 0 && (
           <div>
-            <p className="mb-1 text-[11px] font-bold uppercase tracking-widest">Links</p>
-            <ul className="space-y-0.5 text-[11px] opacity-90">{data.links.map((l) => <li key={l.id}>{l.label}: {l.url}</li>)}</ul>
+            <p className="mb-1.5 text-[11px] font-bold uppercase tracking-widest" style={railTitle}>
+              {data.sections.find((s) => s.type === 'links')?.title ?? 'Links'}
+            </p>
+            <ul className="space-y-0.5 text-[11px]" style={{ color: railMuted }}>
+              {data.links.map((l) => (
+                <li key={l.id}>{l.label}: {l.url}</li>
+              ))}
+            </ul>
           </div>
         )}
       </aside>
       <div className="space-y-5 p-6">
-        {mainOrder.map((type) => <Section key={type} type={type} data={data} t={t} />)}
+        {mainOrder.map((type) => (
+          <Section key={type} type={type} data={data} t={t} />
+        ))}
       </div>
     </div>
+  );
+}
+
+function ContactLine({ icon, value, show }: { icon: React.ReactNode; value: string; show?: boolean | undefined }) {
+  if (!value) return null;
+  return (
+    <p className="flex items-center gap-1.5">
+      {show && <span className="shrink-0">{icon}</span>}
+      <span className="truncate">{value}</span>
+    </p>
+  );
+}
+
+/** Skills in the rail: bars, dots or a plain list, honoring optional levels. */
+function SidebarSkills({ skills, t, railMuted }: { skills: SkillItem[]; t: ResumeTemplate; railMuted: string }) {
+  const style = t.skillStyle ?? 'pill';
+
+  if (style === 'bar') {
+    return (
+      <ul className="space-y-1.5">
+        {skills.map((s) => (
+          <li key={s.name} className="text-[11px]">
+            <span>{s.name}</span>
+            {s.level ? (
+              <span className="mt-0.5 block h-1 w-full overflow-hidden rounded-full" style={{ background: `${railMuted}40` }}>
+                <span className="block h-full rounded-full" style={{ width: `${(s.level / 5) * 100}%`, background: t.accent }} />
+              </span>
+            ) : null}
+          </li>
+        ))}
+      </ul>
+    );
+  }
+
+  if (style === 'dots') {
+    return (
+      <ul className="space-y-1">
+        {skills.map((s) => (
+          <li key={s.name} className="flex items-center justify-between gap-2 text-[11px]">
+            <span>{s.name}</span>
+            {s.level ? (
+              <span className="flex shrink-0 gap-0.5">
+                {[1, 2, 3, 4, 5].map((n) => (
+                  <span key={n} className="h-1.5 w-1.5 rounded-full" style={{ background: n <= s.level! ? t.accent : `${railMuted}40` }} />
+                ))}
+              </span>
+            ) : null}
+          </li>
+        ))}
+      </ul>
+    );
+  }
+
+  return (
+    <ul className="space-y-0.5 text-[11px]" style={{ color: railMuted }}>
+      {skills.map((s) => (
+        <li key={s.name}>{s.name}</li>
+      ))}
+    </ul>
   );
 }
 
@@ -129,7 +215,7 @@ function Section({ type, data, t }: { type: SectionType; data: ResumeData; t: Re
       <div>
         <Heading t={t}>{title}</Heading>
         <ul className="flex flex-wrap gap-1.5">
-          {data.skills.map((s) => <li key={s} className="rounded px-2 py-0.5 text-xs" style={{ background: `${t.accent}14`, color: t.text }}>{s}</li>)}
+          {data.skills.map((s) => <li key={s.name} className="rounded px-2 py-0.5 text-xs" style={{ background: `${t.accent}14`, color: t.text }}>{s.name}</li>)}
         </ul>
       </div>
     ) : null;

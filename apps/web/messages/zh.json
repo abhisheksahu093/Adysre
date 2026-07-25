@@ -337,8 +337,8 @@
       "plan": "套餐",
       "planFree": "免费版",
       "planPremium": "高级版",
-      "planFreeHint": "您可以使用 41 条免费提示词，高级提示词已锁定。",
-      "planPremiumHint": "您可以复制并调整提示词库中的全部内容。",
+      "planFreeHint": "你可以预览每个模板并使用免费的模板。高级模板和下载已锁定。",
+      "planPremiumHint": "你可以复制并下载模板库中的每个模板。",
       "upgrade": "升级",
       "devOnly": "仅限开发环境",
       "devOnlyHint": "切换访问级别以预览付费墙。生产环境不会显示。"
@@ -579,8 +579,8 @@
   },
   "pricing": {
     "metaTitle": "价格",
-    "title": "立即解锁提示词库中的全部内容",
-    "subtitle": "一次付费，即可解锁 15 个分类下的 120+ 提示词 -- 包含我们后续新增的每一条提示词，以及尚未推出的模块。",
+    "title": "立即畅享每个模板和工具",
+    "subtitle": "一次付款即可解锁每个高级模板、全部页面和下载，以及所有工具和即将推出的每个模块。",
     "mostPopular": "最受欢迎",
     "priceAria": "{price} 美元",
     "questions": "还有疑问？<a>联系我们</a>。",
@@ -588,7 +588,7 @@
       "free": {
         "name": "免费版",
         "billing": "无需绑定银行卡",
-        "cta": "浏览免费提示词"
+        "cta": "浏览资源库"
       },
       "annual": {
         "name": "年度订阅",
@@ -607,17 +607,12 @@
       }
     },
     "features": {
-      "freePrompts": "可使用全部 41 条免费提示词",
-      "allPrompts": "可使用全部 120+ 条高级提示词",
-      "allCategories": "涵盖人像到科幻等全部 15 个分类",
-      "fourModels": "已针对 GPT Image、FLUX、Midjourney 和 SDXL 调优",
       "copyPaste": "复制粘贴即用，无需配置",
       "noCard": "无需绑定银行卡",
-      "yearUpdates": "1 年内的新增提示词与更新",
-      "lifetimeUpdates": "终身更新 -- 新增提示词全部包含",
-      "futureModules": "组件与模板模块上线后即可使用",
+      "yearUpdates": "1 年的新模板和更新",
+      "lifetimeUpdates": "终身更新：我们新增的每个模板",
+      "futureModules": "即将推出的每个模块",
       "earlyAccess": "抢先体验新模块",
-      "promptEditor": "复制前可自由调整任意提示词",
       "emailSupport": "邮件支持",
       "prioritySupport": "优先支持",
       "cancelAnytime": "随时可取消",
@@ -625,7 +620,12 @@
       "sharedWorkspace": "团队共享工作区",
       "rolesPermissions": "角色与权限管理",
       "everythingAnnual": "包含年度订阅的全部权益",
-      "everythingLifetime": "包含终身权限的全部权益"
+      "everythingLifetime": "包含终身权限的全部权益",
+      "fullLibrary": "完整资源库：组件、图标、调色板、渐变、图案和纹理",
+      "freeTemplates": "每个免费模板，完整预览",
+      "allTemplates": "每个高级模板，含全部页面",
+      "templateDownloads": "下载 React、Next.js 和静态构建",
+      "allTools": "所有工具：代码生成器、文档、简历和网站智能"
     },
     "faq": {
       "title": "常见问题",
@@ -633,27 +633,27 @@
       "items": {
         "lifetimeIncludes": {
           "q": "终身权限包含哪些内容？",
-          "a": "15 个分类下的全部 120+ 条提示词，以及之后新增的每一条提示词，均无需额外付费。组件与模板模块上线后同样包含在内。一次付费，无需续费。"
+          "a": "每个高级模板及其全部页面和代码下载，以及之后新增的每个模板，均无需额外付费。还涵盖所有工具和即将推出的每个模块。一次付款，无需续订。"
         },
         "purchaseFlow": {
           "q": "购买和开通流程是怎样的？",
-          "a": "选择方案并完成付款后，你的工作区会立即升级。高级提示词将在你登录的所有设备上解锁，无需下载或安装任何内容。"
+          "a": "选择方案，一次付款，你的工作区立即升级。高级模板和下载会在你登录的每台设备上解锁。"
         },
         "freeVsPremium": {
-          "q": "免费提示词和高级提示词有什么区别？",
-          "a": "免费版包含 41 条提示词，无需绑定银行卡即可立即使用。高级版解锁 120+ 条的完整提示词库，包括更复杂的电影感、时尚大片和奇幻风格设定，并支持使用提示词编辑器自由调整。"
-        },
-        "models": {
-          "q": "这些提示词支持哪些 AI 模型？",
-          "a": "每条提示词都会标注适配的模型 -- GPT Image、FLUX、Midjourney 和 SDXL -- 你也可以按模型筛选提示词库。提示词完整保留镜头、光线和调色等细节，因此在不同生成模型间同样适用。"
+          "q": "免费模板和高级模板有什么区别？",
+          "a": "免费模板可完整预览并自由复制。高级则解锁其余的模板库、每个页面，以及 React、Next.js 和静态构建的下载。"
         },
         "refunds": {
           "q": "是否支持退款？",
-          "a": "由于购买后即可立即、完整地使用提示词库中的全部内容，我们不提供退款。详情请查阅我们的退款政策。"
+          "a": "我们不提供退款，因为购买后你会立即获得对每个高级模板和工具的完整访问权限。详情请查看我们的退款政策。"
         },
         "help": {
           "q": "需要帮助或有其他问题？",
           "a": "请发送邮件至 {email}，我们会尽快回复。终身权限和团队版用户享有优先支持，响应更快。"
+        },
+        "frameworks": {
+          "q": "模板支持哪些框架？",
+          "a": "每个模板都可下载为 React、Next.js（App Router）以及静态 HTML/CSS 构建，无需重写即可融入你的技术栈。"
         }
       }
     }
@@ -1301,7 +1301,9 @@
         "premium": "高级",
         "new": "最新",
         "multipage": "多页面"
-      }
+      },
+      "searchPlaceholder": "搜索模板",
+      "searchLabel": "搜索模板"
     },
     "locked": {
       "title": "高级模板",
@@ -1311,6 +1313,17 @@
         "preview": "完整实时预览，无需账户",
         "prompt": "复制设计提示词",
         "download": "下载 React、Next.js 与静态构建"
+      }
+    },
+    "premium": {
+      "title": "高级模板",
+      "description": "\"{name}\" 属于高级访问权限。获取高级访问权限即可复制提示词并下载代码。",
+      "notNow": "暂不",
+      "cta": "获取高级访问权限",
+      "benefits": {
+        "unlockAll": "解锁每个高级模板",
+        "unlockDownload": "下载 React、Next.js 和静态构建",
+        "unlockUpdates": "包含我们新增的每个模板"
       }
     }
   },

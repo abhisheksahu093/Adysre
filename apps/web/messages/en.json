@@ -337,8 +337,8 @@
       "plan": "Plan",
       "planFree": "Free",
       "planPremium": "Premium",
-      "planFreeHint": "You can use the 41 free prompts. Premium prompts are locked.",
-      "planPremiumHint": "You can copy and customise every prompt in the library.",
+      "planFreeHint": "You can preview every template and use the free ones. Premium templates and downloads are locked.",
+      "planPremiumHint": "You can copy and download every template in the gallery.",
       "upgrade": "Upgrade",
       "devOnly": "Development only",
       "devOnlyHint": "Switch access level to preview the paywall. Not shown in production."
@@ -579,8 +579,8 @@
   },
   "pricing": {
     "metaTitle": "Pricing",
-    "title": "Get instant access to every prompt in the library",
-    "subtitle": "One payment unlocks all 120+ prompts across 15 categories, plus every prompt we add, and the modules still to come.",
+    "title": "Get instant access to every template and tool",
+    "subtitle": "One payment unlocks every premium template, all pages and downloads, plus every tool and module still to come.",
     "mostPopular": "Most popular",
     "priceAria": "{price} US dollars",
     "questions": "Questions? <a>Email us</a>.",
@@ -588,7 +588,7 @@
       "free": {
         "name": "Free",
         "billing": "No card required",
-        "cta": "Browse free prompts"
+        "cta": "Browse the library"
       },
       "annual": {
         "name": "Annual Access",
@@ -607,17 +607,12 @@
       }
     },
     "features": {
-      "freePrompts": "Access to all 41 free prompts",
-      "allPrompts": "Access to all 120+ premium prompts",
-      "allCategories": "All 15 categories, from Portrait to Sci-Fi",
-      "fourModels": "Tuned for GPT Image, FLUX, Midjourney and SDXL",
       "copyPaste": "Copy and paste, no setup",
       "noCard": "No card required",
-      "yearUpdates": "1 year of new prompts and updates",
-      "lifetimeUpdates": "Lifetime updates: every prompt we add",
-      "futureModules": "Components and Templates when they ship",
+      "yearUpdates": "1 year of new templates and updates",
+      "lifetimeUpdates": "Lifetime updates: every template we add",
+      "futureModules": "Every module still to come",
       "earlyAccess": "Early access to new modules",
-      "promptEditor": "Customise any prompt before you copy it",
       "emailSupport": "Email support",
       "prioritySupport": "Priority support",
       "cancelAnytime": "Cancel anytime",
@@ -625,7 +620,12 @@
       "sharedWorkspace": "Shared workspace for your team",
       "rolesPermissions": "Roles and permissions",
       "everythingAnnual": "Everything in Annual Access",
-      "everythingLifetime": "Everything in Lifetime Access"
+      "everythingLifetime": "Everything in Lifetime Access",
+      "fullLibrary": "The full library: components, icons, palettes, gradients, patterns and textures",
+      "freeTemplates": "Every free template, previewed in full",
+      "allTemplates": "Every premium template, all pages included",
+      "templateDownloads": "Download React, Next.js and static builds",
+      "allTools": "All tools: code generator, documents, resume and website intelligence"
     },
     "faq": {
       "title": "Frequently asked questions",
@@ -633,27 +633,27 @@
       "items": {
         "lifetimeIncludes": {
           "q": "What does lifetime access include?",
-          "a": "Every one of the 120+ prompts across all 15 categories, plus every prompt added afterwards, at no extra cost. It also covers the Components and Templates modules once they ship. One payment, no renewal."
+          "a": "Every premium template with all its pages and code downloads, plus every template we add afterwards, at no extra cost. It also covers the tools and every module still to come. One payment, no renewal."
         },
         "purchaseFlow": {
           "q": "How does the purchase and access flow work?",
-          "a": "Pick a plan, pay once, and your workspace is upgraded straight away. Premium prompts unlock across every device you sign in on. There is nothing to download or install."
+          "a": "Pick a plan, pay once, and your workspace is upgraded straight away. Premium templates and downloads unlock across every device you sign in on."
         },
         "freeVsPremium": {
-          "q": "What's the difference between free and premium prompts?",
-          "a": "Free covers 41 prompts you can use immediately without a card. Premium unlocks the full library of 120+, including the more involved cinematic, editorial and fantasy setups, and the prompt editor for customising any of them."
-        },
-        "models": {
-          "q": "Which AI models do the prompts work with?",
-          "a": "Every prompt lists the models it is tuned for (GPT Image, FLUX, Midjourney and SDXL), and you can filter the library by model. Prompts keep their lens, lighting and colour-grade details, so they carry across generators."
+          "q": "What's the difference between free and premium templates?",
+          "a": "Free templates preview in full and copy freely. Premium unlocks the rest of the gallery, every page, and the React, Next.js and static-build downloads."
         },
         "refunds": {
           "q": "Do you offer refunds?",
-          "a": "We don't offer refunds because you get immediate, full access to every prompt in the library the moment you buy. Please review our refund policy for details."
+          "a": "We don't offer refunds because you get immediate, full access to every premium template and tool the moment you buy. Please review our refund policy for details."
         },
         "help": {
           "q": "Need help or have a question?",
           "a": "Email {email} and we will get back to you. Lifetime and Team plans get priority support with a faster turnaround."
+        },
+        "frameworks": {
+          "q": "Which frameworks do the templates support?",
+          "a": "Every template downloads as React, Next.js (App Router) and a static HTML and CSS build, so it drops into your stack without a rewrite."
         }
       }
     }
@@ -1301,7 +1301,9 @@
         "premium": "Premium",
         "new": "New",
         "multipage": "Multipage"
-      }
+      },
+      "searchPlaceholder": "Search templates",
+      "searchLabel": "Search templates"
     },
     "locked": {
       "title": "Premium template",
@@ -1311,6 +1313,17 @@
         "preview": "Live preview, in full, no account needed",
         "prompt": "Copy the design prompt",
         "download": "Download React, Next.js and static builds"
+      }
+    },
+    "premium": {
+      "title": "Premium template",
+      "description": "\"{name}\" is part of premium access. Get premium access to copy the prompt and download the code.",
+      "notNow": "Not now",
+      "cta": "Get premium access",
+      "benefits": {
+        "unlockAll": "Unlock every premium template",
+        "unlockDownload": "Download React, Next.js and static builds",
+        "unlockUpdates": "Every template we add, included"
       }
     }
   },

@@ -608,13 +608,22 @@ export function getTemplate(slug: string): TemplateEntry | undefined {
   return TEMPLATES.find((template) => template.slug === slug);
 }
 
-/** Templates added within this window carry the "New" badge. */
-const NEW_FOR_DAYS = 45;
+/**
+ * The single most recently created template - the only one that carries the
+ * "New" badge. Ties on `addedOn` are broken by registration order (the later
+ * entry in `TEMPLATES` wins), so exactly one template is ever "New".
+ */
+const NEWEST_SLUG: string = TEMPLATES.reduce<{ slug: string; at: number }>(
+  (best, template) => {
+    const at = new Date(template.addedOn).getTime();
+    return !Number.isNaN(at) && at >= best.at ? { slug: template.slug, at } : best;
+  },
+  { slug: '', at: -Infinity },
+).slug;
 
-export function isNewTemplate(template: TemplateEntry, now: Date): boolean {
-  const added = new Date(template.addedOn).getTime();
-  if (Number.isNaN(added)) return false;
-  return (now.getTime() - added) / 86_400_000 <= NEW_FOR_DAYS;
+/** True only for the single most recently created template. */
+export function isNewTemplate(template: TemplateEntry): boolean {
+  return template.slug === NEWEST_SLUG;
 }
 
 /**
@@ -634,7 +643,6 @@ export function isNewTemplate(template: TemplateEntry, now: Date): boolean {
 export function toSummary(
   template: TemplateEntry,
   level: AccessLevel = 'free',
-  now: Date = new Date(),
 ): TemplateSummary {
   const locked = isLockedFor(template.tier, level);
 
@@ -647,15 +655,15 @@ export function toSummary(
     sections: template.sections,
     pages: template.pages ?? [],
     downloads: locked ? [] : template.downloads,
-    isNew: isNewTemplate(template, now),
+    isNew: isNewTemplate(template),
     locked,
     prompt: locked ? null : template.prompt,
   };
 }
 
 /** The gallery's payload for a given entitlement level. */
-export function templateSummaries(level: AccessLevel, now: Date = new Date()): TemplateSummary[] {
-  return TEMPLATES.map((template) => toSummary(template, level, now));
+export function templateSummaries(level: AccessLevel): TemplateSummary[] {
+  return TEMPLATES.map((template) => toSummary(template, level));
 }
 
 /** Templates a visitor on `level` may download, newest-shaped list unchanged. */

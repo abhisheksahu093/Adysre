@@ -1,17 +1,17 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { cn } from 'adysre';
+import { Search } from 'lucide-react';
+import { Input, Select, cn } from 'adysre';
 import type { TemplateSummary } from '@/data/templates/types';
 
 /**
  * Gallery filters.
  *
- * Two controls, and the split is deliberate: the TABS answer "what am I allowed
- * to take" (all / free / premium / new / multipage) because that is the
- * question a visitor arrives with, and the CHIPS below answer "what business is
- * it for". Counts are shown on every option so an empty result is predictable
- * before you click it.
+ * Three controls, and the split is deliberate: the TABS answer "what am I
+ * allowed to take" (all / free / premium / new / multipage), the SEARCH box
+ * answers "I know the name", and the THEME select answers "what business is it
+ * for". Counts on every tab keep an empty result predictable before you click.
  */
 
 export const TEMPLATE_TABS = ['all', 'free', 'premium', 'new', 'multipage'] as const;
@@ -40,18 +40,24 @@ export function TemplateFilters({
   onTabChange,
   theme,
   onThemeChange,
+  query,
+  onQueryChange,
 }: {
   templates: TemplateSummary[];
   tab: TemplateTabId;
   onTabChange: (tab: TemplateTabId) => void;
   theme: string | null;
   onThemeChange: (theme: string | null) => void;
+  query: string;
+  onQueryChange: (query: string) => void;
 }) {
   const t = useTranslations('templates');
 
-  // Themes come from what is actually registered, not a hardcoded list, so a
-  // new vertical appears here the moment its template does.
-  const themes = [...new Set(templates.filter((x) => matchesTab(x, tab)).map((x) => x.themeKey))].sort();
+  // Themes come from what is actually registered in the current tab, not a
+  // hardcoded list, so a new vertical appears the moment its template does.
+  const themes = [...new Set(templates.filter((x) => matchesTab(x, tab)).map((x) => x.themeKey))].sort(
+    (a, b) => t(`themes.${a}`).localeCompare(t(`themes.${b}`)),
+  );
   const countFor = (id: TemplateTabId) => templates.filter((x) => matchesTab(x, id)).length;
 
   return (
@@ -68,8 +74,8 @@ export function TemplateFilters({
               aria-selected={active}
               onClick={() => {
                 onTabChange(id);
-                // A theme chip that no longer exists in the new tab would
-                // silently empty the grid, so selection resets with the tab.
+                // A theme that no longer exists in the new tab would silently
+                // empty the grid, so selection resets with the tab.
                 onThemeChange(null);
               }}
               className={cn(
@@ -94,42 +100,38 @@ export function TemplateFilters({
         })}
       </div>
 
-      {themes.length > 1 && (
-        <div className="flex flex-wrap items-center gap-1.5">
-          <span className="mr-1 text-xs font-medium uppercase tracking-wide text-muted-foreground">
-            {t('filters.theme')}
-          </span>
-          <button
-            type="button"
-            aria-pressed={theme === null}
-            onClick={() => onThemeChange(null)}
-            className={cn(
-              'rounded-full border px-3 py-1 text-xs transition-colors',
-              theme === null
-                ? 'border-primary/40 bg-primary/10 text-primary'
-                : 'border-border text-muted-foreground hover:border-primary/30 hover:text-foreground',
-            )}
-          >
-            {t('filters.allThemes')}
-          </button>
-          {themes.map((id) => (
-            <button
-              key={id}
-              type="button"
-              aria-pressed={theme === id}
-              onClick={() => onThemeChange(theme === id ? null : id)}
-              className={cn(
-                'rounded-full border px-3 py-1 text-xs transition-colors',
-                theme === id
-                  ? 'border-primary/40 bg-primary/10 text-primary'
-                  : 'border-border text-muted-foreground hover:border-primary/30 hover:text-foreground',
-              )}
-            >
-              {t(`themes.${id}`)}
-            </button>
-          ))}
+      <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+        <div className="relative flex-1">
+          <Search
+            className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground"
+            aria-hidden
+          />
+          <Input
+            type="search"
+            value={query}
+            onChange={(e) => onQueryChange(e.target.value)}
+            placeholder={t('filters.searchPlaceholder')}
+            aria-label={t('filters.searchLabel')}
+            className="pl-9"
+          />
         </div>
-      )}
+
+        {themes.length > 1 && (
+          <Select
+            value={theme ?? ''}
+            onChange={(e) => onThemeChange(e.target.value === '' ? null : e.target.value)}
+            aria-label={t('filters.theme')}
+            className="sm:w-56"
+          >
+            <option value="">{t('filters.allThemes')}</option>
+            {themes.map((id) => (
+              <option key={id} value={id}>
+                {t(`themes.${id}`)}
+              </option>
+            ))}
+          </Select>
+        )}
+      </div>
     </div>
   );
 }

@@ -4,9 +4,9 @@ import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { Check, Copy, Download, ExternalLink, Loader2, Lock, Sparkles } from 'lucide-react';
 import { Button, Dialog } from 'adysre';
-import { Link } from '@/i18n/navigation';
 import { useClipboard } from '@/hooks/use-clipboard';
 import { TEMPLATE_DOWNLOADS, type TemplateDownloadId, type TemplateSummary } from '@/data/templates/types';
+import { TemplatePremiumDialog } from './template-premium-dialog';
 
 /**
  * Template detail dialog: preview it, clone the idea, or take the code.
@@ -26,6 +26,7 @@ export function TemplateDialog({
   const { copy, copied } = useClipboard();
   const [busy, setBusy] = useState<TemplateDownloadId | null>(null);
   const [failed, setFailed] = useState(false);
+  const [premiumOpen, setPremiumOpen] = useState(false);
 
   if (!template) return null;
 
@@ -156,13 +157,14 @@ export function TemplateDialog({
                 {t('locked.included.download')}
               </li>
             </ul>
-            <Link
-              href="/pricing"
-              className="mt-4 inline-flex h-9 items-center justify-center gap-2 rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+            <button
+              type="button"
+              onClick={() => setPremiumOpen(true)}
+              className="mt-4 inline-flex h-9 items-center justify-center gap-2 rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
               <Sparkles className="h-4 w-4" aria-hidden />
               {t('locked.cta')}
-            </Link>
+            </button>
           </section>
         ) : (
           <>
@@ -227,6 +229,11 @@ export function TemplateDialog({
           </>
         )}
       </div>
+
+      <TemplatePremiumDialog
+        templateName={premiumOpen ? template.name : null}
+        onClose={() => setPremiumOpen(false)}
+      />
     </Dialog>
   );
 }

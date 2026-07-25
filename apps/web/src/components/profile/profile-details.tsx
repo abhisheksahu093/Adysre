@@ -10,7 +10,7 @@ import { AccessSwitcher } from './access-switcher';
 
 interface ProfileDetailsProps {
   /**
-   * Resolved on the server - the same value the prompt paywall enforces with.
+   * Resolved on the server - the same value the premium paywall enforces with.
    * Passed in rather than read from the profile query so what's displayed here
    * can't disagree with what's actually granted.
    */

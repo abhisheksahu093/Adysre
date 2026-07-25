@@ -35,7 +35,7 @@ export interface ModuleSubmenu {
   labelMode: LabelMode;
   /** Grouped layout (components); mutually exclusive with `values`. */
   groups?: SubmenuGroup[];
-  /** Flat layout (icons, prompts, tags). */
+  /** Flat layout (icons, tags). */
   values?: string[];
 }
 

@@ -19,14 +19,20 @@ export function TemplateGallery({ templates }: { templates: TemplateSummary[] })
   const [selected, setSelected] = useState<TemplateSummary | null>(null);
   const [tab, setTab] = useState<TemplateTabId>('all');
   const [theme, setTheme] = useState<string | null>(null);
+  const [query, setQuery] = useState('');
 
-  const visible = useMemo(
-    () =>
-      templates.filter(
-        (template) => matchesTab(template, tab) && (theme === null || template.themeKey === theme),
-      ),
-    [templates, tab, theme],
-  );
+  const visible = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    return templates.filter((template) => {
+      if (!matchesTab(template, tab)) return false;
+      if (theme !== null && template.themeKey !== theme) return false;
+      if (q === '') return true;
+      // Search the brand name plus the translated tagline and theme, so typing
+      // "restaurant" or a headline word finds it, not only the exact name.
+      const haystack = `${template.name} ${t(`taglines.${template.taglineKey}`)} ${t(`themes.${template.themeKey}`)}`;
+      return haystack.toLowerCase().includes(q);
+    });
+  }, [templates, tab, theme, query, t]);
 
   return (
     <>
@@ -36,6 +42,8 @@ export function TemplateGallery({ templates }: { templates: TemplateSummary[] })
         onTabChange={setTab}
         theme={theme}
         onThemeChange={setTheme}
+        query={query}
+        onQueryChange={setQuery}
       />
 
       {visible.length === 0 ? (

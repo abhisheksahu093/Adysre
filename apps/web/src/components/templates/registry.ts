@@ -30,6 +30,9 @@ export const TEMPLATE_RENDERERS: Record<string, ComponentType<TemplateRendererPr
   healthcare: dynamic(() =>
     import('./healthcare/aster-template').then((mod) => ({ default: mod.AsterTemplate })),
   ),
+  travel: dynamic(() =>
+    import('./travel/wander-template').then((mod) => ({ default: mod.WanderTemplate })),
+  ),
   'marlowe-portfolio': dynamic(() =>
     import('./marlowe-portfolio/marlowe-template').then((mod) => ({ default: mod.MarloweTemplate })),
   ),

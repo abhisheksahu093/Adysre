@@ -28,6 +28,7 @@ import { CRESTLINE_CONTENT, CRESTLINE_NAV, CRESTLINE_PROMPT } from './crestline-
 import { NEBULA_CONTENT, NEBULA_PAGE_META, NEBULA_PROMPT } from './ai-saas-content';
 import { SOLENE_CONTENT, SOLENE_PAGE_META, SOLENE_PROMPT } from './interior-content';
 import { ASTER_CONTENT, ASTER_PAGE_META, ASTER_PROMPT } from './healthcare-content';
+import { WANDER_CONTENT, WANDER_PAGE_META, WANDER_PROMPT } from './travel-content';
 import {
   TEMPLATE_SECTIONS,
   type TemplateEntry,
@@ -153,6 +154,27 @@ export const TEMPLATES: TemplateEntry[] = [
       scope: 'aster',
     },
     content: ASTER_CONTENT,
+  },
+  {
+    slug: 'travel',
+    name: 'Wander',
+    taglineKey: 'wander',
+    tier: 'premium',
+    themeKey: 'hospitality',
+    sections: TEMPLATE_SECTIONS,
+    prompt: WANDER_PROMPT,
+    // React targets only: Lenis smooth scroll, clip-path image reveals, pulsing
+    // map pins, count-ups and the reveal system are runtime behaviour.
+    downloads: ['nextjs', 'react'],
+    addedOn: '2026-07-25',
+    pages: WANDER_PAGE_META.map((item) => ({ id: item.id, label: item.label })),
+    entry: {
+      file: 'wander-template',
+      symbol: 'WanderTemplate',
+      stylesheet: 'wander.css',
+      scope: 'wander',
+    },
+    content: WANDER_CONTENT,
   },
   {
     slug: 'marlowe-portfolio',

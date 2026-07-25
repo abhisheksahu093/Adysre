@@ -27,6 +27,7 @@ import { MARFA_CONTENT, MARFA_NAV, MARFA_PROMPT } from './marfa-studio-content';
 import { CRESTLINE_CONTENT, CRESTLINE_NAV, CRESTLINE_PROMPT } from './crestline-advisory-content';
 import { NEBULA_CONTENT, NEBULA_PAGE_META, NEBULA_PROMPT } from './ai-saas-content';
 import { SOLENE_CONTENT, SOLENE_PAGE_META, SOLENE_PROMPT } from './interior-content';
+import { ASTER_CONTENT, ASTER_PAGE_META, ASTER_PROMPT } from './healthcare-content';
 import {
   TEMPLATE_SECTIONS,
   type TemplateEntry,
@@ -131,6 +132,27 @@ export const TEMPLATES: TemplateEntry[] = [
       scope: 'solene',
     },
     content: SOLENE_CONTENT,
+  },
+  {
+    slug: 'healthcare',
+    name: 'Aster',
+    taglineKey: 'aster',
+    tier: 'free',
+    themeKey: 'health',
+    sections: TEMPLATE_SECTIONS,
+    prompt: ASTER_PROMPT,
+    // React targets only: Lenis smooth scroll, the pulse, count-ups and the
+    // reveal system are runtime behaviour a static build cannot reproduce.
+    downloads: ['nextjs', 'react'],
+    addedOn: '2026-07-25',
+    pages: ASTER_PAGE_META.map((item) => ({ id: item.id, label: item.label })),
+    entry: {
+      file: 'aster-template',
+      symbol: 'AsterTemplate',
+      stylesheet: 'aster.css',
+      scope: 'aster',
+    },
+    content: ASTER_CONTENT,
   },
   {
     slug: 'marlowe-portfolio',

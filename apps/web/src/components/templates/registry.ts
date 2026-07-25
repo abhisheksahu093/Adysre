@@ -27,6 +27,9 @@ export const TEMPLATE_RENDERERS: Record<string, ComponentType<TemplateRendererPr
   interior: dynamic(() =>
     import('./interior/solene-template').then((mod) => ({ default: mod.SoleneTemplate })),
   ),
+  healthcare: dynamic(() =>
+    import('./healthcare/aster-template').then((mod) => ({ default: mod.AsterTemplate })),
+  ),
   'marlowe-portfolio': dynamic(() =>
     import('./marlowe-portfolio/marlowe-template').then((mod) => ({ default: mod.MarloweTemplate })),
   ),

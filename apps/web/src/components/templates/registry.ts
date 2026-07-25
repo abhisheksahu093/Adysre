@@ -33,6 +33,9 @@ export const TEMPLATE_RENDERERS: Record<string, ComponentType<TemplateRendererPr
   travel: dynamic(() =>
     import('./travel/wander-template').then((mod) => ({ default: mod.WanderTemplate })),
   ),
+  'real-estate': dynamic(() =>
+    import('./real-estate/haven-template').then((mod) => ({ default: mod.HavenTemplate })),
+  ),
   'marlowe-portfolio': dynamic(() =>
     import('./marlowe-portfolio/marlowe-template').then((mod) => ({ default: mod.MarloweTemplate })),
   ),

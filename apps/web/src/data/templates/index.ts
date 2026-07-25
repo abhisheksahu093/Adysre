@@ -29,6 +29,7 @@ import { NEBULA_CONTENT, NEBULA_PAGE_META, NEBULA_PROMPT } from './ai-saas-conte
 import { SOLENE_CONTENT, SOLENE_PAGE_META, SOLENE_PROMPT } from './interior-content';
 import { ASTER_CONTENT, ASTER_PAGE_META, ASTER_PROMPT } from './healthcare-content';
 import { WANDER_CONTENT, WANDER_PAGE_META, WANDER_PROMPT } from './travel-content';
+import { HAVEN_CONTENT, HAVEN_PAGE_META, HAVEN_PROMPT } from './real-estate-content';
 import {
   TEMPLATE_SECTIONS,
   type TemplateEntry,
@@ -175,6 +176,28 @@ export const TEMPLATES: TemplateEntry[] = [
       scope: 'wander',
     },
     content: WANDER_CONTENT,
+  },
+  {
+    slug: 'real-estate',
+    name: 'Haven',
+    taglineKey: 'haven',
+    tier: 'premium',
+    themeKey: 'realEstate',
+    sections: TEMPLATE_SECTIONS,
+    prompt: HAVEN_PROMPT,
+    // React targets only: the live mortgage calculator, the 3D card hover lift,
+    // clip-path image reveals, count-ups and the reveal system are all runtime
+    // behaviour a hand-authored static build cannot reproduce.
+    downloads: ['nextjs', 'react'],
+    addedOn: '2026-07-25',
+    pages: HAVEN_PAGE_META.map((item) => ({ id: item.id, label: item.label })),
+    entry: {
+      file: 'haven-template',
+      symbol: 'HavenTemplate',
+      stylesheet: 'haven.css',
+      scope: 'haven',
+    },
+    content: HAVEN_CONTENT,
   },
   {
     slug: 'marlowe-portfolio',

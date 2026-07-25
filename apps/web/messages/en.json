@@ -125,7 +125,8 @@
     "documents": "Document Generator",
     "resume": "Resume & ATS",
     "codes": "Code Generator",
-    "codeStudio": "Code Studio"
+    "codeStudio": "Code Studio",
+    "customize": "Customize your project"
   },
   "tools": {
     "qr": {

@@ -125,7 +125,8 @@
     "documents": "ドキュメントジェネレーター",
     "resume": "履歴書・ATS",
     "codes": "コードジェネレーター",
-    "codeStudio": "コードスタジオ"
+    "codeStudio": "コードスタジオ",
+    "customize": "プロジェクトをカスタマイズ"
   },
   "tools": {
     "qr": {

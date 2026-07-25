@@ -125,7 +125,8 @@
     "documents": "单据生成器",
     "resume": "简历与 ATS",
     "codes": "代码生成器",
-    "codeStudio": "代码工作室"
+    "codeStudio": "代码工作室",
+    "customize": "定制你的项目"
   },
   "tools": {
     "qr": {

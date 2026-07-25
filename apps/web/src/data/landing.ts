@@ -131,6 +131,8 @@ export const LANDING_LINKS = {
   templates: '/templates',
   // "Open the workspace" drops you straight into the browser IDE.
   codeStudio: '/code-studio',
+  // The components page leads with its "Customize your project" playground CTA.
+  customize: '/components',
   // Tools module destinations, surfaced in the header "Tools" menu.
   codes: '/tools/codes',
   documents: '/tools/documents',

@@ -2,27 +2,30 @@ import { getTranslations } from 'next-intl/server';
 import { ArrowRight, Radar } from 'lucide-react';
 import { buttonVariants, cn } from 'adysre';
 import { Link } from '@/i18n/navigation';
-import { INTEL_ROUTE, INTEL_STATS } from '@/data/website-intelligence';
-import { IntelCapabilitiesGrid } from '@/components/website-intelligence/capabilities-grid';
+import { INTEL_ROUTE, INTEL_STATS, INTEL_CAPABILITIES } from '@/data/website-intelligence';
 import { WebsiteChecker } from './website-checker';
 import { SectionHeading } from './section-heading';
 
 /**
  * "Website Intelligence" — the home-page pitch for the scanning platform.
  *
- * Shares the capability grid with the in-app overview ({@link IntelCapabilitiesGrid}),
- * so the eleven analyses are described in exactly one place. The CTA links into
- * the app at {@link INTEL_ROUTE}; the "in development" badge keeps the section
- * honest about what is shippable today.
+ * Deliberately brief: the in-app overview at {@link INTEL_ROUTE} carries the
+ * full capability grid and every metric, so here we keep just the working
+ * checker, a couple of headline numbers and the capability names as pills, then
+ * send people inside for the detail.
  *
  * Server Component; the whole section is static.
  */
 export async function IntelligenceSection() {
   const t = await getTranslations('websiteIntel');
 
+  // Only the headline metrics belong on the teaser; operational detail (like the
+  // "no paid AI" note) lives on the inner page.
+  const stats = INTEL_STATS.filter((stat) => stat.id !== 'paidAi');
+
   return (
     <section className="relative overflow-hidden border-y border-border">
-      <div className="relative mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-28">
+      <div className="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20">
         <SectionHeading
           eyebrow={
             <span className="inline-flex items-center gap-1.5">
@@ -39,8 +42,8 @@ export async function IntelligenceSection() {
         <WebsiteChecker />
 
         {/* Stats strip. Counts derive from the catalogue (Rule 6). */}
-        <dl className="mx-auto mt-8 grid max-w-3xl grid-cols-2 gap-4 sm:grid-cols-4">
-          {INTEL_STATS.map((stat) => (
+        <dl className="mx-auto mt-8 grid max-w-2xl grid-cols-3 gap-4">
+          {stats.map((stat) => (
             <div key={stat.id} className="text-center">
               <dd className="text-2xl font-bold tabular-nums text-foreground sm:text-3xl">
                 {stat.value}
@@ -51,9 +54,20 @@ export async function IntelligenceSection() {
           ))}
         </dl>
 
-        <IntelCapabilitiesGrid className="mt-14" />
+        {/* Capability names only - a compact taste of the breadth. The full grid
+            with descriptions lives on the inner page. */}
+        <ul className="mx-auto mt-10 flex max-w-3xl flex-wrap justify-center gap-2">
+          {INTEL_CAPABILITIES.map(({ id }) => (
+            <li
+              key={id}
+              className="rounded-full border border-border bg-card px-3 py-1.5 text-xs font-medium text-muted-foreground"
+            >
+              {t(`capabilities.${id}.title`)}
+            </li>
+          ))}
+        </ul>
 
-        <div className="mt-12 flex flex-wrap items-center justify-center gap-3">
+        <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
           <Link href={INTEL_ROUTE} className={cn(buttonVariants({ size: 'lg' }), 'gap-2')}>
             {t('home.cta')}
             <ArrowRight className="h-4 w-4" aria-hidden />

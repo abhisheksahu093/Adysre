@@ -34,7 +34,7 @@ export async function IntelligenceSection() {
             </span>
           }
           title={t('title')}
-          subtitle={t('subtitle')}
+          subtitle={t('home.subtitle')}
           className="max-w-3xl"
         />
 

@@ -2500,7 +2500,8 @@
     "home": {
       "cta": "Explore the platform",
       "secondary": "See what it scans",
-      "moreFindings": "See all {count} findings in the full report"
+      "moreFindings": "See all {count} findings in the full report",
+      "subtitle": "Point it at any public URL and get one report across performance, SEO, accessibility, security, Core Web Vitals and more, backed by 500+ rules."
     },
     "console": {
       "label": "Scan a website",

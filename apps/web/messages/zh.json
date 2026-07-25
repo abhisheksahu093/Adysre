@@ -2500,7 +2500,8 @@
     "home": {
       "cta": "进入平台",
       "secondary": "查看扫描内容",
-      "moreFindings": "在完整报告中查看全部 {count} 项发现"
+      "moreFindings": "在完整报告中查看全部 {count} 项发现",
+      "subtitle": "指向任意公开网址，即可获得一份涵盖性能、SEO、无障碍、安全、Core Web Vitals 等的报告，由 500+ 条规则驱动。"
     },
     "console": {
       "label": "扫描网站",

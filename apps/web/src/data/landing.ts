@@ -58,11 +58,10 @@ export interface FeatureModule {
 export const FEATURE_MODULES: FeatureModule[] = [
   { id: 'components', href: '/components', icon: Blocks, accent: 'primary' },
   { id: 'icons', href: '/icons', icon: Shapes, accent: 'secondary' },
-  { id: 'palettes', href: '/palettes', icon: Palette, accent: 'accent' },
-  { id: 'gradients', href: '/gradients', icon: Blend, accent: 'primary' },
-  { id: 'patterns', href: '/patterns', icon: Grid2x2, accent: 'secondary' },
-  { id: 'textures', href: '/textures', icon: Waves, accent: 'accent' },
+  { id: 'colorsSurfaces', href: '/colors-surfaces', icon: SwatchBook, accent: 'accent' },
   { id: 'templates', href: '/templates', icon: LayoutTemplate, accent: 'primary' },
+  { id: 'aiTools', href: '/ai-tools', icon: Wand2, accent: 'secondary' },
+  { id: 'designPlayground', href: '/design-playground', icon: PenTool, accent: 'accent' },
 ];
 
 /**

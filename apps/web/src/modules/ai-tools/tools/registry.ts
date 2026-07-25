@@ -30,6 +30,12 @@ export interface RegistryTool {
   process?: (ctx: ProcessContext) => Promise<ToolResult>;
   panel?: ComponentType<PanelProps>;
   textOutput?: boolean;
+  /**
+   * Re-render the selected item live as settings change (debounced), so visual
+   * tuning tools show their effect without a full batch run. Only for fast,
+   * image-in/image-out tools; readers and heavy one-shots leave it off.
+   */
+  livePreview?: boolean;
 }
 
 export const AI_TOOLS: RegistryTool[] = [
@@ -123,6 +129,7 @@ export const AI_TOOLS: RegistryTool[] = [
     defaultSettings: enhancerDefaults,
     process: enhancerProcess,
     panel: EnhancerPanel,
+    livePreview: true,
   },
   {
     id: 'face-blur',
@@ -133,6 +140,7 @@ export const AI_TOOLS: RegistryTool[] = [
     defaultSettings: faceBlurDefaults,
     process: faceBlurProcess,
     panel: FaceBlurPanel,
+    livePreview: true,
   },
   {
     id: 'smart-crop',

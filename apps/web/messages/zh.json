@@ -1928,7 +1928,7 @@
       "closeMenu": "关闭菜单",
       "skip": "跳到内容",
       "menus": {
-        "styles": "样式",
+        "colorsSurfaces": "颜色与表面",
         "library": "资源库",
         "tools": "工具"
       }

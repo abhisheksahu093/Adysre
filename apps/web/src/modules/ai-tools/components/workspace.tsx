@@ -28,7 +28,7 @@ export function Workspace({ tool }: { tool: RegistryTool }) {
   const updateSettings = useMediaStore((s) => s.updateSettings);
   const clear = useMediaStore((s) => s.clear);
   const clearResults = useMediaStore((s) => s.clearResults);
-  const { processAll, cancel } = useProcessor();
+  const { processAll, cancel, previewItem } = useProcessor();
 
   useEffect(() => {
     initTool(tool.id, tool.defaultSettings);
@@ -42,6 +42,19 @@ export function Workspace({ tool }: { tool: RegistryTool }) {
   const selected = items.find((i) => i.id === selectedId) ?? null;
   const doneCount = items.filter((i) => i.result).length;
   const Panel = tool.panel;
+
+  // Live preview: re-render the selected item shortly after its settings (or
+  // rotation) change, so tuning tools like the enhancer and face blur update
+  // the preview without a full batch run. Debounced, and skipped while a batch
+  // is running.
+  const selectedRotation = selected?.rotation;
+  useEffect(() => {
+    if (!tool.livePreview || !tool.process || running || !selectedId) return;
+    const timer = window.setTimeout(() => {
+      void previewItem(selectedId);
+    }, 250);
+    return () => window.clearTimeout(timer);
+  }, [tool, settings, selectedId, selectedRotation, running, previewItem]);
 
   const reprocess = async () => {
     clearResults();

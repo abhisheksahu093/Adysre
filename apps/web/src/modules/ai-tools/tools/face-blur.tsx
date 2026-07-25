@@ -14,6 +14,15 @@ interface FaceBlurSettings {
 
 export const faceBlurDefaults: Record<string, unknown> = { strength: 35, shape: 'oval' };
 
+/**
+ * Detected faces are cached per (item, rotation) so live preview stays smooth:
+ * dragging the strength or switching the shape re-blurs the same boxes instead
+ * of re-running detection (the expensive step) on every change. The image and
+ * its rotation fully determine detection, so the key is exact; the map is small
+ * (one entry per opened image) and lives for the session.
+ */
+const detectionCache = new Map<string, FaceBox[]>();
+
 /** Blur each detected face region on the canvas, padded so there is no halo. */
 function blurFaces(canvas: HTMLCanvasElement, faces: FaceBox[], strength: number, shape: 'oval' | 'rect'): void {
   const ctx = canvas.getContext('2d');
@@ -58,7 +67,12 @@ export async function faceBlurProcess(ctx: ProcessContext): Promise<ToolResult> 
   try {
     const canvas = drawToCanvas(bitmap, { rotation: ctx.item.rotation });
     ctx.onProgress(0.3);
-    const faces = await detectFaces(canvas);
+    const cacheKey = `${ctx.item.id}:${ctx.item.rotation}`;
+    let faces = detectionCache.get(cacheKey);
+    if (!faces) {
+      faces = await detectFaces(canvas);
+      detectionCache.set(cacheKey, faces);
+    }
     ctx.onProgress(0.7);
     if (faces.length === 0) throw new Error('No faces detected in this image');
     blurFaces(canvas, faces, s.strength / 100, s.shape);

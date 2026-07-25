@@ -1928,7 +1928,7 @@
       "closeMenu": "メニューを閉じる",
       "skip": "本文へスキップ",
       "menus": {
-        "styles": "スタイル",
+        "colorsSurfaces": "カラーとサーフェス",
         "library": "ライブラリ",
         "tools": "ツール"
       }

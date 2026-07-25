@@ -33,12 +33,12 @@ const NAV_MENUS: { key: string; items: NavItem[] }[] = [
     ],
   },
   {
-    key: 'styles',
+    key: 'colorsSurfaces',
     items: [
-      { href: LANDING_LINKS.palettes, navKey: 'palettes' },
-      { href: LANDING_LINKS.gradients, navKey: 'gradients' },
-      { href: LANDING_LINKS.patterns, navKey: 'patterns' },
-      { href: LANDING_LINKS.textures, navKey: 'textures' },
+      { href: '/colors-surfaces?tab=palettes', navKey: 'palettes' },
+      { href: '/colors-surfaces?tab=gradients', navKey: 'gradients' },
+      { href: '/colors-surfaces?tab=patterns', navKey: 'patterns' },
+      { href: '/colors-surfaces?tab=textures', navKey: 'textures' },
     ],
   },
   {

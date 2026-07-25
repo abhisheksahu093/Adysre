@@ -1928,7 +1928,7 @@
       "closeMenu": "Close menu",
       "skip": "Skip to content",
       "menus": {
-        "styles": "Styles",
+        "colorsSurfaces": "Colors & Surfaces",
         "library": "Library",
         "tools": "Tools"
       }

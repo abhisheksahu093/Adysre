@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { Check, Copy, Download, FileText, RotateCw, Redo2, Undo2, ZoomIn, ZoomOut } from 'lucide-react';
+import { Check, Copy, Download, FileText, Loader2, RotateCw, Redo2, Undo2, ZoomIn, ZoomOut } from 'lucide-react';
 import { cn } from 'adysre';
 import { useMediaStore } from '../store/use-media-store';
 import { downloadResult } from '../engine/download';
@@ -35,6 +35,7 @@ export function CompareView({ item }: { item: MediaItem }) {
   const zoom = useMediaStore((s) => s.zoom);
   const setZoom = useMediaStore((s) => s.setZoom);
   const exportFormat = useMediaStore((s) => s.settings.exportFormat);
+  const previewing = useMediaStore((s) => s.previewing);
 
   const [pos, setPos] = useState(50);
   const [copied, setCopied] = useState(false);
@@ -99,6 +100,12 @@ export function CompareView({ item }: { item: MediaItem }) {
           </>
         )}
         <div className="ml-auto flex items-center gap-1">
+          {previewing && (
+            <span className="mr-1 inline-flex items-center gap-1.5 text-xs text-muted-foreground">
+              <Loader2 className="h-3.5 w-3.5 animate-spin" aria-hidden />
+              Updating
+            </span>
+          )}
           {isText && result && (
             <button type="button" onClick={copy} className="inline-flex items-center gap-1.5 rounded-md border border-border px-2.5 py-1.5 text-xs text-muted-foreground transition-colors hover:bg-muted hover:text-foreground">
               {copied ? <Check className="h-3.5 w-3.5 text-success" aria-hidden /> : <Copy className="h-3.5 w-3.5" aria-hidden />}

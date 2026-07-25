@@ -43,6 +43,8 @@ interface MediaState {
   settings: Record<string, unknown>;
   selectedId: string | null;
   running: boolean;
+  /** A live preview render (of the selected item) is in flight. */
+  previewing: boolean;
   zoom: number;
 
   initTool: (toolId: string, defaults: Record<string, unknown>) => void;
@@ -59,6 +61,7 @@ interface MediaState {
   setError: (id: string, error: string) => void;
   clearResults: () => void;
   setRunning: (running: boolean) => void;
+  setPreviewing: (previewing: boolean) => void;
 
   rotate: (id: string, delta: number) => void;
   undo: (id: string) => void;
@@ -77,6 +80,7 @@ export const useMediaStore = create<MediaState>((set, get) => ({
   settings: {},
   selectedId: null,
   running: false,
+  previewing: false,
   zoom: 1,
 
   initTool: (toolId, defaults) => {
@@ -85,7 +89,7 @@ export const useMediaStore = create<MediaState>((set, get) => ({
       URL.revokeObjectURL(item.srcUrl);
       if (item.result) URL.revokeObjectURL(item.result.url);
     }
-    set({ toolId, items: [], settings: { ...defaults }, selectedId: null, running: false, zoom: 1 });
+    set({ toolId, items: [], settings: { ...defaults }, selectedId: null, running: false, previewing: false, zoom: 1 });
   },
 
   addItems: (items) =>
@@ -141,6 +145,7 @@ export const useMediaStore = create<MediaState>((set, get) => ({
     })),
 
   setRunning: (running) => set({ running }),
+  setPreviewing: (previewing) => set({ previewing }),
 
   rotate: (id, delta) =>
     set((state) => ({

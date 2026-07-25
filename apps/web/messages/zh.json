@@ -71,6 +71,10 @@
       }
     }
   },
+  "colorsSurfaces": {
+    "title": "颜色与表面",
+    "subtitle": "调色板、渐变、图案和纹理，尽在一处。"
+  },
   "nav": {
     "dashboard": "仪表板",
     "components": "组件",
@@ -103,6 +107,7 @@
     "gradients": "渐变",
     "patterns": "图案",
     "textures": "纹理",
+    "colorsSurfaces": "颜色与表面",
     "icons": "图标",
     "backToHome": "返回首页",
     "groups": {

@@ -71,6 +71,10 @@
       }
     }
   },
+  "colorsSurfaces": {
+    "title": "रंग और सतहें",
+    "subtitle": "पैलेट, ग्रेडिएंट, पैटर्न और टेक्सचर, सब एक ही जगह।"
+  },
   "nav": {
     "dashboard": "डैशबोर्ड",
     "components": "कॉम्पोनेंट",
@@ -103,6 +107,7 @@
     "gradients": "ग्रेडिएंट",
     "patterns": "पैटर्न",
     "textures": "टेक्सचर",
+    "colorsSurfaces": "रंग और सतहें",
     "icons": "आइकन",
     "backToHome": "होम पर वापस",
     "groups": {

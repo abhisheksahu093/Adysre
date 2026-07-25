@@ -1,27 +1,21 @@
-import type { Metadata } from 'next';
-import { getTranslations, setRequestLocale } from 'next-intl/server';
-import { TexturesView } from '@/components/textures/textures-view';
-import { NpmUsage } from '@/components/npm/npm-usage';
+import { redirect } from '@/i18n/navigation';
 
-export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+/**
+ * Textures now live as a tab of the Colours & Surfaces page. This redirect keeps
+ * old links (and any `?tag=` deep links) working by forwarding to that tab.
+ */
+export default async function TexturesPage({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ locale: string }>;
+  searchParams: Promise<{ tag?: string | string[] }>;
+}) {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: 'textures' });
-  return {
-    title: t('title'),
-    description: t('subtitle'),
-    alternates: { canonical: locale === 'en' ? '/textures' : `/${locale}/textures` },
-  };
-}
-
-export const dynamic = 'force-dynamic';
-
-export default async function TexturesPage({ params }: { params: Promise<{ locale: string }> }) {
-  const { locale } = await params;
-  setRequestLocale(locale);
-  return (
-    <>
-      <TexturesView />
-      <NpmUsage module="textures" />
-    </>
-  );
+  const { tag } = await searchParams;
+  const tagValue = Array.isArray(tag) ? tag[0] : tag;
+  redirect({
+    locale,
+    href: { pathname: '/colors-surfaces', query: { tab: 'textures', ...(tagValue ? { tag: tagValue } : {}) } },
+  });
 }

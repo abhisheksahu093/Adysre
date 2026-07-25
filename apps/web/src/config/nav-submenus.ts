@@ -19,10 +19,17 @@ export type LabelMode =
   | 'humanize';
 
 export interface SubmenuGroup {
-  /** Key under `nav.groups`. */
+  /** Key under `nav.groups` (flat groups), or a stable id (nested modules). */
   groupKey: string;
-  /** Filter values (category ids), in display order. */
+  /** Filter values (category ids / tags), in display order. */
   values: string[];
+  /**
+   * Nested modules only: the tab this sub-module maps to, and the `nav` key of
+   * its own label. When set, the group header is a link to `?tab=<tab>` and its
+   * leaves link to `?tab=<tab>&<param>=<value>`.
+   */
+  tab?: string;
+  labelKey?: string;
 }
 
 export interface ModuleSubmenu {
@@ -37,6 +44,11 @@ export interface ModuleSubmenu {
   groups?: SubmenuGroup[];
   /** Flat layout (icons, tags). */
   values?: string[];
+  /**
+   * The groups are navigable sub-modules of a single tabbed page (colours &
+   * surfaces): each group is itself a link (to its tab) with its own tag leaves.
+   */
+  nested?: boolean;
 }
 
 /**
@@ -183,32 +195,20 @@ export const NAV_SUBMENUS: Record<string, ModuleSubmenu> = {
     labelMode: { ns: 'icons', prefix: 'categories.' },
     values: ICON_CATEGORIES,
   },
-  palettes: {
-    navKey: 'palettes',
-    href: '/palettes',
+  // Colours & Surfaces: one tabbed page (/colors-surfaces) whose four families
+  // are sub-modules. Each group links to its tab and expands to that family's
+  // tag filters, so the sidebar mirrors the page's four tabs.
+  colorsSurfaces: {
+    navKey: 'colorsSurfaces',
+    href: '/colors-surfaces',
     param: 'tag',
     labelMode: 'humanize',
-    values: PALETTE_TAGS,
-  },
-  gradients: {
-    navKey: 'gradients',
-    href: '/gradients',
-    param: 'tag',
-    labelMode: 'humanize',
-    values: GRADIENT_TAGS,
-  },
-  patterns: {
-    navKey: 'patterns',
-    href: '/patterns',
-    param: 'tag',
-    labelMode: 'humanize',
-    values: PATTERN_TAGS,
-  },
-  textures: {
-    navKey: 'textures',
-    href: '/textures',
-    param: 'tag',
-    labelMode: 'humanize',
-    values: TEXTURE_TAGS,
+    nested: true,
+    groups: [
+      { groupKey: 'palettes', tab: 'palettes', labelKey: 'palettes', values: PALETTE_TAGS },
+      { groupKey: 'gradients', tab: 'gradients', labelKey: 'gradients', values: GRADIENT_TAGS },
+      { groupKey: 'patterns', tab: 'patterns', labelKey: 'patterns', values: PATTERN_TAGS },
+      { groupKey: 'textures', tab: 'textures', labelKey: 'textures', values: TEXTURE_TAGS },
+    ],
   },
 };

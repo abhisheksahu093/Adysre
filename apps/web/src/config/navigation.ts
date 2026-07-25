@@ -1,10 +1,7 @@
 import {
   Blocks,
   Shapes,
-  Palette,
-  Blend,
-  Grid2x2,
-  Waves,
+  SwatchBook,
   PenTool,
   LayoutTemplate,
   Radar,
@@ -48,29 +45,12 @@ export const NAV_ITEMS: NavItem[] = [
     icon: Shapes,
     descriptionKey: 'icons',
   },
+  // Palettes, gradients, patterns and textures are combined into one tabbed
+  // module (Colors & Surfaces); each remains a sub-menu with its own filters.
   {
-    key: 'palettes',
-    href: '/palettes',
-    icon: Palette,
-    descriptionKey: 'palettes',
-  },
-  {
-    key: 'gradients',
-    href: '/gradients',
-    icon: Blend,
-    descriptionKey: 'gradients',
-  },
-  {
-    key: 'patterns',
-    href: '/patterns',
-    icon: Grid2x2,
-    descriptionKey: 'patterns',
-  },
-  {
-    key: 'textures',
-    href: '/textures',
-    icon: Waves,
-    descriptionKey: 'textures',
+    key: 'colorsSurfaces',
+    href: '/colors-surfaces',
+    icon: SwatchBook,
   },
   {
     key: 'designPlayground',

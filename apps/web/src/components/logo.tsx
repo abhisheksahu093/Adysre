@@ -48,7 +48,7 @@ export function Logo({ height = 34, priority = false, className }: LogoProps) {
  * wordmark does not fit. Same monochrome-white artwork as the wordmark, so it
  * gets the same light-mode invert.
  */
-export function LogoIcon({ height = 28, priority = false, className }: LogoProps) {
+export function LogoIcon({ height = 22, priority = false, className }: LogoProps) {
   const width = Math.round(height * ICON_RATIO);
 
   return (

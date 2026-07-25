@@ -1,37 +1,21 @@
-import type { Metadata } from 'next';
-import { getTranslations, setRequestLocale } from 'next-intl/server';
-import { GradientsView } from '@/components/gradients/gradients-view';
-import { NpmUsage } from '@/components/npm/npm-usage';
+import { redirect } from '@/i18n/navigation';
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ locale: string }>;
-}): Promise<Metadata> {
-  const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: 'gradients' });
-  return {
-    title: t('title'),
-    description: t('subtitle'),
-    alternates: { canonical: locale === 'en' ? '/gradients' : `/${locale}/gradients` },
-  };
-}
-
-/** Gradients are static, unlocalised data, so the whole page is the client view. */
-// The grid reads the active tag from `?tag=` (sidebar submenu).
-export const dynamic = 'force-dynamic';
-
+/**
+ * Gradients now live as a tab of the Colours & Surfaces page. This redirect keeps
+ * old links (and any `?tag=` deep links) working by forwarding to that tab.
+ */
 export default async function GradientsPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ locale: string }>;
+  searchParams: Promise<{ tag?: string | string[] }>;
 }) {
   const { locale } = await params;
-  setRequestLocale(locale);
-  return (
-    <>
-      <GradientsView />
-      <NpmUsage module="gradients" />
-    </>
-  );
+  const { tag } = await searchParams;
+  const tagValue = Array.isArray(tag) ? tag[0] : tag;
+  redirect({
+    locale,
+    href: { pathname: '/colors-surfaces', query: { tab: 'gradients', ...(tagValue ? { tag: tagValue } : {}) } },
+  });
 }

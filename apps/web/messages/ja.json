@@ -71,6 +71,10 @@
       }
     }
   },
+  "colorsSurfaces": {
+    "title": "カラーとサーフェス",
+    "subtitle": "パレット、グラデーション、パターン、テクスチャをまとめて一か所に。"
+  },
   "nav": {
     "dashboard": "ダッシュボード",
     "components": "コンポーネント",
@@ -103,6 +107,7 @@
     "gradients": "グラデーション",
     "patterns": "パターン",
     "textures": "テクスチャ",
+    "colorsSurfaces": "カラーとサーフェス",
     "icons": "アイコン",
     "backToHome": "ホームへ戻る",
     "groups": {

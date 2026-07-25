@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useTranslations } from 'next-intl';
-import { Search, Blocks, Shapes, Palette, Blend, Grid2x2, Waves, LayoutTemplate, CornerDownLeft } from 'lucide-react';
+import { Search, Blocks, Shapes, SwatchBook, LayoutTemplate, CornerDownLeft } from 'lucide-react';
 import { cn } from 'adysre';
 import { useRouter } from '@/i18n/navigation';
 import { NAV_SUBMENUS } from '@/config/nav-submenus';
@@ -21,10 +21,7 @@ interface Result {
 const PAGE_LINKS: { key: string; href: string; icon: typeof Blocks }[] = [
   { key: 'components', href: '/components', icon: Blocks },
   { key: 'icons', href: '/icons', icon: Shapes },
-  { key: 'palettes', href: '/palettes', icon: Palette },
-  { key: 'gradients', href: '/gradients', icon: Blend },
-  { key: 'patterns', href: '/patterns', icon: Grid2x2 },
-  { key: 'textures', href: '/textures', icon: Waves },
+  { key: 'colorsSurfaces', href: '/colors-surfaces', icon: SwatchBook },
   { key: 'templates', href: '/templates', icon: LayoutTemplate },
 ];
 
@@ -99,6 +96,21 @@ export function SearchCommand({ open, onClose }: { open: boolean; onClose: () =>
       items.push({ id: `page:${p.key}`, label: t(p.key), sublabel: tTopbar('groups.page'), href: p.href });
     }
     for (const [moduleKey, submenu] of Object.entries(NAV_SUBMENUS)) {
+      // Nested (colours & surfaces): each family's tags carry their tab, so the
+      // result lands on the right tab and names its family in the sublabel.
+      if (submenu.nested && submenu.groups) {
+        for (const group of submenu.groups) {
+          for (const value of group.values) {
+            items.push({
+              id: `${moduleKey}:${group.tab}:${value}`,
+              label: submenuLabel(moduleKey, value),
+              sublabel: `${t(group.labelKey ?? moduleKey)} · ${tTopbar(`groups.${submenu.param}`)}`,
+              href: `${submenu.href}?tab=${group.tab}&${submenu.param}=${value}`,
+            });
+          }
+        }
+        continue;
+      }
       const values = submenu.groups ? submenu.groups.flatMap((g) => g.values) : (submenu.values ?? []);
       for (const value of values) {
         items.push({

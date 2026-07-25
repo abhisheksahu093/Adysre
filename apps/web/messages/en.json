@@ -71,6 +71,10 @@
       }
     }
   },
+  "colorsSurfaces": {
+    "title": "Colors & Surfaces",
+    "subtitle": "Palettes, gradients, patterns and textures, all in one place."
+  },
   "nav": {
     "dashboard": "Dashboard",
     "components": "Components",
@@ -103,6 +107,7 @@
     "gradients": "Gradients",
     "patterns": "Patterns",
     "textures": "Textures",
+    "colorsSurfaces": "Colors & Surfaces",
     "icons": "Icons",
     "backToHome": "Back to home",
     "groups": {

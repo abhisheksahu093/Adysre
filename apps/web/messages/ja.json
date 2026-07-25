@@ -2082,6 +2082,9 @@
     "faq": {
       "title": "よくある質問",
       "subtitle": "始める前に知っておきたいこと。",
+      "badge": "FAQ",
+      "help": "まだ質問がありますか？導入をお手伝いします。",
+      "helpCta": "お問い合わせ",
       "items": {
         "what": {
           "q": "ADYSRE とは？",
@@ -2114,6 +2117,8 @@
     "footer": {
       "tagline": "チームが一緒にデザインしてリリースするワークスペース。",
       "product": "プロダクト",
+      "library": "ライブラリ",
+      "tools": "ツール",
       "resources": "リソース",
       "legal": "法務",
       "contact": "お問い合わせ",

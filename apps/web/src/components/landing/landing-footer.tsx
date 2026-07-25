@@ -21,13 +21,19 @@ export async function LandingFooter() {
 
   const columns = [
     {
-      heading: t('footer.product'),
+      // The library families, split from the tools so neither column runs long.
+      heading: t('footer.library'),
       links: [
         { href: LANDING_LINKS.components, label: tNav('components') },
         { href: LANDING_LINKS.icons, label: tNav('icons') },
-        { href: LANDING_LINKS.palettes, label: tNav('palettes') },
-        { href: LANDING_LINKS.gradients, label: tNav('gradients') },
+        { href: LANDING_LINKS.colorsSurfaces, label: tNav('colorsSurfaces') },
         { href: LANDING_LINKS.templates, label: tNav('templates') },
+      ],
+    },
+    {
+      heading: t('footer.tools'),
+      links: [
+        { href: LANDING_LINKS.aiTools, label: tNav('aiTools') },
         { href: LANDING_LINKS.codes, label: tNav('codes') },
         { href: LANDING_LINKS.documents, label: tNav('documents') },
         { href: LANDING_LINKS.websiteIntelligence, label: tNav('websiteIntelligence') },
@@ -55,7 +61,7 @@ export async function LandingFooter() {
   return (
     <footer className="border-t border-border">
       <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6">
-        <div className="grid grid-cols-2 gap-10 md:grid-cols-5">
+        <div className="grid grid-cols-2 gap-10 md:grid-cols-6">
           <div className="col-span-2">
             <Logo height={26} />
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted-foreground">

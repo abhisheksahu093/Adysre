@@ -124,6 +124,7 @@ export const LANDING_LINKS = {
   components: '/components',
   designPlayground: '/design-playground',
   icons: '/icons',
+  colorsSurfaces: '/colors-surfaces',
   palettes: '/palettes',
   gradients: '/gradients',
   patterns: '/patterns',

@@ -2082,6 +2082,9 @@
     "faq": {
       "title": "常见问题",
       "subtitle": "开始之前你可能想了解的一切。",
+      "badge": "FAQ",
+      "help": "还有疑问？我们很乐意帮助你上手。",
+      "helpCta": "联系我们",
       "items": {
         "what": {
           "q": "ADYSRE 是什么？",
@@ -2114,6 +2117,8 @@
     "footer": {
       "tagline": "让团队一起设计与交付的工作区。",
       "product": "产品",
+      "library": "资源库",
+      "tools": "工具",
       "resources": "资源",
       "legal": "法务",
       "contact": "联系我们",

@@ -2082,6 +2082,9 @@
     "faq": {
       "title": "Questions, answered",
       "subtitle": "Everything else you might want to know before you start.",
+      "badge": "FAQ",
+      "help": "Still have a question? We're happy to help you get started.",
+      "helpCta": "Contact us",
       "items": {
         "what": {
           "q": "What is ADYSRE?",
@@ -2114,6 +2117,8 @@
     "footer": {
       "tagline": "The workspace where teams design and ship together.",
       "product": "Product",
+      "library": "Library",
+      "tools": "Tools",
       "resources": "Resources",
       "legal": "Legal",
       "contact": "Contact",

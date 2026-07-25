@@ -7,7 +7,7 @@ import { ResizerPanel, resizerDefaults, resizerProcess } from './resizer';
 import { qrReaderDefaults, qrReaderProcess } from './qr-reader';
 import { barcodeReaderDefaults, barcodeReaderProcess } from './barcode-reader';
 import { EnhancerPanel, enhancerDefaults, enhancerProcess } from './enhancer';
-import { ocrDefaults, ocrProcess } from './ocr';
+import { OcrPanel, ocrDefaults, ocrProcess } from './ocr';
 import { FaceBlurPanel, faceBlurDefaults, faceBlurProcess } from './face-blur';
 import { BackgroundRemoverPanel, backgroundRemoverDefaults, backgroundRemoverProcess } from './background-remover';
 import { SmartCropPanel, smartCropDefaults, smartCropProcess } from './smart-crop';
@@ -98,9 +98,10 @@ export const AI_TOOLS: RegistryTool[] = [
     status: 'ready',
     phase: 1,
     icon: 'ScanText',
-    accept: IMAGE_ACCEPT,
+    accept: [...IMAGE_ACCEPT, 'application/pdf'],
     defaultSettings: ocrDefaults,
     process: ocrProcess,
+    panel: OcrPanel,
     textOutput: true,
   },
   {

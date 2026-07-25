@@ -2727,7 +2727,7 @@
       },
       "ocr": {
         "name": "OCR",
-        "desc": "Extract text from images on-device, then copy it or download as TXT."
+        "desc": "Extract text from images and PDFs on-device, then copy it or download as TXT, JSON, CSV or DOCX."
       },
       "upscaler": {
         "name": "Image Upscaler",

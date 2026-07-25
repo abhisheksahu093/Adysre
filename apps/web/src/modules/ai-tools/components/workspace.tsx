@@ -79,7 +79,7 @@ export function Workspace({ tool }: { tool: RegistryTool }) {
                 <RotateCcw className="h-4 w-4" aria-hidden />
                 {t('reprocess')}
               </Button>
-              <Button type="button" variant="outline" size="sm" onClick={() => void downloadAllResults(items)} disabled={doneCount === 0} className="gap-1.5">
+              <Button type="button" variant="outline" size="sm" onClick={() => void downloadAllResults(items, undefined, typeof settings.exportFormat === 'string' ? settings.exportFormat : undefined)} disabled={doneCount === 0} className="gap-1.5">
                 <Download className="h-4 w-4" aria-hidden />
                 {t('downloadAll')}
               </Button>

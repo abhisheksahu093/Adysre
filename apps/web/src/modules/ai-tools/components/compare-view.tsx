@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { Check, Copy, Download, RotateCw, Redo2, Undo2, ZoomIn, ZoomOut } from 'lucide-react';
+import { Check, Copy, Download, FileText, RotateCw, Redo2, Undo2, ZoomIn, ZoomOut } from 'lucide-react';
 import { cn } from 'adysre';
 import { useMediaStore } from '../store/use-media-store';
 import { downloadResult } from '../engine/download';
@@ -34,6 +34,7 @@ export function CompareView({ item }: { item: MediaItem }) {
   const redo = useMediaStore((s) => s.redo);
   const zoom = useMediaStore((s) => s.zoom);
   const setZoom = useMediaStore((s) => s.setZoom);
+  const exportFormat = useMediaStore((s) => s.settings.exportFormat);
 
   const [pos, setPos] = useState(50);
   const [copied, setCopied] = useState(false);
@@ -42,6 +43,8 @@ export function CompareView({ item }: { item: MediaItem }) {
 
   const result = item.result;
   const isText = Boolean(result?.text);
+  const isPdfSource = item.mime === 'application/pdf' || /\.pdf$/i.test(item.name);
+  const exportFmt = typeof exportFormat === 'string' ? exportFormat : undefined;
 
   useEffect(() => setPos(50), [item.id, result?.url]);
 
@@ -105,7 +108,7 @@ export function CompareView({ item }: { item: MediaItem }) {
           {result && (
             <button
               type="button"
-              onClick={() => downloadResult(item)}
+              onClick={() => downloadResult(item, exportFmt)}
               className="inline-flex items-center gap-1.5 rounded-md bg-primary px-2.5 py-1.5 text-xs font-medium text-primary-foreground transition-colors hover:bg-primary/90"
             >
               <Download className="h-3.5 w-3.5" aria-hidden />
@@ -118,8 +121,15 @@ export function CompareView({ item }: { item: MediaItem }) {
       {isText && result ? (
         <div className="grid flex-1 gap-4 overflow-auto p-4 md:grid-cols-2">
           <div className="grid place-items-center rounded-lg border border-border bg-muted/20 p-3">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={item.srcUrl} alt="" className="max-h-[50vh] max-w-full object-contain" />
+            {isPdfSource ? (
+              <div className="flex flex-col items-center gap-2 text-muted-foreground">
+                <FileText className="h-10 w-10" aria-hidden />
+                <span className="max-w-full truncate text-xs">{item.name}</span>
+              </div>
+            ) : (
+              /* eslint-disable-next-line @next/next/no-img-element */
+              <img src={item.srcUrl} alt="" className="max-h-[50vh] max-w-full object-contain" />
+            )}
           </div>
           <div className="rounded-lg border border-border p-3">
             <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Decoded</p>

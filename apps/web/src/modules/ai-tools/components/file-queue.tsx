@@ -1,6 +1,6 @@
 'use client';
 
-import { Check, Loader2, Trash2, TriangleAlert, X } from 'lucide-react';
+import { Check, FileText, Loader2, Trash2, TriangleAlert, X } from 'lucide-react';
 import { cn } from 'adysre';
 import { useMediaStore } from '../store/use-media-store';
 import { humanSize } from '../engine/format';
@@ -36,8 +36,14 @@ export function FileQueue() {
               )}
             >
               <button type="button" onClick={() => select(item.id)} className="flex min-w-0 flex-1 items-center gap-2.5 text-left">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={item.srcUrl} alt="" className="h-10 w-10 shrink-0 rounded-md border border-border object-cover" />
+                {item.mime === 'application/pdf' || /\.pdf$/i.test(item.name) ? (
+                  <span className="grid h-10 w-10 shrink-0 place-items-center rounded-md border border-border bg-muted/30 text-muted-foreground">
+                    <FileText className="h-4 w-4" aria-hidden />
+                  </span>
+                ) : (
+                  /* eslint-disable-next-line @next/next/no-img-element */
+                  <img src={item.srcUrl} alt="" className="h-10 w-10 shrink-0 rounded-md border border-border object-cover" />
+                )}
                 <span className="min-w-0 flex-1">
                   <span className="flex items-center gap-1.5">
                     <StatusIcon status={item.status} />

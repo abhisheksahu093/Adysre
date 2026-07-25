@@ -23,6 +23,9 @@ import {
   Blend,
   Grid2x2,
   Waves,
+  SwatchBook,
+  PenTool,
+  Radar,
   LayoutTemplate,
   MousePointerClick,
   Wand2,
@@ -60,6 +63,22 @@ export const FEATURE_MODULES: FeatureModule[] = [
   { id: 'patterns', href: '/patterns', icon: Grid2x2, accent: 'secondary' },
   { id: 'textures', href: '/textures', icon: Waves, accent: 'accent' },
   { id: 'templates', href: '/templates', icon: LayoutTemplate, accent: 'primary' },
+];
+
+/**
+ * The sidebar shown inside the workspace-preview mockup. It mirrors the current
+ * app sidebar (colours & surfaces merges palettes/gradients/patterns/textures;
+ * the tools are represented too), so the illustration never disagrees with the
+ * real navigation. Labels resolve from `nav.<id>`.
+ */
+export const PREVIEW_MODULES: FeatureModule[] = [
+  { id: 'components', href: '/components', icon: Blocks, accent: 'primary' },
+  { id: 'icons', href: '/icons', icon: Shapes, accent: 'secondary' },
+  { id: 'colorsSurfaces', href: '/colors-surfaces', icon: SwatchBook, accent: 'accent' },
+  { id: 'templates', href: '/templates', icon: LayoutTemplate, accent: 'primary' },
+  { id: 'aiTools', href: '/ai-tools', icon: Wand2, accent: 'secondary' },
+  { id: 'designPlayground', href: '/design-playground', icon: PenTool, accent: 'accent' },
+  { id: 'websiteIntelligence', href: '/website-intelligence', icon: Radar, accent: 'primary' },
 ];
 
 export interface WorkflowStep {

@@ -129,6 +129,8 @@ export const LANDING_LINKS = {
   patterns: '/patterns',
   textures: '/textures',
   templates: '/templates',
+  // "Open the workspace" drops you straight into the browser IDE.
+  codeStudio: '/code-studio',
   // Tools module destinations, surfaced in the header "Tools" menu.
   codes: '/tools/codes',
   documents: '/tools/documents',

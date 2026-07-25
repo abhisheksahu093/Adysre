@@ -88,7 +88,7 @@ export function LandingHero() {
               {t('hero.ctaPlayground')}
             </Link>
             <Link
-              href={LANDING_LINKS.app}
+              href={LANDING_LINKS.codeStudio}
               className={cn(buttonVariants({ variant: 'outline', size: 'lg' }), 'w-full gap-1.5 sm:w-auto')}
             >
               {t('hero.ctaWorkspace')}

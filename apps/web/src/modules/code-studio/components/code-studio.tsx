@@ -1,6 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { useTranslations } from 'next-intl';
 import { Loader2 } from 'lucide-react';
 import { useStudioStore } from '../store/use-studio-store';
 import { studioStorage } from '../services/storage';
@@ -9,6 +10,8 @@ import { createId } from '../utils/files';
 import { useAutosave } from '../hooks/use-autosave';
 import { usePreview } from '../hooks/use-preview';
 import { useConsoleBridge } from '../hooks/use-console-bridge';
+import { clearShareHash, decodeSharedProject, readShareHash } from '../services/share';
+import { readFileList, readZip } from '../services/archive';
 import { Toolbar } from './toolbar';
 import { Explorer } from './explorer';
 import { EditorTabs } from './editor-tabs';
@@ -37,10 +40,14 @@ function defaultProject() {
  * compile, console bridge) and global shortcuts.
  */
 export function CodeStudio() {
+  const t = useTranslations('codeStudio');
   const project = useStudioStore((s) => s.project);
   const loadProject = useStudioStore((s) => s.loadProject);
+  const importProject = useStudioStore((s) => s.importProject);
+  const setReadOnly = useStudioStore((s) => s.setReadOnly);
   const updateSettings = useStudioStore((s) => s.updateSettings);
   const [booted, setBooted] = useState(false);
+  const [dragging, setDragging] = useState(false);
 
   const { state: saveState, save } = useAutosave();
   const { srcdoc, building, rebuild } = usePreview();
@@ -53,6 +60,19 @@ export function CodeStudio() {
       try {
         const settings = await studioStorage.getSettings();
         if (alive && settings) updateSettings(settings);
+
+        // A share link wins over the restored project: open it as a fork.
+        const shared = readShareHash();
+        if (shared) {
+          const decoded = await decodeSharedProject(shared);
+          clearShareHash();
+          if (alive && decoded) {
+            loadProject(decoded.project);
+            setReadOnly(decoded.readOnly);
+            return;
+          }
+        }
+
         const lastId = await studioStorage.getLastProjectId();
         const restored = lastId ? await studioStorage.getProject(lastId) : undefined;
         if (!alive) return;
@@ -66,7 +86,7 @@ export function CodeStudio() {
     return () => {
       alive = false;
     };
-  }, [loadProject, updateSettings]);
+  }, [loadProject, importProject, setReadOnly, updateSettings]);
 
   // Global Ctrl/Cmd+S (Monaco has its own binding when the editor is focused).
   useEffect(() => {
@@ -111,8 +131,34 @@ export function CodeStudio() {
     };
   }, []);
 
+  const onDrop = async (e: React.DragEvent) => {
+    e.preventDefault();
+    setDragging(false);
+    const files = Array.from(e.dataTransfer.files);
+    if (files.length === 0) return;
+    const zip = files.find((f) => f.name.toLowerCase().endsWith('.zip'));
+    try {
+      if (zip) importProject(zip.name.replace(/\.zip$/i, ''), await readZip(zip));
+      else importProject('Imported project', await readFileList(files));
+    } catch {
+      /* an unreadable drop simply does nothing */
+    }
+  };
+
   return (
-    <div className="-m-4 flex h-[calc(100%+2rem)] flex-col overflow-hidden bg-background text-foreground sm:-m-6 sm:h-[calc(100%+3rem)]">
+    <div
+      className="relative -m-4 flex h-[calc(100%+2rem)] flex-col overflow-hidden bg-background text-foreground sm:-m-6 sm:h-[calc(100%+3rem)]"
+      onDragOver={(e) => {
+        if (e.dataTransfer.types.includes('Files')) {
+          e.preventDefault();
+          setDragging(true);
+        }
+      }}
+      onDragLeave={(e) => {
+        if (e.currentTarget === e.target) setDragging(false);
+      }}
+      onDrop={onDrop}
+    >
       <Toolbar saveState={saveState} onSave={() => void save()} onRun={() => void rebuild()} />
 
       <div className="flex min-h-0 flex-1">
@@ -141,6 +187,12 @@ export function CodeStudio() {
           </section>
         </div>
       </div>
+
+      {dragging && (
+        <div className="pointer-events-none absolute inset-0 z-40 m-3 flex items-center justify-center rounded-xl border-2 border-dashed border-primary bg-primary/10 text-sm font-medium text-primary">
+          {t('dropToImport')}
+        </div>
+      )}
 
       {!booted && (
         <div className="absolute inset-0 flex items-center justify-center gap-2 bg-background text-sm text-muted-foreground">

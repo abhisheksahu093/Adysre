@@ -29,8 +29,11 @@ interface StudioState {
   settings: StudioSettings;
   device: PreviewDevice;
   previewFullscreen: boolean;
+  readOnly: boolean;
 
   loadProject: (project: Project) => void;
+  importProject: (name: string, entries: { path: string; content: string }[]) => void;
+  setReadOnly: (readOnly: boolean) => void;
   setActiveFile: (id: string) => void;
   openFile: (id: string) => void;
   closeTab: (id: string) => void;
@@ -65,6 +68,7 @@ export const useStudioStore = create<StudioState>((set, get) => ({
   settings: DEFAULT_SETTINGS,
   device: 'desktop',
   previewFullscreen: false,
+  readOnly: false,
 
   loadProject: (project) => {
     const first = project.files[0]?.id ?? null;
@@ -75,8 +79,20 @@ export const useStudioStore = create<StudioState>((set, get) => ({
       openTabIds: preferred ? [preferred] : [],
       console: [],
       diagnostics: [],
+      readOnly: false,
     });
   },
+
+  importProject: (name, entries) => {
+    const files: ProjectFile[] = entries
+      .filter((entry) => normalizePath(entry.path))
+      .map((entry) => ({ id: createId(), path: normalizePath(entry.path), content: entry.content }));
+    if (files.length === 0) return;
+    const now = Date.now();
+    get().loadProject({ id: createId('proj'), name, files, createdAt: now, updatedAt: now });
+  },
+
+  setReadOnly: (readOnly) => set({ readOnly }),
 
   setActiveFile: (id) => set({ activeFileId: id }),
 

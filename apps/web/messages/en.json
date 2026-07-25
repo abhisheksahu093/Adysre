@@ -2635,6 +2635,22 @@
       "react": "React App",
       "reactTs": "React + TypeScript",
       "vue": "Vue App"
+    },
+    "importZip": "Import ZIP",
+    "importFolder": "Import folder",
+    "dropToImport": "Drop a ZIP or files to import",
+    "readOnlyBadge": "Read-only",
+    "forkToEdit": "Fork to edit",
+    "share": {
+      "action": "Share",
+      "title": "Share project",
+      "description": "A link with the whole project encoded in it, so it works with no server.",
+      "readOnly": "Read-only link",
+      "readOnlyHint": "Recipients can view and run, but not edit until they fork.",
+      "building": "Building link",
+      "copy": "Copy",
+      "copied": "Copied",
+      "note": "The project travels inside the link, so anyone with it can open your code."
     }
   }
 }

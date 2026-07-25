@@ -2635,6 +2635,22 @@
       "react": "React 应用",
       "reactTs": "React + TypeScript",
       "vue": "Vue 应用"
+    },
+    "importZip": "导入 ZIP",
+    "importFolder": "导入文件夹",
+    "dropToImport": "拖入 ZIP 或文件以导入",
+    "readOnlyBadge": "只读",
+    "forkToEdit": "复刻以编辑",
+    "share": {
+      "action": "分享",
+      "title": "分享项目",
+      "description": "一个内含整个项目的链接，无需服务器即可使用。",
+      "readOnly": "只读链接",
+      "readOnlyHint": "接收者可以查看和运行，但在复刻前无法编辑。",
+      "building": "正在生成链接",
+      "copy": "复制",
+      "copied": "已复制",
+      "note": "项目内容包含在链接中，因此任何拥有链接的人都能打开你的代码。"
     }
   }
 }

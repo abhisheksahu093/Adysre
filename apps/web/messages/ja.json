@@ -2635,6 +2635,22 @@
       "react": "Reactアプリ",
       "reactTs": "React + TypeScript",
       "vue": "Vueアプリ"
+    },
+    "importZip": "ZIPをインポート",
+    "importFolder": "フォルダをインポート",
+    "dropToImport": "ZIPまたはファイルをドロップしてインポート",
+    "readOnlyBadge": "読み取り専用",
+    "forkToEdit": "フォークして編集",
+    "share": {
+      "action": "共有",
+      "title": "プロジェクトを共有",
+      "description": "プロジェクト全体をエンコードしたリンクなので、サーバーなしで動作します。",
+      "readOnly": "読み取り専用リンク",
+      "readOnlyHint": "受け取った人は閲覧・実行できますが、フォークするまで編集はできません。",
+      "building": "リンクを作成中",
+      "copy": "コピー",
+      "copied": "コピーしました",
+      "note": "プロジェクトはリンクの中に含まれるため、リンクを持つ人は誰でもコードを開けます。"
     }
   }
 }

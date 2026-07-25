@@ -33,6 +33,7 @@ export function MonacoEditor({ onSave }: { onSave: () => void }) {
   const project = useStudioStore((s) => s.project);
   const activeFileId = useStudioStore((s) => s.activeFileId);
   const settings = useStudioStore((s) => s.settings);
+  const readOnly = useStudioStore((s) => s.readOnly);
   const updateFileContent = useStudioStore((s) => s.updateFileContent);
 
   const projectId = project?.id ?? null;
@@ -135,9 +136,10 @@ export function MonacoEditor({ onSave }: { onSave: () => void }) {
       tabSize: settings.tabSize,
       wordWrap: settings.wordWrap ? 'on' : 'off',
       minimap: { enabled: settings.minimap },
+      readOnly,
     });
     monaco.editor.setTheme(resolveTheme(settings.theme));
-  }, [settings, ready]);
+  }, [settings, readOnly, ready]);
 
   return (
     <div className="relative h-full w-full">

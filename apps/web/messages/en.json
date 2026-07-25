@@ -2651,6 +2651,34 @@
       "copy": "Copy",
       "copied": "Copied",
       "note": "The project travels inside the link, so anyone with it can open your code."
+    },
+    "explorer": "Explorer",
+    "search": {
+      "title": "Search",
+      "placeholder": "Search",
+      "replacePlaceholder": "Replace",
+      "caseSensitive": "Match case",
+      "regex": "Use regular expression",
+      "replaceAll": "Replace all",
+      "summary": "{matches} matches in {files} files"
+    },
+    "palette": {
+      "title": "Command palette",
+      "filePlaceholder": "Search files by name",
+      "commandPlaceholder": "Type a command",
+      "empty": "No results"
+    },
+    "commands": {
+      "newFile": "New file",
+      "format": "Format document",
+      "run": "Run preview",
+      "save": "Save project",
+      "download": "Download ZIP",
+      "share": "Share project",
+      "search": "Search in files",
+      "toggleTheme": "Toggle theme",
+      "toggleWordWrap": "Toggle word wrap",
+      "toggleMinimap": "Toggle minimap"
     }
   }
 }

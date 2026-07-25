@@ -5,6 +5,7 @@ import { Loader2 } from 'lucide-react';
 import { useStudioStore } from '../store/use-studio-store';
 import { monacoLanguageOf } from '../utils/files';
 import { loadMonaco, type MonacoApi, type MonacoEditorInstance, type MonacoTextModel } from '../services/monaco-loader';
+import { editorBridge } from '../services/editor-bridge';
 import type { EditorTheme } from '../types';
 
 function resolveTheme(theme: EditorTheme): string {
@@ -64,12 +65,20 @@ export function MonacoEditor({ onSave }: { onSave: () => void }) {
         });
         editor.addCommand(monaco.KeyMod.CtrlCmd | (monaco.KeyCode.KeyS ?? 0), () => onSaveRef.current());
         editorRef.current = editor;
+        editorBridge.format = () => editor?.getAction('editor.action.formatDocument')?.run();
+        editorBridge.revealPosition = (line, column = 1) => {
+          editor?.revealLineInCenter(line);
+          editor?.setPosition({ lineNumber: line, column });
+          editor?.focus();
+        };
         setReady(true);
       })
       .catch(() => setReady(false));
 
     return () => {
       disposed = true;
+      editorBridge.format = null;
+      editorBridge.revealPosition = null;
       editor?.dispose();
       editorRef.current = null;
     };

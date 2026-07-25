@@ -2651,6 +2651,34 @@
       "copy": "复制",
       "copied": "已复制",
       "note": "项目内容包含在链接中，因此任何拥有链接的人都能打开你的代码。"
+    },
+    "explorer": "资源管理器",
+    "search": {
+      "title": "搜索",
+      "placeholder": "搜索",
+      "replacePlaceholder": "替换",
+      "caseSensitive": "区分大小写",
+      "regex": "使用正则表达式",
+      "replaceAll": "全部替换",
+      "summary": "在 {files} 个文件中有 {matches} 处匹配"
+    },
+    "palette": {
+      "title": "命令面板",
+      "filePlaceholder": "按名称搜索文件",
+      "commandPlaceholder": "输入命令",
+      "empty": "没有结果"
+    },
+    "commands": {
+      "newFile": "新建文件",
+      "format": "格式化文档",
+      "run": "运行预览",
+      "save": "保存项目",
+      "download": "下载 ZIP",
+      "share": "分享项目",
+      "search": "在文件中搜索",
+      "toggleTheme": "切换主题",
+      "toggleWordWrap": "切换自动换行",
+      "toggleMinimap": "切换缩略图"
     }
   }
 }

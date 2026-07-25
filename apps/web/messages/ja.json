@@ -2651,6 +2651,34 @@
       "copy": "コピー",
       "copied": "コピーしました",
       "note": "プロジェクトはリンクの中に含まれるため、リンクを持つ人は誰でもコードを開けます。"
+    },
+    "explorer": "エクスプローラー",
+    "search": {
+      "title": "検索",
+      "placeholder": "検索",
+      "replacePlaceholder": "置換",
+      "caseSensitive": "大文字と小文字を区別",
+      "regex": "正規表現を使用",
+      "replaceAll": "すべて置換",
+      "summary": "{files} ファイルで {matches} 件"
+    },
+    "palette": {
+      "title": "コマンドパレット",
+      "filePlaceholder": "名前でファイルを検索",
+      "commandPlaceholder": "コマンドを入力",
+      "empty": "結果なし"
+    },
+    "commands": {
+      "newFile": "新しいファイル",
+      "format": "ドキュメントを整形",
+      "run": "プレビューを実行",
+      "save": "プロジェクトを保存",
+      "download": "ZIPをダウンロード",
+      "share": "プロジェクトを共有",
+      "search": "ファイル内を検索",
+      "toggleTheme": "テーマを切り替え",
+      "toggleWordWrap": "行の折り返しを切り替え",
+      "toggleMinimap": "ミニマップを切り替え"
     }
   }
 }

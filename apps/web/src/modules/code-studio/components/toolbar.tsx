@@ -25,7 +25,6 @@ import { readFileList, readZip } from '../services/archive';
 import { createId } from '../utils/files';
 import type { SaveState } from '../hooks/use-autosave';
 import { SettingsPanel } from './settings-panel';
-import { ShareDialog } from './share-dialog';
 
 function useDismiss(onDismiss: () => void) {
   const ref = useRef<HTMLDivElement>(null);
@@ -35,7 +34,17 @@ function useDismiss(onDismiss: () => void) {
   return { ref, onBlur };
 }
 
-export function Toolbar({ saveState, onSave, onRun }: { saveState: SaveState; onSave: () => void; onRun: () => void }) {
+export function Toolbar({
+  saveState,
+  onSave,
+  onRun,
+  onShare,
+}: {
+  saveState: SaveState;
+  onSave: () => void;
+  onRun: () => void;
+  onShare: () => void;
+}) {
   const t = useTranslations('codeStudio');
   const project = useStudioStore((s) => s.project);
   const loadProject = useStudioStore((s) => s.loadProject);
@@ -46,7 +55,6 @@ export function Toolbar({ saveState, onSave, onRun }: { saveState: SaveState; on
   const setReadOnly = useStudioStore((s) => s.setReadOnly);
   const [templatesOpen, setTemplatesOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
-  const [shareOpen, setShareOpen] = useState(false);
   const templatesMenu = useDismiss(() => setTemplatesOpen(false));
   const settingsMenu = useDismiss(() => setSettingsOpen(false));
   const zipInputRef = useRef<HTMLInputElement>(null);
@@ -215,7 +223,7 @@ export function Toolbar({ saveState, onSave, onRun }: { saveState: SaveState; on
 
         <button
           type="button"
-          onClick={() => setShareOpen(true)}
+          onClick={onShare}
           className="inline-flex items-center gap-1.5 rounded-md border border-border px-2.5 py-1.5 text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
         >
           <Share2 className="h-4 w-4" aria-hidden />
@@ -253,7 +261,6 @@ export function Toolbar({ saveState, onSave, onRun }: { saveState: SaveState; on
         onChange={onFolder}
         {...({ webkitdirectory: '', directory: '' } as Record<string, string>)}
       />
-      <ShareDialog open={shareOpen} onClose={() => setShareOpen(false)} />
     </header>
   );
 }

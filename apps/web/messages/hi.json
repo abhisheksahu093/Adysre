@@ -2651,6 +2651,34 @@
       "copy": "कॉपी",
       "copied": "कॉपी हो गया",
       "note": "प्रोजेक्ट लिंक के अंदर जाता है, इसलिए जिसके पास लिंक है वह आपका कोड खोल सकता है."
+    },
+    "explorer": "एक्सप्लोरर",
+    "search": {
+      "title": "खोजें",
+      "placeholder": "खोजें",
+      "replacePlaceholder": "बदलें",
+      "caseSensitive": "केस मिलाएँ",
+      "regex": "रेगुलर एक्सप्रेशन उपयोग करें",
+      "replaceAll": "सभी बदलें",
+      "summary": "{files} फ़ाइलों में {matches} मैच"
+    },
+    "palette": {
+      "title": "कमांड पैलेट",
+      "filePlaceholder": "नाम से फ़ाइलें खोजें",
+      "commandPlaceholder": "कोई कमांड लिखें",
+      "empty": "कोई परिणाम नहीं"
+    },
+    "commands": {
+      "newFile": "नई फ़ाइल",
+      "format": "डॉक्युमेंट फ़ॉर्मेट करें",
+      "run": "प्रीव्यू चलाएँ",
+      "save": "प्रोजेक्ट सेव करें",
+      "download": "ZIP डाउनलोड करें",
+      "share": "प्रोजेक्ट शेयर करें",
+      "search": "फ़ाइलों में खोजें",
+      "toggleTheme": "थीम बदलें",
+      "toggleWordWrap": "वर्ड रैप टॉगल करें",
+      "toggleMinimap": "मिनीमैप टॉगल करें"
     }
   }
 }

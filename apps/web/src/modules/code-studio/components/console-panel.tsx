@@ -1,12 +1,13 @@
 'use client';
 
 import { useMemo, useState } from 'react';
-import { AlertTriangle, Ban, Copy, Info, Terminal, TriangleAlert } from 'lucide-react';
+import { AlertTriangle, Ban, Copy, Info, SquareTerminal, Terminal, TriangleAlert } from 'lucide-react';
 import { Tooltip, cn } from 'adysre';
 import { useStudioStore } from '../store/use-studio-store';
 import type { ConsoleLevel } from '../types';
+import { TerminalPanel, type TerminalActions } from './terminal-panel';
 
-type PanelTab = 'console' | 'problems';
+type PanelTab = 'console' | 'problems' | 'terminal';
 
 const LEVEL_STYLE: Record<ConsoleLevel, string> = {
   log: 'text-foreground',
@@ -28,7 +29,7 @@ function LevelIcon({ level }: { level: ConsoleLevel }) {
  * Bottom panel: the captured console and the compile/runtime problems, each a
  * live view of the store. Copy exports the whole log; clear resets it.
  */
-export function ConsolePanel() {
+export function ConsolePanel({ terminalActions }: { terminalActions: TerminalActions }) {
   const entries = useStudioStore((s) => s.console);
   const diagnostics = useStudioStore((s) => s.diagnostics);
   const clearConsole = useStudioStore((s) => s.clearConsole);
@@ -74,6 +75,17 @@ export function ConsolePanel() {
             <span className="rounded-full bg-danger/20 px-1.5 text-[10px] text-danger">{diagnostics.length}</span>
           )}
         </button>
+        <button
+          type="button"
+          onClick={() => setTab('terminal')}
+          className={cn(
+            'flex items-center gap-1.5 rounded px-2 py-1 font-medium transition-colors',
+            tab === 'terminal' ? 'bg-primary/15 text-primary' : 'text-muted-foreground hover:text-foreground',
+          )}
+        >
+          <SquareTerminal className="h-3.5 w-3.5" aria-hidden />
+          Terminal
+        </button>
 
         {tab === 'console' && (
           <div className="ml-auto flex items-center gap-0.5">
@@ -103,6 +115,11 @@ export function ConsolePanel() {
         )}
       </div>
 
+      {tab === 'terminal' ? (
+        <div className="min-h-0 flex-1">
+          <TerminalPanel actions={terminalActions} />
+        </div>
+      ) : (
       <div className="flex-1 overflow-y-auto p-1 font-mono text-xs">
         {tab === 'console' ? (
           visible.length === 0 ? (
@@ -133,6 +150,7 @@ export function ConsolePanel() {
           </ul>
         )}
       </div>
+      )}
     </div>
   );
 }

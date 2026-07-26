@@ -19,6 +19,7 @@ import type {
   RequestDefinition,
   VariableContext,
   VariableIssue,
+  WireAuth,
   WireBody,
   WireHeader,
   WirePart,
@@ -44,8 +45,50 @@ export type PrepareResult =
   | { ok: true; request: ExecutionRequest; issues: VariableIssue[] }
   | { ok: false; code: ExecutionErrorCode; detail: string; issues: VariableIssue[] };
 
-/** Auth strategies that need a challenge or a token exchange before sending. */
-const ROUND_TRIP_AUTH = new Set(['digest', 'oauth2', 'jwt', 'awsSignature']);
+/**
+ * Strategies the RUNNER applies, because the browser cannot: they need the
+ * server's challenge, a token exchange, or a signature over the final bytes.
+ * They are passed through resolved rather than applied here.
+ */
+const RUNNER_APPLIED = new Set(['digest', 'oauth2', 'jwt', 'awsSignature']);
+
+/** Project a resolved auth config onto the runner's wire shape. */
+function toWireAuth(auth: AuthConfig): WireAuth | null {
+  switch (auth.type) {
+    case 'digest':
+      return {
+        type: 'digest',
+        username: auth.username,
+        password: auth.password,
+        algorithm: auth.algorithm,
+        qop: auth.qop,
+      };
+    case 'jwt':
+      return {
+        type: 'jwt',
+        algorithm: auth.algorithm,
+        secret: auth.secret,
+        secretBase64Encoded: auth.secretBase64Encoded,
+        payload: auth.payload,
+        headerPrefix: auth.headerPrefix,
+        addTo: auth.addTo,
+        paramName: auth.paramName,
+      };
+    case 'oauth2':
+      return { type: 'oauth2', ...auth.config };
+    case 'awsSignature':
+      return {
+        type: 'awsSignature',
+        accessKeyId: auth.accessKeyId,
+        secretAccessKey: auth.secretAccessKey,
+        sessionToken: auth.sessionToken,
+        region: auth.region,
+        service: auth.service,
+      };
+    default:
+      return null;
+  }
+}
 
 /**
  * Base64 for a UTF-8 string, in browser and server alike.
@@ -280,18 +323,21 @@ export function prepareRequest(input: PrepareInput): PrepareResult {
     ...Object.fromEntries(authFields.map(([key]) => [key, next()])),
   } as AuthConfig;
 
-  if (ROUND_TRIP_AUTH.has(auth.type)) {
+  // A runner-applied strategy is carried, not applied. Everything in it has
+  // been resolved above, so the runner receives literals and no templates.
+  const wireAuth = RUNNER_APPLIED.has(resolvedAuth.type) ? toWireAuth(resolvedAuth) : null;
+  if (RUNNER_APPLIED.has(resolvedAuth.type) && !wireAuth) {
     return {
       ok: false,
       code: 'unsupported_auth',
-      detail: `${auth.type} auth is not available in this build.`,
+      detail: `${resolvedAuth.type} auth is not available in this build.`,
       issues,
     };
   }
 
   const query = [...resolvedParams];
   const wireHeaders: WireHeader[] = resolvedHeaders.filter((header) => header.name.trim() !== '');
-  const applied = applyAuth(resolvedAuth, wireHeaders, query);
+  const applied = wireAuth ? { ok: true as const } : applyAuth(resolvedAuth, wireHeaders, query);
   if (!applied.ok) {
     return {
       ok: false,
@@ -338,6 +384,7 @@ export function prepareRequest(input: PrepareInput): PrepareResult {
       url: finalUrl,
       headers: wireHeaders,
       body: body.body,
+      ...(wireAuth ? { auth: wireAuth } : {}),
       settings: {
         timeoutMs: request.settings.timeoutMs,
         followRedirects: request.settings.followRedirects,

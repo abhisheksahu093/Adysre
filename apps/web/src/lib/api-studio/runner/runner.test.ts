@@ -7,6 +7,8 @@ import type { ExecutionRequest } from '@/modules/api-studio/types';
 import { rateLimit, resetRateLimits } from '@/lib/api/rate-limit';
 import { checkAddress, checkUrl, policyFromEnv, type HostPolicy } from './host-policy';
 import { execute, parseSetCookies } from './execute';
+import { memoryJar } from './cookies';
+import { buildAuthorization, parseChallenge } from './auth/digest';
 
 /**
  * Runner tests.
@@ -99,6 +101,54 @@ before(async () => {
       case '/loop':
         response.writeHead(302, { Location: '/loop' });
         response.end();
+        return;
+
+      case '/digest': {
+        // A server that answers 401 with a challenge, then accepts the answer.
+        const authorization = request.headers.authorization ?? '';
+        const challenge = parseChallenge(
+          'Digest realm="test", qop="auth", nonce="dead-beef", opaque="op", algorithm=MD5',
+        )!;
+
+        if (!authorization.startsWith('Digest ')) {
+          response.writeHead(401, {
+            'WWW-Authenticate':
+              'Digest realm="test", qop="auth", nonce="dead-beef", opaque="op", algorithm=MD5',
+          });
+          response.end('unauthorized');
+          return;
+        }
+
+        const cnonce = /cnonce="([^"]+)"/.exec(authorization)?.[1] ?? '';
+        const expected = buildAuthorization({
+          challenge,
+          credentials: { username: 'mufasa', password: 'circle' },
+          method: request.method ?? 'GET',
+          uri: request.url ?? '/',
+          cnonce,
+          nonceCount: 1,
+        });
+        const wanted = /response="([^"]+)"/.exec(expected)?.[1];
+        const given = /response="([^"]+)"/.exec(authorization)?.[1];
+
+        if (wanted && given === wanted) {
+          response.writeHead(200, { 'Content-Type': 'application/json' });
+          response.end(JSON.stringify({ authenticated: true }));
+        } else {
+          response.writeHead(403);
+          response.end('bad digest');
+        }
+        return;
+      }
+
+      case '/login':
+        response.writeHead(200, { 'Set-Cookie': 'sid=session-token; Path=/' });
+        response.end('ok');
+        return;
+
+      case '/whoami':
+        response.writeHead(200, { 'Content-Type': 'application/json' });
+        response.end(JSON.stringify({ cookie: request.headers.cookie ?? null }));
         return;
 
       case '/status':
@@ -381,6 +431,90 @@ describe('runner', () => {
     );
     assert.equal(result.ok, false);
     assert.equal(result.ok === false && result.error.code, 'unsupported_body');
+  });
+});
+
+describe('digest auth', () => {
+  it('answers the challenge and retries once', async () => {
+    const result = await execute(
+      request('/digest', {
+        auth: {
+          type: 'digest',
+          username: 'mufasa',
+          password: 'circle',
+          algorithm: 'MD5',
+          qop: 'auth',
+        },
+      }),
+      { policy: OPEN },
+    );
+
+    assert.equal(result.ok, true);
+    if (!result.ok) return;
+    assert.equal(result.response.status, 200);
+    assert.deepEqual(JSON.parse(result.response.body), { authenticated: true });
+  });
+
+  it('gives up rather than looping when the password is wrong', async () => {
+    const result = await execute(
+      request('/digest', {
+        auth: {
+          type: 'digest',
+          username: 'mufasa',
+          password: 'wrong',
+          algorithm: 'MD5',
+          qop: 'auth',
+        },
+      }),
+      { policy: OPEN },
+    );
+
+    // The exchange completed; it just was not authorised. That is a response.
+    assert.equal(result.ok, true);
+    assert.equal(result.ok && result.response.status, 403);
+  });
+
+  it('sends nothing extra when there is no digest auth', async () => {
+    const result = await execute(request('/digest'), { policy: OPEN });
+    assert.equal(result.ok && result.response.status, 401);
+  });
+});
+
+describe('cookie jar', () => {
+  it('stores what a response sets and sends it back next time', async () => {
+    const jar = memoryJar();
+
+    const login = await execute(request('/login'), { policy: OPEN, jar });
+    assert.equal(login.ok, true);
+    assert.equal(jar.all().length, 1);
+    assert.equal(jar.all()[0]?.name, 'sid');
+
+    const who = await execute(request('/whoami'), { policy: OPEN, jar });
+    assert.equal(who.ok, true);
+    if (!who.ok) return;
+    assert.equal(JSON.parse(who.response.body).cookie, 'sid=session-token');
+  });
+
+  it('sends nothing when the request says not to', async () => {
+    const jar = memoryJar();
+    await execute(request('/login'), { policy: OPEN, jar });
+
+    const who = await execute(
+      request('/whoami', { settings: { sendCookies: false } }),
+      { policy: OPEN, jar },
+    );
+    assert.equal(who.ok && JSON.parse(who.response.body).cookie, null);
+  });
+
+  it('stores nothing when the request says not to', async () => {
+    const jar = memoryJar();
+    await execute(request('/login', { settings: { storeCookies: false } }), { policy: OPEN, jar });
+    assert.equal(jar.all().length, 0);
+  });
+
+  it('does not send cookies at all without a jar', async () => {
+    const who = await execute(request('/whoami'), { policy: OPEN });
+    assert.equal(who.ok && JSON.parse(who.response.body).cookie, null);
   });
 });
 

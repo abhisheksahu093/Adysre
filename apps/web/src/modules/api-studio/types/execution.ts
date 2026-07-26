@@ -15,7 +15,13 @@
  */
 
 import type { ExecutionAgent } from './protocol';
-import type { HttpMethod } from './http';
+import type {
+  AuthTarget,
+  DigestAlgorithm,
+  HttpMethod,
+  JwtAlgorithm,
+  OAuth2GrantType,
+} from './http';
 
 /** A header exactly as it goes on the wire: ordered, repeatable, resolved. */
 export interface WireHeader {
@@ -48,6 +54,59 @@ export interface WireSettings {
   maxResponseBytes: number;
 }
 
+/**
+ * Auth the RUNNER has to apply, because the browser cannot.
+ *
+ * Everything here is already resolved (no `{{variables}}` left), but not yet
+ * applied, and for a reason in each case: digest needs the server's challenge,
+ * OAuth 2 needs a token exchange, AWS signature signs the final bytes including
+ * headers this layer adds, and JWT needs a private key that must never reach a
+ * browser. Strategies that need none of that (basic, bearer, api key, custom)
+ * are applied client-side and never appear here.
+ */
+export type WireAuth =
+  | {
+      type: 'digest';
+      username: string;
+      password: string;
+      algorithm: DigestAlgorithm;
+      qop: string;
+    }
+  | {
+      type: 'jwt';
+      algorithm: JwtAlgorithm;
+      secret: string;
+      secretBase64Encoded: boolean;
+      payload: string;
+      headerPrefix: string;
+      addTo: AuthTarget;
+      paramName: string;
+    }
+  | {
+      type: 'oauth2';
+      grantType: OAuth2GrantType;
+      accessTokenUrl: string;
+      clientId: string;
+      clientSecret: string;
+      scope: string;
+      audience: string;
+      username: string;
+      password: string;
+      refreshToken: string;
+      accessToken: string;
+      clientAuthentication: 'body' | 'basic';
+      addTo: AuthTarget;
+      headerPrefix: string;
+    }
+  | {
+      type: 'awsSignature';
+      accessKeyId: string;
+      secretAccessKey: string;
+      sessionToken: string;
+      region: string;
+      service: string;
+    };
+
 /** The runner's input. Everything here is literal and ready to send. */
 export interface ExecutionRequest {
   /** Client-generated id, echoed back so a response can find its tab. */
@@ -62,6 +121,13 @@ export interface ExecutionRequest {
   headers: WireHeader[];
   body: WireBody;
   settings: WireSettings;
+  /**
+   * Present only for strategies the runner must apply. See {@link WireAuth}.
+   *
+   * Explicitly `| undefined`: the repo compiles with `exactOptionalPropertyTypes`,
+   * and a parsed body legitimately carries the key holding undefined.
+   */
+  auth?: WireAuth | undefined;
 }
 
 /** A cookie as stored by the jar and shown in the cookie editor. */

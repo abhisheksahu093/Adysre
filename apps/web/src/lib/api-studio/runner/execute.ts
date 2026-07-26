@@ -15,6 +15,9 @@ import type {
 } from '@/modules/api-studio/types';
 import { RUNNER_MANAGED_HEADERS, STATUS_TEXT } from '@/modules/api-studio/constants/http';
 import { checkAddress, checkUrl, type HostPolicy } from './host-policy';
+import { applyWireAuth } from './auth/apply';
+import { buildAuthorization, parseChallenge } from './auth/digest';
+import { canStore, cookieHeader, type CookieJar } from './cookies';
 
 /**
  * The request runner.
@@ -45,6 +48,11 @@ import { checkAddress, checkUrl, type HostPolicy } from './host-policy';
 export interface RunnerOptions {
   policy: HostPolicy;
   signal?: AbortSignal;
+  /**
+   * The cookie jar for this workspace. Absent means cookies are neither sent
+   * nor stored, which is what a caller without persistence gets.
+   */
+  jar?: CookieJar;
 }
 
 interface HopResult {
@@ -389,7 +397,30 @@ export async function execute(
   let payload = body.buffer;
   let insecure = !request.settings.verifyTls;
 
-  for (let hop = 0; hop <= request.settings.maxRedirects; hop += 1) {
+  // JWT and OAuth 2 produce one header for the whole exchange: a token fetched
+  // per redirect hop would be a second round trip to the token endpoint for no
+  // reason. AWS signs per hop, below, because the signature covers the URL.
+  let authHeaders: WireHeader[] = [];
+  if (request.auth && (request.auth.type === 'jwt' || request.auth.type === 'oauth2')) {
+    const applied = await applyWireAuth({
+      auth: request.auth,
+      request,
+      url: target,
+      headers,
+      body: payload,
+      // The token endpoint is a user-supplied URL, so it goes out through this
+      // same runner and is subject to the same host policy and caps.
+      send: (tokenRequest) => execute(tokenRequest, { policy: options.policy }),
+    });
+    if (!applied.ok) return fail(request.id, 'unsupported_auth', applied.reason);
+    authHeaders = applied.headers;
+    for (const parameter of applied.query) target.searchParams.set(parameter.key, parameter.value);
+  }
+
+  let redirectCount = 0;
+  let digestRetried = false;
+
+  while (redirectCount <= request.settings.maxRedirects) {
     if (options.signal?.aborted) return fail(request.id, 'cancelled', 'Cancelled.');
 
     const resolved = await resolveAllowed(target.hostname, options.policy);
@@ -403,13 +434,39 @@ export async function execute(
       );
     }
 
+    // Cookies are chosen per hop: a redirect to another host must send that
+    // host's cookies, not the ones the first host set.
+    let hopHeaders: WireHeader[] = [...headers, ...authHeaders];
+    if (request.settings.sendCookies && options.jar) {
+      const header = cookieHeader(await options.jar.read(target));
+      if (header) {
+        hopHeaders = [
+          ...hopHeaders.filter((entry) => entry.name.toLowerCase() !== 'cookie'),
+          { name: 'Cookie', value: header },
+        ];
+      }
+    }
+
+    if (request.auth?.type === 'awsSignature') {
+      const signed = await applyWireAuth({
+        auth: request.auth,
+        request,
+        url: target,
+        headers: hopHeaders,
+        body: payload,
+        send: (tokenRequest) => execute(tokenRequest, { policy: options.policy }),
+      });
+      if (!signed.ok) return fail(request.id, 'unsupported_auth', signed.reason);
+      hopHeaders = [...hopHeaders, ...signed.headers];
+    }
+
     let result: HopResult;
     try {
       result = await performHop(
         target,
         resolved.address,
         method,
-        headers,
+        hopHeaders,
         payload,
         request.settings,
         resolved.ms,
@@ -421,13 +478,47 @@ export async function execute(
       return fail(request.id, code, describe(code), cause);
     }
 
+    const setCookie = result.headers
+      .filter((header) => header.name.toLowerCase() === 'set-cookie')
+      .map((header) => header.value);
+    const received = parseSetCookies(setCookie, target.hostname);
+
+    if (request.settings.storeCookies && options.jar && received.length > 0) {
+      await options.jar.write(target, received.filter((cookie) => canStore(cookie, target)));
+    }
+
+    // Digest: the first request is meant to be refused, and the 401 carries the
+    // nonce the answer is built from. One retry only, so a server that keeps
+    // refusing ends the exchange rather than looping.
+    if (result.status === 401 && request.auth?.type === 'digest' && !digestRetried) {
+      const challengeHeader = result.headers.find(
+        (header) => header.name.toLowerCase() === 'www-authenticate',
+      );
+      const challenge = challengeHeader ? parseChallenge(challengeHeader.value) : null;
+
+      if (challenge) {
+        digestRetried = true;
+        authHeaders = [
+          {
+            name: 'Authorization',
+            value: buildAuthorization({
+              challenge,
+              credentials: { username: request.auth.username, password: request.auth.password },
+              method,
+              // The server hashes the target exactly as it appears on the wire.
+              uri: `${target.pathname}${target.search}`,
+              body: payload,
+            }),
+          },
+        ];
+        continue;
+      }
+    }
+
     const location = result.headers.find((header) => header.name.toLowerCase() === 'location');
     const isRedirect = result.status >= 300 && result.status < 400 && location?.value;
 
     if (!isRedirect || !request.settings.followRedirects) {
-      const setCookie = result.headers
-        .filter((header) => header.name.toLowerCase() === 'set-cookie')
-        .map((header) => header.value);
       const encoded = encodeBody(result.body);
 
       return {
@@ -438,7 +529,7 @@ export async function execute(
           statusText: result.statusText,
           httpVersion: result.httpVersion,
           headers: result.headers,
-          cookies: parseSetCookies(setCookie, target.hostname),
+          cookies: received,
           ...encoded,
           truncated: result.truncated,
           size: {
@@ -446,7 +537,7 @@ export async function execute(
             body: result.rawBytes,
             total: result.headerBytes + result.rawBytes,
           },
-          requestSize: requestSize(headers, payload),
+          requestSize: requestSize(hopHeaders, payload),
           timings: result.timings,
           redirects,
           insecure,
@@ -483,7 +574,14 @@ export async function execute(
     }
 
     if (next.protocol === 'http:') insecure = insecure || target.protocol === 'https:';
+    if (next.host !== target.host) {
+      // The token or signature was for the previous origin. Carrying it across
+      // would hand a credential to whatever the redirect names.
+      authHeaders = [];
+      digestRetried = false;
+    }
     target = shapeNext.url;
+    redirectCount += 1;
   }
 
   return fail(request.id, 'too_many_redirects', 'The server redirected too many times.');

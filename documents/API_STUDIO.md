@@ -283,11 +283,42 @@ The answer is always 200 with a result envelope, even when the exchange failed:
 endpoint, and it belongs in the response pane rather than an error toast. Only
 auth, rate limiting and validation - failures about the CALL - answer non-200.
 
-**Not yet sendable, by name rather than silently:** digest, OAuth 2, JWT and AWS
-signature auth (each needs a round trip or a signing step), and binary and
-multipart bodies (each needs the file store). Both produce a typed refusal
-(`unsupported_auth`, `unsupported_body`) so nothing is ever sent
-unauthenticated or missing the file the user attached.
+### Auth the runner applies
+
+Four strategies cannot be turned into a header in a browser, so they travel
+resolved but unapplied in `ExecutionRequest.auth` and the runner performs them:
+
+| Strategy | Why it is server-side |
+| --- | --- |
+| Digest | The credential hashes a nonce the server chooses, so the first request must be refused with 401 and repeated. One retry only. |
+| OAuth 2 | Needs a token exchange. The token request goes out through this same runner, so a user-supplied token URL passes the same host policy, timeout and caps as anything else, and never follows a redirect (that would hand the client secret to whoever the redirect names). |
+| AWS SigV4 | Signs the FINAL request, including headers this layer adds and a hash of the body. Signing before those exist produces a valid-looking request the server rejects with a bare 403. |
+| JWT | Needs an HMAC secret or a PEM private key, which must never reach a browser. |
+
+Ordering is fixed for the same reason: OAuth and JWT produce a header, then AWS
+signs whatever the header set turned out to be. On a redirect to another host,
+the token, signature and digest state are all dropped.
+
+`authorization_code`, PKCE, implicit and device-code grants need a browser
+redirect this build cannot perform. They are refused by name, and the UI says to
+paste an access token instead.
+
+### The cookie jar
+
+Per workspace, encrypted with the same envelope as secret variables, because a
+session cookie IS a credential. Matching follows RFC 6265: domain match on a dot
+boundary (so `notexample.com` cannot claim `example.com`'s cookies), path match
+at a segment boundary, secure cookies withheld from plain http, expired cookies
+deleted rather than stored, and `SameSite=None` without `Secure` refused the way
+a browser would. Cookies are re-selected per redirect hop, so a hop to another
+host sends that host's cookies and not the first host's.
+
+With no encryption key configured the jar reads and stores nothing rather than
+falling back to plaintext: a request that carries no cookies is visible and
+fixable, a plaintext table of live sessions is neither.
+
+**Still refused by name:** binary and multipart bodies, which need the file
+store (`unsupported_body`).
 
 ## The interface
 
@@ -351,9 +382,10 @@ database there is no honest tenant to attribute writes to, and the routes say so
 | 4 | Routes and API contracts under `/api/api-studio` | **done** |
 | 5 | Request engine: runner, SSRF policy, timings, cancellation | **done** |
 | 6 | Main UI: sidebar, tabs, request builder, response viewer | **done** |
-| 7 | Auth strategies, cookies, scripts and assertions | next |
-| 8 | Import (Postman, OpenAPI, HAR, cURL), export, code generation | |
-| 9 | Docs generator, offline queue, search, shortcuts, a11y pass | |
+| 7 | Auth strategies (digest, OAuth 2, JWT, AWS) and the cookie jar | **done** |
+| 8 | Scripts, assertions, and the environment and cookie editors | next |
+| 9 | Import (Postman, OpenAPI, HAR, cURL), export, code generation | |
+| 10 | Docs generator, offline queue, search, shortcuts, a11y pass | |
 
 ## Phase 1 file map
 

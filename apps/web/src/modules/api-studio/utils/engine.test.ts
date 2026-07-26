@@ -230,20 +230,56 @@ describe('request preparation', () => {
     assert.equal(inQuery.ok && inQuery.request.url, 'https://a.com?api_key=k');
   });
 
-  it('refuses by name rather than sending unauthenticated', () => {
-    for (const auth of [
-      { type: 'digest', username: 'a', password: 'b', realm: '', algorithm: 'MD5', qop: '', opaque: '' },
-      { type: 'awsSignature', accessKeyId: 'a', secretAccessKey: 'b', sessionToken: '', region: 'us-east-1', service: 's3' },
-    ] as const) {
-      const result = prepareRequest({
-        ...base,
-        request: { ...EMPTY_REQUEST, url: 'https://a.com', auth },
-      });
-      assert.equal(result.ok, false);
-      if (result.ok) return;
-      assert.equal(result.code, 'unsupported_auth');
-      assert.ok(result.detail.includes(auth.type));
-    }
+  it('carries a runner-applied strategy instead of applying it here', () => {
+    // Digest needs the server's challenge and AWS signs the final bytes, so
+    // neither can be turned into a header in the browser. They travel resolved
+    // but unapplied, and the request leaves here with NO Authorization header.
+    const digest = prepareRequest({
+      ...base,
+      request: {
+        ...EMPTY_REQUEST,
+        url: 'https://a.com',
+        auth: {
+          type: 'digest',
+          username: 'ada',
+          password: '{{token}}',
+          realm: '',
+          algorithm: 'MD5',
+          qop: 'auth',
+          opaque: '',
+        },
+      },
+    });
+
+    assert.equal(digest.ok, true);
+    if (!digest.ok) return;
+    assert.equal(digest.request.auth?.type, 'digest');
+    // Resolved on the way through, so the runner never sees a template.
+    assert.equal(
+      digest.request.auth?.type === 'digest' ? digest.request.auth.password : '',
+      't-123',
+    );
+    assert.equal(
+      digest.request.headers.some((header) => header.name === 'Authorization'),
+      false,
+    );
+
+    const aws = prepareRequest({
+      ...base,
+      request: {
+        ...EMPTY_REQUEST,
+        url: 'https://a.com',
+        auth: {
+          type: 'awsSignature',
+          accessKeyId: 'A',
+          secretAccessKey: 'S',
+          sessionToken: '',
+          region: 'us-east-1',
+          service: 's3',
+        },
+      },
+    });
+    assert.equal(aws.ok && aws.request.auth?.type, 'awsSignature');
   });
 
   it('refuses a binary body rather than sending an empty one', () => {

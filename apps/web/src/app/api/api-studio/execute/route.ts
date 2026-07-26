@@ -6,6 +6,7 @@ import { rateLimit } from '@/lib/api/rate-limit';
 import { authorize } from '@/lib/api-studio/guard';
 import { execute } from '@/lib/api-studio/runner/execute';
 import { policyFromEnv } from '@/lib/api-studio/runner/host-policy';
+import { databaseJar } from '@/lib/api-studio/repositories/cookies';
 import { executionRequestSchema } from '@/modules/api-studio/schemas/execution';
 import { RUNNER_RATE_LIMIT } from '@/modules/api-studio/constants/limits';
 
@@ -59,8 +60,16 @@ export async function POST(request: Request): Promise<NextResponse> {
     return BAD_REQUEST('This endpoint runs server-side requests only.');
   }
 
+  // The jar is per workspace and per tenant, and the workspace id is checked
+  // against the session's tenant by every query the repository makes.
+  const wantsCookies = body.data.settings.sendCookies || body.data.settings.storeCookies;
+  const jar = wantsCookies
+    ? databaseJar(auth.session.tenantId, body.data.workspaceId, auth.session.userId)
+    : undefined;
+
   const result = await execute(body.data, {
     policy: policyFromEnv(),
+    ...(jar ? { jar } : {}),
     // The client aborts by dropping the connection; Next surfaces that as the
     // request signal, which the runner uses to destroy the socket rather than
     // finish a call nobody is waiting for.

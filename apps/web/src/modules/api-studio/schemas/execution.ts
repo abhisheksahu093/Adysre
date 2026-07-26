@@ -16,8 +16,21 @@
  */
 
 import { z } from 'zod';
-import type { ExecutionRequest, WireBody, WireHeader, WirePart, WireSettings } from '../types';
-import { EXECUTION_AGENTS, HTTP_METHODS } from '../types';
+import type {
+  ExecutionRequest,
+  WireAuth,
+  WireBody,
+  WireHeader,
+  WirePart,
+  WireSettings,
+} from '../types';
+import {
+  DIGEST_ALGORITHMS,
+  EXECUTION_AGENTS,
+  HTTP_METHODS,
+  JWT_ALGORITHMS,
+  OAUTH2_GRANT_TYPES,
+} from '../types';
 import {
   MAX_HEADER_COUNT,
   MAX_HEADER_VALUE_LENGTH,
@@ -98,6 +111,67 @@ export const wireSettingsSchema: Parser<WireSettings> = z
   .strict();
 
 /**
+ * Auth the runner applies.
+ *
+ * As strict as everything else here: these carry credentials, so an unknown key
+ * is refused rather than stripped, and every string is bounded. The runner then
+ * receives exactly the fields each strategy uses and nothing else.
+ */
+const credential = z.string().max(8_192);
+
+export const wireAuthSchema: Parser<WireAuth> = z.discriminatedUnion('type', [
+  z
+    .object({
+      type: z.literal('digest'),
+      username: credential,
+      password: credential,
+      algorithm: z.enum(DIGEST_ALGORITHMS),
+      qop: z.string().max(40),
+    })
+    .strict(),
+  z
+    .object({
+      type: z.literal('jwt'),
+      algorithm: z.enum(JWT_ALGORITHMS),
+      secret: z.string().max(16_384),
+      secretBase64Encoded: z.boolean(),
+      payload: z.string().max(100_000),
+      headerPrefix: z.string().max(40),
+      addTo: z.enum(['header', 'query']),
+      paramName: z.string().max(200),
+    })
+    .strict(),
+  z
+    .object({
+      type: z.literal('oauth2'),
+      grantType: z.enum(OAUTH2_GRANT_TYPES),
+      accessTokenUrl: credential,
+      clientId: credential,
+      clientSecret: credential,
+      scope: credential,
+      audience: credential,
+      username: credential,
+      password: credential,
+      refreshToken: credential,
+      accessToken: credential,
+      clientAuthentication: z.enum(['body', 'basic']),
+      addTo: z.enum(['header', 'query']),
+      headerPrefix: z.string().max(40),
+    })
+    .strict(),
+  z
+    .object({
+      type: z.literal('awsSignature'),
+      accessKeyId: credential,
+      secretAccessKey: credential,
+      sessionToken: credential,
+      region: z.string().max(64),
+      service: z.string().max(64),
+    })
+    .strict(),
+]);
+
+/**
  * The runner's contract.
  *
  * The URL is checked for shape only (absolute, http/https, bounded). Whether
@@ -126,6 +200,7 @@ export const executionRequestSchema: Parser<ExecutionRequest> = z
     headers: z.array(wireHeaderSchema).max(MAX_HEADER_COUNT),
     body: wireBodySchema,
     settings: wireSettingsSchema,
+    auth: wireAuthSchema.optional(),
   })
   .strict();
 

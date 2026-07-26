@@ -2,6 +2,23 @@
   "$schema": "https://json.schemastore.org/tsconfig",
   "extends": "../../../tsconfig.base.json",
   "compilerOptions": {
-    "composite": false
+    "composite": false,
+    /*
+     * Workspace packages are consumed as SOURCE: their `exports` point at
+     * `src/index.ts`, and nothing builds them before an app imports them. A
+     * relative import inside such a package therefore has to carry its real
+     * extension (`./common.ts`), because the thing resolving it at runtime is
+     * Node's ESM loader, which does not guess extensions - and an extensionless
+     * import that type-checks but cannot be loaded is a package that only fails
+     * when something actually runs it.
+     *
+     * These two flags are the pair that makes that legal everywhere: the first
+     * allows the extension, the second rewrites it to `.js` on emit, so a
+     * package that DOES build still publishes spec-compliant ESM. Set here
+     * rather than per package so a new package inherits the convention instead
+     * of rediscovering it. See documents/NPM_LIBRARY.md §3.
+     */
+    "allowImportingTsExtensions": true,
+    "rewriteRelativeImportExtensions": true
   }
 }

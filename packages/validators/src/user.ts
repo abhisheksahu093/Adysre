@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { emailSchema } from './common';
+import { emailSchema } from './common.ts';
 
 export const createUserSchema = z.object({
   email: emailSchema,

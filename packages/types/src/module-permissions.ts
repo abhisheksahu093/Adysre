@@ -11,7 +11,7 @@
  * clauses make a typo a compile error rather than a permission nobody holds.
  */
 
-import type { Permission } from './rbac';
+import type { Permission } from './rbac.ts';
 
 export const API_STUDIO_MODULE = 'api-studio';
 

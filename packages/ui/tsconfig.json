@@ -11,7 +11,16 @@
      * `rewriteRelativeImportExtensions` (tsconfig.build.json) turns them back
      * into `.js` on emit, so the published package is still correct ESM.
      */
-    "allowImportingTsExtensions": true
+    "allowImportingTsExtensions": true,
+    /*
+     * The automatic runtime, matching tsconfig.build.json rather than the
+     * `preserve` inherited from the Next preset. This package is framework-free
+     * React (see eslint.config.js) and its components import no `React`, so any
+     * tool that reads the NEAREST tsconfig - a test runner, an editor, esbuild -
+     * would otherwise compile them for the classic runtime and hit "React is
+     * not defined" at the first icon.
+     */
+    "jsx": "react-jsx"
   },
   "include": ["src", "scripts"]
 }

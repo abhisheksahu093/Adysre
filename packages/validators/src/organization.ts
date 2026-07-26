@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { slugSchema } from './common';
+import { slugSchema } from './common.ts';
 
 export const createOrganizationSchema = z.object({
   name: z.string().min(2).max(120),

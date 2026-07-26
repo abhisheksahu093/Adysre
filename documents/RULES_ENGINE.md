@@ -35,7 +35,7 @@ longer matches the tree, or a tree that cannot express what somebody typed.
 | `@adysre/rules-react` | headless store, history and hooks for a builder | **built** |
 | `@adysre/rules-storage` | the storage contract, versioning, querying, adapters | **built** |
 | `@adysre/rules-ui` | the visual builder, shadcn/ui and Tailwind | **built** |
-| `@adysre/rules-next` | Next.js adapters: route handlers, server actions | planned |
+| `@adysre/rules-next` | Next.js adapters: route handlers, server actions | **built** |
 | `@adysre/rules-devtools` | the execution debugger | **built** |
 | `@adysre/rules-theme` | design tokens for the builder | planned |
 | `@adysre/rules-playground` | a runnable sandbox and the examples | planned |
@@ -468,6 +468,39 @@ engine is migrated on the way in and one written by a NEWER engine is refused
 rather than half-understood. Storage is where a stored rule meets a different
 build, which is what `schemaVersion` was always for.
 
+## Over HTTP
+
+`@adysre/rules-next` puts the storage contract behind route handlers and server
+actions. It imports NOTHING from Next: a handler is `(Request) => Response`,
+which is all the App Router asks for and all any other Web-standard runtime asks
+for either, so the same handlers run under Hono, Deno, Bun or a Worker - and a
+change to Next's own helpers cannot break them.
+
+`nextRoute` is the only piece that knows Next exists, and it still does not
+import it. The App Router passes dynamic segments as an object in Next 14 and as
+a PROMISE in Next 15, so handlers take resolved parameters and the adapter
+awaits whichever arrived. Hard-coding either would have made an upgrade this
+package has no stake in a breaking change.
+
+**`authorize` is required.** Not optional with a permissive default, because the
+way an unauthenticated rules API reaches production is a factory that worked
+without being told about auth. A callback that THROWS is a refusal rather than a
+pass: the only failure worse than refusing a legitimate request is admitting an
+illegitimate one. It is asked about the specific rule, not just the route, so a
+host decides per rule and per tenant without this package knowing what either is.
+
+**A body is parsed, never cast.** Every document arrives through `parseRule` -
+the same door an import uses - so an older one is migrated, a newer one is
+refused, and a rule naming an operator this deployment lacks is turned away with
+a message instead of stored to fail at evaluation.
+
+The envelope is the platform's, from `API_STANDARDS.md`. A malformed `page` is
+ignored rather than rejected, because a stale bookmark should show page 1 and
+not an error screen; a `filter[kind]` naming something that is not a kind IS
+rejected, because that is a closed set and answering with the whole list reads
+as "the filter does nothing". `total` appears only when an adapter can count
+without paging, the alternative being a handler that quietly loads every row.
+
 ## Rule kinds
 
 `validation`, `filter`, `transformation`, `workflow`, `calculation`,
@@ -488,8 +521,8 @@ change to the AST rather than a plugin.
 | 7 | The visual builder (`rules-ui`) | **done** |
 | 8 | Execution debugger (`rules-devtools`) | **done** |
 | 9 | Storage adapters and versioning | **done** |
-| 10 | Next.js adapters | next |
-| 11 | Themes | |
+| 10 | Next.js adapters | **done** |
+| 11 | Themes | next |
 | 12 | Playground and examples | |
 | 13 | Documentation site | |
 | 14 | Publishing: build, exports, versioning | |

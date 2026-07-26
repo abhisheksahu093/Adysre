@@ -103,7 +103,7 @@
       "codeStudio": "在浏览器 IDE 中编写 HTML、CSS、JS、TypeScript、React 和 Vue，并实时预览。",
       "aiTools": "在浏览器中压缩、转换、调整图像大小，读取二维码和条形码等。",
       "apiStudio": "构建、发送和测试 HTTP 请求，支持集合、环境变量和历史记录。完全自托管。",
-      "rules": "可视化构建业务规则。条件、结果、自然语言预览和实时判定。"
+      "rules": "可视化构建业务规则。JSON 树、自然语言预览、实时判定，以及指出哪条条件决定结果的调试器。"
     },
     "palettes": "调色板",
     "gradients": "渐变",
@@ -3157,7 +3157,95 @@
     }
   },
   "rules": {
-    "title": "业务规则",
-    "subtitle": "ADYSRE 规则引擎的可视化构建器。编辑规则树，语句、判定和 JSON 随之更新。"
+    "title": "业务规则引擎",
+    "subtitle": "与框架无关、基于插件的规则引擎。AST 是唯一的事实来源：构建器编辑它，执行器遍历它，渲染器描述它，调试器解释它。不依赖付费 API、云服务或第三方引擎。",
+    "importsFrom": "可导入格式",
+    "stats": {
+      "packages": "软件包",
+      "operators": "运算符",
+      "functions": "函数",
+      "kinds": "规则类型"
+    },
+    "sections": {
+      "capabilities": "功能",
+      "sandbox": "试用",
+      "sandboxHint": "编辑任意条件，语句、判定和解释会同步更新。",
+      "packages": "软件包",
+      "packagesHint": "每个包都在需要它的阶段落地。按需安装。",
+      "decisions": "值得了解的设计决策"
+    },
+    "capabilities": {
+      "ast": {
+        "title": "A JSON tree",
+        "desc": "Rules are plain JSON. Storable, diffable, versionable, and readable by anything."
+      },
+      "plugins": {
+        "title": "Everything is a plugin",
+        "desc": "Operators, functions, actions, fields, storage, renderers. Add one without touching the engine."
+      },
+      "execute": {
+        "title": "Runs anywhere",
+        "desc": "Synchronous, pure, zero dependencies. The same rule evaluates on a server, in a browser or in a test."
+      },
+      "explain": {
+        "title": "Says what it means",
+        "desc": "Every rule renders as a sentence, generated from the tree and never parsed back into it."
+      },
+      "debug": {
+        "title": "Shows its reasoning",
+        "desc": "Which row decided the verdict, what the operator received, and what short-circuiting hid."
+      },
+      "build": {
+        "title": "Edits itself",
+        "desc": "A visual builder with undo, per-row validation and a live preview, driven entirely by the plugin metadata."
+      },
+      "import": {
+        "title": "Takes what you have",
+        "desc": "Converts other rule formats, warning where an equivalent is near rather than exact."
+      },
+      "store": {
+        "title": "Keeps its history",
+        "desc": "Versioning, restore and querying behind one contract every adapter is checked against."
+      }
+    },
+    "packages": {
+      "types": "The vocabulary",
+      "core": "The engine",
+      "parser": "Importers",
+      "renderer": "Natural language",
+      "storage": "Persistence",
+      "react": "Builder state",
+      "ui": "The visual builder",
+      "devtools": "The debugger",
+      "next": "Over HTTP",
+      "theme": "Design tokens",
+      "playground": "Sandbox and examples"
+    },
+    "decisions": {
+      "sourceOfTruth": {
+        "title": "The AST is the only source of truth",
+        "desc": "Everything else is a projection of it. Prose is generated from the tree and never parsed back, so the two can never disagree."
+      },
+      "errorIsNotFalse": {
+        "title": "An error is not a false",
+        "desc": "A condition that cannot be evaluated is errored, and so is the rule. A broken comparison never looks like a failed one."
+      },
+      "noSideEffects": {
+        "title": "Actions are intent, never performed",
+        "desc": "The engine reports what should happen and the host decides. That is what lets a rule be run twice, in a preview, or in a test."
+      },
+      "immutableRegistry": {
+        "title": "The registry cannot be mutated",
+        "desc": "Extending it returns a new one, so two tenants can hold different capabilities without one leaking into the other."
+      },
+      "traceable": {
+        "title": "Every answer carries its reasoning",
+        "desc": "Each node records what it saw and what it concluded, so somebody can be shown the condition that decided it."
+      },
+      "noParsing": {
+        "title": "No language to learn",
+        "desc": "There is no text format to hand-author, so there is no second system to keep in step with the tree."
+      }
+    }
   }
 }

@@ -572,6 +572,29 @@ browser renders disagree.
 shows is what any host gets - not a bespoke demo that works in one place, and
 not a second set of examples to keep in step with the tested ones.
 
+## The showcase
+
+`/rules` in the web app is the engine's page: what it does, the figures, a live
+sandbox, the package matrix and the decisions behind it - in the order a visitor
+asks those questions, with the sandbox in the middle so somebody convinced by
+the first two sections does not have to scroll past a package list to touch it.
+
+**Every figure derives from the engine.** The operator count is
+`builtinOperators.length`, the kinds are `RULE_KINDS`, the packages are read
+from their own manifests. Registering a twenty-eighth operator updates the page
+with no edit, and the page cannot claim a number the registry does not have.
+Package names, versions and one-line summaries come from the manifests for the
+same reason: a package that changes what it is changes what the page says it is.
+
+Package summaries ship as data rather than translation keys, the way tech-stack
+names already do elsewhere in the app - `@adysre/rules-core` is a proper noun,
+and the ecosystem is English by decision. What the PAGE says on its own behalf
+is translated in all four catalogues.
+
+Everything above the sandbox is a Server Component. It is a package matrix and
+some prose; shipping it to the browser would cost a chunk to achieve nothing,
+and the sandbox is the only part that needs to be interactive.
+
 ## Rule kinds
 
 `validation`, `filter`, `transformation`, `workflow`, `calculation`,
@@ -595,8 +618,8 @@ change to the AST rather than a plugin.
 | 10 | Next.js adapters | **done** |
 | 11 | Themes | **done** |
 | 12 | Playground and examples | **done** |
-| 13 | Documentation site | next |
-| 14 | Publishing: build, exports, versioning | |
+| 13 | Documentation site | **done** |
+| 14 | Publishing: build, exports, versioning | next |
 
 ## Conventions
 

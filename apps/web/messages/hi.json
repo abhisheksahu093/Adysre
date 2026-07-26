@@ -103,7 +103,7 @@
       "codeStudio": "ब्राउज़र IDE में लाइव प्रीव्यू के साथ HTML, CSS, JS, TypeScript, React और Vue लिखें।",
       "aiTools": "ब्राउज़र में ही इमेज कंप्रेस, कन्वर्ट, रिसाइज़ करें, QR और बारकोड पढ़ें और भी बहुत कुछ.",
       "apiStudio": "HTTP रिक्वेस्ट बनाएं, भेजें और टेस्ट करें, कलेक्शन, एनवायरनमेंट और हिस्ट्री के साथ. पूरी तरह सेल्फ-होस्टेड.",
-      "rules": "बिज़नेस रूल्स विज़ुअली बनाएं. कंडीशन, परिणाम, सरल भाषा में प्रीव्यू और लाइव नतीजा."
+      "rules": "बिज़नेस रूल्स विज़ुअली बनाएं. JSON ट्री, सरल भाषा में प्रीव्यू, लाइव नतीजा और डीबगर जो बताता है कौन-सी शर्त ने तय किया."
     },
     "palettes": "कलर पैलेट",
     "gradients": "ग्रेडिएंट",
@@ -3157,7 +3157,95 @@
     }
   },
   "rules": {
-    "title": "बिज़नेस रूल्स",
-    "subtitle": "ADYSRE रूल्स इंजन पर एक विज़ुअल बिल्डर. ट्री बदलें, और वाक्य, नतीजा तथा JSON साथ-साथ बदलते हैं."
+    "title": "बिज़नेस रूल्स इंजन",
+    "subtitle": "फ्रेमवर्क-स्वतंत्र, प्लगइन-आधारित रूल्स इंजन. AST ही सत्य का एकमात्र स्रोत है: बिल्डर उसे संपादित करता है, एक्ज़ीक्यूटर उसे चलाता है, रेंडरर उसका वर्णन करता है, डीबगर उसे समझाता है. न कोई पेड API, न क्लाउड सेवा, न कोई तीसरा इंजन.",
+    "importsFrom": "इनसे आयात करता है",
+    "stats": {
+      "packages": "पैकेज",
+      "operators": "ऑपरेटर",
+      "functions": "फ़ंक्शन",
+      "kinds": "रूल प्रकार"
+    },
+    "sections": {
+      "capabilities": "यह क्या करता है",
+      "sandbox": "आज़माएं",
+      "sandboxHint": "कोई भी शर्त बदलें. वाक्य, नतीजा और व्याख्या साथ-साथ बदलेंगे.",
+      "packages": "पैकेज",
+      "packagesHint": "हर पैकेज उसी चरण में आता है जब उसका काम बनता है. जो चाहिए वही इंस्टॉल करें.",
+      "decisions": "जानने योग्य निर्णय"
+    },
+    "capabilities": {
+      "ast": {
+        "title": "A JSON tree",
+        "desc": "Rules are plain JSON. Storable, diffable, versionable, and readable by anything."
+      },
+      "plugins": {
+        "title": "Everything is a plugin",
+        "desc": "Operators, functions, actions, fields, storage, renderers. Add one without touching the engine."
+      },
+      "execute": {
+        "title": "Runs anywhere",
+        "desc": "Synchronous, pure, zero dependencies. The same rule evaluates on a server, in a browser or in a test."
+      },
+      "explain": {
+        "title": "Says what it means",
+        "desc": "Every rule renders as a sentence, generated from the tree and never parsed back into it."
+      },
+      "debug": {
+        "title": "Shows its reasoning",
+        "desc": "Which row decided the verdict, what the operator received, and what short-circuiting hid."
+      },
+      "build": {
+        "title": "Edits itself",
+        "desc": "A visual builder with undo, per-row validation and a live preview, driven entirely by the plugin metadata."
+      },
+      "import": {
+        "title": "Takes what you have",
+        "desc": "Converts other rule formats, warning where an equivalent is near rather than exact."
+      },
+      "store": {
+        "title": "Keeps its history",
+        "desc": "Versioning, restore and querying behind one contract every adapter is checked against."
+      }
+    },
+    "packages": {
+      "types": "The vocabulary",
+      "core": "The engine",
+      "parser": "Importers",
+      "renderer": "Natural language",
+      "storage": "Persistence",
+      "react": "Builder state",
+      "ui": "The visual builder",
+      "devtools": "The debugger",
+      "next": "Over HTTP",
+      "theme": "Design tokens",
+      "playground": "Sandbox and examples"
+    },
+    "decisions": {
+      "sourceOfTruth": {
+        "title": "The AST is the only source of truth",
+        "desc": "Everything else is a projection of it. Prose is generated from the tree and never parsed back, so the two can never disagree."
+      },
+      "errorIsNotFalse": {
+        "title": "An error is not a false",
+        "desc": "A condition that cannot be evaluated is errored, and so is the rule. A broken comparison never looks like a failed one."
+      },
+      "noSideEffects": {
+        "title": "Actions are intent, never performed",
+        "desc": "The engine reports what should happen and the host decides. That is what lets a rule be run twice, in a preview, or in a test."
+      },
+      "immutableRegistry": {
+        "title": "The registry cannot be mutated",
+        "desc": "Extending it returns a new one, so two tenants can hold different capabilities without one leaking into the other."
+      },
+      "traceable": {
+        "title": "Every answer carries its reasoning",
+        "desc": "Each node records what it saw and what it concluded, so somebody can be shown the condition that decided it."
+      },
+      "noParsing": {
+        "title": "No language to learn",
+        "desc": "There is no text format to hand-author, so there is no second system to keep in step with the tree."
+      }
+    }
   }
 }

@@ -114,9 +114,27 @@ importers:
       '@adysre/rules-devtools':
         specifier: workspace:*
         version: link:../../packages/rules-devtools
+      '@adysre/rules-next':
+        specifier: workspace:^
+        version: link:../../packages/rules-next
+      '@adysre/rules-parser':
+        specifier: workspace:^
+        version: link:../../packages/rules-parser
       '@adysre/rules-playground':
         specifier: workspace:*
         version: link:../../packages/rules-playground
+      '@adysre/rules-react':
+        specifier: workspace:^
+        version: link:../../packages/rules-react
+      '@adysre/rules-renderer':
+        specifier: workspace:^
+        version: link:../../packages/rules-renderer
+      '@adysre/rules-storage':
+        specifier: workspace:^
+        version: link:../../packages/rules-storage
+      '@adysre/rules-theme':
+        specifier: workspace:^
+        version: link:../../packages/rules-theme
       '@adysre/rules-types':
         specifier: workspace:*
         version: link:../../packages/rules-types

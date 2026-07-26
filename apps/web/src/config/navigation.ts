@@ -9,6 +9,7 @@ import {
   FileText,
   FileSearch,
   SquareCode,
+  GitBranch,
   Webhook,
   Wand2,
   type LucideIcon,
@@ -111,15 +112,15 @@ export const NAV_ITEMS: NavItem[] = [
     icon: FileSearch,
     descriptionKey: 'resume',
   },
-  // The business rules builder is a sandbox until `@adysre/rules-*` has its
-  // storage and Next.js adapters, so the route exists and the menu entry does
-  // not. Its translations are in place; uncommenting this reveals it:
-  // {
-  //   key: 'rules',
-  //   href: '/rules',
-  //   icon: GitBranch,
-  //   descriptionKey: 'rules',
-  // },
+  // The business rules engine: the package matrix, the decisions, and a live
+  // sandbox. Storage and the HTTP adapters landed, so this is a module to read
+  // and try rather than the unlisted sandbox it started as.
+  {
+    key: 'rules',
+    href: '/rules',
+    icon: GitBranch,
+    descriptionKey: 'rules',
+  },
   // Settings is hidden until the module lands - re-add this entry to bring it
   // back. The route, its translations and its permission are all still in place,
   // so this is the only line that has to change:

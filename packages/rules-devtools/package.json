@@ -11,7 +11,8 @@
     "directory": "packages/rules-devtools"
   },
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./package.json": "./package.json"
   },
   "main": "./src/index.ts",
   "types": "./src/index.ts",

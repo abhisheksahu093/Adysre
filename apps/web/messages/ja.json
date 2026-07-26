@@ -103,7 +103,7 @@
       "codeStudio": "ブラウザIDEで、ライブプレビュー付きでHTML・CSS・JS・TypeScript・React・Vueを書けます。",
       "aiTools": "ブラウザ内で画像の圧縮・変換・リサイズ、QRやバーコードの読み取りなどを行えます。",
       "apiStudio": "HTTPリクエストの作成・送信・テストを、コレクション、環境変数、履歴とともに。完全セルフホスト。",
-      "rules": "ビジネスルールを視覚的に構築。条件、アクション、平易な文章のプレビュー、そして即時の判定。"
+      "rules": "ビジネスルールを視覚的に構築。JSONツリー、平易な文章のプレビュー、即時の判定、そして判定した条件を示すデバッガー。"
     },
     "palettes": "カラーパレット",
     "gradients": "グラデーション",
@@ -3157,7 +3157,95 @@
     }
   },
   "rules": {
-    "title": "ビジネスルール",
-    "subtitle": "ADYSREルールエンジンのビジュアルビルダー。ツリーを編集すれば、文章も判定もJSONも追随します。"
+    "title": "ビジネスルールエンジン",
+    "subtitle": "フレームワーク非依存、プラグイン方式のルールエンジン。ASTが唯一の真実であり、ビルダーが編集し、実行エンジンが辿り、レンダラーが説明し、デバッガーが解き明かします。有料API、クラウドサービス、外部エンジンは一切使いません。",
+    "importsFrom": "取り込める形式",
+    "stats": {
+      "packages": "パッケージ",
+      "operators": "演算子",
+      "functions": "関数",
+      "kinds": "ルールの種類"
+    },
+    "sections": {
+      "capabilities": "できること",
+      "sandbox": "試す",
+      "sandboxHint": "条件を編集すると、文章も判定も説明も同時に変わります。",
+      "packages": "パッケージ構成",
+      "packagesHint": "各パッケージは必要になった段階で追加されます。使うものだけ導入してください。",
+      "decisions": "知っておきたい設計判断"
+    },
+    "capabilities": {
+      "ast": {
+        "title": "A JSON tree",
+        "desc": "Rules are plain JSON. Storable, diffable, versionable, and readable by anything."
+      },
+      "plugins": {
+        "title": "Everything is a plugin",
+        "desc": "Operators, functions, actions, fields, storage, renderers. Add one without touching the engine."
+      },
+      "execute": {
+        "title": "Runs anywhere",
+        "desc": "Synchronous, pure, zero dependencies. The same rule evaluates on a server, in a browser or in a test."
+      },
+      "explain": {
+        "title": "Says what it means",
+        "desc": "Every rule renders as a sentence, generated from the tree and never parsed back into it."
+      },
+      "debug": {
+        "title": "Shows its reasoning",
+        "desc": "Which row decided the verdict, what the operator received, and what short-circuiting hid."
+      },
+      "build": {
+        "title": "Edits itself",
+        "desc": "A visual builder with undo, per-row validation and a live preview, driven entirely by the plugin metadata."
+      },
+      "import": {
+        "title": "Takes what you have",
+        "desc": "Converts other rule formats, warning where an equivalent is near rather than exact."
+      },
+      "store": {
+        "title": "Keeps its history",
+        "desc": "Versioning, restore and querying behind one contract every adapter is checked against."
+      }
+    },
+    "packages": {
+      "types": "The vocabulary",
+      "core": "The engine",
+      "parser": "Importers",
+      "renderer": "Natural language",
+      "storage": "Persistence",
+      "react": "Builder state",
+      "ui": "The visual builder",
+      "devtools": "The debugger",
+      "next": "Over HTTP",
+      "theme": "Design tokens",
+      "playground": "Sandbox and examples"
+    },
+    "decisions": {
+      "sourceOfTruth": {
+        "title": "The AST is the only source of truth",
+        "desc": "Everything else is a projection of it. Prose is generated from the tree and never parsed back, so the two can never disagree."
+      },
+      "errorIsNotFalse": {
+        "title": "An error is not a false",
+        "desc": "A condition that cannot be evaluated is errored, and so is the rule. A broken comparison never looks like a failed one."
+      },
+      "noSideEffects": {
+        "title": "Actions are intent, never performed",
+        "desc": "The engine reports what should happen and the host decides. That is what lets a rule be run twice, in a preview, or in a test."
+      },
+      "immutableRegistry": {
+        "title": "The registry cannot be mutated",
+        "desc": "Extending it returns a new one, so two tenants can hold different capabilities without one leaking into the other."
+      },
+      "traceable": {
+        "title": "Every answer carries its reasoning",
+        "desc": "Each node records what it saw and what it concluded, so somebody can be shown the condition that decided it."
+      },
+      "noParsing": {
+        "title": "No language to learn",
+        "desc": "There is no text format to hand-author, so there is no second system to keep in step with the tree."
+      }
+    }
   }
 }

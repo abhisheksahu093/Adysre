@@ -101,7 +101,8 @@
       "resume": "将简历与职位描述比对，生成 ATS 分数，含关键词与技能匹配。",
       "codes": "在一个页面上生成二维码和条形码（EAN、UPC、Code 128），支持实时预览和 PNG/SVG 导出。",
       "codeStudio": "在浏览器 IDE 中编写 HTML、CSS、JS、TypeScript、React 和 Vue，并实时预览。",
-      "aiTools": "在浏览器中压缩、转换、调整图像大小，读取二维码和条形码等。"
+      "aiTools": "在浏览器中压缩、转换、调整图像大小，读取二维码和条形码等。",
+      "apiStudio": "构建、发送和测试 HTTP 请求，支持集合、环境变量和历史记录。完全自托管。"
     },
     "palettes": "调色板",
     "gradients": "渐变",
@@ -133,7 +134,8 @@
     "codes": "代码生成器",
     "codeStudio": "代码工作室",
     "customize": "定制你的项目",
-    "aiTools": "图像与实用工具"
+    "aiTools": "图像与实用工具",
+    "apiStudio": "API 工作室"
   },
   "tools": {
     "qr": {

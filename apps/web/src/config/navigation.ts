@@ -9,6 +9,7 @@ import {
   FileText,
   FileSearch,
   SquareCode,
+  Webhook,
   Wand2,
   type LucideIcon,
 } from 'lucide-react';
@@ -77,6 +78,14 @@ export const NAV_ITEMS: NavItem[] = [
     href: '/code-studio',
     icon: SquareCode,
     descriptionKey: 'codeStudio',
+  },
+  // Developer module. API Studio is the self-hosted HTTP client (collections,
+  // environments, request runner); the shell lands first, the engine follows.
+  {
+    key: 'apiStudio',
+    href: '/api-studio',
+    icon: Webhook,
+    descriptionKey: 'apiStudio',
   },
   {
     key: 'aiTools',

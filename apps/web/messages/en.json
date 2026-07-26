@@ -101,7 +101,8 @@
       "resume": "Scan a resume against a job description for an ATS score, with keyword and skills match.",
       "codes": "Generate QR codes and barcodes (EAN, UPC, Code 128) on one page, with live preview and PNG/SVG export.",
       "codeStudio": "Write HTML, CSS, JS, TypeScript, React and Vue with a live preview, in a browser IDE.",
-      "aiTools": "Compress, convert, resize, read QR and barcodes and more, entirely in your browser."
+      "aiTools": "Compress, convert, resize, read QR and barcodes and more, entirely in your browser.",
+      "apiStudio": "Build, send and test HTTP requests, with collections, environments and history. Self-hosted."
     },
     "palettes": "Color Palettes",
     "gradients": "Gradients",
@@ -133,7 +134,8 @@
     "codes": "Code Generator",
     "codeStudio": "Code Studio",
     "customize": "Customize your project",
-    "aiTools": "Image & Utility Tools"
+    "aiTools": "Image & Utility Tools",
+    "apiStudio": "API Studio"
   },
   "tools": {
     "qr": {

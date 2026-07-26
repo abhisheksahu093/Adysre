@@ -2,9 +2,9 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { AlertTriangle, PanelLeftClose, PanelLeftOpen, RefreshCw } from 'lucide-react';
+import { AlertTriangle, Code2, Download, PanelLeftClose, PanelLeftOpen, RefreshCw, Upload } from 'lucide-react';
 import { Button, Select, cn } from 'adysre';
-import type { ApiTab, Assertion, HistoryEntry, RequestDefinition } from '../types';
+import type { ApiTab, Assertion, ExecutionRequest, HistoryEntry, RequestDefinition } from '../types';
 import { EMPTY_REQUEST } from '../constants/defaults';
 import {
   useCollectionsStore,
@@ -18,6 +18,12 @@ import {
 import { apiStudioClient } from '../services/api-client';
 import { useBootstrap } from '../hooks/use-bootstrap';
 import { useSend } from '../hooks/use-send';
+import { prepareRequest } from '../utils/prepare';
+import { exportPostman } from '../services/export/postman';
+import type { ImportedCollection } from '../services/import/postman';
+import { CodeDialog } from './dialogs/code-dialog';
+import { EnvironmentDialog } from './dialogs/environment-dialog';
+import { ImportDialog } from './dialogs/import-dialog';
 import { Sidebar } from './sidebar/sidebar';
 import { TabBar } from './tab-bar';
 import { RequestBuilder } from './request/request-builder';
@@ -67,6 +73,12 @@ export function ApiStudio() {
   // Subscribing to the node map is what re-renders the tree: the selector below
   // reads through the store's memo, which is keyed on this exact object.
   const nodeMap = useCollectionsStore((s) => s.nodes);
+  const [dialog, setDialog] = useState<'import' | 'code' | 'environment' | null>(null);
+  const [snippet, setSnippet] = useState<{ request: ExecutionRequest | null; problem: string | null }>({
+    request: null,
+    problem: null,
+  });
+
   const treeOf = useCallback(
     (collectionId: string) => {
       void nodeMap;
@@ -212,6 +224,117 @@ export function ApiStudio() {
     [send],
   );
 
+  /**
+   * Prepare the active request for a snippet.
+   *
+   * The same preparation the Send button uses, so the code shown is the call
+   * that would be made. A request that cannot be prepared shows why instead of
+   * a snippet built from something unsendable.
+   */
+  const openCode = useCallback(() => {
+    const tab = useTabsStore.getState().activeTab();
+    const workspaceId = useWorkspaceStore.getState().activeWorkspaceId;
+    if (!tab) return;
+
+    const prepared = prepareRequest({
+      request: tab.draft,
+      context: { layers: useWorkspaceStore.getState().variableLayers() },
+      workspaceId: workspaceId ?? tab.id,
+      requestNodeId: tab.nodeId,
+    });
+
+    setSnippet(
+      prepared.ok
+        ? { request: prepared.request, problem: null }
+        : { request: null, problem: prepared.detail },
+    );
+    setDialog('code');
+  }, []);
+
+  /** Download the first collection as a Postman v2.1 file. */
+  const exportCollection = useCallback(() => {
+    const state = useCollectionsStore.getState();
+    const collection = state.collections[0];
+    if (!collection) return;
+
+    const nodes = Object.values(state.nodes).filter(
+      (node) => node.collectionId === collection.id && node.deletedAt === null,
+    );
+    const blob = new Blob([exportPostman(collection, nodes)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `${collection.name.replace(/[^\w.-]+/g, '-').toLowerCase()}.postman_collection.json`;
+    link.click();
+    URL.revokeObjectURL(url);
+  }, []);
+
+  /** A pasted cURL command becomes a scratch tab, ready to send. */
+  const importCurlRequest = useCallback(
+    (request: RequestDefinition) => {
+      useTabsStore.getState().openScratch(request.url || t('tabs.untitled'), request);
+    },
+    [t],
+  );
+
+  /** An imported collection is created for real, then its tree is written. */
+  const importCollection = useCallback(
+    async (imported: ImportedCollection) => {
+      const workspaceId = useWorkspaceStore.getState().activeWorkspaceId;
+      if (!workspaceId) return;
+
+      const created = await apiStudioClient.createCollection({
+        workspaceId,
+        name: imported.name,
+      });
+      if (!created.ok) return;
+      useCollectionsStore.getState().upsertCollection(created.data);
+
+      // Parents before children, so a folder exists before anything is put in
+      // it. The importer emits nodes in that order already; this preserves it
+      // by mapping imported ids to the ids the server hands back.
+      const idMap = new Map<string, string>();
+
+      for (const node of imported.nodes) {
+        const parentId = node.parentId ? (idMap.get(node.parentId) ?? null) : null;
+        const result =
+          node.kind === 'folder'
+            ? await apiStudioClient.createNode({
+                workspaceId,
+                collectionId: created.data.id,
+                parentId,
+                kind: 'folder',
+                name: node.name,
+              })
+            : await apiStudioClient.createNode({
+                workspaceId,
+                collectionId: created.data.id,
+                parentId,
+                kind: 'request',
+                name: node.name,
+                request: node.request ?? structuredClone(EMPTY_REQUEST),
+              });
+
+        if (!result.ok) continue;
+        idMap.set(node.id, result.data.id);
+        useCollectionsStore.getState().upsertNode(result.data);
+      }
+    },
+    [],
+  );
+
+  /** Save the active environment's variables. */
+  const saveEnvironment = useCallback(async (variables: Parameters<typeof apiStudioClient.updateEnvironment>[1]['variables']) => {
+    const store = useWorkspaceStore.getState();
+    const environment = store.activeEnvironment();
+    if (!environment || !variables) return;
+
+    const saved = await apiStudioClient.updateEnvironment(environment.id, { variables });
+    if (saved.ok) store.upsertEnvironment(saved.data);
+    setDialog(null);
+  }, []);
+
   // Global shortcuts. Kept to the ones with no in-page equivalent; everything
   // else is a button that is reachable by tab.
   useEffect(() => {
@@ -273,7 +396,17 @@ export function ApiStudio() {
 
         <h1 className="text-sm font-semibold tracking-tight">{t('title')}</h1>
 
-        <div className="ms-auto flex items-center gap-2">
+        <div className="ms-auto flex items-center gap-1.5">
+          <HeaderAction label={t('import.title')} onClick={() => setDialog('import')}>
+            <Upload className="h-4 w-4" aria-hidden />
+          </HeaderAction>
+          <HeaderAction label={t('export.title')} onClick={exportCollection}>
+            <Download className="h-4 w-4" aria-hidden />
+          </HeaderAction>
+          <HeaderAction label={t('codegen.title')} onClick={openCode}>
+            <Code2 className="h-4 w-4" aria-hidden />
+          </HeaderAction>
+
           <label className="sr-only" htmlFor="environment-select">
             {t('environment.select')}
           </label>
@@ -292,6 +425,12 @@ export function ApiStudio() {
               </option>
             ))}
           </Select>
+
+          {activeEnvironmentId && (
+            <Button variant="outline" size="sm" onClick={() => setDialog('environment')} className="h-8 text-xs">
+              {t('environment.edit')}
+            </Button>
+          )}
         </div>
       </header>
 
@@ -305,6 +444,27 @@ export function ApiStudio() {
           </Button>
         </div>
       )}
+
+      <ImportDialog
+        open={dialog === 'import'}
+        onClose={() => setDialog(null)}
+        onCurl={importCurlRequest}
+        onCollection={(collection) => void importCollection(collection)}
+      />
+
+      <CodeDialog
+        open={dialog === 'code'}
+        onClose={() => setDialog(null)}
+        request={snippet.request}
+        problem={snippet.problem}
+      />
+
+      <EnvironmentDialog
+        open={dialog === 'environment'}
+        environment={environments.find((environment) => environment.id === activeEnvironmentId) ?? null}
+        onClose={() => setDialog(null)}
+        onSave={(variables) => void saveEnvironment(variables)}
+      />
 
       <div className="flex min-h-0 flex-1">
         {!layout.sidebarCollapsed && (
@@ -391,6 +551,29 @@ const IDLE: ExecutionEntry = {
   tests: null,
   scripts: [],
 };
+
+/** A small icon button in the header row. */
+function HeaderAction({
+  label,
+  onClick,
+  children,
+}: {
+  label: string;
+  onClick: () => void;
+  children: React.ReactNode;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-label={label}
+      title={label}
+      className="flex h-8 w-8 items-center justify-center rounded-md text-muted-foreground hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+    >
+      {children}
+    </button>
+  );
+}
 
 /**
  * The builder/response split.

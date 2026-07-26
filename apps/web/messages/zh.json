@@ -2995,7 +2995,19 @@
       "none": "无环境",
       "noneHint": "仅解析全局变量。",
       "empty": "还没有环境。",
-      "variableCount": "{count} 个变量"
+      "variableCount": "{count} 个变量",
+      "edit": "编辑",
+      "editTitle": "{name} 的变量",
+      "editDescription": "这里的值会解析此工作区所有请求中的 {{name}}。",
+      "save": "保存",
+      "secret": "机密",
+      "reveal": "显示值",
+      "hide": "隐藏值",
+      "markSecret": "将 {name} 标记为机密",
+      "addVariable": "添加变量",
+      "noVariables": "还没有变量。",
+      "secretPlaceholder": "已存储，已隐藏",
+      "secretHint": "机密值会被加密且不会显示。留空可保留已存储的值。"
     },
     "history": {
       "clear": "清空历史记录",
@@ -3068,6 +3080,44 @@
         "greaterThan": "大于",
         "isOneOf": "是其中之一",
         "isValid": "符合"
+      }
+    },
+    "import": {
+      "title": "导入",
+      "description": "粘贴 cURL 命令或 Postman 集合。",
+      "format": "格式",
+      "formats": {
+        "curl": "cURL 命令",
+        "postman": "Postman 集合"
+      },
+      "chooseFile": "选择集合文件",
+      "source": "要导入的内容",
+      "submit": "导入",
+      "cancel": "取消",
+      "warnings": "已导入，但以下内容未能带入："
+    },
+    "export": {
+      "title": "导出集合"
+    },
+    "codegen": {
+      "title": "代码",
+      "description": "按将要发送的样子，用你使用的语言生成。",
+      "target": "语言",
+      "close": "关闭",
+      "targets": {
+        "curl": "cURL",
+        "jsFetch": "JavaScript (fetch)",
+        "jsAxios": "JavaScript (axios)",
+        "node": "Node.js",
+        "python": "Python (requests)",
+        "go": "Go",
+        "java": "Java",
+        "php": "PHP (cURL)",
+        "csharp": "C#",
+        "swift": "Swift",
+        "kotlin": "Kotlin (OkHttp)",
+        "dart": "Dart",
+        "ruby": "Ruby"
       }
     }
   }

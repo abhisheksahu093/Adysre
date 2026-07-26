@@ -2995,7 +2995,19 @@
       "none": "環境なし",
       "noneHint": "グローバル変数のみが解決されます。",
       "empty": "環境はまだありません。",
-      "variableCount": "変数 {count} 個"
+      "variableCount": "変数 {count} 個",
+      "edit": "編集",
+      "editTitle": "{name} の変数",
+      "editDescription": "ここの値が、このワークスペースの全リクエストの {{name}} を解決します。",
+      "save": "保存",
+      "secret": "シークレット",
+      "reveal": "値を表示",
+      "hide": "値を隠す",
+      "markSecret": "{name} をシークレットにする",
+      "addVariable": "変数を追加",
+      "noVariables": "変数はまだありません。",
+      "secretPlaceholder": "保存済み・非表示",
+      "secretHint": "シークレットは暗号化され表示されません。保存済みの値を保つには空のままにしてください。"
     },
     "history": {
       "clear": "履歴を消去",
@@ -3068,6 +3080,44 @@
         "greaterThan": "より大きい",
         "isOneOf": "のいずれか",
         "isValid": "に照らして妥当"
+      }
+    },
+    "import": {
+      "title": "インポート",
+      "description": "cURLコマンドかPostmanコレクションを貼り付けてください。",
+      "format": "形式",
+      "formats": {
+        "curl": "cURLコマンド",
+        "postman": "Postmanコレクション"
+      },
+      "chooseFile": "コレクションファイルを選択",
+      "source": "インポートする内容",
+      "submit": "インポート",
+      "cancel": "キャンセル",
+      "warnings": "インポートしました。次は取り込めていません:"
+    },
+    "export": {
+      "title": "コレクションをエクスポート"
+    },
+    "codegen": {
+      "title": "コード",
+      "description": "送信されるリクエストを、お使いの言語で。",
+      "target": "言語",
+      "close": "閉じる",
+      "targets": {
+        "curl": "cURL",
+        "jsFetch": "JavaScript (fetch)",
+        "jsAxios": "JavaScript (axios)",
+        "node": "Node.js",
+        "python": "Python (requests)",
+        "go": "Go",
+        "java": "Java",
+        "php": "PHP (cURL)",
+        "csharp": "C#",
+        "swift": "Swift",
+        "kotlin": "Kotlin (OkHttp)",
+        "dart": "Dart",
+        "ruby": "Ruby"
       }
     }
   }

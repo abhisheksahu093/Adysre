@@ -393,6 +393,32 @@ The runtime is kept as a source STRING rather than a module: a Blob worker needs
 no bundler configuration to be correct, and the tests evaluate that same string
 in Node, so what is verified is the code that actually runs.
 
+## Import, export and code generation
+
+**Import** takes a cURL command or a Postman collection (v2.0 and v2.1, read by
+what is present rather than by the version string, which collections in the wild
+are unreliable about). Both parsers are pure and report what they could not
+bring across as WARNINGS shown before the import is committed: a file upload, an
+OAuth block, an unknown cURL flag. An import that quietly loses a script is
+worse than one that says it did.
+
+The cURL parser is deliberately not a shell. It tokenises quotes and escapes and
+never expands variables or runs substitutions, so a pasted `$(whoami)` stays
+text. It does decode `$'...'` ANSI-C quoting, because that is what a browser
+emits for any non-ASCII header value and `\u00e9` there MEANS `é`.
+
+**Export** writes Postman v2.1, so nothing is locked in. Secrets never leave: a
+variable marked secret exports with an empty value, and a strategy with no
+faithful v2.1 equivalent exports as "no auth" rather than as something it is not.
+
+**Code generation** produces thirteen targets (cURL, fetch, axios, Node, Python,
+Go, Java, PHP, C#, Swift, Kotlin, Dart, Ruby) from templates, never AI: the
+output has to be identical for the same input, has to compile, and has to be
+reviewable. It generates from the PREPARED request, so the snippet makes the
+same call the Send button does rather than carrying `{{token}}` for the reader
+to puzzle out. Each language has its own escaping, because one shared escaper is
+how a generator ends up emitting a string that breaks in Ruby but not in Go.
+
 ## Configuration
 
 | Variable | Effect |
@@ -422,8 +448,8 @@ database there is no honest tenant to attribute writes to, and the routes say so
 | 6 | Main UI: sidebar, tabs, request builder, response viewer | **done** |
 | 7 | Auth strategies (digest, OAuth 2, JWT, AWS) and the cookie jar | **done** |
 | 8 | Assertions, sandboxed scripts and the tests pane | **done** |
-| 9 | Environment and cookie editors, import, export, code generation | next |
-| 10 | Docs generator, offline queue, search, shortcuts, a11y pass | |
+| 9 | Import, export, code generation and the environment editor | **done** |
+| 10 | Cookie editor, docs generator, offline queue, search, a11y pass | next |
 
 ## Phase 1 file map
 

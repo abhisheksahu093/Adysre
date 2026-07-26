@@ -2995,7 +2995,19 @@
       "none": "No environment",
       "noneHint": "Only global variables resolve.",
       "empty": "No environments yet.",
-      "variableCount": "{count} variables"
+      "variableCount": "{count} variables",
+      "edit": "Edit",
+      "editTitle": "Variables in {name}",
+      "editDescription": "Values here resolve {{name}} in every request in this workspace.",
+      "save": "Save",
+      "secret": "Secret",
+      "reveal": "Show value",
+      "hide": "Hide value",
+      "markSecret": "Mark {name} as secret",
+      "addVariable": "Add variable",
+      "noVariables": "No variables yet.",
+      "secretPlaceholder": "Stored, hidden",
+      "secretHint": "A secret is encrypted and never shown. Leave it empty to keep what is stored."
     },
     "history": {
       "clear": "Clear history",
@@ -3068,6 +3080,44 @@
         "greaterThan": "is greater than",
         "isOneOf": "is one of",
         "isValid": "is valid against"
+      }
+    },
+    "import": {
+      "title": "Import",
+      "description": "Paste a cURL command or a Postman collection.",
+      "format": "Format",
+      "formats": {
+        "curl": "cURL command",
+        "postman": "Postman collection"
+      },
+      "chooseFile": "Choose a collection file",
+      "source": "What to import",
+      "submit": "Import",
+      "cancel": "Cancel",
+      "warnings": "Imported, with these gaps:"
+    },
+    "export": {
+      "title": "Export collection"
+    },
+    "codegen": {
+      "title": "Code",
+      "description": "The request as it will be sent, in the language you use.",
+      "target": "Language",
+      "close": "Close",
+      "targets": {
+        "curl": "cURL",
+        "jsFetch": "JavaScript (fetch)",
+        "jsAxios": "JavaScript (axios)",
+        "node": "Node.js",
+        "python": "Python (requests)",
+        "go": "Go",
+        "java": "Java",
+        "php": "PHP (cURL)",
+        "csharp": "C#",
+        "swift": "Swift",
+        "kotlin": "Kotlin (OkHttp)",
+        "dart": "Dart",
+        "ruby": "Ruby"
       }
     }
   }

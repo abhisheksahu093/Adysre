@@ -2995,7 +2995,19 @@
       "none": "कोई एनवायरनमेंट नहीं",
       "noneHint": "सिर्फ़ ग्लोबल वेरिएबल हल होंगे.",
       "empty": "अभी कोई एनवायरनमेंट नहीं है.",
-      "variableCount": "{count} वेरिएबल"
+      "variableCount": "{count} वेरिएबल",
+      "edit": "संपादित करें",
+      "editTitle": "{name} के वेरिएबल",
+      "editDescription": "यहां दिए मान इस वर्कस्पेस की हर रिक्वेस्ट में {{name}} हल करते हैं.",
+      "save": "सेव करें",
+      "secret": "सीक्रेट",
+      "reveal": "मान दिखाएं",
+      "hide": "मान छिपाएं",
+      "markSecret": "{name} को सीक्रेट बनाएं",
+      "addVariable": "वेरिएबल जोड़ें",
+      "noVariables": "अभी कोई वेरिएबल नहीं.",
+      "secretPlaceholder": "संग्रहीत, छिपा हुआ",
+      "secretHint": "सीक्रेट एन्क्रिप्टेड रहता है और कभी दिखाया नहीं जाता. संग्रहीत मान रखने के लिए खाली छोड़ें."
     },
     "history": {
       "clear": "हिस्ट्री साफ़ करें",
@@ -3068,6 +3080,44 @@
         "greaterThan": "इससे अधिक है",
         "isOneOf": "इनमें से एक है",
         "isValid": "इसके अनुसार मान्य है"
+      }
+    },
+    "import": {
+      "title": "इंपोर्ट",
+      "description": "cURL कमांड या Postman कलेक्शन पेस्ट करें.",
+      "format": "फ़ॉर्मेट",
+      "formats": {
+        "curl": "cURL कमांड",
+        "postman": "Postman कलेक्शन"
+      },
+      "chooseFile": "कलेक्शन फ़ाइल चुनें",
+      "source": "क्या इंपोर्ट करें",
+      "submit": "इंपोर्ट करें",
+      "cancel": "रद्द करें",
+      "warnings": "इंपोर्ट हुआ, इन कमियों के साथ:"
+    },
+    "export": {
+      "title": "कलेक्शन एक्सपोर्ट करें"
+    },
+    "codegen": {
+      "title": "कोड",
+      "description": "रिक्वेस्ट जैसी भेजी जाएगी, आपकी भाषा में.",
+      "target": "भाषा",
+      "close": "बंद करें",
+      "targets": {
+        "curl": "cURL",
+        "jsFetch": "JavaScript (fetch)",
+        "jsAxios": "JavaScript (axios)",
+        "node": "Node.js",
+        "python": "Python (requests)",
+        "go": "Go",
+        "java": "Java",
+        "php": "PHP (cURL)",
+        "csharp": "C#",
+        "swift": "Swift",
+        "kotlin": "Kotlin (OkHttp)",
+        "dart": "Dart",
+        "ruby": "Ruby"
       }
     }
   }

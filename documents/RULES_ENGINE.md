@@ -32,7 +32,7 @@ longer matches the tree, or a tree that cannot express what somebody typed.
 | `@adysre/rules-core` | builders, traversal, validation, serialisation, the registry, the built-in plugins, the executor. Zero dependencies | **built** |
 | `@adysre/rules-parser` | importers: this AST, jsonLogic, json-rules-engine, query filters | **built** |
 | `@adysre/rules-renderer` | AST to natural language, and other output formats | **built** |
-| `@adysre/rules-react` | headless hooks and state for a builder | planned |
+| `@adysre/rules-react` | headless store, history and hooks for a builder | **built** |
 | `@adysre/rules-ui` | the visual builder, shadcn/ui and Tailwind | planned |
 | `@adysre/rules-next` | Next.js adapters: route handlers, server actions | planned |
 | `@adysre/rules-devtools` | the execution debugger | planned |
@@ -290,6 +290,39 @@ Every import is validated and, when a registry is given, checked against it. A
 rule referring to an operator this deployment lacks is refused where the message
 is clear rather than where it is a mystery.
 
+## Builder state
+
+`@adysre/rules-react` holds an editing session: the rule, what is selected, and
+what can be undone.
+
+**The store has no React in it.** `createRuleStore`, `reduce` and the selectors
+import nothing from any framework; the hooks are a thin `useSyncExternalStore`
+adapter. A rule builder's behaviour is mostly editing rules rather than drawing
+them, and behaviour that can only be tested through a renderer is behaviour that
+mostly is not tested. Every test in that package drives the reducer directly.
+
+**The rule in state is a plain `RuleDocument`** with nothing bolted onto it.
+What the editor knows and the document does not lives beside it, so `state.rule`
+goes straight to `stringifyRule`, `evaluateRule` or `describeRule`, and an editor
+bug cannot store a field the engine has never heard of.
+
+Judgement calls that shape how it feels to use:
+
+- **Undo is for edits, not clicks.** Selection is not undoable.
+- **Typing is one undo step.** Consecutive edits to the same value collapse;
+  structural changes never merge.
+- **A new edit after an undo discards the redo stack**, because offering the old
+  future back is how an editor loses somebody's work.
+- **History is bounded and cheap**: immutable helpers share every untouched
+  branch, so an entry is a new root and a few nodes rather than a copy.
+- **Dirty ignores a rename**, being measured by `logicHash`. An editor that
+  cries "unsaved changes" at a touched-then-untouched field trains people to
+  ignore it.
+- **Changing an operator resizes its values** to the new arity.
+- **Validation is reported per node**: an AST path is right for a file and
+  useless for a form, so each one resolves back to the node that shows it.
+- **A field provider that fails does not blank the picker.**
+
 ## Rule kinds
 
 `validation`, `filter`, `transformation`, `workflow`, `calculation`,
@@ -306,8 +339,8 @@ change to the AST rather than a plugin.
 | 3 | Executor: evaluation, short-circuiting, tracing, timeouts | **done** |
 | 4 | Natural-language renderer | **done** |
 | 5 | Parser and importers | **done** |
-| 6 | Headless React state (`rules-react`) | next |
-| 7 | The visual builder (`rules-ui`) | |
+| 6 | Headless React state (`rules-react`) | **done** |
+| 7 | The visual builder (`rules-ui`) | next |
 | 8 | Execution debugger (`rules-devtools`) | |
 | 9 | Storage adapters and versioning | |
 | 10 | Next.js adapters | |

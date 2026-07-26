@@ -7,6 +7,7 @@ import {
   type RuleDocument,
   type RuleNode,
 } from '@adysre/rules-types';
+import { createNodeId, type IdFactory } from './ids';
 
 /**
  * Walking the tree.
@@ -232,8 +233,49 @@ export function removeNode(root: RuleNode, id: string): RuleNode {
 }
 
 /** Append a node to a group. */
-export function addNode(root: RuleNode, parentId: string, node: RuleNode): RuleNode {
+export function addNode(
+  root: RuleNode,
+  parentId: string,
+  node: RuleNode,
+  index?: number,
+): RuleNode {
   const parent = findNode(root, parentId);
   if (!parent || !isGroup(parent)) return root;
-  return replaceNode(root, parentId, { ...parent, children: [...parent.children, node] });
+
+  const children = [...parent.children];
+  // Appending is the default because that is where a new row goes; an index is
+  // what a drag lands on, and one clamped out of range is a drop the builder
+  // should still honour rather than silently ignore.
+  const at = index === undefined ? children.length : Math.max(0, Math.min(children.length, index));
+  children.splice(at, 0, node);
+
+  return replaceNode(root, parentId, { ...parent, children });
+}
+
+/**
+ * The same subtree, with every node given a fresh id.
+ *
+ * What duplicating a branch needs, and what pasting one needs: two nodes
+ * sharing an id would make a trace ambiguous and `validateRule` refuse the
+ * document, so the ids have to be replaced rather than carried along.
+ */
+export function withNewIds(root: RuleNode, ids: IdFactory = createNodeId): RuleNode {
+  // Two passes rather than recursion, for the same reason everything else here
+  // is iterative: a pasted branch may be as deep as the tree it came from.
+  const copies = new Map<RuleNode, RuleNode>();
+
+  for (const node of walk(root)) {
+    copies.set(
+      node,
+      isCondition(node) ? { ...node, id: ids('c') } : { ...node, id: ids('g'), children: [] },
+    );
+  }
+
+  for (const [original, copy] of copies) {
+    if (!isGroup(original) || !isGroup(copy)) continue;
+    // Filled after the fact, so every child already has a copy to point at.
+    copy.children = original.children.map((child) => copies.get(child) ?? child);
+  }
+
+  return copies.get(root) ?? root;
 }

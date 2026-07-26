@@ -31,7 +31,7 @@ longer matches the tree, or a tree that cannot express what somebody typed.
 | `@adysre/rules-types` | the vocabulary: AST, execution contracts, plugin interfaces | **built** |
 | `@adysre/rules-core` | builders, traversal, validation, serialisation, the registry, the built-in plugins, the executor. Zero dependencies | **built** |
 | `@adysre/rules-parser` | importers: JSON, and other engines' formats | planned |
-| `@adysre/rules-renderer` | AST to natural language, and other output formats | planned |
+| `@adysre/rules-renderer` | AST to natural language, and other output formats | **built** |
 | `@adysre/rules-react` | headless hooks and state for a builder | planned |
 | `@adysre/rules-ui` | the visual builder, shadcn/ui and Tailwind | planned |
 | `@adysre/rules-next` | Next.js adapters: route handlers, server actions | planned |
@@ -209,6 +209,47 @@ a set whose behaviour depends on an unstable sort behaves differently on two
 machines. `first-match` stops at the first rule that matched; `all-matches`
 collects every one.
 
+## Natural language
+
+```
+Large orders from new customers need approval
+When all of these are true:
+  - order total is greater than 1,000
+  - any of these are true:
+    - customer tier is "new"
+    - order placed at is before today
+Then reject order total
+```
+
+**Structure first, text second.** `describeRule` returns lines of typed
+segments and `.text` is a projection of them. A string is enough for a tooltip
+and useless for a builder that highlights the field being edited or a debugger
+that colours the condition that decided a verdict, and neither can be recovered
+from prose afterwards. Same principle as the AST: the readable form is the
+projection, never the source.
+
+**The operator writes its own sentence.** `toText` lives on the plugin, so the
+renderer holds no second implementation of the operator set that has to be kept
+in step with the first. It hands the plugin private-use markers instead of
+rendered text and splits the answer back apart, so the plugin writes the words
+and the renderer recovers the structure. A plugin that drops a marker has
+dropped that operand from the sentence, which is its right: `isEmpty` never
+mentions its arguments either.
+
+**A group holding one child says nothing its child does not.** `all(X)` renders
+as X, because a heading above a single bullet is noise a reader has to see past.
+`none` and negated groups are excluded, since both invert.
+
+**De Morgan happens in the words.** A negated `any` renders as "none of these
+are true", which is exactly what it means and reads better than wrapping a
+heading in "it is not true that".
+
+**English lives in one object.** `Phrases` is the whole vocabulary, so a locale
+is a data change rather than a fork, and `operatorText` overrides one operator's
+sentence while keeping its operands identifiable. That is the counterpart to
+"no English in a plugin": the words have to live somewhere, and somewhere is
+one replaceable record.
+
 ## Rule kinds
 
 `validation`, `filter`, `transformation`, `workflow`, `calculation`,
@@ -223,8 +264,8 @@ change to the AST rather than a plugin.
 | 1 | Monorepo, core types, the AST | **done** |
 | 2 | Plugin registry and the built-in operator and function set | **done** |
 | 3 | Executor: evaluation, short-circuiting, tracing, timeouts | **done** |
-| 4 | Natural-language renderer | next |
-| 5 | Parser and importers | |
+| 4 | Natural-language renderer | **done** |
+| 5 | Parser and importers | next |
 | 6 | Headless React state (`rules-react`) | |
 | 7 | The visual builder (`rules-ui`) | |
 | 8 | Execution debugger (`rules-devtools`) | |

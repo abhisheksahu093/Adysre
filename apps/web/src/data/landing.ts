@@ -157,6 +157,7 @@ export const LANDING_LINKS = {
   codes: '/tools/codes',
   documents: '/tools/documents',
   websiteIntelligence: '/website-intelligence',
+  rules: '/rules',
   resume: '/tools/resume',
   pricing: '/pricing',
   contact: '/contact',

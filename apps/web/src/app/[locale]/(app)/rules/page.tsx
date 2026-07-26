@@ -6,6 +6,7 @@ import {
 } from '@/components/rules-engine/capabilities-grid';
 import { RulesPackagesGrid } from '@/components/rules-engine/packages-grid';
 import { RulesStats } from '@/components/rules-engine/rules-stats';
+import { RulesUsageGuide } from '@/components/rules-engine/usage-guide';
 import { RulesPlayground } from '@/modules/rules/components/rules-playground';
 
 export async function generateMetadata({
@@ -60,6 +61,11 @@ export default async function RulesPage({ params }: { params: Promise<{ locale: 
           <p className="text-sm text-muted-foreground">{t('sections.sandboxHint')}</p>
         </div>
         <RulesPlayground />
+      </section>
+
+      <section className="flex flex-col gap-4">
+        <h2 className="text-lg font-medium">{t('guide.title')}</h2>
+        <RulesUsageGuide locale={locale} />
       </section>
 
       <section className="flex flex-col gap-4">

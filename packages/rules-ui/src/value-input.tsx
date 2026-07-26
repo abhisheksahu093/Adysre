@@ -154,7 +154,7 @@ export function ValueInput({
           aria-label={label}
           className={className}
           disabled={disabled}
-          placeholder={labels.tagsPlaceholder}
+          placeholder={labels.listPlaceholder}
           value={draft}
           onChange={(event) => commit(event.target.value)}
         />

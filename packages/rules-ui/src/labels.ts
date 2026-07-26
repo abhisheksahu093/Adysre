@@ -65,7 +65,18 @@ export interface BuilderLabels {
 
   /** Where an operand's value comes from. */
   source: string;
+  /**
+   * What an EMPTY field box says.
+   *
+   * Never an example path. `order.total` reads as a value somebody chose, so an
+   * empty box looked filled while the row underneath reported "A field needs a
+   * path" - a screen contradicting itself, and the reader assuming the error
+   * was wrong rather than the box empty. A placeholder has to be impossible to
+   * mistake for data.
+   */
   fieldPlaceholder: string;
+  /** The same, for a comma-separated list of values. */
+  listPlaceholder: string;
   variablePlaceholder: string;
   functionPlaceholder: string;
   chooseField: string;
@@ -202,7 +213,8 @@ export const englishLabels: BuilderLabels = {
   actionValue: 'Value',
 
   source: 'Source',
-  fieldPlaceholder: 'order.total',
+  fieldPlaceholder: 'Choose or type a field',
+  listPlaceholder: 'Comma separated values',
   variablePlaceholder: 'Variable name',
   functionPlaceholder: 'Function',
   chooseField: 'Choose a field',

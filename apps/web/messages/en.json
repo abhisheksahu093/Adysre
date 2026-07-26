@@ -2154,6 +2154,17 @@
       "label": "Icons, Gradients and Palettes are now live in the workspace",
       "cta": "Explore",
       "dismiss": "Dismiss announcement"
+    },
+    "rules": {
+      "badge": "Business Rules",
+      "subtitle": "One rule, three ways at once. The JSON tree is the only source of truth; the sentence and the verdict are generated from it, right here on this page, by the same packages you would install.",
+      "panels": {
+        "tree": "The rule",
+        "words": "In plain English",
+        "verdict": "Run against an order"
+      },
+      "matched": "Matched",
+      "cta": "Open the rules engine"
     }
   },
   "designPlayground": {
@@ -3245,6 +3256,45 @@
       "noParsing": {
         "title": "No language to learn",
         "desc": "There is no text format to hand-author, so there is no second system to keep in step with the tree."
+      }
+    },
+    "guide": {
+      "title": "Using the Business Rules Engine",
+      "intro": "Everything you need to add rules to a project: install, write one, run it, explain it, extend it, and let people edit it. Every snippet below runs as written.",
+      "download": "Download guide",
+      "steps": {
+        "install": {
+          "title": "Install",
+          "body": "Take only what you use. The engine and its vocabulary have zero runtime dependencies; the builder is a separate package because a server that only evaluates rules should not ship a React editor."
+        },
+        "author": {
+          "title": "Write a rule",
+          "body": "A rule is plain JSON. The builders handle ids and timestamps, but nothing stops you writing the object by hand, storing it, diffing it in review or generating it from somewhere else."
+        },
+        "evaluate": {
+          "title": "Run it",
+          "body": "Synchronous and pure. The registry starts empty because what rules may do is your choice; pass the built-ins for the usual set. The result carries the verdict, the actions and the trace."
+        },
+        "explain": {
+          "title": "Read it back",
+          "body": "Every rule renders as a sentence, generated from the tree and never parsed back into it. Structure comes first, so a UI can highlight the field being edited rather than reformatting prose."
+        },
+        "extend": {
+          "title": "Add your own operator",
+          "body": "Everything the engine can do is a plugin. Register one and the builder offers it, the debugger explains it, and your rules stay plain JSON. An operator that cannot answer throws rather than returning false."
+        },
+        "build": {
+          "title": "Let people edit it",
+          "body": "The visual builder is driven entirely by the plugin metadata: arity decides how many value boxes appear, accepts decides which operators a field is offered. Pass sample data and it runs the rule as you type."
+        },
+        "debug": {
+          "title": "Find out why",
+          "body": "The debugger names the row that decided the verdict, and runs the rule a second time with short-circuiting off to surface faults the fast path stepped over."
+        },
+        "store": {
+          "title": "Keep it",
+          "body": "One storage contract with versioning and restore. A restore writes a new version rather than rewinding, and any adapter you write can be checked against the same suite the built-in ones pass."
+        }
       }
     }
   }

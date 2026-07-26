@@ -51,6 +51,7 @@ const NAV_MENUS: { key: string; items: NavItem[] }[] = [
       { href: LANDING_LINKS.codes, navKey: 'codes' },
       { href: LANDING_LINKS.documents, navKey: 'documents' },
       { href: LANDING_LINKS.websiteIntelligence, navKey: 'websiteIntelligence' },
+      { href: LANDING_LINKS.rules, navKey: 'rules' },
       { href: LANDING_LINKS.resume, navKey: 'resume' },
     ],
   },

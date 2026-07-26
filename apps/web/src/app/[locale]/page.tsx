@@ -11,6 +11,7 @@ import { InstallSection } from '@/components/landing/install-section';
 import { LANDING_STATS } from '@/data/library-stats';
 import { TemplatesTeaser } from '@/components/landing/templates-teaser';
 import { IntelligenceSection } from '@/components/landing/intelligence-section';
+import { RulesSection } from '@/components/landing/rules-section';
 import { Faq } from '@/components/landing/faq';
 import { CtaBand } from '@/components/landing/cta-band';
 import { LandingFooter } from '@/components/landing/landing-footer';
@@ -58,6 +59,7 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
             before scrolling anything else. */}
         <IntelligenceSection />
         <FeatureGrid />
+        <RulesSection />
         {/* A visitor who has just seen what the modules are should be told they
             can install the whole thing before being asked to browse. */}
         <InstallSection />

@@ -2154,6 +2154,17 @@
       "label": "图标、渐变和调色板现已在工作区上线",
       "cta": "查看",
       "dismiss": "关闭公告"
+    },
+    "rules": {
+      "badge": "业务规则",
+      "subtitle": "同一条规则，同时以三种形态呈现。JSON 树是唯一的事实来源；语句和判定都由它生成，就在本页，使用与你安装的完全相同的包。",
+      "panels": {
+        "tree": "规则",
+        "words": "自然语言",
+        "verdict": "针对订单运行"
+      },
+      "matched": "匹配",
+      "cta": "打开规则引擎"
     }
   },
   "designPlayground": {
@@ -3245,6 +3256,45 @@
       "noParsing": {
         "title": "No language to learn",
         "desc": "There is no text format to hand-author, so there is no second system to keep in step with the tree."
+      }
+    },
+    "guide": {
+      "title": "业务规则引擎使用指南",
+      "intro": "把规则引入项目所需的一切：安装、编写、运行、解释、扩展，以及让他人编辑。下面每段代码都可直接运行。",
+      "download": "下载指南",
+      "steps": {
+        "install": {
+          "title": "安装",
+          "body": "按需引入。引擎与类型定义没有任何运行时依赖；构建器是独立的包，因为只做规则求值的服务器不必附带 React 编辑器。"
+        },
+        "author": {
+          "title": "编写规则",
+          "body": "规则就是普通 JSON。构建函数负责 ID 和时间戳，但你也可以手写对象、直接存储、在评审中做差异对比。"
+        },
+        "evaluate": {
+          "title": "运行",
+          "body": "同步且纯粹。注册表默认为空，因为规则能做什么由你决定。结果包含判定、动作和执行轨迹。"
+        },
+        "explain": {
+          "title": "读回来",
+          "body": "每条规则都能渲染成一句话，由树生成，且永不反向解析。先有结构，后有文本。"
+        },
+        "extend": {
+          "title": "添加自己的运算符",
+          "body": "引擎能做的一切都是插件。注册之后构建器会提供它，调试器会解释它，而规则仍是普通 JSON。"
+        },
+        "build": {
+          "title": "让别人来编辑",
+          "body": "可视化构建器完全由插件元数据驱动：arity 决定显示几个输入框，accepts 决定字段可用哪些运算符。"
+        },
+        "debug": {
+          "title": "找出原因",
+          "body": "调试器指出决定判定的那一行，并关闭短路再跑一次，暴露快速路径跳过的故障。"
+        },
+        "store": {
+          "title": "持久化",
+          "body": "一个带版本与还原的存储契约。还原会写入新版本而不是回退历史。"
+        }
       }
     }
   }

@@ -357,3 +357,40 @@ describe('loading a different document', () => {
     assert.equal(isDifferentDocument(second, first, first), true);
   });
 });
+
+describe('placeholders cannot be mistaken for data', () => {
+  /**
+   * `order.total` was the field box's placeholder, and it reads as a path
+   * somebody chose. An empty box therefore looked filled while the row under it
+   * reported "A field needs a path" - a screen contradicting itself, where the
+   * reader concludes the error is wrong rather than the box empty.
+   *
+   * Asserted rather than remembered, because the tempting placeholder for a
+   * field box will always be an example field.
+   */
+  const looksLikeAPath = /^[a-z][A-Za-z0-9]*\.[A-Za-z0-9.]+$/;
+
+  it('does not put an example path where a value goes', () => {
+    assert.ok(
+      !looksLikeAPath.test(englishLabels.fieldPlaceholder),
+      `"${englishLabels.fieldPlaceholder}" reads as a real field path`,
+    );
+  });
+
+  it('tells the reader what to do, in every placeholder', () => {
+    const placeholders = [
+      englishLabels.fieldPlaceholder,
+      englishLabels.listPlaceholder,
+      englishLabels.variablePlaceholder,
+      englishLabels.namePlaceholder,
+      englishLabels.descriptionPlaceholder,
+      englishLabels.tagsPlaceholder,
+      englishLabels.commentPlaceholder,
+    ];
+
+    for (const placeholder of placeholders) {
+      assert.ok(placeholder.length > 4, `"${placeholder}" is too terse to help`);
+      assert.ok(!looksLikeAPath.test(placeholder), `"${placeholder}" reads as data`);
+    }
+  });
+});

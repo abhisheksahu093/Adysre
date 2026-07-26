@@ -1,4 +1,4 @@
-import { readFileSync, readdirSync, writeFileSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 
 /**
@@ -18,6 +18,22 @@ import { join, resolve } from 'node:path';
  */
 
 const dist = join(resolve(process.argv[2] ?? process.cwd()), 'dist');
+
+/*
+ * A missing `dist` means the compile emitted nothing, and the useful answer is
+ * to say so. Left to crash, it reports an ENOENT stack from inside a helper
+ * script - which reads as "the tooling is broken" rather than "your build
+ * produced no output", and sends the reader to the wrong file.
+ */
+if (!existsSync(dist)) {
+  console.error(
+    `\n  ✗ fix-declarations: ${dist} does not exist.\n` +
+      '    The compile emitted nothing. A stale incremental cache is the usual\n' +
+      '    cause: tsc reports success and skips emitting when its buildinfo says\n' +
+      '    the output is current, even after the output was deleted.\n',
+  );
+  process.exit(1);
+}
 
 /** `from './x.ts'`, `from "../y.tsx"`, and the `import(...)` form. */
 const SPECIFIER = /((?:from\s*|import\(\s*)['"])(\.\.?\/[^'"]*?)\.tsx?(['"])/g;

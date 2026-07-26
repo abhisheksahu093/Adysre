@@ -6,7 +6,7 @@
     "declaration": true,
     "noEmit": false,
     "rewriteRelativeImportExtensions": true,
-    "tsBuildInfoFile": "./tsconfig.build.tsbuildinfo"
+    "incremental": false
   },
   "exclude": [
     "src/**/*.test.ts",

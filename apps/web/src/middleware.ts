@@ -17,5 +17,11 @@ export const config = {
   // Skip API routes, the public dynamic-QR redirect (/q/<slug> must resolve
   // without a locale prefix), Next internals and anything with a file extension
   // (/logo/adysre.svg must not be locale-rewritten).
-  matcher: '/((?!api|q/|_next|_vercel|.*\\..*).*)',
+  //
+  // `api/` carries its trailing slash for the same reason `q/` does: without it
+  // the exclusion is a PREFIX match, and any page whose path merely starts with
+  // those letters (/api-studio) is skipped by the locale rewrite and 404s. The
+  // route handlers this means to skip all live under `/api/`, so the slash
+  // costs nothing and stops the next such page from being a mystery.
+  matcher: '/((?!api/|q/|_next|_vercel|.*\\..*).*)',
 };

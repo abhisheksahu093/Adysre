@@ -27,6 +27,22 @@ import type { SystemRole } from '@adysre/types';
 /** The demo tenant every unauthenticated dev request is attributed to. */
 const DEMO_ORG_SLUG = 'demo';
 
+/**
+ * The database could not be reached while resolving who the caller is.
+ *
+ * Distinct from "not signed in", because the two need opposite answers: an
+ * unauthenticated caller is told to sign in (401), while an unreachable
+ * database is an operator's problem the caller can do nothing about (503).
+ * Answering 401 for a connection failure would send people to fix their
+ * credentials over an outage.
+ */
+export class StorageUnavailableError extends Error {
+  constructor() {
+    super('The database could not be reached.');
+    this.name = 'StorageUnavailableError';
+  }
+}
+
 function isSystemRole(value: string): value is SystemRole {
   return ['Owner', 'Admin', 'Manager', 'Member', 'Custom'].includes(value);
 }
@@ -68,10 +84,17 @@ export async function getSession(): Promise<PlatformSession | null> {
 async function resolveDevSession(cookie: string | undefined): Promise<PlatformSession | null> {
   if (cookie === 'anonymous') return null;
 
-  const org = await prisma.organization.findFirst({
-    where: { slug: DEMO_ORG_SLUG, ...notDeleted },
-    select: { id: true },
-  });
+  let org: { id: string } | null;
+  try {
+    org = await prisma.organization.findFirst({
+      where: { slug: DEMO_ORG_SLUG, ...notDeleted },
+      select: { id: true },
+    });
+  } catch {
+    // No database, wrong credentials, migrations never run. Reported as what it
+    // is rather than escaping as a 500 with a stack trace in the response.
+    throw new StorageUnavailableError();
+  }
   // No seeded tenant means the database is not set up. Returning null lets the
   // route answer honestly instead of inventing a tenant id and writing rows
   // that belong to nobody.

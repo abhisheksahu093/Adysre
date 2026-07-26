@@ -2784,5 +2784,206 @@
         "desc": "Detect the main subject and crop to social sizes."
       }
     }
+  },
+  "apiStudio": {
+    "title": "API Studio",
+    "subtitle": "Build, send and test HTTP requests, with collections, environments and history. Self-hosted.",
+    "defaults": {
+      "workspace": "My workspace",
+      "collection": "My collection",
+      "request": "New request",
+      "folder": "New folder"
+    },
+    "actions": {
+      "retry": "Retry",
+      "resize": "Resize panes"
+    },
+    "empty": {
+      "title": "No request open."
+    },
+    "sidebar": {
+      "paneLabel": "Sidebar panels",
+      "collections": "Collections",
+      "history": "History",
+      "environments": "Environments",
+      "search": "Search",
+      "searchPlaceholder": "Search requests",
+      "newCollection": "New collection",
+      "newFolder": "New folder",
+      "newRequest": "New request",
+      "noCollections": "No collections yet.",
+      "favorite": "Add to favourites",
+      "unfavorite": "Remove from favourites",
+      "favorited": "Favourite",
+      "delete": "Delete",
+      "show": "Show sidebar",
+      "hide": "Hide sidebar"
+    },
+    "tabs": {
+      "untitled": "Untitled request",
+      "new": "New tab",
+      "close": "Close {name}",
+      "closeUnsaved": "Close {name}, unsaved",
+      "unsaved": "Unsaved changes",
+      "pin": "Pin tab",
+      "unpin": "Unpin tab"
+    },
+    "request": {
+      "paneLabel": "Request panes",
+      "method": "Method",
+      "url": "Request URL",
+      "urlPlaceholder": "https://api.example.com/users",
+      "send": "Send",
+      "cancel": "Cancel",
+      "save": "Save",
+      "saveHint": "Save this request to its collection",
+      "params": "Params",
+      "headers": "Headers",
+      "body": "Body",
+      "auth": "Auth",
+      "paramKey": "Parameter",
+      "headerKey": "Header",
+      "pathVariables": "Path variables"
+    },
+    "table": {
+      "key": "Key",
+      "value": "Value",
+      "enabled": "Enabled",
+      "remove": "Remove",
+      "addRow": "Add row",
+      "newRow": "new row",
+      "enableRow": "Enable {name}",
+      "removeRow": "Remove {name}"
+    },
+    "body": {
+      "type": "Body type",
+      "language": "Format",
+      "content": "Request body",
+      "placeholder": "{ \"name\": \"Ada\" }",
+      "query": "Query",
+      "variables": "Variables",
+      "none": "This request has no body.",
+      "notAllowed": "{method} requests are sent without a body.",
+      "uploadsPending": "File uploads arrive with the upload phase. Nothing is sent until then.",
+      "types": {
+        "none": "None",
+        "raw": "Raw",
+        "graphql": "GraphQL",
+        "multipart": "Form data",
+        "urlencoded": "Form URL encoded",
+        "binary": "Binary"
+      },
+      "languages": {
+        "text": "Text",
+        "json": "JSON",
+        "xml": "XML",
+        "html": "HTML",
+        "javascript": "JavaScript"
+      }
+    },
+    "auth": {
+      "type": "Auth type",
+      "username": "Username",
+      "password": "Password",
+      "token": "Token",
+      "prefix": "Prefix",
+      "key": "Key",
+      "value": "Value",
+      "name": "Name",
+      "addTo": "Add to",
+      "header": "Header",
+      "query": "Query",
+      "noneHint": "This request is sent without credentials.",
+      "inheritsFrom": "Inherits auth from {source}.",
+      "inheritsNothing": "Inherits auth from the collection, which sets none.",
+      "pending": "{type} needs a round trip and arrives with the auth phase. Nothing is sent with it yet.",
+      "types": {
+        "inherit": "Inherit",
+        "none": "No auth",
+        "basic": "Basic",
+        "bearer": "Bearer token",
+        "apiKey": "API key",
+        "digest": "Digest",
+        "jwt": "JWT",
+        "oauth2": "OAuth 2",
+        "awsSignature": "AWS signature",
+        "customHeader": "Custom header",
+        "customQuery": "Custom query"
+      }
+    },
+    "response": {
+      "paneLabel": "Response panes",
+      "empty": "No response yet.",
+      "emptyHint": "Send the request to see the response here.",
+      "sending": "Sending",
+      "cancelled": "Cancelled.",
+      "body": "Body",
+      "headers": "Headers",
+      "cookies": "Cookies",
+      "timings": "Timings",
+      "time": "Time",
+      "size": "Size",
+      "redirects": "Redirects",
+      "insecure": "Certificate not verified",
+      "insecureHint": "This request was sent with TLS verification turned off.",
+      "truncated": "Truncated",
+      "truncatedHint": "The response was larger than the size limit and was cut off.",
+      "copy": "Copy",
+      "copied": "Copied",
+      "noBody": "This response has no body.",
+      "noHeaders": "No headers.",
+      "noCookies": "No cookies were set.",
+      "noPreview": "This response cannot be previewed.",
+      "previewAlt": "Response preview",
+      "cookieName": "Name",
+      "cookieValue": "Value",
+      "cookieDomain": "Domain",
+      "cookieFlags": "Flags",
+      "views": {
+        "pretty": "Pretty",
+        "raw": "Raw",
+        "preview": "Preview"
+      }
+    },
+    "timings": {
+      "dns": "DNS",
+      "tcp": "Connect",
+      "tls": "TLS",
+      "firstByte": "Waiting",
+      "download": "Download",
+      "total": "Total",
+      "unavailable": "Not measurable"
+    },
+    "environment": {
+      "select": "Environment",
+      "none": "No environment",
+      "noneHint": "Only global variables resolve.",
+      "empty": "No environments yet.",
+      "variableCount": "{count} variables"
+    },
+    "history": {
+      "clear": "Clear history",
+      "empty": "Nothing sent yet."
+    },
+    "errors": {
+      "storageUnavailable": "Storage is unavailable, so collections and history are not loading. Requests can still be sent.",
+      "invalid_url": "That URL cannot be sent.",
+      "blocked_host": "That address is not reachable from this deployment.",
+      "unsupported_protocol": "That protocol is not supported yet.",
+      "dns_failure": "The host could not be found.",
+      "connection_refused": "The connection was refused.",
+      "connection_reset": "The connection was reset.",
+      "tls_error": "The certificate could not be verified.",
+      "timeout": "The request timed out.",
+      "too_many_redirects": "The server redirected too many times.",
+      "response_too_large": "The response was too large.",
+      "request_too_large": "The request was too large.",
+      "cancelled": "Cancelled.",
+      "rate_limited": "Too many requests. Slow down.",
+      "agent_unavailable": "The local agent is not running.",
+      "network": "The request could not be completed.",
+      "unsupported_auth": "That auth type cannot be sent yet.",
+      "unsupported_body": "That body type cannot be sent yet."
+    }
   }
 }

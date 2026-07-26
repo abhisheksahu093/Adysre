@@ -2,9 +2,9 @@ import 'server-only';
 import type { NextResponse } from 'next/server';
 import type { ApiStudioPermission } from '@adysre/types';
 import type { PlatformSession } from '@/lib/auth/access-token';
-import { FORBIDDEN, UNAUTHENTICATED } from '@/lib/api/response';
+import { FORBIDDEN, UNAUTHENTICATED, UNAVAILABLE } from '@/lib/api/response';
 import { can } from './auth-policy';
-import { getSession } from './session';
+import { getSession, StorageUnavailableError } from './session';
 
 /**
  * Route-handler authorization for `/api/api-studio/*`.
@@ -27,7 +27,17 @@ type Denied = { ok: false; response: NextResponse };
 export async function authorize(
   permission: ApiStudioPermission,
 ): Promise<Authorized | Denied> {
-  const session = await getSession();
+  let session: PlatformSession | null;
+  try {
+    session = await getSession();
+  } catch (error) {
+    // Resolving a development session reads the seeded tenant, so the database
+    // can fail before any repository is reached. That is a 503, not a 500 with
+    // a stack trace, and not a 401 that would send someone to fix their login.
+    if (error instanceof StorageUnavailableError) return { ok: false, response: UNAVAILABLE() };
+    throw error;
+  }
+
   if (!session) {
     return { ok: false, response: UNAUTHENTICATED('Sign in to use API Studio.') };
   }

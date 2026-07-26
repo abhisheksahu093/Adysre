@@ -2784,5 +2784,206 @@
         "desc": "मुख्य सब्जेक्ट पहचानें और सोशल साइज़ में क्रॉप करें."
       }
     }
+  },
+  "apiStudio": {
+    "title": "API स्टूडियो",
+    "subtitle": "HTTP रिक्वेस्ट बनाएं, भेजें और टेस्ट करें, कलेक्शन, एनवायरनमेंट और हिस्ट्री के साथ. पूरी तरह सेल्फ-होस्टेड.",
+    "defaults": {
+      "workspace": "मेरा वर्कस्पेस",
+      "collection": "मेरा कलेक्शन",
+      "request": "नई रिक्वेस्ट",
+      "folder": "नया फ़ोल्डर"
+    },
+    "actions": {
+      "retry": "फिर कोशिश करें",
+      "resize": "पैनल का आकार बदलें"
+    },
+    "empty": {
+      "title": "कोई रिक्वेस्ट खुली नहीं है."
+    },
+    "sidebar": {
+      "paneLabel": "साइडबार पैनल",
+      "collections": "कलेक्शन",
+      "history": "हिस्ट्री",
+      "environments": "एनवायरनमेंट",
+      "search": "खोजें",
+      "searchPlaceholder": "रिक्वेस्ट खोजें",
+      "newCollection": "नया कलेक्शन",
+      "newFolder": "नया फ़ोल्डर",
+      "newRequest": "नई रिक्वेस्ट",
+      "noCollections": "अभी कोई कलेक्शन नहीं है.",
+      "favorite": "पसंदीदा में जोड़ें",
+      "unfavorite": "पसंदीदा से हटाएं",
+      "favorited": "पसंदीदा",
+      "delete": "हटाएं",
+      "show": "साइडबार दिखाएं",
+      "hide": "साइडबार छिपाएं"
+    },
+    "tabs": {
+      "untitled": "बिना नाम की रिक्वेस्ट",
+      "new": "नया टैब",
+      "close": "{name} बंद करें",
+      "closeUnsaved": "{name} बंद करें, सेव नहीं हुआ",
+      "unsaved": "सेव न किए गए बदलाव",
+      "pin": "टैब पिन करें",
+      "unpin": "टैब अनपिन करें"
+    },
+    "request": {
+      "paneLabel": "रिक्वेस्ट पैनल",
+      "method": "मेथड",
+      "url": "रिक्वेस्ट URL",
+      "urlPlaceholder": "https://api.example.com/users",
+      "send": "भेजें",
+      "cancel": "रद्द करें",
+      "save": "सेव करें",
+      "saveHint": "इस रिक्वेस्ट को उसके कलेक्शन में सेव करें",
+      "params": "पैरामीटर",
+      "headers": "हेडर",
+      "body": "बॉडी",
+      "auth": "ऑथ",
+      "paramKey": "पैरामीटर",
+      "headerKey": "हेडर",
+      "pathVariables": "पाथ वेरिएबल"
+    },
+    "table": {
+      "key": "की",
+      "value": "वैल्यू",
+      "enabled": "सक्रिय",
+      "remove": "हटाएं",
+      "addRow": "पंक्ति जोड़ें",
+      "newRow": "नई पंक्ति",
+      "enableRow": "{name} सक्रिय करें",
+      "removeRow": "{name} हटाएं"
+    },
+    "body": {
+      "type": "बॉडी प्रकार",
+      "language": "फ़ॉर्मेट",
+      "content": "रिक्वेस्ट बॉडी",
+      "placeholder": "{ \"name\": \"Ada\" }",
+      "query": "क्वेरी",
+      "variables": "वेरिएबल",
+      "none": "इस रिक्वेस्ट में कोई बॉडी नहीं है.",
+      "notAllowed": "{method} रिक्वेस्ट बिना बॉडी के भेजी जाती है.",
+      "uploadsPending": "फ़ाइल अपलोड अपलोड फ़ेज़ में आएंगे. तब तक कुछ नहीं भेजा जाता.",
+      "types": {
+        "none": "कोई नहीं",
+        "raw": "रॉ",
+        "graphql": "GraphQL",
+        "multipart": "फ़ॉर्म डेटा",
+        "urlencoded": "फ़ॉर्म URL एन्कोडेड",
+        "binary": "बाइनरी"
+      },
+      "languages": {
+        "text": "टेक्स्ट",
+        "json": "JSON",
+        "xml": "XML",
+        "html": "HTML",
+        "javascript": "JavaScript"
+      }
+    },
+    "auth": {
+      "type": "ऑथ प्रकार",
+      "username": "यूज़रनेम",
+      "password": "पासवर्ड",
+      "token": "टोकन",
+      "prefix": "प्रीफ़िक्स",
+      "key": "की",
+      "value": "वैल्यू",
+      "name": "नाम",
+      "addTo": "कहां जोड़ें",
+      "header": "हेडर",
+      "query": "क्वेरी",
+      "noneHint": "यह रिक्वेस्ट बिना क्रेडेंशियल के भेजी जाती है.",
+      "inheritsFrom": "{source} से ऑथ लेता है.",
+      "inheritsNothing": "कलेक्शन से ऑथ लेता है, जिसमें कोई सेट नहीं है.",
+      "pending": "{type} के लिए एक अतिरिक्त राउंड ट्रिप चाहिए और यह ऑथ फ़ेज़ में आएगा. अभी इसके साथ कुछ नहीं भेजा जाता.",
+      "types": {
+        "inherit": "इनहेरिट",
+        "none": "कोई ऑथ नहीं",
+        "basic": "बेसिक",
+        "bearer": "बियरर टोकन",
+        "apiKey": "API की",
+        "digest": "डाइजेस्ट",
+        "jwt": "JWT",
+        "oauth2": "OAuth 2",
+        "awsSignature": "AWS सिग्नेचर",
+        "customHeader": "कस्टम हेडर",
+        "customQuery": "कस्टम क्वेरी"
+      }
+    },
+    "response": {
+      "paneLabel": "रिस्पॉन्स पैनल",
+      "empty": "अभी कोई रिस्पॉन्स नहीं.",
+      "emptyHint": "रिस्पॉन्स देखने के लिए रिक्वेस्ट भेजें.",
+      "sending": "भेजा जा रहा है",
+      "cancelled": "रद्द किया गया.",
+      "body": "बॉडी",
+      "headers": "हेडर",
+      "cookies": "कुकीज़",
+      "timings": "टाइमिंग",
+      "time": "समय",
+      "size": "आकार",
+      "redirects": "रीडायरेक्ट",
+      "insecure": "सर्टिफिकेट जांचा नहीं गया",
+      "insecureHint": "यह रिक्वेस्ट TLS जांच बंद करके भेजी गई थी.",
+      "truncated": "काटा गया",
+      "truncatedHint": "रिस्पॉन्स आकार सीमा से बड़ा था, इसलिए काट दिया गया.",
+      "copy": "कॉपी करें",
+      "copied": "कॉपी हो गया",
+      "noBody": "इस रिस्पॉन्स में कोई बॉडी नहीं है.",
+      "noHeaders": "कोई हेडर नहीं.",
+      "noCookies": "कोई कुकी सेट नहीं हुई.",
+      "noPreview": "इस रिस्पॉन्स का प्रीव्यू नहीं दिखाया जा सकता.",
+      "previewAlt": "रिस्पॉन्स प्रीव्यू",
+      "cookieName": "नाम",
+      "cookieValue": "वैल्यू",
+      "cookieDomain": "डोमेन",
+      "cookieFlags": "फ़्लैग",
+      "views": {
+        "pretty": "सुंदर",
+        "raw": "रॉ",
+        "preview": "प्रीव्यू"
+      }
+    },
+    "timings": {
+      "dns": "DNS",
+      "tcp": "कनेक्ट",
+      "tls": "TLS",
+      "firstByte": "प्रतीक्षा",
+      "download": "डाउनलोड",
+      "total": "कुल",
+      "unavailable": "मापा नहीं जा सका"
+    },
+    "environment": {
+      "select": "एनवायरनमेंट",
+      "none": "कोई एनवायरनमेंट नहीं",
+      "noneHint": "सिर्फ़ ग्लोबल वेरिएबल हल होंगे.",
+      "empty": "अभी कोई एनवायरनमेंट नहीं है.",
+      "variableCount": "{count} वेरिएबल"
+    },
+    "history": {
+      "clear": "हिस्ट्री साफ़ करें",
+      "empty": "अभी कुछ नहीं भेजा गया."
+    },
+    "errors": {
+      "storageUnavailable": "स्टोरेज उपलब्ध नहीं है, इसलिए कलेक्शन और हिस्ट्री लोड नहीं हो रहे. रिक्वेस्ट फिर भी भेजी जा सकती हैं.",
+      "invalid_url": "यह URL भेजा नहीं जा सकता.",
+      "blocked_host": "यह पता इस डिप्लॉयमेंट से पहुंच योग्य नहीं है.",
+      "unsupported_protocol": "यह प्रोटोकॉल अभी समर्थित नहीं है.",
+      "dns_failure": "होस्ट नहीं मिला.",
+      "connection_refused": "कनेक्शन अस्वीकार कर दिया गया.",
+      "connection_reset": "कनेक्शन रीसेट हो गया.",
+      "tls_error": "सर्टिफिकेट सत्यापित नहीं हो सका.",
+      "timeout": "रिक्वेस्ट का समय समाप्त हो गया.",
+      "too_many_redirects": "सर्वर ने बहुत बार रीडायरेक्ट किया.",
+      "response_too_large": "रिस्पॉन्स बहुत बड़ा था.",
+      "request_too_large": "रिक्वेस्ट बहुत बड़ी थी.",
+      "cancelled": "रद्द किया गया.",
+      "rate_limited": "बहुत अधिक रिक्वेस्ट. थोड़ा धीमा करें.",
+      "agent_unavailable": "लोकल एजेंट नहीं चल रहा.",
+      "network": "रिक्वेस्ट पूरी नहीं हो सकी.",
+      "unsupported_auth": "यह ऑथ प्रकार अभी भेजा नहीं जा सकता.",
+      "unsupported_body": "यह बॉडी प्रकार अभी भेजा नहीं जा सकता."
+    }
   }
 }

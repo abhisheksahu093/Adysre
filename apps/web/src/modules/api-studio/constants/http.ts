@@ -191,3 +191,40 @@ export const STATUS_TEXT: Readonly<Record<number, string>> = {
 /** Status classes, used for the response badge's semantic token. */
 export const STATUS_CLASSES = ['info', 'success', 'redirect', 'client', 'server'] as const;
 export type StatusClass = (typeof STATUS_CLASSES)[number];
+
+/** The status class a code falls into. */
+export function statusClass(status: number): StatusClass {
+  if (status >= 500) return 'server';
+  if (status >= 400) return 'client';
+  if (status >= 300) return 'redirect';
+  if (status >= 200) return 'success';
+  return 'info';
+}
+
+/**
+ * Semantic TOKEN NAMES per method and status class, never colour literals. The
+ * component turns a tone into a Tailwind class built from theme tokens, so both
+ * themes stay legible and a palette change reaches this with everything else
+ * (UI_DESIGN_SYSTEM.md).
+ */
+export type Tone = 'primary' | 'success' | 'warning' | 'danger' | 'muted';
+
+export const METHOD_TONES: Record<HttpMethod, Tone> = {
+  GET: 'primary',
+  POST: 'success',
+  PUT: 'warning',
+  PATCH: 'warning',
+  DELETE: 'danger',
+  OPTIONS: 'muted',
+  HEAD: 'muted',
+  TRACE: 'muted',
+  CONNECT: 'muted',
+};
+
+export const STATUS_TONES: Record<StatusClass, Tone> = {
+  info: 'muted',
+  success: 'success',
+  redirect: 'warning',
+  client: 'danger',
+  server: 'danger',
+};

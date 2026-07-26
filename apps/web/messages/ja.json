@@ -2784,5 +2784,206 @@
         "desc": "主要な被写体を検出し、SNSサイズにクロップします。"
       }
     }
+  },
+  "apiStudio": {
+    "title": "APIスタジオ",
+    "subtitle": "HTTPリクエストの作成・送信・テストを、コレクション、環境変数、履歴とともに。完全セルフホスト。",
+    "defaults": {
+      "workspace": "マイワークスペース",
+      "collection": "マイコレクション",
+      "request": "新しいリクエスト",
+      "folder": "新しいフォルダー"
+    },
+    "actions": {
+      "retry": "再試行",
+      "resize": "パネルのサイズ変更"
+    },
+    "empty": {
+      "title": "開いているリクエストはありません。"
+    },
+    "sidebar": {
+      "paneLabel": "サイドバーパネル",
+      "collections": "コレクション",
+      "history": "履歴",
+      "environments": "環境",
+      "search": "検索",
+      "searchPlaceholder": "リクエストを検索",
+      "newCollection": "新しいコレクション",
+      "newFolder": "新しいフォルダー",
+      "newRequest": "新しいリクエスト",
+      "noCollections": "コレクションはまだありません。",
+      "favorite": "お気に入りに追加",
+      "unfavorite": "お気に入りから削除",
+      "favorited": "お気に入り",
+      "delete": "削除",
+      "show": "サイドバーを表示",
+      "hide": "サイドバーを隠す"
+    },
+    "tabs": {
+      "untitled": "無題のリクエスト",
+      "new": "新しいタブ",
+      "close": "{name} を閉じる",
+      "closeUnsaved": "{name} を閉じる（未保存）",
+      "unsaved": "未保存の変更",
+      "pin": "タブをピン留め",
+      "unpin": "ピン留めを解除"
+    },
+    "request": {
+      "paneLabel": "リクエストパネル",
+      "method": "メソッド",
+      "url": "リクエストURL",
+      "urlPlaceholder": "https://api.example.com/users",
+      "send": "送信",
+      "cancel": "キャンセル",
+      "save": "保存",
+      "saveHint": "このリクエストをコレクションに保存",
+      "params": "パラメーター",
+      "headers": "ヘッダー",
+      "body": "ボディ",
+      "auth": "認証",
+      "paramKey": "パラメーター",
+      "headerKey": "ヘッダー",
+      "pathVariables": "パス変数"
+    },
+    "table": {
+      "key": "キー",
+      "value": "値",
+      "enabled": "有効",
+      "remove": "削除",
+      "addRow": "行を追加",
+      "newRow": "新しい行",
+      "enableRow": "{name} を有効にする",
+      "removeRow": "{name} を削除"
+    },
+    "body": {
+      "type": "ボディの種類",
+      "language": "形式",
+      "content": "リクエストボディ",
+      "placeholder": "{ \"name\": \"Ada\" }",
+      "query": "クエリ",
+      "variables": "変数",
+      "none": "このリクエストにボディはありません。",
+      "notAllowed": "{method} リクエストはボディなしで送信されます。",
+      "uploadsPending": "ファイルアップロードはアップロードフェーズで対応します。それまでは送信されません。",
+      "types": {
+        "none": "なし",
+        "raw": "Raw",
+        "graphql": "GraphQL",
+        "multipart": "フォームデータ",
+        "urlencoded": "フォームURLエンコード",
+        "binary": "バイナリ"
+      },
+      "languages": {
+        "text": "テキスト",
+        "json": "JSON",
+        "xml": "XML",
+        "html": "HTML",
+        "javascript": "JavaScript"
+      }
+    },
+    "auth": {
+      "type": "認証の種類",
+      "username": "ユーザー名",
+      "password": "パスワード",
+      "token": "トークン",
+      "prefix": "プレフィックス",
+      "key": "キー",
+      "value": "値",
+      "name": "名前",
+      "addTo": "追加先",
+      "header": "ヘッダー",
+      "query": "クエリ",
+      "noneHint": "このリクエストは認証情報なしで送信されます。",
+      "inheritsFrom": "{source} から認証を継承します。",
+      "inheritsNothing": "コレクションから継承しますが、設定されていません。",
+      "pending": "{type} は往復通信が必要で、認証フェーズで対応します。現時点では送信されません。",
+      "types": {
+        "inherit": "継承",
+        "none": "認証なし",
+        "basic": "ベーシック",
+        "bearer": "ベアラートークン",
+        "apiKey": "APIキー",
+        "digest": "ダイジェスト",
+        "jwt": "JWT",
+        "oauth2": "OAuth 2",
+        "awsSignature": "AWS署名",
+        "customHeader": "カスタムヘッダー",
+        "customQuery": "カスタムクエリ"
+      }
+    },
+    "response": {
+      "paneLabel": "レスポンスパネル",
+      "empty": "レスポンスはまだありません。",
+      "emptyHint": "リクエストを送信するとここに表示されます。",
+      "sending": "送信中",
+      "cancelled": "キャンセルしました。",
+      "body": "ボディ",
+      "headers": "ヘッダー",
+      "cookies": "クッキー",
+      "timings": "タイミング",
+      "time": "時間",
+      "size": "サイズ",
+      "redirects": "リダイレクト",
+      "insecure": "証明書は未検証",
+      "insecureHint": "このリクエストはTLS検証を無効にして送信されました。",
+      "truncated": "切り詰め",
+      "truncatedHint": "レスポンスがサイズ上限を超えたため切り詰められました。",
+      "copy": "コピー",
+      "copied": "コピーしました",
+      "noBody": "このレスポンスにボディはありません。",
+      "noHeaders": "ヘッダーはありません。",
+      "noCookies": "クッキーは設定されませんでした。",
+      "noPreview": "このレスポンスはプレビューできません。",
+      "previewAlt": "レスポンスのプレビュー",
+      "cookieName": "名前",
+      "cookieValue": "値",
+      "cookieDomain": "ドメイン",
+      "cookieFlags": "フラグ",
+      "views": {
+        "pretty": "整形",
+        "raw": "Raw",
+        "preview": "プレビュー"
+      }
+    },
+    "timings": {
+      "dns": "DNS",
+      "tcp": "接続",
+      "tls": "TLS",
+      "firstByte": "待機",
+      "download": "ダウンロード",
+      "total": "合計",
+      "unavailable": "計測不可"
+    },
+    "environment": {
+      "select": "環境",
+      "none": "環境なし",
+      "noneHint": "グローバル変数のみが解決されます。",
+      "empty": "環境はまだありません。",
+      "variableCount": "変数 {count} 個"
+    },
+    "history": {
+      "clear": "履歴を消去",
+      "empty": "まだ何も送信していません。"
+    },
+    "errors": {
+      "storageUnavailable": "ストレージが利用できないため、コレクションと履歴を読み込めません。リクエストの送信は可能です。",
+      "invalid_url": "このURLは送信できません。",
+      "blocked_host": "このアドレスにはこのデプロイからは到達できません。",
+      "unsupported_protocol": "このプロトコルはまだ対応していません。",
+      "dns_failure": "ホストが見つかりませんでした。",
+      "connection_refused": "接続が拒否されました。",
+      "connection_reset": "接続がリセットされました。",
+      "tls_error": "証明書を検証できませんでした。",
+      "timeout": "リクエストがタイムアウトしました。",
+      "too_many_redirects": "リダイレクトが多すぎます。",
+      "response_too_large": "レスポンスが大きすぎます。",
+      "request_too_large": "リクエストが大きすぎます。",
+      "cancelled": "キャンセルしました。",
+      "rate_limited": "リクエストが多すぎます。少し待ってください。",
+      "agent_unavailable": "ローカルエージェントが起動していません。",
+      "network": "リクエストを完了できませんでした。",
+      "unsupported_auth": "この認証方式はまだ送信できません。",
+      "unsupported_body": "このボディ形式はまだ送信できません。"
+    }
   }
 }

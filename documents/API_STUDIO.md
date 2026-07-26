@@ -289,6 +289,41 @@ multipart bodies (each needs the file store). Both produce a typed refusal
 (`unsupported_auth`, `unsupported_body`) so nothing is ever sent
 unauthenticated or missing the file the user attached.
 
+## The interface
+
+Three panes: sidebar (collections tree, history, environments), tab strip, and a
+builder over a response viewer with a draggable split. Below `lg` the split
+becomes a stack, because a 40% tall pane is unusable and a drag handle nobody
+can hit is furniture.
+
+Decisions worth knowing:
+
+- **Persistence failing does not take the studio down.** The runner needs no
+  database, so a scratch request can still be built and sent while a banner
+  explains why the sidebar is empty.
+- **The dirty dot IS the close button.** An unsaved tab shows a dot where its
+  close control sits and the dot becomes an X on hover, so a tab does not change
+  width as you type and the row never reflows.
+- **Row actions appear on focus, not only on hover.** An action a keyboard user
+  cannot see is an action they do not have.
+- **Tones, not colours.** Components ask for `success` or `danger`; one map
+  turns that into classes built from theme tokens, so both themes stay legible
+  and a palette change reaches the module with everything else.
+- **HTML previews render in an iframe with an empty `sandbox`.** No
+  `allow-same-origin`: the response came from somewhere else and must not be
+  able to read this document, its cookies or its storage.
+- **A scratch tab saves into the first collection** rather than opening a modal
+  in the middle of a debugging session.
+
+### A routing trap this phase uncovered
+
+`/api-studio` 404'd while every other page worked. The i18n middleware matcher
+excluded `api` without a trailing slash, so the exclusion was a PREFIX match and
+any page whose path merely begins with those letters was skipped by the locale
+rewrite. The matcher now says `api/`, the same way it already said `q/`. Worth
+remembering when naming a route: the build, the types and the tests were all
+green while the page was unreachable.
+
 ## Configuration
 
 | Variable | Effect |
@@ -315,8 +350,8 @@ database there is no honest tenant to attribute writes to, and the routes say so
 | 3 | Stores: collections, tabs, environments, history, UI state | **done** |
 | 4 | Routes and API contracts under `/api/api-studio` | **done** |
 | 5 | Request engine: runner, SSRF policy, timings, cancellation | **done** |
-| 6 | Main UI: sidebar, tabs, request builder, response viewer | next |
-| 7 | Auth strategies, cookies, scripts and assertions | |
+| 6 | Main UI: sidebar, tabs, request builder, response viewer | **done** |
+| 7 | Auth strategies, cookies, scripts and assertions | next |
 | 8 | Import (Postman, OpenAPI, HAR, cURL), export, code generation | |
 | 9 | Docs generator, offline queue, search, shortcuts, a11y pass | |
 

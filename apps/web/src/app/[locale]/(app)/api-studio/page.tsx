@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
-import { ComingSoon } from '@/components/coming-soon';
+import { ApiStudio } from '@/modules/api-studio/components/api-studio';
 
 export async function generateMetadata({
   params,
@@ -8,15 +8,16 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: 'nav' });
-  return { title: t('apiStudio'), description: t('descriptions.apiStudio') };
+  const t = await getTranslations({ locale, namespace: 'apiStudio' });
+  return { title: t('title'), description: t('subtitle') };
 }
 
 /**
- * ADYSRE API Studio - the self-hosted HTTP client (collections, environments,
- * request runner, response viewer). This route is the module's entry point; the
- * workspace shell replaces this placeholder once Phase 1 lands. Title and
- * description come from the sidebar entry, so the two can never drift.
+ * ADYSRE API Studio - the self-hosted HTTP client.
+ *
+ * The workspace is a Client Component: it is an editor, and every part of it is
+ * stateful. This server route only sets metadata and mounts it full-bleed, the
+ * same shape Code Studio uses.
  */
 export default async function ApiStudioPage({
   params,
@@ -25,5 +26,5 @@ export default async function ApiStudioPage({
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
-  return <ComingSoon href="/api-studio" />;
+  return <ApiStudio />;
 }

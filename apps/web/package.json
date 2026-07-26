@@ -9,10 +9,11 @@
     "start": "next start -p 3000",
     "lint": "eslint src",
     "typecheck": "tsc --noEmit",
-    "test": "node scripts/generate-template-sources.mjs && tsx --test 'src/**/*.test.ts'",
+    "test": "node scripts/generate-template-sources.mjs && tsx --test 'src/**/*.test.ts' && pnpm test:db",
     "postinstall": "node scripts/generate-template-sources.mjs",
     "gen:section-demos": "node scripts/generate-section-demos.mjs",
-    "gen:template-sources": "node scripts/generate-template-sources.mjs"
+    "gen:template-sources": "node scripts/generate-template-sources.mjs",
+    "test:db": "tsx --conditions=react-server --test 'src/**/*.dbtest.ts'"
   },
   "dependencies": {
     "@adysre/database": "workspace:^",

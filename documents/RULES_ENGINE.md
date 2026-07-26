@@ -468,6 +468,37 @@ engine is migrated on the way in and one written by a NEWER engine is refused
 rather than half-understood. Storage is where a stored rule meets a different
 build, which is what `schemaVersion` was always for.
 
+### The Postgres adapter
+
+`apps/web/src/lib/rules` is the third adapter, and the one the conformance suite
+was written for: it translates the querying into SQL rather than calling the
+shared helpers, so it is the one place the semantics can genuinely diverge. It
+passes all fourteen checks against a real database, plus two of its own.
+
+The versioning is NOT reimplemented there. `nextVersion` and `restoreFrom` come
+from `@adysre/rules-storage`, so what is local to Postgres is only where the
+bytes go.
+
+- **The document is the row's source of truth.** `document` is the whole
+  `RuleDocument`; `name`, `kind`, `status`, `tags` and the rest are PROJECTIONS
+  written from it on save and never edited independently - the same relationship
+  the builder and the renderer have to the tree. They exist so `list` filters,
+  sorts and pages in SQL instead of loading every rule to sort it in memory.
+- **Two ids.** `id` is the UUID primary key every table here carries; `rule_id`
+  is the engine's own identifier, which is what a stored document refers to.
+  Forcing the engine to mint UUIDs would put a database convention inside a
+  package that must run in a browser with no database at all.
+- **Uniqueness is partial.** `WHERE deleted_at IS NULL`, so a soft-deleted row
+  does not occupy its own id forever. A full constraint would make saving a rule
+  whose id was once removed fail here and succeed in memory - exactly the
+  divergence the conformance suite exists to prevent, and it has its own test.
+- **The tenant is bound at construction**, never passed as an argument, so there
+  is no request shape that reaches another tenant's rows. There is a test that
+  one adapter cannot see another tenant's rules.
+- **A save is one transaction.** A rule at version 4 whose versions table
+  stopped at 3 is a history that has silently lost an entry, and nothing
+  downstream could tell.
+
 ## Over HTTP
 
 `@adysre/rules-next` puts the storage contract behind route handlers and server

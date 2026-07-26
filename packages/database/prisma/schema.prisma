@@ -56,6 +56,8 @@ model Organization {
   apiResponses        ApiResponse[]
   apiRequestVersions  ApiRequestVersion[]
   apiCookies          ApiCookie[]
+  rules               Rule[]
+  ruleVersions        RuleVersion[]
 
   @@index([deletedAt])
   @@map("organizations")
@@ -861,4 +863,87 @@ model ApiCookie {
   @@unique([workspaceId, domain, path, name])
   @@index([tenantId, workspaceId, expiresAt])
   @@map("api_studio_cookies")
+}
+
+// ---------------------------------------------------------------------------
+// Business rules — see documents/RULES_ENGINE.md
+// ---------------------------------------------------------------------------
+
+/// A business rule, stored as its AST.
+///
+/// `document` is the whole `RuleDocument` and the single source of truth. Every
+/// other column here is a PROJECTION of it, written from the document on save
+/// and never edited independently — the same relationship the builder, the
+/// renderer and the debugger have to the tree. They exist so `list` can filter,
+/// sort and page in SQL instead of loading every rule to sort it in memory.
+///
+/// Two ids, deliberately. `id` is the UUID primary key every table here carries;
+/// `ruleId` is the engine's own identifier (`r_a1b2c3d4e5`), which is what a
+/// stored document refers to and what a client asks for. Forcing the engine to
+/// mint UUIDs would put a database convention inside a package that must run in
+/// a browser with no database at all.
+model Rule {
+  id        String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  tenantId  String    @map("tenant_id") @db.Uuid
+  /// The engine's id. Unique per tenant, not globally: two tenants importing
+  /// the same rule file must not collide.
+  ruleId    String    @map("rule_id")
+  /// Stable business key, when the host has one. Survives a re-import.
+  key       String?
+  name      String
+  kind      String
+  status    String
+  version   Int
+  priority  Int       @default(0)
+  enabled   Boolean   @default(true)
+  tags      String[]
+  document  Json
+  /// FNV-1a over the logic only, so "did the logic change" is a column rather
+  /// than a document comparison in application code.
+  logicHash String    @map("logic_hash")
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  createdBy String?   @map("created_by") @db.Uuid
+  updatedBy String?   @map("updated_by") @db.Uuid
+  deletedAt DateTime? @map("deleted_at")
+
+  organization Organization  @relation(fields: [tenantId], references: [id])
+  versions     RuleVersion[]
+
+  /// Uniqueness of `ruleId` and `key` is enforced by PARTIAL unique indexes
+  /// (`WHERE deleted_at IS NULL`) created in the migration, which Prisma's
+  /// schema cannot express. A full unique constraint would let a soft-deleted
+  /// row keep occupying its own id forever, so saving a rule whose id was once
+  /// removed would fail — and the in-memory adapter, which the conformance
+  /// suite holds every adapter to, treats that as an ordinary new rule.
+  @@index([tenantId, ruleId])
+  /// The list query: a tenant's live rules, newest first.
+  @@index([tenantId, deletedAt, updatedAt])
+  @@index([tenantId, kind])
+  @@index([tenantId, status])
+  @@map("rules")
+}
+
+/// Every version of a rule, including the current one.
+///
+/// Append-only. A restore writes a NEW version holding the old content rather
+/// than deleting the ones after it: a history that can be rewritten is a
+/// history nobody can be asked to trust, and "who changed this, and when" is
+/// the question a version list exists to answer.
+model RuleVersion {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  tenantId  String   @map("tenant_id") @db.Uuid
+  ruleId    String   @map("rule_id") @db.Uuid
+  version   Int
+  document  Json
+  logicHash String   @map("logic_hash")
+  createdAt DateTime @default(now()) @map("created_at")
+  createdBy String?  @map("created_by") @db.Uuid
+
+  organization Organization @relation(fields: [tenantId], references: [id])
+  rule         Rule         @relation(fields: [ruleId], references: [id], onDelete: Cascade)
+
+  @@unique([ruleId, version])
+  @@index([tenantId, ruleId])
+  @@map("rule_versions")
 }

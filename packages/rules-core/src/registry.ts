@@ -195,6 +195,18 @@ export function createRegistry(...sets: readonly PluginSet[]): Registry {
 }
 
 /**
+ * What a presence check needs: which plugins EXIST, not what they do.
+ *
+ * Narrower than `Registry` on purpose. An importer holds the ids a rule refers
+ * to and wants to know whether this deployment has them; asking it to carry a
+ * whole registry to answer that would make the check harder to use than to skip.
+ */
+export interface PluginPresence {
+  operators: ReadonlyMap<string, unknown>;
+  functions: ReadonlyMap<string, unknown>;
+}
+
+/**
  * Which plugins a rule needs that a registry does not have.
  *
  * The check a host runs before saving or importing: a rule referring to an
@@ -203,7 +215,7 @@ export function createRegistry(...sets: readonly PluginSet[]): Registry {
  * mystery in production.
  */
 export function missingPlugins(
-  registry: Registry,
+  registry: PluginPresence,
   required: { operators: readonly string[]; functions: readonly string[] },
 ): { operators: string[]; functions: string[] } {
   return {

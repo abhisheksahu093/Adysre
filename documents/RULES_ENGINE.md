@@ -30,7 +30,7 @@ longer matches the tree, or a tree that cannot express what somebody typed.
 | --- | --- | --- |
 | `@adysre/rules-types` | the vocabulary: AST, execution contracts, plugin interfaces | **built** |
 | `@adysre/rules-core` | builders, traversal, validation, serialisation, the registry, the built-in plugins, the executor. Zero dependencies | **built** |
-| `@adysre/rules-parser` | importers: JSON, and other engines' formats | planned |
+| `@adysre/rules-parser` | importers: this AST, jsonLogic, json-rules-engine, query filters | **built** |
 | `@adysre/rules-renderer` | AST to natural language, and other output formats | **built** |
 | `@adysre/rules-react` | headless hooks and state for a builder | planned |
 | `@adysre/rules-ui` | the visual builder, shadcn/ui and Tailwind | planned |
@@ -250,6 +250,46 @@ sentence while keeping its operands identifiable. That is the counterpart to
 "no English in a plugin": the words have to live somewhere, and somewhere is
 one replaceable record.
 
+## Importing
+
+| Format | Recognised by |
+| --- | --- |
+| `ast` | `schemaVersion` and `when`: this engine's own |
+| `json-rules-engine` | a `conditions` wrapper |
+| `json-logic` | one known operator key |
+| `mongo` | field names and `$` keywords: saved searches, segments, filters |
+
+Tried in that order. A query filter is last because "an object whose keys are
+field names" describes almost anything, and a permissive detector that runs
+first is always right and never correct.
+
+**Nothing throws, and nothing imports halfway.** Diagnostics carry the path into
+the SOURCE document, because the person fixing it is looking at their file
+rather than at ours. And if any part of a rule cannot be converted, the whole
+import fails: a rule that quietly does less than the one it came from is
+discovered in production, while an import that refused is discovered in the
+dialog.
+
+Between those sits the distinction the importers are mostly about:
+
+- An **exact** equivalent converts silently.
+- A **near** equivalent converts with a WARNING naming the difference.
+  jsonLogic's `{"!!": x}` becomes `isNotEmpty`, and the warning says that
+  jsonLogic counts `0` and `false` as false while this engine counts them as
+  values somebody chose.
+- **No** equivalent is an ERROR. `$options: "i"` is refused rather than dropped,
+  because dropping it changes which values match.
+
+Some conversions dodge the middle case by being less obvious. `{"<": [1, x, 10]}`
+is exclusive, so it becomes two conditions rather than a `between` that is
+nearly right; a json-rules-engine `priority` is negated, because that engine runs
+the highest first and this one runs the lowest, so the number changes in order
+that the order does not.
+
+Every import is validated and, when a registry is given, checked against it. A
+rule referring to an operator this deployment lacks is refused where the message
+is clear rather than where it is a mystery.
+
 ## Rule kinds
 
 `validation`, `filter`, `transformation`, `workflow`, `calculation`,
@@ -265,8 +305,8 @@ change to the AST rather than a plugin.
 | 2 | Plugin registry and the built-in operator and function set | **done** |
 | 3 | Executor: evaluation, short-circuiting, tracing, timeouts | **done** |
 | 4 | Natural-language renderer | **done** |
-| 5 | Parser and importers | next |
-| 6 | Headless React state (`rules-react`) | |
+| 5 | Parser and importers | **done** |
+| 6 | Headless React state (`rules-react`) | next |
 | 7 | The visual builder (`rules-ui`) | |
 | 8 | Execution debugger (`rules-devtools`) | |
 | 9 | Storage adapters and versioning | |

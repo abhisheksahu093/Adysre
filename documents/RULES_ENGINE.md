@@ -35,7 +35,7 @@ longer matches the tree, or a tree that cannot express what somebody typed.
 | `@adysre/rules-react` | headless store, history and hooks for a builder | **built** |
 | `@adysre/rules-ui` | the visual builder, shadcn/ui and Tailwind | **built** |
 | `@adysre/rules-next` | Next.js adapters: route handlers, server actions | planned |
-| `@adysre/rules-devtools` | the execution debugger | planned |
+| `@adysre/rules-devtools` | the execution debugger | **built** |
 | `@adysre/rules-theme` | design tokens for the builder | planned |
 | `@adysre/rules-playground` | a runnable sandbox and the examples | planned |
 
@@ -380,6 +380,49 @@ every reader of the app embedding it.
 Every part is exported, not just the whole. A host that wants the condition tree
 inside its own form should not have to take the toolbar with it.
 
+## The debugger
+
+`@adysre/rules-devtools` turns the trace into an answer. It exists because a
+trace is the right thing to PRODUCE and the wrong thing to read: twelve events
+in completion order is a list nobody works through when a business user is
+waiting.
+
+**It names the row that decided, and refuses to when none did.** `all` matching
+means every child matched, and pointing at the last of them would be a debugger
+asserting something false about a rule somebody is about to change. So a
+decision carries a reason as well as a node - `shortCircuit` and `errored` name
+a row, `collective` and `empty` admit that nothing single did - and a caller can
+ask which it was rather than inferring it from prose.
+
+A negated group is read through its COMBINATOR's verdict rather than its
+reported one. `not(any)` reports the opposite of what its children produced, so
+searching for "the child that made this fail" against the reported verdict finds
+the wrong child, or none, on every negated group in the tree.
+
+**It runs the rule twice.** Short-circuiting is right, and it means the trace of
+a real run is a trace of part of the rule: a condition with a typo'd field sits
+behind a passing sibling, never runs, and never reports. So the session also
+runs with `shortCircuit: false` - which is what that option is for - and reports
+the difference. The finding that matters is a hidden error: a rule answering
+`matched` only because the fast path stepped over a broken branch is a rule that
+changes its answer the day somebody reorders a group, and nothing else in the
+system would ever say so.
+
+**The trace goes back into the shape of the rule**, and from the AST rather than
+from the events, because only the AST is complete. A skipped branch leaves no
+event, so a tree assembled from events alone would omit exactly the nodes a
+debugger exists to ask about; `notRun` has to be a visible state and not an
+absence. `treeFromTrace` covers the other case - a stored outcome whose rule is
+gone - and it is the one thing in the system that depends on children being
+recorded before parents.
+
+**Values are shown, not described.** `previewValue` is JSON with its quotes, not
+the renderer's prose: the renderer writes `1,000` for somebody checking a
+sentence reads correctly, and a debugger answering "what did the operator
+receive" must not add a character that was never in the data. Capped in length,
+because a field can hold ten thousand entries and the rule most worth inspecting
+should not be the one that hangs the panel.
+
 ## Rule kinds
 
 `validation`, `filter`, `transformation`, `workflow`, `calculation`,
@@ -398,8 +441,8 @@ change to the AST rather than a plugin.
 | 5 | Parser and importers | **done** |
 | 6 | Headless React state (`rules-react`) | **done** |
 | 7 | The visual builder (`rules-ui`) | **done** |
-| 8 | Execution debugger (`rules-devtools`) | next |
-| 9 | Storage adapters and versioning | |
+| 8 | Execution debugger (`rules-devtools`) | **done** |
+| 9 | Storage adapters and versioning | next |
 | 10 | Next.js adapters | |
 | 11 | Themes | |
 | 12 | Playground and examples | |

@@ -1,0 +1,23 @@
+{
+  "extends": "@adysre/config/tsconfig/base",
+  "compilerOptions": {
+    /*
+     * A browser package, unlike every other `rules-*`: the engine, the parser
+     * and the renderer run anywhere, and this one draws.
+     */
+    "lib": ["DOM", "DOM.Iterable", "ES2022"],
+    /*
+     * `react-jsx` rather than `preserve`, because this package is framework-free
+     * React and its build is `tsc` alone. Leaving JSX in the output would make
+     * the published files unusable by anything that is not Next.js.
+     */
+    "jsx": "react-jsx",
+    /*
+     * `adysre` is consumed through its source exports, and that package's
+     * internal imports carry real source extensions. Same reason as `apps/web`;
+     * see documents/NPM_LIBRARY.md §3.
+     */
+    "allowImportingTsExtensions": true
+  },
+  "include": ["src"]
+}

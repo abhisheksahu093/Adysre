@@ -7,6 +7,11 @@
    silently collapse to content height. */
 @source '../../../../packages/ui/src';
 
+/* Same reason, for the rule builder: `@adysre/rules-ui` is a workspace package
+   consumed as source, and its utilities (the row borders, the ring on a
+   selected condition) exist nowhere else in this app's own files. */
+@source '../../../../packages/rules-ui/src';
+
 /* Dark mode is class-based (next-themes toggles `.dark` on <html>). */
 @custom-variant dark (&:where(.dark, .dark *));
 

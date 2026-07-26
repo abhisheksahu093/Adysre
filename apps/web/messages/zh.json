@@ -102,7 +102,8 @@
       "codes": "在一个页面上生成二维码和条形码（EAN、UPC、Code 128），支持实时预览和 PNG/SVG 导出。",
       "codeStudio": "在浏览器 IDE 中编写 HTML、CSS、JS、TypeScript、React 和 Vue，并实时预览。",
       "aiTools": "在浏览器中压缩、转换、调整图像大小，读取二维码和条形码等。",
-      "apiStudio": "构建、发送和测试 HTTP 请求，支持集合、环境变量和历史记录。完全自托管。"
+      "apiStudio": "构建、发送和测试 HTTP 请求，支持集合、环境变量和历史记录。完全自托管。",
+      "rules": "可视化构建业务规则。条件、结果、自然语言预览和实时判定。"
     },
     "palettes": "调色板",
     "gradients": "渐变",
@@ -135,7 +136,8 @@
     "codeStudio": "代码工作室",
     "customize": "定制你的项目",
     "aiTools": "图像与实用工具",
-    "apiStudio": "API 工作室"
+    "apiStudio": "API 工作室",
+    "rules": "业务规则"
   },
   "tools": {
     "qr": {
@@ -3153,5 +3155,13 @@
       "clearResponse": "清空响应",
       "showShortcuts": "键盘快捷键"
     }
+  },
+  "rules": {
+    "title": "业务规则",
+    "subtitle": "ADYSRE 规则引擎的可视化构建器。编辑规则树，语句、判定和 JSON 随之更新。",
+    "json": "规则的 JSON",
+    "showJson": "显示 JSON",
+    "hideJson": "隐藏 JSON",
+    "jsonHint": "这就是完整的规则。构建器、预览和执行器都是它的投影。"
   }
 }

@@ -102,7 +102,8 @@
       "codes": "Generate QR codes and barcodes (EAN, UPC, Code 128) on one page, with live preview and PNG/SVG export.",
       "codeStudio": "Write HTML, CSS, JS, TypeScript, React and Vue with a live preview, in a browser IDE.",
       "aiTools": "Compress, convert, resize, read QR and barcodes and more, entirely in your browser.",
-      "apiStudio": "Build, send and test HTTP requests, with collections, environments and history. Self-hosted."
+      "apiStudio": "Build, send and test HTTP requests, with collections, environments and history. Self-hosted.",
+      "rules": "Build business rules visually. Conditions, outcomes, plain-English preview and a live verdict."
     },
     "palettes": "Color Palettes",
     "gradients": "Gradients",
@@ -135,7 +136,8 @@
     "codeStudio": "Code Studio",
     "customize": "Customize your project",
     "aiTools": "Image & Utility Tools",
-    "apiStudio": "API Studio"
+    "apiStudio": "API Studio",
+    "rules": "Business Rules"
   },
   "tools": {
     "qr": {
@@ -3153,5 +3155,13 @@
       "clearResponse": "Clear the response",
       "showShortcuts": "Keyboard shortcuts"
     }
+  },
+  "rules": {
+    "title": "Business Rules",
+    "subtitle": "A visual builder over the ADYSRE rules engine. Edit the tree, and the sentence, the verdict and the JSON follow.",
+    "json": "The rule, as JSON",
+    "showJson": "Show JSON",
+    "hideJson": "Hide JSON",
+    "jsonHint": "This is the whole rule. The builder, the preview and the executor are all projections of it."
   }
 }

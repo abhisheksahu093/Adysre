@@ -33,7 +33,7 @@ longer matches the tree, or a tree that cannot express what somebody typed.
 | `@adysre/rules-parser` | importers: this AST, jsonLogic, json-rules-engine, query filters | **built** |
 | `@adysre/rules-renderer` | AST to natural language, and other output formats | **built** |
 | `@adysre/rules-react` | headless store, history and hooks for a builder | **built** |
-| `@adysre/rules-ui` | the visual builder, shadcn/ui and Tailwind | planned |
+| `@adysre/rules-ui` | the visual builder, shadcn/ui and Tailwind | **built** |
 | `@adysre/rules-next` | Next.js adapters: route handlers, server actions | planned |
 | `@adysre/rules-devtools` | the execution debugger | planned |
 | `@adysre/rules-theme` | design tokens for the builder | planned |
@@ -323,6 +323,63 @@ Judgement calls that shape how it feels to use:
   useless for a form, so each one resolves back to the node that shows it.
 - **A field provider that fails does not blank the picker.**
 
+## The builder
+
+`@adysre/rules-ui` draws that state. It holds none of its own beyond what a text
+box needs between keystrokes, so undo, per-node validation and dirtiness behave
+exactly as they do for a host driving the store without a screen.
+
+**Nothing about it is hard-coded per operator.** `arity` decides how many value
+boxes a condition draws, `accepts` decides which operators a field is offered,
+`returns` types a function operand, `requiresTarget` decides whether an action
+shows a target. Registering `withinBusinessHours` puts it in the right rows with
+the right number of boxes without the builder hearing about it, which is the
+whole point of the plugin contracts carrying that metadata rather than the
+executor alone.
+
+**The decisions live outside the components** - which operators fit a type, how
+many boxes to draw, what an empty box means - in plain modules beside them. Same
+reason the store has no React in it: a decision reachable only by rendering
+something is a decision nobody tests. What is left for a renderer to prove is
+that the recursion survives a real document, which is one smoke test.
+
+Judgement calls that shape how it feels to use:
+
+- **An empty box is `null`, for every type.** Not `""`, not `0`. A box nobody
+  filled in is a value nobody chose, and the validator can see the condition is
+  incomplete. `isEmpty` is how somebody says "has no value" on purpose.
+- **A typed box never guesses; a list always does.** A string field holding `3`
+  stays text, because it was declared. A list has nothing to consult, so
+  `gold, 3` becomes `["gold", 3]`.
+- **A `null` literal types as `any`.** Every new condition starts as one, and
+  reading it as the `null` TYPE would leave a fresh row offering almost nothing.
+- **An unknown operator still draws, and keeps its values.** The row says the
+  operator is missing rather than silently rewriting the rule to whichever one
+  happened to be first in the list.
+- **Switching an operand's source starts empty.** A path is not a variable name,
+  and a plausible wrong value is worse than an obviously empty slot.
+- **Reordering is buttons, not drag and drop.** A tree is reordered from the
+  keyboard as often as with a mouse.
+- **The preview is rendered from segments**, not from `.text`, so the field being
+  edited can be highlighted and a click on a line selects the node it describes.
+- **The clock is fixed at mount**, or passed in. A preview whose `today` advanced
+  while somebody wrote a condition about it would answer differently by the end
+  of the sentence.
+
+English lives in `BuilderLabels`, the counterpart to the renderer's `Phrases`:
+plugins carry `labelKey` and never a label, so the words have to live somewhere,
+and somewhere is one replaceable record. Overrides merge, so a host adding a
+label for its own operator does not lose the twenty-seven that shipped.
+
+**The engine ships in English only.** The record is a seam, not a promise: a host
+passes `labels` and gets another language, but `@adysre/rules-*` carries no i18n
+dependency and no second catalogue to keep in step. That is a deliberate line
+around the ecosystem, whose audience is developers authoring rules rather than
+every reader of the app embedding it.
+
+Every part is exported, not just the whole. A host that wants the condition tree
+inside its own form should not have to take the toolbar with it.
+
 ## Rule kinds
 
 `validation`, `filter`, `transformation`, `workflow`, `calculation`,
@@ -340,8 +397,8 @@ change to the AST rather than a plugin.
 | 4 | Natural-language renderer | **done** |
 | 5 | Parser and importers | **done** |
 | 6 | Headless React state (`rules-react`) | **done** |
-| 7 | The visual builder (`rules-ui`) | next |
-| 8 | Execution debugger (`rules-devtools`) | |
+| 7 | The visual builder (`rules-ui`) | **done** |
+| 8 | Execution debugger (`rules-devtools`) | next |
 | 9 | Storage adapters and versioning | |
 | 10 | Next.js adapters | |
 | 11 | Themes | |

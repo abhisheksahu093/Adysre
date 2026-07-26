@@ -149,6 +149,22 @@ export const historyClearSchema = z.object({
   includeFavorites: z.boolean().default(false),
 });
 
+/**
+ * Clearing cookies. Naming one deletes it; omitting the name empties the jar,
+ * which are different enough operations that the body has to say which.
+ */
+export const cookieClearSchema = z.object({
+  workspaceId: idSchema,
+  cookie: z
+    .object({
+      domain: z.string().min(1).max(255),
+      path: z.string().min(1).max(255),
+      name: z.string().min(1).max(255),
+    })
+    .nullable()
+    .default(null),
+});
+
 export type WorkspaceCreateInput = z.infer<typeof workspaceCreateSchema>;
 export type CollectionCreateInput = z.infer<typeof collectionCreateSchema>;
 export type NodeCreateInput = z.infer<typeof nodeCreateSchema>;

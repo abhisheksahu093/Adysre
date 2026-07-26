@@ -3097,7 +3097,8 @@
       "warnings": "インポートしました。次は取り込めていません:"
     },
     "export": {
-      "title": "コレクションをエクスポート"
+      "title": "コレクションをエクスポート",
+      "docs": "ドキュメントを書き出す"
     },
     "codegen": {
       "title": "コード",
@@ -3119,6 +3120,38 @@
         "dart": "Dart",
         "ruby": "Ruby"
       }
+    },
+    "cookies": {
+      "title": "クッキー",
+      "description": "このワークスペースがテスト中に保存したクッキー。",
+      "empty": "保存されたクッキーはありません。",
+      "loading": "クッキーを読み込み中",
+      "path": "パス",
+      "expires": "有効期限",
+      "session": "セッション終了時",
+      "delete": "{name} を削除",
+      "clearAll": "すべて削除",
+      "confirmClear": "はい、すべて削除します",
+      "maskedHint": "値は暗号化されており、ここには表示されません。"
+    },
+    "shortcuts": {
+      "title": "キーボードショートカット",
+      "sendRequest": "リクエストを送信",
+      "saveRequest": "リクエストを保存",
+      "commandPalette": "コマンドパレット",
+      "search": "検索",
+      "toggleSidebar": "サイドバーの表示切り替え",
+      "newTab": "新しいタブ",
+      "duplicateTab": "タブを複製",
+      "closeTab": "タブを閉じる",
+      "reopenTab": "閉じたタブを開く",
+      "nextTab": "次のタブ",
+      "previousTab": "前のタブ",
+      "focusUrl": "アドレスバーへ移動",
+      "toggleEnvironment": "環境を切り替え",
+      "copyAsCurl": "cURLとしてコピー",
+      "clearResponse": "レスポンスを消去",
+      "showShortcuts": "キーボードショートカット"
     }
   }
 }

@@ -3097,7 +3097,8 @@
       "warnings": "Imported, with these gaps:"
     },
     "export": {
-      "title": "Export collection"
+      "title": "Export collection",
+      "docs": "Export documentation"
     },
     "codegen": {
       "title": "Code",
@@ -3119,6 +3120,38 @@
         "dart": "Dart",
         "ruby": "Ruby"
       }
+    },
+    "cookies": {
+      "title": "Cookies",
+      "description": "Cookies this workspace has stored while testing.",
+      "empty": "No cookies stored.",
+      "loading": "Loading cookies",
+      "path": "Path",
+      "expires": "Expires",
+      "session": "When the session ends",
+      "delete": "Delete {name}",
+      "clearAll": "Clear all",
+      "confirmClear": "Yes, clear them all",
+      "maskedHint": "Values are encrypted and are not shown here."
+    },
+    "shortcuts": {
+      "title": "Keyboard shortcuts",
+      "sendRequest": "Send request",
+      "saveRequest": "Save request",
+      "commandPalette": "Command palette",
+      "search": "Search",
+      "toggleSidebar": "Show or hide the sidebar",
+      "newTab": "New tab",
+      "duplicateTab": "Duplicate tab",
+      "closeTab": "Close tab",
+      "reopenTab": "Reopen closed tab",
+      "nextTab": "Next tab",
+      "previousTab": "Previous tab",
+      "focusUrl": "Focus the address bar",
+      "toggleEnvironment": "Switch environment",
+      "copyAsCurl": "Copy as cURL",
+      "clearResponse": "Clear the response",
+      "showShortcuts": "Keyboard shortcuts"
     }
   }
 }

@@ -419,6 +419,26 @@ same call the Send button does rather than carrying `{{token}}` for the reader
 to puzzle out. Each language has its own escaping, because one shared escaper is
 how a generator ends up emitting a string that breaks in Ruby but not in Go.
 
+## Persistence of work in progress
+
+Tabs and their drafts persist to `localStorage`, which is what makes "remember
+tabs after refresh", draft recovery and crash recovery ONE mechanism rather than
+three: a reload, a crash and a closed laptop all look the same to a store that
+writes as it goes. In-flight responses deliberately do not persist - a response
+belongs to a moment, and restoring one beside a request edited since would be
+worse than an empty pane.
+
+A draft can hold a literal credential someone typed into the auth tab, and that
+draft is written to storage. It is the trade every API client makes, and the
+alternative is losing an hour of work to a refresh. What never goes there is
+what the module encrypts: environment secrets and cookie values live on the
+server and resolve at send time.
+
+**Not built:** an offline mutation queue. Collections, environments and history
+are read and written through the API, so editing while the server is unreachable
+is not supported; the studio stays usable for building and sending requests
+(the runner needs no database), and says so in a banner.
+
 ## Configuration
 
 | Variable | Effect |
@@ -449,7 +469,7 @@ database there is no honest tenant to attribute writes to, and the routes say so
 | 7 | Auth strategies (digest, OAuth 2, JWT, AWS) and the cookie jar | **done** |
 | 8 | Assertions, sandboxed scripts and the tests pane | **done** |
 | 9 | Import, export, code generation and the environment editor | **done** |
-| 10 | Cookie editor, docs generator, offline queue, search, a11y pass | next |
+| 10 | Cookie editor, documentation generator, draft persistence, shortcut reference | **done** |
 
 ## Phase 1 file map
 

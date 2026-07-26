@@ -6,6 +6,7 @@ import type {
   ApiNode,
   ApiRequestNode,
   ApiWorkspace,
+  CookieRecord,
   HistoryEntry,
   RequestDefinition,
 } from '../types';
@@ -145,6 +146,15 @@ export const apiStudioClient = {
     responseBytes: number;
     request: RequestDefinition;
   }) => call<HistoryEntry>('/history', json(input)),
+
+  listCookies: (workspaceId: string) =>
+    call<CookieRecord[]>(`/cookies?workspaceId=${encodeURIComponent(workspaceId)}`),
+
+  clearCookies: (workspaceId: string, cookie?: { domain: string; path: string; name: string }) =>
+    call<{ removed: number }>('/cookies', {
+      method: 'DELETE',
+      body: JSON.stringify({ workspaceId, cookie: cookie ?? null }),
+    }),
 
   clearHistory: (workspaceId: string) =>
     call<{ removed: number }>('/history', {

@@ -1,10 +1,11 @@
 'use client';
 
 import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 import type { ApiRequestNode, ApiTab, ClosedTab, RequestDefinition } from '../types';
 import type { Assertion } from '../types';
 import { EMPTY_REQUEST } from '../constants/defaults';
-import { MAX_CLOSED_TAB_STACK, MAX_OPEN_TABS } from '../constants/limits';
+import { MAX_CLOSED_TAB_STACK, MAX_OPEN_TABS, STORAGE_KEYS } from '../constants/limits';
 import { createId } from '../utils/ids';
 import { paramsFromUrl, pathVariablesFromUrl, urlWithParams } from '../utils/url';
 
@@ -19,6 +20,19 @@ import { paramsFromUrl, pathVariablesFromUrl, urlWithParams } from '../utils/url
  * The URL and the params table are two views of one thing, so `updateDraft`
  * keeps them in step: editing the address rebuilds the table, editing the table
  * rebuilds the address. Neither can silently drift from the other.
+ *
+ * Tabs and their drafts PERSIST. That is what makes "remember tabs after
+ * refresh", draft recovery and crash recovery one mechanism rather than three:
+ * a reload, a crash and closing the laptop all look the same to a store that
+ * writes as it goes. In-flight responses are deliberately not persisted - a
+ * response is about a moment, and restoring one next to a request that has been
+ * edited since would be worse than an empty pane.
+ *
+ * A draft can contain a literal credential someone typed into the auth tab, and
+ * that draft is written to `localStorage`. It is the same trade every API
+ * client makes: the alternative is losing an hour of work to a refresh. What
+ * does NOT go there is anything the module encrypts - environment secrets live
+ * on the server and resolve at send time.
  */
 
 interface TabsState {
@@ -94,7 +108,9 @@ function sortPinned(tabs: ApiTab[]): ApiTab[] {
   return [...tabs].sort((a, b) => Number(b.pinned) - Number(a.pinned));
 }
 
-export const useTabsStore = create<TabsState>((set, get) => ({
+export const useTabsStore = create<TabsState>()(
+  persist(
+    (set, get) => ({
   tabs: [],
   activeTabId: null,
   closed: [],
@@ -243,7 +259,28 @@ export const useTabsStore = create<TabsState>((set, get) => ({
   },
   dirtyTabs: () => get().tabs.filter((tab) => tab.dirty),
   hasUnsavedChanges: () => get().tabs.some((tab) => tab.dirty),
-}));
+    }),
+    {
+      name: STORAGE_KEYS.tabs,
+      // Only what a person would be sad to lose. A response, a spinner and an
+      // abort handle all belong to a moment that has passed.
+      partialize: (state) => ({
+        tabs: state.tabs.map((tab) => ({ ...tab, responseId: null })),
+        activeTabId: state.activeTabId,
+        closed: state.closed,
+      }),
+      merge: (persisted, current) => {
+        const stored = persisted as Partial<TabsState> | undefined;
+        return {
+          ...current,
+          tabs: Array.isArray(stored?.tabs) ? stored.tabs : [],
+          activeTabId: typeof stored?.activeTabId === 'string' ? stored.activeTabId : null,
+          closed: Array.isArray(stored?.closed) ? stored.closed : [],
+        };
+      },
+    },
+  ),
+);
 
 /** Cycle the active tab, wrapping at both ends. */
 function step(

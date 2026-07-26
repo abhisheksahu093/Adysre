@@ -2,9 +2,27 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { AlertTriangle, Code2, Download, PanelLeftClose, PanelLeftOpen, RefreshCw, Upload } from 'lucide-react';
+import {
+  AlertTriangle,
+  Code2,
+  Cookie,
+  Download,
+  FileText,
+  Keyboard,
+  PanelLeftClose,
+  PanelLeftOpen,
+  RefreshCw,
+  Upload,
+} from 'lucide-react';
 import { Button, Select, cn } from 'adysre';
-import type { ApiTab, Assertion, ExecutionRequest, HistoryEntry, RequestDefinition } from '../types';
+import type {
+  ApiTab,
+  Assertion,
+  CookieRecord,
+  ExecutionRequest,
+  HistoryEntry,
+  RequestDefinition,
+} from '../types';
 import { EMPTY_REQUEST } from '../constants/defaults';
 import {
   useCollectionsStore,
@@ -20,8 +38,11 @@ import { useBootstrap } from '../hooks/use-bootstrap';
 import { useSend } from '../hooks/use-send';
 import { prepareRequest } from '../utils/prepare';
 import { exportPostman } from '../services/export/postman';
+import { exportMarkdown } from '../services/export/markdown';
 import type { ImportedCollection } from '../services/import/postman';
 import { CodeDialog } from './dialogs/code-dialog';
+import { CookieDialog } from './dialogs/cookie-dialog';
+import { ShortcutsDialog } from './dialogs/shortcuts-dialog';
 import { EnvironmentDialog } from './dialogs/environment-dialog';
 import { ImportDialog } from './dialogs/import-dialog';
 import { Sidebar } from './sidebar/sidebar';
@@ -73,7 +94,13 @@ export function ApiStudio() {
   // Subscribing to the node map is what re-renders the tree: the selector below
   // reads through the store's memo, which is keyed on this exact object.
   const nodeMap = useCollectionsStore((s) => s.nodes);
-  const [dialog, setDialog] = useState<'import' | 'code' | 'environment' | null>(null);
+  const [dialog, setDialog] = useState<
+    'import' | 'code' | 'environment' | 'cookies' | 'shortcuts' | null
+  >(null);
+  const [cookies, setCookies] = useState<{ list: CookieRecord[]; loading: boolean }>({
+    list: [],
+    loading: false,
+  });
   const [snippet, setSnippet] = useState<{ request: ExecutionRequest | null; problem: string | null }>({
     request: null,
     problem: null,
@@ -251,8 +278,8 @@ export function ApiStudio() {
     setDialog('code');
   }, []);
 
-  /** Download the first collection as a Postman v2.1 file. */
-  const exportCollection = useCallback(() => {
+  /** Download the first collection, as a Postman file or as documentation. */
+  const exportCollection = useCallback((format: 'postman' | 'markdown') => {
     const state = useCollectionsStore.getState();
     const collection = state.collections[0];
     if (!collection) return;
@@ -260,14 +287,50 @@ export function ApiStudio() {
     const nodes = Object.values(state.nodes).filter(
       (node) => node.collectionId === collection.id && node.deletedAt === null,
     );
-    const blob = new Blob([exportPostman(collection, nodes)], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
+    const slug = collection.name.replace(/[^\w.-]+/g, '-').toLowerCase() || 'collection';
 
+    const [content, type, filename] =
+      format === 'postman'
+        ? [exportPostman(collection, nodes), 'application/json', `${slug}.postman_collection.json`]
+        : [exportMarkdown(collection, nodes), 'text/markdown', `${slug}.md`];
+
+    const url = URL.createObjectURL(new Blob([content], { type }));
     const link = document.createElement('a');
     link.href = url;
-    link.download = `${collection.name.replace(/[^\w.-]+/g, '-').toLowerCase()}.postman_collection.json`;
+    link.download = filename;
     link.click();
     URL.revokeObjectURL(url);
+  }, []);
+
+  /** Open the jar, loading it first: it lives on the server, not in a store. */
+  const openCookies = useCallback(async () => {
+    const workspaceId = useWorkspaceStore.getState().activeWorkspaceId;
+    setDialog('cookies');
+    if (!workspaceId) return;
+
+    setCookies({ list: [], loading: true });
+    const result = await apiStudioClient.listCookies(workspaceId);
+    setCookies({ list: result.ok ? result.data : [], loading: false });
+  }, []);
+
+  const deleteCookie = useCallback(async (cookie: CookieRecord | null) => {
+    const workspaceId = useWorkspaceStore.getState().activeWorkspaceId;
+    if (!workspaceId) return;
+
+    setCookies((current) => ({
+      list: cookie
+        ? current.list.filter(
+            (entry) =>
+              !(entry.name === cookie.name && entry.domain === cookie.domain && entry.path === cookie.path),
+          )
+        : [],
+      loading: false,
+    }));
+
+    await apiStudioClient.clearCookies(
+      workspaceId,
+      cookie ? { domain: cookie.domain, path: cookie.path, name: cookie.name } : undefined,
+    );
   }, []);
 
   /** A pasted cURL command becomes a scratch tab, ready to send. */
@@ -359,6 +422,9 @@ export function ApiStudio() {
       } else if (key === 'b') {
         event.preventDefault();
         useLayoutStore.getState().toggleSidebar();
+      } else if (key === '/') {
+        event.preventDefault();
+        setDialog('shortcuts');
       }
     }
 
@@ -400,8 +466,17 @@ export function ApiStudio() {
           <HeaderAction label={t('import.title')} onClick={() => setDialog('import')}>
             <Upload className="h-4 w-4" aria-hidden />
           </HeaderAction>
-          <HeaderAction label={t('export.title')} onClick={exportCollection}>
+          <HeaderAction label={t('export.title')} onClick={() => exportCollection('postman')}>
             <Download className="h-4 w-4" aria-hidden />
+          </HeaderAction>
+          <HeaderAction label={t('export.docs')} onClick={() => exportCollection('markdown')}>
+            <FileText className="h-4 w-4" aria-hidden />
+          </HeaderAction>
+          <HeaderAction label={t('cookies.title')} onClick={() => void openCookies()}>
+            <Cookie className="h-4 w-4" aria-hidden />
+          </HeaderAction>
+          <HeaderAction label={t('shortcuts.title')} onClick={() => setDialog('shortcuts')}>
+            <Keyboard className="h-4 w-4" aria-hidden />
           </HeaderAction>
           <HeaderAction label={t('codegen.title')} onClick={openCode}>
             <Code2 className="h-4 w-4" aria-hidden />
@@ -458,6 +533,17 @@ export function ApiStudio() {
         request={snippet.request}
         problem={snippet.problem}
       />
+
+      <CookieDialog
+        open={dialog === 'cookies'}
+        onClose={() => setDialog(null)}
+        cookies={cookies.list}
+        loading={cookies.loading}
+        onDelete={(cookie) => void deleteCookie(cookie)}
+        onClearAll={() => void deleteCookie(null)}
+      />
+
+      <ShortcutsDialog open={dialog === 'shortcuts'} onClose={() => setDialog(null)} />
 
       <EnvironmentDialog
         open={dialog === 'environment'}

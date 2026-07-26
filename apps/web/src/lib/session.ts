@@ -14,10 +14,10 @@ export interface SessionUser {
   /**
    * Org role - what you may administer (Owner/Admin/Member).
    * Deliberately separate from `accessLevel`: an Owner on the free plan still
-   * can't copy premium prompts, and a Member on a Team plan can.
+   * can't take premium templates, and a Member on a Team plan can.
    */
   role: string;
-  /** What the user has paid for. Drives the prompt paywall. */
+  /** What the user has paid for. Drives the premium paywall. */
   accessLevel: AccessLevel;
 }
 

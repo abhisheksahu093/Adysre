@@ -167,6 +167,7 @@ export const TEMPLATE_THEMES = [
   'education',
   'hardware',
   'hospitality',
+  'portfolio',
 ] as const;
 export type TemplateThemeId = (typeof TEMPLATE_THEMES)[number];
 

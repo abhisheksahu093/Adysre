@@ -9,6 +9,9 @@ out/
 build/
 *.tsbuildinfo
 
+# generated (rebuilt on install/dev/build/test; never committed, keeps the repo light)
+apps/web/src/data/templates/generated/
+
 # turbo
 .turbo/
 

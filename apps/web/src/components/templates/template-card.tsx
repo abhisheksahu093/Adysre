@@ -2,9 +2,15 @@
 
 import { useTranslations } from 'next-intl';
 import { Files, Lock, Sparkles } from 'lucide-react';
-import { Badge } from 'adysre';
+import { cn } from 'adysre';
 import type { TemplateSummary } from '@/data/templates/types';
 import { TemplateThumbnail } from './template-thumbnail';
+
+// An opaque, frosted chip so overlay badges stay legible over any thumbnail
+// (light, dark or busy). The semantic colour lives on the icon and label; the
+// card-token surface guarantees the preview never bleeds through.
+const CHIP =
+  'inline-flex items-center gap-1 rounded-full bg-card/95 px-2.5 py-1 text-[11px] font-semibold shadow-sm ring-1 ring-border backdrop-blur-sm';
 
 /**
  * Gallery card: a live thumbnail on top, the template's name below.
@@ -38,23 +44,23 @@ export function TemplateCard({
 
         <div className="absolute right-2 top-2 flex flex-wrap justify-end gap-1.5">
           {template.isNew && (
-            <Badge variant="accent">
-              <Sparkles className="h-2.5 w-2.5" aria-hidden />
+            <span className={cn(CHIP, 'text-foreground')}>
+              <Sparkles className="h-3 w-3 text-accent" aria-hidden />
               {t('filters.tabs.new')}
-            </Badge>
+            </span>
           )}
           {template.pages.length > 1 && (
-            <Badge variant="primary">
-              <Files className="h-2.5 w-2.5" aria-hidden />
+            <span className={cn(CHIP, 'text-foreground')}>
+              <Files className="h-3 w-3 text-muted-foreground" aria-hidden />
               {t('pagesCount', { count: template.pages.length })}
-            </Badge>
+            </span>
           )}
-          <Badge variant={premium ? 'primary' : 'success'}>
+          <span className={cn(CHIP, premium ? 'text-primary' : 'text-success')}>
             {/* The lock only appears when this visitor actually cannot take it -
                 a premium template they own should not look fenced off. */}
-            {locked && <Lock className="h-2.5 w-2.5" aria-hidden />}
+            {locked && <Lock className="h-3 w-3" aria-hidden />}
             {t(`tiers.${template.tier}`)}
-          </Badge>
+          </span>
         </div>
       </div>
 

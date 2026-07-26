@@ -1,0 +1,73 @@
+{
+  "name": "@adysre/rules-devtools",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "The execution debugger: why a rule answered what it answered, and what short-circuiting hid.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abhisheksahu093/Adysre.git",
+    "directory": "packages/rules-devtools"
+  },
+  "exports": {
+    ".": "./src/index.ts",
+    "./package.json": "./package.json"
+  },
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json && node ../config/scripts/fix-declarations.mjs",
+    "lint": "eslint src",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "clean": "rm -rf dist .turbo tsconfig.tsbuildinfo tsconfig.build.tsbuildinfo",
+    "prepublishOnly": "node ../config/scripts/guard-publisher.mjs && pnpm build && node ../config/scripts/verify-dist.mjs"
+  },
+  "devDependencies": {
+    "@adysre/config": "workspace:*",
+    "@types/node": "^20.16.10",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "typescript": "^5.6.3",
+    "vitest": "^2.1.9"
+  },
+  "dependencies": {
+    "@adysre/rules-core": "workspace:*",
+    "@adysre/rules-types": "workspace:*",
+    "adysre": "workspace:*"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0"
+  },
+  "keywords": [
+    "rules-engine",
+    "business-rules",
+    "rule-builder",
+    "json-logic",
+    "decision-engine",
+    "typescript"
+  ],
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public",
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "exports": {
+      ".": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "./package.json": "./package.json"
+    }
+  }
+}

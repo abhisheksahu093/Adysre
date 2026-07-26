@@ -1,0 +1,183 @@
+/*
+ * CRESTLINE - template-scoped design tokens.
+ *
+ * A template is a standalone artifact with its own brand, so it cannot inherit
+ * the app's tokens. The whole palette lives here, scoped to
+ * `[data-template='crestline']`, and every section references these variables
+ * only - no raw colour in markup (Rule 6).
+ *
+ * ─── Calm, green, corporate ────────────────────────────────────────────────
+ * White ground, near-black green-tinted ink, one deep forest-green accent, and
+ * two quiet ambient touches: a drifting particle field behind the hero and a
+ * slowly rotating orbit ring. The feel is trust and clarity, not flash.
+ *
+ * CAUTION, as in the other templates: a scoped selector such as
+ * `[data-template='crestline'] .crl-x` outranks Tailwind's single-class
+ * utilities, so nothing here may set `position`, `display` or spacing on an
+ * element Tailwind also positions. Only pseudo-elements are positioned from CSS.
+ */
+
+[data-template='crestline'] {
+  --crl-bg: #ffffff;
+  --crl-soft: #eef7f1;
+  --crl-panel: #f6faf8;
+
+  --crl-ink: #0e1a13;
+  --crl-ink-soft: rgb(14 26 19 / 68%);
+  --crl-ink-faint: rgb(14 26 19 / 50%);
+  --crl-line: rgb(14 26 19 / 10%);
+  --crl-line-strong: rgb(14 26 19 / 22%);
+
+  /* The forest green. Accent word, primary button, orbit dot, icons. */
+  --crl-green: #157e49;
+  --crl-green-deep: #0f5f37;
+  --crl-green-soft: rgb(21 126 73 / 10%);
+
+  /* The dark panel behind the "why" counters. */
+  --crl-dark: #0c1f16;
+  --crl-dark-soft: rgb(255 255 255 / 66%);
+
+  --crl-radius: 20px;
+
+  color: var(--crl-ink);
+  background-color: var(--crl-bg);
+  font-family: 'Inter Variable', Inter, system-ui, -apple-system, sans-serif;
+  font-feature-settings: 'ss01', 'cv11';
+}
+
+/* ── Type ────────────────────────────────────────────────────────────────── */
+
+[data-template='crestline'] .crl-display {
+  font-weight: 680;
+  letter-spacing: -0.035em;
+  line-height: 0.98;
+}
+
+[data-template='crestline'] .crl-accent {
+  color: var(--crl-green);
+}
+
+[data-template='crestline'] .crl-mono {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+/* ── Particle field ──────────────────────────────────────────────────────── */
+
+/*
+ * A quiet drift of dots behind the hero. It is a pseudo-element so it never
+ * fights Tailwind for the layout of the hero's real content; the host element
+ * carries `relative isolate overflow-hidden` from Tailwind and this sits at
+ * z-index -1.
+ */
+[data-template='crestline'] .crl-particles::before {
+  content: '';
+  position: absolute;
+  inset: -20%;
+  z-index: -1;
+  background-image: radial-gradient(circle, rgb(21 126 73 / 22%) 1px, transparent 1.6px);
+  background-size: 26px 26px;
+  animation: crl-drift 40s linear infinite;
+}
+
+/* A soft green wash that pools toward the top-right of the hero. */
+[data-template='crestline'] .crl-particles::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image: radial-gradient(60% 55% at 85% 0%, var(--crl-green-soft), transparent 70%);
+}
+
+@keyframes crl-drift {
+  from { background-position: 0 0; }
+  to { background-position: 260px 130px; }
+}
+
+/* ── Orbit figure ────────────────────────────────────────────────────────── */
+
+/* The rings are decorative borders; only the spinning dot layer rotates. */
+[data-template='crestline'] .crl-ring {
+  border: 1px solid var(--crl-line);
+  border-radius: 9999px;
+}
+
+[data-template='crestline'] .crl-orbit-spin {
+  animation: crl-spin 26s linear infinite;
+}
+
+@keyframes crl-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* A gentle bob for the floating service pills. Paused under reduced motion. */
+[data-template='crestline'] .crl-float {
+  animation: crl-float 6s ease-in-out infinite;
+}
+
+[data-template='crestline'] .crl-float-slow {
+  animation: crl-float 8s ease-in-out infinite;
+}
+
+@keyframes crl-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* ── Soft plates (image stand-ins) ───────────────────────────────────────── */
+
+[data-template='crestline'] .crl-plate {
+  background-color: var(--crl-soft);
+  background-image:
+    radial-gradient(90% 90% at 25% 15%, rgb(21 126 73 / 24%), transparent 55%),
+    linear-gradient(200deg, rgb(14 26 19 / 8%), transparent 60%);
+}
+
+/* ── Marquee ─────────────────────────────────────────────────────────────── */
+
+[data-template='crestline'] .crl-marquee {
+  animation: crl-marquee 36s linear infinite;
+}
+
+@keyframes crl-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* ── Focus ───────────────────────────────────────────────────────────────── */
+
+[data-template='crestline'] :focus-visible {
+  outline: 2px solid var(--crl-green);
+  outline-offset: 3px;
+}
+
+/* ── Motion primitives' resting state ────────────────────────────────────── */
+
+[data-template='crestline'] [data-crl-reveal='pending'] {
+  opacity: 0;
+}
+
+[data-template='crestline'] .crl-clip {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.2em; /* descenders */
+  margin-bottom: -0.2em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-template='crestline'] [data-crl-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  [data-template='crestline'] .crl-particles::before,
+  [data-template='crestline'] .crl-orbit-spin,
+  [data-template='crestline'] .crl-float,
+  [data-template='crestline'] .crl-float-slow,
+  [data-template='crestline'] .crl-marquee {
+    animation: none !important;
+  }
+}

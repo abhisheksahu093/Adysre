@@ -1,27 +1,21 @@
-import type { Metadata } from 'next';
-import { getTranslations, setRequestLocale } from 'next-intl/server';
-import { PatternsView } from '@/components/patterns/patterns-view';
-import { NpmUsage } from '@/components/npm/npm-usage';
+import { redirect } from '@/i18n/navigation';
 
-export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+/**
+ * Patterns now live as a tab of the Colours & Surfaces page. This redirect keeps
+ * old links (and any `?tag=` deep links) working by forwarding to that tab.
+ */
+export default async function PatternsPage({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ locale: string }>;
+  searchParams: Promise<{ tag?: string | string[] }>;
+}) {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: 'patterns' });
-  return {
-    title: t('title'),
-    description: t('subtitle'),
-    alternates: { canonical: locale === 'en' ? '/patterns' : `/${locale}/patterns` },
-  };
-}
-
-export const dynamic = 'force-dynamic';
-
-export default async function PatternsPage({ params }: { params: Promise<{ locale: string }> }) {
-  const { locale } = await params;
-  setRequestLocale(locale);
-  return (
-    <>
-      <PatternsView />
-      <NpmUsage module="patterns" />
-    </>
-  );
+  const { tag } = await searchParams;
+  const tagValue = Array.isArray(tag) ? tag[0] : tag;
+  redirect({
+    locale,
+    href: { pathname: '/colors-surfaces', query: { tab: 'patterns', ...(tagValue ? { tag: tagValue } : {}) } },
+  });
 }

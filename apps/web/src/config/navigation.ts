@@ -1,13 +1,17 @@
 import {
-  Library,
   Blocks,
   Shapes,
-  Palette,
-  Blend,
-  Grid2x2,
-  Waves,
+  SwatchBook,
   PenTool,
   LayoutTemplate,
+  Radar,
+  QrCode,
+  FileText,
+  FileSearch,
+  SquareCode,
+  GitBranch,
+  Webhook,
+  Wand2,
   type LucideIcon,
 } from 'lucide-react';
 
@@ -33,12 +37,6 @@ export const NAV_ITEMS: NavItem[] = [
   // Dashboard is hidden for now - re-add this entry to bring it back:
   // { key: 'dashboard', href: '/dashboard', icon: LayoutDashboard },
   {
-    key: 'promptLibrary',
-    href: '/prompt-library',
-    icon: Library,
-    descriptionKey: 'promptLibrary',
-  },
-  {
     key: 'components',
     href: '/components',
     icon: Blocks,
@@ -49,29 +47,12 @@ export const NAV_ITEMS: NavItem[] = [
     icon: Shapes,
     descriptionKey: 'icons',
   },
+  // Palettes, gradients, patterns and textures are combined into one tabbed
+  // module (Colors & Surfaces); each remains a sub-menu with its own filters.
   {
-    key: 'palettes',
-    href: '/palettes',
-    icon: Palette,
-    descriptionKey: 'palettes',
-  },
-  {
-    key: 'gradients',
-    href: '/gradients',
-    icon: Blend,
-    descriptionKey: 'gradients',
-  },
-  {
-    key: 'patterns',
-    href: '/patterns',
-    icon: Grid2x2,
-    descriptionKey: 'patterns',
-  },
-  {
-    key: 'textures',
-    href: '/textures',
-    icon: Waves,
-    descriptionKey: 'textures',
+    key: 'colorsSurfaces',
+    href: '/colors-surfaces',
+    icon: SwatchBook,
   },
   {
     key: 'designPlayground',
@@ -84,6 +65,61 @@ export const NAV_ITEMS: NavItem[] = [
     href: '/templates',
     icon: LayoutTemplate,
     descriptionKey: 'templates',
+  },
+  {
+    key: 'websiteIntelligence',
+    href: '/website-intelligence',
+    icon: Radar,
+    descriptionKey: 'websiteIntelligence',
+  },
+  // Tools module. The Code Generator pairs the QR and barcode generators on one
+  // page; the document generator and the rest of the spec extend this section.
+  {
+    key: 'codeStudio',
+    href: '/code-studio',
+    icon: SquareCode,
+    descriptionKey: 'codeStudio',
+  },
+  // Developer module. API Studio is the self-hosted HTTP client (collections,
+  // environments, request runner); the shell lands first, the engine follows.
+  {
+    key: 'apiStudio',
+    href: '/api-studio',
+    icon: Webhook,
+    descriptionKey: 'apiStudio',
+  },
+  {
+    key: 'aiTools',
+    href: '/ai-tools',
+    icon: Wand2,
+    descriptionKey: 'aiTools',
+  },
+  {
+    key: 'codes',
+    href: '/tools/codes',
+    icon: QrCode,
+    descriptionKey: 'codes',
+  },
+  {
+    key: 'documents',
+    href: '/tools/documents',
+    icon: FileText,
+    descriptionKey: 'documents',
+  },
+  {
+    key: 'resume',
+    href: '/tools/resume',
+    icon: FileSearch,
+    descriptionKey: 'resume',
+  },
+  // The business rules engine: the package matrix, the decisions, and a live
+  // sandbox. Storage and the HTTP adapters landed, so this is a module to read
+  // and try rather than the unlisted sandbox it started as.
+  {
+    key: 'rules',
+    href: '/rules',
+    icon: GitBranch,
+    descriptionKey: 'rules',
   },
   // Settings is hidden until the module lands - re-add this entry to bring it
   // back. The route, its translations and its permission are all still in place,
@@ -110,4 +146,4 @@ export function getNavItem(href: string): NavItem | undefined {
  * here rather than hardcoding a route, so hiding or reordering the menu moves
  * the entry point with it. (Dashboard used to be home; it's hidden for now.)
  */
-export const APP_HOME: string = NAV_ITEMS[0]?.href ?? '/prompt-library';
+export const APP_HOME: string = NAV_ITEMS[0]?.href ?? '/components';

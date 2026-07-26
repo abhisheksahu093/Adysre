@@ -10,7 +10,7 @@ export function Skeleton({ className }: { className?: string }) {
 
 /**
  * The shared loading state for a library page (components, icons, palettes,
- * gradients, patterns, prompts). Mirrors the real layout - title, search/filter
+ * gradients, patterns, textures). Mirrors the real layout - title, search/filter
  * row, then a card or icon grid - so the swap to real content doesn't jump.
  * `variant` picks the grid density; `icons` renders the dense square grid.
  */

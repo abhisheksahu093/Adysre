@@ -28,16 +28,36 @@ model Organization {
   updatedBy String?   @map("updated_by") @db.Uuid
   deletedAt DateTime? @map("deleted_at")
 
-  users         User[]
-  roles         Role[]
-  permissions   Permission[]
-  userRoles     UserRole[]
-  sessions      Session[]
-  auditLogs     AuditLog[]
-  notifications Notification[]
-  files          File[]
-  settings       Setting[]
-  designProjects DesignProject[]
+  users               User[]
+  roles               Role[]
+  permissions         Permission[]
+  userRoles           UserRole[]
+  sessions            Session[]
+  auditLogs           AuditLog[]
+  notifications       Notification[]
+  files               File[]
+  settings            Setting[]
+  designProjects      DesignProject[]
+  qrFolders           QrFolder[]
+  qrCodes             QrCode[]
+  signatureTemplates  SignatureTemplate[]
+  emailSignatures     EmailSignature[]
+  atsReports          AtsReport[]
+  resumes             Resume[]
+  resumeVersions      ResumeVersion[]
+  mediaJobs           MediaJob[]
+  apiWorkspaces       ApiWorkspace[]
+  apiWorkspaceMembers ApiWorkspaceMember[]
+  apiCollections      ApiCollection[]
+  apiNodes            ApiNode[]
+  apiEnvironments     ApiEnvironment[]
+  apiVariables        ApiVariable[]
+  apiHistory          ApiHistoryEntry[]
+  apiResponses        ApiResponse[]
+  apiRequestVersions  ApiRequestVersion[]
+  apiCookies          ApiCookie[]
+  rules               Rule[]
+  ruleVersions        RuleVersion[]
 
   @@index([deletedAt])
   @@map("organizations")
@@ -245,19 +265,123 @@ model Setting {
 // ---------------------------------------------------------------------------
 
 model DesignProject {
-  id        String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  tenantId  String    @map("tenant_id") @db.Uuid
-  name      String
+  id            String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  tenantId      String    @map("tenant_id") @db.Uuid
+  name          String
   /// The full document (pages + flat node map), validated on read by
   /// `schema.parseDocument` before it reaches the canvas. JSONB rather than
   /// relational tables: the editor loads and saves whole documents, and a node
   /// row per shape would turn one autosave into thousands of statements.
-  document  Json
+  document      Json
   /// Mirrors document.schemaVersion so a migration can find stale rows without
   /// parsing every blob.
-  schemaVersion Int   @default(1) @map("schema_version")
+  schemaVersion Int       @default(1) @map("schema_version")
   /// Data-URI or object-store key for the card thumbnail; null until rendered.
-  thumbnail String?
+  thumbnail     String?
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime  @updatedAt @map("updated_at")
+  createdBy     String?   @map("created_by") @db.Uuid
+  updatedBy     String?   @map("updated_by") @db.Uuid
+  deletedAt     DateTime? @map("deleted_at")
+
+  organization Organization @relation(fields: [tenantId], references: [id])
+
+  // The list view is always "this tenant's live projects, newest first".
+  @@index([tenantId, deletedAt, updatedAt])
+  @@map("design_projects")
+}
+
+// ---------------------------------------------------------------------------
+// Tools — QR codes (dynamic QR + scan analytics)
+// ---------------------------------------------------------------------------
+
+model QrFolder {
+  id        String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  tenantId  String    @map("tenant_id") @db.Uuid
+  name      String
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  createdBy String?   @map("created_by") @db.Uuid
+  updatedBy String?   @map("updated_by") @db.Uuid
+  deletedAt DateTime? @map("deleted_at")
+
+  organization Organization @relation(fields: [tenantId], references: [id])
+  qrCodes      QrCode[]
+
+  @@index([tenantId, deletedAt])
+  @@map("qr_folders")
+}
+
+model QrCode {
+  id        String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  tenantId  String    @map("tenant_id") @db.Uuid
+  /// Short, public, URL-safe code the dynamic QR encodes: /q/<slug>.
+  slug      String    @unique
+  /// Registry type id (url, wifi, vcard, …). See lib/tools/qr/registry.
+  type      String
+  /// Human label shown in the saved-codes list.
+  name      String
+  /// The type's field values, as entered.
+  payload   Json
+  /// The QrDesign (colors, styles, logo reference).
+  design    Json
+  /// Where a scan redirects. Null for static payloads (wifi/vcard/text) that
+  /// encode content directly and are not tracked.
+  targetUrl String?   @map("target_url")
+  favorite  Boolean   @default(false)
+  tags      String[]
+  folderId  String?   @map("folder_id") @db.Uuid
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  createdBy String?   @map("created_by") @db.Uuid
+  updatedBy String?   @map("updated_by") @db.Uuid
+  deletedAt DateTime? @map("deleted_at")
+
+  organization Organization @relation(fields: [tenantId], references: [id])
+  folder       QrFolder?    @relation(fields: [folderId], references: [id])
+  scans        QrScan[]
+
+  @@index([tenantId, deletedAt, updatedAt])
+  @@index([tenantId, folderId])
+  @@map("qr_codes")
+}
+
+// Append-only scan events. No soft-delete/audit columns by design: a scan is an
+// immutable fact, not an editable record (mirrors an audit log).
+model QrScan {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  tenantId  String   @map("tenant_id") @db.Uuid
+  qrCodeId  String   @map("qr_code_id") @db.Uuid
+  /// Coarse device class parsed from the User-Agent (mobile/tablet/desktop).
+  device    String?
+  browser   String?
+  os        String?
+  /// Referrer host, when the scanner sent one.
+  referrer  String?
+  /// Best-effort region from Accept-Language (no external geo-IP service).
+  country   String?
+  city      String?
+  /// UTM parameters captured off the scan URL.
+  utm       Json?
+  scannedAt DateTime @default(now()) @map("scanned_at")
+
+  qrCode QrCode @relation(fields: [qrCodeId], references: [id])
+
+  @@index([qrCodeId, scannedAt])
+  @@index([tenantId, scannedAt])
+  @@map("qr_scans")
+}
+
+// ---------------------------------------------------------------------------
+// Tools — Email signatures
+// ---------------------------------------------------------------------------
+
+model SignatureTemplate {
+  id        String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  tenantId  String    @map("tenant_id") @db.Uuid
+  name      String
+  /// A SignatureDesign preset (see lib/tools/signature/themes).
+  design    Json
   createdAt DateTime  @default(now()) @map("created_at")
   updatedAt DateTime  @updatedAt @map("updated_at")
   createdBy String?   @map("created_by") @db.Uuid
@@ -266,7 +390,560 @@ model DesignProject {
 
   organization Organization @relation(fields: [tenantId], references: [id])
 
-  // The list view is always "this tenant's live projects, newest first".
+  @@index([tenantId, deletedAt])
+  @@map("signature_templates")
+}
+
+model EmailSignature {
+  id        String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  tenantId  String    @map("tenant_id") @db.Uuid
+  name      String
+  /// The full SignatureData (fields + socials + theme + design).
+  data      Json
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  createdBy String?   @map("created_by") @db.Uuid
+  updatedBy String?   @map("updated_by") @db.Uuid
+  deletedAt DateTime? @map("deleted_at")
+
+  organization Organization @relation(fields: [tenantId], references: [id])
+
   @@index([tenantId, deletedAt, updatedAt])
-  @@map("design_projects")
+  @@map("email_signatures")
+}
+
+// ---------------------------------------------------------------------------
+// Tools — ATS resume reports
+// ---------------------------------------------------------------------------
+
+model AtsReport {
+  id        String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  tenantId  String    @map("tenant_id") @db.Uuid
+  /// Resume file name or a label for the scan.
+  name      String
+  /// Overall ATS score 0-100 (denormalised for list/sort).
+  score     Int
+  /// The full AtsReport (breakdown, matched/missing, sections, suggestions).
+  report    Json
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  createdBy String?   @map("created_by") @db.Uuid
+  updatedBy String?   @map("updated_by") @db.Uuid
+  deletedAt DateTime? @map("deleted_at")
+
+  organization Organization @relation(fields: [tenantId], references: [id])
+
+  @@index([tenantId, deletedAt, createdAt])
+  @@map("ats_reports")
+}
+
+/// A resume composed in the Resume Builder. The full ResumeData (contact,
+/// sections, design) lives in `data`; `templateId` and `name` are denormalised
+/// for list/sort. Versions are snapshots kept for history.
+model Resume {
+  id         String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  tenantId   String    @map("tenant_id") @db.Uuid
+  /// Resume label (defaults to the person's name).
+  name       String
+  /// Resume template id (minimal, modern, corporate, creative, elegant).
+  templateId String    @map("template_id")
+  /// The full ResumeData document (contact, sections, design).
+  data       Json
+  createdAt  DateTime  @default(now()) @map("created_at")
+  updatedAt  DateTime  @updatedAt @map("updated_at")
+  createdBy  String?   @map("created_by") @db.Uuid
+  updatedBy  String?   @map("updated_by") @db.Uuid
+  deletedAt  DateTime? @map("deleted_at")
+
+  organization Organization    @relation(fields: [tenantId], references: [id])
+  versions     ResumeVersion[]
+
+  @@index([tenantId, deletedAt, updatedAt])
+  @@map("resumes")
+}
+
+/// An immutable snapshot of a resume, captured on save/export.
+model ResumeVersion {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  tenantId  String   @map("tenant_id") @db.Uuid
+  resumeId  String   @map("resume_id") @db.Uuid
+  /// Monotonic version number within the resume.
+  version   Int
+  /// The ResumeData snapshot at this version.
+  data      Json
+  createdAt DateTime @default(now()) @map("created_at")
+  createdBy String?  @map("created_by") @db.Uuid
+
+  organization Organization @relation(fields: [tenantId], references: [id])
+  resume       Resume       @relation(fields: [resumeId], references: [id], onDelete: Cascade)
+
+  @@unique([resumeId, version])
+  @@index([tenantId, resumeId])
+  @@map("resume_versions")
+}
+
+/// Optional saved history for an AI Tools run. The image work happens entirely
+/// in the browser (files never leave ADYSRE); this only records the job for a
+/// signed-in user who opts to keep it. Inputs/outputs are metadata, not blobs.
+model MediaJob {
+  id        String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  tenantId  String    @map("tenant_id") @db.Uuid
+  /// Tool id from the registry (compressor, converter, resizer, ...).
+  tool      String
+  /// Original file name / label.
+  name      String
+  /// The settings used for the run.
+  settings  Json
+  /// Result summary: sizes, dimensions, format, percent saved.
+  summary   Json
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  createdBy String?   @map("created_by") @db.Uuid
+  deletedAt DateTime? @map("deleted_at")
+
+  organization Organization @relation(fields: [tenantId], references: [id])
+
+  @@index([tenantId, deletedAt, createdAt])
+  @@map("media_jobs")
+}
+
+// ---------------------------------------------------------------------------
+// API Studio — see documents/API_STUDIO.md
+//
+// Storage notes that apply to every table below:
+//
+// * The request TREE is flat: folders and requests are rows in `api_studio_nodes`
+//   carrying `parent_id` and a sparse `position`. Nesting is unlimited, a move
+//   is a two-column update, and a branch can be paged in on demand.
+// * A request DEFINITION is a JSONB document, not a table per header. The
+//   builder loads and saves a request whole, and a row per header would turn
+//   one save into dozens of statements while buying no query we ever run.
+// * VARIABLES are rows rather than JSON, because secrets need their own
+//   encrypted column, their own audit trail, and a single query that loads
+//   every layer of the resolution stack at once.
+// * CHECK constraints for the string enums and for the variable owner/secret
+//   invariants live in the migration: Prisma does not model them, so they are
+//   written once in SQL and never dropped by a later diff.
+// ---------------------------------------------------------------------------
+
+/// A workspace: the unit users switch between and share. Many per tenant.
+model ApiWorkspace {
+  id          String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  tenantId    String    @map("tenant_id") @db.Uuid
+  name        String
+  /// URL segment, unique per tenant among live workspaces. The repository
+  /// suffixes the slug on soft delete so the name is immediately reusable.
+  slug        String
+  description String    @default("")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+  createdBy   String?   @map("created_by") @db.Uuid
+  updatedBy   String?   @map("updated_by") @db.Uuid
+  deletedAt   DateTime? @map("deleted_at")
+
+  organization Organization         @relation(fields: [tenantId], references: [id])
+  members      ApiWorkspaceMember[]
+  collections  ApiCollection[]
+  nodes        ApiNode[]
+  environments ApiEnvironment[]
+  variables    ApiVariable[]
+  history      ApiHistoryEntry[]
+  cookies      ApiCookie[]
+
+  @@unique([tenantId, slug])
+  @@index([tenantId, deletedAt, updatedAt])
+  @@map("api_studio_workspaces")
+}
+
+/// Who may use a workspace, and as what. Roles map onto the module permission
+/// sets in modules/api-studio/permissions.ts: owner, admin, developer, viewer.
+model ApiWorkspaceMember {
+  id          String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  tenantId    String    @map("tenant_id") @db.Uuid
+  workspaceId String    @map("workspace_id") @db.Uuid
+  userId      String    @map("user_id") @db.Uuid
+  /// owner | admin | developer | viewer (CHECK constraint in the migration).
+  role        String
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+  createdBy   String?   @map("created_by") @db.Uuid
+  updatedBy   String?   @map("updated_by") @db.Uuid
+  deletedAt   DateTime? @map("deleted_at")
+
+  organization Organization @relation(fields: [tenantId], references: [id])
+  workspace    ApiWorkspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  @@unique([workspaceId, userId])
+  @@index([tenantId, userId, deletedAt])
+  @@map("api_studio_workspace_members")
+}
+
+/// A collection: the root every folder and request hangs from.
+model ApiCollection {
+  id          String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  tenantId    String    @map("tenant_id") @db.Uuid
+  workspaceId String    @map("workspace_id") @db.Uuid
+  name        String
+  description String    @default("")
+  /// Semantic token id (neutral, primary, success, …), never a colour literal.
+  color       String?
+  /// Lucide icon id, resolved through the module's icon map.
+  icon        String?
+  tags        String[]
+  favorite    Boolean   @default(false)
+  /// AuthConfig. Inherited by every descendant whose auth type is `inherit`.
+  auth        Json
+  /// RequestScripts: pre-request and test sources run for every descendant.
+  scripts     Json
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+  createdBy   String?   @map("created_by") @db.Uuid
+  updatedBy   String?   @map("updated_by") @db.Uuid
+  deletedAt   DateTime? @map("deleted_at")
+
+  organization Organization  @relation(fields: [tenantId], references: [id])
+  workspace    ApiWorkspace  @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  nodes        ApiNode[]
+  variables    ApiVariable[]
+
+  @@index([tenantId, workspaceId, deletedAt, updatedAt])
+  @@map("api_studio_collections")
+}
+
+/// One node of the flat tree: a folder or a request.
+model ApiNode {
+  id           String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  tenantId     String    @map("tenant_id") @db.Uuid
+  workspaceId  String    @map("workspace_id") @db.Uuid
+  collectionId String    @map("collection_id") @db.Uuid
+  /// Null for a node at the collection root.
+  parentId     String?   @map("parent_id") @db.Uuid
+  /// folder | request (CHECK constraint in the migration).
+  kind         String
+  name         String
+  /// Sparse ordering key within `parent_id`, stepped by 1000 so an insert
+  /// between two siblings takes the midpoint and rewrites exactly one row.
+  position     Int
+  description  String    @default("")
+  tags         String[]
+  color        String?
+  icon         String?
+  favorite     Boolean   @default(false)
+  /// Denormalised from `request` so the sidebar can draw a 5,000-node tree
+  /// without reading a single JSONB document. Written only by the repository's
+  /// mapper, which is the one place a definition becomes a row.
+  method       String?
+  url          String?
+  /// RequestDefinition. Non-null exactly when kind = 'request'.
+  request      Json?
+  /// AuthConfig / RequestScripts for a folder. Null for a request, which
+  /// carries its own inside `request`.
+  auth         Json?
+  scripts      Json?
+  /// Bumped on every save. Drives optimistic concurrency and version history.
+  version      Int       @default(1)
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @updatedAt @map("updated_at")
+  createdBy    String?   @map("created_by") @db.Uuid
+  updatedBy    String?   @map("updated_by") @db.Uuid
+  deletedAt    DateTime? @map("deleted_at")
+
+  organization Organization        @relation(fields: [tenantId], references: [id])
+  workspace    ApiWorkspace        @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  collection   ApiCollection       @relation(fields: [collectionId], references: [id], onDelete: Cascade)
+  parent       ApiNode?            @relation("ApiNodeChildren", fields: [parentId], references: [id], onDelete: Cascade)
+  children     ApiNode[]           @relation("ApiNodeChildren")
+  variables    ApiVariable[]
+  versions     ApiRequestVersion[]
+  history      ApiHistoryEntry[]
+
+  // The tree read: one collection's children, in order, one parent at a time.
+  @@index([collectionId, parentId, position])
+  // Search and the recent list, both always scoped to a tenant's workspace.
+  @@index([tenantId, workspaceId, deletedAt, updatedAt])
+  @@index([tenantId, workspaceId, favorite])
+  @@map("api_studio_nodes")
+}
+
+/// A named set of variables the user switches between (dev, staging, prod).
+model ApiEnvironment {
+  id          String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  tenantId    String    @map("tenant_id") @db.Uuid
+  workspaceId String    @map("workspace_id") @db.Uuid
+  name        String
+  color       String?
+  /// The environment a workspace opens with. At most one per workspace, kept
+  /// true by the repository; a flag rather than a column on the workspace, so
+  /// deleting an environment cannot leave a dangling pointer behind.
+  isDefault   Boolean   @default(false) @map("is_default")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+  createdBy   String?   @map("created_by") @db.Uuid
+  updatedBy   String?   @map("updated_by") @db.Uuid
+  deletedAt   DateTime? @map("deleted_at")
+
+  organization Organization  @relation(fields: [tenantId], references: [id])
+  workspace    ApiWorkspace  @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  variables    ApiVariable[]
+
+  @@index([tenantId, workspaceId, deletedAt])
+  @@map("api_studio_environments")
+}
+
+/// One variable, at one layer of the resolution stack.
+///
+/// The owner is whichever of `environment_id`, `collection_id` and `node_id` is
+/// set; a global variable sets none. Which one may be set is fixed by `scope`
+/// and enforced by CHECK constraints, so a row can never claim a scope its
+/// foreign keys contradict.
+///
+/// Secrets never touch `value`: a secret row carries `value_cipher` only, in the
+/// self-describing format `v<n>:<key id>:<base64 iv>:<base64 ciphertext+tag>`
+/// (AES-256-GCM), so keys can be rotated without a schema change. The pair of
+/// columns is mutually exclusive, by CHECK.
+model ApiVariable {
+  id            String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  tenantId      String    @map("tenant_id") @db.Uuid
+  workspaceId   String    @map("workspace_id") @db.Uuid
+  /// global | environment | collection | folder | request.
+  scope         String
+  environmentId String?   @map("environment_id") @db.Uuid
+  collectionId  String?   @map("collection_id") @db.Uuid
+  nodeId        String?   @map("node_id") @db.Uuid
+  key           String
+  /// Plaintext value. Null for a secret.
+  value         String?
+  /// Ciphertext. Null unless `secret`.
+  valueCipher   String?   @map("value_cipher")
+  /// The value the environment ships with, so a shared export carries the
+  /// shape without anyone's session edits. Never set for a secret.
+  initialValue  String?   @map("initial_value")
+  secret        Boolean   @default(false)
+  enabled       Boolean   @default(true)
+  description   String    @default("")
+  position      Int       @default(0)
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime  @updatedAt @map("updated_at")
+  createdBy     String?   @map("created_by") @db.Uuid
+  updatedBy     String?   @map("updated_by") @db.Uuid
+  deletedAt     DateTime? @map("deleted_at")
+
+  organization Organization    @relation(fields: [tenantId], references: [id])
+  workspace    ApiWorkspace    @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  environment  ApiEnvironment? @relation(fields: [environmentId], references: [id], onDelete: Cascade)
+  collection   ApiCollection?  @relation(fields: [collectionId], references: [id], onDelete: Cascade)
+  node         ApiNode?        @relation(fields: [nodeId], references: [id], onDelete: Cascade)
+
+  // The resolver's one query: every layer for this workspace, in scope order.
+  @@index([tenantId, workspaceId, scope, deletedAt])
+  @@index([environmentId])
+  @@index([collectionId])
+  @@index([nodeId])
+  @@map("api_studio_variables")
+}
+
+/// A sent request. Hard-deleted rather than soft: "Clear history" means gone,
+/// and a history row is a personal log, not a tenant record. Audit of who sent
+/// what lives in `audit_logs`, which is the record that must survive.
+model ApiHistoryEntry {
+  id            String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  tenantId      String   @map("tenant_id") @db.Uuid
+  workspaceId   String   @map("workspace_id") @db.Uuid
+  /// The saved request it came from, if it came from one.
+  nodeId        String?  @map("node_id") @db.Uuid
+  method        String
+  url           String
+  /// Null when the exchange failed before a response arrived.
+  status        Int?
+  /// ExecutionErrorCode when there was no response.
+  errorCode     String?  @map("error_code")
+  durationMs    Int      @map("duration_ms")
+  requestBytes  Int      @default(0) @map("request_bytes")
+  responseBytes Int      @default(0) @map("response_bytes")
+  favorite      Boolean  @default(false)
+  /// The RequestDefinition as sent, with every secret redacted, so the entry
+  /// can be restored into a tab without the log becoming a credential store.
+  request       Json
+  executedAt    DateTime @default(now()) @map("executed_at")
+  createdBy     String?  @map("created_by") @db.Uuid
+
+  organization Organization @relation(fields: [tenantId], references: [id])
+  workspace    ApiWorkspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  node         ApiNode?     @relation(fields: [nodeId], references: [id], onDelete: SetNull)
+  response     ApiResponse?
+
+  @@index([tenantId, workspaceId, executedAt])
+  @@index([tenantId, workspaceId, favorite])
+  @@index([nodeId])
+  @@map("api_studio_history")
+}
+
+/// The response for a history entry. A separate table because bodies are the
+/// only large thing here: retention can drop responses while keeping the log,
+/// and a history list never pays to read a 20 MB column it does not show.
+model ApiResponse {
+  id           String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  tenantId     String   @map("tenant_id") @db.Uuid
+  historyId    String   @unique @map("history_id") @db.Uuid
+  status       Int
+  statusText   String   @map("status_text")
+  httpVersion  String?  @map("http_version")
+  /// WireHeader[] and CookieRecord[], in the order received.
+  headers      Json
+  cookies      Json
+  /// utf8 | base64 (CHECK constraint in the migration).
+  bodyEncoding String   @map("body_encoding")
+  body         String?
+  truncated    Boolean  @default(false)
+  headerBytes  Int      @default(0) @map("header_bytes")
+  bodyBytes    Int      @default(0) @map("body_bytes")
+  /// ExecutionTimings: per-phase milliseconds, nulls where unmeasurable.
+  timings      Json
+  /// RedirectHop[].
+  redirects    Json
+  /// True when the exchange completed with TLS verification disabled.
+  insecure     Boolean  @default(false)
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  organization Organization    @relation(fields: [tenantId], references: [id])
+  history      ApiHistoryEntry @relation(fields: [historyId], references: [id], onDelete: Cascade)
+
+  @@index([tenantId, createdAt])
+  @@map("api_studio_responses")
+}
+
+/// An immutable snapshot of a request, captured on save. Mirrors ResumeVersion.
+model ApiRequestVersion {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  tenantId  String   @map("tenant_id") @db.Uuid
+  nodeId    String   @map("node_id") @db.Uuid
+  /// Monotonic version number within the node.
+  version   Int
+  /// The RequestDefinition snapshot at this version.
+  request   Json
+  /// Optional label the user gave the save point.
+  label     String?
+  createdAt DateTime @default(now()) @map("created_at")
+  createdBy String?  @map("created_by") @db.Uuid
+
+  organization Organization @relation(fields: [tenantId], references: [id])
+  node         ApiNode      @relation(fields: [nodeId], references: [id], onDelete: Cascade)
+
+  @@unique([nodeId, version])
+  @@index([tenantId, nodeId])
+  @@map("api_studio_request_versions")
+}
+
+/// The cookie jar, per workspace. Values are credentials, so they are stored
+/// with the same envelope encryption as secret variables and never returned to
+/// the client in plaintext unless the caller holds `api-studio:secret:read`.
+model ApiCookie {
+  id          String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  tenantId    String    @map("tenant_id") @db.Uuid
+  workspaceId String    @map("workspace_id") @db.Uuid
+  domain      String
+  path        String    @default("/")
+  name        String
+  valueCipher String    @map("value_cipher")
+  /// Null for a session cookie.
+  expiresAt   DateTime? @map("expires_at")
+  secure      Boolean   @default(false)
+  httpOnly    Boolean   @default(false) @map("http_only")
+  /// strict | lax | none, or null when unset (CHECK constraint in the migration).
+  sameSite    String?   @map("same_site")
+  enabled     Boolean   @default(true)
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+  createdBy   String?   @map("created_by") @db.Uuid
+  updatedBy   String?   @map("updated_by") @db.Uuid
+
+  organization Organization @relation(fields: [tenantId], references: [id])
+  workspace    ApiWorkspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  @@unique([workspaceId, domain, path, name])
+  @@index([tenantId, workspaceId, expiresAt])
+  @@map("api_studio_cookies")
+}
+
+// ---------------------------------------------------------------------------
+// Business rules — see documents/RULES_ENGINE.md
+// ---------------------------------------------------------------------------
+
+/// A business rule, stored as its AST.
+///
+/// `document` is the whole `RuleDocument` and the single source of truth. Every
+/// other column here is a PROJECTION of it, written from the document on save
+/// and never edited independently — the same relationship the builder, the
+/// renderer and the debugger have to the tree. They exist so `list` can filter,
+/// sort and page in SQL instead of loading every rule to sort it in memory.
+///
+/// Two ids, deliberately. `id` is the UUID primary key every table here carries;
+/// `ruleId` is the engine's own identifier (`r_a1b2c3d4e5`), which is what a
+/// stored document refers to and what a client asks for. Forcing the engine to
+/// mint UUIDs would put a database convention inside a package that must run in
+/// a browser with no database at all.
+model Rule {
+  id        String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  tenantId  String    @map("tenant_id") @db.Uuid
+  /// The engine's id. Unique per tenant, not globally: two tenants importing
+  /// the same rule file must not collide.
+  ruleId    String    @map("rule_id")
+  /// Stable business key, when the host has one. Survives a re-import.
+  key       String?
+  name      String
+  kind      String
+  status    String
+  version   Int
+  priority  Int       @default(0)
+  enabled   Boolean   @default(true)
+  tags      String[]
+  document  Json
+  /// FNV-1a over the logic only, so "did the logic change" is a column rather
+  /// than a document comparison in application code.
+  logicHash String    @map("logic_hash")
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  createdBy String?   @map("created_by") @db.Uuid
+  updatedBy String?   @map("updated_by") @db.Uuid
+  deletedAt DateTime? @map("deleted_at")
+
+  organization Organization  @relation(fields: [tenantId], references: [id])
+  versions     RuleVersion[]
+
+  /// Uniqueness of `ruleId` and `key` is enforced by PARTIAL unique indexes
+  /// (`WHERE deleted_at IS NULL`) created in the migration, which Prisma's
+  /// schema cannot express. A full unique constraint would let a soft-deleted
+  /// row keep occupying its own id forever, so saving a rule whose id was once
+  /// removed would fail — and the in-memory adapter, which the conformance
+  /// suite holds every adapter to, treats that as an ordinary new rule.
+  @@index([tenantId, ruleId])
+  /// The list query: a tenant's live rules, newest first.
+  @@index([tenantId, deletedAt, updatedAt])
+  @@index([tenantId, kind])
+  @@index([tenantId, status])
+  @@map("rules")
+}
+
+/// Every version of a rule, including the current one.
+///
+/// Append-only. A restore writes a NEW version holding the old content rather
+/// than deleting the ones after it: a history that can be rewritten is a
+/// history nobody can be asked to trust, and "who changed this, and when" is
+/// the question a version list exists to answer.
+model RuleVersion {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  tenantId  String   @map("tenant_id") @db.Uuid
+  ruleId    String   @map("rule_id") @db.Uuid
+  version   Int
+  document  Json
+  logicHash String   @map("logic_hash")
+  createdAt DateTime @default(now()) @map("created_at")
+  createdBy String?  @map("created_by") @db.Uuid
+
+  organization Organization @relation(fields: [tenantId], references: [id])
+  rule         Rule         @relation(fields: [ruleId], references: [id], onDelete: Cascade)
+
+  @@unique([ruleId, version])
+  @@index([tenantId, ruleId])
+  @@map("rule_versions")
 }

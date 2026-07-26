@@ -30,16 +30,29 @@ const NAV_MENUS: { key: string; items: NavItem[] }[] = [
     items: [
       { href: LANDING_LINKS.components, navKey: 'components' },
       { href: LANDING_LINKS.icons, navKey: 'icons' },
-      { href: LANDING_LINKS.promptLibrary, navKey: 'promptLibrary' },
     ],
   },
   {
-    key: 'styles',
+    key: 'colorsSurfaces',
     items: [
-      { href: LANDING_LINKS.palettes, navKey: 'palettes' },
-      { href: LANDING_LINKS.gradients, navKey: 'gradients' },
-      { href: LANDING_LINKS.patterns, navKey: 'patterns' },
-      { href: LANDING_LINKS.textures, navKey: 'textures' },
+      { href: '/colors-surfaces?tab=palettes', navKey: 'palettes' },
+      { href: '/colors-surfaces?tab=gradients', navKey: 'gradients' },
+      { href: '/colors-surfaces?tab=patterns', navKey: 'patterns' },
+      { href: '/colors-surfaces?tab=textures', navKey: 'textures' },
+    ],
+  },
+  {
+    key: 'tools',
+    items: [
+      { href: LANDING_LINKS.codeStudio, navKey: 'codeStudio' },
+      { href: LANDING_LINKS.designPlayground, navKey: 'designPlayground' },
+      { href: LANDING_LINKS.customize, navKey: 'customize' },
+      { href: LANDING_LINKS.aiTools, navKey: 'aiTools' },
+      { href: LANDING_LINKS.codes, navKey: 'codes' },
+      { href: LANDING_LINKS.documents, navKey: 'documents' },
+      { href: LANDING_LINKS.websiteIntelligence, navKey: 'websiteIntelligence' },
+      { href: LANDING_LINKS.rules, navKey: 'rules' },
+      { href: LANDING_LINKS.resume, navKey: 'resume' },
     ],
   },
 ];

@@ -1,0 +1,77 @@
+{
+  "name": "@adysre/rules-ui",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "The visual rule builder: React components over @adysre/rules-react, styled with design tokens.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abhisheksahu093/Adysre.git",
+    "directory": "packages/rules-ui"
+  },
+  "exports": {
+    ".": "./src/index.ts",
+    "./package.json": "./package.json"
+  },
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json && node ../config/scripts/fix-declarations.mjs",
+    "lint": "eslint src",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "clean": "rm -rf dist .turbo tsconfig.tsbuildinfo tsconfig.build.tsbuildinfo",
+    "prepublishOnly": "node ../config/scripts/guard-publisher.mjs && pnpm build && node ../config/scripts/verify-dist.mjs"
+  },
+  "devDependencies": {
+    "@adysre/config": "workspace:*",
+    "@types/node": "^20.16.10",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "tsx": "^4.19.1",
+    "typescript": "^5.6.3",
+    "vitest": "^2.1.2"
+  },
+  "dependencies": {
+    "@adysre/rules-core": "workspace:*",
+    "@adysre/rules-react": "workspace:*",
+    "@adysre/rules-renderer": "workspace:*",
+    "@adysre/rules-theme": "workspace:*",
+    "@adysre/rules-types": "workspace:*",
+    "adysre": "workspace:*"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0"
+  },
+  "keywords": [
+    "rules-engine",
+    "business-rules",
+    "rule-builder",
+    "json-logic",
+    "decision-engine",
+    "typescript"
+  ],
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public",
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "exports": {
+      ".": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "./package.json": "./package.json"
+    }
+  }
+}

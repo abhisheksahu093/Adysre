@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { hasLocale, NextIntlClientProvider } from 'next-intl';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { routing } from '@/i18n/routing';
+import { ExtensionErrorSilencer } from '@/components/system/extension-error-silencer';
 import { Providers } from './providers';
 import '../globals.css';
 
@@ -45,6 +46,9 @@ export default async function LocaleLayout({
   return (
     // `lang` must track the locale - screen readers pick pronunciation from it.
     <html lang={locale} suppressHydrationWarning>
+      <head>
+        <ExtensionErrorSilencer />
+      </head>
       <body>
         <NextIntlClientProvider>
           <Providers>{children}</Providers>

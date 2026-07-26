@@ -1,0 +1,33 @@
+# Keep the build context small and reproducible. Anything a Dockerfile needs is
+# generated inside the image from source + the lockfile, never copied from here.
+
+# Dependencies / build output (reinstalled and rebuilt in-image)
+**/node_modules
+**/.next
+**/dist
+**/.turbo
+**/coverage
+**/*.tsbuildinfo
+**/.prisma
+
+# Local env & secrets (containers inject real env vars)
+.env
+.env.*
+!.env.example
+**/.env.local
+
+# VCS / tooling / editor
+.git
+.github
+.gitignore
+**/.DS_Store
+**/*.log
+
+# Docker artifacts themselves
+**/Dockerfile
+docker-compose*.yml
+.dockerignore
+
+# Local data written by the file-backed stores
+.data
+**/.data

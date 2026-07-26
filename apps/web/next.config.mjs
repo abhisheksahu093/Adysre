@@ -33,12 +33,20 @@ function loadRootEnv() {
 
 loadRootEnv();
 
+/** Monorepo root - used to trace files for the standalone Docker output. */
+const monorepoRoot = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
+
 /** Points the plugin at our request config (default location is ./i18n/request.ts). */
 const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts');
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  // Self-contained server bundle for the Docker image (apps/web/Dockerfile).
+  // `outputFileTracingRoot` is required in a monorepo so tracing follows the
+  // workspace packages this app imports instead of stopping at apps/web.
+  output: 'standalone',
+  outputFileTracingRoot: monorepoRoot,
   // Compile workspace packages that ship raw TS/TSX.
   transpilePackages: ['adysre', '@adysre/theme', '@adysre/sdk', '@adysre/types', '@adysre/validators'],
   typedRoutes: true,

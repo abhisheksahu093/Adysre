@@ -1,0 +1,238 @@
+/*
+ * NEBULA - template-scoped design tokens (AI-SaaS).
+ *
+ * A template is a standalone artifact with its own brand, so it cannot inherit
+ * the app's tokens. The whole palette lives here, scoped to
+ * `[data-template='nebula']`; every section references these variables only -
+ * no raw colour in markup (Rule 6).
+ *
+ * ─── Neon-on-dark glassmorphism ────────────────────────────────────────────
+ * A near-black indigo ground, a slowly drifting animated GRADIENT MESH (violet,
+ * neon cyan, magenta), frosted-glass panels with hairline borders, and one
+ * gradient accent for display type. Restraint everywhere, neon only where it
+ * earns attention.
+ *
+ * CAUTION, as in the other templates: a scoped selector such as
+ * `[data-template='nebula'] .neb-x` outranks Tailwind's single-class utilities,
+ * so nothing here may set `position`, `display` or spacing on an element
+ * Tailwind also positions. Only pseudo-elements are positioned from CSS, and the
+ * mesh is animated by transform/opacity only (never repainting the gradient).
+ */
+
+[data-template='nebula'] {
+  --neb-bg: #06060f;
+  --neb-bg-2: #0a0918;
+  --neb-panel: rgb(255 255 255 / 4%);
+  --neb-panel-2: rgb(255 255 255 / 6%);
+
+  --neb-ink: #f4f3ff;
+  --neb-ink-soft: rgb(244 243 255 / 70%);
+  --neb-ink-faint: rgb(244 243 255 / 48%);
+  --neb-line: rgb(255 255 255 / 10%);
+  --neb-line-strong: rgb(255 255 255 / 18%);
+
+  --neb-violet: #7c5cff;
+  --neb-neon: #34e5ff;
+  --neb-pink: #ff5cf0;
+  --neb-violet-soft: rgb(124 92 255 / 16%);
+
+  --neb-radius: 20px;
+
+  color: var(--neb-ink);
+  background-color: var(--neb-bg);
+  font-family: 'Inter Variable', Inter, system-ui, -apple-system, sans-serif;
+  font-feature-settings: 'ss01', 'cv11';
+}
+
+/* ── Type ────────────────────────────────────────────────────────────────── */
+
+[data-template='nebula'] .neb-display {
+  font-weight: 660;
+  letter-spacing: -0.035em;
+  line-height: 1;
+}
+
+/* The gradient accent word. */
+[data-template='nebula'] .neb-accent {
+  background: linear-gradient(100deg, var(--neb-neon), var(--neb-violet) 55%, var(--neb-pink));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+[data-template='nebula'] .neb-mono {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+/* ── Glass ───────────────────────────────────────────────────────────────── */
+
+[data-template='nebula'] .neb-glass {
+  background: var(--neb-panel);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--neb-line);
+}
+
+[data-template='nebula'] .neb-glass-strong {
+  background: var(--neb-panel-2);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--neb-line-strong);
+}
+
+/* A hover-lift + neon edge for cards. Only colour/shadow/transform here. */
+[data-template='nebula'] .neb-card {
+  transition: transform 400ms cubic-bezier(0.22, 1, 0.36, 1), border-color 400ms, box-shadow 400ms;
+}
+
+@media (hover: hover) {
+  [data-template='nebula'] .neb-card:hover {
+    transform: translateY(-4px);
+    border-color: color-mix(in srgb, var(--neb-violet) 55%, transparent);
+    box-shadow: 0 20px 60px -20px rgb(124 92 255 / 45%);
+  }
+}
+
+/* ── Gradient mesh ───────────────────────────────────────────────────────── */
+
+/*
+ * Three blurred colour fields that drift slowly behind the hero and mastheads.
+ * Pseudo-elements so they never fight Tailwind for layout; the host carries
+ * `relative isolate overflow-hidden` and these sit at z-index -1.
+ */
+[data-template='nebula'] .neb-mesh {
+  background-image: radial-gradient(50% 40% at 50% 120%, rgb(255 92 240 / 22%), transparent 70%);
+}
+
+[data-template='nebula'] .neb-mesh::before,
+[data-template='nebula'] .neb-mesh::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  border-radius: 9999px;
+  filter: blur(90px);
+  will-change: transform;
+}
+
+[data-template='nebula'] .neb-mesh::before {
+  width: 46rem;
+  height: 46rem;
+  left: -14rem;
+  top: -18rem;
+  background: radial-gradient(circle, rgb(124 92 255 / 55%), transparent 62%);
+  animation: neb-drift-a 24s ease-in-out infinite;
+}
+
+[data-template='nebula'] .neb-mesh::after {
+  width: 40rem;
+  height: 40rem;
+  right: -12rem;
+  top: -8rem;
+  background: radial-gradient(circle, rgb(52 229 255 / 42%), transparent 62%);
+  animation: neb-drift-b 30s ease-in-out infinite;
+}
+
+@keyframes neb-drift-a {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(6rem, 4rem); }
+}
+
+@keyframes neb-drift-b {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-5rem, 3rem); }
+}
+
+/* A faint dotted grid, for hero depth. */
+[data-template='nebula'] .neb-grid {
+  background-image: radial-gradient(rgb(255 255 255 / 8%) 1px, transparent 1.4px);
+  background-size: 30px 30px;
+}
+
+/* ── Floating glass ──────────────────────────────────────────────────────── */
+
+[data-template='nebula'] .neb-float {
+  animation: neb-float 7s ease-in-out infinite;
+}
+
+[data-template='nebula'] .neb-float-slow {
+  animation: neb-float 10s ease-in-out infinite;
+}
+
+@keyframes neb-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* An animated bar in the floating dashboard. Grows once, on a loop of glow. */
+[data-template='nebula'] .neb-bar {
+  transform-origin: bottom;
+  animation: neb-bar 3.4s ease-in-out infinite alternate;
+}
+
+@keyframes neb-bar {
+  from { transform: scaleY(0.55); }
+  to { transform: scaleY(1); }
+}
+
+/* ── Marquee ─────────────────────────────────────────────────────────────── */
+
+[data-template='nebula'] .neb-marquee {
+  animation: neb-marquee 34s linear infinite;
+}
+
+@keyframes neb-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* ── Buttons / focus ─────────────────────────────────────────────────────── */
+
+[data-template='nebula'] .neb-btn-primary {
+  background: linear-gradient(100deg, var(--neb-violet), var(--neb-neon));
+  color: #06060f;
+  transition: transform 250ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 250ms;
+  box-shadow: 0 10px 30px -10px rgb(124 92 255 / 60%);
+}
+
+@media (hover: hover) {
+  [data-template='nebula'] .neb-btn-primary:hover {
+    box-shadow: 0 16px 44px -12px rgb(52 229 255 / 60%);
+  }
+}
+
+[data-template='nebula'] :focus-visible {
+  outline: 2px solid var(--neb-neon);
+  outline-offset: 3px;
+}
+
+/* ── Motion primitives' resting state ────────────────────────────────────── */
+
+[data-template='nebula'] [data-neb-reveal='pending'] {
+  opacity: 0;
+}
+
+[data-template='nebula'] .neb-clip {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.2em; /* descenders */
+  margin-bottom: -0.2em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-template='nebula'] [data-neb-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  [data-template='nebula'] .neb-mesh::before,
+  [data-template='nebula'] .neb-mesh::after,
+  [data-template='nebula'] .neb-float,
+  [data-template='nebula'] .neb-float-slow,
+  [data-template='nebula'] .neb-bar,
+  [data-template='nebula'] .neb-marquee {
+    animation: none !important;
+  }
+}

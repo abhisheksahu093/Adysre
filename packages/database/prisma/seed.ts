@@ -4,12 +4,16 @@
  */
 import { PrismaClient } from '@prisma/client';
 import { createHash } from 'node:crypto';
+import { MODULE_PERMISSIONS } from '@adysre/types';
 
 const prisma = new PrismaClient();
 
 const SYSTEM_ROLES = ['Owner', 'Admin', 'Manager', 'Member'] as const;
 
-// module:resource:action — baseline core permissions.
+// module:resource:action — baseline core permissions. Module permissions come
+// from `@adysre/types` so the seed and the modules that check them read one
+// list; a copy here would drift the first time a module added a permission,
+// and drifted permissions fail silently as denials.
 const CORE_PERMISSIONS = [
   'org:organization:manage',
   'org:user:create',
@@ -34,7 +38,7 @@ async function main() {
   const tenantId = org.id;
 
   const permissions = await Promise.all(
-    CORE_PERMISSIONS.map((key) =>
+    [...CORE_PERMISSIONS, ...MODULE_PERMISSIONS].map((key) =>
       prisma.permission.upsert({
         where: { tenantId_key: { tenantId, key } },
         update: {},

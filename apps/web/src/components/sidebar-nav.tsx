@@ -9,7 +9,7 @@ import { Link, usePathname } from '@/i18n/navigation';
 import { NAV_ITEMS } from '@/config/navigation';
 import { NAV_SUBMENUS, type LabelMode, type ModuleSubmenu } from '@/config/nav-submenus';
 import { humanizeKey } from '@/lib/humanize';
-import { Logo } from './logo';
+import { Logo, LogoIcon } from './logo';
 
 /** Brand mark - shared by the desktop sidebar and the mobile drawer. */
 export function SidebarBrand() {
@@ -33,6 +33,22 @@ export function SidebarBrand() {
   );
 }
 
+/** Collapsed-rail brand: the compact icon mark, still a link home. */
+export function SidebarBrandIcon() {
+  const t = useTranslations('nav');
+  return (
+    <div className="flex h-14 shrink-0 items-center justify-center border-b border-border">
+      <Link
+        href="/"
+        aria-label={t('backToHome')}
+        className="rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+      >
+        <LogoIcon height={20} priority />
+      </Link>
+    </div>
+  );
+}
+
 /**
  * Sidebar navigation, rendered from NAV_ITEMS.
  *
@@ -44,7 +60,7 @@ export function SidebarBrand() {
  * `NAV_ITEMS` stays in declaration order because `APP_HOME` (and the marketing
  * links that point at it) is defined as its first entry.
  *
- * Modules that expose a submenu (components, prompts, icons, gradients,
+ * Modules that expose a submenu (components, icons, gradients,
  * palettes) render as expandable dropdowns whose items are the categories/tags
  * that used to sit as filter chips on the page. Each item links to the module
  * with a `?category=` / `?tag=` query the page reads, so choosing a filter is a
@@ -65,7 +81,7 @@ export function SidebarNav({
   return (
     <Suspense
       fallback={
-        <SidebarNavInner onNavigate={onNavigate} activeValue={null} collapsed={collapsed} />
+        <SidebarNavInner onNavigate={onNavigate} activeValue={null} activeTab={null} collapsed={collapsed} />
       }
     >
       <SidebarNavWithParams onNavigate={onNavigate} collapsed={collapsed} />
@@ -89,19 +105,29 @@ function SidebarNavWithParams({
     (m) => pathname === m.href || pathname.startsWith(`${m.href}/`),
   );
   const activeValue = activeModule ? searchParams.get(activeModule.param) : null;
+  // The active tab drives which sub-module (and its filters) is highlighted in
+  // the nested colours & surfaces menu.
+  const activeTab = activeModule?.nested ? searchParams.get('tab') : null;
 
   return (
-    <SidebarNavInner onNavigate={onNavigate} activeValue={activeValue} collapsed={collapsed} />
+    <SidebarNavInner
+      onNavigate={onNavigate}
+      activeValue={activeValue}
+      activeTab={activeTab}
+      collapsed={collapsed}
+    />
   );
 }
 
 function SidebarNavInner({
   onNavigate,
   activeValue,
+  activeTab,
   collapsed,
 }: {
   onNavigate: () => void;
   activeValue: string | null;
+  activeTab: string | null;
   collapsed: boolean;
 }) {
   const pathname = usePathname();
@@ -110,7 +136,6 @@ function SidebarNavInner({
   const tCommon = useTranslations('common');
   const tComponents = useTranslations('components');
   const tIcons = useTranslations('icons');
-  const tPrompts = useTranslations('promptLibrary');
 
   // One collator for the whole tree: `localeCompare` rebuilds the collation
   // table on every call, and the submenus sort a few hundred labels between
@@ -133,16 +158,25 @@ function SidebarNavInner({
 
   useEffect(() => {
     const submenu = activeModuleKey ? NAV_SUBMENUS[activeModuleKey] : undefined;
-    if (submenu?.groups && activeValue) {
+    if (!submenu) return;
+    // Nested (colours & surfaces): open the parent and the active tab's group,
+    // so a deep link (?tab=&tag=) lands with its branch already unfolded.
+    if (submenu.nested && activeTab) {
+      setOpenModule(activeModuleKey);
+      const group = submenu.groups?.find((g) => g.tab === activeTab);
+      if (group) setOpenGroup(group.groupKey);
+      return;
+    }
+    if (submenu.groups && activeValue) {
       const group = submenu.groups.find((g) => g.values.includes(activeValue));
       if (group) setOpenGroup(group.groupKey);
     }
-  }, [activeModuleKey, activeValue]);
+  }, [activeModuleKey, activeValue, activeTab]);
 
   /** Resolve a filter value to its sidebar label. */
   function resolveLabel(mode: LabelMode, value: string): string {
     if (mode === 'humanize') return humanizeKey(value);
-    const translate = mode.ns === 'components' ? tComponents : mode.ns === 'icons' ? tIcons : tPrompts;
+    const translate = mode.ns === 'components' ? tComponents : tIcons;
     const key = `${mode.prefix}${value}`;
     return translate.has(key) ? translate(key) : humanizeKey(value);
   }
@@ -154,12 +188,18 @@ function SidebarNavInner({
     );
   }
 
-  /** One filter link (a submenu leaf). */
-  function Leaf({ submenu, value }: { submenu: ModuleSubmenu; value: string }) {
-    const isActive = activeModuleKey === submenu.navKey && activeValue === value;
+  /** One filter link (a submenu leaf). `tab` scopes it to a nested sub-module. */
+  function Leaf({ submenu, value, tab }: { submenu: ModuleSubmenu; value: string; tab?: string }) {
+    const isActive =
+      activeModuleKey === submenu.navKey &&
+      activeValue === value &&
+      (tab === undefined || activeTab === tab);
+    const href = tab
+      ? `${submenu.href}?tab=${tab}&${submenu.param}=${value}`
+      : `${submenu.href}?${submenu.param}=${value}`;
     return (
       <Link
-        href={`${submenu.href}?${submenu.param}=${value}`}
+        href={href}
         onClick={onNavigate}
         aria-current={isActive ? 'page' : undefined}
         className={cn(
@@ -185,9 +225,13 @@ function SidebarNavInner({
       {items.map((item) => {
         const { key, href, icon: Icon, comingSoon } = item;
         const submenu = NAV_SUBMENUS[key];
+        const nested = submenu?.nested ?? false;
         const sortedGroups = submenu?.groups
           ? [...submenu.groups].sort((a, b) =>
-              collator.compare(t(`groups.${a.groupKey}`), t(`groups.${b.groupKey}`)),
+              collator.compare(
+                nested ? t(a.labelKey ?? '') : t(`groups.${a.groupKey}`),
+                nested ? t(b.labelKey ?? '') : t(`groups.${b.groupKey}`),
+              ),
             )
           : undefined;
         // usePathname is locale-stripped, so it compares cleanly to hrefs.
@@ -298,18 +342,75 @@ function SidebarNavInner({
                 <Link
                   href={submenu.href}
                   onClick={onNavigate}
-                  aria-current={active && !activeValue ? 'page' : undefined}
+                  aria-current={active && !activeValue && !activeTab ? 'page' : undefined}
                   className={cn(
                     'block truncate rounded-md px-3 py-1.5 text-[13px] font-medium transition-colors',
                     'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
-                    active && !activeValue
+                    active && !activeValue && !activeTab
                       ? 'bg-primary/10 text-primary'
                       : 'text-muted-foreground hover:bg-muted hover:text-foreground',
                   )}
                 >
                   {t('viewAll', { label: t(key) })}
                 </Link>
-                {sortedGroups
+                {nested && sortedGroups
+                  ? sortedGroups.map((group) => {
+                      const groupOpen = openGroup === group.groupKey;
+                      const tabActive = active && activeTab === group.tab;
+                      return (
+                        <div key={group.groupKey}>
+                          <div
+                            className={cn(
+                              'flex items-stretch gap-0.5 rounded-md transition-colors',
+                              tabActive && !activeValue
+                                ? 'bg-primary/10 text-primary'
+                                : 'text-muted-foreground hover:bg-muted',
+                            )}
+                          >
+                            <Link
+                              href={`${submenu.href}?tab=${group.tab}`}
+                              onClick={onNavigate}
+                              aria-current={tabActive && !activeValue ? 'page' : undefined}
+                              className={cn(
+                                'flex min-w-0 flex-1 items-center rounded-md px-3 py-1.5 text-[13px] font-medium',
+                                'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring',
+                                tabActive && !activeValue ? 'text-primary' : 'hover:text-foreground',
+                              )}
+                            >
+                              <span className="truncate">{t(group.labelKey ?? '')}</span>
+                            </Link>
+                            <button
+                              type="button"
+                              onClick={() => setOpenGroup(groupOpen ? null : group.groupKey)}
+                              aria-expanded={groupOpen}
+                              aria-label={
+                                groupOpen
+                                  ? t('collapseSection', { label: t(group.labelKey ?? '') })
+                                  : t('expandSection', { label: t(group.labelKey ?? '') })
+                              }
+                              className={cn(
+                                'flex w-8 shrink-0 items-center justify-center rounded-md',
+                                'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring',
+                                tabActive ? 'text-primary' : 'text-muted-foreground hover:text-foreground',
+                              )}
+                            >
+                              <ChevronDown
+                                className={cn('h-4 w-4 transition-transform', groupOpen && 'rotate-180')}
+                                aria-hidden
+                              />
+                            </button>
+                          </div>
+                          {groupOpen && (
+                            <div className="mt-0.5 space-y-0.5 border-l border-border pl-2">
+                              {sortedValues(submenu.labelMode, group.values).map((value) => (
+                                <Leaf key={value} submenu={submenu} value={value} tab={group.tab ?? ''} />
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })
+                  : sortedGroups
                   ? sortedGroups.map((group) => {
                       const groupOpen = openGroup === group.groupKey;
                       return (

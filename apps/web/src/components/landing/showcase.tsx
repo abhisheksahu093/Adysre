@@ -55,12 +55,12 @@ export async function Showcase() {
     <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-28">
       <SectionHeading title={t('showcase.title')} subtitle={t('showcase.subtitle')} />
 
-      <div className="mt-12 grid grid-cols-1 gap-4 md:grid-cols-3">
+      <div className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {/* Gradient tile - spans two columns on desktop. */}
         <Tile
           label={t('showcase.gradient.label')}
           caption={t('showcase.gradient.caption')}
-          className="md:col-span-2"
+          className="sm:col-span-2"
         >
           <div
             className="h-40 w-full rounded-lg bg-gradient-to-br from-primary via-secondary to-accent"
@@ -92,11 +92,27 @@ export async function Showcase() {
           </div>
         </Tile>
 
+        {/* Patterns tile - dot grid and diagonal lines from CSS, token-coloured. */}
+        <Tile label={t('showcase.patterns.label')} caption={t('showcase.patterns.caption')}>
+          <div className="grid h-40 grid-cols-2 gap-2" aria-hidden>
+            <span className="rounded-lg bg-card text-primary/70 [background-image:radial-gradient(currentColor_1.5px,transparent_1.6px)] [background-size:12px_12px]" />
+            <span className="rounded-lg bg-card text-secondary/60 [background-image:repeating-linear-gradient(45deg,currentColor_0,currentColor_2px,transparent_2px,transparent_10px)]" />
+          </div>
+        </Tile>
+
+        {/* Textures tile - fine grain and cross-hatch, from CSS over a token surface. */}
+        <Tile label={t('showcase.textures.label')} caption={t('showcase.textures.caption')}>
+          <div className="grid h-40 grid-cols-2 gap-2" aria-hidden>
+            <span className="rounded-lg bg-muted text-foreground/20 [background-image:radial-gradient(currentColor_0.5px,transparent_0.6px)] [background-size:3px_3px]" />
+            <span className="rounded-lg bg-muted text-foreground/15 [background-image:repeating-linear-gradient(45deg,currentColor_0,currentColor_1px,transparent_1px,transparent_5px),repeating-linear-gradient(-45deg,currentColor_0,currentColor_1px,transparent_1px,transparent_5px)]" />
+          </div>
+        </Tile>
+
         {/* Components tile - spans two columns; renders real UI primitives. */}
         <Tile
           label={t('showcase.components.label')}
           caption={t('showcase.components.caption')}
-          className="md:col-span-2"
+          className="sm:col-span-2"
         >
           <div
             className="flex h-40 flex-col justify-center gap-3 pointer-events-none"

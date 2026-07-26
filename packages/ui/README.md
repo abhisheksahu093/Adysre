@@ -1,183 +1,480 @@
-# adysre
+# ADYSRE
 
-React components, icons, gradients, patterns, textures and palettes for Next.js
-and React — the library behind [ADYSRE](https://github.com/abhisheksahu093/Adysre).
+The most complete **React UI component library** for **Next.js**, **React**, **TypeScript**, and **Tailwind CSS**.
 
-| | |
-|---|---|
-| **780** section & page blocks | hero, pricing, navbar, footer, auth, tables, calendars, carousels… |
-| **448** icons | original 24×24 line drawings, tree-shakeable, `currentColor` |
-| **102** palettes | curated colour sets plus the colour maths behind them |
-| **78** gradients | linear, radial, conic — plain data, no images |
-| **50** patterns | dots, grids, lines, checkerboard, crosshatch — pure CSS |
-| **28** textures | noise, grain, paper, carbon, fabric — inline SVG, no image files |
-| **9** primitives | Button, Card, Input, Label, Textarea, Select, Badge, Dialog, Tooltip |
+Build modern websites, SaaS products, dashboards, landing pages, admin panels, AI applications, eCommerce stores, startup websites, and business applications faster with hundreds of production-ready UI components, icons, design assets, and developer utilities.
 
-Everything is typed, tree-shakeable ESM. React 18+ is the only required peer.
+ADYSRE combines a powerful design system with reusable React components, beautiful icons, CSS gradients, patterns, textures, color palettes, and UI primitives—all designed for speed, accessibility, and developer experience.
 
-## Install
+> ⚡ Build beautiful interfaces in minutes, not days.
+
+---
+
+## Why ADYSRE?
+
+- 🚀 780+ production-ready React sections & page blocks
+- 🎨 448 handcrafted SVG icons
+- 🌈 102 professionally curated color palettes
+- ✨ 78 modern CSS gradients
+- 🔲 50 pure CSS patterns
+- 🧩 28 SVG textures
+- ⚙️ 9 reusable UI primitives
+- 💯 TypeScript-first
+- 🌳 Tree-shakeable ESM
+- ♿ Accessible components
+- 📱 Responsive by default
+- ⚡ Optimized for Next.js, Vite, Remix & Astro
+- 🎯 React 18 & React 19 compatible
+
+---
+
+## What's Included?
+
+| Category | Count | Description |
+|----------|------:|------------|
+| UI Sections & Blocks | **780** | Hero, Navbar, Footer, CTA, Features, Pricing, FAQ, Team, Testimonials, Contact, Dashboard, Authentication, Tables, Calendars, Carousels, Blogs, Statistics, Marketing, SaaS, AI Landing Pages and more |
+| Icons | **448** | Original SVG icons with customizable size, stroke and color |
+| Color Palettes | **102** | Beautiful color systems with accessibility helpers |
+| CSS Gradients | **78** | Linear, Radial and Conic gradients |
+| CSS Patterns | **50** | Dots, Grid, Waves, Blueprint, Lines, Checkerboard, Crosshatch and more |
+| SVG Textures | **28** | Grain, Paper, Noise, Carbon, Fabric, Mesh and more |
+| UI Components | **9** | Button, Card, Input, Badge, Dialog, Tooltip, Select, Label, Textarea |
+
+---
+
+## Perfect For
+
+ADYSRE is built for developers creating:
+
+- Landing Pages
+- SaaS Applications
+- AI Platforms
+- Startup Websites
+- Dashboards
+- CRM Systems
+- Admin Panels
+- Portfolio Websites
+- Agency Websites
+- Blogs
+- Marketing Websites
+- Authentication Pages
+- eCommerce Stores
+- Business Applications
+- Internal Tools
+- Design Systems
+
+---
+
+# Installation
 
 ```bash
-npm i adysre        # pnpm add adysre   ·   yarn add adysre
+npm install adysre
 ```
 
-## Styling
+or
 
-Components are styled with Tailwind utility classes. Pick the path that matches
-your project — you only need one.
+```bash
+pnpm add adysre
+```
 
-**Using Tailwind v4** (recommended). Add one line to your global stylesheet; it
-brings the design tokens and tells Tailwind to scan this package, without which
-the utilities baked into our components are never generated:
+or
+
+```bash
+yarn add adysre
+```
+
+---
+
+# Tailwind CSS Setup
+
+## Tailwind CSS v4 (Recommended)
+
+Import ADYSRE into your global stylesheet.
 
 ```css
-/* app/globals.css */
 @import "tailwindcss";
 @import "adysre/styles.css";
 ```
 
-**Not using Tailwind.** Import the pre-compiled stylesheet once, anywhere:
+This automatically:
+
+- loads ADYSRE design tokens
+- registers utility classes
+- enables all component styles
+- configures Tailwind scanning
+
+---
+
+## Without Tailwind
+
+Import the precompiled stylesheet once.
 
 ```tsx
-// app/layout.tsx
-import 'adysre/dist.css';
+import "adysre/dist.css";
 ```
 
-Dark mode follows a `.dark` class on a parent element — the convention
-`next-themes` and most setups already use.
+---
 
-## Use
+Dark mode follows the standard `.dark` class and works perfectly with:
 
-Each area has its own entry point, so importing a button never drags 780
-components into your module graph.
+- next-themes
+- shadcn/ui
+- Tailwind Dark Mode
+- custom implementations
+
+---
+
+# Quick Start
 
 ```tsx
-import { Button, Card, cn } from 'adysre';
-import { ArrowUpRight, Search } from 'adysre/icons';
-import { GradientSurface } from 'adysre/gradients';
-import { PatternSurface } from 'adysre/patterns';
-import { TextureSurface } from 'adysre/textures';
-import { getPalette } from 'adysre/palettes';
-import { AboutStats, PricingThreeTier } from 'adysre/blocks';
+import {
+  Button,
+  Card,
+  cn
+} from "adysre";
+
+import {
+  ArrowUpRight,
+  Search
+} from "adysre/icons";
+
+import {
+  GradientSurface
+} from "adysre/gradients";
+
+import {
+  PatternSurface
+} from "adysre/patterns";
+
+import {
+  TextureSurface
+} from "adysre/textures";
+
+import {
+  AboutStats,
+  PricingThreeTier
+} from "adysre/blocks";
 ```
 
-### Blocks
+---
 
-Blocks are prop-driven sections. Every one is a plain function component — no
-context, no provider, no client runtime unless the block genuinely needs one.
+# UI Blocks
+
+ADYSRE includes hundreds of reusable website sections.
+
+Examples include:
+
+- Hero Sections
+- Pricing Sections
+- Testimonials
+- Team Sections
+- FAQ
+- Contact Forms
+- Feature Grids
+- Statistics
+- Logos
+- Blog Layouts
+- Authentication
+- Dashboards
+- Admin Components
+- Tables
+- Calendars
+- Carousels
+- Marketing Sections
+- AI Landing Pages
+- Startup Templates
+
+Every block is:
+
+- Fully typed
+- Responsive
+- Accessible
+- Customizable
+- Production ready
+
+Example:
 
 ```tsx
-import { AboutStats } from 'adysre/blocks';
+import { AboutStats } from "adysre/blocks";
 
 <AboutStats
-  kicker="By the numbers"
-  title="Where we are after six years"
+  kicker="By the Numbers"
+  title="Trusted by companies worldwide"
   stats={[
-    { label: 'People', value: '12' },
-    { label: 'Projects shipped', value: '148' },
-    { label: 'Client retention', value: '94%' },
+    {
+      label: "Customers",
+      value: "12K+"
+    },
+    {
+      label: "Projects",
+      value: "3,400"
+    },
+    {
+      label: "Countries",
+      value: "42"
+    }
   ]}
-/>;
+/>
 ```
 
-Deep-import when you only need one — kinder to your dev server:
+Need only one component?
 
 ```tsx
-import { AboutStats } from 'adysre/blocks/about-stats';
+import { AboutStats } from "adysre/blocks/about-stats";
 ```
 
-Every block module also default-exports a zero-prop demo with realistic sample
-content, which is what the ADYSRE site renders:
+Deep imports reduce bundle size and improve development performance.
+
+---
+
+# Icons
+
+ADYSRE includes 448 handcrafted SVG icons.
 
 ```tsx
-import AboutStatsDemo from 'adysre/blocks/about-stats';
+import { ArrowUpRight } from "adysre/icons";
+
+<ArrowUpRight />
+
+<ArrowUpRight
+  size={32}
+  strokeWidth={2}
+/>
+
+<ArrowUpRight
+  className="text-blue-600"
+  aria-label="Open"
+/>
 ```
 
-### Icons
+Features:
+
+- SVG
+- Tree-shakeable
+- Accessible
+- currentColor support
+- TypeScript
+- Adjustable size
+- Adjustable stroke width
+
+Dynamic lookup:
 
 ```tsx
-import { ArrowUpRight } from 'adysre/icons';
+import {
+  Icon,
+  getIcon
+} from "adysre/icons";
 
-<ArrowUpRight />                                  {/* 24px, currentColor */}
-<ArrowUpRight size={32} strokeWidth={2} />
-<ArrowUpRight className="text-blue-600" aria-label="Open in new tab" />
+<Icon name="ArrowUpRight" />
 ```
 
-Icons are `aria-hidden` unless you give them an `aria-label` — decorative by
-default, which is what an icon beside a label should be.
+---
 
-When the name is data rather than something you can write down, look it up:
+# Gradients
+
+Beautiful CSS gradients without images.
 
 ```tsx
-import { Icon, ICONS, getIcon } from 'adysre/icons';
+import {
+  GradientSurface
+} from "adysre/gradients";
 
-<Icon name={page.iconName} size={20} />
+<GradientSurface
+  gradient="warm-flame"
+  className="rounded-xl h-64"
+/>
 ```
 
-`<Icon>` pulls the whole catalogue into that chunk, so prefer the named import
-wherever the name is known at build time.
+Utilities:
 
-### Gradients, patterns, textures
+- getGradient()
+- gradientToCss()
+- gradientToStyle()
 
-Three interchangeable surfaces. Pass a curated id or your own object; anything
-else you pass is forwarded to the element.
+---
+
+# CSS Patterns
+
+Create modern backgrounds using pure CSS.
 
 ```tsx
-import { GradientSurface } from 'adysre/gradients';
-import { PatternSurface } from 'adysre/patterns';
-import { TextureSurface } from 'adysre/textures';
+import {
+  PatternSurface
+} from "adysre/patterns";
 
-<GradientSurface gradient="warm-flame" className="h-64 rounded-xl" />
-<PatternSurface  pattern="blueprint-grid" as="section" className="py-24" />
-<TextureSurface  texture="ink-noise" className="absolute inset-0 -z-10" />
+<PatternSurface
+  pattern="blueprint-grid"
+/>
 ```
 
-Need the raw CSS instead of an element?
+Includes:
+
+- Grid
+- Dot
+- Wave
+- Checkerboard
+- Blueprint
+- Crosshatch
+- Diagonal Lines
+
+---
+
+# SVG Textures
+
+Add subtle visual depth.
 
 ```tsx
-import { getGradient, gradientToCss, gradientToStyle } from 'adysre/gradients';
+import {
+  TextureSurface
+} from "adysre/textures";
 
-gradientToCss(getGradient('warm-flame')!);
-// 'linear-gradient(45deg, #ff9a9e 0%, #fad0c4 100%)'
-
-<div style={gradientToStyle(getGradient('warm-flame')!)} />
+<TextureSurface
+  texture="ink-noise"
+/>
 ```
 
-Browse the catalogues to build your own picker: `GRADIENTS`, `PATTERNS`,
-`TEXTURES`, `PALETTES`, `ICONS`, each with `similar*()` and tag lists.
+Available textures:
 
-### Palettes and colour
+- Noise
+- Grain
+- Carbon
+- Paper
+- Fabric
+- Mesh
+- Ink
+
+---
+
+# Color Utilities
 
 ```tsx
-import { getPalette, contrastRatio, readableText, harmony } from 'adysre/palettes';
+import {
+  getPalette,
+  readableText,
+  harmony,
+  contrastRatio
+} from "adysre/palettes";
 
-readableText('#2563eb');                 // '#ffffff'
-contrastRatio('#111827', '#f9fafb');     // 16.4
-harmony('#2563eb', 'triadic', 5);        // ['#2563eb', '#eb2563', …]
+readableText("#2563eb");
+
+contrastRatio("#111827", "#ffffff");
+
+harmony("#2563eb", "triadic");
 ```
 
-## Optional peers
+Perfect for:
 
-One block animates with `framer-motion`. It is an optional peer and is left out
-of the `blocks` barrel on purpose, so a missing peer can never break everyone
-else's import. Install it and import by path:
+- Theme generation
+- Accessibility
+- WCAG compliance
+- Design systems
+
+---
+
+# Performance
+
+ADYSRE is built for speed.
+
+✔ Tree-shakeable
+
+✔ ES Modules
+
+✔ TypeScript
+
+✔ Zero runtime configuration
+
+✔ Deep imports
+
+✔ Minimal bundle size
+
+✔ Server Components compatible
+
+✔ React Server Components friendly
+
+✔ Optimized for production
+
+---
+
+# Optional Animation
+
+Animated blocks use Framer Motion.
+
+Install only if needed.
 
 ```bash
-npm i framer-motion
+npm install framer-motion
 ```
 
 ```tsx
-import { FadeInOnScroll } from 'adysre/blocks/fade-in-on-scroll';
+import { FadeInOnScroll } from "adysre/blocks/fade-in-on-scroll";
 ```
 
-## Requirements
+---
 
-- React 18 or newer (React 19 recommended)
-- ESM. Next.js, Vite, Remix and Astro consume it directly; a CommonJS `require()`
-  will not resolve it.
-- Node 20+ for anything server-rendering it
+# Requirements
 
-## License
+- React 18+
+- React 19 Supported
+- TypeScript
+- Node.js 20+
+- ES Modules
 
-MIT © ADYSRE. Icons are original drawings authored for this project; no
-third-party icon set is redistributed here.
+Compatible with:
+
+- Next.js
+- React
+- Vite
+- Remix
+- Astro
+
+---
+
+# Documentation
+
+Documentation includes:
+
+- Installation Guide
+- Component Examples
+- API Reference
+- Playground
+- Blocks Gallery
+- Icons Gallery
+- Color Palettes
+- Gradients
+- Patterns
+- Textures
+- Accessibility Guide
+- Migration Guides
+
+---
+
+# Roadmap
+
+Upcoming releases include:
+
+- Figma Plugin
+- Theme Builder
+- Visual Block Editor
+- AI Page Generator
+- Component Generator
+- Motion Library
+- Charts
+- Advanced Forms
+- Charts & Analytics
+- CMS Blocks
+
+---
+
+# License
+
+MIT License
+
+© ADYSRE
+
+All icons are original artwork created exclusively for ADYSRE and are not redistributed from any third-party icon library.
+
+---
+
+## Keywords
+
+React UI Components • Next.js Components • React Component Library • Tailwind CSS Components • React Icons • UI Kit • Dashboard Components • Landing Page Components • SaaS Components • Admin Dashboard • TypeScript UI Library • CSS Gradients • SVG Icons • Design System • React Design System • Next.js UI Kit • Modern UI Components • Accessible Components • Responsive Components • AI Website Components • Startup UI Kit

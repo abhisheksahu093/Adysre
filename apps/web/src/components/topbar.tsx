@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { Search } from 'lucide-react';
 import { MobileNav } from './mobile-nav';
+import { SidebarToggle } from './sidebar-toggle';
 import { ThemeSwitcher } from './theme-switcher';
 import { CartMenu } from './cart-menu';
 import { NotificationsMenu } from './notifications-menu';
@@ -31,6 +32,7 @@ export function Topbar() {
   return (
     <header className="sticky top-0 z-10 flex h-14 items-center gap-1 border-b border-border bg-background/80 px-4 backdrop-blur sm:gap-2 sm:px-6">
       <MobileNav />
+      <SidebarToggle />
       <button
         type="button"
         onClick={() => setSearchOpen(true)}

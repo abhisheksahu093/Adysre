@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl';
 import { ArrowRight, Sparkles, Check, PenTool } from 'lucide-react';
 import { buttonVariants, cn } from 'adysre';
 import { Link } from '@/i18n/navigation';
-import { FEATURE_MODULES, LANDING_LINKS } from '@/data/landing';
+import { PREVIEW_MODULES, LANDING_LINKS } from '@/data/landing';
 import { TRUSTED_BUILDERS } from '@/config/audience';
 import { LandingBackdrop } from './landing-backdrop';
 import { WorkspacePreview } from './workspace-preview';
@@ -88,7 +88,7 @@ export function LandingHero() {
               {t('hero.ctaPlayground')}
             </Link>
             <Link
-              href={LANDING_LINKS.app}
+              href={LANDING_LINKS.codeStudio}
               className={cn(buttonVariants({ variant: 'outline', size: 'lg' }), 'w-full gap-1.5 sm:w-auto')}
             >
               {t('hero.ctaWorkspace')}
@@ -116,7 +116,7 @@ export function LandingHero() {
           transition={{ duration: 0.6, delay: reduce ? 0 : 0.35, ease: 'easeOut' }}
           className="mx-auto mt-14 max-w-5xl"
         >
-          <WorkspacePreview modules={FEATURE_MODULES} />
+          <WorkspacePreview modules={PREVIEW_MODULES} />
         </motion.div>
       </div>
     </section>

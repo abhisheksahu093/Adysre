@@ -18,6 +18,12 @@ files, audit, and AI. See [`documents/BOOTSTRAP_PROJECT.md`](./documents/BOOTSTR
 
 **Module specs:** [Design Playground](./documents/DESIGN_PLAYGROUND_PRD.md) —
 the visual design editor at `/design-playground` (Phase 1: shell only).
+[Tool Suite](./documents/TOOL_SUITE.md) — four local-only, no-AI tools
+(email signature, SEO audit, ATS scanner, resume builder).
+[API Studio](./documents/API_STUDIO.md) — the self-hosted HTTP client at
+`/api-studio` (Phase 1: architecture, types, schemas, permissions).
+[Business Rules Engine](./documents/RULES_ENGINE.md) — the framework-agnostic
+`@adysre/rules-*` package ecosystem (AST, plugins, executor, visual builder).
 
 **Published library:** [`documents/NPM_LIBRARY.md`](./documents/NPM_LIBRARY.md) —
 `adysre` on npm (blocks, icons, gradients, patterns, textures, palettes).

@@ -24,7 +24,7 @@ export async function CtaBand() {
 
           <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Link
-              href={LANDING_LINKS.app}
+              href={LANDING_LINKS.codeStudio}
               className={cn(buttonVariants({ size: 'lg' }), 'w-full gap-1.5 sm:w-auto')}
             >
               {t('cta.primary')}

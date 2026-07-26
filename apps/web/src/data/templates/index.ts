@@ -19,6 +19,17 @@ import { SCULPT_CONTENT, SCULPT_NAV, SCULPT_PROMPT } from './sculpt-audio-conten
 import { SOLSTICE_CONTENT, SOLSTICE_NAV, SOLSTICE_PROMPT } from './solstice-hotel-content';
 import { CIRRUS_CONTENT, CIRRUS_NAV, CIRRUS_PROMPT } from './cirrus-analytics-content';
 import { PRISM_CONTENT, PRISM_NAV, PRISM_PROMPT } from './prism-studio-content';
+import { ASTRA_CONTENT, ASTRA_PROMPT } from './astra-portfolio-content';
+import { MARLOWE_CONTENT, MARLOWE_PROMPT } from './marlowe-portfolio-content';
+import { NOCTIS_CONTENT, NOCTIS_NAV, NOCTIS_PROMPT } from './noctis-folio-content';
+import { VESPER_CONTENT, VESPER_NAV, VESPER_PROMPT } from './vesper-portfolio-content';
+import { MARFA_CONTENT, MARFA_NAV, MARFA_PROMPT } from './marfa-studio-content';
+import { CRESTLINE_CONTENT, CRESTLINE_NAV, CRESTLINE_PROMPT } from './crestline-advisory-content';
+import { NEBULA_CONTENT, NEBULA_PAGE_META, NEBULA_PROMPT } from './ai-saas-content';
+import { SOLENE_CONTENT, SOLENE_PAGE_META, SOLENE_PROMPT } from './interior-content';
+import { ASTER_CONTENT, ASTER_PAGE_META, ASTER_PROMPT } from './healthcare-content';
+import { WANDER_CONTENT, WANDER_PAGE_META, WANDER_PROMPT } from './travel-content';
+import { HAVEN_CONTENT, HAVEN_PAGE_META, HAVEN_PROMPT } from './real-estate-content';
 import {
   TEMPLATE_SECTIONS,
   type TemplateEntry,
@@ -40,6 +51,241 @@ import {
  * the downloads are all driven by this list.
  */
 export const TEMPLATES: TemplateEntry[] = [
+  {
+    slug: 'astra-portfolio',
+    name: 'Astra',
+    taglineKey: 'astra',
+    tier: 'premium',
+    themeKey: 'portfolio',
+    sections: TEMPLATE_SECTIONS,
+    prompt: ASTRA_PROMPT,
+    // React targets only: the count-up stats and the reveal system are runtime
+    // behaviour a hand-authored static build cannot reproduce. Single-page, so
+    // no `pages`.
+    downloads: ['nextjs', 'react'],
+    addedOn: '2026-07-24',
+    entry: {
+      file: 'astra-template',
+      symbol: 'AstraTemplate',
+      stylesheet: 'astra.css',
+      scope: 'astra',
+    },
+    content: ASTRA_CONTENT,
+  },
+  {
+    slug: 'crestline-advisory',
+    name: 'Crestline',
+    taglineKey: 'crestline',
+    tier: 'free',
+    themeKey: 'consulting',
+    sections: TEMPLATE_SECTIONS,
+    prompt: CRESTLINE_PROMPT,
+    // React targets only: the count-up stats, orbit and reveal system are
+    // runtime behaviour a hand-authored static build cannot reproduce.
+    downloads: ['nextjs', 'react'],
+    addedOn: '2026-07-25',
+    pages: CRESTLINE_NAV.map((item) => ({ id: item.id, label: item.label })),
+    entry: {
+      file: 'crestline-template',
+      symbol: 'CrestlineTemplate',
+      stylesheet: 'crestline.css',
+      scope: 'crestline',
+    },
+    content: CRESTLINE_CONTENT,
+  },
+  {
+    slug: 'ai-saas',
+    name: 'Nebula',
+    taglineKey: 'nebula',
+    tier: 'free',
+    themeKey: 'saas',
+    sections: TEMPLATE_SECTIONS,
+    prompt: NEBULA_PROMPT,
+    // React targets only: the mesh, Lenis smooth scroll, count-ups and reveal
+    // system are runtime behaviour a hand-authored static build cannot reproduce.
+    downloads: ['nextjs', 'react'],
+    addedOn: '2026-07-25',
+    pages: NEBULA_PAGE_META.map((item) => ({ id: item.id, label: item.label })),
+    entry: {
+      file: 'nebula-template',
+      symbol: 'NebulaTemplate',
+      stylesheet: 'nebula.css',
+      scope: 'nebula',
+    },
+    content: NEBULA_CONTENT,
+  },
+  {
+    slug: 'interior',
+    name: 'Solène',
+    taglineKey: 'solene',
+    tier: 'premium',
+    themeKey: 'architecture',
+    sections: TEMPLATE_SECTIONS,
+    prompt: SOLENE_PROMPT,
+    // React targets only: Lenis smooth scroll, clip-path image reveals, count-ups
+    // and the reveal system are runtime behaviour a static build cannot reproduce.
+    downloads: ['nextjs', 'react'],
+    addedOn: '2026-07-25',
+    pages: SOLENE_PAGE_META.map((item) => ({ id: item.id, label: item.label })),
+    entry: {
+      file: 'solene-template',
+      symbol: 'SoleneTemplate',
+      stylesheet: 'solene.css',
+      scope: 'solene',
+    },
+    content: SOLENE_CONTENT,
+  },
+  {
+    slug: 'healthcare',
+    name: 'Aster',
+    taglineKey: 'aster',
+    tier: 'free',
+    themeKey: 'health',
+    sections: TEMPLATE_SECTIONS,
+    prompt: ASTER_PROMPT,
+    // React targets only: Lenis smooth scroll, the pulse, count-ups and the
+    // reveal system are runtime behaviour a static build cannot reproduce.
+    downloads: ['nextjs', 'react'],
+    addedOn: '2026-07-25',
+    pages: ASTER_PAGE_META.map((item) => ({ id: item.id, label: item.label })),
+    entry: {
+      file: 'aster-template',
+      symbol: 'AsterTemplate',
+      stylesheet: 'aster.css',
+      scope: 'aster',
+    },
+    content: ASTER_CONTENT,
+  },
+  {
+    slug: 'travel',
+    name: 'Wander',
+    taglineKey: 'wander',
+    tier: 'premium',
+    themeKey: 'hospitality',
+    sections: TEMPLATE_SECTIONS,
+    prompt: WANDER_PROMPT,
+    // React targets only: Lenis smooth scroll, clip-path image reveals, pulsing
+    // map pins, count-ups and the reveal system are runtime behaviour.
+    downloads: ['nextjs', 'react'],
+    addedOn: '2026-07-25',
+    pages: WANDER_PAGE_META.map((item) => ({ id: item.id, label: item.label })),
+    entry: {
+      file: 'wander-template',
+      symbol: 'WanderTemplate',
+      stylesheet: 'wander.css',
+      scope: 'wander',
+    },
+    content: WANDER_CONTENT,
+  },
+  {
+    slug: 'real-estate',
+    name: 'Haven',
+    taglineKey: 'haven',
+    tier: 'premium',
+    themeKey: 'realEstate',
+    sections: TEMPLATE_SECTIONS,
+    prompt: HAVEN_PROMPT,
+    // React targets only: the live mortgage calculator, the 3D card hover lift,
+    // clip-path image reveals, count-ups and the reveal system are all runtime
+    // behaviour a hand-authored static build cannot reproduce.
+    downloads: ['nextjs', 'react'],
+    addedOn: '2026-07-25',
+    pages: HAVEN_PAGE_META.map((item) => ({ id: item.id, label: item.label })),
+    entry: {
+      file: 'haven-template',
+      symbol: 'HavenTemplate',
+      stylesheet: 'haven.css',
+      scope: 'haven',
+    },
+    content: HAVEN_CONTENT,
+  },
+  {
+    slug: 'marlowe-portfolio',
+    name: 'Marlowe',
+    taglineKey: 'marlowe',
+    tier: 'premium',
+    themeKey: 'portfolio',
+    sections: TEMPLATE_SECTIONS,
+    prompt: MARLOWE_PROMPT,
+    // React targets only: the scroll-filled skill bars, count-up stats and the
+    // interactive tag filter are all runtime behaviour a hand-authored static
+    // build cannot reproduce. Single-page, so no `pages`.
+    downloads: ['nextjs', 'react'],
+    addedOn: '2026-07-24',
+    entry: {
+      file: 'marlowe-template',
+      symbol: 'MarloweTemplate',
+      stylesheet: 'marlowe.css',
+      scope: 'marlowe',
+    },
+    content: MARLOWE_CONTENT,
+  },
+  {
+    slug: 'noctis-folio',
+    name: 'Noctis',
+    taglineKey: 'noctis',
+    tier: 'free',
+    themeKey: 'portfolio',
+    sections: TEMPLATE_SECTIONS,
+    prompt: NOCTIS_PROMPT,
+    // React targets only: the curtain-wipe reveals and the scroll-scrubbed film
+    // strip rewrite clip-paths and transforms at runtime, which a hand-authored
+    // static build cannot reproduce.
+    downloads: ['nextjs', 'react'],
+    addedOn: '2026-07-24',
+    pages: NOCTIS_NAV.map((item) => ({ id: item.id, label: item.label })),
+    entry: {
+      file: 'noctis-template',
+      symbol: 'NoctisTemplate',
+      stylesheet: 'noctis.css',
+      scope: 'noctis',
+    },
+    content: NOCTIS_CONTENT,
+  },
+  {
+    slug: 'vesper-portfolio',
+    name: 'Vesper',
+    taglineKey: 'vesper',
+    tier: 'premium',
+    themeKey: 'portfolio',
+    sections: TEMPLATE_SECTIONS,
+    prompt: VESPER_PROMPT,
+    // React targets only: the pointer spotlight, 3D-tilt cards and magnetic
+    // buttons are driven by live pointer events, which a no-script build cannot
+    // reproduce.
+    downloads: ['nextjs', 'react'],
+    addedOn: '2026-07-24',
+    pages: VESPER_NAV.map((item) => ({ id: item.id, label: item.label })),
+    entry: {
+      file: 'vesper-template',
+      symbol: 'VesperTemplate',
+      stylesheet: 'vesper.css',
+      scope: 'vesper',
+    },
+    content: VESPER_CONTENT,
+  },
+  {
+    slug: 'marfa-studio',
+    name: 'Marfa',
+    taglineKey: 'marfa',
+    tier: 'premium',
+    themeKey: 'portfolio',
+    sections: TEMPLATE_SECTIONS,
+    prompt: MARFA_PROMPT,
+    // React targets only: the scroll-linked parallax and the word-by-word mask
+    // reveal rewrite transforms at runtime, which a hand-authored static build
+    // cannot reproduce.
+    downloads: ['nextjs', 'react'],
+    addedOn: '2026-07-24',
+    pages: MARFA_NAV.map((item) => ({ id: item.id, label: item.label })),
+    entry: {
+      file: 'marfa-template',
+      symbol: 'MarfaTemplate',
+      stylesheet: 'marfa.css',
+      scope: 'marfa',
+    },
+    content: MARFA_CONTENT,
+  },
   {
     slug: 'prism-studio',
     name: 'Prism',
@@ -495,13 +741,22 @@ export function getTemplate(slug: string): TemplateEntry | undefined {
   return TEMPLATES.find((template) => template.slug === slug);
 }
 
-/** Templates added within this window carry the "New" badge. */
-const NEW_FOR_DAYS = 45;
+/**
+ * The single most recently created template - the only one that carries the
+ * "New" badge. Ties on `addedOn` are broken by registration order (the later
+ * entry in `TEMPLATES` wins), so exactly one template is ever "New".
+ */
+const NEWEST_SLUG: string = TEMPLATES.reduce<{ slug: string; at: number }>(
+  (best, template) => {
+    const at = new Date(template.addedOn).getTime();
+    return !Number.isNaN(at) && at >= best.at ? { slug: template.slug, at } : best;
+  },
+  { slug: '', at: -Infinity },
+).slug;
 
-export function isNewTemplate(template: TemplateEntry, now: Date): boolean {
-  const added = new Date(template.addedOn).getTime();
-  if (Number.isNaN(added)) return false;
-  return (now.getTime() - added) / 86_400_000 <= NEW_FOR_DAYS;
+/** True only for the single most recently created template. */
+export function isNewTemplate(template: TemplateEntry): boolean {
+  return template.slug === NEWEST_SLUG;
 }
 
 /**
@@ -521,7 +776,6 @@ export function isNewTemplate(template: TemplateEntry, now: Date): boolean {
 export function toSummary(
   template: TemplateEntry,
   level: AccessLevel = 'free',
-  now: Date = new Date(),
 ): TemplateSummary {
   const locked = isLockedFor(template.tier, level);
 
@@ -534,15 +788,15 @@ export function toSummary(
     sections: template.sections,
     pages: template.pages ?? [],
     downloads: locked ? [] : template.downloads,
-    isNew: isNewTemplate(template, now),
+    isNew: isNewTemplate(template),
     locked,
     prompt: locked ? null : template.prompt,
   };
 }
 
 /** The gallery's payload for a given entitlement level. */
-export function templateSummaries(level: AccessLevel, now: Date = new Date()): TemplateSummary[] {
-  return TEMPLATES.map((template) => toSummary(template, level, now));
+export function templateSummaries(level: AccessLevel): TemplateSummary[] {
+  return TEMPLATES.map((template) => toSummary(template, level));
 }
 
 /** Templates a visitor on `level` may download, newest-shaped list unchanged. */

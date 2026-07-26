@@ -71,9 +71,12 @@
       }
     }
   },
+  "colorsSurfaces": {
+    "title": "Colors & Surfaces",
+    "subtitle": "Palettes, gradients, patterns and textures, all in one place."
+  },
   "nav": {
     "dashboard": "Dashboard",
-    "promptLibrary": "Prompt Library",
     "components": "Components",
     "designPlayground": "Design Playground",
     "templates": "Templates",
@@ -82,7 +85,6 @@
     "openMenu": "Open navigation menu",
     "closeMenu": "Close navigation menu",
     "descriptions": {
-      "promptLibrary": "Browse, customise and copy prompts for your workspace.",
       "components": "Browse the building blocks available to every module.",
       "templates": "Start from a ready-made layout instead of a blank page.",
       "settings": "Manage your organization, members and preferences.",
@@ -91,12 +93,23 @@
       "patterns": "Browse, edit and export CSS background patterns, or generate your own.",
       "textures": "Browse, edit and export CSS surface textures, or generate your own.",
       "icons": "Browse, customise and export original SVG icons in any format or size.",
-      "designPlayground": "Design pages, dashboards and graphics on an infinite canvas. No code."
+      "designPlayground": "Design pages, dashboards and graphics on an infinite canvas. No code.",
+      "websiteIntelligence": "Scan any public site for performance, SEO, accessibility, security and more.",
+      "qrCode": "Generate customizable QR codes for links, WiFi, contacts, payments and more.",
+      "barcode": "Generate EAN, UPC, Code 128 and Code 39 barcodes with live preview and PNG/SVG export.",
+      "documents": "Create invoices, quotes, receipts and salary slips with live preview, templates and PDF export.",
+      "resume": "Scan a resume against a job description for an ATS score, with keyword and skills match.",
+      "codes": "Generate QR codes and barcodes (EAN, UPC, Code 128) on one page, with live preview and PNG/SVG export.",
+      "codeStudio": "Write HTML, CSS, JS, TypeScript, React and Vue with a live preview, in a browser IDE.",
+      "aiTools": "Compress, convert, resize, read QR and barcodes and more, entirely in your browser.",
+      "apiStudio": "Build, send and test HTTP requests, with collections, environments and history. Self-hosted.",
+      "rules": "Build business rules visually. A JSON tree, a plain-English preview, a live verdict and a debugger that shows which condition decided it."
     },
     "palettes": "Color Palettes",
     "gradients": "Gradients",
     "patterns": "Patterns",
     "textures": "Textures",
+    "colorsSurfaces": "Colors & Surfaces",
     "icons": "Icons",
     "backToHome": "Back to home",
     "groups": {
@@ -113,7 +126,68 @@
     "collapseSection": "Collapse {label}",
     "viewAll": "All {label}",
     "collapseSidebar": "Collapse sidebar",
-    "expandSidebar": "Expand sidebar"
+    "expandSidebar": "Expand sidebar",
+    "websiteIntelligence": "Website Intelligence",
+    "qrCode": "QR Code Generator",
+    "barcode": "Barcode Generator",
+    "documents": "Document Generator",
+    "resume": "Resume & ATS",
+    "codes": "Code Generator",
+    "codeStudio": "Code Studio",
+    "customize": "Customize your project",
+    "aiTools": "Image & Utility Tools",
+    "apiStudio": "API Studio",
+    "rules": "Business Rules"
+  },
+  "tools": {
+    "qr": {
+      "badge": "Tools",
+      "title": "QR Code Generator",
+      "subtitle": "Create customizable QR codes for links, WiFi, contacts, events and payments, designed live and downloaded as PNG or SVG, all in your browser."
+    },
+    "invoice": {
+      "badge": "Tools",
+      "title": "Invoice & Document Generator",
+      "subtitle": "Build invoices, quotes, receipts and orders with a live preview, polished templates and one-click print-to-PDF, plus JSON/CSV export and CSV import, all offline."
+    },
+    "barcode": {
+      "badge": "Tools",
+      "title": "Barcode Generator",
+      "subtitle": "Generate scannable EAN-13, EAN-8, UPC-A, ITF-14, Code 128 and Code 39 barcodes, check digits computed, designed live and exported as PNG or SVG, all in your browser."
+    },
+    "salary": {
+      "badge": "Tools",
+      "title": "Salary Slip Generator",
+      "subtitle": "Build professional payslips with employee details, earnings and deductions ledgers and an auto-calculated net salary. Preview live and print to PDF, all offline."
+    },
+    "documents": {
+      "badge": "Tools",
+      "title": "Document Generator",
+      "subtitle": "Create invoices, quotes, receipts and salary slips with a live preview, polished templates and print to PDF, all offline.",
+      "tabs": {
+        "invoice": "Invoice",
+        "salary": "Salary Slip",
+        "signature": "Email Signature"
+      }
+    },
+    "resume": {
+      "badge": "Tools",
+      "title": "Resume & ATS",
+      "subtitle": "Scan a resume against a job description for a rule-based ATS score, or build a print-ready resume with live templates. No AI, processed entirely in your browser.",
+      "tabs": {
+        "scanner": "ATS Scanner",
+        "builder": "Resume Builder"
+      }
+    },
+    "codes": {
+      "badge": "Tools",
+      "title": "Code Generator",
+      "subtitle": "Create QR codes and barcodes on one page. Design a QR for links, WiFi, contacts and payments, or a scannable EAN, UPC, Code 128 or Code 39 barcode, all previewed live and exported as PNG or SVG in your browser.",
+      "tabs": {
+        "qr": "QR Code",
+        "barcode": "Barcode"
+      }
+    }
   },
   "topbar": {
     "searchPlaceholder": "Search or jump to…",
@@ -264,87 +338,6 @@
       "files": "files"
     }
   },
-  "promptLibrary": {
-    "searchPlaceholder": "Search by title, tag or keyword…",
-    "searchLabel": "Search prompts",
-    "collections": {
-      "all": "All",
-      "featured": "Featured",
-      "trending": "Trending",
-      "new": "New"
-    },
-    "filters": {
-      "collection": "Collection",
-      "category": "Category",
-      "allCategories": "All categories",
-      "allTiers": "All tiers",
-      "allModels": "All models",
-      "allRatios": "All ratios",
-      "byTier": "Filter by tier",
-      "byModel": "Filter by model",
-      "byRatio": "Filter by aspect ratio"
-    },
-    "count": "{count, plural, =1 {# prompt} other {# prompts}}",
-    "countFiltered": "{count} of {total} prompts",
-    "empty": {
-      "title": "No prompts match those filters",
-      "description": "Try a different search or clear the filters."
-    },
-    "card": {
-      "editAria": "Edit {title}",
-      "searchTag": "Search for {tag}",
-      "lockedAria": "Premium prompt: get premium access to use {title}"
-    },
-    "dialog": {
-      "description": "Tweak the wording, then copy it. Your changes aren't saved to the library.",
-      "promptLabel": "Prompt",
-      "copyPrompt": "Copy prompt",
-      "characters": "{count} characters",
-      "edited": "Edited",
-      "worksWellOn": "Works well on",
-      "aspectRatios": "Aspect ratios",
-      "tags": "Tags",
-      "englishOriginal": "Showing the English original. This prompt hasn't been translated yet."
-    },
-    "tiers": {
-      "free": "Free",
-      "premium": "Premium"
-    },
-    "categories": {
-      "portrait": "Portrait",
-      "headshot": "Headshot",
-      "business": "Business",
-      "fashion": "Fashion",
-      "lifestyle": "Lifestyle",
-      "cinematic": "Cinematic",
-      "travel": "Travel",
-      "nature": "Nature",
-      "fitness": "Fitness",
-      "automotive": "Automotive",
-      "editorial": "Editorial",
-      "fantasy": "Fantasy",
-      "sci-fi": "Sci-Fi",
-      "anime": "Anime",
-      "artistic": "Artistic"
-    },
-    "styles": {
-      "photorealistic": "Photorealistic",
-      "cinematic": "Cinematic",
-      "editorial": "Editorial",
-      "monochrome": "Monochrome",
-      "painterly": "Painterly",
-      "illustrated": "Illustrated",
-      "3d-render": "3D Render",
-      "anime": "Anime"
-    },
-    "ratios": {
-      "1:1": "1:1 Square",
-      "4:5": "4:5 Portrait",
-      "3:4": "3:4 Portrait",
-      "9:16": "9:16 Story",
-      "16:9": "16:9 Wide"
-    }
-  },
   "pages": {
     "profile": {
       "title": "Profile",
@@ -358,8 +351,8 @@
       "plan": "Plan",
       "planFree": "Free",
       "planPremium": "Premium",
-      "planFreeHint": "You can use the 41 free prompts. Premium prompts are locked.",
-      "planPremiumHint": "You can copy and customise every prompt in the library.",
+      "planFreeHint": "You can preview every template and use the free ones. Premium templates and downloads are locked.",
+      "planPremiumHint": "You can copy and download every template in the gallery.",
       "upgrade": "Upgrade",
       "devOnly": "Development only",
       "devOnlyHint": "Switch access level to preview the paywall. Not shown in production."
@@ -600,8 +593,8 @@
   },
   "pricing": {
     "metaTitle": "Pricing",
-    "title": "Get instant access to every prompt in the library",
-    "subtitle": "One payment unlocks all 120+ prompts across 15 categories, plus every prompt we add, and the modules still to come.",
+    "title": "Get instant access to every template and tool",
+    "subtitle": "One payment unlocks every premium template, all pages and downloads, plus every tool and module still to come.",
     "mostPopular": "Most popular",
     "priceAria": "{price} US dollars",
     "questions": "Questions? <a>Email us</a>.",
@@ -609,7 +602,7 @@
       "free": {
         "name": "Free",
         "billing": "No card required",
-        "cta": "Browse free prompts"
+        "cta": "Browse the library"
       },
       "annual": {
         "name": "Annual Access",
@@ -628,17 +621,12 @@
       }
     },
     "features": {
-      "freePrompts": "Access to all 41 free prompts",
-      "allPrompts": "Access to all 120+ premium prompts",
-      "allCategories": "All 15 categories, from Portrait to Sci-Fi",
-      "fourModels": "Tuned for GPT Image, FLUX, Midjourney and SDXL",
       "copyPaste": "Copy and paste, no setup",
       "noCard": "No card required",
-      "yearUpdates": "1 year of new prompts and updates",
-      "lifetimeUpdates": "Lifetime updates: every prompt we add",
-      "futureModules": "Components and Templates when they ship",
+      "yearUpdates": "1 year of new templates and updates",
+      "lifetimeUpdates": "Lifetime updates: every template we add",
+      "futureModules": "Every module still to come",
       "earlyAccess": "Early access to new modules",
-      "promptEditor": "Customise any prompt before you copy it",
       "emailSupport": "Email support",
       "prioritySupport": "Priority support",
       "cancelAnytime": "Cancel anytime",
@@ -646,7 +634,12 @@
       "sharedWorkspace": "Shared workspace for your team",
       "rolesPermissions": "Roles and permissions",
       "everythingAnnual": "Everything in Annual Access",
-      "everythingLifetime": "Everything in Lifetime Access"
+      "everythingLifetime": "Everything in Lifetime Access",
+      "fullLibrary": "The full library: components, icons, palettes, gradients, patterns and textures",
+      "freeTemplates": "Every free template, previewed in full",
+      "allTemplates": "Every premium template, all pages included",
+      "templateDownloads": "Download React, Next.js and static builds",
+      "allTools": "All tools: code generator, documents, resume and website intelligence"
     },
     "faq": {
       "title": "Frequently asked questions",
@@ -654,27 +647,27 @@
       "items": {
         "lifetimeIncludes": {
           "q": "What does lifetime access include?",
-          "a": "Every one of the 120+ prompts across all 15 categories, plus every prompt added afterwards, at no extra cost. It also covers the Components and Templates modules once they ship. One payment, no renewal."
+          "a": "Every premium template with all its pages and code downloads, plus every template we add afterwards, at no extra cost. It also covers the tools and every module still to come. One payment, no renewal."
         },
         "purchaseFlow": {
           "q": "How does the purchase and access flow work?",
-          "a": "Pick a plan, pay once, and your workspace is upgraded straight away. Premium prompts unlock across every device you sign in on. There is nothing to download or install."
+          "a": "Pick a plan, pay once, and your workspace is upgraded straight away. Premium templates and downloads unlock across every device you sign in on."
         },
         "freeVsPremium": {
-          "q": "What's the difference between free and premium prompts?",
-          "a": "Free covers 41 prompts you can use immediately without a card. Premium unlocks the full library of 120+, including the more involved cinematic, editorial and fantasy setups, and the prompt editor for customising any of them."
-        },
-        "models": {
-          "q": "Which AI models do the prompts work with?",
-          "a": "Every prompt lists the models it is tuned for (GPT Image, FLUX, Midjourney and SDXL), and you can filter the library by model. Prompts keep their lens, lighting and colour-grade details, so they carry across generators."
+          "q": "What's the difference between free and premium templates?",
+          "a": "Free templates preview in full and copy freely. Premium unlocks the rest of the gallery, every page, and the React, Next.js and static-build downloads."
         },
         "refunds": {
           "q": "Do you offer refunds?",
-          "a": "We don't offer refunds because you get immediate, full access to every prompt in the library the moment you buy. Please review our refund policy for details."
+          "a": "We don't offer refunds because you get immediate, full access to every premium template and tool the moment you buy. Please review our refund policy for details."
         },
         "help": {
           "q": "Need help or have a question?",
           "a": "Email {email} and we will get back to you. Lifetime and Team plans get priority support with a faster turnaround."
+        },
+        "frameworks": {
+          "q": "Which frameworks do the templates support?",
+          "a": "Every template downloads as React, Next.js (App Router) and a static HTML and CSS build, so it drops into your stack without a rewrite."
         }
       }
     }
@@ -688,18 +681,6 @@
     "submit": "Checkout",
     "submitting": "Redirecting…",
     "unavailable": "Checkout isn't available yet. Please email support to purchase."
-  },
-  "premiumGate": {
-    "title": "This is a premium prompt",
-    "descriptionCopy": "“{title}” is part of the premium library. Get premium access to copy it.",
-    "descriptionEdit": "“{title}” is part of the premium library. Get premium access to customise it.",
-    "cta": "Get premium access",
-    "notNow": "Not now",
-    "benefits": {
-      "unlockAll": "Unlock all 120+ premium prompts",
-      "unlockEdit": "Customise any prompt before you copy it",
-      "unlockUpdates": "Every prompt we add, included"
-    }
   },
   "components": {
     "metaTitle": "Components",
@@ -1258,9 +1239,21 @@
       "consulting": "Consulting",
       "education": "Education",
       "hardware": "Hardware",
-      "hospitality": "Hospitality"
+      "hospitality": "Hospitality",
+      "portfolio": "Portfolio"
     },
     "taglines": {
+      "noctis": "Cinematic photography portfolio on near-black with an amber accent, curtain-wipe image reveals and a scroll-scrubbed film-strip rail.",
+      "vesper": "Dark developer portfolio in indigo and violet glass, with a pointer-tracked spotlight, 3D-tilt project cards and magnetic buttons.",
+      "marfa": "Light editorial art-director portfolio in ivory and ink with a terracotta accent, parallax plates and text-mask reveals.",
+      "marlowe": "Single-page freelancer portfolio on near-black with a coral accent, drifting hero orbs, count-up stats, animated skill bars and a filterable work grid.",
+      "astra": "Light, bold single-page portfolio in warm off-white with a cobalt accent and star motifs, a bento work grid, a star marquee and count-up stats.",
+      "crestline": "Calm, green corporate-services consultancy: an orbiting service hero over a quiet particle field, numbered services, a dark stats panel and count-up figures.",
+      "nebula": "Neon-on-dark AI-SaaS: an animated gradient mesh, glassmorphism, a floating live dashboard, magnetic buttons, Lenis smooth scroll and count-up stats across eight pages.",
+      "solene": "Quiet-luxury interior-design studio: warm ivory and brass, a large editorial serif, duotone photography plates with clip-path reveals, Lenis smooth scroll, across seven pages.",
+      "aster": "Clean, trustworthy healthcare & hospital site: soft blue and teal, rounded cards, a floating appointment widget, a gentle pulse, count-up stats and Lenis smooth scroll, across seven pages.",
+      "wander": "Immersive travel & tourism site: sunset orange and cyan, a full-bleed search hero, interactive destination cards with clip-path reveals, a pinned map, a gallery, count-ups and Lenis smooth scroll, across eight pages.",
+      "haven": "Luxury boutique real-estate site: white and dark forest green with a sand accent, 3D-inspired property cards, a live mortgage calculator, clip-path reveals, count-ups and Lenis smooth scroll, across seven pages.",
       "nova": "Dark, glassy analytics SaaS with a gradient mesh hero and animated counters.",
       "saffron": "Warm, editorial fine dining in cream and forest green, with parallax plating and serif display type.",
       "pulse": "Calm, rounded clinic site in medical blue and mint, built to reassure.",
@@ -1328,7 +1321,9 @@
         "premium": "Premium",
         "new": "New",
         "multipage": "Multipage"
-      }
+      },
+      "searchPlaceholder": "Search templates",
+      "searchLabel": "Search templates"
     },
     "locked": {
       "title": "Premium template",
@@ -1338,6 +1333,17 @@
         "preview": "Live preview, in full, no account needed",
         "prompt": "Copy the design prompt",
         "download": "Download React, Next.js and static builds"
+      }
+    },
+    "premium": {
+      "title": "Premium template",
+      "description": "\"{name}\" is part of premium access. Get premium access to copy the prompt and download the code.",
+      "notNow": "Not now",
+      "cta": "Get premium access",
+      "benefits": {
+        "unlockAll": "Unlock every premium template",
+        "unlockDownload": "Download React, Next.js and static builds",
+        "unlockUpdates": "Every template we add, included"
       }
     }
   },
@@ -1923,7 +1929,7 @@
   "landing": {
     "meta": {
       "title": "ADYSRE: Design and ship in one workspace",
-      "description": "The workspace where product teams browse components, icons, palettes, gradients and prompts, then take them straight to production."
+      "description": "The workspace where product teams browse components, icons, colours, surfaces, templates and tools, then take them straight to production."
     },
     "nav": {
       "pricing": "Pricing",
@@ -1932,15 +1938,16 @@
       "closeMenu": "Close menu",
       "skip": "Skip to content",
       "menus": {
-        "styles": "Styles",
-        "library": "Library"
+        "colorsSurfaces": "Colors & Surfaces",
+        "library": "Library",
+        "tools": "Tools"
       }
     },
     "hero": {
       "badge": "New: gradient and palette generators",
-      "title": "Everything your team needs to design and ship",
+      "title": "Every block, colour and tool your team needs",
       "titleAccent": "in one calm workspace",
-      "subtitle": "ADYSRE brings components, icons, palettes, gradients and prompts together, so your team can move from idea to production without switching tools.",
+      "subtitle": "ADYSRE brings your components, icons, colours, surfaces, templates and tools into one workspace, so your team can move from idea to production without switching apps.",
       "ctaComponents": "Explore components",
       "ctaPlayground": "Open the playground",
       "ctaWorkspace": "Open the workspace",
@@ -1979,13 +1986,21 @@
           "title": "Textures",
           "desc": "Noise, grain, paper and woven surface textures in pure CSS. No image files."
         },
-        "promptLibrary": {
-          "title": "Prompt library",
-          "desc": "A curated library of prompts across categories, tuned for the models your team already uses."
-        },
         "templates": {
           "title": "Templates",
           "desc": "Full page and flow templates that assemble the modules into finished screens."
+        },
+        "colorsSurfaces": {
+          "title": "Colors & Surfaces",
+          "desc": "Palettes, gradients, patterns and textures, all token-driven and ready to export."
+        },
+        "aiTools": {
+          "title": "Image & Utility Tools",
+          "desc": "Compress, convert, resize, remove backgrounds and read codes, entirely in your browser."
+        },
+        "designPlayground": {
+          "title": "Design Playground",
+          "desc": "Design pages, dashboards and graphics on an infinite canvas. No code."
         }
       }
     },
@@ -2018,6 +2033,14 @@
         "label": "Gradient",
         "caption": "Paste-ready CSS backgrounds"
       },
+      "patterns": {
+        "label": "Patterns",
+        "caption": "CSS backgrounds, no image files"
+      },
+      "textures": {
+        "label": "Textures",
+        "caption": "Grain and surface finishes"
+      },
       "icons": {
         "label": "Icons",
         "caption": "Adjustable, copy in one click"
@@ -2043,7 +2066,6 @@
         "gradients": "Gradients",
         "patterns": "Patterns",
         "textures": "Textures",
-        "prompts": "Prompts",
         "teams": "Teams building"
       }
     },
@@ -2082,10 +2104,13 @@
     "faq": {
       "title": "Questions, answered",
       "subtitle": "Everything else you might want to know before you start.",
+      "badge": "FAQ",
+      "help": "Still have a question? We're happy to help you get started.",
+      "helpCta": "Contact us",
       "items": {
         "what": {
           "q": "What is ADYSRE?",
-          "a": "A single workspace for design and build resources: components, icons, palettes, gradients and prompts, ready to copy into your product."
+          "a": "A single workspace for design and build resources: components, icons, palettes, gradients and templates, ready to copy into your product."
         },
         "frameworks": {
           "q": "Which frameworks do you support?",
@@ -2114,6 +2139,8 @@
     "footer": {
       "tagline": "The workspace where teams design and ship together.",
       "product": "Product",
+      "library": "Library",
+      "tools": "Tools",
       "resources": "Resources",
       "legal": "Legal",
       "contact": "Contact",
@@ -2127,6 +2154,17 @@
       "label": "Icons, Gradients and Palettes are now live in the workspace",
       "cta": "Explore",
       "dismiss": "Dismiss announcement"
+    },
+    "rules": {
+      "badge": "Business Rules",
+      "subtitle": "One rule, three ways at once. The JSON tree is the only source of truth; the sentence and the verdict are generated from it, right here on this page, by the same packages you would install.",
+      "panels": {
+        "tree": "The rule",
+        "words": "In plain English",
+        "verdict": "Run against an order"
+      },
+      "matched": "Matched",
+      "cta": "Open the rules engine"
     }
   },
   "designPlayground": {
@@ -2417,6 +2455,847 @@
       "loading": "Loading…",
       "empty": "No saved designs yet.",
       "unavailable": "Saved designs are unavailable because storage is not reachable. Your work is still saved on this device."
+    }
+  },
+  "websiteIntel": {
+    "meta": {
+      "title": "Website Intelligence",
+      "description": "Scan any public website for performance, SEO, accessibility, security and more, in one report."
+    },
+    "badge": "Website Intelligence",
+    "title": "Know exactly what is wrong with any website",
+    "subtitle": "Point it at any public URL and get one report across performance, SEO, accessibility, security, Core Web Vitals and more, backed by 500+ rules and no paid AI.",
+    "comingSoon": "In development",
+    "scan": {
+      "placeholder": "https://example.com",
+      "button": "Scan",
+      "note": "The scanning engine is in active development. This is a preview of the analyses it will run."
+    },
+    "stats": {
+      "analyses": "Analyses per scan",
+      "rules": "Rule-based checks",
+      "formats": "Export formats",
+      "paidAi": "Paid AI APIs"
+    },
+    "capabilitiesTitle": "Eleven analyses, one scan",
+    "capabilitiesSubtitle": "Every scan runs the full suite and rolls the findings into an overall score.",
+    "capabilities": {
+      "performance": {
+        "title": "Performance",
+        "desc": "Lighthouse-grade timing, render-blocking resources and the load waterfall."
+      },
+      "seo": {
+        "title": "SEO",
+        "desc": "Meta tags, headings, canonical, sitemap, structured data and social cards."
+      },
+      "accessibility": {
+        "title": "Accessibility",
+        "desc": "An axe-core audit of contrast, roles, labels and keyboard order."
+      },
+      "bestPractices": {
+        "title": "Best practices",
+        "desc": "Modern-web checks: doctype, console errors and deprecated APIs."
+      },
+      "security": {
+        "title": "Security",
+        "desc": "HTTPS, security headers, CSP, HSTS and cookie flags."
+      },
+      "webVitals": {
+        "title": "Core Web Vitals",
+        "desc": "LCP, CLS and INP measured against the field thresholds."
+      },
+      "technology": {
+        "title": "Technology detection",
+        "desc": "Frameworks, CMS, analytics and libraries in use."
+      },
+      "assets": {
+        "title": "Asset optimization",
+        "desc": "Image, CSS, JS and font weight, lazy-loading and compression."
+      },
+      "html": {
+        "title": "HTML structure",
+        "desc": "Document outline, landmarks, link health and markup validity."
+      },
+      "network": {
+        "title": "Network",
+        "desc": "DNS, TTFB, HTTP/2 and HTTP/3, caching and CDN."
+      },
+      "recommendations": {
+        "title": "AI recommendations",
+        "desc": "500+ rule-based fixes, ranked by impact and estimated savings."
+      },
+      "history": {
+        "title": "Historical comparison",
+        "desc": "Track every score over time and diff two scans."
+      }
+    },
+    "dashboardTitle": "A dashboard for every angle",
+    "dashboardSubtitle": "Ten sections, from an at-a-glance overview to a full recommendation timeline.",
+    "dashboard": {
+      "overview": "Overview",
+      "performance": "Performance",
+      "seo": "SEO",
+      "accessibility": "Accessibility",
+      "security": "Security",
+      "assets": "Assets",
+      "network": "Network",
+      "technologies": "Technologies",
+      "recommendations": "Recommendations",
+      "timeline": "Timeline"
+    },
+    "reportsTitle": "Export any report",
+    "reportsSubtitle": "Take the findings anywhere, in the format your workflow expects.",
+    "reportsEmpty": "Run a scan above and its report exports here in any format.",
+    "stackTitle": "Built on a production stack",
+    "stack": {
+      "frontend": "Frontend",
+      "backend": "Backend",
+      "scanning": "Scanning",
+      "infra": "Queue & infra"
+    },
+    "home": {
+      "cta": "Explore the platform",
+      "secondary": "See what it scans",
+      "moreFindings": "See all {count} findings in the full report",
+      "subtitle": "Point it at any public URL and get one report across performance, SEO, accessibility, security, Core Web Vitals and more, backed by 500+ rules."
+    },
+    "console": {
+      "label": "Scan a website",
+      "scanning": "Scanning…",
+      "overall": "Overall score",
+      "technologiesTitle": "Technologies detected",
+      "noTechnologies": "No known technologies detected.",
+      "findingsTitle": "Recommendations",
+      "noFindings": "No issues found in this pass. Nice.",
+      "scannedIn": "Scanned in {ms} ms",
+      "browserNote": "Performance, accessibility and Core Web Vitals need the browser engine, which is a later phase.",
+      "categories": {
+        "seo": "SEO",
+        "security": "Security",
+        "html": "HTML",
+        "assets": "Assets",
+        "bestPractices": "Best practices",
+        "accessibility": "Accessibility",
+        "performance": "Performance"
+      },
+      "severity": {
+        "critical": "Critical",
+        "serious": "Serious",
+        "moderate": "Moderate",
+        "minor": "Minor",
+        "info": "Info"
+      },
+      "errors": {
+        "generic": "Something went wrong. Please try again.",
+        "url_required": "Enter a URL to scan.",
+        "url_invalid": "That is not a valid URL.",
+        "url_scheme": "Only http and https URLs can be scanned.",
+        "url_hostname": "Enter a full domain, e.g. example.com.",
+        "url_blocked": "That address is not allowed.",
+        "url_too_long": "That URL is too long.",
+        "timeout": "The site took too long to respond.",
+        "unreachable": "The site could not be reached.",
+        "too_many_redirects": "The site redirected too many times.",
+        "bad_redirect": "The site sent an invalid redirect.",
+        "rate_limited": "Too many scans. Try again in a minute.",
+        "bad_json": "The request could not be read.",
+        "server_error": "The scan failed unexpectedly."
+      },
+      "history": {
+        "title": "Recent scans",
+        "empty": "No scans yet. Run one above.",
+        "view": "View",
+        "vsPrevious": "vs previous scan",
+        "fixed": "{count} fixed",
+        "appeared": "{count} new"
+      },
+      "webVitalsTitle": "Core Web Vitals",
+      "export": "Export"
+    },
+    "report": {
+      "title": "Website Intelligence report",
+      "print": "Save as PDF",
+      "scanned": "Scanned {date}",
+      "generatedBy": "Generated by ADYSRE Website Intelligence",
+      "notFound": "That scan was not found."
+    },
+    "schedule": {
+      "title": "Scheduled scans",
+      "subtitle": "Rescan a URL automatically and keep its history growing.",
+      "urlPlaceholder": "https://example.com",
+      "add": "Schedule",
+      "runDue": "Run due now",
+      "empty": "No schedules yet.",
+      "next": "Next",
+      "delete": "Delete",
+      "ranNone": "Nothing was due.",
+      "ranSome": "Ran {count}.",
+      "cadences": {
+        "hourly": "Hourly",
+        "daily": "Daily",
+        "weekly": "Weekly"
+      }
+    },
+    "notify": {
+      "title": "Notifications",
+      "subtitle": "Get told when a scheduled scan finishes, via webhook, Slack or Discord.",
+      "targetPlaceholder": "https://hooks.slack.com/... or you@company.com",
+      "add": "Add channel",
+      "empty": "No channels yet.",
+      "delete": "Delete",
+      "test": "Test",
+      "testOk": "Delivered.",
+      "testFail": "Not delivered.",
+      "emailNote": "Email delivery needs a provider and is not sent yet; the channel is saved.",
+      "types": {
+        "webhook": "Webhook",
+        "slack": "Slack",
+        "discord": "Discord",
+        "email": "Email"
+      }
+    },
+    "tabs": {
+      "website": "Website Scan",
+      "seo": "SEO Audit"
+    }
+  },
+  "codeStudio": {
+    "title": "Code Studio",
+    "subtitle": "A browser IDE with Monaco, live preview and console. No install, no server.",
+    "projectName": "Project name",
+    "newProject": "New",
+    "templatesLabel": "Templates",
+    "run": "Run",
+    "reset": "Reset",
+    "save": "Save",
+    "saving": "Saving",
+    "saved": "Saved",
+    "downloadZip": "Download ZIP",
+    "settings": "Settings",
+    "theme": "Theme",
+    "fontSize": "Font size",
+    "tabSize": "Tab size",
+    "wordWrap": "Word wrap",
+    "minimap": "Minimap",
+    "autosave": "Autosave",
+    "themes": {
+      "dark": "Dark",
+      "light": "Light",
+      "system": "System"
+    },
+    "templates": {
+      "html": "Blank HTML",
+      "typescript": "TypeScript",
+      "react": "React App",
+      "reactTs": "React + TypeScript",
+      "vue": "Vue App"
+    },
+    "importZip": "Import ZIP",
+    "importFolder": "Import folder",
+    "dropToImport": "Drop a ZIP or files to import",
+    "readOnlyBadge": "Read-only",
+    "forkToEdit": "Fork to edit",
+    "share": {
+      "action": "Share",
+      "title": "Share project",
+      "description": "A link with the whole project encoded in it, so it works with no server.",
+      "readOnly": "Read-only link",
+      "readOnlyHint": "Recipients can view and run, but not edit until they fork.",
+      "building": "Building link",
+      "copy": "Copy",
+      "copied": "Copied",
+      "note": "The project travels inside the link, so anyone with it can open your code."
+    },
+    "explorer": "Explorer",
+    "search": {
+      "title": "Search",
+      "placeholder": "Search",
+      "replacePlaceholder": "Replace",
+      "caseSensitive": "Match case",
+      "regex": "Use regular expression",
+      "replaceAll": "Replace all",
+      "summary": "{matches} matches in {files} files"
+    },
+    "palette": {
+      "title": "Command palette",
+      "filePlaceholder": "Search files by name",
+      "commandPlaceholder": "Type a command",
+      "empty": "No results"
+    },
+    "commands": {
+      "newFile": "New file",
+      "format": "Format document",
+      "run": "Run preview",
+      "save": "Save project",
+      "download": "Download ZIP",
+      "share": "Share project",
+      "search": "Search in files",
+      "toggleTheme": "Toggle theme",
+      "toggleWordWrap": "Toggle word wrap",
+      "toggleMinimap": "Toggle minimap"
+    }
+  },
+  "aiTools": {
+    "badge": "AI Tools",
+    "title": "Image & Utility Tools",
+    "subtitle": "Compress, convert, resize and more. Everything runs in your browser, so your files never leave ADYSRE and it works offline.",
+    "phase": "Phase {phase}",
+    "soon": "Soon",
+    "soonHint": "This tool is on the roadmap. Its engine is being bundled so it runs fully offline, like the tools already live.",
+    "backToTools": "All AI tools",
+    "dropHint": "Add images",
+    "settings": "Settings",
+    "processAll": "Process all",
+    "cancel": "Cancel",
+    "reprocess": "Reprocess",
+    "downloadAll": "Download all",
+    "clear": "Clear",
+    "emptyPreview": "Upload an image to preview it here.",
+    "tools": {
+      "compressor": {
+        "name": "Image Compressor",
+        "desc": "Shrink JPG, PNG and WEBP files with adjustable quality, in your browser."
+      },
+      "converter": {
+        "name": "Image Converter",
+        "desc": "Convert between PNG, JPG, WEBP and AVIF without uploading anywhere."
+      },
+      "resizer": {
+        "name": "Image Resizer",
+        "desc": "Resize by width, height or percentage, keeping the aspect ratio."
+      },
+      "background-remover": {
+        "name": "Background Remover",
+        "desc": "Cut out the subject and export a transparent PNG or a new background."
+      },
+      "qr-reader": {
+        "name": "QR Reader",
+        "desc": "Scan QR codes from images and read links, WiFi, contacts and more."
+      },
+      "barcode-reader": {
+        "name": "Barcode Reader",
+        "desc": "Read Code 128, EAN, UPC and other barcodes from images."
+      },
+      "ocr": {
+        "name": "OCR",
+        "desc": "Extract text from images and PDFs on-device, then copy it or download as TXT, JSON, CSV or DOCX."
+      },
+      "upscaler": {
+        "name": "Image Upscaler",
+        "desc": "Enlarge images 2x, 4x or 8x while keeping detail."
+      },
+      "enhancer": {
+        "name": "Image Enhancer",
+        "desc": "Sharpen, denoise and tune brightness, contrast and color."
+      },
+      "face-blur": {
+        "name": "Face Blur",
+        "desc": "Detect and blur faces automatically for privacy."
+      },
+      "smart-crop": {
+        "name": "Smart Object Crop",
+        "desc": "Detect the main subject and crop to social sizes."
+      }
+    }
+  },
+  "apiStudio": {
+    "title": "API Studio",
+    "subtitle": "Build, send and test HTTP requests, with collections, environments and history. Self-hosted.",
+    "defaults": {
+      "workspace": "My workspace",
+      "collection": "My collection",
+      "request": "New request",
+      "folder": "New folder"
+    },
+    "actions": {
+      "retry": "Retry",
+      "resize": "Resize panes"
+    },
+    "empty": {
+      "title": "No request open."
+    },
+    "sidebar": {
+      "paneLabel": "Sidebar panels",
+      "collections": "Collections",
+      "history": "History",
+      "environments": "Environments",
+      "search": "Search",
+      "searchPlaceholder": "Search requests",
+      "newCollection": "New collection",
+      "newFolder": "New folder",
+      "newRequest": "New request",
+      "noCollections": "No collections yet.",
+      "favorite": "Add to favourites",
+      "unfavorite": "Remove from favourites",
+      "favorited": "Favourite",
+      "delete": "Delete",
+      "show": "Show sidebar",
+      "hide": "Hide sidebar"
+    },
+    "tabs": {
+      "untitled": "Untitled request",
+      "new": "New tab",
+      "close": "Close {name}",
+      "closeUnsaved": "Close {name}, unsaved",
+      "unsaved": "Unsaved changes",
+      "pin": "Pin tab",
+      "unpin": "Unpin tab"
+    },
+    "request": {
+      "paneLabel": "Request panes",
+      "method": "Method",
+      "url": "Request URL",
+      "urlPlaceholder": "https://api.example.com/users",
+      "send": "Send",
+      "cancel": "Cancel",
+      "save": "Save",
+      "saveHint": "Save this request to its collection",
+      "params": "Params",
+      "headers": "Headers",
+      "body": "Body",
+      "auth": "Auth",
+      "paramKey": "Parameter",
+      "headerKey": "Header",
+      "pathVariables": "Path variables",
+      "tests": "Tests"
+    },
+    "table": {
+      "key": "Key",
+      "value": "Value",
+      "enabled": "Enabled",
+      "remove": "Remove",
+      "addRow": "Add row",
+      "newRow": "new row",
+      "enableRow": "Enable {name}",
+      "removeRow": "Remove {name}"
+    },
+    "body": {
+      "type": "Body type",
+      "language": "Format",
+      "content": "Request body",
+      "placeholder": "'{ \"name\": \"Ada\" }'",
+      "query": "Query",
+      "variables": "Variables",
+      "none": "This request has no body.",
+      "notAllowed": "{method} requests are sent without a body.",
+      "uploadsPending": "File uploads arrive with the upload phase. Nothing is sent until then.",
+      "types": {
+        "none": "None",
+        "raw": "Raw",
+        "graphql": "GraphQL",
+        "multipart": "Form data",
+        "urlencoded": "Form URL encoded",
+        "binary": "Binary"
+      },
+      "languages": {
+        "text": "Text",
+        "json": "JSON",
+        "xml": "XML",
+        "html": "HTML",
+        "javascript": "JavaScript"
+      }
+    },
+    "auth": {
+      "type": "Auth type",
+      "username": "Username",
+      "password": "Password",
+      "token": "Token",
+      "prefix": "Prefix",
+      "key": "Key",
+      "value": "Value",
+      "name": "Name",
+      "addTo": "Add to",
+      "header": "Header",
+      "query": "Query",
+      "noneHint": "This request is sent without credentials.",
+      "inheritsFrom": "Inherits auth from {source}.",
+      "inheritsNothing": "Inherits auth from the collection, which sets none.",
+      "types": {
+        "inherit": "Inherit",
+        "none": "No auth",
+        "basic": "Basic",
+        "bearer": "Bearer token",
+        "apiKey": "API key",
+        "digest": "Digest",
+        "jwt": "JWT",
+        "oauth2": "OAuth 2",
+        "awsSignature": "AWS signature",
+        "customHeader": "Custom header",
+        "customQuery": "Custom query"
+      },
+      "algorithm": "Algorithm",
+      "qop": "Quality of protection",
+      "qopNone": "None",
+      "secret": "Secret",
+      "privateKey": "Private key (PEM)",
+      "base64Secret": "The secret is base64 encoded",
+      "payload": "Payload",
+      "grantType": "Grant type",
+      "tokenUrl": "Token URL",
+      "clientId": "Client ID",
+      "clientSecret": "Client secret",
+      "scope": "Scope",
+      "refreshToken": "Refresh token",
+      "accessToken": "Access token",
+      "accessTokenHint": "A token set here is used as-is, and no grant is performed.",
+      "clientAuthentication": "Send client credentials",
+      "inBody": "In the body",
+      "inHeader": "As a Basic header",
+      "accessKeyId": "Access key ID",
+      "secretAccessKey": "Secret access key",
+      "sessionToken": "Session token",
+      "region": "Region",
+      "service": "Service",
+      "runnerApplied": "Applied by the server when the request is sent, so the credential never reaches the browser.",
+      "grantNeedsBrowser": "This grant needs a browser redirect, which this build cannot perform. Paste an access token below instead.",
+      "grants": {
+        "authorization_code": "Authorization code",
+        "authorization_code_pkce": "Authorization code with PKCE",
+        "client_credentials": "Client credentials",
+        "password": "Password",
+        "implicit": "Implicit",
+        "device_code": "Device code",
+        "refresh_token": "Refresh token"
+      }
+    },
+    "response": {
+      "paneLabel": "Response panes",
+      "empty": "No response yet.",
+      "emptyHint": "Send the request to see the response here.",
+      "sending": "Sending",
+      "cancelled": "Cancelled.",
+      "body": "Body",
+      "headers": "Headers",
+      "cookies": "Cookies",
+      "timings": "Timings",
+      "time": "Time",
+      "size": "Size",
+      "redirects": "Redirects",
+      "insecure": "Certificate not verified",
+      "insecureHint": "This request was sent with TLS verification turned off.",
+      "truncated": "Truncated",
+      "truncatedHint": "The response was larger than the size limit and was cut off.",
+      "copy": "Copy",
+      "copied": "Copied",
+      "noBody": "This response has no body.",
+      "noHeaders": "No headers.",
+      "noCookies": "No cookies were set.",
+      "noPreview": "This response cannot be previewed.",
+      "previewAlt": "Response preview",
+      "cookieName": "Name",
+      "cookieValue": "Value",
+      "cookieDomain": "Domain",
+      "cookieFlags": "Flags",
+      "views": {
+        "pretty": "Pretty",
+        "raw": "Raw",
+        "preview": "Preview"
+      },
+      "tests": "Tests",
+      "noTests": "No assertions or scripts ran for this request."
+    },
+    "timings": {
+      "dns": "DNS",
+      "tcp": "Connect",
+      "tls": "TLS",
+      "firstByte": "Waiting",
+      "download": "Download",
+      "total": "Total",
+      "unavailable": "Not measurable"
+    },
+    "environment": {
+      "select": "Environment",
+      "none": "No environment",
+      "noneHint": "Only global variables resolve.",
+      "empty": "No environments yet.",
+      "variableCount": "{count} variables",
+      "edit": "Edit",
+      "editTitle": "Variables in {name}",
+      "editDescription": "Values here resolve '{{name}}' in every request in this workspace.",
+      "save": "Save",
+      "secret": "Secret",
+      "reveal": "Show value",
+      "hide": "Hide value",
+      "markSecret": "Mark {name} as secret",
+      "addVariable": "Add variable",
+      "noVariables": "No variables yet.",
+      "secretPlaceholder": "Stored, hidden",
+      "secretHint": "A secret is encrypted and never shown. Leave it empty to keep what is stored."
+    },
+    "history": {
+      "clear": "Clear history",
+      "empty": "Nothing sent yet."
+    },
+    "errors": {
+      "storageUnavailable": "Storage is unavailable, so collections and history are not loading. Requests can still be sent.",
+      "invalid_url": "That URL cannot be sent.",
+      "blocked_host": "That address is not reachable from this deployment.",
+      "unsupported_protocol": "That protocol is not supported yet.",
+      "dns_failure": "The host could not be found.",
+      "connection_refused": "The connection was refused.",
+      "connection_reset": "The connection was reset.",
+      "tls_error": "The certificate could not be verified.",
+      "timeout": "The request timed out.",
+      "too_many_redirects": "The server redirected too many times.",
+      "response_too_large": "The response was too large.",
+      "request_too_large": "The request was too large.",
+      "cancelled": "Cancelled.",
+      "rate_limited": "Too many requests. Slow down.",
+      "agent_unavailable": "The local agent is not running.",
+      "network": "The request could not be completed.",
+      "unsupported_auth": "That auth type cannot be sent yet.",
+      "unsupported_body": "That body type cannot be sent yet."
+    },
+    "tests": {
+      "assertions": "Assertions",
+      "noAssertions": "No assertions yet. Add one to check the response automatically.",
+      "addAssertion": "Add assertion",
+      "target": "What to check",
+      "path": "Name or path",
+      "operator": "Comparison",
+      "expected": "Expected",
+      "scripts": "Scripts",
+      "preRequest": "Pre-request script",
+      "testScript": "Test script",
+      "sandboxNote": "Scripts run in a sandboxed worker with no network access, and are stopped after two seconds.",
+      "console": "Console",
+      "summary": "{passed} passed, {failed} failed, {errored} could not be checked, {skipped} skipped",
+      "got": "Got: {actual}",
+      "outcomes": {
+        "passed": "Passed",
+        "failed": "Failed",
+        "errored": "Could not be checked",
+        "skipped": "Skipped"
+      },
+      "phases": {
+        "preRequest": "Pre-request script",
+        "test": "Test script"
+      },
+      "targets": {
+        "status": "Status code",
+        "statusText": "Status text",
+        "responseTime": "Response time",
+        "contentType": "Content type",
+        "header": "Header",
+        "body": "Body",
+        "jsonPath": "JSON path",
+        "jsonSchema": "JSON schema"
+      },
+      "operators": {
+        "equals": "equals",
+        "notEquals": "does not equal",
+        "contains": "contains",
+        "notContains": "does not contain",
+        "matches": "matches",
+        "exists": "exists",
+        "notExists": "does not exist",
+        "lessThan": "is less than",
+        "greaterThan": "is greater than",
+        "isOneOf": "is one of",
+        "isValid": "is valid against"
+      }
+    },
+    "import": {
+      "title": "Import",
+      "description": "Paste a cURL command or a Postman collection.",
+      "format": "Format",
+      "formats": {
+        "curl": "cURL command",
+        "postman": "Postman collection"
+      },
+      "chooseFile": "Choose a collection file",
+      "source": "What to import",
+      "submit": "Import",
+      "cancel": "Cancel",
+      "warnings": "Imported, with these gaps:"
+    },
+    "export": {
+      "title": "Export collection",
+      "docs": "Export documentation"
+    },
+    "codegen": {
+      "title": "Code",
+      "description": "The request as it will be sent, in the language you use.",
+      "target": "Language",
+      "close": "Close",
+      "targets": {
+        "curl": "cURL",
+        "jsFetch": "JavaScript (fetch)",
+        "jsAxios": "JavaScript (axios)",
+        "node": "Node.js",
+        "python": "Python (requests)",
+        "go": "Go",
+        "java": "Java",
+        "php": "PHP (cURL)",
+        "csharp": "C#",
+        "swift": "Swift",
+        "kotlin": "Kotlin (OkHttp)",
+        "dart": "Dart",
+        "ruby": "Ruby"
+      }
+    },
+    "cookies": {
+      "title": "Cookies",
+      "description": "Cookies this workspace has stored while testing.",
+      "empty": "No cookies stored.",
+      "loading": "Loading cookies",
+      "path": "Path",
+      "expires": "Expires",
+      "session": "When the session ends",
+      "delete": "Delete {name}",
+      "clearAll": "Clear all",
+      "confirmClear": "Yes, clear them all",
+      "maskedHint": "Values are encrypted and are not shown here."
+    },
+    "shortcuts": {
+      "title": "Keyboard shortcuts",
+      "sendRequest": "Send request",
+      "saveRequest": "Save request",
+      "commandPalette": "Command palette",
+      "search": "Search",
+      "toggleSidebar": "Show or hide the sidebar",
+      "newTab": "New tab",
+      "duplicateTab": "Duplicate tab",
+      "closeTab": "Close tab",
+      "reopenTab": "Reopen closed tab",
+      "nextTab": "Next tab",
+      "previousTab": "Previous tab",
+      "focusUrl": "Focus the address bar",
+      "toggleEnvironment": "Switch environment",
+      "copyAsCurl": "Copy as cURL",
+      "clearResponse": "Clear the response",
+      "showShortcuts": "Keyboard shortcuts"
+    }
+  },
+  "rules": {
+    "title": "Business Rules Engine",
+    "subtitle": "A framework-agnostic, plugin-based rules engine. The AST is the single source of truth: the builder edits it, the executor walks it, the renderer describes it, the debugger explains it. No paid APIs, no cloud services, no third-party engine underneath.",
+    "importsFrom": "Imports from",
+    "stats": {
+      "packages": "Packages",
+      "operators": "Operators",
+      "functions": "Functions",
+      "kinds": "Rule kinds"
+    },
+    "sections": {
+      "capabilities": "What it does",
+      "sandbox": "Try it",
+      "sandboxHint": "Edit any condition. The sentence, the verdict and the explanation follow as you type.",
+      "packages": "The packages",
+      "packagesHint": "Each one lands with the phase that gives it something to do. Install only what you use.",
+      "decisions": "Decisions worth knowing"
+    },
+    "capabilities": {
+      "ast": {
+        "title": "A JSON tree",
+        "desc": "Rules are plain JSON. Storable, diffable, versionable, and readable by anything."
+      },
+      "plugins": {
+        "title": "Everything is a plugin",
+        "desc": "Operators, functions, actions, fields, storage, renderers. Add one without touching the engine."
+      },
+      "execute": {
+        "title": "Runs anywhere",
+        "desc": "Synchronous, pure, zero dependencies. The same rule evaluates on a server, in a browser or in a test."
+      },
+      "explain": {
+        "title": "Says what it means",
+        "desc": "Every rule renders as a sentence, generated from the tree and never parsed back into it."
+      },
+      "debug": {
+        "title": "Shows its reasoning",
+        "desc": "Which row decided the verdict, what the operator received, and what short-circuiting hid."
+      },
+      "build": {
+        "title": "Edits itself",
+        "desc": "A visual builder with undo, per-row validation and a live preview, driven entirely by the plugin metadata."
+      },
+      "import": {
+        "title": "Takes what you have",
+        "desc": "Converts other rule formats, warning where an equivalent is near rather than exact."
+      },
+      "store": {
+        "title": "Keeps its history",
+        "desc": "Versioning, restore and querying behind one contract every adapter is checked against."
+      }
+    },
+    "packages": {
+      "types": "The vocabulary",
+      "core": "The engine",
+      "parser": "Importers",
+      "renderer": "Natural language",
+      "storage": "Persistence",
+      "react": "Builder state",
+      "ui": "The visual builder",
+      "devtools": "The debugger",
+      "next": "Over HTTP",
+      "theme": "Design tokens",
+      "playground": "Sandbox and examples"
+    },
+    "decisions": {
+      "sourceOfTruth": {
+        "title": "The AST is the only source of truth",
+        "desc": "Everything else is a projection of it. Prose is generated from the tree and never parsed back, so the two can never disagree."
+      },
+      "errorIsNotFalse": {
+        "title": "An error is not a false",
+        "desc": "A condition that cannot be evaluated is errored, and so is the rule. A broken comparison never looks like a failed one."
+      },
+      "noSideEffects": {
+        "title": "Actions are intent, never performed",
+        "desc": "The engine reports what should happen and the host decides. That is what lets a rule be run twice, in a preview, or in a test."
+      },
+      "immutableRegistry": {
+        "title": "The registry cannot be mutated",
+        "desc": "Extending it returns a new one, so two tenants can hold different capabilities without one leaking into the other."
+      },
+      "traceable": {
+        "title": "Every answer carries its reasoning",
+        "desc": "Each node records what it saw and what it concluded, so somebody can be shown the condition that decided it."
+      },
+      "noParsing": {
+        "title": "No language to learn",
+        "desc": "There is no text format to hand-author, so there is no second system to keep in step with the tree."
+      }
+    },
+    "guide": {
+      "title": "Using the Business Rules Engine",
+      "intro": "Everything you need to add rules to a project: install, write one, run it, explain it, extend it, and let people edit it. Every snippet below runs as written.",
+      "download": "Download guide",
+      "steps": {
+        "install": {
+          "title": "Install",
+          "body": "Take only what you use. The engine and its vocabulary have zero runtime dependencies; the builder is a separate package because a server that only evaluates rules should not ship a React editor."
+        },
+        "author": {
+          "title": "Write a rule",
+          "body": "A rule is plain JSON. The builders handle ids and timestamps, but nothing stops you writing the object by hand, storing it, diffing it in review or generating it from somewhere else."
+        },
+        "evaluate": {
+          "title": "Run it",
+          "body": "Synchronous and pure. The registry starts empty because what rules may do is your choice; pass the built-ins for the usual set. The result carries the verdict, the actions and the trace."
+        },
+        "explain": {
+          "title": "Read it back",
+          "body": "Every rule renders as a sentence, generated from the tree and never parsed back into it. Structure comes first, so a UI can highlight the field being edited rather than reformatting prose."
+        },
+        "extend": {
+          "title": "Add your own operator",
+          "body": "Everything the engine can do is a plugin. Register one and the builder offers it, the debugger explains it, and your rules stay plain JSON. An operator that cannot answer throws rather than returning false."
+        },
+        "build": {
+          "title": "Let people edit it",
+          "body": "The visual builder is driven entirely by the plugin metadata: arity decides how many value boxes appear, accepts decides which operators a field is offered. Pass sample data and it runs the rule as you type."
+        },
+        "debug": {
+          "title": "Find out why",
+          "body": "The debugger names the row that decided the verdict, and runs the rule a second time with short-circuiting off to surface faults the fast path stepped over."
+        },
+        "store": {
+          "title": "Keep it",
+          "body": "One storage contract with versioning and restore. A restore writes a new version rather than rewinding, and any adapter you write can be checked against the same suite the built-in ones pass."
+        }
+      }
     }
   }
 }

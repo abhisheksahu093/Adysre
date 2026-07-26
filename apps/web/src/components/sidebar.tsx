@@ -1,11 +1,10 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
-import { PanelLeftClose, PanelLeftOpen } from 'lucide-react';
 import { cn } from 'adysre';
 import { useAppShellStore } from '@/stores/app-shell-store';
-import { SidebarBrand, SidebarNav } from './sidebar-nav';
-import { PromoCard } from './promo-card';
+import { SidebarBrand, SidebarBrandIcon, SidebarNav } from './sidebar-nav';
+// Promo card temporarily hidden (see below).
+// import { PromoCard } from './promo-card';
 
 /**
  * Persistent sidebar (UI_DESIGN_SYSTEM.md). Desktop only - below `md` the
@@ -19,12 +18,7 @@ import { PromoCard } from './promo-card';
  * inside the nav, so the mobile drawer always renders its labels.
  */
 export function Sidebar() {
-  const t = useTranslations('nav');
   const collapsed = useAppShellStore((s) => s.sidebarCollapsed);
-  const toggleSidebar = useAppShellStore((s) => s.toggleSidebar);
-
-  const label = collapsed ? t('expandSidebar') : t('collapseSidebar');
-  const Icon = collapsed ? PanelLeftOpen : PanelLeftClose;
 
   return (
     <aside
@@ -33,50 +27,19 @@ export function Sidebar() {
         collapsed ? 'w-16' : 'w-64',
       )}
     >
-      {/* The brand row doubles as the toggle's home, so collapsing costs no
-          vertical space. Collapsed, the wordmark gives way to the control -
-          16rem of logo does not fit in 4. */}
-      {collapsed ? (
-        <div className="flex h-14 shrink-0 items-center justify-center border-b border-border">
-          <SidebarToggle label={label} icon={Icon} onClick={toggleSidebar} />
-        </div>
-      ) : (
-        <div className="relative">
-          <SidebarBrand />
-          <div className="absolute right-2 top-1/2 -translate-y-1/2">
-            <SidebarToggle label={label} icon={Icon} onClick={toggleSidebar} />
-          </div>
-        </div>
-      )}
+      {/* Collapsed, the wordmark gives way to the compact icon mark - 16rem of
+          logo does not fit in 4. The collapse/expand control lives at the left
+          of the topbar (SidebarToggle), so both states keep the brand visible. */}
+      {collapsed ? <SidebarBrandIcon /> : <SidebarBrand />}
 
-      {/* SidebarNav takes flex-1 and scrolls, so the promo stays pinned to the
+      {/* SidebarNav takes flex-1 and scrolls, so the footer stays pinned to the
           bottom no matter how many nav items exist. */}
       <SidebarNav collapsed={collapsed} />
-      {/* The upsell is all copy and artwork; there is nothing of it to show in a
-          4rem rail, so it steps aside rather than being squeezed. */}
-      {!collapsed && <PromoCard />}
+      {/* Promo card hidden for now; pinned copyright takes the bottom slot. */}
+      {/* {!collapsed && <PromoCard />} */}
+      <div className="shrink-0 border-t border-border px-4 py-3 text-center text-[11px] text-muted-foreground">
+        {collapsed ? '©' : `© ${new Date().getFullYear()} Adysre. All rights reserved.`}
+      </div>
     </aside>
-  );
-}
-
-function SidebarToggle({
-  label,
-  icon: Icon,
-  onClick,
-}: {
-  label: string;
-  icon: typeof PanelLeftClose;
-  onClick: () => void;
-}) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      title={label}
-      aria-label={label}
-      className="flex h-8 w-8 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-    >
-      <Icon className="h-4 w-4" aria-hidden />
-    </button>
   );
 }

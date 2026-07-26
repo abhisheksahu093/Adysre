@@ -23,7 +23,9 @@ import {
   Blend,
   Grid2x2,
   Waves,
-  Library,
+  SwatchBook,
+  PenTool,
+  Radar,
   LayoutTemplate,
   MousePointerClick,
   Wand2,
@@ -56,12 +58,26 @@ export interface FeatureModule {
 export const FEATURE_MODULES: FeatureModule[] = [
   { id: 'components', href: '/components', icon: Blocks, accent: 'primary' },
   { id: 'icons', href: '/icons', icon: Shapes, accent: 'secondary' },
-  { id: 'palettes', href: '/palettes', icon: Palette, accent: 'accent' },
-  { id: 'gradients', href: '/gradients', icon: Blend, accent: 'primary' },
-  { id: 'patterns', href: '/patterns', icon: Grid2x2, accent: 'secondary' },
-  { id: 'textures', href: '/textures', icon: Waves, accent: 'accent' },
-  { id: 'promptLibrary', href: '/prompt-library', icon: Library, accent: 'primary' },
+  { id: 'colorsSurfaces', href: '/colors-surfaces', icon: SwatchBook, accent: 'accent' },
   { id: 'templates', href: '/templates', icon: LayoutTemplate, accent: 'primary' },
+  { id: 'aiTools', href: '/ai-tools', icon: Wand2, accent: 'secondary' },
+  { id: 'designPlayground', href: '/design-playground', icon: PenTool, accent: 'accent' },
+];
+
+/**
+ * The sidebar shown inside the workspace-preview mockup. It mirrors the current
+ * app sidebar (colours & surfaces merges palettes/gradients/patterns/textures;
+ * the tools are represented too), so the illustration never disagrees with the
+ * real navigation. Labels resolve from `nav.<id>`.
+ */
+export const PREVIEW_MODULES: FeatureModule[] = [
+  { id: 'components', href: '/components', icon: Blocks, accent: 'primary' },
+  { id: 'icons', href: '/icons', icon: Shapes, accent: 'secondary' },
+  { id: 'colorsSurfaces', href: '/colors-surfaces', icon: SwatchBook, accent: 'accent' },
+  { id: 'templates', href: '/templates', icon: LayoutTemplate, accent: 'primary' },
+  { id: 'aiTools', href: '/ai-tools', icon: Wand2, accent: 'secondary' },
+  { id: 'designPlayground', href: '/design-playground', icon: PenTool, accent: 'accent' },
+  { id: 'websiteIntelligence', href: '/website-intelligence', icon: Radar, accent: 'primary' },
 ];
 
 export interface WorkflowStep {
@@ -111,7 +127,6 @@ export const STAT_META: Record<string, StatMeta> = {
   gradients: { icon: Blend, accent: 'primary', href: '/gradients' },
   patterns: { icon: Grid2x2, accent: 'secondary', href: '/patterns' },
   textures: { icon: Waves, accent: 'accent', href: '/textures' },
-  prompts: { icon: Library, accent: 'primary', href: '/prompt-library' },
   teams: { icon: Users, accent: 'secondary' },
 };
 
@@ -127,12 +142,23 @@ export const LANDING_LINKS = {
   components: '/components',
   designPlayground: '/design-playground',
   icons: '/icons',
+  colorsSurfaces: '/colors-surfaces',
   palettes: '/palettes',
   gradients: '/gradients',
   patterns: '/patterns',
   textures: '/textures',
-  promptLibrary: '/prompt-library',
   templates: '/templates',
+  // "Open the workspace" drops you straight into the browser IDE.
+  codeStudio: '/code-studio',
+  // The components page leads with its "Customize your project" playground CTA.
+  customize: '/components',
+  // Tools module destinations, surfaced in the header "Tools" menu.
+  aiTools: '/ai-tools',
+  codes: '/tools/codes',
+  documents: '/tools/documents',
+  websiteIntelligence: '/website-intelligence',
+  rules: '/rules',
+  resume: '/tools/resume',
   pricing: '/pricing',
   contact: '/contact',
   docs: '/docs',

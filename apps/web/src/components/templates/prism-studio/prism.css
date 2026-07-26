@@ -147,6 +147,8 @@
 [data-template='prism'] .pri-clip {
   display: block;
   overflow: hidden;
+  padding-bottom: 0.2em; /* descenders */
+  margin-bottom: -0.2em;
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -91,4 +91,9 @@
   --color-warning: var(--warning);
   --color-danger: var(--danger);
   --color-danger-foreground: var(--danger-foreground);
+  /* `destructive` is the shadcn name for the danger role; alias it so
+     bg-destructive / text-destructive utilities resolve to the danger token
+     (they render nothing otherwise, e.g. low-score audit bars). */
+  --color-destructive: var(--danger);
+  --color-destructive-foreground: var(--danger-foreground);
 }

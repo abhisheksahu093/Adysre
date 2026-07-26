@@ -47,6 +47,6 @@ export const LANDING_TEMPLATES: LandingTemplate[] = [...TEMPLATES]
     slug: template.slug,
     name: template.name,
     themeKey: template.themeKey,
-    isNew: isNewTemplate(template, new Date()),
+    isNew: isNewTemplate(template),
     pageCount: template.pages?.length ?? 0,
   }));

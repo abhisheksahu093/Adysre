@@ -71,9 +71,12 @@
       }
     }
   },
+  "colorsSurfaces": {
+    "title": "カラーとサーフェス",
+    "subtitle": "パレット、グラデーション、パターン、テクスチャをまとめて一か所に。"
+  },
   "nav": {
     "dashboard": "ダッシュボード",
-    "promptLibrary": "プロンプトライブラリ",
     "components": "コンポーネント",
     "designPlayground": "デザインプレイグラウンド",
     "templates": "テンプレート",
@@ -82,7 +85,6 @@
     "openMenu": "ナビゲーションメニューを開く",
     "closeMenu": "ナビゲーションメニューを閉じる",
     "descriptions": {
-      "promptLibrary": "ワークスペースで使うプロンプトを検索・編集・コピーできます。",
       "components": "すべてのモジュールで利用できる構成要素を確認できます。",
       "templates": "白紙からではなく、既成のレイアウトから始められます。",
       "settings": "組織・メンバー・環境設定を管理します。",
@@ -91,12 +93,23 @@
       "patterns": "CSS背景パターンを閲覧・編集・エクスポート、または自分で生成。",
       "textures": "CSSサーフェステクスチャを閲覧・編集・エクスポート、または自分で生成。",
       "icons": "オリジナルの SVG アイコンを閲覧・カスタマイズし、任意の形式やサイズで書き出せます。",
-      "designPlayground": "無限キャンバスでページ・ダッシュボード・グラフィックをコードなしでデザイン。"
+      "designPlayground": "無限キャンバスでページ・ダッシュボード・グラフィックをコードなしでデザイン。",
+      "websiteIntelligence": "任意の公開サイトをパフォーマンス・SEO・アクセシビリティ・セキュリティなどでスキャンします。",
+      "qrCode": "リンク・WiFi・連絡先・決済などに対応したカスタマイズ可能なQRコードを作成します。",
+      "barcode": "ライブプレビューとPNG/SVG出力でEAN・UPC・Code 128・Code 39バーコードを作成します。",
+      "documents": "ライブプレビュー、テンプレート、PDF出力で請求書・見積書・領収書・給与明細を作成します。",
+      "resume": "求人票と照合してATSスコアを算出。キーワードとスキルの一致も表示。",
+      "codes": "QRコードとバーコード（EAN、UPC、Code 128）を1つのページで生成。ライブプレビューとPNG/SVGエクスポートに対応。",
+      "codeStudio": "ブラウザIDEで、ライブプレビュー付きでHTML・CSS・JS・TypeScript・React・Vueを書けます。",
+      "aiTools": "ブラウザ内で画像の圧縮・変換・リサイズ、QRやバーコードの読み取りなどを行えます。",
+      "apiStudio": "HTTPリクエストの作成・送信・テストを、コレクション、環境変数、履歴とともに。完全セルフホスト。",
+      "rules": "ビジネスルールを視覚的に構築。JSONツリー、平易な文章のプレビュー、即時の判定、そして判定した条件を示すデバッガー。"
     },
     "palettes": "カラーパレット",
     "gradients": "グラデーション",
     "patterns": "パターン",
     "textures": "テクスチャ",
+    "colorsSurfaces": "カラーとサーフェス",
     "icons": "アイコン",
     "backToHome": "ホームへ戻る",
     "groups": {
@@ -113,7 +126,68 @@
     "collapseSection": "{label}を折りたたむ",
     "viewAll": "すべての{label}",
     "collapseSidebar": "サイドバーを折りたたむ",
-    "expandSidebar": "サイドバーを展開"
+    "expandSidebar": "サイドバーを展開",
+    "websiteIntelligence": "ウェブサイトインテリジェンス",
+    "qrCode": "QRコードジェネレーター",
+    "barcode": "バーコードジェネレーター",
+    "documents": "ドキュメントジェネレーター",
+    "resume": "履歴書・ATS",
+    "codes": "コードジェネレーター",
+    "codeStudio": "コードスタジオ",
+    "customize": "プロジェクトをカスタマイズ",
+    "aiTools": "画像・ユーティリティツール",
+    "apiStudio": "APIスタジオ",
+    "rules": "ビジネスルール"
+  },
+  "tools": {
+    "qr": {
+      "badge": "ツール",
+      "title": "QRコードジェネレーター",
+      "subtitle": "リンク・WiFi・連絡先・イベント・決済向けのカスタマイズ可能なQRコードを作成。ライブでデザインし、PNGまたはSVGでダウンロード, すべてブラウザ内で完結します。"
+    },
+    "invoice": {
+      "badge": "ツール",
+      "title": "請求書・ドキュメントジェネレーター",
+      "subtitle": "ライブプレビュー、洗練されたテンプレート、ワンクリックのPDF出力で請求書・見積書・領収書・注文書を作成。JSON/CSV出力とCSV取り込みにも対応、すべてオフラインで動作します。"
+    },
+    "barcode": {
+      "badge": "ツール",
+      "title": "バーコードジェネレーター",
+      "subtitle": "スキャン可能なEAN-13・EAN-8・UPC-A・ITF-14・Code 128・Code 39バーコードを作成。チェックデジットを自動計算し、ライブでデザインしてPNGまたはSVGで出力, すべてブラウザ内で完結します。"
+    },
+    "salary": {
+      "badge": "ツール",
+      "title": "給与明細ジェネレーター",
+      "subtitle": "従業員情報、支給と控除の明細、自動計算された差引支給額を備えたプロ仕様の給与明細を作成。ライブでプレビューしPDFに印刷、すべてオフラインで動作します。"
+    },
+    "documents": {
+      "badge": "ツール",
+      "title": "ドキュメントジェネレーター",
+      "subtitle": "ライブプレビュー、洗練されたテンプレート、PDF印刷で請求書・見積書・領収書・給与明細を作成。すべてオフラインで動作します。",
+      "tabs": {
+        "invoice": "請求書",
+        "salary": "給与明細",
+        "signature": "メール署名"
+      }
+    },
+    "resume": {
+      "badge": "ツール",
+      "title": "履歴書とATS",
+      "subtitle": "ルールベースのATSスコアのために履歴書を求人内容と照合したり、ライブテンプレートで印刷対応の履歴書を作成したりできます。AIは使わず、すべてブラウザ内で処理されます。",
+      "tabs": {
+        "scanner": "ATSスキャナー",
+        "builder": "履歴書ビルダー"
+      }
+    },
+    "codes": {
+      "badge": "ツール",
+      "title": "コードジェネレーター",
+      "subtitle": "QRコードとバーコードを1つのページで作成できます。リンク、WiFi、連絡先、決済用のQRを設計したり、スキャン可能なEAN、UPC、Code 128、Code 39バーコードを作成したりでき、すべてブラウザ内でライブプレビューし、PNGまたはSVGとして書き出せます。",
+      "tabs": {
+        "qr": "QRコード",
+        "barcode": "バーコード"
+      }
+    }
   },
   "topbar": {
     "searchPlaceholder": "検索またはページへ移動…",
@@ -264,87 +338,6 @@
       "files": "ファイル"
     }
   },
-  "promptLibrary": {
-    "searchPlaceholder": "タイトル・タグ・キーワードで検索…",
-    "searchLabel": "プロンプトを検索",
-    "collections": {
-      "all": "すべて",
-      "featured": "おすすめ",
-      "trending": "人気",
-      "new": "新着"
-    },
-    "filters": {
-      "collection": "コレクション",
-      "category": "カテゴリ",
-      "allCategories": "すべてのカテゴリ",
-      "allTiers": "すべてのプラン",
-      "allModels": "すべてのモデル",
-      "allRatios": "すべての比率",
-      "byTier": "プランで絞り込む",
-      "byModel": "モデルで絞り込む",
-      "byRatio": "アスペクト比で絞り込む"
-    },
-    "count": "{count, plural, other {# 件のプロンプト}}",
-    "countFiltered": "{total} 件中 {count} 件のプロンプト",
-    "empty": {
-      "title": "条件に一致するプロンプトがありません",
-      "description": "検索条件を変えるか、フィルターをクリアしてください。"
-    },
-    "card": {
-      "editAria": "{title} を編集",
-      "searchTag": "{tag} を検索",
-      "lockedAria": "プレミアムプロンプト：{title} を使うにはプレミアムアクセスが必要です"
-    },
-    "dialog": {
-      "description": "文言を調整してからコピーできます。変更内容はライブラリには保存されません。",
-      "promptLabel": "プロンプト",
-      "copyPrompt": "プロンプトをコピー",
-      "characters": "{count} 文字",
-      "edited": "編集済み",
-      "worksWellOn": "相性の良いモデル",
-      "aspectRatios": "アスペクト比",
-      "tags": "タグ",
-      "englishOriginal": "英語の原文を表示しています、このプロンプトはまだ翻訳されていません。"
-    },
-    "tiers": {
-      "free": "無料",
-      "premium": "プレミアム"
-    },
-    "categories": {
-      "portrait": "ポートレート",
-      "headshot": "ヘッドショット",
-      "business": "ビジネス",
-      "fashion": "ファッション",
-      "lifestyle": "ライフスタイル",
-      "cinematic": "シネマティック",
-      "travel": "トラベル",
-      "nature": "ネイチャー",
-      "fitness": "フィットネス",
-      "automotive": "自動車",
-      "editorial": "エディトリアル",
-      "fantasy": "ファンタジー",
-      "sci-fi": "SF",
-      "anime": "アニメ",
-      "artistic": "アート"
-    },
-    "styles": {
-      "photorealistic": "フォトリアル",
-      "cinematic": "シネマティック",
-      "editorial": "エディトリアル",
-      "monochrome": "モノクロ",
-      "painterly": "絵画調",
-      "illustrated": "イラスト",
-      "3d-render": "3D レンダー",
-      "anime": "アニメ"
-    },
-    "ratios": {
-      "1:1": "1:1 スクエア",
-      "4:5": "4:5 ポートレート",
-      "3:4": "3:4 ポートレート",
-      "9:16": "9:16 ストーリー",
-      "16:9": "16:9 ワイド"
-    }
-  },
   "pages": {
     "profile": {
       "title": "プロフィール",
@@ -358,8 +351,8 @@
       "plan": "プラン",
       "planFree": "フリー",
       "planPremium": "プレミアム",
-      "planFreeHint": "41件の無料プロンプトをご利用いただけます。プレミアムプロンプトはロックされています。",
-      "planPremiumHint": "ライブラリのすべてのプロンプトをコピー・カスタマイズできます。",
+      "planFreeHint": "すべてのテンプレートをプレビューでき、無料のものは利用できます。プレミアムテンプレートとダウンロードはロックされています。",
+      "planPremiumHint": "ギャラリーのすべてのテンプレートをコピー・ダウンロードできます。",
       "upgrade": "アップグレード",
       "devOnly": "開発環境専用",
       "devOnlyHint": "アクセスレベルを切り替えてペイウォールを確認できます。本番環境では表示されません。"
@@ -600,8 +593,8 @@
   },
   "pricing": {
     "metaTitle": "料金プラン",
-    "title": "ライブラリのすべてのプロンプトに、今すぐアクセス",
-    "subtitle": "一度のお支払いで、15カテゴリ・120以上のプロンプトがすべて解放されます。今後追加されるプロンプトも、これから登場するモジュールも対象です。",
+    "title": "すべてのテンプレートとツールに今すぐアクセス",
+    "subtitle": "一度の支払いで、すべてのプレミアムテンプレートと全ページ、ダウンロードが解除され、さらにすべてのツールとこれから登場するモジュールも含まれます。",
     "mostPopular": "一番人気",
     "priceAria": "{price} 米ドル",
     "questions": "ご質問がありますか？<a>メールでお問い合わせください</a>。",
@@ -609,7 +602,7 @@
       "free": {
         "name": "フリー",
         "billing": "カード登録不要",
-        "cta": "無料プロンプトを見る"
+        "cta": "ライブラリを見る"
       },
       "annual": {
         "name": "年間アクセス",
@@ -628,17 +621,12 @@
       }
     },
     "features": {
-      "freePrompts": "41点の無料プロンプトをすべて利用可能",
-      "allPrompts": "120以上のプレミアムプロンプトをすべて利用可能",
-      "allCategories": "ポートレートからSFまで、全15カテゴリ",
-      "fourModels": "GPT Image・FLUX・Midjourney・SDXL に最適化",
       "copyPaste": "コピー＆ペーストするだけ、設定不要",
       "noCard": "カード登録不要",
-      "yearUpdates": "新規プロンプトと更新を1年間提供",
-      "lifetimeUpdates": "生涯アップデート、追加されるすべてのプロンプトを提供",
-      "futureModules": "コンポーネントとテンプレートのリリース時に利用可能",
+      "yearUpdates": "1年間の新テンプレートとアップデート",
+      "lifetimeUpdates": "永久アップデート：追加されるすべてのテンプレート",
+      "futureModules": "これから登場するすべてのモジュール",
       "earlyAccess": "新モジュールへの先行アクセス",
-      "promptEditor": "コピー前に任意のプロンプトをカスタマイズ",
       "emailSupport": "メールサポート",
       "prioritySupport": "優先サポート",
       "cancelAnytime": "いつでもキャンセル可能",
@@ -646,7 +634,12 @@
       "sharedWorkspace": "チーム共有ワークスペース",
       "rolesPermissions": "ロールと権限管理",
       "everythingAnnual": "年間アクセスのすべての機能",
-      "everythingLifetime": "ライフタイムアクセスのすべての機能"
+      "everythingLifetime": "ライフタイムアクセスのすべての機能",
+      "fullLibrary": "フルライブラリ：コンポーネント、アイコン、パレット、グラデーション、パターン、テクスチャ",
+      "freeTemplates": "すべての無料テンプレートをフルプレビュー",
+      "allTemplates": "すべてのプレミアムテンプレート、全ページ込み",
+      "templateDownloads": "React、Next.js、静的ビルドをダウンロード",
+      "allTools": "すべてのツール：コードジェネレーター、ドキュメント、履歴書、ウェブサイトインテリジェンス"
     },
     "faq": {
       "title": "よくあるご質問",
@@ -654,27 +647,27 @@
       "items": {
         "lifetimeIncludes": {
           "q": "ライフタイムアクセスには何が含まれますか？",
-          "a": "全15カテゴリにわたる120以上のプロンプトすべてに加えて、その後追加されるすべてのプロンプトを追加費用なしでご利用いただけます。コンポーネントとテンプレートの各モジュールも、リリース時点で対象となります。お支払いは一度だけで、更新は不要です。"
+          "a": "すべてのプレミアムテンプレートを全ページとコードのダウンロード込みで、さらに後から追加されるすべてのテンプレートも追加費用なしで。ツールとこれから登場するすべてのモジュールもカバーします。一度の支払い、更新なし。"
         },
         "purchaseFlow": {
           "q": "購入からアクセスまでの流れを教えてください。",
-          "a": "プランを選んで一度お支払いいただくと、ワークスペースはすぐにアップグレードされます。サインインすればどの端末でもプレミアムプロンプトが解放され、ダウンロードやインストールは一切不要です。"
+          "a": "プランを選んで一度支払えば、ワークスペースはすぐにアップグレードされます。プレミアムテンプレートとダウンロードは、サインインするすべてのデバイスで解除されます。"
         },
         "freeVsPremium": {
-          "q": "無料プロンプトとプレミアムプロンプトの違いは何ですか？",
-          "a": "無料プランでは、カード登録なしですぐに使える41点のプロンプトをご利用いただけます。プレミアムでは120以上の全ライブラリが解放され、作り込まれたシネマティック・エディトリアル・ファンタジーの構成や、どのプロンプトでも自由に調整できるプロンプトエディターが含まれます。"
-        },
-        "models": {
-          "q": "プロンプトはどのAIモデルで使えますか？",
-          "a": "各プロンプトには最適化済みのモデル（GPT Image・FLUX・Midjourney・SDXL）が明記されており、モデルでライブラリを絞り込むこともできます。レンズ・ライティング・カラーグレーディングの指定はそのまま保持されるため、どのジェネレーターでも活かせます。"
+          "q": "無料テンプレートとプレミアムテンプレートの違いは？",
+          "a": "無料テンプレートはフルプレビューでき、自由にコピーできます。プレミアムはギャラリーの残り、全ページ、そしてReact・Next.js・静的ビルドのダウンロードを解除します。"
         },
         "refunds": {
           "q": "返金は可能ですか？",
-          "a": "ご購入後すぐにライブラリのすべてのプロンプトへ全面的にアクセスいただけるため、返金は承っておりません。詳細は返金ポリシーをご確認ください。"
+          "a": "購入した瞬間にすべてのプレミアムテンプレートとツールへ即座にフルアクセスできるため、返金は行っておりません。詳しくは返金ポリシーをご確認ください。"
         },
         "help": {
           "q": "サポートが必要ですか？ご質問がありますか？",
           "a": "{email} までメールでご連絡ください。折り返しご対応いたします。ライフタイムプランとチームプランは、より迅速な優先サポートの対象です。"
+        },
+        "frameworks": {
+          "q": "テンプレートはどのフレームワークに対応していますか？",
+          "a": "すべてのテンプレートはReact、Next.js（App Router）、静的なHTML/CSSビルドとしてダウンロードでき、書き直しなしでスタックに組み込めます。"
         }
       }
     }
@@ -688,18 +681,6 @@
     "submit": "購入手続きへ",
     "submitting": "リダイレクト中…",
     "unavailable": "決済はまだご利用いただけません。ご購入はサポートまでご連絡ください。"
-  },
-  "premiumGate": {
-    "title": "これはプレミアムプロンプトです",
-    "descriptionCopy": "「{title}」はプレミアムライブラリの一部です。コピーするにはプレミアムアクセスが必要です。",
-    "descriptionEdit": "「{title}」はプレミアムライブラリの一部です。カスタマイズするにはプレミアムアクセスが必要です。",
-    "cta": "プレミアムを利用する",
-    "notNow": "後で",
-    "benefits": {
-      "unlockAll": "120以上のプレミアムプロンプトをすべて利用",
-      "unlockEdit": "コピー前にどのプロンプトもカスタマイズ可能",
-      "unlockUpdates": "今後追加されるプロンプトもすべて含む"
-    }
   },
   "components": {
     "metaTitle": "コンポーネント",
@@ -1258,9 +1239,21 @@
       "consulting": "コンサルティング",
       "education": "教育",
       "hardware": "ハードウェア",
-      "hospitality": "ホスピタリティ"
+      "hospitality": "ホスピタリティ",
+      "portfolio": "ポートフォリオ"
     },
     "taglines": {
+      "noctis": "ニアブラックのシネマティックな写真ポートフォリオ。アンバーのアクセント、カーテンワイプの画像リビール、スクロール連動のフィルムストリップレール。",
+      "vesper": "インディゴとバイオレットのガラス調によるダークな開発者ポートフォリオ。ポインター追従のスポットライト、3Dチルトの作品カード、マグネティックボタン。",
+      "marfa": "アイボリーとインクの明るいエディトリアルなアートディレクター向けポートフォリオ。テラコッタのアクセント、パララックスの版面、テキストマスクのリビール。",
+      "marlowe": "ニアブラックのシングルページなフリーランサー向けポートフォリオ。コーラルのアクセント、漂うヒーローの光球、カウントアップ数値、アニメーションするスキルバー、絞り込み可能な作品グリッド。",
+      "astra": "温かみのあるオフホワイトに、太字で明るいシングルページのポートフォリオ。コバルトのアクセントと星のモチーフ、ベントー型の作品グリッド、星のマーキー、カウントアップ数値。",
+      "crestline": "落ち着いたグリーンの企業向けサービス・コンサルティング。パーティクル背景に浮かぶ回転サービス図、番号付きサービス、ダークな数値パネル、カウントアップ表示。",
+      "nebula": "ネオン・オン・ダークの AI-SaaS。動くグラデーションメッシュ、グラスモーフィズム、浮遊するライブダッシュボード、マグネティックボタン、Lenis のスムーススクロール、8ページのカウントアップ数値。",
+      "solene": "静かな高級感のインテリアデザインスタジオ。温かなアイボリーと真鍮、大きなエディトリアル・セリフ、クリップパスで現れるデュオトーンの写真プレート、Lenis のスムーススクロール、全7ページ。",
+      "aster": "清潔で信頼感のあるヘルスケア・病院サイト。やわらかなブルーとティール、丸みのあるカード、浮遊する予約ウィジェット、穏やかなパルス、カウントアップ数値、Lenis のスムーススクロール、全7ページ。",
+      "wander": "没入感のある旅行・観光サイト。サンセットのオレンジとシアン、全面の検索ヒーロー、クリップパスで現れるインタラクティブな目的地カード、ピン付きマップ、ギャラリー、カウントアップ、Lenis のスムーススクロール、全8ページ。",
+      "haven": "ラグジュアリーなブティック不動産サイト。白とダークフォレストグリーンにサンドのアクセント、3D風の物件カード、ライブの住宅ローン計算機、クリップパスの表示、カウントアップ、Lenis のスムーススクロール、全7ページ。",
       "nova": "グラデーションメッシュのヒーローとアニメーションカウンターを備えたダークで透明感のある分析 SaaS。",
       "saffron": "クリームとフォレストグリーンの温かみあるエディトリアルなファインダイニング。パララックスの盛り付けとセリフ書体。",
       "pulse": "メディカルブルーとミントの落ち着いた丸みのあるクリニックサイト。安心感を第一に。",
@@ -1328,7 +1321,9 @@
         "premium": "プレミアム",
         "new": "新着",
         "multipage": "マルチページ"
-      }
+      },
+      "searchPlaceholder": "テンプレートを検索",
+      "searchLabel": "テンプレートを検索"
     },
     "locked": {
       "title": "プレミアムテンプレート",
@@ -1338,6 +1333,17 @@
         "preview": "アカウント不要の完全なライブプレビュー",
         "prompt": "デザインプロンプトをコピー",
         "download": "React、Next.js、静的ビルドをダウンロード"
+      }
+    },
+    "premium": {
+      "title": "プレミアムテンプレート",
+      "description": "「{name}」はプレミアムアクセスに含まれます。プロンプトのコピーとコードのダウンロードにはプレミアムアクセスを取得してください。",
+      "notNow": "後で",
+      "cta": "プレミアムアクセスを取得",
+      "benefits": {
+        "unlockAll": "すべてのプレミアムテンプレートを解除",
+        "unlockDownload": "React、Next.js、静的ビルドをダウンロード",
+        "unlockUpdates": "追加されるすべてのテンプレートを含む"
       }
     }
   },
@@ -1923,7 +1929,7 @@
   "landing": {
     "meta": {
       "title": "ADYSRE：デザインとリリースを一つのワークスペースで",
-      "description": "プロダクトチームがコンポーネント、アイコン、パレット、グラデーション、プロンプトを一か所で扱い、そのまま本番へ届けられるワークスペース。"
+      "description": "プロダクトチームがコンポーネント、アイコン、カラー、サーフェス、テンプレート、ツールを一か所で扱い、そのまま本番へ届けられるワークスペース。"
     },
     "nav": {
       "pricing": "料金",
@@ -1932,15 +1938,16 @@
       "closeMenu": "メニューを閉じる",
       "skip": "本文へスキップ",
       "menus": {
-        "styles": "スタイル",
-        "library": "ライブラリ"
+        "colorsSurfaces": "カラーとサーフェス",
+        "library": "ライブラリ",
+        "tools": "ツール"
       }
     },
     "hero": {
       "badge": "新機能: グラデーションとパレットのジェネレーター",
-      "title": "チームのデザインとリリースに必要なすべて",
+      "title": "チームに必要なすべてのブロック、カラー、ツール",
       "titleAccent": "を、静かな一つのワークスペースに",
-      "subtitle": "ADYSRE はコンポーネント、アイコン、パレット、グラデーション、プロンプトを一つにまとめ、ツールを切り替えずにアイデアから本番まで進められます。",
+      "subtitle": "ADYSRE はコンポーネント、アイコン、カラー、サーフェス、テンプレート、ツールを一つのワークスペースにまとめ、アプリを切り替えずにアイデアから本番まで進められます。",
       "ctaComponents": "コンポーネントを見る",
       "ctaPlayground": "プレイグラウンドを開く",
       "ctaWorkspace": "ワークスペースを開く",
@@ -1979,13 +1986,21 @@
           "title": "テクスチャ",
           "desc": "純粋なCSSによるノイズ・グレイン・紙・織りのサーフェステクスチャ、画像ファイル不要。"
         },
-        "promptLibrary": {
-          "title": "プロンプトライブラリ",
-          "desc": "カテゴリー別に厳選したプロンプト集。チームが使うモデルに合わせて調整済み。"
-        },
         "templates": {
           "title": "テンプレート",
           "desc": "モジュールを組み合わせて完成画面にするページとフローのテンプレート。"
+        },
+        "colorsSurfaces": {
+          "title": "カラーとサーフェス",
+          "desc": "パレット、グラデーション、パターン、テクスチャ。すべてトークン駆動で書き出し可能。"
+        },
+        "aiTools": {
+          "title": "画像・ユーティリティツール",
+          "desc": "圧縮・変換・リサイズ・背景除去・コード読み取りを、すべてブラウザ内で。"
+        },
+        "designPlayground": {
+          "title": "デザインプレイグラウンド",
+          "desc": "無限キャンバスでページ・ダッシュボード・グラフィックをコードなしでデザイン。"
         }
       }
     },
@@ -2018,6 +2033,14 @@
         "label": "グラデーション",
         "caption": "貼り付け対応の CSS 背景"
       },
+      "patterns": {
+        "label": "パターン",
+        "caption": "画像ファイル不要の CSS 背景"
+      },
+      "textures": {
+        "label": "テクスチャ",
+        "caption": "グレインとサーフェス仕上げ"
+      },
       "icons": {
         "label": "アイコン",
         "caption": "調整可能、ワンクリックでコピー"
@@ -2043,7 +2066,6 @@
         "gradients": "グラデーション",
         "patterns": "パターン",
         "textures": "テクスチャ",
-        "prompts": "プロンプト",
         "teams": "利用中のチーム"
       }
     },
@@ -2082,10 +2104,13 @@
     "faq": {
       "title": "よくある質問",
       "subtitle": "始める前に知っておきたいこと。",
+      "badge": "FAQ",
+      "help": "まだ質問がありますか？導入をお手伝いします。",
+      "helpCta": "お問い合わせ",
       "items": {
         "what": {
           "q": "ADYSRE とは？",
-          "a": "コンポーネント、アイコン、パレット、グラデーション、プロンプトを一つにまとめ、プロダクトにコピーできるデザインと開発のワークスペースです。"
+          "a": "コンポーネント、アイコン、パレット、グラデーション、テンプレートを一つにまとめ、プロダクトにコピーできるデザインと開発のワークスペースです。"
         },
         "frameworks": {
           "q": "対応フレームワークは？",
@@ -2114,6 +2139,8 @@
     "footer": {
       "tagline": "チームが一緒にデザインしてリリースするワークスペース。",
       "product": "プロダクト",
+      "library": "ライブラリ",
+      "tools": "ツール",
       "resources": "リソース",
       "legal": "法務",
       "contact": "お問い合わせ",
@@ -2127,6 +2154,17 @@
       "label": "アイコン、グラデーション、パレットがワークスペースで公開されました",
       "cta": "見る",
       "dismiss": "お知らせを閉じる"
+    },
+    "rules": {
+      "badge": "ビジネスルール",
+      "subtitle": "ひとつのルールを同時に三つの形で。JSONツリーだけが真実であり、文章も判定もそこから生成されます。このページ上で、あなたが導入するのと同じパッケージによって。",
+      "panels": {
+        "tree": "ルール",
+        "words": "平易な文章で",
+        "verdict": "注文に対して実行"
+      },
+      "matched": "一致",
+      "cta": "ルールエンジンを開く"
     }
   },
   "designPlayground": {
@@ -2417,6 +2455,847 @@
       "loading": "読み込み中…",
       "empty": "保存されたデザインはまだありません。",
       "unavailable": "保存済みデザインを表示できません、ストレージに接続できません。作業内容はこの端末に保存されています。"
+    }
+  },
+  "websiteIntel": {
+    "meta": {
+      "title": "ウェブサイトインテリジェンス",
+      "description": "任意の公開ウェブサイトを、パフォーマンス・SEO・アクセシビリティ・セキュリティなどにわたり1つのレポートでスキャンします。"
+    },
+    "badge": "ウェブサイトインテリジェンス",
+    "title": "どんなサイトの問題も正確に把握",
+    "subtitle": "任意の公開URLを指定すると、パフォーマンス・SEO・アクセシビリティ・セキュリティ・Core Web Vitals などを1つのレポートに。500以上のルールに基づき、有料AIは不要です。",
+    "comingSoon": "開発中",
+    "scan": {
+      "placeholder": "https://example.com",
+      "button": "スキャン",
+      "note": "スキャンエンジンは現在開発中です。これは実行予定の解析のプレビューです。"
+    },
+    "stats": {
+      "analyses": "1スキャンあたりの解析",
+      "rules": "ルールベースの検査",
+      "formats": "エクスポート形式",
+      "paidAi": "有料AI API"
+    },
+    "capabilitiesTitle": "11の解析、1回のスキャン",
+    "capabilitiesSubtitle": "すべてのスキャンで全項目を実行し、結果を総合スコアにまとめます。",
+    "capabilities": {
+      "performance": {
+        "title": "パフォーマンス",
+        "desc": "Lighthouse品質のタイミング、レンダリングを妨げるリソース、読み込みの流れ。"
+      },
+      "seo": {
+        "title": "SEO",
+        "desc": "メタタグ、見出し、canonical、サイトマップ、構造化データ、ソーシャルカード。"
+      },
+      "accessibility": {
+        "title": "アクセシビリティ",
+        "desc": "コントラスト・ロール・ラベル・キーボード順序を axe-core で監査。"
+      },
+      "bestPractices": {
+        "title": "ベストプラクティス",
+        "desc": "モダンWebの検査：doctype、コンソールエラー、非推奨API。"
+      },
+      "security": {
+        "title": "セキュリティ",
+        "desc": "HTTPS、セキュリティヘッダー、CSP、HSTS、Cookieフラグ。"
+      },
+      "webVitals": {
+        "title": "Core Web Vitals",
+        "desc": "フィールドしきい値に対して測定した LCP・CLS・INP。"
+      },
+      "technology": {
+        "title": "技術検出",
+        "desc": "使用中のフレームワーク、CMS、解析ツール、ライブラリ。"
+      },
+      "assets": {
+        "title": "アセット最適化",
+        "desc": "画像・CSS・JS・フォントの重量、遅延読み込み、圧縮。"
+      },
+      "html": {
+        "title": "HTML構造",
+        "desc": "文書アウトライン、ランドマーク、リンクの健全性、マークアップの妥当性。"
+      },
+      "network": {
+        "title": "ネットワーク",
+        "desc": "DNS、TTFB、HTTP/2 と HTTP/3、キャッシュ、CDN。"
+      },
+      "recommendations": {
+        "title": "AIレコメンド",
+        "desc": "影響度と推定削減量で並べた500以上のルールベース修正。"
+      },
+      "history": {
+        "title": "履歴比較",
+        "desc": "スコアの推移を追跡し、2つのスキャンを差分表示。"
+      }
+    },
+    "dashboardTitle": "あらゆる観点のダッシュボード",
+    "dashboardSubtitle": "一目でわかる概要から、レコメンドのタイムラインまで10セクション。",
+    "dashboard": {
+      "overview": "概要",
+      "performance": "パフォーマンス",
+      "seo": "SEO",
+      "accessibility": "アクセシビリティ",
+      "security": "セキュリティ",
+      "assets": "アセット",
+      "network": "ネットワーク",
+      "technologies": "技術",
+      "recommendations": "レコメンド",
+      "timeline": "タイムライン"
+    },
+    "reportsTitle": "レポートをエクスポート",
+    "reportsSubtitle": "ワークフローに合う形式で、結果をどこへでも。",
+    "reportsEmpty": "上でスキャンを実行すると、そのレポートを任意の形式でここからエクスポートできます。",
+    "stackTitle": "本番向けスタックで構築",
+    "stack": {
+      "frontend": "フロントエンド",
+      "backend": "バックエンド",
+      "scanning": "スキャン",
+      "infra": "キューとインフラ"
+    },
+    "home": {
+      "cta": "プラットフォームを見る",
+      "secondary": "スキャン内容を見る",
+      "moreFindings": "完全なレポートで{count}件すべての検出結果を見る",
+      "subtitle": "任意の公開URLを指定すると、パフォーマンス・SEO・アクセシビリティ・セキュリティ・Core Web Vitals などを1つのレポートに。500以上のルールに基づいています。"
+    },
+    "console": {
+      "label": "ウェブサイトをスキャン",
+      "scanning": "スキャン中…",
+      "overall": "総合スコア",
+      "technologiesTitle": "検出された技術",
+      "noTechnologies": "既知の技術は検出されませんでした。",
+      "findingsTitle": "推奨事項",
+      "noFindings": "今回の検査では問題は見つかりませんでした。",
+      "scannedIn": "{ms} ms でスキャン",
+      "browserNote": "パフォーマンス・アクセシビリティ・Core Web Vitals はブラウザエンジンが必要で、後のフェーズで対応します。",
+      "categories": {
+        "seo": "SEO",
+        "security": "セキュリティ",
+        "html": "HTML",
+        "assets": "アセット",
+        "bestPractices": "ベストプラクティス",
+        "accessibility": "アクセシビリティ",
+        "performance": "パフォーマンス"
+      },
+      "severity": {
+        "critical": "重大",
+        "serious": "深刻",
+        "moderate": "中程度",
+        "minor": "軽微",
+        "info": "情報"
+      },
+      "errors": {
+        "generic": "問題が発生しました。もう一度お試しください。",
+        "url_required": "スキャンするURLを入力してください。",
+        "url_invalid": "有効なURLではありません。",
+        "url_scheme": "http と https のURLのみスキャンできます。",
+        "url_hostname": "完全なドメインを入力してください（例：example.com）。",
+        "url_blocked": "このアドレスは許可されていません。",
+        "url_too_long": "URLが長すぎます。",
+        "timeout": "サイトの応答に時間がかかりすぎました。",
+        "unreachable": "サイトに到達できませんでした。",
+        "too_many_redirects": "リダイレクトが多すぎます。",
+        "bad_redirect": "無効なリダイレクトが返されました。",
+        "rate_limited": "スキャンが多すぎます。1分後に再試行してください。",
+        "bad_json": "リクエストを読み取れませんでした。",
+        "server_error": "スキャンが予期せず失敗しました。"
+      },
+      "history": {
+        "title": "最近のスキャン",
+        "empty": "まだスキャンがありません。上で実行してください。",
+        "view": "表示",
+        "vsPrevious": "前回のスキャンとの比較",
+        "fixed": "{count} 件解消",
+        "appeared": "{count} 件新規"
+      },
+      "webVitalsTitle": "Core Web Vitals",
+      "export": "エクスポート"
+    },
+    "report": {
+      "title": "ウェブサイトインテリジェンス レポート",
+      "print": "PDFとして保存",
+      "scanned": "{date} にスキャン",
+      "generatedBy": "ADYSRE Website Intelligence により生成",
+      "notFound": "そのスキャンは見つかりませんでした。"
+    },
+    "schedule": {
+      "title": "スケジュールされたスキャン",
+      "subtitle": "URLを自動で再スキャンし、履歴を積み上げます。",
+      "urlPlaceholder": "https://example.com",
+      "add": "スケジュール",
+      "runDue": "期限分を実行",
+      "empty": "スケジュールはまだありません。",
+      "next": "次回",
+      "delete": "削除",
+      "ranNone": "実行対象はありませんでした。",
+      "ranSome": "{count} 件実行しました。",
+      "cadences": {
+        "hourly": "毎時",
+        "daily": "毎日",
+        "weekly": "毎週"
+      }
+    },
+    "notify": {
+      "title": "通知",
+      "subtitle": "スケジュールされたスキャンの完了を、Webhook・Slack・Discord で受け取れます。",
+      "targetPlaceholder": "https://hooks.slack.com/... または you@company.com",
+      "add": "チャンネルを追加",
+      "empty": "チャンネルはまだありません。",
+      "delete": "削除",
+      "test": "テスト",
+      "testOk": "送信しました。",
+      "testFail": "送信できませんでした。",
+      "emailNote": "メール送信にはプロバイダーが必要で、まだ送信されません。チャンネルは保存されます。",
+      "types": {
+        "webhook": "Webhook",
+        "slack": "Slack",
+        "discord": "Discord",
+        "email": "メール"
+      }
+    },
+    "tabs": {
+      "website": "サイトスキャン",
+      "seo": "SEO監査"
+    }
+  },
+  "codeStudio": {
+    "title": "コードスタジオ",
+    "subtitle": "Monaco、ライブプレビュー、コンソールを備えたブラウザIDE。インストール不要、サーバー不要。",
+    "projectName": "プロジェクト名",
+    "newProject": "新規",
+    "templatesLabel": "テンプレート",
+    "run": "実行",
+    "reset": "リセット",
+    "save": "保存",
+    "saving": "保存中",
+    "saved": "保存しました",
+    "downloadZip": "ZIPをダウンロード",
+    "settings": "設定",
+    "theme": "テーマ",
+    "fontSize": "フォントサイズ",
+    "tabSize": "タブ幅",
+    "wordWrap": "行の折り返し",
+    "minimap": "ミニマップ",
+    "autosave": "自動保存",
+    "themes": {
+      "dark": "ダーク",
+      "light": "ライト",
+      "system": "システム"
+    },
+    "templates": {
+      "html": "空のHTML",
+      "typescript": "TypeScript",
+      "react": "Reactアプリ",
+      "reactTs": "React + TypeScript",
+      "vue": "Vueアプリ"
+    },
+    "importZip": "ZIPをインポート",
+    "importFolder": "フォルダをインポート",
+    "dropToImport": "ZIPまたはファイルをドロップしてインポート",
+    "readOnlyBadge": "読み取り専用",
+    "forkToEdit": "フォークして編集",
+    "share": {
+      "action": "共有",
+      "title": "プロジェクトを共有",
+      "description": "プロジェクト全体をエンコードしたリンクなので、サーバーなしで動作します。",
+      "readOnly": "読み取り専用リンク",
+      "readOnlyHint": "受け取った人は閲覧・実行できますが、フォークするまで編集はできません。",
+      "building": "リンクを作成中",
+      "copy": "コピー",
+      "copied": "コピーしました",
+      "note": "プロジェクトはリンクの中に含まれるため、リンクを持つ人は誰でもコードを開けます。"
+    },
+    "explorer": "エクスプローラー",
+    "search": {
+      "title": "検索",
+      "placeholder": "検索",
+      "replacePlaceholder": "置換",
+      "caseSensitive": "大文字と小文字を区別",
+      "regex": "正規表現を使用",
+      "replaceAll": "すべて置換",
+      "summary": "{files} ファイルで {matches} 件"
+    },
+    "palette": {
+      "title": "コマンドパレット",
+      "filePlaceholder": "名前でファイルを検索",
+      "commandPlaceholder": "コマンドを入力",
+      "empty": "結果なし"
+    },
+    "commands": {
+      "newFile": "新しいファイル",
+      "format": "ドキュメントを整形",
+      "run": "プレビューを実行",
+      "save": "プロジェクトを保存",
+      "download": "ZIPをダウンロード",
+      "share": "プロジェクトを共有",
+      "search": "ファイル内を検索",
+      "toggleTheme": "テーマを切り替え",
+      "toggleWordWrap": "行の折り返しを切り替え",
+      "toggleMinimap": "ミニマップを切り替え"
+    }
+  },
+  "aiTools": {
+    "badge": "AIツール",
+    "title": "画像・ユーティリティツール",
+    "subtitle": "圧縮・変換・リサイズなど。すべてブラウザ内で動作するため、ファイルがADYSREの外に出ることはなく、オフラインでも使えます。",
+    "phase": "フェーズ{phase}",
+    "soon": "近日公開",
+    "soonHint": "このツールはロードマップに含まれています。既存のツールと同様に完全オフラインで動くよう、エンジンを同梱中です。",
+    "backToTools": "すべてのAIツール",
+    "dropHint": "画像を追加",
+    "settings": "設定",
+    "processAll": "すべて処理",
+    "cancel": "キャンセル",
+    "reprocess": "再処理",
+    "downloadAll": "すべてダウンロード",
+    "clear": "クリア",
+    "emptyPreview": "ここでプレビューするには画像をアップロードしてください。",
+    "tools": {
+      "compressor": {
+        "name": "画像コンプレッサー",
+        "desc": "ブラウザ内で品質を調整しながらJPG・PNG・WEBPを圧縮します。"
+      },
+      "converter": {
+        "name": "画像コンバーター",
+        "desc": "どこにもアップロードせずにPNG・JPG・WEBP・AVIFを相互変換します。"
+      },
+      "resizer": {
+        "name": "画像リサイザー",
+        "desc": "縦横比を保ちつつ、幅・高さ・割合でリサイズします。"
+      },
+      "background-remover": {
+        "name": "背景リムーバー",
+        "desc": "被写体を切り抜き、透過PNGや新しい背景で書き出します。"
+      },
+      "qr-reader": {
+        "name": "QRリーダー",
+        "desc": "画像からQRコードを読み取り、リンクやWiFi、連絡先などを取得します。"
+      },
+      "barcode-reader": {
+        "name": "バーコードリーダー",
+        "desc": "画像からCode 128・EAN・UPCなどのバーコードを読み取ります。"
+      },
+      "ocr": {
+        "name": "OCR",
+        "desc": "画像やPDFからテキストを端末上で抽出し、コピーまたはTXT・JSON・CSV・DOCXで書き出します。"
+      },
+      "upscaler": {
+        "name": "画像アップスケーラー",
+        "desc": "ディテールを保ちながら画像を2x・4x・8xに拡大します。"
+      },
+      "enhancer": {
+        "name": "画像エンハンサー",
+        "desc": "シャープ化・ノイズ除去、明るさ・コントラスト・色の調整を行います。"
+      },
+      "face-blur": {
+        "name": "顔ぼかし",
+        "desc": "プライバシー保護のため顔を自動検出してぼかします。"
+      },
+      "smart-crop": {
+        "name": "スマート被写体クロップ",
+        "desc": "主要な被写体を検出し、SNSサイズにクロップします。"
+      }
+    }
+  },
+  "apiStudio": {
+    "title": "APIスタジオ",
+    "subtitle": "HTTPリクエストの作成・送信・テストを、コレクション、環境変数、履歴とともに。完全セルフホスト。",
+    "defaults": {
+      "workspace": "マイワークスペース",
+      "collection": "マイコレクション",
+      "request": "新しいリクエスト",
+      "folder": "新しいフォルダー"
+    },
+    "actions": {
+      "retry": "再試行",
+      "resize": "パネルのサイズ変更"
+    },
+    "empty": {
+      "title": "開いているリクエストはありません。"
+    },
+    "sidebar": {
+      "paneLabel": "サイドバーパネル",
+      "collections": "コレクション",
+      "history": "履歴",
+      "environments": "環境",
+      "search": "検索",
+      "searchPlaceholder": "リクエストを検索",
+      "newCollection": "新しいコレクション",
+      "newFolder": "新しいフォルダー",
+      "newRequest": "新しいリクエスト",
+      "noCollections": "コレクションはまだありません。",
+      "favorite": "お気に入りに追加",
+      "unfavorite": "お気に入りから削除",
+      "favorited": "お気に入り",
+      "delete": "削除",
+      "show": "サイドバーを表示",
+      "hide": "サイドバーを隠す"
+    },
+    "tabs": {
+      "untitled": "無題のリクエスト",
+      "new": "新しいタブ",
+      "close": "{name} を閉じる",
+      "closeUnsaved": "{name} を閉じる（未保存）",
+      "unsaved": "未保存の変更",
+      "pin": "タブをピン留め",
+      "unpin": "ピン留めを解除"
+    },
+    "request": {
+      "paneLabel": "リクエストパネル",
+      "method": "メソッド",
+      "url": "リクエストURL",
+      "urlPlaceholder": "https://api.example.com/users",
+      "send": "送信",
+      "cancel": "キャンセル",
+      "save": "保存",
+      "saveHint": "このリクエストをコレクションに保存",
+      "params": "パラメーター",
+      "headers": "ヘッダー",
+      "body": "ボディ",
+      "auth": "認証",
+      "paramKey": "パラメーター",
+      "headerKey": "ヘッダー",
+      "pathVariables": "パス変数",
+      "tests": "テスト"
+    },
+    "table": {
+      "key": "キー",
+      "value": "値",
+      "enabled": "有効",
+      "remove": "削除",
+      "addRow": "行を追加",
+      "newRow": "新しい行",
+      "enableRow": "{name} を有効にする",
+      "removeRow": "{name} を削除"
+    },
+    "body": {
+      "type": "ボディの種類",
+      "language": "形式",
+      "content": "リクエストボディ",
+      "placeholder": "'{ \"name\": \"Ada\" }'",
+      "query": "クエリ",
+      "variables": "変数",
+      "none": "このリクエストにボディはありません。",
+      "notAllowed": "{method} リクエストはボディなしで送信されます。",
+      "uploadsPending": "ファイルアップロードはアップロードフェーズで対応します。それまでは送信されません。",
+      "types": {
+        "none": "なし",
+        "raw": "Raw",
+        "graphql": "GraphQL",
+        "multipart": "フォームデータ",
+        "urlencoded": "フォームURLエンコード",
+        "binary": "バイナリ"
+      },
+      "languages": {
+        "text": "テキスト",
+        "json": "JSON",
+        "xml": "XML",
+        "html": "HTML",
+        "javascript": "JavaScript"
+      }
+    },
+    "auth": {
+      "type": "認証の種類",
+      "username": "ユーザー名",
+      "password": "パスワード",
+      "token": "トークン",
+      "prefix": "プレフィックス",
+      "key": "キー",
+      "value": "値",
+      "name": "名前",
+      "addTo": "追加先",
+      "header": "ヘッダー",
+      "query": "クエリ",
+      "noneHint": "このリクエストは認証情報なしで送信されます。",
+      "inheritsFrom": "{source} から認証を継承します。",
+      "inheritsNothing": "コレクションから継承しますが、設定されていません。",
+      "types": {
+        "inherit": "継承",
+        "none": "認証なし",
+        "basic": "ベーシック",
+        "bearer": "ベアラートークン",
+        "apiKey": "APIキー",
+        "digest": "ダイジェスト",
+        "jwt": "JWT",
+        "oauth2": "OAuth 2",
+        "awsSignature": "AWS署名",
+        "customHeader": "カスタムヘッダー",
+        "customQuery": "カスタムクエリ"
+      },
+      "algorithm": "アルゴリズム",
+      "qop": "保護品質 (qop)",
+      "qopNone": "なし",
+      "secret": "シークレット",
+      "privateKey": "秘密鍵 (PEM)",
+      "base64Secret": "シークレットはbase64エンコード済み",
+      "payload": "ペイロード",
+      "grantType": "グラントタイプ",
+      "tokenUrl": "トークンURL",
+      "clientId": "クライアントID",
+      "clientSecret": "クライアントシークレット",
+      "scope": "スコープ",
+      "refreshToken": "リフレッシュトークン",
+      "accessToken": "アクセストークン",
+      "accessTokenHint": "ここに入れたトークンはそのまま使われ、グラントは実行されません。",
+      "clientAuthentication": "クライアント認証情報の送り方",
+      "inBody": "ボディに含める",
+      "inHeader": "Basicヘッダーで送る",
+      "accessKeyId": "アクセスキーID",
+      "secretAccessKey": "シークレットアクセスキー",
+      "sessionToken": "セッショントークン",
+      "region": "リージョン",
+      "service": "サービス",
+      "runnerApplied": "送信時にサーバー側で適用されるため、認証情報がブラウザに渡ることはありません。",
+      "grantNeedsBrowser": "このグラントはブラウザのリダイレクトが必要で、このビルドでは実行できません。代わりに下にアクセストークンを貼り付けてください。",
+      "grants": {
+        "authorization_code": "認可コード",
+        "authorization_code_pkce": "認可コード + PKCE",
+        "client_credentials": "クライアントクレデンシャル",
+        "password": "パスワード",
+        "implicit": "インプリシット",
+        "device_code": "デバイスコード",
+        "refresh_token": "リフレッシュトークン"
+      }
+    },
+    "response": {
+      "paneLabel": "レスポンスパネル",
+      "empty": "レスポンスはまだありません。",
+      "emptyHint": "リクエストを送信するとここに表示されます。",
+      "sending": "送信中",
+      "cancelled": "キャンセルしました。",
+      "body": "ボディ",
+      "headers": "ヘッダー",
+      "cookies": "クッキー",
+      "timings": "タイミング",
+      "time": "時間",
+      "size": "サイズ",
+      "redirects": "リダイレクト",
+      "insecure": "証明書は未検証",
+      "insecureHint": "このリクエストはTLS検証を無効にして送信されました。",
+      "truncated": "切り詰め",
+      "truncatedHint": "レスポンスがサイズ上限を超えたため切り詰められました。",
+      "copy": "コピー",
+      "copied": "コピーしました",
+      "noBody": "このレスポンスにボディはありません。",
+      "noHeaders": "ヘッダーはありません。",
+      "noCookies": "クッキーは設定されませんでした。",
+      "noPreview": "このレスポンスはプレビューできません。",
+      "previewAlt": "レスポンスのプレビュー",
+      "cookieName": "名前",
+      "cookieValue": "値",
+      "cookieDomain": "ドメイン",
+      "cookieFlags": "フラグ",
+      "views": {
+        "pretty": "整形",
+        "raw": "Raw",
+        "preview": "プレビュー"
+      },
+      "tests": "テスト",
+      "noTests": "このリクエストではアサーションもスクリプトも実行されていません。"
+    },
+    "timings": {
+      "dns": "DNS",
+      "tcp": "接続",
+      "tls": "TLS",
+      "firstByte": "待機",
+      "download": "ダウンロード",
+      "total": "合計",
+      "unavailable": "計測不可"
+    },
+    "environment": {
+      "select": "環境",
+      "none": "環境なし",
+      "noneHint": "グローバル変数のみが解決されます。",
+      "empty": "環境はまだありません。",
+      "variableCount": "変数 {count} 個",
+      "edit": "編集",
+      "editTitle": "{name} の変数",
+      "editDescription": "ここの値が、このワークスペースの全リクエストの '{{name}}' を解決します。",
+      "save": "保存",
+      "secret": "シークレット",
+      "reveal": "値を表示",
+      "hide": "値を隠す",
+      "markSecret": "{name} をシークレットにする",
+      "addVariable": "変数を追加",
+      "noVariables": "変数はまだありません。",
+      "secretPlaceholder": "保存済み・非表示",
+      "secretHint": "シークレットは暗号化され表示されません。保存済みの値を保つには空のままにしてください。"
+    },
+    "history": {
+      "clear": "履歴を消去",
+      "empty": "まだ何も送信していません。"
+    },
+    "errors": {
+      "storageUnavailable": "ストレージが利用できないため、コレクションと履歴を読み込めません。リクエストの送信は可能です。",
+      "invalid_url": "このURLは送信できません。",
+      "blocked_host": "このアドレスにはこのデプロイからは到達できません。",
+      "unsupported_protocol": "このプロトコルはまだ対応していません。",
+      "dns_failure": "ホストが見つかりませんでした。",
+      "connection_refused": "接続が拒否されました。",
+      "connection_reset": "接続がリセットされました。",
+      "tls_error": "証明書を検証できませんでした。",
+      "timeout": "リクエストがタイムアウトしました。",
+      "too_many_redirects": "リダイレクトが多すぎます。",
+      "response_too_large": "レスポンスが大きすぎます。",
+      "request_too_large": "リクエストが大きすぎます。",
+      "cancelled": "キャンセルしました。",
+      "rate_limited": "リクエストが多すぎます。少し待ってください。",
+      "agent_unavailable": "ローカルエージェントが起動していません。",
+      "network": "リクエストを完了できませんでした。",
+      "unsupported_auth": "この認証方式はまだ送信できません。",
+      "unsupported_body": "このボディ形式はまだ送信できません。"
+    },
+    "tests": {
+      "assertions": "アサーション",
+      "noAssertions": "アサーションはまだありません。追加するとレスポンスを自動で検証できます。",
+      "addAssertion": "アサーションを追加",
+      "target": "検証対象",
+      "path": "名前またはパス",
+      "operator": "比較",
+      "expected": "期待値",
+      "scripts": "スクリプト",
+      "preRequest": "プリリクエストスクリプト",
+      "testScript": "テストスクリプト",
+      "sandboxNote": "スクリプトはネットワークのないサンドボックスワーカーで実行され、2秒で停止されます。",
+      "console": "コンソール",
+      "summary": "成功 {passed}、失敗 {failed}、検証不能 {errored}、スキップ {skipped}",
+      "got": "実際: {actual}",
+      "outcomes": {
+        "passed": "成功",
+        "failed": "失敗",
+        "errored": "検証できません",
+        "skipped": "スキップ"
+      },
+      "phases": {
+        "preRequest": "プリリクエストスクリプト",
+        "test": "テストスクリプト"
+      },
+      "targets": {
+        "status": "ステータスコード",
+        "statusText": "ステータステキスト",
+        "responseTime": "レスポンス時間",
+        "contentType": "コンテンツタイプ",
+        "header": "ヘッダー",
+        "body": "ボディ",
+        "jsonPath": "JSONパス",
+        "jsonSchema": "JSONスキーマ"
+      },
+      "operators": {
+        "equals": "と等しい",
+        "notEquals": "と等しくない",
+        "contains": "を含む",
+        "notContains": "を含まない",
+        "matches": "に一致する",
+        "exists": "が存在する",
+        "notExists": "が存在しない",
+        "lessThan": "より小さい",
+        "greaterThan": "より大きい",
+        "isOneOf": "のいずれか",
+        "isValid": "に照らして妥当"
+      }
+    },
+    "import": {
+      "title": "インポート",
+      "description": "cURLコマンドかPostmanコレクションを貼り付けてください。",
+      "format": "形式",
+      "formats": {
+        "curl": "cURLコマンド",
+        "postman": "Postmanコレクション"
+      },
+      "chooseFile": "コレクションファイルを選択",
+      "source": "インポートする内容",
+      "submit": "インポート",
+      "cancel": "キャンセル",
+      "warnings": "インポートしました。次は取り込めていません:"
+    },
+    "export": {
+      "title": "コレクションをエクスポート",
+      "docs": "ドキュメントを書き出す"
+    },
+    "codegen": {
+      "title": "コード",
+      "description": "送信されるリクエストを、お使いの言語で。",
+      "target": "言語",
+      "close": "閉じる",
+      "targets": {
+        "curl": "cURL",
+        "jsFetch": "JavaScript (fetch)",
+        "jsAxios": "JavaScript (axios)",
+        "node": "Node.js",
+        "python": "Python (requests)",
+        "go": "Go",
+        "java": "Java",
+        "php": "PHP (cURL)",
+        "csharp": "C#",
+        "swift": "Swift",
+        "kotlin": "Kotlin (OkHttp)",
+        "dart": "Dart",
+        "ruby": "Ruby"
+      }
+    },
+    "cookies": {
+      "title": "クッキー",
+      "description": "このワークスペースがテスト中に保存したクッキー。",
+      "empty": "保存されたクッキーはありません。",
+      "loading": "クッキーを読み込み中",
+      "path": "パス",
+      "expires": "有効期限",
+      "session": "セッション終了時",
+      "delete": "{name} を削除",
+      "clearAll": "すべて削除",
+      "confirmClear": "はい、すべて削除します",
+      "maskedHint": "値は暗号化されており、ここには表示されません。"
+    },
+    "shortcuts": {
+      "title": "キーボードショートカット",
+      "sendRequest": "リクエストを送信",
+      "saveRequest": "リクエストを保存",
+      "commandPalette": "コマンドパレット",
+      "search": "検索",
+      "toggleSidebar": "サイドバーの表示切り替え",
+      "newTab": "新しいタブ",
+      "duplicateTab": "タブを複製",
+      "closeTab": "タブを閉じる",
+      "reopenTab": "閉じたタブを開く",
+      "nextTab": "次のタブ",
+      "previousTab": "前のタブ",
+      "focusUrl": "アドレスバーへ移動",
+      "toggleEnvironment": "環境を切り替え",
+      "copyAsCurl": "cURLとしてコピー",
+      "clearResponse": "レスポンスを消去",
+      "showShortcuts": "キーボードショートカット"
+    }
+  },
+  "rules": {
+    "title": "ビジネスルールエンジン",
+    "subtitle": "フレームワーク非依存、プラグイン方式のルールエンジン。ASTが唯一の真実であり、ビルダーが編集し、実行エンジンが辿り、レンダラーが説明し、デバッガーが解き明かします。有料API、クラウドサービス、外部エンジンは一切使いません。",
+    "importsFrom": "取り込める形式",
+    "stats": {
+      "packages": "パッケージ",
+      "operators": "演算子",
+      "functions": "関数",
+      "kinds": "ルールの種類"
+    },
+    "sections": {
+      "capabilities": "できること",
+      "sandbox": "試す",
+      "sandboxHint": "条件を編集すると、文章も判定も説明も同時に変わります。",
+      "packages": "パッケージ構成",
+      "packagesHint": "各パッケージは必要になった段階で追加されます。使うものだけ導入してください。",
+      "decisions": "知っておきたい設計判断"
+    },
+    "capabilities": {
+      "ast": {
+        "title": "A JSON tree",
+        "desc": "Rules are plain JSON. Storable, diffable, versionable, and readable by anything."
+      },
+      "plugins": {
+        "title": "Everything is a plugin",
+        "desc": "Operators, functions, actions, fields, storage, renderers. Add one without touching the engine."
+      },
+      "execute": {
+        "title": "Runs anywhere",
+        "desc": "Synchronous, pure, zero dependencies. The same rule evaluates on a server, in a browser or in a test."
+      },
+      "explain": {
+        "title": "Says what it means",
+        "desc": "Every rule renders as a sentence, generated from the tree and never parsed back into it."
+      },
+      "debug": {
+        "title": "Shows its reasoning",
+        "desc": "Which row decided the verdict, what the operator received, and what short-circuiting hid."
+      },
+      "build": {
+        "title": "Edits itself",
+        "desc": "A visual builder with undo, per-row validation and a live preview, driven entirely by the plugin metadata."
+      },
+      "import": {
+        "title": "Takes what you have",
+        "desc": "Converts other rule formats, warning where an equivalent is near rather than exact."
+      },
+      "store": {
+        "title": "Keeps its history",
+        "desc": "Versioning, restore and querying behind one contract every adapter is checked against."
+      }
+    },
+    "packages": {
+      "types": "The vocabulary",
+      "core": "The engine",
+      "parser": "Importers",
+      "renderer": "Natural language",
+      "storage": "Persistence",
+      "react": "Builder state",
+      "ui": "The visual builder",
+      "devtools": "The debugger",
+      "next": "Over HTTP",
+      "theme": "Design tokens",
+      "playground": "Sandbox and examples"
+    },
+    "decisions": {
+      "sourceOfTruth": {
+        "title": "The AST is the only source of truth",
+        "desc": "Everything else is a projection of it. Prose is generated from the tree and never parsed back, so the two can never disagree."
+      },
+      "errorIsNotFalse": {
+        "title": "An error is not a false",
+        "desc": "A condition that cannot be evaluated is errored, and so is the rule. A broken comparison never looks like a failed one."
+      },
+      "noSideEffects": {
+        "title": "Actions are intent, never performed",
+        "desc": "The engine reports what should happen and the host decides. That is what lets a rule be run twice, in a preview, or in a test."
+      },
+      "immutableRegistry": {
+        "title": "The registry cannot be mutated",
+        "desc": "Extending it returns a new one, so two tenants can hold different capabilities without one leaking into the other."
+      },
+      "traceable": {
+        "title": "Every answer carries its reasoning",
+        "desc": "Each node records what it saw and what it concluded, so somebody can be shown the condition that decided it."
+      },
+      "noParsing": {
+        "title": "No language to learn",
+        "desc": "There is no text format to hand-author, so there is no second system to keep in step with the tree."
+      }
+    },
+    "guide": {
+      "title": "ビジネスルールエンジンの使い方",
+      "intro": "プロジェクトにルールを組み込むために必要なすべて。導入、記述、実行、説明、拡張、そして編集の提供まで。以下のコードはそのまま動きます。",
+      "download": "ガイドをダウンロード",
+      "steps": {
+        "install": {
+          "title": "インストール",
+          "body": "必要なものだけを導入します。エンジンと型定義はランタイム依存ゼロ。ビルダーが別パッケージなのは、ルールを評価するだけのサーバーにReactエディタを送る必要がないからです。"
+        },
+        "author": {
+          "title": "ルールを書く",
+          "body": "ルールはただのJSONです。ビルダーがIDと時刻を扱いますが、手で書いても、保存しても、レビューで差分を取っても構いません。"
+        },
+        "evaluate": {
+          "title": "実行する",
+          "body": "同期的で純粋。レジストリが空から始まるのは、ルールに何を許すかがあなたの選択だからです。結果には判定、アクション、トレースが含まれます。"
+        },
+        "explain": {
+          "title": "読み返す",
+          "body": "すべてのルールは文章になります。ツリーから生成され、決して逆方向に解析されません。まず構造、次に文字列です。"
+        },
+        "extend": {
+          "title": "独自の演算子を足す",
+          "body": "エンジンができることはすべてプラグインです。登録すればビルダーが提示し、デバッガーが説明し、ルールはJSONのままです。"
+        },
+        "build": {
+          "title": "編集できるようにする",
+          "body": "ビジュアルビルダーはプラグインのメタデータだけで動きます。arityが入力欄の数を、acceptsが提示する演算子を決めます。"
+        },
+        "debug": {
+          "title": "理由を知る",
+          "body": "デバッガーは判定を決めた行を示し、短絡評価を切ってもう一度実行し、速い経路が飛ばした不具合を明らかにします。"
+        },
+        "store": {
+          "title": "保存する",
+          "body": "バージョン管理と復元を備えた単一のストレージ契約。復元は巻き戻しではなく新しいバージョンを書きます。"
+        }
+      }
     }
   }
 }

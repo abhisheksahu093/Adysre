@@ -1,0 +1,39 @@
+{
+  "name": "@adysre/rules-storage",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Where rules live: the storage contract, versioning, querying, and a reference adapter every other one has to match.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abhisheksahu093/Adysre.git",
+    "directory": "packages/rules-storage"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "lint": "eslint src",
+    "typecheck": "tsc --noEmit",
+    "test": "tsx --test 'src/**/*.test.ts'",
+    "clean": "rm -rf dist .turbo tsconfig.tsbuildinfo"
+  },
+  "devDependencies": {
+    "@adysre/config": "workspace:*",
+    "@types/node": "^20.16.10",
+    "tsx": "^4.19.1",
+    "typescript": "^5.6.3"
+  },
+  "dependencies": {
+    "@adysre/rules-core": "workspace:*",
+    "@adysre/rules-types": "workspace:*"
+  }
+}

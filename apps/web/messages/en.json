@@ -3163,6 +3163,8 @@
     "showJson": "Show JSON",
     "hideJson": "Hide JSON",
     "jsonHint": "This is the whole rule. The builder, the preview and the executor are all projections of it.",
-    "debugger": "Why this answer"
+    "debugger": "Why this answer",
+    "savedVersion": "Saved in this browser as version {version}.",
+    "notSaved": "Not saved yet. Saving keeps the rule in this browser."
   }
 }

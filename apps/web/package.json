@@ -18,6 +18,7 @@
     "@adysre/database": "workspace:^",
     "@adysre/rules-core": "workspace:^",
     "@adysre/rules-devtools": "workspace:^",
+    "@adysre/rules-storage": "workspace:^",
     "@adysre/rules-types": "workspace:^",
     "@adysre/rules-ui": "workspace:^",
     "@adysre/sdk": "workspace:*",

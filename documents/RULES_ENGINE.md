@@ -33,6 +33,7 @@ longer matches the tree, or a tree that cannot express what somebody typed.
 | `@adysre/rules-parser` | importers: this AST, jsonLogic, json-rules-engine, query filters | **built** |
 | `@adysre/rules-renderer` | AST to natural language, and other output formats | **built** |
 | `@adysre/rules-react` | headless store, history and hooks for a builder | **built** |
+| `@adysre/rules-storage` | the storage contract, versioning, querying, adapters | **built** |
 | `@adysre/rules-ui` | the visual builder, shadcn/ui and Tailwind | **built** |
 | `@adysre/rules-next` | Next.js adapters: route handlers, server actions | planned |
 | `@adysre/rules-devtools` | the execution debugger | **built** |
@@ -423,6 +424,50 @@ receive" must not add a character that was never in the data. Capped in length,
 because a field can hold ten thousand entries and the rule most worth inspecting
 should not be the one that hangs the panel.
 
+## Storage
+
+`StoragePlugin` was in the vocabulary from the start. What `@adysre/rules-storage`
+adds is everything a store has to DECIDE that the contract cannot say: when a
+save makes a version, what a restore does to history, what a tag filter means,
+how a list breaks a tie.
+
+**The contract is executable.** "Adapters" is plural, and a plural that only
+means "several things with the same method names" is worth nothing - a screen
+that lists correctly against the in-memory store and wrongly against the
+database is a bug nobody finds until production, because both type-check. So
+`runStorageConformance` is a framework-free suite an adapter runs against
+itself, and the second adapter exists partly to prove the first one was not
+simply defining the contract by accident.
+
+Decisions worth knowing:
+
+- **A save that changes nothing creates no version.** A builder autosaves, a
+  form posts twice, a retry lands after the first attempt succeeded, and a
+  history padded with identical entries is one nobody scrolls.
+- **A rename still makes a version**, because the AST says the version
+  increments on each saved change. Whether the LOGIC changed is a different
+  question, which `logicHash` already answered and `compareVersions` reports.
+- **The stored version wins over the one a client sent.** A stale editor holding
+  version 1 must not write 2 over 9.
+- **A first save is version 1**, whatever the document claimed. An import
+  carries the version it was written with, and honouring it starts a history
+  at 7.
+- **Restore moves forward.** The old content becomes a new version on top rather
+  than rewinding: a history that can be rewritten is one nobody can be asked to
+  trust, and "who changed this, and when" is what a version list is for.
+- **A tag filter narrows**, taking all of the tags rather than any of them. One
+  that returned more as tags were added would read as broken.
+- **Search looks at what identifies a rule** - name, key, tags - and not the
+  description, because a search that matches prose returns most of the list.
+- **Ties are broken by id**, so paging cannot show an item twice or never.
+- **An invalid rule is refused rather than stored.** Unlike parsing, where a bad
+  document is a message to show, one reaching `save` is a bug in the caller.
+
+Reading goes through `parseRule`, so a stored document written by an older
+engine is migrated on the way in and one written by a NEWER engine is refused
+rather than half-understood. Storage is where a stored rule meets a different
+build, which is what `schemaVersion` was always for.
+
 ## Rule kinds
 
 `validation`, `filter`, `transformation`, `workflow`, `calculation`,
@@ -442,8 +487,8 @@ change to the AST rather than a plugin.
 | 6 | Headless React state (`rules-react`) | **done** |
 | 7 | The visual builder (`rules-ui`) | **done** |
 | 8 | Execution debugger (`rules-devtools`) | **done** |
-| 9 | Storage adapters and versioning | next |
-| 10 | Next.js adapters | |
+| 9 | Storage adapters and versioning | **done** |
+| 10 | Next.js adapters | next |
 | 11 | Themes | |
 | 12 | Playground and examples | |
 | 13 | Documentation site | |

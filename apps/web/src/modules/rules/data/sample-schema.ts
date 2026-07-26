@@ -30,6 +30,14 @@ import type {
  */
 export const EVALUATED_AT = Date.parse('2026-07-26T00:00:00.000Z');
 
+/**
+ * Where the playground keeps what somebody saved.
+ *
+ * Namespaced rather than the adapter's default, so a sandbox cannot collide
+ * with whatever a real rules module stores at the same origin later.
+ */
+export const RULES_STORAGE_KEY = 'adysre.rules.playground';
+
 /** The subject a rule here is written against. */
 export const SAMPLE_ORDER: JsonValue = {
   order: {

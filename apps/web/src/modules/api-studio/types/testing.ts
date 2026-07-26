@@ -82,3 +82,42 @@ export interface TestRunResult {
   errored: number;
   durationMs: number;
 }
+
+/**
+ * What a sandboxed script produced.
+ *
+ * A script cannot return a value: it runs in a worker, so everything it wants
+ * to say has to be data. Logs, test outcomes and variable changes are that
+ * data, and `error` is how a script that threw reports itself rather than
+ * disappearing.
+ */
+export interface ScriptOutcome {
+  logs: { level: 'log' | 'warn' | 'error'; message: string }[];
+  /** Results from `pm.test(...)` calls, in the order they ran. */
+  tests: { name: string; passed: boolean; error: string | null }[];
+  /** Variables the script set, to be applied to the active environment. */
+  setVariables: Record<string, string>;
+  /** Variables the script removed. */
+  unsetVariables: string[];
+  /** The script threw, or the sandbox stopped it. `null` when it completed. */
+  error: string | null;
+}
+
+/** What a script is allowed to see. Nothing here is a live object. */
+export interface ScriptContext {
+  request: {
+    method: string;
+    url: string;
+    headers: { name: string; value: string }[];
+    body: string;
+  };
+  response?: {
+    status: number;
+    statusText: string;
+    responseTime: number;
+    headers: { name: string; value: string }[];
+    body: string;
+  };
+  /** The resolved variable stack, flattened. */
+  variables: Record<string, string>;
+}

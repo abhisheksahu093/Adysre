@@ -2843,7 +2843,8 @@
       "auth": "Auth",
       "paramKey": "Parameter",
       "headerKey": "Header",
-      "pathVariables": "Path variables"
+      "pathVariables": "Path variables",
+      "tests": "Tests"
     },
     "table": {
       "key": "Key",
@@ -2976,7 +2977,9 @@
         "pretty": "Pretty",
         "raw": "Raw",
         "preview": "Preview"
-      }
+      },
+      "tests": "Tests",
+      "noTests": "No assertions or scripts ran for this request."
     },
     "timings": {
       "dns": "DNS",
@@ -3017,6 +3020,55 @@
       "network": "The request could not be completed.",
       "unsupported_auth": "That auth type cannot be sent yet.",
       "unsupported_body": "That body type cannot be sent yet."
+    },
+    "tests": {
+      "assertions": "Assertions",
+      "noAssertions": "No assertions yet. Add one to check the response automatically.",
+      "addAssertion": "Add assertion",
+      "target": "What to check",
+      "path": "Name or path",
+      "operator": "Comparison",
+      "expected": "Expected",
+      "scripts": "Scripts",
+      "preRequest": "Pre-request script",
+      "testScript": "Test script",
+      "sandboxNote": "Scripts run in a sandboxed worker with no network access, and are stopped after two seconds.",
+      "console": "Console",
+      "summary": "{passed} passed, {failed} failed, {errored} could not be checked, {skipped} skipped",
+      "got": "Got: {actual}",
+      "outcomes": {
+        "passed": "Passed",
+        "failed": "Failed",
+        "errored": "Could not be checked",
+        "skipped": "Skipped"
+      },
+      "phases": {
+        "preRequest": "Pre-request script",
+        "test": "Test script"
+      },
+      "targets": {
+        "status": "Status code",
+        "statusText": "Status text",
+        "responseTime": "Response time",
+        "contentType": "Content type",
+        "header": "Header",
+        "body": "Body",
+        "jsonPath": "JSON path",
+        "jsonSchema": "JSON schema"
+      },
+      "operators": {
+        "equals": "equals",
+        "notEquals": "does not equal",
+        "contains": "contains",
+        "notContains": "does not contain",
+        "matches": "matches",
+        "exists": "exists",
+        "notExists": "does not exist",
+        "lessThan": "is less than",
+        "greaterThan": "is greater than",
+        "isOneOf": "is one of",
+        "isValid": "is valid against"
+      }
     }
   }
 }

@@ -355,6 +355,44 @@ rewrite. The matcher now says `api/`, the same way it already said `q/`. Worth
 remembering when naming a route: the build, the types and the tests were all
 green while the page was unreachable.
 
+## Tests
+
+Two mechanisms, sharing one report.
+
+**Assertions are data**: a target, an operator and an expected value. That is
+what lets them be built without writing code, translated, exported alongside the
+request and diffed in review. Targets cover status, status text, response time,
+content type, a header, the body, a JSON path and a JSON schema.
+
+Three outcomes, kept apart because they mean different things: `passed`,
+`failed` (the response is wrong) and `errored` (the check could not be made, so
+the response has not been judged). A typo'd JSON path or an unsupported schema
+keyword is the third, never the first. The bundled JSON Schema validator covers
+the keywords a response assertion uses and **reports any keyword it does not
+implement** rather than skipping it, because a validator that silently ignores
+`oneOf` would pass a response that violates it.
+
+The JSON path subset is deliberate too: dot, bracket index and quoted key. No
+wildcards, filters or recursive descent - those make a path a query language.
+Unsupported syntax is named, not guessed at.
+
+**Scripts are the escape hatch.** Pre-request and test scripts run in a Web
+Worker built from a Blob, with `fetch`, `XMLHttpRequest`, `WebSocket`,
+`importScripts`, storage and `Worker` itself removed, and are terminated after
+two seconds. The worker matters for two separate reasons: a `while (true)` must
+not take the tab with it, and a script from a SHARED collection running in a
+colleague's browser must not be able to phone home with what it saw. Each run
+gets a fresh worker, so nothing one script leaves behind can reach the next.
+
+The API is Postman-shaped (`pm.test`, `pm.expect`, `pm.response.json()`,
+`pm.environment.set`) so a pasted script mostly works. A pre-request script runs
+BEFORE resolution, since setting a variable is the main thing it is for and a
+value set afterwards would not reach the request it was set for.
+
+The runtime is kept as a source STRING rather than a module: a Blob worker needs
+no bundler configuration to be correct, and the tests evaluate that same string
+in Node, so what is verified is the code that actually runs.
+
 ## Configuration
 
 | Variable | Effect |
@@ -383,8 +421,8 @@ database there is no honest tenant to attribute writes to, and the routes say so
 | 5 | Request engine: runner, SSRF policy, timings, cancellation | **done** |
 | 6 | Main UI: sidebar, tabs, request builder, response viewer | **done** |
 | 7 | Auth strategies (digest, OAuth 2, JWT, AWS) and the cookie jar | **done** |
-| 8 | Scripts, assertions, and the environment and cookie editors | next |
-| 9 | Import (Postman, OpenAPI, HAR, cURL), export, code generation | |
+| 8 | Assertions, sandboxed scripts and the tests pane | **done** |
+| 9 | Environment and cookie editors, import, export, code generation | next |
 | 10 | Docs generator, offline queue, search, shortcuts, a11y pass | |
 
 ## Phase 1 file map

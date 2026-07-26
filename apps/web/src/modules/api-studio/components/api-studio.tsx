@@ -4,7 +4,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { AlertTriangle, PanelLeftClose, PanelLeftOpen, RefreshCw } from 'lucide-react';
 import { Button, Select, cn } from 'adysre';
-import type { ApiTab, HistoryEntry, RequestDefinition } from '../types';
+import type { ApiTab, Assertion, HistoryEntry, RequestDefinition } from '../types';
 import { EMPTY_REQUEST } from '../constants/defaults';
 import {
   useCollectionsStore,
@@ -13,6 +13,7 @@ import {
   useLayoutStore,
   useTabsStore,
   useWorkspaceStore,
+  type ExecutionEntry,
 } from '../stores';
 import { apiStudioClient } from '../services/api-client';
 import { useBootstrap } from '../hooks/use-bootstrap';
@@ -197,6 +198,20 @@ export function ApiStudio() {
     if (id) useTabsStore.getState().updateDraft(id, patch);
   }, []);
 
+  const updateAssertions = useCallback((assertions: Assertion[]) => {
+    const id = useTabsStore.getState().activeTabId;
+    if (id) useTabsStore.getState().setAssertions(id, assertions);
+  }, []);
+
+  /** Send, then hand the assertion and script outcomes to the response pane. */
+  const sendTab = useCallback(
+    async (tab: ApiTab) => {
+      const output = await send(tab);
+      useExecutionStore.getState().setOutcome(tab.id, output);
+    },
+    [send],
+  );
+
   // Global shortcuts. Kept to the ones with no in-page equivalent; everything
   // else is a button that is reachable by tab.
   useEffect(() => {
@@ -208,7 +223,7 @@ export function ApiStudio() {
 
       if (key === 'enter' && tab) {
         event.preventDefault();
-        void send(tab);
+        void sendTab(tab);
       } else if (key === 's' && tab) {
         event.preventDefault();
         void saveTab(tab);
@@ -226,7 +241,7 @@ export function ApiStudio() {
 
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [newScratch, saveTab, send]);
+  }, [newScratch, saveTab, sendTab]);
 
   // Open something on first load, so the studio is never a blank canvas.
   const bootedTabs = useRef(false);
@@ -339,9 +354,10 @@ export function ApiStudio() {
                   tab={activeTab}
                   sending={sending}
                   onChange={updateDraft}
-                  onSend={() => void send(activeTab)}
+                  onSend={() => void sendTab(activeTab)}
                   onCancel={() => useExecutionStore.getState().cancel(activeTab.id)}
                   onSave={() => void saveTab(activeTab)}
+                  onAssertions={updateAssertions}
                   canSave={activeTab.dirty || activeTab.nodeId === null}
                 />
               }
@@ -363,7 +379,8 @@ export function ApiStudio() {
   );
 }
 
-const IDLE = {
+/** What a tab that has never been sent shows. */
+const IDLE: ExecutionEntry = {
   status: 'idle',
   startedAt: null,
   finishedAt: null,
@@ -371,7 +388,9 @@ const IDLE = {
   error: null,
   progress: null,
   controller: null,
-} as const;
+  tests: null,
+  scripts: [],
+};
 
 /**
  * The builder/response split.

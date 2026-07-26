@@ -2843,7 +2843,8 @@
       "auth": "認証",
       "paramKey": "パラメーター",
       "headerKey": "ヘッダー",
-      "pathVariables": "パス変数"
+      "pathVariables": "パス変数",
+      "tests": "テスト"
     },
     "table": {
       "key": "キー",
@@ -2976,7 +2977,9 @@
         "pretty": "整形",
         "raw": "Raw",
         "preview": "プレビュー"
-      }
+      },
+      "tests": "テスト",
+      "noTests": "このリクエストではアサーションもスクリプトも実行されていません。"
     },
     "timings": {
       "dns": "DNS",
@@ -3017,6 +3020,55 @@
       "network": "リクエストを完了できませんでした。",
       "unsupported_auth": "この認証方式はまだ送信できません。",
       "unsupported_body": "このボディ形式はまだ送信できません。"
+    },
+    "tests": {
+      "assertions": "アサーション",
+      "noAssertions": "アサーションはまだありません。追加するとレスポンスを自動で検証できます。",
+      "addAssertion": "アサーションを追加",
+      "target": "検証対象",
+      "path": "名前またはパス",
+      "operator": "比較",
+      "expected": "期待値",
+      "scripts": "スクリプト",
+      "preRequest": "プリリクエストスクリプト",
+      "testScript": "テストスクリプト",
+      "sandboxNote": "スクリプトはネットワークのないサンドボックスワーカーで実行され、2秒で停止されます。",
+      "console": "コンソール",
+      "summary": "成功 {passed}、失敗 {failed}、検証不能 {errored}、スキップ {skipped}",
+      "got": "実際: {actual}",
+      "outcomes": {
+        "passed": "成功",
+        "failed": "失敗",
+        "errored": "検証できません",
+        "skipped": "スキップ"
+      },
+      "phases": {
+        "preRequest": "プリリクエストスクリプト",
+        "test": "テストスクリプト"
+      },
+      "targets": {
+        "status": "ステータスコード",
+        "statusText": "ステータステキスト",
+        "responseTime": "レスポンス時間",
+        "contentType": "コンテンツタイプ",
+        "header": "ヘッダー",
+        "body": "ボディ",
+        "jsonPath": "JSONパス",
+        "jsonSchema": "JSONスキーマ"
+      },
+      "operators": {
+        "equals": "と等しい",
+        "notEquals": "と等しくない",
+        "contains": "を含む",
+        "notContains": "を含まない",
+        "matches": "に一致する",
+        "exists": "が存在する",
+        "notExists": "が存在しない",
+        "lessThan": "より小さい",
+        "greaterThan": "より大きい",
+        "isOneOf": "のいずれか",
+        "isValid": "に照らして妥当"
+      }
     }
   }
 }

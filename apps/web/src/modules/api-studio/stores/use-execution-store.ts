@@ -1,7 +1,13 @@
 'use client';
 
 import { create } from 'zustand';
-import type { ExecutionError, ExecutionResponse, ExecutionResult } from '../types';
+import type {
+  ExecutionError,
+  ExecutionResponse,
+  ExecutionResult,
+  ScriptOutcome,
+  TestRunResult,
+} from '../types';
 import { MAX_CONCURRENT_REQUESTS } from '../constants/limits';
 
 /**
@@ -27,6 +33,10 @@ export interface ExecutionEntry {
   /** Upload progress 0 to 1, or `null` when the runtime cannot report it. */
   progress: number | null;
   controller: AbortController | null;
+  /** Structured assertions evaluated against this response. */
+  tests: TestRunResult | null;
+  /** What the pre-request and test scripts produced, in the order they ran. */
+  scripts: { phase: 'preRequest' | 'test'; outcome: ScriptOutcome }[];
 }
 
 const IDLE: ExecutionEntry = {
@@ -37,6 +47,8 @@ const IDLE: ExecutionEntry = {
   error: null,
   progress: null,
   controller: null,
+  tests: null,
+  scripts: [],
 };
 
 interface ExecutionState {
@@ -49,6 +61,15 @@ interface ExecutionState {
   finish: (tabId: string, result: ExecutionResult) => void;
   /** Record a failure that never reached the runner (offline, refused). */
   fail: (tabId: string, error: ExecutionError) => void;
+  /**
+   * Record what the assertions and scripts produced for this response. Separate
+   * from `finish` because they run after it: the response has to exist before
+   * anything can be asserted about it.
+   */
+  setOutcome: (
+    tabId: string,
+    outcome: { tests: TestRunResult | null; scripts: ExecutionEntry['scripts'] },
+  ) => void;
   /** Abort an in-flight request. Safe to call when nothing is in flight. */
   cancel: (tabId: string) => void;
   /** Cancel everything, e.g. when the module unmounts. */
@@ -121,6 +142,13 @@ export const useExecutionStore = create<ExecutionState>((set, get) => ({
           },
         },
       };
+    }),
+
+  setOutcome: (tabId, outcome) =>
+    set((state) => {
+      const entry = state.byTab[tabId];
+      if (!entry) return {};
+      return { byTab: { ...state.byTab, [tabId]: { ...entry, ...outcome } } };
     }),
 
   cancel: (tabId) => {

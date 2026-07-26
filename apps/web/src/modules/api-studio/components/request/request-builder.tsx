@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { Loader2, Save, Send, X } from 'lucide-react';
 import { Button, Input, Select, cn } from 'adysre';
-import type { ApiTab, RequestDefinition } from '../../types';
+import type { ApiTab, Assertion, RequestDefinition } from '../../types';
 import { HTTP_METHODS } from '../../types';
 import { COMMON_REQUEST_HEADERS, METHOD_TONES } from '../../constants/http';
 import { activeEntries } from '../../utils/entries';
@@ -14,8 +14,9 @@ import { PanePanel, PaneTabs, type PaneTab } from '../pane-tabs';
 import { toneText } from '../tone';
 import { AuthEditor } from './auth-editor';
 import { BodyEditor } from './body-editor';
+import { TestsEditor } from './tests-editor';
 
-type RequestPane = 'params' | 'headers' | 'body' | 'auth';
+type RequestPane = 'params' | 'headers' | 'body' | 'auth' | 'tests';
 
 /**
  * The request builder: method, address, send, and the four editing panes.
@@ -35,6 +36,7 @@ export function RequestBuilder({
   onSend,
   onCancel,
   onSave,
+  onAssertions,
   canSave,
 }: {
   tab: ApiTab;
@@ -43,6 +45,7 @@ export function RequestBuilder({
   onSend: () => void;
   onCancel: () => void;
   onSave: () => void;
+  onAssertions: (assertions: Assertion[]) => void;
   canSave: boolean;
 }) {
   const t = useTranslations('apiStudio');
@@ -54,6 +57,11 @@ export function RequestBuilder({
     { id: 'headers', label: t('request.headers'), count: activeEntries(draft.headers).length },
     { id: 'body', label: t('request.body') },
     { id: 'auth', label: t('request.auth') },
+    {
+      id: 'tests',
+      label: t('request.tests'),
+      count: tab.assertions.filter((assertion) => assertion.enabled).length,
+    },
   ];
 
   const sendable = looksSendable(draft.url);
@@ -172,6 +180,15 @@ export function RequestBuilder({
 
           <PanePanel id="auth" active={pane === 'auth'}>
             <AuthEditor auth={draft.auth} onChange={(auth) => onChange({ auth })} />
+          </PanePanel>
+
+          <PanePanel id="tests" active={pane === 'tests'}>
+            <TestsEditor
+              assertions={tab.assertions}
+              scripts={draft.scripts}
+              onAssertions={onAssertions}
+              onScripts={(scripts) => onChange({ scripts })}
+            />
           </PanePanel>
         </div>
       </div>

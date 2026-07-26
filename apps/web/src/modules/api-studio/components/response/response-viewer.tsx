@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
-import { AlertTriangle, Check, Copy, Loader2, ShieldAlert } from 'lucide-react';
+import { AlertTriangle, Check, CircleSlash, Copy, Loader2, ShieldAlert, X } from 'lucide-react';
 import { cn } from 'adysre';
 import type { ExecutionEntry } from '../../stores';
 import { STATUS_TONES, statusClass } from '../../constants/http';
@@ -10,7 +10,7 @@ import { contentTypeOf, formatBytes, formatDuration, prettyPrint, previewKind } 
 import { PanePanel, PaneTabs, type PaneTab } from '../pane-tabs';
 import { TonePill, toneFill } from '../tone';
 
-type ResponsePane = 'body' | 'headers' | 'cookies' | 'timings';
+type ResponsePane = 'body' | 'headers' | 'cookies' | 'timings' | 'tests';
 type BodyView = 'pretty' | 'raw' | 'preview';
 
 /**
@@ -71,6 +71,15 @@ export function ResponseViewer({ entry }: { entry: ExecutionEntry }) {
     { id: 'headers', label: t('response.headers'), count: response.headers.length },
     { id: 'cookies', label: t('response.cookies'), count: response.cookies.length },
     { id: 'timings', label: t('response.timings') },
+    ...(entry.tests || entry.scripts.length > 0
+      ? [
+          {
+            id: 'tests' as const,
+            label: t('response.tests'),
+            count: (entry.tests?.failed ?? 0) + (entry.tests?.errored ?? 0),
+          },
+        ]
+      : []),
   ];
 
   const tone = STATUS_TONES[statusClass(response.status)];
@@ -153,6 +162,10 @@ export function ResponseViewer({ entry }: { entry: ExecutionEntry }) {
 
         <PanePanel id="timings" active={pane === 'timings'}>
           <Timings timings={response.timings} />
+        </PanePanel>
+
+        <PanePanel id="tests" active={pane === 'tests'}>
+          <TestResults entry={entry} />
         </PanePanel>
       </div>
     </div>
@@ -344,6 +357,126 @@ function Timings({ timings }: { timings: NonNullable<ExecutionEntry['response']>
         <span className="text-right tabular-nums">{formatDuration(timings.total, locale)}</span>
       </div>
     </div>
+  );
+}
+
+/**
+ * Assertion outcomes and script output.
+ *
+ * `errored` is rendered differently from `failed` on purpose: a failed
+ * assertion says the response is wrong, an errored one says the check could not
+ * be made and the response has not been judged. Showing both as red would hide
+ * the difference exactly when it matters.
+ */
+function TestResults({ entry }: { entry: ExecutionEntry }) {
+  const t = useTranslations('apiStudio');
+  const tests = entry.tests;
+
+  const scriptTests = entry.scripts.flatMap((script) =>
+    script.outcome.tests.map((test) => ({ ...test, phase: script.phase })),
+  );
+  const logs = entry.scripts.flatMap((script) =>
+    script.outcome.logs.map((log) => ({ ...log, phase: script.phase })),
+  );
+  const errors = entry.scripts
+    .filter((script) => script.outcome.error)
+    .map((script) => ({ phase: script.phase, message: script.outcome.error! }));
+
+  if (!tests && scriptTests.length === 0 && logs.length === 0 && errors.length === 0) {
+    return <Empty>{t('response.noTests')}</Empty>;
+  }
+
+  return (
+    <div className="space-y-4 px-3 py-3 text-xs">
+      {tests && (
+        <div className="space-y-2">
+          <p className="text-muted-foreground">
+            {t('tests.summary', {
+              passed: tests.passed,
+              failed: tests.failed,
+              errored: tests.errored,
+              skipped: tests.skipped,
+            })}
+          </p>
+          <ul className="space-y-1">
+            {tests.results.map((result) => (
+              <li key={result.id} className="flex items-start gap-2">
+                <Outcome outcome={result.outcome} />
+                <span className="min-w-0 flex-1">
+                  <span className="block">{result.description}</span>
+                  {result.error && <span className="block text-warning">{result.error}</span>}
+                  {result.outcome === 'failed' && result.actual !== null && (
+                    <span className="block text-muted-foreground">
+                      {t('tests.got', { actual: result.actual })}
+                    </span>
+                  )}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {scriptTests.length > 0 && (
+        <ul className="space-y-1">
+          {scriptTests.map((test, index) => (
+            <li key={`${test.name}-${index}`} className="flex items-start gap-2">
+              <Outcome outcome={test.passed ? 'passed' : 'failed'} />
+              <span className="min-w-0 flex-1">
+                <span className="block">{test.name}</span>
+                {test.error && <span className="block text-danger">{test.error}</span>}
+              </span>
+            </li>
+          ))}
+        </ul>
+      )}
+
+      {errors.map((error, index) => (
+        <p key={index} className="rounded-md bg-danger/10 px-2 py-1.5 text-danger">
+          {t(`tests.phases.${error.phase}`)}: {error.message}
+        </p>
+      ))}
+
+      {logs.length > 0 && (
+        <div className="space-y-1">
+          <h3 className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
+            {t('tests.console')}
+          </h3>
+          <ul className="space-y-0.5 font-mono">
+            {logs.map((log, index) => (
+              <li
+                key={index}
+                className={cn(
+                  log.level === 'error' && 'text-danger',
+                  log.level === 'warn' && 'text-warning',
+                  log.level === 'log' && 'text-muted-foreground',
+                )}
+              >
+                {log.message}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function Outcome({ outcome }: { outcome: 'passed' | 'failed' | 'skipped' | 'errored' }) {
+  const t = useTranslations('apiStudio');
+  const label = t(`tests.outcomes.${outcome}`);
+
+  if (outcome === 'passed') {
+    return <Check className="mt-0.5 h-3.5 w-3.5 shrink-0 text-success" aria-label={label} />;
+  }
+  if (outcome === 'failed') {
+    return <X className="mt-0.5 h-3.5 w-3.5 shrink-0 text-danger" aria-label={label} />;
+  }
+  if (outcome === 'errored') {
+    return <AlertTriangle className="mt-0.5 h-3.5 w-3.5 shrink-0 text-warning" aria-label={label} />;
+  }
+  return (
+    <CircleSlash className="mt-0.5 h-3.5 w-3.5 shrink-0 text-muted-foreground" aria-label={label} />
   );
 }
 

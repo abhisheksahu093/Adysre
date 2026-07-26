@@ -2843,7 +2843,8 @@
       "auth": "ऑथ",
       "paramKey": "पैरामीटर",
       "headerKey": "हेडर",
-      "pathVariables": "पाथ वेरिएबल"
+      "pathVariables": "पाथ वेरिएबल",
+      "tests": "टेस्ट"
     },
     "table": {
       "key": "की",
@@ -2976,7 +2977,9 @@
         "pretty": "सुंदर",
         "raw": "रॉ",
         "preview": "प्रीव्यू"
-      }
+      },
+      "tests": "टेस्ट",
+      "noTests": "इस रिक्वेस्ट के लिए कोई असर्शन या स्क्रिप्ट नहीं चली."
     },
     "timings": {
       "dns": "DNS",
@@ -3017,6 +3020,55 @@
       "network": "रिक्वेस्ट पूरी नहीं हो सकी.",
       "unsupported_auth": "यह ऑथ प्रकार अभी भेजा नहीं जा सकता.",
       "unsupported_body": "यह बॉडी प्रकार अभी भेजा नहीं जा सकता."
+    },
+    "tests": {
+      "assertions": "असर्शन",
+      "noAssertions": "अभी कोई असर्शन नहीं. रिस्पॉन्स की अपने आप जांच के लिए एक जोड़ें.",
+      "addAssertion": "असर्शन जोड़ें",
+      "target": "क्या जांचें",
+      "path": "नाम या पाथ",
+      "operator": "तुलना",
+      "expected": "अपेक्षित",
+      "scripts": "स्क्रिप्ट",
+      "preRequest": "प्री-रिक्वेस्ट स्क्रिप्ट",
+      "testScript": "टेस्ट स्क्रिप्ट",
+      "sandboxNote": "स्क्रिप्ट बिना नेटवर्क वाले सैंडबॉक्स वर्कर में चलती हैं और दो सेकंड बाद रोक दी जाती हैं.",
+      "console": "कंसोल",
+      "summary": "{passed} पास, {failed} फेल, {errored} जांची नहीं जा सकीं, {skipped} छोड़ी गईं",
+      "got": "मिला: {actual}",
+      "outcomes": {
+        "passed": "पास",
+        "failed": "फेल",
+        "errored": "जांची नहीं जा सकी",
+        "skipped": "छोड़ी गई"
+      },
+      "phases": {
+        "preRequest": "प्री-रिक्वेस्ट स्क्रिप्ट",
+        "test": "टेस्ट स्क्रिप्ट"
+      },
+      "targets": {
+        "status": "स्टेटस कोड",
+        "statusText": "स्टेटस टेक्स्ट",
+        "responseTime": "रिस्पॉन्स समय",
+        "contentType": "कंटेंट टाइप",
+        "header": "हेडर",
+        "body": "बॉडी",
+        "jsonPath": "JSON पाथ",
+        "jsonSchema": "JSON स्कीमा"
+      },
+      "operators": {
+        "equals": "बराबर है",
+        "notEquals": "बराबर नहीं है",
+        "contains": "शामिल है",
+        "notContains": "शामिल नहीं है",
+        "matches": "मेल खाता है",
+        "exists": "मौजूद है",
+        "notExists": "मौजूद नहीं है",
+        "lessThan": "इससे कम है",
+        "greaterThan": "इससे अधिक है",
+        "isOneOf": "इनमें से एक है",
+        "isValid": "इसके अनुसार मान्य है"
+      }
     }
   }
 }

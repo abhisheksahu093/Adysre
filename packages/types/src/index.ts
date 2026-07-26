@@ -3,3 +3,4 @@
 export * from './api';
 export * from './rbac';
 export * from './entities';
+export * from './module-permissions';

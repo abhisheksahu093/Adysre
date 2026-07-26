@@ -9,6 +9,7 @@
  *   network call, where anything unrecognised is a reason to refuse.
  */
 
+export * from './api';
 export * from './collection';
 export * from './common';
 export * from './execution';

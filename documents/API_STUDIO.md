@@ -15,8 +15,9 @@ already has.
 | Thing | Where |
 | --- | --- |
 | Route | `/api-studio` (sidebar entry `apiStudio` in `config/navigation.ts`) |
-| Module code | `apps/web/src/modules/api-studio` |
-| Server runner | `apps/web/src/app/api/api-studio/*` (Next route handlers) |
+| Client module | `apps/web/src/modules/api-studio` |
+| Server module | `apps/web/src/lib/api-studio` (session, guard, crypto, repositories) |
+| Route handlers | `apps/web/src/app/api/api-studio/*` |
 | Tables | `packages/database/prisma/schema.prisma`, `api_studio_*` |
 
 The module follows the pattern Website Intelligence established: a Next.js app
@@ -30,18 +31,31 @@ and is blocked by CORS on most targets.
 Data flows one way, and no layer imports from a layer above it.
 
 ```
-types/        the domain vocabulary. Depends on nothing but @adysre/types.
-constants/    limits, lookup tables, defaults, the keyboard map.
-schemas/      Zod parsers. Turn untrusted JSON into the types above.
-utils/        pure functions (url merge, variable resolution, formatting).
-services/     IO: persistence, the runner client, import/export, codegen.
-stores/       Zustand state and synchronous reducers. No IO.
-hooks/        React glue between stores, services and components.
-components/   presentation. No business logic.
+modules/api-studio/          the client module
+  types/        the domain vocabulary. Depends on nothing but @adysre/types.
+  constants/    limits, lookup tables, defaults, the keyboard map.
+  schemas/      Zod parsers. Turn untrusted JSON into the types above.
+  utils/        pure functions (ids, tree, url merge, redaction).
+  stores/       Zustand state and synchronous reducers. No IO.
+  services/     IO: the API client, import/export, codegen.
+  hooks/        React glue between stores, services and components.
+  components/   presentation. No business logic.
+
+lib/api-studio/              the server module
+  session.ts    resolve the verified principal (cookies, env, dev fallback)
+  auth-policy.ts  pure: role to module permission, deny by default
+  guard.ts      one call at the top of every route handler
+  crypto.ts     envelope encryption for secrets and cookie values
+  mappers.ts    row to DTO. The only place a Prisma row is seen.
+  repositories/ the only place Prisma is touched.
 ```
 
-Two rules keep the boundary honest: `stores` never perform IO (a service does),
-and `components` never reach past a hook into a service.
+Three rules keep the boundaries honest: `stores` never perform IO (a service
+does), `components` never reach past a hook into a service, and only
+`repositories` touch Prisma.
+
+Pure rules that both sides need live in the client module and are imported by
+the server, never copied: the tree helpers and redaction are the examples.
 
 ## Key decisions
 
@@ -187,6 +201,70 @@ params table are kept in step inside `updateDraft`: editing the address rebuilds
 the table, editing the table rebuilds the address, and disabled rows survive
 both because they were never in the URL to begin with.
 
+## API
+
+All under `/api/api-studio`, all answering the standard envelope
+(`{ success, message, data, meta }` / `{ success, code, message }`).
+
+| Method | Path | Permission |
+| --- | --- | --- |
+| GET / POST | `/workspaces` | `workspace:read` / `workspace:manage` |
+| GET / PATCH / DELETE | `/workspaces/{id}` | `workspace:read` / `workspace:manage` |
+| GET / POST | `/collections?workspaceId=` | `collection:read` / `collection:create` |
+| GET / PATCH / DELETE | `/collections/{id}` | `collection:read` / `update` / `delete` |
+| GET / POST | `/nodes?collectionId=` | `request:read` / `request:create` |
+| GET / PATCH / DELETE | `/nodes/{id}` | `request:read` / `update` / `delete` |
+| POST | `/nodes/{id}/move` | `request:update` |
+| POST | `/nodes/{id}/duplicate` | `request:create` |
+| GET / POST | `/environments?workspaceId=` | `environment:read` / `environment:manage` |
+| GET / PATCH / DELETE | `/environments/{id}` | `environment:read` / `environment:manage` |
+| GET / POST / DELETE | `/history` | `history:read` / `request:execute` / `history:delete` |
+| PATCH | `/history/{id}` | `history:read` |
+
+Every handler runs the same three steps in the same order: authenticate, check
+the permission, then scope every query by `session.tenantId`. The tenant is
+never a parameter, so no request shape can point at another tenant's rows, and a
+row that belongs to someone else answers 404 rather than 403 (telling a caller
+"this exists but is not yours" is a way to enumerate ids).
+
+**Layers.** Server-side code lives in `apps/web/src/lib/api-studio` (session,
+guard, crypto, mappers, repositories), following the convention Website
+Intelligence and Design Playground already set; `apps/web/src/modules/api-studio`
+stays the client-side module. Only repositories touch Prisma, and nothing
+outside `mappers.ts` sees a Prisma row.
+
+**Shared, not copied.** Three things were promoted rather than duplicated for
+this module: token verification (`lib/auth/access-token`, now used by Website
+Intelligence too), the response envelope (`lib/api/response`), and the
+permission manifest (`@adysre/types`, which the database seed also reads so the
+strings it inserts and the strings the module checks cannot drift).
+
+**Structural rules run once.** Move and duplicate use the same pure tree helpers
+as the client store, so the server cannot accept a drop the UI would have
+refused, or order a node differently than the UI would have drawn it.
+
+**Secrets.** Reads mask secret variables; `?reveal=1` needs
+`api-studio:secret:read` and is audited. A secret submitted with an empty value
+keeps its existing ciphertext, which is what lets a UI that only ever saw a
+masked field save without wiping the credential. If no encryption key is
+configured, a secret is refused (400) rather than stored in the clear.
+
+## Configuration
+
+| Variable | Effect |
+| --- | --- |
+| `JWT_ACCESS_SECRET` | Verifies the platform access token. Required in production; its absence there throws rather than waving requests through. |
+| `API_STUDIO_SECRET_KEY` | Base64 32-byte key for secret variables and cookie values (`openssl rand -base64 32`). Without it, storing a secret is refused rather than done in plaintext. |
+| `API_STUDIO_SECRET_KEYS_PREVIOUS` | Retired keys, comma separated, kept readable during a rotation. |
+| `API_STUDIO_STRICT_AUTH` | `true` disables the development session fallback, to rehearse production behaviour locally or in CI. |
+
+Outside production and without a token, a development session is resolved
+against the seeded `demo` tenant. It differs from the Website Intelligence
+fallback in one way that matters: API Studio writes rows with a tenant foreign
+key, so the dev session carries the seeded tenant's real UUID. With no seeded
+database there is no honest tenant to attribute writes to, and the routes say so
+(503) rather than inventing one.
+
 ## Phases
 
 | Phase | Scope | State |
@@ -194,8 +272,8 @@ both because they were never in the URL to begin with.
 | 1 | Architecture: types, constants, schemas, permissions | **done** |
 | 2 | Database: `api_studio_*` tables, indexes, migration | **done** |
 | 3 | Stores: collections, tabs, environments, history, UI state | **done** |
-| 4 | Routes and API contracts under `/api/api-studio` | next |
-| 5 | Main UI: sidebar, tabs, request builder, response viewer | |
+| 4 | Routes and API contracts under `/api/api-studio` | **done** |
+| 5 | Main UI: sidebar, tabs, request builder, response viewer | next |
 | 6 | Request engine: runner, SSRF policy, timings, cancellation | |
 | 7 | Auth strategies, cookies, scripts and assertions | |
 | 8 | Import (Postman, OpenAPI, HAR, cURL), export, code generation | |

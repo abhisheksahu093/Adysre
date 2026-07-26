@@ -31,3 +31,19 @@ export function parsePermission(p: Permission): {
   const [module, resource, action] = p.split(':');
   return { module: module ?? '', resource: resource ?? '', action: action ?? '' };
 }
+
+/**
+ * Whether `granted` covers `required`.
+ *
+ * A `module:resource:manage` grant implies every action on that resource. That
+ * is the only implication in the model: there is no wildcard, and no role
+ * inherits another's set implicitly. Deny by default.
+ */
+export function hasPermission(
+  granted: readonly Permission[],
+  required: Permission,
+): boolean {
+  if (granted.includes(required)) return true;
+  const { module, resource } = parsePermission(required);
+  return granted.includes(`${module}:${resource}:manage` as Permission);
+}

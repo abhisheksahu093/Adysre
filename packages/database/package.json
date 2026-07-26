@@ -23,6 +23,7 @@
     "seed": "tsx prisma/seed.ts"
   },
   "dependencies": {
+    "@adysre/types": "workspace:*",
     "@prisma/client": "^5.20.0"
   },
   "devDependencies": {

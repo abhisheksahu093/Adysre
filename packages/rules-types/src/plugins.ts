@@ -54,7 +54,17 @@ export interface OperatorPlugin extends Plugin {
   arity: number | null;
   /** Left-hand types this applies to. Absent means any. */
   accepts?: readonly ValueType[];
-  /** True when the condition holds. Must be pure and must not throw. */
+  /**
+   * True when the condition holds. Must be PURE: same inputs, same answer, no
+   * side effects, nothing read from outside `context`.
+   *
+   * A boolean leaves nowhere to say "you gave me a string and a number", so an
+   * operator that cannot answer throws `RuleError` (from `@adysre/rules-core`)
+   * and the executor turns that into an `errored` verdict with a diagnostic.
+   * Returning `false` instead would make a broken comparison look like a failed
+   * one, which is how a rule silently stops firing and nobody can see why.
+   * Anything else thrown is treated as a bug in the plugin.
+   */
   evaluate: (left: JsonValue, args: JsonValue[], context: EvaluationContext) => boolean;
   /**
    * The natural-language fragment for this operator, given already-rendered
@@ -70,7 +80,11 @@ export interface FunctionPlugin extends Plugin {
   arity: number | null;
   argTypes?: readonly ValueType[];
   returns: ValueType;
-  /** Pure. Anything impure belongs in `context.extras`, injected by the host. */
+  /**
+   * Pure. Anything impure - a clock, a database, a translator - belongs in
+   * `context`, injected by the host, so a run is reproducible and a rule can be
+   * replayed in a debugger. Throws `RuleError` when the arguments make no sense.
+   */
   evaluate: (args: JsonValue[], context: EvaluationContext) => JsonValue;
   toText?: (args: string[]) => string;
 }

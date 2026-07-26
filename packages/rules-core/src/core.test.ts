@@ -323,8 +323,11 @@ describe('serialising', () => {
 
   it('writes keys in a fixed order, so two saves diff to nothing', () => {
     const original = sample();
-    // Same logic, keys inserted in a different order.
-    const shuffled = JSON.parse(JSON.stringify({ metadata: original.metadata, ...original }));
+    // The same rule with its keys inserted in the opposite order: what a
+    // different serializer, or a database round trip, can hand back.
+    const shuffled = JSON.parse(
+      JSON.stringify(Object.fromEntries(Object.entries(original).reverse())),
+    );
     assert.equal(stringifyRule(original), stringifyRule(shuffled));
   });
 

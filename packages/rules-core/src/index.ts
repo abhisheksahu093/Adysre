@@ -13,7 +13,10 @@
  */
 
 export * from './builders';
+export * from './builtins';
+export * from './errors';
 export * from './ids';
+export * from './registry';
 export * from './serialize';
 export * from './validate';
 export * from './walk';

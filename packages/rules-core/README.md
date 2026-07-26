@@ -31,6 +31,9 @@ validateRule(document); // { valid: true, diagnostics: [] }
 | `walk` | Traverse, search, edit immutably, and report which fields, variables and plugins a rule needs |
 | `validate` | Structural validation, reporting the AST path of every problem |
 | `serialize` | Parse and stringify with a stable key order, plus a migration path between AST versions |
+| `registry` | Immutable plugin registry: duplicate ids throw at registration, lookups never throw |
+| `builtins` | 27 operators and 23 functions, offered rather than imposed |
+| `errors` | `RuleError`, how a plugin says "I cannot answer that" |
 
 The executor, the plugin registry and the renderers are separate packages
 precisely so this one is safe to import anywhere: a form that only reads a rule,

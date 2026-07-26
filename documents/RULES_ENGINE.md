@@ -97,6 +97,57 @@ rule's `reject` becomes a form error in one app and a queue message in another.
 An engine that performed side effects could not be run twice, in a preview, or
 in a test.
 
+## The registry
+
+Immutable. `extend` returns a NEW registry rather than mutating one, so an
+executor holding a registry cannot have the ground move under it mid-evaluation,
+and two tenants or two tests can hold different capabilities at once without one
+leaking into the other. A registry that could be mutated globally is one where
+the answer to a rule depends on what else the process happened to load.
+
+Registering a duplicate id **throws, at registration**: two plugins claiming
+`equals` is a programming error, and the moment to find it is at startup rather
+than when a rule runs at three in the morning and silently gets the wrong one.
+Lookups never throw - an unknown operator is a fact about a stored rule, which
+the executor reports as a diagnostic pointing at the node.
+
+`createRegistry()` starts EMPTY. What rules may do is the host's choice, and
+"everything that ships with the engine" is a choice rather than a default:
+
+```ts
+const registry = createRegistry(builtinPlugins, { operators: [withinBusinessHours] });
+missingPlugins(registry, collectPluginIds(rule)); // check before saving an import
+```
+
+## Comparison semantics
+
+Defined once, in `builtins/compare`, because the alternative is twenty-seven
+operators each making their own small decision and a rules engine whose answers
+depend on which operator you happened to pick.
+
+- Numbers compare numerically, strings lexicographically, booleans `false < true`.
+- An ISO-8601 string compares as a **date**, but only when it looks like one.
+  `"2026-07-26"` is a date; `"10"` is text. Guessing more eagerly is how `"12"`
+  sorts before `"9"` in one place and after it in another.
+- Different kinds are **not comparable**. `5 > "apple"` raises rather than
+  answering `false`, because it is a mistake in the rule and not a failed test.
+- Equality is deep and JSON-shaped: key order never matters, list order does.
+- `0`, `false` and `"0"` are **not empty**. They are values someone chose, and
+  treating them as absent is the classic bug that makes a rule ignore a
+  legitimate zero.
+
+A plugin that cannot answer throws `RuleError`, which the executor turns into an
+`errored` verdict with a diagnostic. Returning `false` would make a broken
+comparison look like a failed one - a rule that silently stops firing, with
+nothing to show why.
+
+**`matches` is bounded and optional.** The pattern comes from a rule author and
+runs in the engine's process, and JavaScript cannot interrupt a regular
+expression mid-execution, so a catastrophically backtracking pattern is a denial
+of service no timeout above can rescue. Pattern and subject are length-capped;
+a deployment that lets untrusted third parties author rules should leave the
+operator unregistered, which is possible precisely because it is a plugin.
+
 ## Results carry their reasoning
 
 A rules engine whose answer is a bare `true` is unusable in the moment it
@@ -117,8 +168,8 @@ change to the AST rather than a plugin.
 | Phase | Scope | State |
 | --- | --- | --- |
 | 1 | Monorepo, core types, the AST | **done** |
-| 2 | Plugin registry and the built-in operator and function set | next |
-| 3 | Executor: evaluation, short-circuiting, tracing, timeouts | |
+| 2 | Plugin registry and the built-in operator and function set | **done** |
+| 3 | Executor: evaluation, short-circuiting, tracing, timeouts | next |
 | 4 | Natural-language renderer | |
 | 5 | Parser and importers | |
 | 6 | Headless React state (`rules-react`) | |

@@ -1,0 +1,37 @@
+{
+  "name": "@adysre/rules-theme",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Design tokens for the rule builder, and a contrast audit that proves a theme is readable.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abhisheksahu093/Adysre.git",
+    "directory": "packages/rules-theme"
+  },
+  "exports": {
+    ".": "./src/index.ts",
+    "./tokens.css": "./src/tokens.css"
+  },
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "sideEffects": ["*.css"],
+  "files": ["dist", "README.md"],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "lint": "eslint src",
+    "typecheck": "tsc --noEmit",
+    "test": "tsx --test 'src/**/*.test.ts'",
+    "clean": "rm -rf dist .turbo tsconfig.tsbuildinfo"
+  },
+  "devDependencies": {
+    "@adysre/config": "workspace:*",
+    "@types/node": "^20.16.10",
+    "tsx": "^4.19.1",
+    "typescript": "^5.6.3"
+  },
+  "dependencies": {
+    "@adysre/rules-types": "workspace:*"
+  }
+}

@@ -42,6 +42,7 @@
     "@adysre/rules-core": "workspace:*",
     "@adysre/rules-react": "workspace:*",
     "@adysre/rules-renderer": "workspace:*",
+    "@adysre/rules-theme": "workspace:*",
     "@adysre/rules-types": "workspace:*",
     "adysre": "workspace:*"
   },

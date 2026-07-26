@@ -6,7 +6,8 @@ import {
   type Registry,
 } from '@adysre/rules-core';
 import { useFields, useRuleBuilder, useVariables } from '@adysre/rules-react';
-import type { JsonValue, RuleDocument } from '@adysre/rules-types';
+import { themeStyle } from '@adysre/rules-theme';
+import type { JsonValue, RuleDocument, ThemePlugin } from '@adysre/rules-types';
 import { cn } from 'adysre';
 import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { ActionList } from './action-editor.tsx';
@@ -40,6 +41,19 @@ export interface RuleBuilderProps {
   variables?: Readonly<Record<string, JsonValue>> | undefined;
   /** Epoch milliseconds for the sample run. Fixed per mount when absent. */
   now?: number | undefined;
+  /**
+   * Colours for this builder.
+   *
+   * Applied as CSS custom properties on the root, so it scopes to this subtree:
+   * two builders on one page can wear different themes, which a stylesheet
+   * cannot do without a class per theme. Absent inherits whatever the host has
+   * defined - which is the case a design system is in, and the reason
+   * `ThemePlugin` carries token names rather than colour literals.
+   *
+   * The debugger needs no theme prop of its own: custom properties inherit, so
+   * a `RuleDebugger` rendered inside a themed builder is already themed.
+   */
+  theme?: ThemePlugin | undefined;
   readOnly?: boolean;
   showMeta?: boolean;
   showActions?: boolean;
@@ -66,6 +80,7 @@ export function RuleBuilder({
   sample,
   variables,
   now,
+  theme,
   readOnly = false,
   showMeta = true,
   showActions = true,
@@ -164,7 +179,10 @@ export function RuleBuilder({
 
   return (
     <BuilderProvider value={context}>
-      <div className={cn('flex flex-col gap-6 text-foreground', className)}>
+      <div
+        className={cn('flex flex-col gap-6 text-foreground', theme?.className, className)}
+        style={theme === undefined ? undefined : themeStyle(theme)}
+      >
         <RuleToolbar
           canRedo={builder.canRedo}
           canUndo={builder.canUndo}

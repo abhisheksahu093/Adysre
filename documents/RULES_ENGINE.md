@@ -37,7 +37,7 @@ longer matches the tree, or a tree that cannot express what somebody typed.
 | `@adysre/rules-ui` | the visual builder, shadcn/ui and Tailwind | **built** |
 | `@adysre/rules-next` | Next.js adapters: route handlers, server actions | **built** |
 | `@adysre/rules-devtools` | the execution debugger | **built** |
-| `@adysre/rules-theme` | design tokens for the builder | planned |
+| `@adysre/rules-theme` | design tokens for the builder, and a contrast audit | **built** |
 | `@adysre/rules-playground` | a runnable sandbox and the examples | planned |
 
 Planned packages do not exist yet. Ten directories each holding a `package.json`
@@ -501,6 +501,42 @@ rejected, because that is a closed set and answering with the whole list reads
 as "the filter does nothing". `total` appears only when an adapter can count
 without paging, the alternative being a handler that quietly loads every row.
 
+## Themes
+
+`@adysre/rules-theme` is a token set and an audit, and the audit is why it is a
+package rather than a stylesheet.
+
+**Tokens are named after ADYSRE's**, so a host that already has a design system
+defines them already and the builder inherits it rather than imposing a second
+palette on the page. That is what `ThemePlugin` meant by carrying token names
+and never colour literals. The list is derived from what the components use, not
+invented: a token nobody uses is a promise a host keeps for nothing, and one the
+components use and the list omits is a theme that silently half-applies.
+
+**"WCAG AA" is arithmetic, so it is checked.** `auditTheme` walks the
+combinations the builder actually renders - `danger` on a card, `muted-foreground`
+on a muted panel - and reports the ratio against the threshold. A theme package
+that shipped colours without checking them would be the one place in the system
+where an accessibility failure is invisible to every other test.
+
+It does not guess. A token pointing at `var(--brand)` or an `oklch()` comes back
+as UNCHECKED rather than assumed to pass, because an audit that quietly skips
+what it cannot read is an audit that always passes.
+
+It also earned its keep immediately: white on blue-500 is 3.68:1, so the shipped
+dark theme uses a light fill with a dark label. Darkening the fill until white
+passes would have put a near-black button on a near-black page, and the audit
+turned that from a matter of taste into an answer.
+
+**The defaults are not the brand palette.** A brand palette is chosen for large
+surfaces; the builder renders dense small text, and `#f59e0b` reads beautifully
+as a filled badge and sits at 2.14:1 as a sentence. Each accent is the text-safe
+variant of the same hue.
+
+A theme applies as custom properties, so it scopes to a subtree - two builders
+on one page can wear different themes, which a stylesheet cannot do without a
+class each. The debugger needs no theme of its own: custom properties inherit.
+
 ## Rule kinds
 
 `validation`, `filter`, `transformation`, `workflow`, `calculation`,
@@ -522,8 +558,8 @@ change to the AST rather than a plugin.
 | 8 | Execution debugger (`rules-devtools`) | **done** |
 | 9 | Storage adapters and versioning | **done** |
 | 10 | Next.js adapters | **done** |
-| 11 | Themes | next |
-| 12 | Playground and examples | |
+| 11 | Themes | **done** |
+| 12 | Playground and examples | next |
 | 13 | Documentation site | |
 | 14 | Publishing: build, exports, versioning | |
 

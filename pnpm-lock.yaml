@@ -528,6 +528,25 @@ importers:
         specifier: ^5.6.3
         version: 5.9.3
 
+  packages/rules-theme:
+    dependencies:
+      '@adysre/rules-types':
+        specifier: workspace:*
+        version: link:../rules-types
+    devDependencies:
+      '@adysre/config':
+        specifier: workspace:*
+        version: link:../config
+      '@types/node':
+        specifier: ^20.16.10
+        version: 20.19.43
+      tsx:
+        specifier: ^4.19.1
+        version: 4.23.1
+      typescript:
+        specifier: ^5.6.3
+        version: 5.9.3
+
   packages/rules-types:
     devDependencies:
       '@adysre/config':
@@ -554,6 +573,9 @@ importers:
       '@adysre/rules-renderer':
         specifier: workspace:*
         version: link:../rules-renderer
+      '@adysre/rules-theme':
+        specifier: workspace:^
+        version: link:../rules-theme
       '@adysre/rules-types':
         specifier: workspace:*
         version: link:../rules-types

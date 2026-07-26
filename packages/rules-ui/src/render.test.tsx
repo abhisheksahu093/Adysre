@@ -161,3 +161,25 @@ describe('the builder renders', () => {
     assert.ok(!html.includes('Description'), 'the metadata panel was not asked for');
   });
 });
+
+describe('theming', () => {
+  it('scopes a theme to the builder rather than the page', async () => {
+    // Custom properties on the root, so two builders on one page can wear
+    // different themes - which a stylesheet cannot do without a class each.
+    const { darkRulesTheme } = await import('@adysre/rules-theme');
+    const html = renderToStaticMarkup(
+      <RuleBuilder registry={registry} rule={sample()} theme={darkRulesTheme} />,
+    );
+
+    assert.ok(html.includes('--background:#09090b'), 'the theme was not applied inline');
+    assert.ok(html.includes('--primary-foreground:#0a0a0a'));
+  });
+
+  it('inherits the host when no theme is given', () => {
+    const html = renderToStaticMarkup(<RuleBuilder registry={registry} rule={sample()} />);
+
+    // No inline variables at all: a host with a design system already defines
+    // these names, and overriding them would impose a second palette.
+    assert.ok(!html.includes('--background:'));
+  });
+});

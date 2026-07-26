@@ -1,0 +1,128 @@
+/**
+ * Default tokens for the rule builder.
+ *
+ * FOR A HOST WITH NO DESIGN SYSTEM. A project that already has ADYSRE loaded
+ * defines every one of these names in `@adysre/theme`, so it should NOT import
+ * this file - the builder inherits the host's palette by using the same names,
+ * which is the whole point of `ThemePlugin` carrying token names rather than
+ * colour literals.
+ *
+ * The values are the accessible variants from `themes.ts`, and both sets pass
+ * `auditTheme` - see `theme.test.ts`, which fails the build if they stop
+ * passing. They are deliberately not a raw brand palette: the builder renders
+ * dense small text, and a colour chosen to fill a badge sits near 2:1 as a
+ * sentence.
+ *
+ * Import once, above your own styles:
+ *
+ *   @import '@adysre/rules-theme/tokens.css';
+ */
+
+:root {
+  --background: #ffffff;
+  --foreground: #0a0a0a;
+  --card: #ffffff;
+  --card-foreground: #0a0a0a;
+  --muted: #f4f4f5;
+  --muted-foreground: #52525b;
+  --border: #e4e4e7;
+  --input: #8e8e99;
+  --ring: #2563eb;
+
+  --primary: #2563eb;
+  --primary-foreground: #ffffff;
+  --secondary: #4f46e5;
+  --secondary-foreground: #ffffff;
+  --accent: #0e7490;
+  --success: #15803d;
+  --warning: #b45309;
+  --danger: #b91c1c;
+  --danger-foreground: #ffffff;
+
+  --radius-md: 0.5rem;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+/*
+ * Both signals, deliberately.
+ *
+ * `.dark` is what a class-based toggle sets, and the media query is what a
+ * visitor who never touched a toggle gets. A builder that honoured only the
+ * class would render a white panel inside a host that follows the system, and
+ * one that honoured only the query would ignore the toggle it was given.
+ */
+.dark,
+[data-theme='dark'] {
+  --background: #09090b;
+  --foreground: #fafafa;
+  --card: #18181b;
+  --card-foreground: #fafafa;
+  --muted: #27272a;
+  --muted-foreground: #a1a1aa;
+  --border: #3f3f46;
+  --input: #71717a;
+  --ring: #60a5fa;
+
+  --primary: #60a5fa;
+  --primary-foreground: #0a0a0a;
+  --secondary: #818cf8;
+  --secondary-foreground: #0a0a0a;
+  --accent: #22d3ee;
+  --success: #4ade80;
+  --warning: #fbbf24;
+  --danger: #f87171;
+  --danger-foreground: #0a0a0a;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not(.light):not([data-theme='light']) {
+    --background: #09090b;
+    --foreground: #fafafa;
+    --card: #18181b;
+    --card-foreground: #fafafa;
+    --muted: #27272a;
+    --muted-foreground: #a1a1aa;
+    --border: #3f3f46;
+    --input: #71717a;
+    --ring: #60a5fa;
+
+    --primary: #60a5fa;
+    --primary-foreground: #0a0a0a;
+    --secondary: #818cf8;
+    --secondary-foreground: #0a0a0a;
+    --accent: #22d3ee;
+    --success: #4ade80;
+    --warning: #fbbf24;
+    --danger: #f87171;
+    --danger-foreground: #0a0a0a;
+  }
+}
+
+/*
+ * Bind the semantic names into Tailwind's colour system, so `bg-card` and
+ * `text-muted-foreground` resolve. `inline` keeps them as `var()` references
+ * rather than snapshots, which is what lets the dark rules above take effect
+ * without a second set of utilities.
+ *
+ * Harmless in a project that is not using Tailwind: an unused at-rule.
+ */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-accent: var(--accent);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-danger: var(--danger);
+  --color-danger-foreground: var(--danger-foreground);
+}

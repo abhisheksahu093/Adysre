@@ -2,11 +2,18 @@
 
 import { useMemo, useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { builtinPlugins, createRegistry, stringifyRule } from '@adysre/rules-core';
+import { builtinPlugins, createContext, createRegistry, stringifyRule } from '@adysre/rules-core';
 import type { RuleDocument } from '@adysre/rules-types';
+import { RuleDebugger, useDebugSession } from '@adysre/rules-devtools';
 import { RuleBuilder } from '@adysre/rules-ui';
 import { Button, Card, CardContent, CardHeader, CardTitle } from 'adysre';
-import { ORDER_ACTIONS, SAMPLE_ORDER, orderFields, starterRule } from '../data/sample-schema';
+import {
+  EVALUATED_AT,
+  ORDER_ACTIONS,
+  SAMPLE_ORDER,
+  orderFields,
+  starterRule,
+} from '../data/sample-schema';
 
 /**
  * The rule builder, running against a sample order.
@@ -32,6 +39,12 @@ export function RulesPlayground() {
   const [rule, setRule] = useState<RuleDocument>(starterRule);
   const [showJson, setShowJson] = useState(false);
 
+  // Fixed at mount, like the builder's own preview clock: a debugger whose
+  // `today` advanced while somebody read it would explain a different run from
+  // the one on screen.
+  const context = useMemo(() => createContext(SAMPLE_ORDER, { now: EVALUATED_AT }), []);
+  const session = useDebugSession(registry, rule, context);
+
   return (
     <div className="mx-auto flex w-full max-w-6xl flex-col gap-6">
       <header className="flex flex-col gap-1">
@@ -47,12 +60,27 @@ export function RulesPlayground() {
            * back and does not reload it, so the history stays intact.
            */}
           <RuleBuilder
+            now={EVALUATED_AT}
             registry={registry}
             rule={rule}
             sample={SAMPLE_ORDER}
             onChange={setRule}
             onSave={setRule}
           />
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-base">{t('debugger')}</CardTitle>
+        </CardHeader>
+        <CardContent>
+          {/*
+           * The same rule, run twice: as it really runs, and with
+           * short-circuiting off. Edit a condition into something broken and put
+           * it behind a passing sibling to see what the second run is for.
+           */}
+          <RuleDebugger session={session} />
         </CardContent>
       </Card>
 

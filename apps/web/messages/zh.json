@@ -3162,6 +3162,7 @@
     "json": "规则的 JSON",
     "showJson": "显示 JSON",
     "hideJson": "隐藏 JSON",
-    "jsonHint": "这就是完整的规则。构建器、预览和执行器都是它的投影。"
+    "jsonHint": "这就是完整的规则。构建器、预览和执行器都是它的投影。",
+    "debugger": "为何是这个结果"
   }
 }

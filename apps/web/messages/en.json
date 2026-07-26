@@ -3162,6 +3162,7 @@
     "json": "The rule, as JSON",
     "showJson": "Show JSON",
     "hideJson": "Hide JSON",
-    "jsonHint": "This is the whole rule. The builder, the preview and the executor are all projections of it."
+    "jsonHint": "This is the whole rule. The builder, the preview and the executor are all projections of it.",
+    "debugger": "Why this answer"
   }
 }

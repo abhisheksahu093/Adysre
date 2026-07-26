@@ -19,6 +19,17 @@ import type {
  * which is the same plugin contract with the least ceremony.
  */
 
+/**
+ * The instant the sample is evaluated at.
+ *
+ * Fixed rather than `Date.now()`, and passed to both the builder's preview and
+ * the debugger. Two reasons, and both matter: the page is rendered on the server
+ * and again on the client, so a moving clock is a hydration mismatch; and the
+ * order below was placed on a specific day, so `today` has to be a specific day
+ * too or a rule about `placedAt` explains nothing.
+ */
+export const EVALUATED_AT = Date.parse('2026-07-26T00:00:00.000Z');
+
 /** The subject a rule here is written against. */
 export const SAMPLE_ORDER: JsonValue = {
   order: {

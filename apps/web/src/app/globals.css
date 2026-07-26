@@ -12,6 +12,7 @@
    selected condition) exist nowhere else in this app's own files. */
 @source '../../../../packages/rules-ui/src';
 @source '../../../../packages/rules-devtools/src';
+@source '../../../../packages/rules-playground/src';
 
 /* Dark mode is class-based (next-themes toggles `.dark` on <html>). */
 @custom-variant dark (&:where(.dark, .dark *));

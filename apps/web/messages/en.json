@@ -3158,13 +3158,6 @@
   },
   "rules": {
     "title": "Business Rules",
-    "subtitle": "A visual builder over the ADYSRE rules engine. Edit the tree, and the sentence, the verdict and the JSON follow.",
-    "json": "The rule, as JSON",
-    "showJson": "Show JSON",
-    "hideJson": "Hide JSON",
-    "jsonHint": "This is the whole rule. The builder, the preview and the executor are all projections of it.",
-    "debugger": "Why this answer",
-    "savedVersion": "Saved in this browser as version {version}.",
-    "notSaved": "Not saved yet. Saving keeps the rule in this browser."
+    "subtitle": "A visual builder over the ADYSRE rules engine. Edit the tree, and the sentence, the verdict and the JSON follow."
   }
 }

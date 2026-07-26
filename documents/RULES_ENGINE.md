@@ -38,7 +38,7 @@ longer matches the tree, or a tree that cannot express what somebody typed.
 | `@adysre/rules-next` | Next.js adapters: route handlers, server actions | **built** |
 | `@adysre/rules-devtools` | the execution debugger | **built** |
 | `@adysre/rules-theme` | design tokens for the builder, and a contrast audit | **built** |
-| `@adysre/rules-playground` | a runnable sandbox and the examples | planned |
+| `@adysre/rules-playground` | a runnable sandbox and the examples, each verified | **built** |
 
 Planned packages do not exist yet. Ten directories each holding a `package.json`
 and an empty `index.ts` would be ten placeholders, and each one lands with the
@@ -537,6 +537,41 @@ A theme applies as custom properties, so it scopes to a subtree - two builders
 on one page can wear different themes, which a stylesheet cannot do without a
 class each. The debugger needs no theme of its own: custom properties inherit.
 
+## The playground
+
+`@adysre/rules-playground` is the capstone: a builder, a debugger, a live
+verdict and the JSON over one rule, with an example picker above them. Dropping
+`<RulePlayground />` on a page runs the whole ecosystem.
+
+**The examples check themselves, and that is the design.** Every sample declares
+the verdict the engine must produce, and `verifyExamples` runs them. An example
+is documentation, and documentation is the one part of a system nothing else
+tests: a rule with a screenshot beside it looks right on the day it is written,
+and the only thing checking it afterwards is a reader who assumes it works. If a
+comparison rule or an operator changes meaning, the example that taught it fails
+in CI rather than teaching the wrong thing to everybody who reads it next.
+
+The suite is framework-free, like the storage conformance suite, and the tests
+go beyond the verdict: each example must be a VALID rule, use only plugins it
+registers, offer a field for every path it reads, and name every action it
+applies - the four ways an example is broken that a verdict alone would not
+catch.
+
+One example exists to fail. `hidden-fault` answers correctly by luck: its first
+condition matches, `any` short-circuits, and the second condition - which
+compares a number to a word - never runs. It reports `matched` with no
+diagnostic, and reports `errored` the moment a different customer arrives. It
+asserts `expectHidden`, so it cannot quietly become an ordinary passing rule,
+which is how a teaching example stops teaching without anybody noticing.
+
+**The clock is fixed, never `Date.now()`.** Half of these rules read a date, and
+a moving clock makes a declared verdict a lie on a schedule and the server and
+browser renders disagree.
+
+`/rules` in the web app is now this component and nothing else, so what the page
+shows is what any host gets - not a bespoke demo that works in one place, and
+not a second set of examples to keep in step with the tested ones.
+
 ## Rule kinds
 
 `validation`, `filter`, `transformation`, `workflow`, `calculation`,
@@ -559,8 +594,8 @@ change to the AST rather than a plugin.
 | 9 | Storage adapters and versioning | **done** |
 | 10 | Next.js adapters | **done** |
 | 11 | Themes | **done** |
-| 12 | Playground and examples | next |
-| 13 | Documentation site | |
+| 12 | Playground and examples | **done** |
+| 13 | Documentation site | next |
 | 14 | Publishing: build, exports, versioning | |
 
 ## Conventions

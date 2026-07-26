@@ -1,0 +1,51 @@
+{
+  "name": "@adysre/rules-playground",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "A runnable sandbox and the worked examples, each verified against the engine that runs it.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abhisheksahu093/Adysre.git",
+    "directory": "packages/rules-playground"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "lint": "eslint src",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "clean": "rm -rf dist .turbo tsconfig.tsbuildinfo"
+  },
+  "devDependencies": {
+    "@adysre/config": "workspace:*",
+    "@types/node": "^20.16.10",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "typescript": "^5.6.3",
+    "vitest": "^2.1.9"
+  },
+  "dependencies": {
+    "@adysre/rules-core": "workspace:*",
+    "@adysre/rules-devtools": "workspace:*",
+    "@adysre/rules-theme": "workspace:*",
+    "@adysre/rules-types": "workspace:*",
+    "@adysre/rules-ui": "workspace:*",
+    "adysre": "workspace:*"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0"
+  }
+}

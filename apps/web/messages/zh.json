@@ -3158,13 +3158,6 @@
   },
   "rules": {
     "title": "业务规则",
-    "subtitle": "ADYSRE 规则引擎的可视化构建器。编辑规则树，语句、判定和 JSON 随之更新。",
-    "json": "规则的 JSON",
-    "showJson": "显示 JSON",
-    "hideJson": "隐藏 JSON",
-    "jsonHint": "这就是完整的规则。构建器、预览和执行器都是它的投影。",
-    "debugger": "为何是这个结果",
-    "savedVersion": "已在此浏览器中保存为版本 {version}。",
-    "notSaved": "尚未保存。保存后规则将留在此浏览器中。"
+    "subtitle": "ADYSRE 规则引擎的可视化构建器。编辑规则树，语句、判定和 JSON 随之更新。"
   }
 }

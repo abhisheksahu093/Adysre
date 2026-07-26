@@ -98,13 +98,70 @@ that would actually be sent.
 | Privilege | Deny by default. Executing a request is `api-studio:request:execute`, separate from reading it, so a reviewer can read a collection without firing it at production. |
 | XSS | HTML and SVG response previews render in a sandboxed iframe with no same-origin access. |
 
+## Data model
+
+Ten tables, all prefixed `api_studio_`, all partitioned by `tenant_id`, all
+reachable from `Organization` so a tenant purge finds every row.
+
+| Table | Holds | Notable indexes |
+| --- | --- | --- |
+| `api_studio_workspaces` | the unit users switch between and share | unique `(tenant_id, slug)` |
+| `api_studio_workspace_members` | who may use a workspace, and as what role | unique `(workspace_id, user_id)` |
+| `api_studio_collections` | collection root: inherited auth, scripts, variables | `(tenant_id, workspace_id, deleted_at, updated_at)` |
+| `api_studio_nodes` | the flat tree: folders and requests | `(collection_id, parent_id, position)` |
+| `api_studio_environments` | named variable sets (dev, staging, prod) | `(tenant_id, workspace_id, deleted_at)` |
+| `api_studio_variables` | every layer of the resolution stack, secrets included | `(tenant_id, workspace_id, scope, deleted_at)` |
+| `api_studio_history` | one row per send | `(tenant_id, workspace_id, executed_at)` |
+| `api_studio_responses` | the body and headers for a history row | unique `(history_id)` |
+| `api_studio_request_versions` | immutable save-point snapshots | unique `(node_id, version)` |
+| `api_studio_cookies` | the jar, per workspace | unique `(workspace_id, domain, path, name)` |
+
+Four storage decisions carry the rest:
+
+- **A request definition is JSONB, not a table per header.** The builder loads
+  and saves a request whole; a row per header would turn one save into dozens of
+  statements and buy no query anyone runs. `method` and `url` are denormalised
+  onto the node so the sidebar can draw a 5,000-node tree without reading a
+  single JSONB document.
+- **Variables are rows, not JSON.** Secrets need their own encrypted column,
+  their own audit trail, and one indexed query that loads every layer at once.
+- **Secrets are ciphertext or nothing.** A secret row carries `value_cipher`
+  only, in the self-describing form `v<n>:<key id>:<base64 iv>:<base64
+  ciphertext+tag>` (AES-256-GCM), so keys rotate without a schema change. A
+  CHECK constraint makes plaintext on a secret row unstorable.
+- **History is hard-deleted.** "Clear history" means gone. The record that has
+  to survive is the audit log, which is a different table with a different
+  lifetime.
+
+### Constraints Prisma cannot model
+
+Prisma has no notion of CHECK constraints, so they are written once in the
+migration, where Prisma will also never diff them away. They are the difference
+between "the repository is supposed to keep this true" and "the database will
+not store it otherwise":
+
+| Constraint | Prevents |
+| --- | --- |
+| `nodes_kind_check` | a folder carrying a request definition, or a request without one |
+| `variables_scope_owner_check` | a row whose `scope` contradicts its foreign keys |
+| `variables_secret_check` | a secret persisted in plaintext |
+| `variables_key_check` | a key the `{{name}}` grammar could never reference |
+| `history_outcome_check` | a row that is neither a response nor a failure |
+| `cookies_path_check` | a `SameSite=None` cookie without `Secure` |
+| `workspace_members_role_check`, `responses_encoding_check`, `cookies_same_site_check`, `nodes_method_check` | string columns drifting outside their declared sets |
+
+Partial unique indexes are deliberately absent: Prisma models indexes, so one
+added by hand would be dropped by the next `migrate dev`. The two rules that
+would have used them (one default environment per workspace, unique variable key
+per layer) are enforced in the repository instead.
+
 ## Phases
 
 | Phase | Scope | State |
 | --- | --- | --- |
 | 1 | Architecture: types, constants, schemas, permissions | **done** |
-| 2 | Database: `api_studio_*` tables, indexes, migration | next |
-| 3 | Stores: collections, tabs, environments, history, UI state | |
+| 2 | Database: `api_studio_*` tables, indexes, migration | **done** |
+| 3 | Stores: collections, tabs, environments, history, UI state | next |
 | 4 | Routes and API contracts under `/api/api-studio` | |
 | 5 | Main UI: sidebar, tabs, request builder, response viewer | |
 | 6 | Request engine: runner, SSRF policy, timings, cancellation | |

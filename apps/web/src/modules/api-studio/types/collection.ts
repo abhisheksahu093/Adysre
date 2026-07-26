@@ -42,7 +42,12 @@ export interface ApiWorkspace extends BaseEntity {
   name: string;
   slug: string;
   description: string;
-  /** Workspace-default request settings and the id of the active environment. */
+  /**
+   * The environment the workspace opens with. Derived on read from the
+   * environment flagged `is_default`, rather than stored as a pointer on the
+   * workspace row: deleting an environment can then never leave a dangling id
+   * behind. See documents/API_STUDIO.md.
+   */
   activeEnvironmentId: string | null;
 }
 

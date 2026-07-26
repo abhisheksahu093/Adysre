@@ -24,7 +24,7 @@
     "lint": "eslint src",
     "typecheck": "tsc --noEmit",
     "test": "tsx --test 'src/**/*.test.ts'",
-    "clean": "rm -rf dist .turbo tsconfig.tsbuildinfo",
+    "clean": "rm -rf dist .turbo tsconfig.tsbuildinfo tsconfig.build.tsbuildinfo",
     "prepublishOnly": "node ../config/scripts/guard-publisher.mjs && pnpm build && node ../config/scripts/verify-dist.mjs"
   },
   "devDependencies": {

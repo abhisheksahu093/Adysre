@@ -5,12 +5,11 @@
     "rootDir": "src",
     "declaration": true,
     "noEmit": false,
-    /*
-     * The counterpart to `allowImportingTsExtensions`: emit is only allowed
-     * alongside it when the extensions are rewritten, which is also what makes
-     * the published files spec-compliant ESM.
-     */
-    "rewriteRelativeImportExtensions": true
+    "rewriteRelativeImportExtensions": true,
+    "tsBuildInfoFile": "./tsconfig.build.tsbuildinfo"
   },
-  "exclude": ["src/**/*.test.ts", "src/**/*.test.tsx"]
+  "exclude": [
+    "src/**/*.test.ts",
+    "src/**/*.test.tsx"
+  ]
 }

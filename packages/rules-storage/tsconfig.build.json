@@ -3,7 +3,10 @@
   "compilerOptions": {
     "outDir": "dist",
     "declaration": true,
-    "noEmit": false
+    "noEmit": false,
+    "tsBuildInfoFile": "./tsconfig.build.tsbuildinfo"
   },
-  "exclude": ["src/**/*.test.ts"]
+  "exclude": [
+    "src/**/*.test.ts"
+  ]
 }

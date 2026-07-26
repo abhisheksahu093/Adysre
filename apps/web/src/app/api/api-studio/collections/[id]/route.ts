@@ -1,6 +1,6 @@
 import type { NextResponse } from 'next/server';
 import { API_STUDIO_PERMISSIONS } from '@adysre/types';
-import { BAD_REQUEST, NOT_FOUND, UNAVAILABLE, ok } from '@/lib/api/response';
+import { BAD_REQUEST, NOT_FOUND, ok, reportRouteError } from '@/lib/api/response';
 import { parseBody } from '@/lib/api/parse';
 import { authorize } from '@/lib/api-studio/guard';
 import { can } from '@/lib/api-studio/auth-policy';
@@ -39,8 +39,8 @@ export async function GET(request: Request, { params }: Params): Promise<NextRes
     }
     const collection = await getCollection(auth.session.tenantId, id, reveal);
     return collection ? ok(collection) : NOT_FOUND('Collection not found.');
-  } catch {
-    return UNAVAILABLE();
+  } catch (error) {
+    return reportRouteError('api-studio.collections.id', error);
   }
 }
 
@@ -62,7 +62,7 @@ export async function PATCH(request: Request, { params }: Params): Promise<NextR
     return collection ? ok(collection, 'Collection updated.') : NOT_FOUND('Collection not found.');
   } catch (error) {
     if (error instanceof SecretStorageError) return BAD_REQUEST(error.message);
-    return UNAVAILABLE();
+    return reportRouteError('api-studio.collections.id', error);
   }
 }
 
@@ -76,7 +76,7 @@ export async function DELETE(_request: Request, { params }: Params): Promise<Nex
     if (!deleted) return NOT_FOUND('Collection not found.');
     await recordAudit(auth.session, 'collection.delete', 'api-studio.collection', id);
     return ok({ id }, 'Collection deleted.');
-  } catch {
-    return UNAVAILABLE();
+  } catch (error) {
+    return reportRouteError('api-studio.collections.id', error);
   }
 }

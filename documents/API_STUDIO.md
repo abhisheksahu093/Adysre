@@ -441,6 +441,13 @@ is not supported; the studio stays usable for building and sending requests
 
 ## Configuration
 
+**Where these go.** Next.js loads env files from the APP directory, so anything
+the web app reads through `process.env` belongs in `apps/web/.env.local`, not in
+the monorepo root. The database URL is the exception and the reason this is
+confusing: Prisma Client resolves it from the `.env` beside
+`packages/database/prisma/schema.prisma`, so queries work while a key placed at
+the root is silently absent.
+
 | Variable | Effect |
 | --- | --- |
 | `JWT_ACCESS_SECRET` | Verifies the platform access token. Required in production; its absence there throws rather than waving requests through. |
@@ -450,11 +457,22 @@ is not supported; the studio stays usable for building and sending requests
 | `API_STUDIO_ALLOW_PRIVATE_HOSTS` | Opts a deployment into reaching loopback and private ranges. Defaults to on outside production and off in it. Cloud metadata and link-local are refused under every setting. |
 
 Outside production and without a token, a development session is resolved
-against the seeded `demo` tenant. It differs from the Website Intelligence
-fallback in one way that matters: API Studio writes rows with a tenant foreign
-key, so the dev session carries the seeded tenant's real UUID. With no seeded
-database there is no honest tenant to attribute writes to, and the routes say so
-(503) rather than inventing one.
+against the seeded `demo` tenant. Both ids in it are REAL rows, and that is not
+cosmetic: every table carries `created_by`/`updated_by` as `uuid`, so a
+synthetic actor id is accepted by nothing. A session carrying one would let
+every READ succeed and every WRITE fail - which is exactly what "storage is
+unavailable" looked like the first time this ran against a real database. A
+tenant with no users is therefore reported as an unfinished seed rather than
+left to fail one insert at a time.
+
+### When a route answers 503
+
+`reportRouteError` logs the underlying cause to the server log and returns the
+generic envelope. The response stays vague on purpose - a database error must
+never be echoed to a caller - but the operator gets the constraint, the column
+or the connection error by name, tagged with the route that hit it. A catch that
+returned 503 and discarded the cause is how a `uuid` column mismatch took a
+probe to find.
 
 ## Phases
 

@@ -1,6 +1,6 @@
 import type { NextResponse } from 'next/server';
 import { API_STUDIO_PERMISSIONS } from '@adysre/types';
-import { BAD_REQUEST, NOT_FOUND, UNAVAILABLE, ok } from '@/lib/api/response';
+import { BAD_REQUEST, NOT_FOUND, ok, reportRouteError } from '@/lib/api/response';
 import { parseBody } from '@/lib/api/parse';
 import { authorize } from '@/lib/api-studio/guard';
 import { moveNode } from '@/lib/api-studio/repositories/nodes';
@@ -44,7 +44,7 @@ export async function POST(
     return result.reason === 'not_found'
       ? NOT_FOUND('Not found.')
       : BAD_REQUEST('That destination would break the tree.');
-  } catch {
-    return UNAVAILABLE();
+  } catch (error) {
+    return reportRouteError('api-studio.nodes.id.move', error);
   }
 }

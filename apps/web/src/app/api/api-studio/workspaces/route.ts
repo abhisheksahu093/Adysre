@@ -1,6 +1,6 @@
 import type { NextResponse } from 'next/server';
 import { API_STUDIO_PERMISSIONS } from '@adysre/types';
-import { CONFLICT, UNAVAILABLE, ok } from '@/lib/api/response';
+import { CONFLICT, ok, reportRouteError } from '@/lib/api/response';
 import { parseBody } from '@/lib/api/parse';
 import { authorize } from '@/lib/api-studio/guard';
 import { recordAudit } from '@/lib/api-studio/audit';
@@ -24,8 +24,8 @@ export async function GET(): Promise<NextResponse> {
 
   try {
     return ok(await listWorkspaces(auth.session.tenantId));
-  } catch {
-    return UNAVAILABLE();
+  } catch (error) {
+    return reportRouteError('api-studio.workspaces', error);
   }
 }
 
@@ -52,7 +52,7 @@ export async function POST(request: Request): Promise<NextResponse> {
     if (isUniqueViolation(error)) {
       return CONFLICT('SLUG_TAKEN', 'A workspace with that slug already exists.');
     }
-    return UNAVAILABLE();
+    return reportRouteError('api-studio.workspaces', error);
   }
 }
 

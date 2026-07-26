@@ -1,6 +1,6 @@
 import type { NextResponse } from 'next/server';
 import { API_STUDIO_PERMISSIONS } from '@adysre/types';
-import { UNAVAILABLE, ok } from '@/lib/api/response';
+import { ok, reportRouteError } from '@/lib/api/response';
 import { parseBody, requiredParam } from '@/lib/api/parse';
 import { authorize } from '@/lib/api-studio/guard';
 import { recordAudit } from '@/lib/api-studio/audit';
@@ -48,8 +48,8 @@ export async function GET(request: Request): Promise<NextResponse> {
       pageSize: result.pageSize,
       total: result.total,
     });
-  } catch {
-    return UNAVAILABLE();
+  } catch (error) {
+    return reportRouteError('api-studio.history', error);
   }
 }
 
@@ -64,8 +64,8 @@ export async function POST(request: Request): Promise<NextResponse> {
 
   try {
     return ok(await recordHistory(auth.session.tenantId, auth.session.userId, body.data));
-  } catch {
-    return UNAVAILABLE();
+  } catch (error) {
+    return reportRouteError('api-studio.history', error);
   }
 }
 
@@ -87,8 +87,8 @@ export async function DELETE(request: Request): Promise<NextResponse> {
       includeFavorites: body.data.includeFavorites,
     });
     return ok({ removed }, 'History cleared.');
-  } catch {
-    return UNAVAILABLE();
+  } catch (error) {
+    return reportRouteError('api-studio.history', error);
   }
 }
 

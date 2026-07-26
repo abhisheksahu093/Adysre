@@ -1,6 +1,6 @@
 import type { NextResponse } from 'next/server';
 import { API_STUDIO_PERMISSIONS } from '@adysre/types';
-import { NOT_FOUND, UNAVAILABLE, ok } from '@/lib/api/response';
+import { NOT_FOUND, ok, reportRouteError } from '@/lib/api/response';
 import { parseBody } from '@/lib/api/parse';
 import { authorize } from '@/lib/api-studio/guard';
 import { setHistoryFavorite } from '@/lib/api-studio/repositories/history';
@@ -31,7 +31,7 @@ export async function PATCH(
   try {
     const entry = await setHistoryFavorite(auth.session.tenantId, id, body.data.favorite);
     return entry ? ok(entry) : NOT_FOUND('Not found.');
-  } catch {
-    return UNAVAILABLE();
+  } catch (error) {
+    return reportRouteError('api-studio.history.id', error);
   }
 }

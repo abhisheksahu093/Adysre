@@ -49,3 +49,22 @@ export const CONFLICT = (code: string, message: string) => fail(code, message, 4
 export const UNAVAILABLE = (
   message = 'Storage is not available. Check DATABASE_URL and run the migrations.',
 ) => fail('PERSISTENCE_UNAVAILABLE', message, 503);
+
+/**
+ * Answer 503, and say on the server WHY.
+ *
+ * A route that catches everything and returns a generic "storage unavailable"
+ * tells the client the right thing and the operator nothing: the actual cause
+ * (a constraint, a column type, a closed connection) is discarded at exactly
+ * the moment it is needed. The response stays deliberately vague - a database
+ * error must never be echoed to a caller - while the cause goes to the server
+ * log, where the person who can fix it is looking.
+ *
+ * @param scope - what was being attempted, e.g. `api-studio.workspaces.create`.
+ */
+export function reportRouteError(scope: string, error: unknown, message?: string): NextResponse {
+  const detail = error instanceof Error ? `${error.name}: ${error.message}` : String(error);
+  // The server log is the destination: this is where an operator looks.
+  console.error(`[${scope}] ${detail}`);
+  return message ? UNAVAILABLE(message) : UNAVAILABLE();
+}

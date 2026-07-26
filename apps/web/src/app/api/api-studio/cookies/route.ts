@@ -1,6 +1,6 @@
 import type { NextResponse } from 'next/server';
 import { API_STUDIO_PERMISSIONS } from '@adysre/types';
-import { UNAVAILABLE, ok } from '@/lib/api/response';
+import { ok, reportRouteError } from '@/lib/api/response';
 import { parseBody, requiredParam } from '@/lib/api/parse';
 import { authorize } from '@/lib/api-studio/guard';
 import { can } from '@/lib/api-studio/auth-policy';
@@ -38,8 +38,8 @@ export async function GET(request: Request): Promise<NextResponse> {
 
     const cookies = await listCookies(auth.session.tenantId, workspaceId.value);
     return ok(reveal ? cookies : cookies.map((cookie) => ({ ...cookie, value: '' })));
-  } catch {
-    return UNAVAILABLE();
+  } catch (error) {
+    return reportRouteError('api-studio.cookies', error);
   }
 }
 
@@ -60,7 +60,7 @@ export async function DELETE(request: Request): Promise<NextResponse> {
       body.data.cookie ?? undefined,
     );
     return ok({ removed }, 'Cookies cleared.');
-  } catch {
-    return UNAVAILABLE();
+  } catch (error) {
+    return reportRouteError('api-studio.cookies', error);
   }
 }

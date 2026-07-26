@@ -1,6 +1,6 @@
 import type { NextResponse } from 'next/server';
 import { API_STUDIO_PERMISSIONS } from '@adysre/types';
-import { BAD_REQUEST, UNAVAILABLE, ok } from '@/lib/api/response';
+import { BAD_REQUEST, UNAVAILABLE, ok, reportRouteError } from '@/lib/api/response';
 import { parseBody, requiredParam } from '@/lib/api/parse';
 import { authorize } from '@/lib/api-studio/guard';
 import { can } from '@/lib/api-studio/auth-policy';
@@ -36,8 +36,8 @@ export async function GET(request: Request): Promise<NextResponse> {
       await recordAudit(auth.session, 'secret.reveal', 'api-studio.collection', workspaceId.value);
     }
     return ok(await listCollections(auth.session.tenantId, workspaceId.value, reveal));
-  } catch {
-    return UNAVAILABLE();
+  } catch (error) {
+    return reportRouteError('api-studio.collections', error);
   }
 }
 

@@ -1,6 +1,6 @@
 import type { NextResponse } from 'next/server';
 import { API_STUDIO_PERMISSIONS } from '@adysre/types';
-import { NOT_FOUND, UNAVAILABLE, ok } from '@/lib/api/response';
+import { NOT_FOUND, ok, reportRouteError } from '@/lib/api/response';
 import { parseBody } from '@/lib/api/parse';
 import { authorize } from '@/lib/api-studio/guard';
 import { duplicateNode } from '@/lib/api-studio/repositories/nodes';
@@ -39,7 +39,7 @@ export async function POST(
       name ? () => name : undefined,
     );
     return node ? ok(node, 'Duplicated.') : NOT_FOUND('Not found.');
-  } catch {
-    return UNAVAILABLE();
+  } catch (error) {
+    return reportRouteError('api-studio.nodes.id.duplicate', error);
   }
 }

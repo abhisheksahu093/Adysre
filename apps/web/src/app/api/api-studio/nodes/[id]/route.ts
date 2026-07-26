@@ -1,6 +1,6 @@
 import type { NextResponse } from 'next/server';
 import { API_STUDIO_PERMISSIONS } from '@adysre/types';
-import { BAD_REQUEST, NOT_FOUND, UNAVAILABLE, ok } from '@/lib/api/response';
+import { BAD_REQUEST, NOT_FOUND, ok, reportRouteError } from '@/lib/api/response';
 import { parseBody } from '@/lib/api/parse';
 import { authorize } from '@/lib/api-studio/guard';
 import { SecretStorageError } from '@/lib/api-studio/crypto';
@@ -27,8 +27,8 @@ export async function GET(_request: Request, { params }: Params): Promise<NextRe
   try {
     const node = await getNode(auth.session.tenantId, id);
     return node ? ok(node) : NOT_FOUND('Not found.');
-  } catch {
-    return UNAVAILABLE();
+  } catch (error) {
+    return reportRouteError('api-studio.nodes.id', error);
   }
 }
 
@@ -45,7 +45,7 @@ export async function PATCH(request: Request, { params }: Params): Promise<NextR
     return node ? ok(node, 'Saved.') : NOT_FOUND('Not found.');
   } catch (error) {
     if (error instanceof SecretStorageError) return BAD_REQUEST(error.message);
-    return UNAVAILABLE();
+    return reportRouteError('api-studio.nodes.id', error);
   }
 }
 
@@ -57,7 +57,7 @@ export async function DELETE(_request: Request, { params }: Params): Promise<Nex
   try {
     const deleted = await softDeleteNode(auth.session.tenantId, auth.session.userId, id);
     return deleted ? ok({ id }, 'Deleted.') : NOT_FOUND('Not found.');
-  } catch {
-    return UNAVAILABLE();
+  } catch (error) {
+    return reportRouteError('api-studio.nodes.id', error);
   }
 }

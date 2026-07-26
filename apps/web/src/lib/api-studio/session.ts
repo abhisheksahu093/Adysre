@@ -37,8 +37,8 @@ const DEMO_ORG_SLUG = 'demo';
  * credentials over an outage.
  */
 export class StorageUnavailableError extends Error {
-  constructor() {
-    super('The database could not be reached.');
+  constructor(message = 'The database could not be reached.') {
+    super(message);
     this.name = 'StorageUnavailableError';
   }
 }
@@ -75,8 +75,12 @@ export async function getSession(): Promise<PlatformSession | null> {
 }
 
 /**
- * The dev stand-in session. Reads the seeded tenant's real id, because rows
- * written under it carry a foreign key onto `organizations`.
+ * The dev stand-in session.
+ *
+ * Both ids are REAL rows from the seeded tenant, and that is not cosmetic: every
+ * table here carries `created_by`/`updated_by` as `uuid`, so a synthetic id like
+ * `demo-user-<org>` is rejected by Postgres on insert. Reads would work and
+ * every write would fail - which is exactly the shape of bug this once had.
  *
  * Cookie grammar: `<role>`, or `anonymous` to exercise the denied path.
  * An unrecognised role falls back to Owner, never to a silent deny.
@@ -85,24 +89,44 @@ async function resolveDevSession(cookie: string | undefined): Promise<PlatformSe
   if (cookie === 'anonymous') return null;
 
   let org: { id: string } | null;
+  let user: { id: string } | null;
   try {
     org = await prisma.organization.findFirst({
       where: { slug: DEMO_ORG_SLUG, ...notDeleted },
       select: { id: true },
     });
+    // The seed's Owner. Any user in the tenant will do; what matters is that the
+    // id is one the database will accept as an actor.
+    user = org
+      ? await prisma.user.findFirst({
+          where: { tenantId: org.id, ...notDeleted },
+          orderBy: { createdAt: 'asc' },
+          select: { id: true },
+        })
+      : null;
   } catch {
     // No database, wrong credentials, migrations never run. Reported as what it
     // is rather than escaping as a 500 with a stack trace in the response.
     throw new StorageUnavailableError();
   }
+
   // No seeded tenant means the database is not set up. Returning null lets the
   // route answer honestly instead of inventing a tenant id and writing rows
   // that belong to nobody.
   if (!org) return null;
 
+  // A tenant with no user is a half-seeded database: reads would work and every
+  // write would fail on the actor column. Saying so points at `pnpm db:seed`
+  // instead of leaving a 503 with no cause.
+  if (!user) {
+    throw new StorageUnavailableError(
+      'The tenant has no users. Run `pnpm db:seed` to finish setting up the database.',
+    );
+  }
+
   const role: SystemRole = cookie && isSystemRole(cookie) ? cookie : 'Owner';
   return {
-    userId: `demo-user-${org.id}`,
+    userId: user.id,
     tenantId: org.id,
     roles: [role],
     permissions: [],

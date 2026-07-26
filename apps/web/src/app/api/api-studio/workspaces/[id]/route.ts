@@ -1,6 +1,6 @@
 import type { NextResponse } from 'next/server';
 import { API_STUDIO_PERMISSIONS } from '@adysre/types';
-import { NOT_FOUND, UNAVAILABLE, ok } from '@/lib/api/response';
+import { NOT_FOUND, ok, reportRouteError } from '@/lib/api/response';
 import { parseBody } from '@/lib/api/parse';
 import { authorize } from '@/lib/api-studio/guard';
 import { recordAudit } from '@/lib/api-studio/audit';
@@ -31,8 +31,8 @@ export async function GET(_request: Request, { params }: Params): Promise<NextRe
   try {
     const workspace = await getWorkspace(auth.session.tenantId, id);
     return workspace ? ok(workspace) : NOT_FOUND('Workspace not found.');
-  } catch {
-    return UNAVAILABLE();
+  } catch (error) {
+    return reportRouteError('api-studio.workspaces.id', error);
   }
 }
 
@@ -52,8 +52,8 @@ export async function PATCH(request: Request, { params }: Params): Promise<NextR
       body.data,
     );
     return workspace ? ok(workspace, 'Workspace updated.') : NOT_FOUND('Workspace not found.');
-  } catch {
-    return UNAVAILABLE();
+  } catch (error) {
+    return reportRouteError('api-studio.workspaces.id', error);
   }
 }
 
@@ -67,7 +67,7 @@ export async function DELETE(_request: Request, { params }: Params): Promise<Nex
     if (!deleted) return NOT_FOUND('Workspace not found.');
     await recordAudit(auth.session, 'workspace.delete', 'api-studio.workspace', id);
     return ok({ id }, 'Workspace deleted.');
-  } catch {
-    return UNAVAILABLE();
+  } catch (error) {
+    return reportRouteError('api-studio.workspaces.id', error);
   }
 }

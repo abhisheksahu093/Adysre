@@ -19,9 +19,14 @@ const here = dirname(fileURLToPath(import.meta.url));
 const schema = readFileSync(join(here, 'schema.prisma'), 'utf8');
 
 const migrationsDir = join(here, 'migrations');
-const migrations = readdirSync(migrationsDir)
-  .filter((name) => !name.startsWith('.'))
-  .map((name) => ({ name, sql: readFileSync(join(migrationsDir, name, 'migration.sql'), 'utf8') }));
+// Directories only: `migration_lock.toml` lives here too, and treating it as a
+// migration folder is how this test crashed instead of reporting.
+const migrations = readdirSync(migrationsDir, { withFileTypes: true })
+  .filter((entry) => entry.isDirectory() && !entry.name.startsWith('.'))
+  .map((entry) => ({
+    name: entry.name,
+    sql: readFileSync(join(migrationsDir, entry.name, 'migration.sql'), 'utf8'),
+  }));
 
 const allSql = migrations.map((m) => m.sql).join('\n');
 
@@ -104,6 +109,17 @@ describe('migration', () => {
     }
   });
 
+  it('keeps the actor columns as uuid, which is what callers must supply', () => {
+    // `created_by`/`updated_by` are uuid, so anything writing a synthetic actor
+    // id ("demo-user-<org>") is rejected on INSERT while reads keep working.
+    // That asymmetry once looked like "storage is unavailable", so the column
+    // type is pinned here and the session documents the requirement.
+    for (const column of ['created_by', 'updated_by']) {
+      assert.match(allSql, new RegExp(`"${column}" UUID`), column);
+      assert.doesNotMatch(allSql, new RegExp(`"${column}" TEXT`), column);
+    }
+  });
+
   it('declares every column the models declare', () => {
     // A spot check of the columns that are easy to add to a model and forget in
     // a hand-edited migration: the denormalised and encrypted ones.
@@ -133,11 +149,13 @@ describe('migration', () => {
     assert.match(allSql, /api_studio_history_outcome_check/);
   });
 
-  it('never drops or renames anything: every api studio statement is additive', () => {
-    const apiStudioMigration = migrations.find((m) => m.name.includes('api_studio'));
-    assert.ok(apiStudioMigration);
-    assert.doesNotMatch(apiStudioMigration.sql, /\bDROP\s+(TABLE|COLUMN|CONSTRAINT)\b/i);
-    assert.doesNotMatch(apiStudioMigration.sql, /\bALTER\s+TABLE\s+"\w+"\s+RENAME\b/i);
+  it('never drops a table or a column', () => {
+    // Constraints may be dropped and re-added, which is how the constraint
+    // migration stays idempotent; tables and columns may not.
+    for (const migration of migrations) {
+      assert.doesNotMatch(migration.sql, /\bDROP\s+(TABLE|COLUMN)\b/i, migration.name);
+      assert.doesNotMatch(migration.sql, /\bALTER\s+TABLE\s+"\w+"\s+RENAME\b/i, migration.name);
+    }
   });
 
   it('cascades from the workspace, so deleting one leaves nothing behind', () => {

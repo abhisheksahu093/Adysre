@@ -29,7 +29,7 @@ longer matches the tree, or a tree that cannot express what somebody typed.
 | Package | Holds | State |
 | --- | --- | --- |
 | `@adysre/rules-types` | the vocabulary: AST, execution contracts, plugin interfaces | **built** |
-| `@adysre/rules-core` | builders, traversal, validation, serialisation. Zero dependencies | **built** |
+| `@adysre/rules-core` | builders, traversal, validation, serialisation, the registry, the built-in plugins, the executor. Zero dependencies | **built** |
 | `@adysre/rules-parser` | importers: JSON, and other engines' formats | planned |
 | `@adysre/rules-renderer` | AST to natural language, and other output formats | planned |
 | `@adysre/rules-react` | headless hooks and state for a builder | planned |
@@ -148,13 +148,66 @@ of service no timeout above can rescue. Pattern and subject are length-capped;
 a deployment that lets untrusted third parties author rules should leave the
 operator unregistered, which is possible precisely because it is a plugin.
 
+## The executor
+
+```ts
+const evaluator = createEvaluator(createRegistry(builtinPlugins));
+const outcome = evaluator.evaluate(rule, createContext(order, { now }));
+// { verdict, actions, diagnostics, trace, ms }
+```
+
+**An error is not a `false`.** A condition that cannot be evaluated - unknown
+operator, type mismatch, a function that threw - is `errored`, and so is every
+group containing it, and so is the rule. An errored rule applies **no actions**,
+from neither branch: the engine does not know which one was right. Error even
+wins over a combinator that had already decided, because a rule you could not
+fully evaluate does not get to claim it matched.
+
+The alternative is the failure that makes people stop trusting a rules engine: a
+rule that silently stops firing because one branch is broken, and a report that
+says `unmatched` with nothing to show why.
+
+**An empty group matches** - all three combinators. Not the mathematical
+convention for an empty `any`, deliberately: an empty group means "nothing has
+been said yet", and every rule starts as one. A brand-new rule that matches
+nothing is worse than one consistent answer that reads as "no restriction".
+
+**A missing field is `null`, and says so.** Rules are written against optional
+data, so `tier isEmpty` on a customer without a tier should match rather than
+raise. But a typo'd path is the most common reason a rule "does not work", so
+the absence produces a warning naming the path - once per path, not once per
+mention. Field paths read **own properties only**: a path comes out of a stored
+document, and `constructor.prototype` is a path.
+
+**Short-circuiting is on, and visible.** `all` stops at the first unmatched
+child, `any` and `none` at the first matched one, and the trace lists only the
+children that ran, so nobody mistakes a skipped branch for a passing one. A
+debugger sets `shortCircuit: false` and sees the branches the fast path never
+reached - including errors it stepped over.
+
+**The tree is walked iteratively**, with an explicit stack and one frame per
+group. Same reason as `walk`: an imported tree was not authored by anyone you
+know, and a stack overflow inside a rules engine has no useful message.
+
+**Timeouts bound a tree, not a plugin.** `timeoutMs` is checked between nodes,
+which stops a pathological document; it cannot interrupt a synchronous call,
+which is why `matches` bounds its own inputs instead of trusting it. The clock
+is injectable, because a timeout only reachable by waiting is a timeout nobody
+tests.
+
 ## Results carry their reasoning
 
 A rules engine whose answer is a bare `true` is unusable in the moment it
 matters most: when a business user insists the rule is wrong and someone has to
 show which condition decided it. Every node that runs leaves a `TraceEvent`
-recording what it saw and what it concluded, so the trace is part of the result
-rather than a debugging mode bolted on later.
+recording what it saw, what the operator actually received, and what it
+concluded - children before parents, so a reader can rebuild the tree. The trace
+is part of the result rather than a debugging mode bolted on later.
+
+Sets run their rules in `priority` order, low first, ties in the order written:
+a set whose behaviour depends on an unstable sort behaves differently on two
+machines. `first-match` stops at the first rule that matched; `all-matches`
+collects every one.
 
 ## Rule kinds
 
@@ -169,8 +222,8 @@ change to the AST rather than a plugin.
 | --- | --- | --- |
 | 1 | Monorepo, core types, the AST | **done** |
 | 2 | Plugin registry and the built-in operator and function set | **done** |
-| 3 | Executor: evaluation, short-circuiting, tracing, timeouts | next |
-| 4 | Natural-language renderer | |
+| 3 | Executor: evaluation, short-circuiting, tracing, timeouts | **done** |
+| 4 | Natural-language renderer | next |
 | 5 | Parser and importers | |
 | 6 | Headless React state (`rules-react`) | |
 | 7 | The visual builder (`rules-ui`) | |

@@ -1,11 +1,11 @@
 /**
- * `@adysre/rules-core` - the AST, and everything that can be done to it without
- * running it.
+ * `@adysre/rules-core` - the AST, and everything that can be done to it.
  *
- * Building, walking, validating and serialising a rule. The executor, the
- * plugin registry and the renderers are separate packages precisely because
- * this one has to be safe to import anywhere: a form that only needs to READ a
- * rule, a migration that rewrites one, a build step that lints them.
+ * Building, walking, validating, serialising, and running: the registry, the
+ * built-in plugins and the executor live here, because an engine split from the
+ * tree it walks is two packages that have to agree on a contract nobody reads.
+ * The renderers, the React state and the builder are separate precisely because
+ * they are NOT needed to evaluate a rule on a server.
  *
  * ZERO runtime dependencies, deliberately. A rules engine is embedded, and one
  * that drags a dependency tree into every bundle that touches it is one teams
@@ -15,8 +15,10 @@
 export * from './builders';
 export * from './builtins';
 export * from './errors';
+export * from './execute';
 export * from './ids';
 export * from './registry';
+export * from './resolve';
 export * from './serialize';
 export * from './validate';
 export * from './walk';
@@ -25,15 +27,22 @@ export * from './walk';
 // package stays the source of truth; this is a convenience, not a copy.
 export type {
   ActionNode,
+  AppliedAction,
   Combinator,
   ConditionNode,
   Diagnostic,
+  EvaluationContext,
+  EvaluationOptions,
   GroupNode,
   JsonValue,
   Operand,
   RuleDocument,
   RuleKind,
   RuleNode,
+  RuleOutcome,
   RuleSet,
+  SetOutcome,
+  TraceEvent,
   ValueType,
+  Verdict,
 } from '@adysre/rules-types';

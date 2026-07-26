@@ -115,8 +115,22 @@ export interface EvaluationOptions {
   shortCircuit?: boolean;
   /** Ceiling on nested function operands, so a malformed AST cannot recurse. */
   maxDepth?: number;
-  /** How long one rule may take before it is abandoned. */
+  /**
+   * How long one rule may take before it is abandoned.
+   *
+   * Checked BETWEEN nodes, which bounds a large tree and not a single runaway
+   * plugin: JavaScript cannot interrupt a synchronous call, so nothing here can
+   * rescue a catastrophically backtracking regular expression. That is why the
+   * built-in `matches` bounds its inputs instead of trusting a timeout above it.
+   */
   timeoutMs?: number;
+  /**
+   * The monotonic clock the timeout is measured against, in milliseconds.
+   *
+   * Injectable for the same reason `EvaluationContext.now` is: a timeout that
+   * can only be reached by actually waiting is a timeout nobody tests.
+   */
+  clock?: () => number;
 }
 
 /** The engine's contract, so a host can swap the implementation. */

@@ -1,7 +1,7 @@
 # @adysre/rules-core
 
-The AST, and everything that can be done to it without running it: building,
-walking, validating, serialising.
+The AST and everything that can be done to it: building, walking, validating,
+serialising, and running.
 
 **Zero runtime dependencies**, deliberately. A rules engine is embedded, and one
 that drags a dependency tree into every bundle that touches it is one teams work
@@ -21,6 +21,12 @@ const document = rule({
 });
 
 validateRule(document); // { valid: true, diagnostics: [] }
+
+const evaluator = createEvaluator(createRegistry(builtinPlugins));
+const { verdict, actions, trace } = evaluator.evaluate(
+  document,
+  createContext({ order: { total: 2500 } }),
+); // 'matched', the reject action, and a record of how it got there
 ```
 
 ## What is here
@@ -34,9 +40,11 @@ validateRule(document); // { valid: true, diagnostics: [] }
 | `registry` | Immutable plugin registry: duplicate ids throw at registration, lookups never throw |
 | `builtins` | 27 operators and 23 functions, offered rather than imposed |
 | `errors` | `RuleError`, how a plugin says "I cannot answer that" |
+| `resolve` | Operands to values: own-property field reads, bounded function nesting |
+| `execute` | The executor: verdicts, actions, diagnostics and a trace |
 
-The executor, the plugin registry and the renderers are separate packages
-precisely so this one is safe to import anywhere: a form that only reads a rule,
-a migration that rewrites one, a build step that lints them.
+The renderers, the React state and the visual builder are separate packages
+precisely so this one is safe to import anywhere a rule has to run: a server
+route, a worker, a build step that lints them. Nothing here needs a DOM.
 
 See [`documents/RULES_ENGINE.md`](../../documents/RULES_ENGINE.md).

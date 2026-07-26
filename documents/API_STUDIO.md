@@ -210,6 +210,7 @@ All under `/api/api-studio`, all answering the standard envelope
 | --- | --- | --- |
 | GET / POST | `/workspaces` | `workspace:read` / `workspace:manage` |
 | GET / PATCH / DELETE | `/workspaces/{id}` | `workspace:read` / `workspace:manage` |
+| POST | `/execute` | `request:execute` |
 | GET / POST | `/collections?workspaceId=` | `collection:read` / `collection:create` |
 | GET / PATCH / DELETE | `/collections/{id}` | `collection:read` / `update` / `delete` |
 | GET / POST | `/nodes?collectionId=` | `request:read` / `request:create` |
@@ -249,6 +250,45 @@ keeps its existing ciphertext, which is what lets a UI that only ever saw a
 masked field save without wiping the credential. If no encryption key is
 configured, a secret is refused (400) rather than stored in the clear.
 
+## The runner
+
+`POST /api/api-studio/execute` is the one endpoint that opens an outbound
+connection on a user's behalf, so it has the most between the caller and the
+socket: a verified session holding `request:execute`, a per-tenant rate limit,
+the strict `executionRequestSchema`, and the host policy applied to the
+**resolved address** of every hop.
+
+Built on `node:http`/`node:https` rather than `fetch`, for three things fetch
+cannot give an API client:
+
+- **Real timings.** DNS, TCP and TLS are socket events. A response viewer that
+  invented those numbers would be lying, so anything unmeasurable stays `null`.
+- **Address pinning.** The policy is decided on a resolved IP and the connection
+  is made to that IP with the hostname carried in `Host` and TLS `servername`.
+  A name therefore cannot resolve to something allowed for the check and
+  something private for the connection (DNS rebinding).
+- **Per-request TLS.** "Ignore certificate errors" is a real need on a staging
+  box with a self-signed cert, and must be per request rather than a
+  process-wide flag that would silently weaken every other call.
+
+Redirects are followed manually, so each hop is re-checked against the policy,
+recorded for the user, stripped of `Authorization` and `Cookie` when the host
+changes, and turned from POST into GET on 303 (and on 301/302, as every client
+does). Bodies stream through a size cap and stop being read at the ceiling
+rather than being buffered and discarded. Responses that are not valid UTF-8
+come back base64.
+
+The answer is always 200 with a result envelope, even when the exchange failed:
+"the connection was refused" is a fact about the target, not a failure of this
+endpoint, and it belongs in the response pane rather than an error toast. Only
+auth, rate limiting and validation - failures about the CALL - answer non-200.
+
+**Not yet sendable, by name rather than silently:** digest, OAuth 2, JWT and AWS
+signature auth (each needs a round trip or a signing step), and binary and
+multipart bodies (each needs the file store). Both produce a typed refusal
+(`unsupported_auth`, `unsupported_body`) so nothing is ever sent
+unauthenticated or missing the file the user attached.
+
 ## Configuration
 
 | Variable | Effect |
@@ -257,6 +297,7 @@ configured, a secret is refused (400) rather than stored in the clear.
 | `API_STUDIO_SECRET_KEY` | Base64 32-byte key for secret variables and cookie values (`openssl rand -base64 32`). Without it, storing a secret is refused rather than done in plaintext. |
 | `API_STUDIO_SECRET_KEYS_PREVIOUS` | Retired keys, comma separated, kept readable during a rotation. |
 | `API_STUDIO_STRICT_AUTH` | `true` disables the development session fallback, to rehearse production behaviour locally or in CI. |
+| `API_STUDIO_ALLOW_PRIVATE_HOSTS` | Opts a deployment into reaching loopback and private ranges. Defaults to on outside production and off in it. Cloud metadata and link-local are refused under every setting. |
 
 Outside production and without a token, a development session is resolved
 against the seeded `demo` tenant. It differs from the Website Intelligence
@@ -273,8 +314,8 @@ database there is no honest tenant to attribute writes to, and the routes say so
 | 2 | Database: `api_studio_*` tables, indexes, migration | **done** |
 | 3 | Stores: collections, tabs, environments, history, UI state | **done** |
 | 4 | Routes and API contracts under `/api/api-studio` | **done** |
-| 5 | Main UI: sidebar, tabs, request builder, response viewer | next |
-| 6 | Request engine: runner, SSRF policy, timings, cancellation | |
+| 5 | Request engine: runner, SSRF policy, timings, cancellation | **done** |
+| 6 | Main UI: sidebar, tabs, request builder, response viewer | next |
 | 7 | Auth strategies, cookies, scripts and assertions | |
 | 8 | Import (Postman, OpenAPI, HAR, cURL), export, code generation | |
 | 9 | Docs generator, offline queue, search, shortcuts, a11y pass | |

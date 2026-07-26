@@ -145,6 +145,14 @@ export const EXECUTION_ERROR_CODES = [
   'rate_limited',
   'agent_unavailable',
   'network',
+  /**
+   * The request uses an auth strategy or a body kind this build cannot send
+   * yet (digest and OAuth2 need a round trip; uploads need the file store).
+   * A named refusal, so nothing is ever sent unauthenticated or half-formed
+   * because a feature was missing.
+   */
+  'unsupported_auth',
+  'unsupported_body',
 ] as const;
 export type ExecutionErrorCode = (typeof EXECUTION_ERROR_CODES)[number];
 

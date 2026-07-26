@@ -619,7 +619,41 @@ change to the AST rather than a plugin.
 | 11 | Themes | **done** |
 | 12 | Playground and examples | **done** |
 | 13 | Documentation site | **done** |
-| 14 | Publishing: build, exports, versioning | next |
+| 14 | Publishing: build, exports, versioning | **done** |
+
+## Publishing
+
+The eleven packages publish to npm under `@adysre`, in LOCKSTEP: one version
+across the ecosystem. They share the AST and the plugin interfaces, so
+`rules-core@0.3` with `rules-types@0.1` is a combination that type-checks and
+cannot work. One version makes it unrepresentable, and a test asserts the
+versions have not drifted apart.
+
+`exports` points at `src/*.ts` so the workspace consumes source with no build
+step; `publishConfig.exports` points at `dist/*.js` for consumers, and pnpm
+substitutes one for the other at pack time. `npm publish` IGNORES
+`publishConfig`, which is why `prepublishOnly` refuses any client but pnpm -
+that mistake shipped once, as `adysre@0.1.0`, and cost a version number.
+
+Preparing this found two more ways to ship a package that installs and cannot
+be imported, neither of which `tsc` reports:
+
+- **An extensionless relative import.** `export * from './builders'` emits
+  verbatim, and Node's ESM loader does not guess. Every package built cleanly,
+  passed every test in the workspace - which resolves through a bundler - and
+  would have thrown `ERR_MODULE_NOT_FOUND` on a consumer's first import.
+- **A `.ts` extension left in a declaration file.**
+  `rewriteRelativeImportExtensions` fixes the JavaScript and leaves the `.d.ts`
+  alone, so the runtime resolves and a TypeScript consumer gets `Cannot find
+  module './labels.ts'`.
+
+Both are now checked by `verify-dist`, which runs before the tarball is built,
+and the second is repaired by `fix-declarations` during the build. Both scripts
+live in `@adysre/config` rather than in each package, and both exist because an
+end-to-end install caught what the verifier's first draft did not.
+
+The check that matters is the one that is hard to fake: pack the tarballs,
+install them into an empty project, and both `node` and `tsc` accept them.
 
 ## Conventions
 

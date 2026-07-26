@@ -1,6 +1,6 @@
 import type { JsonValue } from '@adysre/rules-types';
 import { isDateString } from '@adysre/rules-core';
-import type { Phrases } from './phrases';
+import type { Phrases } from './phrases.ts';
 
 /**
  * Values, as a person would write them.

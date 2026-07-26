@@ -1,6 +1,6 @@
 import type { EvaluationContext, JsonValue, Operand } from '@adysre/rules-types';
-import { RuleError, arityMismatch } from './errors';
-import type { Registry } from './registry';
+import { RuleError, arityMismatch } from './errors.ts';
+import type { Registry } from './registry.ts';
 
 /**
  * Turning an operand into a value.

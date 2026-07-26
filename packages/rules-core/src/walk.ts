@@ -7,7 +7,7 @@ import {
   type RuleDocument,
   type RuleNode,
 } from '@adysre/rules-types';
-import { createNodeId, type IdFactory } from './ids';
+import { createNodeId, type IdFactory } from './ids.ts';
 
 /**
  * Walking the tree.

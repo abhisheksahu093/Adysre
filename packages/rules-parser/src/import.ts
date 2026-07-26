@@ -1,8 +1,8 @@
-import { astImporter } from './importers/ast';
-import { jsonLogicImporter } from './importers/json-logic';
-import { jsonRulesEngineImporter } from './importers/json-rules-engine';
-import { mongoImporter } from './importers/mongo';
-import { Report, type Importer, type ImportOptions, type ImportResult } from './types';
+import { astImporter } from './importers/ast.ts';
+import { jsonLogicImporter } from './importers/json-logic.ts';
+import { jsonRulesEngineImporter } from './importers/json-rules-engine.ts';
+import { mongoImporter } from './importers/mongo.ts';
+import { Report, type Importer, type ImportOptions, type ImportResult } from './types.ts';
 
 /**
  * Choosing an importer, and running it.

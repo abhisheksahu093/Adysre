@@ -12,7 +12,7 @@ import {
   type RuleSet,
   type SetStrategy,
 } from '@adysre/rules-types';
-import { createNodeId, type IdFactory } from './ids';
+import { createNodeId, type IdFactory } from './ids.ts';
 
 /**
  * Building an AST in code.

@@ -28,7 +28,7 @@ import {
   validateRule,
   variable,
   walk,
-} from './index';
+} from './index.ts';
 
 /**
  * Core tests.

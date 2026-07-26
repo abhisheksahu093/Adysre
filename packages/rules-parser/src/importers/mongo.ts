@@ -1,7 +1,7 @@
 import { all, any, condition, field, group, literal, none, type BuilderOptions } from '@adysre/rules-core';
 import type { JsonValue, RuleNode } from '@adysre/rules-types';
-import { builderOptions, finish } from '../finish';
-import { isPlainObject, Report, type Importer, type ImportOptions, type ImportResult } from '../types';
+import { builderOptions, finish } from '../finish.ts';
+import { isPlainObject, Report, type Importer, type ImportOptions, type ImportResult } from '../types.ts';
 
 /**
  * MongoDB-style query filters.

@@ -1,7 +1,7 @@
 import { all, any, condition, field, fn, group, literal, type BuilderOptions } from '@adysre/rules-core';
 import type { JsonValue, Operand, RuleNode } from '@adysre/rules-types';
-import { builderOptions, finish } from '../finish';
-import { isPlainObject, Report, type Importer, type ImportOptions, type ImportResult } from '../types';
+import { builderOptions, finish } from '../finish.ts';
+import { isPlainObject, Report, type Importer, type ImportOptions, type ImportResult } from '../types.ts';
 
 /**
  * JsonLogic.

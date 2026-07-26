@@ -23,7 +23,7 @@ import {
   ruleSet,
   sequentialIds,
   variable,
-} from './index';
+} from './index.ts';
 
 /**
  * Executor tests.

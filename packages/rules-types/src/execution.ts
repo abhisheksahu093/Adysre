@@ -1,5 +1,5 @@
-import type { ActionNode, RuleDocument } from './ast';
-import type { JsonObject, JsonValue } from './json';
+import type { ActionNode, RuleDocument } from './ast.ts';
+import type { JsonObject, JsonValue } from './json.ts';
 
 /**
  * Executing a rule: what goes in, what comes out, and what was observed.

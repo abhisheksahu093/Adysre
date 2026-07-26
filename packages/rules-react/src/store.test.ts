@@ -31,7 +31,7 @@ import {
   validation,
   type BuilderState,
   type ReducerDeps,
-} from './index';
+} from './index.ts';
 
 /**
  * Builder tests.

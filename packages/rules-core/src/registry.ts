@@ -11,7 +11,7 @@ import type {
   ValidatorPlugin,
   VariableProviderPlugin,
 } from '@adysre/rules-types';
-import { RuleError } from './errors';
+import { RuleError } from './errors.ts';
 
 /**
  * The plugin registry: what this engine can do, right now.

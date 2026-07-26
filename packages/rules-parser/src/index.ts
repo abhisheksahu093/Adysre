@@ -16,9 +16,9 @@
  * the difference, and no equivalent is an ERROR.
  */
 
-export * from './import';
-export * from './importers/ast';
-export * from './importers/json-logic';
-export * from './importers/json-rules-engine';
-export * from './importers/mongo';
-export * from './types';
+export * from './import.ts';
+export * from './importers/ast.ts';
+export * from './importers/json-logic.ts';
+export * from './importers/json-rules-engine.ts';
+export * from './importers/mongo.ts';
+export * from './types.ts';

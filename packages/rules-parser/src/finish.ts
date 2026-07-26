@@ -7,7 +7,7 @@ import {
   type BuilderOptions,
 } from '@adysre/rules-core';
 import type { ActionNode, GroupNode, RuleKind, RuleNode } from '@adysre/rules-types';
-import type { ImportOptions, ImportResult, Report } from './types';
+import type { ImportOptions, ImportResult, Report } from './types.ts';
 
 /**
  * The last step every importer takes.

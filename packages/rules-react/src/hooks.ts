@@ -6,16 +6,16 @@ import type {
   RuleOutcome,
 } from '@adysre/rules-types';
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react';
-import type { ReducerDeps } from './reducer';
+import type { ReducerDeps } from './reducer.ts';
 import {
   resolveFields,
   resolveVariables,
   type ResolvedFields,
   type ResolvedVariables,
-} from './providers';
-import { canRedo, canUndo, isDirty, selectedNode, validation, type Validation } from './selectors';
-import { createRuleStore, type BuilderActions, type RuleStore } from './store';
-import type { BuilderState } from './state';
+} from './providers.ts';
+import { canRedo, canUndo, isDirty, selectedNode, validation, type Validation } from './selectors.ts';
+import { createRuleStore, type BuilderActions, type RuleStore } from './store.ts';
+import type { BuilderState } from './state.ts';
 
 /**
  * The React bindings.

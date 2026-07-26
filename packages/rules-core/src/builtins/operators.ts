@@ -1,6 +1,6 @@
 import type { JsonValue, OperatorPlugin } from '@adysre/rules-types';
-import { RuleError } from '../errors';
-import { compareValues, isEmptyValue, toList, toText, valuesEqual } from './compare';
+import { RuleError } from '../errors.ts';
+import { compareValues, isEmptyValue, toList, toText, valuesEqual } from './compare.ts';
 
 /**
  * The operators every rule set needs.

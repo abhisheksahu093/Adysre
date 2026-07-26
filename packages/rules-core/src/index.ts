@@ -12,16 +12,16 @@
  * work around.
  */
 
-export * from './builders';
-export * from './builtins';
-export * from './errors';
-export * from './execute';
-export * from './ids';
-export * from './registry';
-export * from './resolve';
-export * from './serialize';
-export * from './validate';
-export * from './walk';
+export * from './builders.ts';
+export * from './builtins/index.ts';
+export * from './errors.ts';
+export * from './execute.ts';
+export * from './ids.ts';
+export * from './registry.ts';
+export * from './resolve.ts';
+export * from './serialize.ts';
+export * from './validate.ts';
+export * from './walk.ts';
 
 // Re-exported so a consumer needs one import for the common case. The types
 // package stays the source of truth; this is a convenience, not a copy.

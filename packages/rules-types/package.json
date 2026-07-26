@@ -1,7 +1,6 @@
 {
   "name": "@adysre/rules-types",
   "version": "0.1.0",
-  "private": true,
   "type": "module",
   "description": "Type vocabulary for the ADYSRE Business Rules Engine: the rule AST, execution contracts and plugin interfaces.",
   "license": "MIT",
@@ -21,16 +20,41 @@
     "README.md"
   ],
   "scripts": {
-    "build": "tsc -p tsconfig.build.json",
+    "build": "tsc -p tsconfig.build.json && node ../config/scripts/fix-declarations.mjs",
     "lint": "eslint src",
     "typecheck": "tsc --noEmit",
     "test": "tsx --test 'src/**/*.test.ts'",
-    "clean": "rm -rf dist .turbo tsconfig.tsbuildinfo"
+    "clean": "rm -rf dist .turbo tsconfig.tsbuildinfo",
+    "prepublishOnly": "node ../config/scripts/guard-publisher.mjs && pnpm build && node ../config/scripts/verify-dist.mjs"
   },
   "devDependencies": {
     "@adysre/config": "workspace:*",
     "@types/node": "^20.16.10",
     "tsx": "^4.19.1",
     "typescript": "^5.6.3"
+  },
+  "keywords": [
+    "rules-engine",
+    "business-rules",
+    "rule-builder",
+    "json-logic",
+    "decision-engine",
+    "typescript"
+  ],
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public",
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "exports": {
+      ".": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "./package.json": "./package.json"
+    }
   }
 }

@@ -11,9 +11,9 @@
  * engine has never heard of.
  */
 
-export * from './hooks';
-export * from './providers';
-export * from './reducer';
-export * from './selectors';
-export * from './state';
-export * from './store';
+export * from './hooks.ts';
+export * from './providers.ts';
+export * from './reducer.ts';
+export * from './selectors.ts';
+export * from './state.ts';
+export * from './store.ts';

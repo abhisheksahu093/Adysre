@@ -1,6 +1,6 @@
 import type { PluginSet } from '@adysre/rules-types';
-import { builtinFunctions } from './functions';
-import { builtinOperators } from './operators';
+import { builtinFunctions } from './functions.ts';
+import { builtinOperators } from './operators.ts';
 
 /**
  * The plugins that ship with the engine.
@@ -25,4 +25,4 @@ export {
   toNumber,
   toText,
   valuesEqual,
-} from './compare';
+} from './compare.ts';

@@ -1,6 +1,6 @@
 import type { FunctionPlugin, JsonValue } from '@adysre/rules-types';
-import { RuleError } from '../errors';
-import { compareValues, isDateString, toList, toNumber, toText } from './compare';
+import { RuleError } from '../errors.ts';
+import { compareValues, isDateString, toList, toNumber, toText } from './compare.ts';
 
 /**
  * The functions every rule set needs.

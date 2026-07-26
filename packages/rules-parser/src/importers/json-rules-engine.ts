@@ -1,7 +1,7 @@
 import { action, all, any, condition, field, group, literal, type BuilderOptions } from '@adysre/rules-core';
 import type { ActionNode, JsonValue, Operand, RuleNode } from '@adysre/rules-types';
-import { builderOptions, finish } from '../finish';
-import { isPlainObject, Report, type Importer, type ImportOptions, type ImportResult } from '../types';
+import { builderOptions, finish } from '../finish.ts';
+import { isPlainObject, Report, type Importer, type ImportOptions, type ImportResult } from '../types.ts';
 
 /**
  * json-rules-engine.

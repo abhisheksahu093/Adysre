@@ -11,8 +11,8 @@
  * be recovered from prose afterwards.
  */
 
-export * from './format';
-export * from './phrases';
-export * from './plugin';
-export * from './render';
-export * from './segments';
+export * from './format.ts';
+export * from './phrases.ts';
+export * from './plugin.ts';
+export * from './render.ts';
+export * from './segments.ts';

@@ -15,7 +15,7 @@ import {
   valueTypeOf,
   type ConditionNode,
   type GroupNode,
-} from './index';
+} from './index.ts';
 
 /**
  * Type-package tests.

@@ -1,6 +1,6 @@
-import type { ActionNode, RuleDocument, RuleKind, RuleNode } from './ast';
-import type { AppliedAction, Diagnostic, EvaluationContext } from './execution';
-import type { JsonValue, ValueType } from './json';
+import type { ActionNode, RuleDocument, RuleKind, RuleNode } from './ast.ts';
+import type { AppliedAction, Diagnostic, EvaluationContext } from './execution.ts';
+import type { JsonValue, ValueType } from './json.ts';
 
 /**
  * The plugin contracts.

@@ -14,7 +14,7 @@ import {
   type Registry,
 } from '@adysre/rules-core';
 import type { ActionNode, GroupNode, Operand, RuleDocument, RuleNode } from '@adysre/rules-types';
-import type { BuilderAction, BuilderState, HistoryEntry } from './state';
+import type { BuilderAction, BuilderState, HistoryEntry } from './state.ts';
 
 /**
  * One pure function, and the whole of what a builder can do.

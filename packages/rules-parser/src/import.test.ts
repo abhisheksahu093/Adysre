@@ -21,7 +21,7 @@ import {
   importMongoFilter,
   importRule,
   type ImportResult,
-} from './index';
+} from './index.ts';
 
 /**
  * Importer tests.

@@ -9,7 +9,7 @@
  * The AST in `ast.ts` is the single source of truth. Read that file first.
  */
 
-export * from './ast';
-export * from './execution';
-export * from './json';
-export * from './plugins';
+export * from './ast.ts';
+export * from './execution.ts';
+export * from './json.ts';
+export * from './plugins.ts';

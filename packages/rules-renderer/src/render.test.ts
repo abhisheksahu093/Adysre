@@ -19,7 +19,7 @@ import {
 } from '@adysre/rules-core';
 import type { OperatorPlugin } from '@adysre/rules-types';
 
-import { englishPhrases } from './phrases';
+import { englishPhrases } from './phrases.ts';
 import {
   createNrlRenderer,
   describeCondition,
@@ -27,7 +27,7 @@ import {
   describeRule,
   humanisePath,
   toPlainText,
-} from './index';
+} from './index.ts';
 
 /**
  * Renderer tests.

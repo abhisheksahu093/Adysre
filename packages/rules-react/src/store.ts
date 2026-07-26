@@ -1,7 +1,7 @@
 import { createNodeId } from '@adysre/rules-core';
 import type { Combinator, Operand, RuleDocument } from '@adysre/rules-types';
-import { initialState, reduce, type ReducerDeps } from './reducer';
-import type { ActionPatch, Branch, BuilderAction, BuilderState, MetaPatch } from './state';
+import { initialState, reduce, type ReducerDeps } from './reducer.ts';
+import type { ActionPatch, Branch, BuilderAction, BuilderState, MetaPatch } from './state.ts';
 
 /**
  * The store, with no React in it.

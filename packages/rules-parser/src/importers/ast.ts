@@ -1,6 +1,6 @@
 import { parseRule } from '@adysre/rules-core';
 import { collectPluginIds, missingPlugins } from '@adysre/rules-core';
-import { isPlainObject, Report, type Importer, type ImportOptions, type ImportResult } from '../types';
+import { isPlainObject, Report, type Importer, type ImportOptions, type ImportResult } from '../types.ts';
 
 /**
  * This engine's own format.

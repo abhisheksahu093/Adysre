@@ -16,9 +16,9 @@ import type {
   TraceEvent,
   Verdict,
 } from '@adysre/rules-types';
-import { RuleError } from './errors';
-import type { Registry } from './registry';
-import { DEFAULT_MAX_DEPTH, resolveOperand, type MissingKind, type ResolveScope } from './resolve';
+import { RuleError } from './errors.ts';
+import type { Registry } from './registry.ts';
+import { DEFAULT_MAX_DEPTH, resolveOperand, type MissingKind, type ResolveScope } from './resolve.ts';
 
 /**
  * The executor: an AST, a context and a registry in; a verdict, actions and a

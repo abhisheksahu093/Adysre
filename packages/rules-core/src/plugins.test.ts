@@ -12,7 +12,7 @@ import {
   isEmptyValue,
   missingPlugins,
   valuesEqual,
-} from './index';
+} from './index.ts';
 
 /**
  * Registry and built-in tests.

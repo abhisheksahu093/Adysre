@@ -1,5 +1,5 @@
 import { AST_SCHEMA_VERSION, type RuleDocument } from '@adysre/rules-types';
-import { validateRule, type ValidationResult } from './validate';
+import { validateRule, type ValidationResult } from './validate.ts';
 
 /**
  * Rules crossing a boundary.

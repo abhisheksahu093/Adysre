@@ -1,7 +1,6 @@
 {
   "name": "@adysre/rules-react",
   "version": "0.1.0",
-  "private": true,
   "type": "module",
   "description": "Headless state for a rule builder: an immutable store with history, plus the React bindings.",
   "license": "MIT",
@@ -21,11 +20,12 @@
     "README.md"
   ],
   "scripts": {
-    "build": "tsc -p tsconfig.build.json",
+    "build": "tsc -p tsconfig.build.json && node ../config/scripts/fix-declarations.mjs",
     "lint": "eslint src",
     "typecheck": "tsc --noEmit",
     "test": "tsx --test 'src/**/*.test.ts'",
-    "clean": "rm -rf dist .turbo tsconfig.tsbuildinfo"
+    "clean": "rm -rf dist .turbo tsconfig.tsbuildinfo",
+    "prepublishOnly": "node ../config/scripts/guard-publisher.mjs && pnpm build && node ../config/scripts/verify-dist.mjs"
   },
   "devDependencies": {
     "@adysre/config": "workspace:*",
@@ -41,5 +41,29 @@
   },
   "peerDependencies": {
     "react": "^19.0.0"
+  },
+  "keywords": [
+    "rules-engine",
+    "business-rules",
+    "rule-builder",
+    "json-logic",
+    "decision-engine",
+    "typescript"
+  ],
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public",
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "exports": {
+      ".": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "./package.json": "./package.json"
+    }
   }
 }

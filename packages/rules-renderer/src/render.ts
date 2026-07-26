@@ -9,9 +9,9 @@ import type {
   RuleDocument,
   RuleNode,
 } from '@adysre/rules-types';
-import { formatValue, humaniseId, humanisePath, joinList } from './format';
-import { fill, phrasesWith, type Phrases } from './phrases';
-import { lineText, slot, weave, type RenderedLine, type RenderedRule, type Segment } from './segments';
+import { formatValue, humaniseId, humanisePath, joinList } from './format.ts';
+import { fill, phrasesWith, type Phrases } from './phrases.ts';
+import { lineText, slot, weave, type RenderedLine, type RenderedRule, type Segment } from './segments.ts';
 
 /**
  * The natural-language renderer.

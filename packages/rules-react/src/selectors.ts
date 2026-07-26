@@ -7,7 +7,7 @@ import {
   type PluginPresence,
 } from '@adysre/rules-core';
 import type { Diagnostic, RuleDocument, RuleNode } from '@adysre/rules-types';
-import type { BuilderState } from './state';
+import type { BuilderState } from './state.ts';
 
 /**
  * What the editor needs to know that the state does not literally hold.

@@ -1,5 +1,5 @@
 import type { JsonValue } from '@adysre/rules-types';
-import { RuleError } from '../errors';
+import { RuleError } from '../errors.ts';
 
 /**
  * Comparison semantics, defined once.

@@ -1,6 +1,6 @@
 import type { RendererPlugin, RuleDocument, RuleNode } from '@adysre/rules-types';
-import { describeNode, describeRule, toPlainText, type RenderOptions } from './render';
-import { phrasesWith } from './phrases';
+import { describeNode, describeRule, toPlainText, type RenderOptions } from './render.ts';
+import { phrasesWith } from './phrases.ts';
 
 /**
  * The renderer, as a plugin.

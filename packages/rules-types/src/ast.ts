@@ -1,4 +1,4 @@
-import type { JsonValue } from './json';
+import type { JsonValue } from './json.ts';
 
 /**
  * The rule AST: the single source of truth.

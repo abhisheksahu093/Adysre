@@ -155,14 +155,46 @@ added by hand would be dropped by the next `migrate dev`. The two rules that
 would have used them (one default environment per workspace, unique variable key
 per layer) are enforced in the repository instead.
 
+## State
+
+Six Zustand stores, split by lifetime rather than by screen, so a keystroke in
+the URL bar cannot re-render the sidebar.
+
+| Store | Owns |
+| --- | --- |
+| `use-workspace-store` | workspaces, environments, globals, the outer two variable layers |
+| `use-collections-store` | collections, the flat node map, selection, expansion, search |
+| `use-tabs-store` | open tabs, their drafts, dirty flags, pins, the closed-tab stack |
+| `use-execution-store` | per-tab send status, response, error, progress, abort handle |
+| `use-history-store` | history rows, filters, favourite-aware eviction |
+| `use-settings-store` | settings and layout, both persisted, both clamped on the way in |
+
+Three rules hold across all of them:
+
+- **No store performs IO.** Services do, and hand results in. A store that could
+  fetch would be a store nobody can test without a network.
+- **No store reads another store.** State spanning two of them is composed in a
+  hook. The full variable stack is the example: the workspace store supplies the
+  global and environment layers, the collection, folder and request layers come
+  from the nodes being edited, and the hook stitches them.
+- **There is no auth store.** The session is the platform's; a module-level copy
+  would be a second source of truth for who you are.
+
+Two behaviours worth knowing because the UI depends on them. Derived trees are
+memoised on the identity of the `nodes` map, which reducers replace immutably,
+so an unchanged map returns the previously built tree. And the URL and the
+params table are kept in step inside `updateDraft`: editing the address rebuilds
+the table, editing the table rebuilds the address, and disabled rows survive
+both because they were never in the URL to begin with.
+
 ## Phases
 
 | Phase | Scope | State |
 | --- | --- | --- |
 | 1 | Architecture: types, constants, schemas, permissions | **done** |
 | 2 | Database: `api_studio_*` tables, indexes, migration | **done** |
-| 3 | Stores: collections, tabs, environments, history, UI state | next |
-| 4 | Routes and API contracts under `/api/api-studio` | |
+| 3 | Stores: collections, tabs, environments, history, UI state | **done** |
+| 4 | Routes and API contracts under `/api/api-studio` | next |
 | 5 | Main UI: sidebar, tabs, request builder, response viewer | |
 | 6 | Request engine: runner, SSRF policy, timings, cancellation | |
 | 7 | Auth strategies, cookies, scripts and assertions | |

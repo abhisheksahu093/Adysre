@@ -4,7 +4,7 @@
     "outDir": "dist",
     "declaration": true,
     "noEmit": false,
-    "tsBuildInfoFile": "./tsconfig.build.tsbuildinfo"
+    "incremental": false
   },
   "exclude": [
     "src/**/*.test.ts"

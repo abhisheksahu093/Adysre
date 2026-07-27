@@ -4,6 +4,8 @@ import { useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { Ban, Download, ImageOff, Play, RotateCcw, Trash2 } from 'lucide-react';
 import { Button } from 'adysre';
+import { useGatedAction } from '@/hooks/use-gated-action';
+import { UsageBadge } from '@/components/entitlements/usage-badge';
 import { useMediaStore, createItem } from '../store/use-media-store';
 import { useProcessor } from '../hooks/use-processor';
 import { downloadAllResults } from '../engine/download';
@@ -43,6 +45,34 @@ export function Workspace({ tool }: { tool: RegistryTool }) {
   const doneCount = items.filter((i) => i.result).length;
   const Panel = tool.panel;
 
+  /**
+   * Phase-2 tools are metered; phase-1 are not.
+   *
+   * Phase 1 is plain image manipulation that costs nothing to serve, so a limit
+   * on it would be friction with no purpose. Phase 2 is the expensive set
+   * (upscaler, enhancer, face blur, smart crop), and the registry's own `phase`
+   * field is the source of that distinction rather than a second list here.
+   */
+  const isMetered = tool.phase === 2;
+  const { run, modal: quotaModal } = useGatedAction('ai-tools.phase2.generate');
+
+  /**
+   * One unit PER IMAGE, not per click.
+   *
+   * A batch of twenty images is twenty pieces of work, and charging one for the
+   * batch would make the limit meaningless to anyone who queues files before
+   * pressing the button. The whole batch is refused when the remaining quota
+   * cannot cover it, rather than half-processing it.
+   */
+  const runProcessing = async () => {
+    const pending = items.filter((item) => !item.result).length || items.length;
+    if (!isMetered) {
+      await processAll();
+      return;
+    }
+    await run(() => processAll(), { quantity: Math.max(1, pending) });
+  };
+
   // Live preview: re-render the selected item shortly after its settings (or
   // rotation) change, so tuning tools like the enhancer and face blur update
   // the preview without a full batch run. Debounced, and skipped while a batch
@@ -58,7 +88,7 @@ export function Workspace({ tool }: { tool: RegistryTool }) {
 
   const reprocess = async () => {
     clearResults();
-    await processAll();
+    await runProcessing();
   };
 
   return (
@@ -83,7 +113,7 @@ export function Workspace({ tool }: { tool: RegistryTool }) {
                   {t('cancel')}
                 </Button>
               ) : (
-                <Button type="button" size="sm" onClick={() => void processAll()} disabled={doneCount === items.length} className="gap-1.5">
+                <Button type="button" size="sm" onClick={() => void runProcessing()} disabled={doneCount === items.length} className="gap-1.5">
                   <Play className="h-4 w-4" aria-hidden />
                   {t('processAll')}
                 </Button>
@@ -101,6 +131,8 @@ export function Workspace({ tool }: { tool: RegistryTool }) {
                 {t('clear')}
               </Button>
             </div>
+            {/* Renders nothing for phase-1 tools, which carry no limit. */}
+            {isMetered && <UsageBadge feature="ai-tools.phase2.generate" />}
             <FileQueue />
           </section>
         )}
@@ -117,6 +149,9 @@ export function Workspace({ tool }: { tool: RegistryTool }) {
           </div>
         )}
       </div>
+
+      {/* Opened when a metered run is refused. */}
+      {quotaModal}
     </div>
   );
 }

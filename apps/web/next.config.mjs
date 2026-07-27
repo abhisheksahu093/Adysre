@@ -67,6 +67,87 @@ const nextConfig = {
   experimental: {
     optimizePackageImports: ['lucide-react'],
   },
+  headers: securityHeaders,
 };
+
+/**
+ * Security response headers, applied to every route.
+ *
+ * Deliberately excludes Content-Security-Policy. A correct CSP for this app
+ * needs per-request nonces to coexist with Next's inline bootstrap scripts, and
+ * a wrong one breaks the app in ways that are hard to attribute. Shipping a
+ * permissive `unsafe-inline` policy to claim the header would be worse than
+ * having none: it reads as protection while providing almost none.
+ */
+async function securityHeaders() {
+  return [
+    {
+      source: '/:path*',
+      headers: [
+        {
+          // Two years, and only meaningful over https, so it is skipped in
+          // development where the site is served over http.
+          key: 'Strict-Transport-Security',
+          value: 'max-age=63072000; includeSubDomains; preload',
+        },
+        {
+          // Stops a browser second-guessing Content-Type. Without it, a file a
+          // user uploaded as text can be sniffed as HTML and executed on our
+          // origin.
+          key: 'X-Content-Type-Options',
+          value: 'nosniff',
+        },
+        {
+          /**
+           * Clickjacking: no OTHER site may frame this app, so a transparent
+           * overlay cannot trick someone into clicking a real control.
+           *
+           * SAMEORIGIN rather than DENY, and the difference is not cosmetic.
+           * DENY blocks framing by ANY document including our own, which broke
+           * two real features: the playground canvas renders each section as a
+           * same-origin `/preview/[slug]` iframe, and the template gallery
+           * renders `/template-preview/[slug]` the same way. Both went blank
+           * with "localhost refused to connect", which reads like a dead server
+           * rather than a header.
+           *
+           * The threat this header addresses is a third-party page framing us.
+           * Our own origin framing itself is not that threat, and those iframes
+           * exist because Tailwind breakpoints key off the viewport: a 375px
+           * div still matches `md:` while a 375px iframe genuinely does not.
+           */
+          key: 'X-Frame-Options',
+          value: 'SAMEORIGIN',
+        },
+        {
+          // Matters specifically for reset links. Under a permissive policy a
+          // page at /reset-password?token=... leaks the whole URL, token
+          // included, in the Referer of every outbound request it makes.
+          key: 'Referrer-Policy',
+          value: 'strict-origin-when-cross-origin',
+        },
+        {
+          key: 'Permissions-Policy',
+          value: 'camera=(), microphone=(), geolocation=(), payment=(), usb=()',
+        },
+        {
+          // Isolates this origin's browsing context group from any window it
+          // opens or is opened by.
+          key: 'Cross-Origin-Opener-Policy',
+          value: 'same-origin',
+        },
+      ],
+    },
+    {
+      // Auth responses must never be stored. A cached 200 from /api/auth/me on
+      // a shared machine or an intermediary proxy is one user's identity served
+      // to the next.
+      source: '/api/auth/:path*',
+      headers: [
+        { key: 'Cache-Control', value: 'no-store, no-cache, must-revalidate, private' },
+        { key: 'Pragma', value: 'no-cache' },
+      ],
+    },
+  ];
+}
 
 export default withNextIntl(nextConfig);

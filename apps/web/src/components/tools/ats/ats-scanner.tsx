@@ -3,6 +3,8 @@
 import { useMemo, useState, type ChangeEvent } from 'react';
 import { AlertCircle, CheckCircle2, FileJson, Loader2, Printer, Upload, XCircle } from 'lucide-react';
 import { Button, cn } from 'adysre';
+import { useGatedAction } from '@/hooks/use-gated-action';
+import { UsageBadge } from '@/components/entitlements/usage-badge';
 import { analyzeResume, RESUME_SECTIONS, type AtsBreakdown, type AtsReport, type SectionId } from '@/lib/tools/ats/analyze';
 import { extractResumeText, isSupportedResume } from '@/lib/tools/ats/extract';
 
@@ -42,6 +44,12 @@ function download(name: string, content: string, mime: string) {
 }
 
 export function AtsScanner() {
+  // Exports are metered. `run` consumes before the file or print is
+  // produced and opens the upgrade modal on refusal; `gated` adapts it for
+  // the inline onClick handlers below.
+  const { run, modal: quotaModal } = useGatedAction('tools.ats.scan');
+  const gated = (action: () => void) => () => void run(action);
+
   const [resumeText, setResumeText] = useState('');
   const [fileName, setFileName] = useState('');
   const [jd, setJd] = useState('');
@@ -124,10 +132,11 @@ export function AtsScanner() {
         ) : (
           <>
             <div className="flex flex-wrap gap-2">
-              <Button type="button" size="sm" variant="outline" onClick={() => window.print()}>
+              <UsageBadge feature="tools.ats.scan" className="mr-1 self-center" />
+              <Button type="button" size="sm" variant="outline" onClick={gated(() => window.print())}>
                 <Printer className="mr-1.5 h-3.5 w-3.5" aria-hidden /> Print / PDF
               </Button>
-              <Button type="button" size="sm" variant="outline" onClick={() => download('ats-report.json', JSON.stringify(report, null, 2), 'application/json')}>
+              <Button type="button" size="sm" variant="outline" onClick={gated(() => download('ats-report.json', JSON.stringify(report, null, 2), 'application/json'))}>
                 <FileJson className="mr-1.5 h-3.5 w-3.5" aria-hidden /> JSON
               </Button>
             </div>
@@ -194,6 +203,9 @@ export function AtsScanner() {
           </>
         )}
       </div>
+
+      {/* Opened when a metered export is refused. */}
+      {quotaModal}
     </div>
   );
 }

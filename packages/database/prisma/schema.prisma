@@ -8,7 +8,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider  = "postgresql"
   // The POOLED connection. Serverless functions scale to many short-lived
   // instances, and each one opening its own Postgres connection exhausts the
   // server's limit long before traffic does - the classic "too many
@@ -71,29 +71,54 @@ model Organization {
   apiCookies          ApiCookie[]
   rules               Rule[]
   ruleVersions        RuleVersion[]
+  emailVerifications  EmailVerification[]
+  passwordResets      PasswordReset[]
+  subscription        Subscription?
+  featureUsageEvents  FeatureUsageEvent[]
 
   @@index([deletedAt])
   @@map("organizations")
 }
 
 model User {
-  id           String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  tenantId     String    @map("tenant_id") @db.Uuid
+  id           String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  tenantId     String  @map("tenant_id") @db.Uuid
   email        String
   name         String
-  passwordHash String?   @map("password_hash")
-  avatarUrl    String?   @map("avatar_url")
-  isActive     Boolean   @default(true) @map("is_active")
-  createdAt    DateTime  @default(now()) @map("created_at")
-  updatedAt    DateTime  @updatedAt @map("updated_at")
-  createdBy    String?   @map("created_by") @db.Uuid
-  updatedBy    String?   @map("updated_by") @db.Uuid
-  deletedAt    DateTime? @map("deleted_at")
+  // Nullable: an account created through OAuth has no password. Login must
+  // answer 401 for it rather than compare against null.
+  passwordHash String? @map("password_hash")
+  avatarUrl    String? @map("avatar_url")
+  isActive     Boolean @default(true) @map("is_active")
 
-  organization  Organization   @relation(fields: [tenantId], references: [id])
-  userRoles     UserRole[]
-  sessions      Session[]
-  notifications Notification[]
+  /// Proven ownership of `email`. Null means the verification link is still
+  /// outstanding; it does not by itself block sign-in.
+  emailVerifiedAt DateTime? @map("email_verified_at")
+
+  /// Consecutive failed sign-ins. Reset to 0 on success, and on password reset.
+  failedLoginAttempts Int @default(0) @map("failed_login_attempts")
+
+  /// Lockout expiry, not an `isLocked` boolean, so the lock clears itself. A
+  /// boolean would need a scheduled job, and a job that fails silently locks
+  /// people out permanently. Policy: 5 failures, 15 minutes.
+  lockedUntil DateTime? @map("locked_until")
+
+  /// Last successful sign-in, for the security screen and dormant-account
+  /// review. Not used in any authorization decision.
+  lastLoginAt DateTime? @map("last_login_at")
+
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  createdBy String?   @map("created_by") @db.Uuid
+  updatedBy String?   @map("updated_by") @db.Uuid
+  deletedAt DateTime? @map("deleted_at")
+
+  organization       Organization        @relation(fields: [tenantId], references: [id])
+  userRoles          UserRole[]
+  sessions           Session[]
+  notifications      Notification[]
+  emailVerifications EmailVerification[]
+  passwordResets     PasswordReset[]
 
   @@unique([tenantId, email])
   @@index([tenantId, isActive])
@@ -180,23 +205,375 @@ model UserRole {
 // ---------------------------------------------------------------------------
 
 model Session {
-  id               String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  tenantId         String    @map("tenant_id") @db.Uuid
-  userId           String    @map("user_id") @db.Uuid
+  id               String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  tenantId         String @map("tenant_id") @db.Uuid
+  userId           String @map("user_id") @db.Uuid
   // Hash of the refresh token (rotation) — never store the raw token.
-  refreshTokenHash String    @map("refresh_token_hash")
-  userAgent        String?   @map("user_agent")
-  ip               String?
-  expiresAt        DateTime  @map("expires_at")
-  revokedAt        DateTime? @map("revoked_at")
-  createdAt        DateTime  @default(now()) @map("created_at")
+  refreshTokenHash String @map("refresh_token_hash")
+
+  /// The hash this row held before the most recent rotation.
+  ///
+  /// Required for reuse detection to work at all. Rotation OVERWRITES
+  /// `refreshTokenHash`, so without this column a replayed token simply matches
+  /// no row and is indistinguishable from a forged one: the theft signal is
+  /// lost precisely when it matters. Keeping one generation catches the case
+  /// that counts, where a thief refreshes first and the legitimate client then
+  /// presents its now-stale token.
+  previousTokenHash String?   @map("previous_token_hash")
+  userAgent         String?   @map("user_agent")
+  ip                String?
+  expiresAt         DateTime  @map("expires_at")
+  revokedAt         DateTime? @map("revoked_at")
+  createdAt         DateTime  @default(now()) @map("created_at")
 
   organization Organization @relation(fields: [tenantId], references: [id])
   user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([tenantId, userId])
   @@index([expiresAt])
+  // Every refresh is a lookup by this column. Without the index it is a
+  // sequential scan over every session on the platform: fine at ten users,
+  // an incident at ten thousand.
+  @@index([refreshTokenHash])
+  // Every refresh that does not match a current token checks this one before
+  // concluding the token is simply unknown.
+  @@index([previousTokenHash])
   @@map("sessions")
+}
+
+// ---------------------------------------------------------------------------
+// Subscriptions and feature access - see docs/SUBSCRIPTIONS.md
+// ---------------------------------------------------------------------------
+
+/// What a workspace GETS. Limits hang off this, never off a purchasable plan.
+///
+/// `annual` and `lifetime` differ only in how they are billed, so they must not
+/// each carry their own copy of "5 collections": a price change or a seasonal
+/// SKU would then be an entitlement change too.
+enum SubscriptionTier {
+  free
+  premium
+  enterprise
+}
+
+/// Whether a plan is metered by count, or by events in a period.
+///
+/// The distinction decides how a limit is counted and whether deleting
+/// something gives the slot back. Conflating them produces the worst bug in
+/// this system: a user deletes everything, still cannot create, and is told
+/// they are at their limit of zero things.
+enum MeterKind {
+  /// How many may exist at once. Counted from the owning table. Deletion frees
+  /// a slot. "Max 5 API Studio collections."
+  stock
+
+  /// How many may happen in a window. Counted from feature_usage_events.
+  /// Deletion frees nothing. "5 QR downloads."
+  flow
+}
+
+/// The period a flow limit is measured over.
+enum UsageWindow {
+  /// Stock ceilings have no time component.
+  none
+  /// Calendar periods, evaluated in UTC.
+  day
+  week
+  month
+  /// The last `windowSeconds`, always. Required for "3 in the last 24 hours",
+  /// which a counter cannot express because the answer changes with no write.
+  rolling
+  /// Since the workspace existed.
+  lifetime
+}
+
+enum SubscriptionStatus {
+  active
+  trialing
+  past_due
+  canceled
+  expired
+}
+
+/// What a workspace BUYS. A product in the pricing table.
+///
+/// Global rather than tenant-owned: these are the catalogue, not customer data.
+model Plan {
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+
+  /// Stable identifier used in code and checkout, e.g. `annual`. Matches the
+  /// ids already in apps/web/src/data/pricing.ts.
+  key String @unique
+
+  /// The entitlement this SKU grants. Several plans may map to one tier.
+  tier SubscriptionTier
+
+  name String
+
+  /// Minor units (cents), so no float ever touches money.
+  priceCents Int    @default(0) @map("price_cents")
+  currency   String @default("USD")
+
+  /// `year`, or null for a one-time purchase such as lifetime. Decides whether
+  /// checkout promises a renewal.
+  billingInterval String? @map("billing_interval")
+
+  /// Withdrawn plans stay for the subscriptions that still reference them.
+  isActive  Boolean @default(true) @map("is_active")
+  sortOrder Int     @default(0) @map("sort_order")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  subscriptions Subscription[]
+
+  @@index([isActive])
+  @@map("plans")
+}
+
+/// A workspace's current entitlement.
+///
+/// One per organization, not per user: quotas are shared by everyone in the
+/// workspace, which is what the tenant_id on every gated table already implies.
+model Subscription {
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+
+  /// Unique: a workspace has exactly one live subscription. History belongs in
+  /// audit_logs and the provider, not in extra rows here that a resolver would
+  /// have to disambiguate on every request.
+  tenantId String @unique @map("tenant_id") @db.Uuid
+
+  planId String             @map("plan_id") @db.Uuid
+  status SubscriptionStatus @default(active)
+
+  /// Denormalised from the plan, deliberately.
+  ///
+  /// Entitlement is read on nearly every request, and this saves a join on the
+  /// hottest path. It also FREEZES what a workspace was sold: retiring a plan
+  /// or changing its tier must not silently re-tier existing customers.
+  tier SubscriptionTier @default(free)
+
+  currentPeriodStart DateTime? @map("current_period_start")
+  /// Null for free and lifetime, which never renew.
+  currentPeriodEnd   DateTime? @map("current_period_end")
+
+  /// Set when someone cancels but keeps access until the period ends.
+  cancelAtPeriodEnd Boolean @default(false) @map("cancel_at_period_end")
+
+  /// The payment provider's id, so a webhook can find this row.
+  externalId String? @unique @map("external_id")
+
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  createdBy String?   @map("created_by") @db.Uuid
+  updatedBy String?   @map("updated_by") @db.Uuid
+  deletedAt DateTime? @map("deleted_at")
+
+  organization Organization @relation(fields: [tenantId], references: [id])
+  plan         Plan         @relation(fields: [planId], references: [id])
+
+  @@index([status])
+  @@index([currentPeriodEnd])
+  @@map("subscriptions")
+}
+
+/// A capability that can be gated.
+///
+/// Seeded, so adding a limit is data rather than a deployment, and the UI can
+/// render a name and unit it did not have to hardcode.
+model Feature {
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+
+  /// `module.resource.action`, e.g. `tools.qr.download`. The key every gate
+  /// and every badge refers to.
+  key String @unique
+
+  /// Which part of the product this belongs to, for grouping in the UI.
+  module String
+
+  name        String
+  description String?
+
+  meterKind MeterKind @map("meter_kind")
+
+  /// What one unit is called, so a component can say "3 downloads left"
+  /// without a lookup table of its own.
+  unit String @default("use")
+
+  isActive  Boolean @default(true) @map("is_active")
+  sortOrder Int     @default(0) @map("sort_order")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  tierLimits  TierFeature[]
+  usageEvents FeatureUsageEvent[]
+
+  @@index([module])
+  @@map("features")
+}
+
+/// One limit, for one tier, on one feature.
+///
+/// Named for the TIER rather than the plan because that is where limits live.
+/// A row per limit, not per feature, because one feature can carry several:
+/// Website Intelligence allows 3 per 24 hours AND 5 per rolling week, and a
+/// request has to satisfy both.
+model TierFeature {
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+
+  tier      SubscriptionTier
+  featureId String           @map("feature_id") @db.Uuid
+
+  /// Three distinct meanings:
+  ///   null → unlimited
+  ///   0    → not available on this tier at all (prompts an upgrade)
+  ///   N    → metered
+  /// Nullable rather than a sentinel like -1, so "unlimited" cannot be
+  /// accidentally compared as a number.
+  limitValue Int? @map("limit_value")
+
+  windowKind UsageWindow @default(none) @map("window_kind")
+
+  /// Length of a `rolling` window. Null for every other kind.
+  windowSeconds Int? @map("window_seconds")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  feature Feature @relation(fields: [featureId], references: [id], onDelete: Cascade)
+
+  /// One limit per (tier, feature, window). Two rows differing only by window
+  /// is the supported case; two identical windows is a seeding mistake.
+  @@unique([tier, featureId, windowKind, windowSeconds])
+  @@index([tier])
+  @@map("tier_features")
+}
+
+/// One metered action. The event log behind every flow limit.
+///
+/// Events rather than counters, because a rolling window cannot be counted any
+/// other way: "3 in the last 24 hours" changes every second with nothing being
+/// written. It also lets the UI say exactly when the next slot frees.
+///
+/// Volume is not a concern at these quotas; the retention sweep trims it.
+model FeatureUsageEvent {
+  id       String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  tenantId String @map("tenant_id") @db.Uuid
+
+  /// WHO did it. Quotas are counted per tenant, but "who used the last scan"
+  /// is a real support question, so the actor is recorded.
+  userId String? @map("user_id") @db.Uuid
+
+  featureId String @map("feature_id") @db.Uuid
+
+  /// Almost always 1. Present so one call can consume several units, such as a
+  /// batch export.
+  quantity Int @default(1)
+
+  occurredAt DateTime @default(now()) @map("occurred_at")
+
+  /// Context for support and analytics. Never a credential.
+  metadata Json?
+
+  organization Organization @relation(fields: [tenantId], references: [id])
+  feature      Feature      @relation(fields: [featureId], references: [id], onDelete: Cascade)
+
+  /// The window query: tenant + feature, newest first. Every consume runs it.
+  @@index([tenantId, featureId, occurredAt])
+  @@index([occurredAt])
+  @@map("feature_usage_events")
+}
+
+/// Fixed-window rate limit counters.
+///
+/// In shared storage rather than process memory, because serverless runs many
+/// instances and a per-instance counter means the real limit is the stated
+/// number multiplied by however many are warm. That is not a limit anyone can
+/// reason about, and it silently loosens as traffic grows.
+///
+/// Deliberately NOT tenant-scoped, and the only table here that is not. Most
+/// keys are an IP or an email address observed BEFORE anyone is authenticated,
+/// so there is no tenant to attribute them to; adding a column would mean
+/// inventing one. Nothing here is user data beyond the key itself.
+model RateLimit {
+  /// What is being limited: `login:ip:1.2.3.4`, `forgot:someone@example.com`.
+  key String @id
+
+  /// Requests counted in the current window.
+  count Int @default(0)
+
+  /// When the window ends and `count` resets. Also what the sweeper deletes by.
+  resetAt DateTime @map("reset_at")
+
+  @@index([resetAt])
+  @@map("rate_limits")
+}
+
+// ---------------------------------------------------------------------------
+// Email verification and password reset
+//
+// Both store only a SHA-256 hash of the token they issue, for the same reason
+// passwords are hashed: read access to these tables must not be enough to take
+// over an account. Both are single-use via `usedAt` and time-bounded.
+// ---------------------------------------------------------------------------
+
+model EmailVerification {
+  id       String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  tenantId String @map("tenant_id") @db.Uuid
+  userId   String @map("user_id") @db.Uuid
+
+  /// sha256 hex of the token in the link. The raw token exists only in the
+  /// email that was sent.
+  tokenHash String @unique @map("token_hash")
+
+  /// The address this link proves. Stored on the row rather than read from the
+  /// user at redemption, because this table also backs CHANGING an address: it
+  /// must remember which new address the link was issued for. Without it a user
+  /// could request a link for one address, edit their pending address to
+  /// another, and click the original link to verify an address they never held.
+  email String
+
+  /// 24 hours. Verification proves an address and grants nothing on its own,
+  /// so it can afford a longer window than a reset link.
+  expiresAt DateTime @map("expires_at")
+
+  /// Set on redemption rather than deleting the row, so a second click can say
+  /// "already used" instead of "invalid", and the row remains as evidence.
+  usedAt    DateTime? @map("used_at")
+  createdAt DateTime  @default(now()) @map("created_at")
+
+  organization Organization @relation(fields: [tenantId], references: [id])
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([expiresAt])
+  @@map("email_verifications")
+}
+
+model PasswordReset {
+  id        String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  tenantId  String @map("tenant_id") @db.Uuid
+  userId    String @map("user_id") @db.Uuid
+  tokenHash String @unique @map("token_hash")
+
+  /// One hour, against 24 for verification. A reset link is a full account
+  /// takeover in a single click, and it sits in an inbox that may be shared,
+  /// synced to a phone, or scanned by a mail filter that follows links.
+  expiresAt DateTime  @map("expires_at")
+  usedAt    DateTime? @map("used_at")
+
+  /// Who asked. Kept for abuse investigation, since this endpoint is
+  /// unauthenticated and answers identically for unknown addresses.
+  requestedIp String?  @map("requested_ip")
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  organization Organization @relation(fields: [tenantId], references: [id])
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([expiresAt])
+  @@map("password_resets")
 }
 
 model AuditLog {

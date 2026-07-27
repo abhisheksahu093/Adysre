@@ -5,6 +5,8 @@ import DOMPurify from 'dompurify';
 import { toPng } from 'html-to-image';
 import { Check, Code2, Copy, Download, ImagePlus, Loader2, Printer, Trash2 } from 'lucide-react';
 import { Button, Input, Label, Select } from 'adysre';
+import { useGatedAction } from '@/hooks/use-gated-action';
+import { UsageBadge } from '@/components/entitlements/usage-badge';
 import type { SignatureData, SocialPlatform } from '@/lib/tools/signature/types';
 import { SOCIAL_PLATFORMS } from '@/lib/tools/signature/types';
 import { SAMPLE_SIGNATURE } from '@/lib/tools/signature/sample';
@@ -46,6 +48,12 @@ function download(name: string, content: BlobPart, mime: string) {
 type CopyState = 'idle' | 'html' | 'rich';
 
 export function SignatureGenerator() {
+  // Exports are metered. `run` consumes before the file or print is
+  // produced and opens the upgrade modal on refusal; `gated` adapts it for
+  // the inline onClick handlers below.
+  const { run, modal: quotaModal } = useGatedAction('tools.signature.generate');
+  const gated = (action: () => void) => () => void run(action);
+
   const [sig, setSig] = useState<SignatureData>(SAMPLE_SIGNATURE);
   const [copied, setCopied] = useState<CopyState>('idle');
   const [pngBusy, setPngBusy] = useState(false);
@@ -209,6 +217,7 @@ export function SignatureGenerator() {
       {/* Preview + actions */}
       <div className="relative space-y-4 lg:min-h-0 lg:overflow-y-auto">
         <div className="flex flex-wrap gap-2">
+          <UsageBadge feature="tools.signature.generate" className="mr-1 self-center" />
           <Button type="button" size="sm" onClick={() => void copyRich()}>
             {copied === 'rich' ? <Check className="mr-1.5 h-3.5 w-3.5" aria-hidden /> : <Copy className="mr-1.5 h-3.5 w-3.5" aria-hidden />}
             Copy rich text
@@ -217,15 +226,15 @@ export function SignatureGenerator() {
             {copied === 'html' ? <Check className="mr-1.5 h-3.5 w-3.5" aria-hidden /> : <Code2 className="mr-1.5 h-3.5 w-3.5" aria-hidden />}
             Copy HTML
           </Button>
-          <Button type="button" variant="outline" size="sm" onClick={() => download('signature.html', HTML_DOC(safeHtml), 'text/html')}>
+          <Button type="button" variant="outline" size="sm" onClick={gated(() => download('signature.html', HTML_DOC(safeHtml), 'text/html'))}>
             <Download className="mr-1.5 h-3.5 w-3.5" aria-hidden />
             HTML
           </Button>
-          <Button type="button" variant="outline" size="sm" disabled={pngBusy} onClick={() => void downloadPng()}>
+          <Button type="button" variant="outline" size="sm" disabled={pngBusy} onClick={gated(() => void downloadPng())}>
             {pngBusy ? <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" aria-hidden /> : <Download className="mr-1.5 h-3.5 w-3.5" aria-hidden />}
             PNG
           </Button>
-          <Button type="button" variant="outline" size="sm" onClick={() => window.print()}>
+          <Button type="button" variant="outline" size="sm" onClick={gated(() => window.print())}>
             <Printer className="mr-1.5 h-3.5 w-3.5" aria-hidden />
             Print
           </Button>
@@ -238,6 +247,9 @@ export function SignatureGenerator() {
           Table based, inline styled HTML. Works in Gmail, Outlook, Apple Mail and Thunderbird. Nothing leaves your browser.
         </p>
       </div>
+
+      {/* Opened when a metered export is refused. */}
+      {quotaModal}
     </div>
   );
 }

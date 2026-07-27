@@ -1,22 +1,28 @@
 /**
- * What the current user is entitled to.
+ * What the current workspace is entitled to.
  *
- * Kept deliberately coarse for now - it maps to the pricing tiers, not to
- * roles. Roles (Owner/Admin/Member) answer "what may you administer"; this
- * answers "what have you paid for". They are different questions.
+ * Deliberately coarse: it maps to the pricing tiers, not to roles. Roles
+ * (Owner/Admin/Member) answer "what may you administer"; this answers "what has
+ * the workspace paid for". Different questions, and conflating them is how an
+ * Admin on the free plan ends up with paid content.
+ *
+ * These values mirror `SubscriptionTier` in `lib/entitlements/types.ts`, which
+ * mirrors the database enum. This module stays separate because the template
+ * gallery and its data import it, and those must not pull in the server-only
+ * entitlement stack.
  */
-export const ACCESS_LEVELS = ['free', 'premium'] as const;
+export const ACCESS_LEVELS = ['free', 'premium', 'enterprise'] as const;
 export type AccessLevel = (typeof ACCESS_LEVELS)[number];
 
 /**
- * Dev stand-in for a real entitlement claim, read by `getAccessLevel`.
- * Lives here rather than in `access-server.ts` because that module is
- * `server-only` and the dev switcher (a Client Component) needs the name too.
+ * Whether this level unlocks paid content.
+ *
+ * Written as "not free" rather than "is premium" deliberately: a fourth tier
+ * added tomorrow should unlock paid content by default, rather than being
+ * silently treated as free because nobody remembered to extend this.
  */
-export const ACCESS_COOKIE = 'adysre_access';
-
 export function isPremium(level: AccessLevel): boolean {
-  return level === 'premium';
+  return level !== 'free';
 }
 
 /** True when this tier is paid content the given level can't use. */

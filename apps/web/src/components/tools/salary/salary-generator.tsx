@@ -3,6 +3,8 @@
 import { useState, type ChangeEvent } from 'react';
 import { FileJson, ImagePlus, Plus, Printer, Trash2 } from 'lucide-react';
 import { Button, Input, Label, Select } from 'adysre';
+import { useGatedAction } from '@/hooks/use-gated-action';
+import { UsageBadge } from '@/components/entitlements/usage-badge';
 import type { Employee, SalaryLine, SalarySlip } from '@/lib/tools/salary/types';
 import { SAMPLE_SALARY } from '@/lib/tools/salary/sample';
 import { computeSalary } from '@/lib/tools/salary/totals';
@@ -32,6 +34,12 @@ function download(name: string, content: string, mime: string) {
 }
 
 export function SalaryGenerator() {
+  // Exports are metered. `run` consumes before the file or print is
+  // produced and opens the upgrade modal on refusal; `gated` adapts it for
+  // the inline onClick handlers below.
+  const { run, modal: quotaModal } = useGatedAction('tools.salary-slip.generate');
+  const gated = (action: () => void) => () => void run(action);
+
   const [slip, setSlip] = useState<SalarySlip>(SAMPLE_SALARY);
   const totals = computeSalary(slip);
 
@@ -155,11 +163,12 @@ export function SalaryGenerator() {
       {/* Preview + actions */}
       <div className="relative space-y-4 lg:min-h-0 lg:overflow-y-auto">
         <div className="flex flex-wrap gap-2">
-          <Button type="button" size="sm" onClick={() => window.print()}>
+          <UsageBadge feature="tools.salary-slip.generate" className="mr-1 self-center" />
+          <Button type="button" size="sm" onClick={gated(() => window.print())}>
             <Printer className="mr-1.5 h-3.5 w-3.5" aria-hidden />
             Print / PDF
           </Button>
-          <Button type="button" variant="outline" size="sm" onClick={() => download(`${slug}.json`, JSON.stringify({ slip, totals }, null, 2), 'application/json')}>
+          <Button type="button" variant="outline" size="sm" onClick={gated(() => download(`${slug}.json`, JSON.stringify({ slip, totals }, null, 2), 'application/json'))}>
             <FileJson className="mr-1.5 h-3.5 w-3.5" aria-hidden />
             JSON
           </Button>
@@ -172,6 +181,9 @@ export function SalaryGenerator() {
           <SalaryPreview slip={slip} />
         </div>
       </div>
+
+      {/* Opened when a metered export is refused. */}
+      {quotaModal}
     </div>
   );
 }

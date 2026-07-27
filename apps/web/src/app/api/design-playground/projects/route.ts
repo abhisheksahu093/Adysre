@@ -7,6 +7,7 @@ import {
 } from '@/lib/design-playground/project-repository';
 import { resolveActor } from '@/lib/design-playground/tenant-server';
 import { UNAVAILABLE, fail, ok } from '@/lib/design-playground/api-response';
+import { QuotaExceededError } from '@/lib/entitlements/service';
 
 /**
  * Design Playground projects — collection routes.
@@ -58,7 +59,16 @@ export async function POST(request: Request): Promise<NextResponse> {
     const actor = await resolveActor();
     if (!actor) return UNAVAILABLE();
     return ok(await createProject(actor.tenantId, actor.userId, name.slice(0, 200), document));
-  } catch {
+  } catch (error) {
+    // Caught explicitly, and before the catch-all: a spent quota reported as
+    // 503 would tell the editor persistence is down and send it into its
+    // offline path, hiding the one thing the user needs to know.
+    if (error instanceof QuotaExceededError) {
+      return NextResponse.json(
+        { success: false, code: 'QUOTA_EXCEEDED', message: error.message, data: error.denial },
+        { status: 402 },
+      );
+    }
     return UNAVAILABLE();
   }
 }

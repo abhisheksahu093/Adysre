@@ -323,6 +323,15 @@
         "oauth_no_email": "{provider} から確認済みのメールを取得できませんでした。メールをご利用ください。",
         "oauth_invalid": "そのサインイン方法は利用できません。"
       }
+    },
+    "verifyEmail": {
+      "successTitle": "メールアドレスを確認しました",
+      "failureTitle": "このリンクを確認できませんでした",
+      "confirmedDescription": "ありがとうございます。メールアドレスの確認が完了しました。",
+      "alreadyDescription": "このアドレスは確認済みです。追加の操作は必要ありません。",
+      "invalidDescription": "このリンクは無効か、有効期限が切れています。確認リンクの有効期間は24時間で、使用できるのは1回のみです。プロフィールから新しいリンクを請求できます。",
+      "missingDescription": "このリンクに確認コードが含まれていません。メールに届いたリンクをそのまま開いてください。",
+      "continue": "続ける"
     }
   },
   "dashboard": {
@@ -349,13 +358,21 @@
       "loading": "読み込み中…",
       "active": "有効",
       "plan": "プラン",
-      "planFree": "フリー",
-      "planPremium": "プレミアム",
       "planFreeHint": "すべてのテンプレートをプレビューでき、無料のものは利用できます。プレミアムテンプレートとダウンロードはロックされています。",
       "planPremiumHint": "ギャラリーのすべてのテンプレートをコピー・ダウンロードできます。",
       "upgrade": "アップグレード",
-      "devOnly": "開発環境専用",
-      "devOnlyHint": "アクセスレベルを切り替えてペイウォールを確認できます。本番環境では表示されません。"
+      "usage": "使用状況",
+      "renewsOn": "更新日",
+      "endsOn": "終了日",
+      "noRenewal": "更新なし",
+      "status_active": "有効",
+      "status_trialing": "試用中",
+      "status_past_due": "支払い待ち",
+      "status_canceled": "キャンセル済み",
+      "status_expired": "期限切れ",
+      "devOnly": "開発環境のみ",
+      "devOnlyHint": "ペイウォールを検証するためにワークスペースのプランを切り替えます。サーバー側で制御・監査され、本番環境では利用できません。",
+      "switchFailed": "プランを変更できませんでした。"
     },
     "helpCentre": {
       "title": "ヘルプセンター",

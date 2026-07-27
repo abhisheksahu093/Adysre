@@ -24,7 +24,8 @@
   },
   "dependencies": {
     "@adysre/types": "workspace:*",
-    "@prisma/client": "^5.20.0"
+    "@prisma/client": "^5.20.0",
+    "bcryptjs": "^3.0.3"
   },
   "devDependencies": {
     "@adysre/config": "workspace:*",

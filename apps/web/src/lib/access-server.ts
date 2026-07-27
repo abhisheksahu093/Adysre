@@ -1,25 +1,35 @@
 import 'server-only';
-import { cookies } from 'next/headers';
-import { ACCESS_COOKIE, ACCESS_LEVELS, type AccessLevel } from './access';
+import { getAuthSession } from './auth/guard';
+import { resolveTier } from './entitlements/service';
+import type { AccessLevel } from './access';
 
 /**
- * The current user's entitlement, resolved on the server.
+ * The current workspace's entitlement, resolved on the server.
  *
- * ─── NOT SECURE YET ─────────────────────────────────────────────────────────
- * This reads a plain cookie the browser can set, so today it is a development
- * switch, not an entitlement check - anyone can hand themselves premium with
- * one line in devtools. It exists so the paywall is wired end-to-end and the
- * redaction path is real; the trust boundary is the only piece missing.
+ * This used to read a plain `adysre_access` cookie: a development switch anyone
+ * could set from devtools, carrying a comment saying to replace it with the
+ * subscription record once auth landed. Auth landed, so it now reads the
+ * verified session and the workspace's subscription, and the cookie is gone.
  *
- * When auth lands, replace the cookie read with the session:
- *   1. Read the HTTP-only access token (AUTHENTICATION_RBAC.md).
- *   2. Resolve entitlement server-side from the subscription record - never
- *      from anything the client can write.
- *   3. Keep returning 'free' on any failure. Defaulting closed means a bug
- *      denies access rather than giving the library away.
+ * **Fails closed.** No session, no subscription, or an unreachable database all
+ * return `free`. A bug then withholds a paid feature, which someone reports in
+ * minutes, rather than handing the library out silently to everyone.
+ *
+ * Entitlement is per WORKSPACE, not per user: every gated table carries
+ * `tenant_id`, so a per-user quota on shared rows would give a ten-person free
+ * workspace ten times the limit on data everybody can see.
  */
 export async function getAccessLevel(): Promise<AccessLevel> {
-  const store = await cookies();
-  const value = store.get(ACCESS_COOKIE)?.value;
-  return ACCESS_LEVELS.includes(value as AccessLevel) ? (value as AccessLevel) : 'free';
+  try {
+    const session = await getAuthSession();
+    if (!session) return 'free';
+    return await resolveTier(session.tenantId);
+  } catch (error) {
+    console.error(
+      `[access] could not resolve entitlement: ${
+        error instanceof Error ? error.message : String(error)
+      }`,
+    );
+    return 'free';
+  }
 }

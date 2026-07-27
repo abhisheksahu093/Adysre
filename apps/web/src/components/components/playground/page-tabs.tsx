@@ -5,6 +5,8 @@ import { useTranslations } from 'next-intl';
 import { Plus, X } from 'lucide-react';
 import { cn } from 'adysre';
 import { usePlaygroundStore } from '@/stores/playground-store';
+import { useEntitlement } from '@/hooks/use-entitlement';
+import { PremiumModal } from '@/components/entitlements/premium-modal';
 
 /**
  * The site's pages, as tabs above the section rail.
@@ -29,6 +31,28 @@ export function PageTabs() {
 
   const [renamingId, setRenamingId] = useState<string | null>(null);
 
+  /**
+   * The page ceiling.
+   *
+   * A stock limit the server cannot count: the builder keeps its document in
+   * the browser and never posts it, so there is nothing to query. The LIMIT
+   * still comes from the database, and the client compares it against its own
+   * page count. Nothing here knows the number.
+   *
+   * `limit === null` is unlimited, which is every paid tier.
+   */
+  const { feature: pagesFeature, limit: pageLimit } = useEntitlement('builder.pages');
+  const [showUpgrade, setShowUpgrade] = useState(false);
+  const atPageLimit = pageLimit !== null && pages.length >= pageLimit;
+
+  function onAddPage() {
+    if (atPageLimit) {
+      setShowUpgrade(true);
+      return;
+    }
+    addPage(t('playground.pages.newName'));
+  }
+
   return (
     <div className="rounded-xl border border-border bg-card p-1.5 shadow-sm">
       <div className="flex items-center justify-between gap-2 px-2.5 pb-2 pt-2">
@@ -37,7 +61,7 @@ export function PageTabs() {
         </p>
         <button
           type="button"
-          onClick={() => addPage(t('playground.pages.newName'))}
+          onClick={onAddPage}
           title={t('playground.pages.add')}
           aria-label={t('playground.pages.add')}
           className="flex h-6 w-6 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
@@ -119,6 +143,14 @@ export function PageTabs() {
           );
         })}
       </ul>
+
+      {/* The shared modal, rendered from the feature's own state rather than a
+          server denial: no request is made, because nothing is consumed. */}
+      <PremiumModal
+        open={showUpgrade}
+        onClose={() => setShowUpgrade(false)}
+        denial={pagesFeature}
+      />
     </div>
   );
 }

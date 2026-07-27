@@ -5,6 +5,7 @@ import { ScanFetchError } from '@/lib/website-intel/collect';
 import { getScanStore } from '@/lib/website-intel/history/store';
 import { recordScan } from '@/lib/website-intel/history/service';
 import { authorize } from '@/lib/website-intel/auth/guard';
+import { consume, release } from '@/lib/entitlements/service';
 
 /**
  * POST /api/website-intelligence/scan
@@ -68,6 +69,28 @@ export async function POST(request: Request) {
     throw error;
   }
 
+  // Consumed AFTER validation, so a malformed URL never costs a scan, and
+  // BEFORE the work, so nobody can take a scan without being counted by
+  // abandoning the request halfway through.
+  const quota = await consume({
+    tenantId: auth.session.tenantId,
+    userId: auth.session.userId,
+    featureKey: 'website-intel.scan',
+    metadata: { host: input.url },
+  });
+
+  if (!quota.ok && quota.denial) {
+    return NextResponse.json(
+      {
+        success: false,
+        code: 'QUOTA_EXCEEDED',
+        message: `You have used all ${quota.denial.limit} scans available on your plan.`,
+        data: quota.denial,
+      },
+      { status: 402 },
+    );
+  }
+
   try {
     const data = await runScan(input);
     // Persist the scan and diff it against this host's previous one. A storage
@@ -87,6 +110,16 @@ export async function POST(request: Request) {
       comparison,
     });
   } catch (error) {
+    // The scan was charged and did not happen, so give the unit back. A user
+    // must not lose one of three daily scans because a site timed out, and
+    // release is best-effort: failing to refund must not replace the real error
+    // with a different one.
+    if (quota.eventId) {
+      await release(auth.session.tenantId, quota.eventId).catch(() => {
+        console.error(`[website-intel.scan] could not release usage ${quota.eventId}`);
+      });
+    }
+
     if (error instanceof ScanValidationError) return fail(400, error.code, error.message);
     if (error instanceof ScanFetchError) {
       const status = error.code === 'timeout' ? 504 : 502;

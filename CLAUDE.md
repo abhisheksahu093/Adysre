@@ -93,6 +93,20 @@ accessible (WCAG AA), is responsive, and is secure.**
 - **RBAC on every endpoint.** Structured logging everywhere.
 - Never expose Prisma/DB entities directly — map to DTOs.
 
+**Two API surfaces.** Browser-facing endpoints are Next.js Route Handlers in
+`apps/web` (`/api/*`); `apps/api` (NestJS, `/api/v1`) serves background and
+long-running work and is not on the sign-in path. The deployment target is
+Vercel, which builds `apps/web` only, so authentication must be same-origin with
+the pages that consume it: a cross-origin session cookie would require
+`SameSite=None` and a hand-rolled CSRF scheme. The layering above is unchanged
+by this. A route handler is a controller, and it must not call Prisma directly.
+See [`docs/AUTHENTICATION_ARCHITECTURE.md`](./docs/AUTHENTICATION_ARCHITECTURE.md).
+
+**`/docs` vs `/documents`.** `/documents` holds the product and platform specs
+(what we are building). `/docs` holds implementation guides for the backend:
+authentication, API, schema, security, environment, local dev, deployment,
+testing.
+
 ## 8. Database rules ([`DATABASE_ARCHITECTURE.md`](./documents/DATABASE_ARCHITECTURE.md))
 
 - PostgreSQL + Prisma is the single source of truth. **Never bypass Prisma.**

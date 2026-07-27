@@ -3,6 +3,8 @@
 import { useCallback, useState, type ChangeEvent } from 'react';
 import { Download, FileJson, FileSpreadsheet, ImagePlus, Plus, Printer, Trash2, Upload } from 'lucide-react';
 import { Button, Input, Label, Select } from 'adysre';
+import { useGatedAction } from '@/hooks/use-gated-action';
+import { UsageBadge } from '@/components/entitlements/usage-badge';
 import type { InvoiceDocument, LineItem, Party } from '@/lib/tools/invoice/types';
 import { SAMPLE_DOCUMENT } from '@/lib/tools/invoice/sample';
 import { CURRENCIES } from '@/lib/tools/invoice/format';
@@ -36,6 +38,12 @@ function download(filename: string, content: string, mime: string) {
 }
 
 export function InvoiceGenerator() {
+  // Exports are metered. `run` consumes before the file or print is
+  // produced and opens the upgrade modal on refusal; `gated` adapts it for
+  // the inline onClick handlers below.
+  const { run, modal: quotaModal } = useGatedAction('tools.invoice.generate');
+  const gated = (action: () => void) => () => void run(action);
+
   const [doc, setDoc] = useState<InvoiceDocument>(SAMPLE_DOCUMENT);
 
   const update = useCallback((patch: Partial<InvoiceDocument>) => setDoc((d) => ({ ...d, ...patch })), []);
@@ -248,15 +256,16 @@ export function InvoiceGenerator() {
       {/* Preview: fills the rest and scrolls the paper independently. */}
       <div className="relative space-y-4 lg:min-h-0 lg:overflow-y-auto">
         <div className="flex flex-wrap gap-2">
-          <Button type="button" size="sm" onClick={() => window.print()}>
+          <UsageBadge feature="tools.invoice.generate" className="mr-1 self-center" />
+          <Button type="button" size="sm" onClick={gated(() => window.print())}>
             <Printer className="mr-1.5 h-3.5 w-3.5" aria-hidden />
             Print / PDF
           </Button>
-          <Button type="button" variant="outline" size="sm" onClick={() => download(`${slug}.json`, toJson(doc), 'application/json')}>
+          <Button type="button" variant="outline" size="sm" onClick={gated(() => download(`${slug}.json`, toJson(doc), 'application/json'))}>
             <FileJson className="mr-1.5 h-3.5 w-3.5" aria-hidden />
             JSON
           </Button>
-          <Button type="button" variant="outline" size="sm" onClick={() => download(`${slug}-items.csv`, toItemsCsv(doc), 'text/csv')}>
+          <Button type="button" variant="outline" size="sm" onClick={gated(() => download(`${slug}-items.csv`, toItemsCsv(doc), 'text/csv'))}>
             <FileSpreadsheet className="mr-1.5 h-3.5 w-3.5" aria-hidden />
             CSV
           </Button>
@@ -271,6 +280,9 @@ export function InvoiceGenerator() {
           <InvoicePreview doc={doc} />
         </div>
       </div>
+
+      {/* Opened when a metered export is refused. */}
+      {quotaModal}
     </div>
   );
 }

@@ -8,7 +8,7 @@ import { cn } from 'adysre';
 import { Link, getPathname, usePathname, useRouter } from '@/i18n/navigation';
 import { LOCALE_LABELS, routing, type Locale } from '@/i18n/routing';
 import { USER_MENU_ITEMS, type UserMenuItem } from '@/config/user-menu';
-import { fetchProfile, initials, DEMO_USER } from '@/lib/session';
+import { fetchProfile, initials, ANONYMOUS_USER } from '@/lib/session';
 import { logout } from '@/lib/auth';
 
 const ROW =
@@ -115,7 +115,7 @@ export function UserMenu() {
   const [isPending, startTransition] = useTransition();
   const ref = useRef<HTMLDivElement>(null);
 
-  const { data: user = DEMO_USER } = useQuery({
+  const { data: user = ANONYMOUS_USER } = useQuery({
     queryKey: ['profile'],
     queryFn: fetchProfile,
     staleTime: 60_000,

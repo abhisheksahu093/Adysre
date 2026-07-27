@@ -3,8 +3,9 @@
  * Owner user. Idempotent — safe to run repeatedly.
  */
 import { PrismaClient } from '@prisma/client';
-import { createHash } from 'node:crypto';
+import bcrypt from 'bcryptjs';
 import { MODULE_PERMISSIONS } from '@adysre/types';
+import { seedEntitlements } from './seed-entitlements.ts';
 
 const prisma = new PrismaClient();
 
@@ -67,12 +68,22 @@ async function main() {
     });
   }
 
-  // Demo Owner user — password "ChangeMe123!" (sha256 placeholder; real hashing
-  // happens in the api auth module with argon2/bcrypt).
-  const passwordHash = createHash('sha256').update('ChangeMe123!').digest('hex');
+  // Demo Owner user, password "ChangeMe123!".
+  //
+  // A real bcrypt hash at the production cost. This used to store a raw
+  // unsalted SHA-256, which no verifier accepts, so the demo Owner could never
+  // actually sign in: reads worked, sign-in always failed, and the cause looked
+  // like a broken login rather than a broken seed.
+  //
+  // The password is documented and therefore public. Anything reachable from
+  // the internet must change it or delete this user (see
+  // docs/PRODUCTION_DEPLOYMENT.md).
+  const passwordHash = await bcrypt.hash('ChangeMe123!', 12);
   const user = await prisma.user.upsert({
     where: { tenantId_email: { tenantId, email: 'owner@demo.test' } },
-    update: {},
+    // Repair the hash on re-seed, so a database seeded before this fix gets a
+    // usable credential without being reset by hand.
+    update: { passwordHash },
     create: { tenantId, email: 'owner@demo.test', name: 'Demo Owner', passwordHash },
   });
   await prisma.userRole.upsert({
@@ -82,6 +93,10 @@ async function main() {
   });
 
   console.log(`Seeded tenant ${tenantId} with ${roles.length} roles, ${permissions.length} permissions.`);
+
+  // Plans, features and limits. Runs last, because it subscribes every
+  // organization that exists, including the demo tenant created above.
+  await seedEntitlements(prisma);
 }
 
 main()

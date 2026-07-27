@@ -24,6 +24,11 @@ export function fail(code: string, message: string, status: number): NextRespons
   return NextResponse.json({ success: false, code, message }, { status });
 }
 
+/** A resource was created. Same envelope, 201. */
+export function created<T>(data: T, message = 'Created'): NextResponse {
+  return NextResponse.json({ success: true, message, data }, { status: 201 });
+}
+
 /** The body was not JSON, or failed validation. */
 export const BAD_REQUEST = (message: string) => fail('VALIDATION_ERROR', message, 400);
 
@@ -36,6 +41,23 @@ export const FORBIDDEN = (message = 'Your role cannot perform this action.') =>
   fail('FORBIDDEN', message, 403);
 
 /**
+ * A quota is spent, or the feature is not on this tier.
+ *
+ * **402, not 403.** The caller is authenticated and permitted; they have simply
+ * run out. Distinguishing the two lets a client show an upgrade prompt for one
+ * and an access error for the other without parsing prose, and stops a spent
+ * quota looking like a permissions bug in the logs.
+ *
+ * `data` carries everything the upgrade modal renders, so the client never
+ * keeps its own copy of the limits.
+ */
+export const QUOTA_EXCEEDED = (denial: unknown, message: string) =>
+  NextResponse.json(
+    { success: false, code: 'QUOTA_EXCEEDED', message, data: denial },
+    { status: 402 },
+  );
+
+/**
  * The row does not exist, or belongs to another tenant.
  *
  * Deliberately the same answer for both: telling a caller "this exists but is
@@ -44,6 +66,66 @@ export const FORBIDDEN = (message = 'Your role cannot perform this action.') =>
 export const NOT_FOUND = (message = 'Not found.') => fail('NOT_FOUND', message, 404);
 
 export const CONFLICT = (code: string, message: string) => fail(code, message, 409);
+
+/**
+ * Wrong email or wrong password, deliberately indistinguishable.
+ *
+ * One code and one message for both, because answering "no such account"
+ * separately turns sign-in into a directory of who is registered. The timing
+ * has to match too, which is `verifyOrBurn`'s job (see lib/auth/password.ts).
+ */
+export const INVALID_CREDENTIALS = () =>
+  fail('INVALID_CREDENTIALS', 'Email or password is incorrect.', 401);
+
+/**
+ * Too many failed attempts. 423 rather than 401, because 401 invites the client
+ * to prompt and retry, and every retry extends the lock.
+ */
+export const ACCOUNT_LOCKED = (until: Date) => {
+  const seconds = Math.max(1, Math.ceil((until.getTime() - Date.now()) / 1000));
+  const response = fail(
+    'ACCOUNT_LOCKED',
+    `Too many failed attempts. Try again in ${Math.ceil(seconds / 60)} minute(s).`,
+    423,
+  );
+  response.headers.set('Retry-After', String(seconds));
+  return response;
+};
+
+/**
+ * Rate limited.
+ *
+ * `Retry-After` is not optional. Without it a client has to guess, and a
+ * guessing client hammers the endpoint it was just told to back off from.
+ */
+export const RATE_LIMITED = (retryAfterSeconds: number) => {
+  const response = fail(
+    'RATE_LIMITED',
+    `Too many requests. Try again in ${retryAfterSeconds} second(s).`,
+    429,
+  );
+  response.headers.set('Retry-After', String(retryAfterSeconds));
+  return response;
+};
+
+/**
+ * The credentials match accounts in more than one workspace.
+ *
+ * Users are unique on `(tenantId, email)`, so this is a legitimate state rather
+ * than an error: the client re-posts with `tenantSlug`. Only workspaces whose
+ * password actually verified are listed, so this never reveals where an address
+ * exists to someone who does not hold the password.
+ */
+export const TENANT_AMBIGUOUS = (workspaces: { slug: string; name: string }[]) =>
+  NextResponse.json(
+    {
+      success: false,
+      code: 'TENANT_AMBIGUOUS',
+      message: 'This email belongs to several workspaces. Choose one and sign in again.',
+      data: { workspaces },
+    },
+    { status: 409 },
+  );
 
 /** Persistence is configured but unreachable, or the tenant is not seeded. */
 export const UNAVAILABLE = (

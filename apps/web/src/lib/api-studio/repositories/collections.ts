@@ -3,6 +3,7 @@ import { prisma, notDeleted } from '@adysre/database';
 import type { ApiCollection, ApiVariable, AuthConfig, RequestScripts } from '@/modules/api-studio/types';
 import { createId } from '@/modules/api-studio/utils/ids';
 import { defined, type Patch } from '@/lib/api/patch';
+import { enforceStock } from '@/lib/entitlements/service';
 import { toCollection, toJson } from '../mappers';
 import { loadVariables, loadVariablesByOwner, replaceVariables } from './variables';
 
@@ -75,6 +76,12 @@ export async function createCollection(
   const id = createId();
 
   return prisma.$transaction(async (tx) => {
+    // Inside the transaction, before the insert, holding the advisory lock for
+    // the rest of it. Checking outside would release the lock before the row
+    // exists, and two concurrent creates would both see four collections.
+    // Throws QuotaExceededError, which the route turns into a 402.
+    await enforceStock(tx, { tenantId, featureKey: 'api-studio.collections' });
+
     const row = await tx.apiCollection.create({
       data: {
         id,

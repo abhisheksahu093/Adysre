@@ -5,6 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
 import { Check, Copy, Download, FileArchive } from 'lucide-react';
 import { Button, Dialog, cn } from 'adysre';
+import { useGatedAction } from '@/hooks/use-gated-action';
 import type { Framework } from '@/data/components';
 import type { PlaygroundSection } from '@/data/playground';
 import type { Palette } from '@/data/palettes';
@@ -55,21 +56,33 @@ export function ExportDialog({
   const [copiedSection, setCopiedSection] = useState<string | null>(null);
   const [framework, setFramework] = useState<Framework | null>(null);
 
-  /** Build the chosen project, zip it in the browser, and download it. */
+  // Exporting a project is premium: the free tier's limit is zero, so `run`
+  // refuses and opens the upgrade modal. Copying individual snippets stays
+  // free, which is what makes the gallery usable without an account.
+  const { run, modal: quotaModal } = useGatedAction('builder.generate-code');
+
+  /**
+   * Build the chosen project, zip it in the browser, and download it.
+   *
+   * Metered, and on the free tier the limit is zero: exporting a project is a
+   * premium capability, so `run` refuses and opens the upgrade modal rather
+   * than producing a file. The 0.5 MB of demo sources is only imported after
+   * the quota has allowed it, so a refused export costs no download either.
+   */
   async function downloadProject(target: ScaffoldTarget) {
-    // The section demos are ~0.5 MB of source strings; load them only when a
-    // project is actually being downloaded rather than on every dialog open.
-    const { SECTION_DEMOS } = await import('@/data/playground/section-demos');
-    const files = buildProjectScaffold(
-      target,
-      sections,
-      'adysre-page',
-      contentOverrides,
-      SECTION_DEMOS,
-      sectionStyles,
-    );
-    const zip = createZip(files);
-    downloadBlob(`adysre-${target}-project.zip`, zip);
+    await run(async () => {
+      const { SECTION_DEMOS } = await import('@/data/playground/section-demos');
+      const files = buildProjectScaffold(
+        target,
+        sections,
+        'adysre-page',
+        contentOverrides,
+        SECTION_DEMOS,
+        sectionStyles,
+      );
+      const zip = createZip(files);
+      downloadBlob(`adysre-${target}-project.zip`, zip);
+    });
   }
 
   // The per-section styling as one stylesheet - the same CSS the downloaded
@@ -350,6 +363,9 @@ export function ExportDialog({
           </div>
         </div>
       )}
+
+      {/* Opened when a project export is refused. */}
+      {quotaModal}
     </Dialog>
   );
 }

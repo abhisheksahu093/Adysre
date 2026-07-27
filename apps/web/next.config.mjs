@@ -39,13 +39,24 @@ const monorepoRoot = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 /** Points the plugin at our request config (default location is ./i18n/request.ts). */
 const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts');
 
+/**
+ * Whether this build must emit the self-contained server for the Docker image.
+ *
+ * `output: 'standalone'` copies the whole traced server into `.next/standalone`
+ * - several GB for an app this size, written on EVERY build. Only the Docker
+ * image consumes it (apps/web/Dockerfile sets this variable); Vercel uses its
+ * own adapter, and a developer running `pnpm build` locally just pays the disk.
+ * Off by default, so a full local build no longer doubles its own output.
+ */
+const standalone = process.env.NEXT_OUTPUT === 'standalone';
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
   // Self-contained server bundle for the Docker image (apps/web/Dockerfile).
+  ...(standalone ? { output: 'standalone' } : {}),
   // `outputFileTracingRoot` is required in a monorepo so tracing follows the
   // workspace packages this app imports instead of stopping at apps/web.
-  output: 'standalone',
   outputFileTracingRoot: monorepoRoot,
   // Compile workspace packages that ship raw TS/TSX.
   transpilePackages: ['adysre', '@adysre/theme', '@adysre/sdk', '@adysre/types', '@adysre/validators'],

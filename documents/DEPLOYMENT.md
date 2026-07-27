@@ -79,6 +79,12 @@ and follows one pattern:
 3. **Runner** — a slim final stage. The web image ships Next's
    `output: 'standalone'` server; api/worker ship the pruned workspace.
 
+The standalone output is opt-in: `apps/web/Dockerfile` sets `NEXT_OUTPUT=standalone`
+(declared in `turbo.json` so the task sees it and it lands in the cache key), and
+`next.config.mjs` enables `output` only when it is set. A plain `pnpm build` on a
+laptop or on Vercel skips it, because that copy is several GB and only this image
+reads it.
+
 Base image is `node:20-alpine`; `libc6-compat` + `openssl` are installed because
 the Prisma engine needs them on musl.
 

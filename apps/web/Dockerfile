@@ -6,8 +6,10 @@
 #
 # Strategy: `turbo prune` reduces the monorepo to just this app and the
 # workspace packages it imports, so the dependency-install layer only rebuilds
-# when those change; `output: 'standalone'` (next.config.mjs) then produces a
-# self-contained server the final stage ships without dev dependencies.
+# when those change; `NEXT_OUTPUT=standalone` (read by next.config.mjs) then
+# produces a self-contained server the final stage ships without dev
+# dependencies. That output is several GB and nothing outside this image wants
+# it, which is why the flag lives here rather than in the config.
 
 # ── Base: Node 20 + pnpm (corepack). Prisma engines need musl compat + openssl
 #    because @adysre/database is a transitive dependency of the web build. ─────
@@ -30,6 +32,9 @@ COPY --from=pruner /app/out/full/ .
 ARG NEXT_PUBLIC_API_URL=http://localhost:4000/api/v1
 ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
 ENV NEXT_TELEMETRY_DISABLED=1
+# Emit `.next/standalone`, which the runner stage below copies. Off outside this
+# image so a local `pnpm build` does not write a multi-GB copy nobody reads.
+ENV NEXT_OUTPUT=standalone
 # `turbo run build` runs the workspace deps' build first (^build): Prisma
 # generate and the UI codegen, then `next build`.
 RUN pnpm turbo run build --filter=@adysre/web

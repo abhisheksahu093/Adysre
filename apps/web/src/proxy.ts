@@ -5,11 +5,17 @@ import { routing } from './i18n/routing';
  * Resolves the active locale for every page request (URL prefix → cookie →
  * Accept-Language → default) and rewrites to the matching /[locale] route.
  *
+ * This is what Next.js 16 calls a PROXY. It was `middleware.ts` until that
+ * convention was deprecated; only the filename changed. The contract (request
+ * in, response or rewrite out), the matcher below and next-intl's handler are
+ * untouched, which is why the handler is still `createMiddleware` - that is the
+ * library's export name, not the file convention.
+ *
  * NOTE: auth is enforced per-route/per-page, not here (Website Intelligence
  * gates its endpoints via `lib/website-intel/auth` and its pages via a session
- * redirect). If app-wide auth ever moves into middleware it must COMPOSE with
- * this i18n middleware rather than replace it - Next.js runs a single
- * middleware, so a second `export default` here would silently disable i18n.
+ * redirect). If app-wide auth ever moves in here it must COMPOSE with this i18n
+ * handler rather than replace it - Next.js runs a single proxy, so a second
+ * `export default` here would silently disable i18n.
  */
 export default createMiddleware(routing);
 

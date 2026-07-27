@@ -9,6 +9,8 @@ import { CURRENCIES } from '@/lib/tools/invoice/format';
 import { DOC_TYPES, DOC_TYPES_BY_ID } from '@/lib/tools/invoice/registry';
 import { TEMPLATES } from '@/lib/tools/invoice/templates';
 import { toItemsCsv, toJson, parseItemsCsv } from '@/lib/tools/invoice/exchange';
+import { printSheetCss } from '@/lib/tools/print-sheet';
+import { LOGO_MAX_EDGE, readImageFile } from '@/lib/tools/image-upload';
 import { InvoicePreview } from './invoice-preview';
 
 /**
@@ -57,10 +59,14 @@ export function InvoiceGenerator() {
 
   function onLogo(event: ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
+    // Reset first: picking the same file twice must fire `change` again.
+    event.target.value = '';
     if (!file) return;
-    const reader = new FileReader();
-    reader.onload = () => update({ logo: typeof reader.result === 'string' ? reader.result : null });
-    reader.readAsDataURL(file);
+    // Scaled on the way in, so the document stays small enough to export and
+    // print without carrying a phone-sized bitmap for a header logo.
+    void readImageFile(file, { maxEdge: LOGO_MAX_EDGE }).then((logo) => {
+      if (logo !== null) update({ logo });
+    });
   }
 
   function onImportCsv(event: ChangeEvent<HTMLInputElement>) {
@@ -76,12 +82,10 @@ export function InvoiceGenerator() {
   }
 
   const slug = (doc.number || 'document').replace(/[^\w-]+/g, '-');
-  const pageCss = `@page { size: ${doc.pageSize} ${doc.orientation}; margin: 12mm; }
-@media print {
-  body * { visibility: hidden !important; }
-  #invoice-print, #invoice-print * { visibility: visible !important; }
-  #invoice-print { position: absolute; left: 0; top: 0; width: 100%; }
-}`;
+  const pageCss = printSheetCss('invoice-print', {
+    size: doc.pageSize,
+    orientation: doc.orientation,
+  });
 
   return (
     <div className="flex flex-col gap-8 lg:grid lg:h-full lg:min-h-0 lg:grid-cols-[24rem_1fr] lg:gap-8">

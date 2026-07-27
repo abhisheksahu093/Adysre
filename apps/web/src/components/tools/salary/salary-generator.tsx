@@ -8,6 +8,8 @@ import { SAMPLE_SALARY } from '@/lib/tools/salary/sample';
 import { computeSalary } from '@/lib/tools/salary/totals';
 import { SALARY_DESIGNS } from '@/lib/tools/salary/designs';
 import { CURRENCIES } from '@/lib/tools/invoice/format';
+import { printSheetCss } from '@/lib/tools/print-sheet';
+import { LOGO_MAX_EDGE, readImageFile } from '@/lib/tools/image-upload';
 import { SalaryPreview } from './salary-preview';
 
 /**
@@ -45,19 +47,21 @@ export function SalaryGenerator() {
 
   function onLogo(event: ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
+    // Reset first: picking the same file twice must fire `change` again.
+    event.target.value = '';
     if (!file) return;
-    const reader = new FileReader();
-    reader.onload = () => update({ logo: typeof reader.result === 'string' ? reader.result : null });
-    reader.readAsDataURL(file);
+    // Scaled on the way in, so a phone-sized bitmap never rides along in a slip
+    // that gets exported and printed.
+    void readImageFile(file, { maxEdge: LOGO_MAX_EDGE }).then((logo) => {
+      if (logo !== null) update({ logo });
+    });
   }
 
   const slug = `payslip-${slip.employee.name || 'employee'}-${slip.period}`.replace(/[^\w-]+/g, '-');
-  const pageCss = `@page { size: ${slip.pageSize} ${slip.orientation}; margin: 12mm; }
-@media print {
-  body * { visibility: hidden !important; }
-  #salary-print, #salary-print * { visibility: visible !important; }
-  #salary-print { position: absolute; left: 0; top: 0; width: 100%; }
-}`;
+  const pageCss = printSheetCss('salary-print', {
+    size: slip.pageSize,
+    orientation: slip.orientation,
+  });
 
   return (
     <div className="flex flex-col gap-8 lg:grid lg:h-full lg:min-h-0 lg:grid-cols-[24rem_1fr] lg:gap-8">

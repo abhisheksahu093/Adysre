@@ -37,12 +37,20 @@ function Stacked({ data, t, order, banner }: { data: ResumeData; t: ResumeTempla
   return (
     <div>
       {banner ? (
-        <div className="px-8 py-6" style={{ background: t.accent, color: t.accentText }}>
+        // The photo rides in the accent band, ringed in the band's own text
+        // colour so it reads against any accent.
+        <div className="flex items-center gap-5 px-8 py-6" style={{ background: t.accent, color: t.accentText }}>
+          {data.photo && <Photo src={data.photo} ring={t.accentText} />}
           <Name data={data} inverse />
         </div>
       ) : (
         <div className="px-8 pt-8">
-          <Name data={data} t={t} />
+          {/* Name left, photo right: a one-column resume has nowhere else to put
+              it without pushing the header off balance. */}
+          <div className="flex items-start justify-between gap-5">
+            <Name data={data} t={t} />
+            {data.photo && <Photo src={data.photo} ring={t.accent} />}
+          </div>
           <div className="mt-3 border-t" style={{ borderColor: t.border }} />
         </div>
       )}
@@ -70,13 +78,7 @@ function Sidebar({ data, t, types, order }: { data: ResumeData; t: ResumeTemplat
       <aside className="space-y-5 p-6" style={{ background: railBg, color: railText }}>
         {data.photo && (
           <div className="flex justify-center">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={data.photo}
-              alt=""
-              className="h-24 w-24 rounded-full object-cover ring-2"
-              style={{ borderColor: t.accent }}
-            />
+            <Photo src={data.photo} ring={t.accent} size="h-24 w-24" />
           </div>
         )}
         <div className={data.photo ? 'text-center' : ''}>
@@ -119,6 +121,30 @@ function Sidebar({ data, t, types, order }: { data: ResumeData; t: ResumeTemplat
         ))}
       </div>
     </div>
+  );
+}
+
+/**
+ * The candidate's photo, wherever a layout puts it.
+ *
+ * One component for all three layouts, so an uploaded photo cannot appear in
+ * some templates and vanish in others - which is exactly what happened while
+ * only the sidebar rendered it.
+ *
+ * The ring is an inline `box-shadow` rather than Tailwind's `ring-2`: a ring
+ * utility takes its colour from a CSS variable this paper never sets, so it
+ * painted the framework default instead of the template accent. Inline also
+ * means it survives print, like every other colour on this page.
+ */
+function Photo({ src, ring, size = 'h-20 w-20' }: { src: string; ring: string; size?: string }) {
+  return (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src={src}
+      alt=""
+      className={cn('shrink-0 rounded-full object-cover', size)}
+      style={{ boxShadow: `0 0 0 2px ${ring}` }}
+    />
   );
 }
 

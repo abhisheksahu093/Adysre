@@ -2495,13 +2495,13 @@
       "note": "スキャンエンジンは現在開発中です。これは実行予定の解析のプレビューです。"
     },
     "stats": {
-      "analyses": "1スキャンあたりの解析",
+      "analyses": "スキャンごとの解析",
       "rules": "ルールベースの検査",
       "formats": "エクスポート形式",
       "paidAi": "有料AI API"
     },
-    "capabilitiesTitle": "11の解析、1回のスキャン",
-    "capabilitiesSubtitle": "すべてのスキャンで全項目を実行し、結果を総合スコアにまとめます。",
+    "capabilitiesTitle": "1回のスキャンで見るもの",
+    "capabilitiesSubtitle": "すべての検査を一度に実行し、結果をひとつのスコアにまとめます。",
     "capabilities": {
       "performance": {
         "title": "パフォーマンス",

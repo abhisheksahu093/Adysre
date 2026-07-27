@@ -2500,8 +2500,8 @@
       "formats": "Export formats",
       "paidAi": "Paid AI APIs"
     },
-    "capabilitiesTitle": "Eleven analyses, one scan",
-    "capabilitiesSubtitle": "Every scan runs the full suite and rolls the findings into an overall score.",
+    "capabilitiesTitle": "What one scan covers",
+    "capabilitiesSubtitle": "Every check runs in a single pass, and the findings roll into one score.",
     "capabilities": {
       "performance": {
         "title": "Performance",

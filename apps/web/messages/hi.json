@@ -2500,8 +2500,8 @@
       "formats": "एक्सपोर्ट फ़ॉर्मेट",
       "paidAi": "पेड AI API"
     },
-    "capabilitiesTitle": "ग्यारह विश्लेषण, एक स्कैन",
-    "capabilitiesSubtitle": "हर स्कैन पूरी सूट चलाता है और निष्कर्षों को एक समग्र स्कोर में समेटता है।",
+    "capabilitiesTitle": "एक स्कैन में क्या-क्या शामिल है",
+    "capabilitiesSubtitle": "हर जाँच एक ही पास में चलती है, और सभी निष्कर्ष मिलकर एक स्कोर बनाते हैं.",
     "capabilities": {
       "performance": {
         "title": "परफ़ॉर्मेंस",

@@ -13,10 +13,13 @@ import {
   rule,
   sequentialIds,
 } from '@adysre/rules-core';
-import type { ActionPlugin, FieldProviderPlugin, RuleDocument } from '@adysre/rules-types';
+import type { ActionPlugin, FieldDescriptor, FieldProviderPlugin, RuleDocument } from '@adysre/rules-types';
 import { renderToStaticMarkup } from 'react-dom/server';
 
 import { RuleBuilder } from './rule-builder.tsx';
+import { BuilderProvider, type BuilderContextValue } from './context.tsx';
+import { FieldPicker } from './field-picker.tsx';
+import { englishLabels } from './labels.ts';
 
 /**
  * Does it draw at all.
@@ -57,6 +60,13 @@ const fields: FieldProviderPlugin = {
 const reject: ActionPlugin = { id: 'reject', kinds: ['validation'], requiresTarget: true };
 
 const registry = createRegistry(builtinPlugins, { fields: [fields], actions: [reject] });
+
+/** Enough context for a single picker: the field list and the labels. */
+const context = {
+  fields: fields.fields(),
+  labels: englishLabels,
+  loading: false,
+} as unknown as BuilderContextValue;
 
 function sample(): RuleDocument {
   return rule(
@@ -120,6 +130,8 @@ describe('the builder renders', () => {
     assert.ok(html.includes('Matched'));
   });
 
+
+
   it('draws a brand new rule, which is an empty group', () => {
     const html = renderToStaticMarkup(
       <RuleBuilder
@@ -181,5 +193,61 @@ describe('theming', () => {
     // No inline variables at all: a host with a design system already defines
     // these names, and overriding them would impose a second palette.
     assert.ok(!html.includes('--background:'));
+  });
+});
+
+/*
+ * Every other cell of a condition row reads as language, and the field cell
+ * used to read as a schema: `customer.tier` sat between "A field" and "is".
+ *
+ * Asserted on the picker rather than through `RuleBuilder`, because the field
+ * list resolves in an effect and a static render never runs one - the builder
+ * always draws its first frame with no fields at all.
+ */
+describe('the field picker', () => {
+  function draw(path: string): string {
+    return renderToStaticMarkup(
+      <BuilderProvider value={context}>
+        <FieldPicker path={path} onChange={() => undefined} />
+      </BuilderProvider>,
+    );
+  }
+
+  it('shows a known field by its label and keeps the path as the title', () => {
+    const html = draw('order.total');
+    assert.ok(html.includes('value="Order total"'), 'the box shows the label');
+    assert.ok(html.includes('title="order.total"'), 'the path stays one hover away');
+    assert.ok(!html.includes('value="order.total"'), 'the raw path is not the display value');
+  });
+
+  it('offers labels as the values, since that is what a datalist inserts', () => {
+    const html = draw('customer.tier');
+    assert.ok(html.includes('value="Tier"'));
+    // The path is the option's text, so it is still visible while choosing.
+    assert.ok(html.includes('>order.placedAt</option>'));
+  });
+
+  it('qualifies a label only when another field answers to it', () => {
+    const twins: FieldDescriptor[] = [
+      { path: 'order.name', label: 'Name', type: 'string', group: 'Order' },
+      { path: 'customer.name', label: 'Name', type: 'string', group: 'Customer' },
+      { path: 'order.total', label: 'Order total', type: 'number', group: 'Order' },
+    ];
+    const html = renderToStaticMarkup(
+      <BuilderProvider value={{ ...context, fields: twins }}>
+        <FieldPicker path="customer.name" onChange={() => undefined} />
+      </BuilderProvider>,
+    );
+
+    assert.ok(html.includes('value="Customer: Name"'), 'the twin needs its group');
+    // The unambiguous one in the same list still reads plainly, in the options.
+    assert.ok(html.includes('value="Order total"'));
+  });
+
+  it('leaves a path nobody enumerated exactly as typed', () => {
+    // The whole reason this is a text box and not a select: a provider that has
+    // never heard of a path must not stop a rule from reading it.
+    const html = draw('shipment.weightKg');
+    assert.ok(html.includes('value="shipment.weightKg"'));
   });
 });

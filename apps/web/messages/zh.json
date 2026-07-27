@@ -2500,8 +2500,8 @@
       "formats": "导出格式",
       "paidAi": "付费 AI 接口"
     },
-    "capabilitiesTitle": "十一项分析，一次扫描",
-    "capabilitiesSubtitle": "每次扫描都运行全部项目，并将结果汇总为总体评分。",
+    "capabilitiesTitle": "一次扫描涵盖哪些内容",
+    "capabilitiesSubtitle": "所有检查在一次扫描中完成，结果汇总为一个评分。",
     "capabilities": {
       "performance": {
         "title": "性能",

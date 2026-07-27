@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "node scripts/generate-template-sources.mjs && next dev -p 3000",
-    "build": "node scripts/generate-template-sources.mjs && next build",
+    "build": "node scripts/generate-template-sources.mjs && node scripts/build.mjs",
     "start": "next start -p 3000",
     "lint": "eslint src",
     "typecheck": "tsc --noEmit",

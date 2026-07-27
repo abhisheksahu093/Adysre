@@ -1,28 +1,4 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-
-  "//": [
-    "One override, because one thing was broken.",
-    "",
-    "Vercel sets NODE_ENV=production for the install, so pnpm skips",
-    "devDependencies - and `typescript` and `prisma` are devDependencies, which",
-    "is where build tools belong. The build then died on `tsc: command not",
-    "found` and `prisma: command not found` before compiling a single file.",
-    "",
-    "`--prod=false` says: install everything, including the tools needed to",
-    "produce the thing being deployed. It does not put devDependencies into the",
-    "runtime bundle - Next decides what ships, and this only affects what exists",
-    "on the build machine.",
-    "",
-    "The alternative, moving typescript and prisma into `dependencies`, would",
-    "make every consumer of the eleven published packages download a compiler",
-    "they will never run.",
-    "",
-    "Nothing else is set on purpose. Vercel's own detection already found the",
-    "Next.js app and scoped turbo to `@adysre/web` and its dependencies - the",
-    "build log says so - and overriding a buildCommand or outputDirectory that",
-    "already works is how a targeted fix becomes a second outage."
-  ],
-
   "installCommand": "pnpm install --frozen-lockfile --prod=false"
 }

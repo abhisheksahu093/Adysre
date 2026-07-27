@@ -7,11 +7,62 @@ How ADYSRE is built into images, run as a stack, and gated by CI. See the
 
 | Concern | File |
 | --- | --- |
+| Hosted web deploy | `vercel.json` |
 | Data services (dev + prod) | `docker-compose.yml` (postgres, redis) |
 | Application stack (prod) | `docker-compose.prod.yml` (migrate, api, worker, web) |
 | Images | `apps/{web,api,worker}/Dockerfile` |
 | Build-context excludes | `.dockerignore` |
 | CI | `.github/workflows/ci.yml` |
+
+## Vercel (apps/web)
+
+`apps/web` deploys to Vercel from `main`. The Docker images above are the
+self-hosted path and stay as they are; this is the hosted one.
+
+`vercel.json` sets exactly one thing, and can explain none of it - Vercel
+validates the file against a schema with `additionalProperties: false`, so a
+`"//"` comment key fails the build outright rather than being ignored. Hence
+this section.
+
+```json
+{ "installCommand": "pnpm install --frozen-lockfile --prod=false" }
+```
+
+**Why `--prod=false`.** Vercel sets `NODE_ENV=production` for the install, so
+pnpm honours it and skips devDependencies - which is where `typescript` and
+`prisma` live, because that is where build tools belong. Without the flag the
+build dies within seconds on `tsc: command not found` and `prisma: command not
+found`, before compiling a single file. The flag changes only what exists on the
+build machine; Next still decides what ships.
+
+Moving `typescript` and `prisma` into `dependencies` would fix the build too,
+and make every consumer of the eleven published `@adysre/rules-*` packages
+download a compiler they will never run.
+
+**Why nothing else is set.** Vercel's own detection finds the Next.js app and
+scopes turbo to `@adysre/web` and its dependencies - the build log says
+`Packages in scope: @adysre/web`. Overriding a working `buildCommand` or
+`outputDirectory` is how a targeted fix becomes a second outage.
+
+**Environment variables.** Turbo runs tasks in a filtered environment: a
+variable set in the Vercel dashboard and absent from `turbo.json` is withheld
+from the build, and Vercel warns by name when that happens. `globalEnv` lists
+`DATABASE_URL` and `DIRECT_URL` for that reason - see
+[`RULES_ENGINE.md`](./RULES_ENGINE.md) and the datasource block in
+`packages/database/prisma/schema.prisma` for why there are two.
+
+Set both in the dashboard, never in the repository:
+
+| Variable | Connection | Used by |
+| --- | --- | --- |
+| `DATABASE_URL` | pooled | the running application |
+| `DIRECT_URL` | direct | `prisma migrate` and introspection |
+
+A serverless deployment scales to many short-lived instances, and each one
+opening its own Postgres connection exhausts the server's limit - which appears
+as "too many connections" under load, on the platform, and never locally.
+Migrations need the direct connection because advisory locks and DDL do not
+survive a pooler handing them a different backend mid-statement.
 
 ## Image strategy
 

@@ -282,6 +282,19 @@ for header in x-frame-options x-content-type-options referrer-policy permissions
   check "$header is set" "$n" "1"
 done
 
+# Presence is not enough for this one. DENY also "is set", and DENY blocks
+# same-origin framing, which silently blanks the playground canvas and every
+# template thumbnail: both render their content in a same-origin iframe, and the
+# browser reports the block as "refused to connect", which reads like a dead
+# server rather than a header.
+frame=$(printf '%s' "$headers" | grep '^x-frame-options:' | tr -d '\r' | awk '{print $2}')
+check "x-frame-options allows our own iframes" "$frame" "sameorigin"
+
+# The two routes that are framed. A 200 here with the header above is what the
+# playground and the gallery actually need.
+code=$(status "$BASE/preview/bento-icon-features")
+check "the section preview route serves" "$code" "200"
+
 # Auth responses must never be stored: a cached 200 from /api/auth/me on a
 # shared machine is one user's identity served to the next.
 n=$(curl -sI -b "$JAR" --max-time 60 "$BASE/api/auth/me" | tr 'A-Z' 'a-z' | grep -c 'cache-control:.*no-store')

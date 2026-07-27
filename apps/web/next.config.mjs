@@ -98,10 +98,25 @@ async function securityHeaders() {
           value: 'nosniff',
         },
         {
-          // Clickjacking: the app must never be framed, so a transparent
-          // overlay cannot trick someone into clicking a real control.
+          /**
+           * Clickjacking: no OTHER site may frame this app, so a transparent
+           * overlay cannot trick someone into clicking a real control.
+           *
+           * SAMEORIGIN rather than DENY, and the difference is not cosmetic.
+           * DENY blocks framing by ANY document including our own, which broke
+           * two real features: the playground canvas renders each section as a
+           * same-origin `/preview/[slug]` iframe, and the template gallery
+           * renders `/template-preview/[slug]` the same way. Both went blank
+           * with "localhost refused to connect", which reads like a dead server
+           * rather than a header.
+           *
+           * The threat this header addresses is a third-party page framing us.
+           * Our own origin framing itself is not that threat, and those iframes
+           * exist because Tailwind breakpoints key off the viewport: a 375px
+           * div still matches `md:` while a 375px iframe genuinely does not.
+           */
           key: 'X-Frame-Options',
-          value: 'DENY',
+          value: 'SAMEORIGIN',
         },
         {
           // Matters specifically for reset links. Under a permissive policy a

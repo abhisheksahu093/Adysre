@@ -9,7 +9,20 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  // The POOLED connection. Serverless functions scale to many short-lived
+  // instances, and each one opening its own Postgres connection exhausts the
+  // server's limit long before traffic does - the classic "too many
+  // connections" that only appears under load, on the platform, and never
+  // locally.
+  url       = env("DATABASE_URL")
+  // The DIRECT connection, for migrations and introspection.
+  //
+  // A pooler multiplexes sessions, and a migration needs a real one: advisory
+  // locks and DDL do not survive being handed a different backend mid
+  // statement. Prisma uses this only for those commands, never at runtime.
+  // Locally the two are the same connection, which is correct - there is no
+  // pooler in front of a local database.
+  directUrl = env("DIRECT_URL")
 }
 
 // ---------------------------------------------------------------------------

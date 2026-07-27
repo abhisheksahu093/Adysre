@@ -2,7 +2,18 @@
   "$schema": "https://turbo.build/schema.json",
   "ui": "tui",
   "globalDependencies": [".env", "tsconfig.base.json"],
-  "globalEnv": ["NODE_ENV"],
+  /*
+   * Turbo runs tasks in a filtered environment: a variable set on the hosting
+   * platform and not listed here is NOT passed through, and the build sees it
+   * as unset. Vercel warns about exactly this, naming the variables it is
+   * about to withhold.
+   *
+   * `NODE_VERSION` is Vercel's own. The two database URLs are listed because
+   * `prisma generate` reads the datasource block, and a build that silently
+   * runs without them is the kind that succeeds locally and produces a broken
+   * deployment.
+   */
+  "globalEnv": ["NODE_ENV", "NODE_VERSION", "DATABASE_URL", "DIRECT_URL"],
   "tasks": {
     "build": {
       "dependsOn": ["^build"],

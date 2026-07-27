@@ -4,6 +4,8 @@ import { useEffect, useState, type ChangeEvent } from 'react';
 import { Reorder, useDragControls } from 'framer-motion';
 import { Eye, EyeOff, FileJson, GripVertical, ImagePlus, Plus, Printer, Trash2, Upload } from 'lucide-react';
 import { Button, Input, Label, Select, cn } from 'adysre';
+import { useGatedAction } from '@/hooks/use-gated-action';
+import { UsageBadge } from '@/components/entitlements/usage-badge';
 import type { CertItem, EducationItem, ExperienceItem, LinkItem, ProjectItem, ResumeData, ResumeSection } from '@/lib/tools/resume/types';
 import { SAMPLE_RESUME } from '@/lib/tools/resume/sample';
 import { RESUME_FONTS, RESUME_TEMPLATES, RESUME_TEMPLATES_BY_ID } from '@/lib/tools/resume/templates';
@@ -33,6 +35,12 @@ function download(name: string, content: string, mime: string) {
 }
 
 export function ResumeBuilder() {
+  // Exports are metered. `run` consumes before the file or print is
+  // produced and opens the upgrade modal on refusal; `gated` adapts it for
+  // the inline onClick handlers below.
+  const { run, modal: quotaModal } = useGatedAction('tools.resume.generate');
+  const gated = (action: () => void) => () => void run(action);
+
   const [data, setData] = useState<ResumeData>(SAMPLE_RESUME);
   const [saved, setSaved] = useState(false);
   /**
@@ -278,8 +286,9 @@ export function ResumeBuilder() {
       {/* Preview + actions */}
       <div id="resume-preview-col" className="relative space-y-4 lg:sticky lg:top-4 lg:self-start">
         <div className="flex flex-wrap items-center gap-2">
-          <Button type="button" size="sm" onClick={() => window.print()}><Printer className="mr-1.5 h-3.5 w-3.5" aria-hidden /> Print / PDF</Button>
-          <Button type="button" variant="outline" size="sm" onClick={() => download(`resume-${data.contact.name || 'me'}.json`.replace(/\s+/g, '-'), toJson(data), 'application/json')}>
+          <UsageBadge feature="tools.resume.generate" className="mr-1 self-center" />
+          <Button type="button" size="sm" onClick={gated(() => window.print())}><Printer className="mr-1.5 h-3.5 w-3.5" aria-hidden /> Print / PDF</Button>
+          <Button type="button" variant="outline" size="sm" onClick={gated(() => download(`resume-${data.contact.name || 'me'}.json`.replace(/\s+/g, '-'), toJson(data), 'application/json'))}>
             <FileJson className="mr-1.5 h-3.5 w-3.5" aria-hidden /> JSON
           </Button>
           <label className="inline-flex cursor-pointer items-center gap-1.5 rounded-md border border-border bg-card px-3 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground">
@@ -292,6 +301,9 @@ export function ResumeBuilder() {
           <ResumePreview data={data} />
         </div>
       </div>
+
+      {/* Opened when a metered export is refused. */}
+      {quotaModal}
     </div>
   );
 }

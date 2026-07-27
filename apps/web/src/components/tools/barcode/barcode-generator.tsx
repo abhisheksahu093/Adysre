@@ -4,6 +4,8 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import type JsBarcodeType from 'jsbarcode';
 import { Barcode as BarcodeIcon, Download } from 'lucide-react';
 import { Button, Input, Label, Select, cn } from 'adysre';
+import { useGatedAction } from '@/hooks/use-gated-action';
+import { UsageBadge } from '@/components/entitlements/usage-badge';
 import {
   BARCODE_FORMATS,
   BARCODE_META,
@@ -26,6 +28,11 @@ import { validateBarcode } from '@/lib/tools/barcode/validate';
  * on the client only.
  */
 export function BarcodeGenerator() {
+  // Downloads are metered. `run` consumes before the file is produced and opens
+  // the upgrade modal on refusal. No `gated` helper here: both handlers are
+  // named functions that call `run` directly.
+  const { run, modal: quotaModal } = useGatedAction('tools.barcode.download');
+
   const [format, setFormat] = useState<BarcodeFormat>('CODE128');
   const [value, setValue] = useState(BARCODE_META.CODE128.sample);
   const [design, setDesign] = useState<BarcodeDesign>(DEFAULT_BARCODE_DESIGN);
@@ -112,21 +119,27 @@ export function BarcodeGenerator() {
 
   const patch = (p: Partial<BarcodeDesign>) => setDesign((d) => ({ ...d, ...p }));
 
+  // Both downloads are metered. The guard on validity runs BEFORE `run`, so an
+  // invalid barcode never costs a download for a file that was not produced.
   function downloadSvg() {
     if (!svgRef.current || !validation.valid) return;
-    const source = new XMLSerializer().serializeToString(svgRef.current);
-    triggerDownload(`barcode-${format}.svg`, new Blob([source], { type: 'image/svg+xml' }));
+    void run(() => {
+      const source = new XMLSerializer().serializeToString(svgRef.current!);
+      triggerDownload(`barcode-${format}.svg`, new Blob([source], { type: 'image/svg+xml' }));
+    });
   }
 
   function downloadPng() {
     if (!lib || !validation.valid) return;
-    const canvas = document.createElement('canvas');
-    try {
-      lib(canvas, validation.value, options);
-      canvas.toBlob((blob) => blob && triggerDownload(`barcode-${format}.png`, blob), 'image/png');
-    } catch {
-      /* invalid input never reaches here, but never throw at the user. */
-    }
+    void run(() => {
+      const canvas = document.createElement('canvas');
+      try {
+        lib(canvas, validation.value, options);
+        canvas.toBlob((blob) => blob && triggerDownload(`barcode-${format}.png`, blob), 'image/png');
+      } catch {
+        /* invalid input never reaches here, but never throw at the user. */
+      }
+    });
   }
 
   return (
@@ -204,6 +217,7 @@ export function BarcodeGenerator() {
           </div>
 
           <div className="grid grid-cols-2 gap-2">
+            <UsageBadge feature="tools.barcode.download" className="mr-1 self-center" />
             <Button type="button" variant="outline" size="sm" disabled={!validation.valid} onClick={downloadPng}>
               <Download className="mr-1.5 h-3.5 w-3.5" aria-hidden />
               PNG
@@ -218,6 +232,9 @@ export function BarcodeGenerator() {
           </p>
         </div>
       </aside>
+
+      {/* Opened when a metered export is refused. */}
+      {quotaModal}
     </div>
   );
 }

@@ -2,22 +2,15 @@
 
 import { useQuery } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
-import { Badge, Card, CardContent, CardHeader, CardTitle, CardDescription, buttonVariants, cn } from 'adysre';
-import { Link } from '@/i18n/navigation';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from 'adysre';
 import { fetchProfile, initials, ANONYMOUS_USER } from '@/lib/session';
-import { isPremium, type AccessLevel } from '@/lib/access';
-import { AccessSwitcher } from './access-switcher';
 
-interface ProfileDetailsProps {
-  /**
-   * Resolved on the server - the same value the premium paywall enforces with.
-   * Passed in rather than read from the profile query so what's displayed here
-   * can't disagree with what's actually granted.
-   */
-  accessLevel: AccessLevel;
-  /** True outside production; gates the dev-only switcher. */
-  showDevTools: boolean;
-}
+/**
+ * Identity only. The plan, its status and usage live in `SubscriptionCard`,
+ * which reads them from the entitlement API rather than being handed an access
+ * level: two components rendering the same fact from two sources is how they
+ * end up disagreeing.
+ */
 
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
@@ -28,15 +21,13 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
   );
 }
 
-export function ProfileDetails({ accessLevel, showDevTools }: ProfileDetailsProps) {
+export function ProfileDetails() {
   const t = useTranslations('pages.profile');
   const { data: user = ANONYMOUS_USER, isLoading } = useQuery({
     queryKey: ['profile'],
     queryFn: fetchProfile,
     staleTime: 60_000,
   });
-
-  const premium = isPremium(accessLevel);
 
   return (
     <Card>
@@ -60,28 +51,6 @@ export function ProfileDetails({ accessLevel, showDevTools }: ProfileDetailsProp
           <Field label={t('status')}>{isLoading ? t('loading') : t('active')}</Field>
         </dl>
 
-        <div className="space-y-3 border-t border-border pt-6">
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <div className="space-y-1">
-              <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
-                {t('plan')}
-              </p>
-              <Badge variant={premium ? 'warning' : 'outline'} size="md">
-                {premium ? t('planPremium') : t('planFree')}
-              </Badge>
-            </div>
-            {!premium && (
-              <Link href="/pricing" className={cn(buttonVariants({ size: 'sm' }))}>
-                {t('upgrade')}
-              </Link>
-            )}
-          </div>
-          <p className="text-xs text-muted-foreground">
-            {premium ? t('planPremiumHint') : t('planFreeHint')}
-          </p>
-        </div>
-
-        {showDevTools && <AccessSwitcher current={accessLevel} />}
       </CardContent>
     </Card>
   );

@@ -4,6 +4,8 @@ import { useCallback, useEffect, useMemo, useRef, useState, type ChangeEvent } f
 import type QRCodeStyling from 'qr-code-styling';
 import { Check, Copy, Download, ImagePlus, Loader2, QrCode, Save, Trash2 } from 'lucide-react';
 import { Button, Input, Label, Select, cn } from 'adysre';
+import { useGatedAction } from '@/hooks/use-gated-action';
+import { UsageBadge } from '@/components/entitlements/usage-badge';
 import {
   QR_CATEGORIES,
   CATEGORY_LABELS,
@@ -43,6 +45,10 @@ const DOWNLOADS = [
 ] as const;
 
 export function QrGenerator() {
+  // Downloads are metered. `run` consumes before writing the file and opens the
+  // upgrade modal on refusal; `quotaModal` is rendered beside the buttons.
+  const { run, modal: quotaModal, isPending } = useGatedAction('tools.qr.download');
+
   const [category, setCategory] = useState<QrCategoryId>('basic');
   const [typeId, setTypeId] = useState<string>('url');
   const [values, setValues] = useState<Record<string, string>>({});
@@ -117,9 +123,16 @@ export function QrGenerator() {
     reader.readAsDataURL(file);
   }
 
+  /**
+   * Metered. `run` consumes a download before producing the file and opens the
+   * upgrade modal when the quota is spent, so the file is never written after a
+   * refusal. The rendering itself still happens entirely in the browser.
+   */
   async function download(ext: (typeof DOWNLOADS)[number]['ext']) {
     if (!data) return;
-    await qrRef.current?.download({ name: `qr-${typeId}`, extension: ext });
+    await run(async () => {
+      await qrRef.current?.download({ name: `qr-${typeId}`, extension: ext });
+    });
   }
 
   // A fresh edit invalidates a prior save result.
@@ -344,6 +357,10 @@ export function QrGenerator() {
             )}
           </div>
 
+          <div className="mb-2 flex items-center justify-center">
+            <UsageBadge feature="tools.qr.download" />
+          </div>
+
           <div className="grid grid-cols-3 gap-2">
             {DOWNLOADS.map(({ ext, label }) => (
               <Button
@@ -351,7 +368,7 @@ export function QrGenerator() {
                 type="button"
                 variant="outline"
                 size="sm"
-                disabled={!complete}
+                disabled={!complete || isPending}
                 onClick={() => void download(ext)}
               >
                 <Download className="mr-1.5 h-3.5 w-3.5" aria-hidden />
@@ -362,6 +379,10 @@ export function QrGenerator() {
           <p className="text-center text-xs text-muted-foreground">
             Rendered locally. Nothing leaves your browser.
           </p>
+
+          {/* Opened by `run` when the quota refuses. One modal for every
+              feature, rendered from the server's denial. */}
+          {quotaModal}
         </div>
 
         {/* Save → dynamic QR with a trackable short link + analytics. */}

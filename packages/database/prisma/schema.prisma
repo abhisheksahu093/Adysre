@@ -73,6 +73,8 @@ model Organization {
   ruleVersions        RuleVersion[]
   emailVerifications  EmailVerification[]
   passwordResets      PasswordReset[]
+  subscription        Subscription?
+  featureUsageEvents  FeatureUsageEvent[]
 
   @@index([deletedAt])
   @@map("organizations")
@@ -237,6 +239,250 @@ model Session {
   // concluding the token is simply unknown.
   @@index([previousTokenHash])
   @@map("sessions")
+}
+
+// ---------------------------------------------------------------------------
+// Subscriptions and feature access - see docs/SUBSCRIPTIONS.md
+// ---------------------------------------------------------------------------
+
+/// What a workspace GETS. Limits hang off this, never off a purchasable plan.
+///
+/// `annual` and `lifetime` differ only in how they are billed, so they must not
+/// each carry their own copy of "5 collections": a price change or a seasonal
+/// SKU would then be an entitlement change too.
+enum SubscriptionTier {
+  free
+  premium
+  enterprise
+}
+
+/// Whether a plan is metered by count, or by events in a period.
+///
+/// The distinction decides how a limit is counted and whether deleting
+/// something gives the slot back. Conflating them produces the worst bug in
+/// this system: a user deletes everything, still cannot create, and is told
+/// they are at their limit of zero things.
+enum MeterKind {
+  /// How many may exist at once. Counted from the owning table. Deletion frees
+  /// a slot. "Max 5 API Studio collections."
+  stock
+
+  /// How many may happen in a window. Counted from feature_usage_events.
+  /// Deletion frees nothing. "5 QR downloads."
+  flow
+}
+
+/// The period a flow limit is measured over.
+enum UsageWindow {
+  /// Stock ceilings have no time component.
+  none
+  /// Calendar periods, evaluated in UTC.
+  day
+  week
+  month
+  /// The last `windowSeconds`, always. Required for "3 in the last 24 hours",
+  /// which a counter cannot express because the answer changes with no write.
+  rolling
+  /// Since the workspace existed.
+  lifetime
+}
+
+enum SubscriptionStatus {
+  active
+  trialing
+  past_due
+  canceled
+  expired
+}
+
+/// What a workspace BUYS. A product in the pricing table.
+///
+/// Global rather than tenant-owned: these are the catalogue, not customer data.
+model Plan {
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+
+  /// Stable identifier used in code and checkout, e.g. `annual`. Matches the
+  /// ids already in apps/web/src/data/pricing.ts.
+  key String @unique
+
+  /// The entitlement this SKU grants. Several plans may map to one tier.
+  tier SubscriptionTier
+
+  name String
+
+  /// Minor units (cents), so no float ever touches money.
+  priceCents Int    @default(0) @map("price_cents")
+  currency   String @default("USD")
+
+  /// `year`, or null for a one-time purchase such as lifetime. Decides whether
+  /// checkout promises a renewal.
+  billingInterval String? @map("billing_interval")
+
+  /// Withdrawn plans stay for the subscriptions that still reference them.
+  isActive  Boolean @default(true) @map("is_active")
+  sortOrder Int     @default(0) @map("sort_order")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  subscriptions Subscription[]
+
+  @@index([isActive])
+  @@map("plans")
+}
+
+/// A workspace's current entitlement.
+///
+/// One per organization, not per user: quotas are shared by everyone in the
+/// workspace, which is what the tenant_id on every gated table already implies.
+model Subscription {
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+
+  /// Unique: a workspace has exactly one live subscription. History belongs in
+  /// audit_logs and the provider, not in extra rows here that a resolver would
+  /// have to disambiguate on every request.
+  tenantId String @unique @map("tenant_id") @db.Uuid
+
+  planId String             @map("plan_id") @db.Uuid
+  status SubscriptionStatus @default(active)
+
+  /// Denormalised from the plan, deliberately.
+  ///
+  /// Entitlement is read on nearly every request, and this saves a join on the
+  /// hottest path. It also FREEZES what a workspace was sold: retiring a plan
+  /// or changing its tier must not silently re-tier existing customers.
+  tier SubscriptionTier @default(free)
+
+  currentPeriodStart DateTime? @map("current_period_start")
+  /// Null for free and lifetime, which never renew.
+  currentPeriodEnd   DateTime? @map("current_period_end")
+
+  /// Set when someone cancels but keeps access until the period ends.
+  cancelAtPeriodEnd Boolean @default(false) @map("cancel_at_period_end")
+
+  /// The payment provider's id, so a webhook can find this row.
+  externalId String? @unique @map("external_id")
+
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  createdBy String?   @map("created_by") @db.Uuid
+  updatedBy String?   @map("updated_by") @db.Uuid
+  deletedAt DateTime? @map("deleted_at")
+
+  organization Organization @relation(fields: [tenantId], references: [id])
+  plan         Plan         @relation(fields: [planId], references: [id])
+
+  @@index([status])
+  @@index([currentPeriodEnd])
+  @@map("subscriptions")
+}
+
+/// A capability that can be gated.
+///
+/// Seeded, so adding a limit is data rather than a deployment, and the UI can
+/// render a name and unit it did not have to hardcode.
+model Feature {
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+
+  /// `module.resource.action`, e.g. `tools.qr.download`. The key every gate
+  /// and every badge refers to.
+  key String @unique
+
+  /// Which part of the product this belongs to, for grouping in the UI.
+  module String
+
+  name        String
+  description String?
+
+  meterKind MeterKind @map("meter_kind")
+
+  /// What one unit is called, so a component can say "3 downloads left"
+  /// without a lookup table of its own.
+  unit String @default("use")
+
+  isActive  Boolean @default(true) @map("is_active")
+  sortOrder Int     @default(0) @map("sort_order")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  tierLimits  TierFeature[]
+  usageEvents FeatureUsageEvent[]
+
+  @@index([module])
+  @@map("features")
+}
+
+/// One limit, for one tier, on one feature.
+///
+/// Named for the TIER rather than the plan because that is where limits live.
+/// A row per limit, not per feature, because one feature can carry several:
+/// Website Intelligence allows 3 per 24 hours AND 5 per rolling week, and a
+/// request has to satisfy both.
+model TierFeature {
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+
+  tier      SubscriptionTier
+  featureId String           @map("feature_id") @db.Uuid
+
+  /// Three distinct meanings:
+  ///   null → unlimited
+  ///   0    → not available on this tier at all (prompts an upgrade)
+  ///   N    → metered
+  /// Nullable rather than a sentinel like -1, so "unlimited" cannot be
+  /// accidentally compared as a number.
+  limitValue Int? @map("limit_value")
+
+  windowKind UsageWindow @default(none) @map("window_kind")
+
+  /// Length of a `rolling` window. Null for every other kind.
+  windowSeconds Int? @map("window_seconds")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  feature Feature @relation(fields: [featureId], references: [id], onDelete: Cascade)
+
+  /// One limit per (tier, feature, window). Two rows differing only by window
+  /// is the supported case; two identical windows is a seeding mistake.
+  @@unique([tier, featureId, windowKind, windowSeconds])
+  @@index([tier])
+  @@map("tier_features")
+}
+
+/// One metered action. The event log behind every flow limit.
+///
+/// Events rather than counters, because a rolling window cannot be counted any
+/// other way: "3 in the last 24 hours" changes every second with nothing being
+/// written. It also lets the UI say exactly when the next slot frees.
+///
+/// Volume is not a concern at these quotas; the retention sweep trims it.
+model FeatureUsageEvent {
+  id       String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  tenantId String @map("tenant_id") @db.Uuid
+
+  /// WHO did it. Quotas are counted per tenant, but "who used the last scan"
+  /// is a real support question, so the actor is recorded.
+  userId String? @map("user_id") @db.Uuid
+
+  featureId String @map("feature_id") @db.Uuid
+
+  /// Almost always 1. Present so one call can consume several units, such as a
+  /// batch export.
+  quantity Int @default(1)
+
+  occurredAt DateTime @default(now()) @map("occurred_at")
+
+  /// Context for support and analytics. Never a credential.
+  metadata Json?
+
+  organization Organization @relation(fields: [tenantId], references: [id])
+  feature      Feature      @relation(fields: [featureId], references: [id], onDelete: Cascade)
+
+  /// The window query: tenant + feature, newest first. Every consume runs it.
+  @@index([tenantId, featureId, occurredAt])
+  @@index([occurredAt])
+  @@map("feature_usage_events")
 }
 
 /// Fixed-window rate limit counters.

@@ -1,6 +1,7 @@
 import 'server-only';
 
 import { Prisma, prisma, tenantScope } from '@adysre/database';
+import { enforceStock } from '@/lib/entitlements/service';
 import { parseDocument } from './schema';
 import type { Document } from './types';
 
@@ -107,17 +108,27 @@ export async function createProject(
   name: string,
   document: Document,
 ): Promise<ProjectSummary> {
-  const row = await prisma.designProject.create({
-    data: {
-      tenantId,
-      name,
-      document: toJson(document),
-      schemaVersion: document.schemaVersion,
-      createdBy: userId,
-      updatedBy: userId,
-    },
-    select: SUMMARY_SELECT,
+  // Wrapped in a transaction solely so the quota check and the insert share one
+  // advisory lock. Checking outside it would release the lock before the row
+  // exists, and two simultaneous creates would both see four projects and both
+  // proceed.
+  const row = await prisma.$transaction(async (tx) => {
+    // Throws QuotaExceededError, which the route turns into a 402.
+    await enforceStock(tx, { tenantId, featureKey: 'design-playground.projects' });
+
+    return tx.designProject.create({
+      data: {
+        tenantId,
+        name,
+        document: toJson(document),
+        schemaVersion: document.schemaVersion,
+        createdBy: userId,
+        updatedBy: userId,
+      },
+      select: SUMMARY_SELECT,
+    });
   });
+
   return toSummary(row);
 }
 

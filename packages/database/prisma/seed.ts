@@ -5,6 +5,7 @@
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcryptjs';
 import { MODULE_PERMISSIONS } from '@adysre/types';
+import { seedEntitlements } from './seed-entitlements.ts';
 
 const prisma = new PrismaClient();
 
@@ -92,6 +93,10 @@ async function main() {
   });
 
   console.log(`Seeded tenant ${tenantId} with ${roles.length} roles, ${permissions.length} permissions.`);
+
+  // Plans, features and limits. Runs last, because it subscribes every
+  // organization that exists, including the demo tenant created above.
+  await seedEntitlements(prisma);
 }
 
 main()

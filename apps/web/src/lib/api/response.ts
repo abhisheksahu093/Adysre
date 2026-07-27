@@ -41,6 +41,23 @@ export const FORBIDDEN = (message = 'Your role cannot perform this action.') =>
   fail('FORBIDDEN', message, 403);
 
 /**
+ * A quota is spent, or the feature is not on this tier.
+ *
+ * **402, not 403.** The caller is authenticated and permitted; they have simply
+ * run out. Distinguishing the two lets a client show an upgrade prompt for one
+ * and an access error for the other without parsing prose, and stops a spent
+ * quota looking like a permissions bug in the logs.
+ *
+ * `data` carries everything the upgrade modal renders, so the client never
+ * keeps its own copy of the limits.
+ */
+export const QUOTA_EXCEEDED = (denial: unknown, message: string) =>
+  NextResponse.json(
+    { success: false, code: 'QUOTA_EXCEEDED', message, data: denial },
+    { status: 402 },
+  );
+
+/**
  * The row does not exist, or belongs to another tenant.
  *
  * Deliberately the same answer for both: telling a caller "this exists but is

@@ -201,6 +201,135 @@ describe('auth models', () => {
   });
 });
 
+/**
+ * Subscriptions and feature access.
+ *
+ * The invariants worth pinning here are the ones whose absence silently gives
+ * the product away: a limit that cannot be expressed as unlimited, a usage
+ * table that cannot answer a rolling window, or a quota counted per user on
+ * data the whole workspace shares.
+ */
+describe('entitlement models', () => {
+  const byName = (name: string) => {
+    const model = models().find((m) => m.name === name);
+    assert.ok(model, `${name} is missing from the schema`);
+    return model;
+  };
+
+  it('separates what you buy from what you get', () => {
+    // Limits hang off the TIER. If they hung off the plan, `annual` and
+    // `lifetime` would each carry their own copy of every number and a price
+    // change would become an entitlement change.
+    assert.match(byName('TierFeature').body, /tier\s+SubscriptionTier/);
+    assert.doesNotMatch(byName('TierFeature').body, /planId/);
+    assert.match(byName('Plan').body, /tier\s+SubscriptionTier/);
+  });
+
+  it('gives a workspace exactly one subscription', () => {
+    // Not `@@unique`: a plain unique on the column, so a resolver never has to
+    // disambiguate two live rows on the hottest path in the app.
+    assert.match(byName('Subscription').body, /tenantId\s+String\s+@unique\s+@map\("tenant_id"\)/);
+  });
+
+  it('scopes usage to the tenant, and records the actor separately', () => {
+    // Quotas are shared by the workspace, because every gated table carries
+    // tenant_id. The user is recorded for support, not for counting.
+    const { body } = byName('FeatureUsageEvent');
+    assert.match(body, /tenantId\s+String\s+@map\("tenant_id"\)/);
+    assert.match(body, /userId\s+String\?\s+@map\("user_id"\)/);
+  });
+
+  it('can express unlimited without a sentinel number', () => {
+    // A large number would eventually be reached, and would render in the UI
+    // as a real quota. Null cannot be compared as a number by accident.
+    assert.match(byName('TierFeature').body, /limitValue\s+Int\?\s+@map\("limit_value"\)/);
+  });
+
+  it('distinguishes a stock ceiling from a flow quota', () => {
+    // Conflating them is what makes a user delete everything, still be unable
+    // to create, and be told they are at their limit of zero things.
+    assert.match(byName('Feature').body, /meterKind\s+MeterKind/);
+    assert.match(schema, /enum MeterKind \{[^}]*stock[^}]*flow[^}]*\}/);
+  });
+
+  it('supports rolling windows, not only calendar periods', () => {
+    // "3 in the last 24 hours" cannot be answered by a counter, because the
+    // answer changes every second with nothing being written.
+    assert.match(schema, /enum UsageWindow \{[^}]*rolling[^}]*\}/);
+    assert.match(byName('TierFeature').body, /windowSeconds\s+Int\?\s+@map\("window_seconds"\)/);
+  });
+
+  it('allows several limits on one feature', () => {
+    // Website Intelligence needs 3 per 24h AND 5 per rolling week, so the
+    // uniqueness must include the window rather than stopping at the feature.
+    assert.match(
+      byName('TierFeature').body,
+      /@@unique\(\[tier, featureId, windowKind, windowSeconds\]\)/,
+    );
+  });
+
+  it('indexes the query every consume runs', () => {
+    assert.match(
+      byName('FeatureUsageEvent').body,
+      /@@index\(\[tenantId, featureId, occurredAt\]\)/,
+    );
+  });
+
+  it('keeps every entitlement column in snake_case', () => {
+    // Relation fields are not columns and take no @map, so they must be
+    // excluded by TYPE rather than by name: a relation whose type is a model.
+    const modelNames = new Set(models().map((m) => m.name));
+
+    for (const name of ['Plan', 'Subscription', 'Feature', 'TierFeature', 'FeatureUsageEvent']) {
+      const { body } = byName(name);
+
+      // Every multi-word scalar must carry an explicit @map. `meterKind`
+      // shipped without one and produced a camelCase column, which only the
+      // generated migration revealed.
+      const fields = [...body.matchAll(/^\s{2}([a-z]+[A-Z]\w*)\s+(\w+)/gm)];
+
+      for (const [, field, type] of fields) {
+        if (modelNames.has(type!)) continue; // a relation, not a column
+        assert.match(
+          body,
+          new RegExp(`${field}[^\\n]*@map\\("[a-z_]+"\\)`),
+          `${name}.${field} has no @map, so its column would be camelCase`,
+        );
+      }
+    }
+  });
+});
+
+describe('entitlement migration', () => {
+  it('closes the NULL hole in the per-window uniqueness', () => {
+    // Postgres treats NULLs as distinct, so Prisma's @@unique does NOT stop two
+    // identical `lifetime` limits: window_seconds is NULL on both. COALESCE
+    // gives NULL a value so the constraint actually holds.
+    assert.match(allSql, /tier_features_one_limit_per_window/);
+    assert.match(allSql, /COALESCE\("window_seconds", -1\)/);
+  });
+
+  it('requires a length for rolling windows and forbids one otherwise', () => {
+    // A `rolling` row with no length counts over an infinite window and never
+    // denies anything, which looks exactly like a working limit.
+    assert.match(allSql, /tier_features_window_check/);
+    assert.match(allSql, /"window_kind" = 'rolling' AND "window_seconds" IS NOT NULL/);
+  });
+
+  it('refuses a negative limit', () => {
+    // NULL means unlimited and 0 means not-on-this-tier, so below zero is a
+    // mistake that would deny everything with a confusing message.
+    assert.match(allSql, /tier_features_limit_check/);
+  });
+
+  it('refuses a usage event that consumes nothing', () => {
+    // Zero would succeed while counting nothing; negative would refund quota
+    // through the consume path.
+    assert.match(allSql, /feature_usage_events_quantity_check/);
+    assert.match(allSql, /"quantity" > 0/);
+  });
+});
+
 describe('migration', () => {
   it('creates a table for every model in the schema', () => {
     for (const model of apiStudioModels) {

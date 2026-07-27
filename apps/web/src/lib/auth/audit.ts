@@ -27,7 +27,14 @@ export type AuthAuditAction =
   | 'auth.password.reset.completed'
   | 'auth.password.changed'
   | 'auth.account.locked'
-  | 'auth.profile.updated';
+  | 'auth.profile.updated'
+  /**
+   * A workspace hit a wall. The clearest upgrade signal there is, and the
+   * clearest sign a limit is set wrong.
+   */
+  | 'entitlement.quota.denied'
+  | 'entitlement.upgrade.requested'
+  | 'entitlement.upgrade.applied';
 
 export interface AuditContext {
   tenantId: string;

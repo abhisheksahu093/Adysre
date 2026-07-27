@@ -1,6 +1,7 @@
 import type { NextResponse } from 'next/server';
 import { API_STUDIO_PERMISSIONS } from '@adysre/types';
-import { BAD_REQUEST, UNAVAILABLE, ok, reportRouteError } from '@/lib/api/response';
+import { BAD_REQUEST, QUOTA_EXCEEDED, UNAVAILABLE, ok, reportRouteError } from '@/lib/api/response';
+import { QuotaExceededError } from '@/lib/entitlements/service';
 import { parseBody, requiredParam } from '@/lib/api/parse';
 import { authorize } from '@/lib/api-studio/guard';
 import { can } from '@/lib/api-studio/auth-policy';
@@ -54,6 +55,11 @@ export async function POST(request: Request): Promise<NextResponse> {
       'Collection created.',
     );
   } catch (error) {
+    // 402, not 403: the caller is authenticated and permitted, they have simply
+    // run out. The denial carries what the upgrade modal renders.
+    if (error instanceof QuotaExceededError) {
+      return QUOTA_EXCEEDED(error.denial, error.message);
+    }
     // Refusing a secret is better than storing one in the clear, and an
     // operator can fix a missing key; a leaked token cannot be unleaked.
     if (error instanceof SecretStorageError) return BAD_REQUEST(error.message);

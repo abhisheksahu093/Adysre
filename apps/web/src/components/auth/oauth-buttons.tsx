@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { OAUTH_PROVIDERS, type OAuthProvider } from '@adysre/validators';
 import { Button } from 'adysre';
-import { api } from '@/lib/api-client';
+import { platformApi } from '@/lib/api-client';
 import { oauthUrl } from '@/lib/auth';
 import { PROVIDER_ICONS } from './provider-icons';
 
@@ -18,11 +18,16 @@ const LABELS: Record<OAuthProvider, string> = {
 /**
  * OAuth sign-in options (AUTHENTICATION_RBAC.md).
  *
- * The set of usable providers is dynamic: the API reports which ones actually
- * have credentials configured, and any that don't are disabled here rather than
- * sending the user into a dead-end redirect. While that list is loading - or if
- * the API is unreachable - every button stays enabled, so the happy path is
- * never blocked by a slow probe.
+ * OAuth is the one part of authentication still served by the NestJS app, since
+ * the provider callbacks are registered against its URL. So it works only where
+ * `NEXT_PUBLIC_API_URL` names a reachable deployment, and every button is
+ * disabled where it does not.
+ *
+ * That check is deliberately pessimistic, unlike the provider probe below. The
+ * old behaviour stayed optimistic when the API was unreachable and left the
+ * buttons live, which sent people into a dead-end redirect to
+ * `http://localhost:4000` - a URL that in production resolves to the user's own
+ * machine. A disabled button explains itself; a redirect into nothing does not.
  */
 export function OAuthButtons() {
   const t = useTranslations('auth.oauth');
@@ -30,26 +35,32 @@ export function OAuthButtons() {
   // the API tells us otherwise.
   const [configured, setConfigured] = useState<OAuthProvider[] | undefined>(undefined);
 
+  // No API deployment means no OAuth at all, whatever the probe would say.
+  const oauthAvailable = Boolean(process.env.NEXT_PUBLIC_API_URL);
+
   useEffect(() => {
+    if (!oauthAvailable) return;
     let active = true;
-    api
+    platformApi
       .get<{ providers: OAuthProvider[] }>('/auth/oauth/providers')
       .then((data) => {
         if (active) setConfigured(data.providers);
       })
       .catch(() => {
-        // API down or unreachable: stay optimistic and leave the buttons live.
+        // Reachable-but-erroring API: stay optimistic and leave the buttons
+        // live, so a slow or flaky probe never blocks the happy path.
       });
     return () => {
       active = false;
     };
-  }, []);
+  }, [oauthAvailable]);
 
   return (
     <div className="grid grid-cols-3 gap-2">
       {OAUTH_PROVIDERS.map((provider) => {
         const Icon = PROVIDER_ICONS[provider];
-        const enabled = configured === undefined || configured.includes(provider);
+        const enabled =
+          oauthAvailable && (configured === undefined || configured.includes(provider));
         const label = t('continueWith', { provider: LABELS[provider] });
         const title = enabled ? label : t('notConfigured', { provider: LABELS[provider] });
         return (
@@ -66,7 +77,11 @@ export function OAuthButtons() {
             onClick={() => {
               // Full-page navigation, not fetch: the provider consent screen is
               // a browser redirect the API kicks off, not an API response.
-              window.location.href = oauthUrl(provider);
+              const url = oauthUrl(provider);
+              // Null when no API deployment is configured. The button is already
+              // disabled in that case; this is the guard that makes it
+              // impossible rather than merely unlikely.
+              if (url) window.location.href = url;
             }}
           >
             <Icon className="h-5 w-5" />

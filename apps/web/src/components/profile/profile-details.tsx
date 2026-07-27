@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
 import { Badge, Card, CardContent, CardHeader, CardTitle, CardDescription, buttonVariants, cn } from 'adysre';
 import { Link } from '@/i18n/navigation';
-import { fetchProfile, initials, DEMO_USER } from '@/lib/session';
+import { fetchProfile, initials, ANONYMOUS_USER } from '@/lib/session';
 import { isPremium, type AccessLevel } from '@/lib/access';
 import { AccessSwitcher } from './access-switcher';
 
@@ -30,7 +30,7 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
 
 export function ProfileDetails({ accessLevel, showDevTools }: ProfileDetailsProps) {
   const t = useTranslations('pages.profile');
-  const { data: user = DEMO_USER, isLoading } = useQuery({
+  const { data: user = ANONYMOUS_USER, isLoading } = useQuery({
     queryKey: ['profile'],
     queryFn: fetchProfile,
     staleTime: 60_000,

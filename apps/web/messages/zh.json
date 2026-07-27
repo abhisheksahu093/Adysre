@@ -323,6 +323,15 @@
         "oauth_no_email": "无法从 {provider} 获取已验证的邮箱，请改用邮箱。",
         "oauth_invalid": "该登录方式不可用。"
       }
+    },
+    "verifyEmail": {
+      "successTitle": "邮箱已确认",
+      "failureTitle": "无法确认该链接",
+      "confirmedDescription": "感谢。您的邮箱地址已确认。",
+      "alreadyDescription": "该地址此前已确认，无需再做任何操作。",
+      "invalidDescription": "该链接无效或已过期。确认链接有效期为 24 小时，且只能使用一次。您可以在个人资料中重新获取。",
+      "missingDescription": "该链接缺少确认码。请完全按照邮件中的链接打开。",
+      "continue": "继续"
     }
   },
   "dashboard": {

@@ -323,6 +323,15 @@
         "oauth_no_email": "{provider} から確認済みのメールを取得できませんでした。メールをご利用ください。",
         "oauth_invalid": "そのサインイン方法は利用できません。"
       }
+    },
+    "verifyEmail": {
+      "successTitle": "メールアドレスを確認しました",
+      "failureTitle": "このリンクを確認できませんでした",
+      "confirmedDescription": "ありがとうございます。メールアドレスの確認が完了しました。",
+      "alreadyDescription": "このアドレスは確認済みです。追加の操作は必要ありません。",
+      "invalidDescription": "このリンクは無効か、有効期限が切れています。確認リンクの有効期間は24時間で、使用できるのは1回のみです。プロフィールから新しいリンクを請求できます。",
+      "missingDescription": "このリンクに確認コードが含まれていません。メールに届いたリンクをそのまま開いてください。",
+      "continue": "続ける"
     }
   },
   "dashboard": {

@@ -11,6 +11,7 @@
     "typecheck": "tsc --noEmit",
     "test": "node scripts/generate-template-sources.mjs && tsx --test 'src/**/*.test.ts' && pnpm test:db",
     "postinstall": "node scripts/generate-template-sources.mjs",
+    "gen:openapi": "tsx scripts/generate-openapi.mjs",
     "gen:section-demos": "node scripts/generate-section-demos.mjs",
     "gen:template-sources": "node scripts/generate-template-sources.mjs",
     "test:db": "tsx --conditions=react-server --test 'src/**/*.dbtest.ts'"
@@ -38,6 +39,7 @@
     "@tanstack/react-query": "^5.59.0",
     "adysre": "workspace:*",
     "animejs": "^4.5.0",
+    "bcryptjs": "^3.0.3",
     "dompurify": "^3.2.4",
     "framer-motion": "^12.42.2",
     "html-to-image": "^1.11.13",
@@ -64,11 +66,13 @@
   },
   "devDependencies": {
     "@adysre/config": "workspace:*",
+    "@asteasolutions/zod-to-openapi": "^7.3.4",
     "@tailwindcss/postcss": "^4.0.0",
     "@types/dompurify": "^3.0.5",
     "@types/node": "^20.16.10",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
+    "openapi3-ts": "^4.6.0",
     "tailwindcss": "^4.0.0",
     "tsx": "^4.19.1",
     "typescript": "^5.6.3"

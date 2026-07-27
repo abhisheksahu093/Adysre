@@ -323,6 +323,15 @@
         "oauth_no_email": "We could not get a verified email from {provider}. Use email instead.",
         "oauth_invalid": "That sign-in option is not available."
       }
+    },
+    "verifyEmail": {
+      "successTitle": "Email confirmed",
+      "failureTitle": "We could not confirm that link",
+      "confirmedDescription": "Thanks. Your email address is now confirmed.",
+      "alreadyDescription": "This address was already confirmed. Nothing more to do.",
+      "invalidDescription": "That link is invalid or has expired. Confirmation links last 24 hours and can be used once. You can request a new one from your profile.",
+      "missingDescription": "That link is missing its confirmation code. Open the link from your email exactly as it was sent.",
+      "continue": "Continue"
     }
   },
   "dashboard": {

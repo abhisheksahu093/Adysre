@@ -10,6 +10,7 @@ import { SOCIAL_PLATFORMS } from '@/lib/tools/signature/types';
 import { SAMPLE_SIGNATURE } from '@/lib/tools/signature/sample';
 import { SIGNATURE_THEMES, SIGNATURE_THEMES_BY_ID, SOCIAL_META } from '@/lib/tools/signature/themes';
 import { buildSignatureHtml } from '@/lib/tools/signature/build';
+import { printSheetCss } from '@/lib/tools/print-sheet';
 
 /**
  * Email Signature Generator. A live editor beside a live preview of the exact
@@ -119,7 +120,9 @@ export function SignatureGenerator() {
 
   return (
     <div className="flex flex-col gap-8 lg:grid lg:h-full lg:min-h-0 lg:grid-cols-[24rem_1fr] lg:gap-8">
-      <style dangerouslySetInnerHTML={{ __html: PRINT_CSS }} />
+      {/* A signature is not a page, so no `@page`: it prints at whatever the
+          browser's default paper is, which is all a signature block needs. */}
+      <style dangerouslySetInnerHTML={{ __html: printSheetCss('signature-preview') }} />
 
       {/* Editor */}
       <div className="relative space-y-6 lg:min-h-0 lg:overflow-y-auto lg:pr-2">
@@ -239,11 +242,6 @@ export function SignatureGenerator() {
   );
 }
 
-const PRINT_CSS = `@media print {
-  body * { visibility: hidden !important; }
-  #signature-preview, #signature-preview * { visibility: visible !important; }
-  #signature-preview { position: absolute; left: 0; top: 0; }
-}`;
 
 // ── Small form primitives ────────────────────────────────────────────────────
 

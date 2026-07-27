@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState, type ChangeEvent } from 'react';
+import { useEffect, useState, type ChangeEvent } from 'react';
 import { Reorder, useDragControls } from 'framer-motion';
 import { Eye, EyeOff, FileJson, GripVertical, ImagePlus, Plus, Printer, Trash2, Upload } from 'lucide-react';
 import { Button, Input, Label, Select, cn } from 'adysre';
@@ -8,6 +8,8 @@ import type { CertItem, EducationItem, ExperienceItem, LinkItem, ProjectItem, Re
 import { SAMPLE_RESUME } from '@/lib/tools/resume/sample';
 import { RESUME_FONTS, RESUME_TEMPLATES, RESUME_TEMPLATES_BY_ID } from '@/lib/tools/resume/templates';
 import { fromJson, toJson } from '@/lib/tools/resume/serialize';
+import { printSheetCss } from '@/lib/tools/print-sheet';
+import { AVATAR_MAX_EDGE, readImageFile } from '@/lib/tools/image-upload';
 import { ResumePreview } from './resume-preview';
 
 /**
@@ -33,7 +35,16 @@ function download(name: string, content: string, mime: string) {
 export function ResumeBuilder() {
   const [data, setData] = useState<ResumeData>(SAMPLE_RESUME);
   const [saved, setSaved] = useState(false);
-  const loaded = useRef(false);
+  /**
+   * Whether the restore has finished. STATE, not a ref, and that is the whole
+   * point: effects in one commit run in declaration order with the state this
+   * render already had. A ref flipped by the restore is visible to the autosave
+   * effect immediately, so the autosave ran in the same commit and wrote the
+   * SAMPLE over the resume that had just been read back - replacing the user's
+   * saved work with the placeholder. A state flag cannot be seen until the next
+   * commit, which is exactly when `data` holds the restored resume.
+   */
+  const [restored, setRestored] = useState(false);
 
   // Load once, then autosave.
   useEffect(() => {
@@ -42,15 +53,23 @@ export function ResumeBuilder() {
       const parsed = fromJson(stored);
       if (parsed) setData(parsed);
     }
-    loaded.current = true;
+    setRestored(true);
   }, []);
   useEffect(() => {
-    if (!loaded.current) return;
-    window.localStorage.setItem(STORAGE_KEY, toJson(data));
+    if (!restored) return;
+    try {
+      window.localStorage.setItem(STORAGE_KEY, toJson(data));
+    } catch {
+      // Quota, or a browser with storage switched off. The resume is still in
+      // memory and still exports, so a failed autosave must not take the editor
+      // down with it - it just stops claiming it saved.
+      setSaved(false);
+      return;
+    }
     setSaved(true);
     const t = window.setTimeout(() => setSaved(false), 1200);
     return () => window.clearTimeout(t);
-  }, [data]);
+  }, [data, restored]);
 
   const set = (patch: Partial<ResumeData>) => setData((d) => ({ ...d, ...patch }));
   const setContact = (patch: Partial<ResumeData['contact']>) => setData((d) => ({ ...d, contact: { ...d.contact, ...patch } }));
@@ -62,10 +81,15 @@ export function ResumeBuilder() {
 
   function onPhoto(event: ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
+    // Reset first: picking the same file twice must fire `change` again.
+    event.target.value = '';
     if (!file) return;
-    const reader = new FileReader();
-    reader.onload = () => set({ photo: typeof reader.result === 'string' ? reader.result : '' });
-    reader.readAsDataURL(file);
+    // Scaled before it enters the document. A photo straight off a phone is
+    // several MB of base64, which overflows the localStorage autosave below and
+    // takes the upload with it.
+    void readImageFile(file, { maxEdge: AVATAR_MAX_EDGE }).then((photo) => {
+      if (photo !== null) set({ photo });
+    });
   }
   function onImport(event: ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
@@ -100,7 +124,7 @@ export function ResumeBuilder() {
 
   return (
     <div id="resume-shell" className="grid gap-8 lg:grid-cols-[24rem_1fr]">
-      <style dangerouslySetInnerHTML={{ __html: PRINT_CSS(data.design.pageSize) }} />
+      <style dangerouslySetInnerHTML={{ __html: printSheetCss('resume-print', { size: data.design.pageSize }) }} />
 
       {/* Editor */}
       <div id="resume-editor" className="relative space-y-6">
@@ -286,38 +310,6 @@ function SectionRow({ section, onToggle }: { section: ResumeSection; onToggle: (
     </Reorder.Item>
   );
 }
-
-const PRINT_CSS = (size: string) => `@page { size: ${size} portrait; margin: 12mm; }
-@media print {
-  /* Let the document grow to as many pages as the resume needs. */
-  html, body { height: auto !important; overflow: visible !important; }
-
-  /* Paint only the resume paper, hiding the rest of the app shell. */
-  body * { visibility: hidden !important; }
-  #resume-print, #resume-print * { visibility: visible !important; }
-
-  /* Drop the editor and neutralize the sticky/relative preview column so the
-     paper anchors to the page origin instead of a pushed-down container - this
-     is what otherwise produced blank leading pages. */
-  #resume-editor { display: none !important; }
-  #resume-shell, #resume-preview-col { position: static !important; display: block !important; }
-
-  #resume-print {
-    position: absolute !important;
-    left: 0 !important;
-    top: 0 !important;
-    width: 100% !important;
-    margin: 0 !important;
-    border: 0 !important;
-    border-radius: 0 !important;
-    box-shadow: none !important;
-    overflow: visible !important;
-    /* Keep template backgrounds and inverse (white-on-accent) text, which
-       browsers drop from print by default. */
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
-  }
-}`;
 
 // ── Primitives ───────────────────────────────────────────────────────────────
 

@@ -12,6 +12,8 @@ import {
   Sparkles,
   type LucideIcon,
 } from 'lucide-react';
+import { RULES } from '@/lib/website-intel/rules';
+import { SEO_CHECK_IDS } from '@/lib/website-intel/seo/audit';
 
 /**
  * Website Intelligence platform - the catalogue of what it analyses.
@@ -83,14 +85,23 @@ export const INTEL_STACK: IntelStackGroup[] = [
  * from the catalogues above so they can never drift from what is actually
  * listed (Rule 6); the rest are illustrative platform figures.
  */
-export const INTEL_STATS = [
-  { value: INTEL_CAPABILITIES.length, suffix: '', id: 'analyses' },
-  { value: 500, suffix: '+', id: 'rules' },
-  { value: 4, suffix: '', id: 'formats' },
-];
-
 /** Report export formats offered. Extensions are proper nouns. */
 export const INTEL_REPORT_FORMATS = ['PDF', 'CSV', 'JSON', 'Markdown'] as const;
+
+/**
+ * The checks a scan actually runs: the page rule set plus the SEO audit.
+ *
+ * Counted from the engine, never typed here. This used to read `500+`, which no
+ * part of the code could produce - and a scanner whose own numbers are made up
+ * is the last thing that should be grading anybody else's site.
+ */
+export const INTEL_CHECK_COUNT = RULES.length + SEO_CHECK_IDS.length;
+
+export const INTEL_STATS = [
+  { value: INTEL_CAPABILITIES.length, suffix: '', id: 'analyses' },
+  { value: INTEL_CHECK_COUNT, suffix: '', id: 'rules' },
+  { value: INTEL_REPORT_FORMATS.length, suffix: '', id: 'formats' },
+];
 
 /** The in-app route the platform lives at, referenced by nav and the home CTA. */
 export const INTEL_ROUTE = '/website-intelligence';

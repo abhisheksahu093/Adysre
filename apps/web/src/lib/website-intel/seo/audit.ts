@@ -58,6 +58,40 @@ function grade(score: number): string {
   return 'F';
 }
 
+/**
+ * Every check this audit emits, in order.
+ *
+ * Declared rather than counted after the fact, because the number of checks the
+ * platform runs is a CLAIM the marketing page makes ("rule-based checks"), and
+ * a claim needs a source. `seo.test.ts` asserts a real audit emits exactly this
+ * list, so the figure cannot drift from the code that produces it.
+ */
+export const SEO_CHECK_IDS = [
+  'title',
+  'title-length',
+  'meta-description',
+  'meta-description-length',
+  'canonical',
+  'h1',
+  'heading-order',
+  'image-alt',
+  'word-count',
+  'https',
+  'status',
+  'viewport',
+  'charset',
+  'lang',
+  'favicon',
+  'redirects',
+  'page-size',
+  'structured-data',
+  'open-graph',
+  'twitter-card',
+  'internal-links',
+  'external-links',
+  'security-headers',
+] as const;
+
 export function auditSeo(facts: PageFacts, extra: SeoExtra): SeoReport {
   const c: SeoCheck[] = [];
   const add = (

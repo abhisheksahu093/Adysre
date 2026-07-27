@@ -2,7 +2,7 @@ import { getTranslations } from 'next-intl/server';
 import { ArrowRight, Radar } from 'lucide-react';
 import { buttonVariants, cn } from 'adysre';
 import { Link } from '@/i18n/navigation';
-import { INTEL_ROUTE, INTEL_STATS, INTEL_CAPABILITIES } from '@/data/website-intelligence';
+import { INTEL_CHECK_COUNT, INTEL_ROUTE, INTEL_STATS, INTEL_CAPABILITIES } from '@/data/website-intelligence';
 import { WebsiteChecker } from './website-checker';
 import { SectionHeading } from './section-heading';
 
@@ -34,7 +34,7 @@ export async function IntelligenceSection() {
             </span>
           }
           title={t('title')}
-          subtitle={t('home.subtitle')}
+          subtitle={t('home.subtitle', { count: INTEL_CHECK_COUNT })}
           className="max-w-3xl"
         />
 

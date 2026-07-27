@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { describe, it } from 'node:test';
 
 import type { PageFacts } from '../types';
-import { auditSeo } from './audit';
+import { auditSeo, SEO_CHECK_IDS } from './audit';
 import { plainText, textStats, auditSnapshot } from './run';
 
 /**
@@ -47,6 +47,19 @@ function facts(over: Partial<PageFacts> = {}): PageFacts {
 const extra = { wordCount: 800, keywords: [] };
 
 describe('auditSeo', () => {
+  /*
+   * The count of checks this audit runs is published on the marketing page, so
+   * the declared list has to be the list the audit actually emits - otherwise
+   * the site advertises a number nothing produces.
+   */
+  it('emits exactly the checks it declares', () => {
+    const r = auditSeo(facts(), extra);
+    assert.deepEqual(
+      r.checks.map((c) => c.id),
+      [...SEO_CHECK_IDS],
+    );
+  });
+
   it('grades a well-optimised page A/A+', () => {
     const r = auditSeo(facts(), extra);
     assert.ok(r.score >= 90, `score ${r.score}`);

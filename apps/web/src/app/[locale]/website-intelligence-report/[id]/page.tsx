@@ -93,6 +93,16 @@ export default async function WebsiteIntelligenceReportPage({
             {result.categories.map((category) => (
               <tr key={category.category} className="border-b border-border">
                 <td className="py-2">{c(`categories.${category.category}`)}</td>
+                {/* The checks behind the score travel with the report, so a
+                    printed 100 still says what it was based on. */}
+                <td className="py-2 text-right text-xs text-muted-foreground">
+                  {category.checks === undefined
+                    ? null
+                    : c('checks', {
+                        passed: category.passed ?? category.checks - category.findings.length,
+                        total: category.checks,
+                      })}
+                </td>
                 <td className="py-2 text-right font-semibold tabular-nums">{category.score}</td>
               </tr>
             ))}

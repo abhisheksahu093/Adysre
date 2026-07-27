@@ -6,7 +6,7 @@ import { extractFacts } from './facts';
 import { detectTechnologies } from './technology';
 import { evaluateRules, duplicateRuleIds } from './engine';
 import { RULES } from './rules';
-import { overallScore, scoreByCategory, SCORED_CATEGORIES } from './score';
+import { CATEGORY_WEIGHTS, overallScore, scoreByCategory, SCORED_CATEGORIES, UNMEASURED_CATEGORIES } from './score';
 import { analyzeSnapshot } from './scan';
 import { isBlockedHost, validateScanUrl, ScanValidationError } from './validate';
 
@@ -213,6 +213,58 @@ describe('scoring', () => {
     const security = categories.find((c) => c.category === 'security');
     assert.equal(security?.score, 0);
     assert.ok(overallScore(categories) < 60);
+  });
+
+  /*
+   * The bug this covers: `<script src=... nomodule>` is the legacy fallback a
+   * module build ships beside its real bundle. No module-capable browser
+   * fetches or runs it, so it cannot block render - but it was counted, and one
+   * of them took 25 points off every Next.js/Vite site's assets score.
+   */
+  it('does not count a nomodule fallback as render-blocking', () => {
+    const html = `<html><head>
+      <script src="/modern.js" type="module"></script>
+      <script src="/legacy.js" nomodule></script>
+    </head><body><h1>Hi</h1></body></html>`;
+    const facts = extractFacts(snapshot({ html }));
+    assert.equal(facts.scripts.total, 2);
+    assert.equal(facts.scripts.blocking, 0);
+  });
+
+  it('publishes how many checks each category ran', () => {
+    const facts = extractFacts(snapshot({ html: CLEAN_HTML, headers: CLEAN_HEADERS }));
+    const categories = scoreByCategory(evaluateRules(facts));
+    for (const category of categories) {
+      assert.ok((category.checks ?? 0) > 0, `${category.category} reports no checks`);
+      assert.equal(category.passed, (category.checks ?? 0) - category.findings.length);
+    }
+  });
+
+  it('weights the overall so a one-check category cannot carry it', () => {
+    // accessibility is a single rule today; security is seven. An unweighted
+    // mean gave them the same say, which flattered every site it scanned.
+    const accessibility = CATEGORY_WEIGHTS.accessibility ?? 0;
+    const security = CATEGORY_WEIGHTS.security ?? 0;
+    assert.ok(accessibility > 0 && security > accessibility * 3);
+
+    // A perfect thin category must not lift a failing weighty one to the mean.
+    const categories = [
+      { category: 'security' as const, score: 0, findings: [] },
+      { category: 'accessibility' as const, score: 100, findings: [] },
+    ];
+    const mean = (0 + 100) / 2;
+    assert.ok(overallScore(categories) < mean);
+  });
+
+  it('names what it does not measure, rather than scoring it', () => {
+    assert.ok(UNMEASURED_CATEGORIES.includes('performance'));
+    for (const category of UNMEASURED_CATEGORIES) {
+      assert.ok(!SCORED_CATEGORIES.includes(category), `${category} must not be scored`);
+      // Its weight is already declared so the browser phase counts for
+      // something the day it lands; what matters today is that nothing invents
+      // a score for it.
+      assert.ok((CATEGORY_WEIGHTS[category] ?? 0) > 0);
+    }
   });
 
   it('only scores categories that have rules', () => {

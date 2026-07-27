@@ -2487,7 +2487,7 @@
     },
     "badge": "ウェブサイトインテリジェンス",
     "title": "どんなサイトの問題も正確に把握",
-    "subtitle": "任意の公開URLを指定すると、パフォーマンス・SEO・アクセシビリティ・セキュリティ・Core Web Vitals などを1つのレポートに。500以上のルールに基づき、有料AIは不要です。",
+    "subtitle": "任意の公開URLを指定すると、SEO、セキュリティ、HTML、アセット、ベストプラクティスを一つのレポートにまとめます。{count}件のルールベース検査を用い、有料AIは使いません。パフォーマンスとCore Web Vitalsはブラウザエンジンとともに提供されます。",
     "comingSoon": "開発中",
     "scan": {
       "placeholder": "https://example.com",
@@ -2580,7 +2580,7 @@
       "cta": "プラットフォームを見る",
       "secondary": "スキャン内容を見る",
       "moreFindings": "完全なレポートで{count}件すべての検出結果を見る",
-      "subtitle": "任意の公開URLを指定すると、パフォーマンス・SEO・アクセシビリティ・セキュリティ・Core Web Vitals などを1つのレポートに。500以上のルールに基づいています。"
+      "subtitle": "任意の公開URLを指定すると、SEO、セキュリティ、HTML、アセット、ベストプラクティスを一つのレポートにまとめます。{count}件のルールベース検査を使用。パフォーマンスとCore Web Vitalsはブラウザエンジンとともに提供されます。"
     },
     "console": {
       "label": "ウェブサイトをスキャン",
@@ -2592,6 +2592,9 @@
       "noFindings": "今回の検査では問題は見つかりませんでした。",
       "scannedIn": "{ms} ms でスキャン",
       "browserNote": "パフォーマンス・アクセシビリティ・Core Web Vitals はブラウザエンジンが必要で、後のフェーズで対応します。",
+      "checks": "{total}件中{passed}件のチェックに合格",
+      "notMeasured": "未計測",
+      "scopeNote": "このスコアは、ページを実行せずに判断できる範囲、つまりSEO、セキュリティ、HTML、アセット、ベストプラクティスを対象とします。パフォーマンスの評価ではありません。Lighthouse系のツール（PageSpeed Insights、GTmetrix）はブラウザエンジンを必要とするCore Web Vitalsを主に示すため、二つの数値は別の問いに答えています。",
       "categories": {
         "seo": "SEO",
         "security": "セキュリティ",

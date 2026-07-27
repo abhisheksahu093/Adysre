@@ -3,7 +3,7 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { Radar } from 'lucide-react';
 import { redirect } from '@/i18n/navigation';
 import { getSession } from '@/lib/website-intel/auth/session';
-import { INTEL_DASHBOARD_SECTIONS, INTEL_STATS } from '@/data/website-intelligence';
+import { INTEL_CHECK_COUNT, INTEL_DASHBOARD_SECTIONS, INTEL_STATS } from '@/data/website-intelligence';
 import { IntelCapabilitiesGrid } from '@/components/website-intelligence/capabilities-grid';
 import { ScanConsole } from '@/components/website-intelligence/scan-console';
 import { ScheduleManager } from '@/components/website-intelligence/schedule-manager';
@@ -61,7 +61,7 @@ export default async function WebsiteIntelligencePage({
         </div>
         <div className="max-w-3xl space-y-3">
           <h1 className="text-2xl font-bold tracking-tight sm:text-4xl">{t('title')}</h1>
-          <p className="text-sm leading-relaxed text-muted-foreground sm:text-base">{t('subtitle')}</p>
+          <p className="text-sm leading-relaxed text-muted-foreground sm:text-base">{t('subtitle', { count: INTEL_CHECK_COUNT })}</p>
         </div>
       </div>
 

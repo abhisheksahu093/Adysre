@@ -23,6 +23,48 @@ export { ACCESS_COOKIE, constantTimeEqual, verifyAccessToken };
 /** Dev-only escape-hatch cookie (see `session.ts`). Never trusted in production. */
 export const DEV_SESSION_COOKIE = 'adysre_intel_dev';
 
+/** Holds one anonymous visitor's sandbox id in public demo mode (`session.ts`). */
+export const PUBLIC_DEMO_COOKIE = 'adysre_intel_demo';
+
+/**
+ * The sandbox a request gets before one has been minted for it.
+ *
+ * A Server Component may read cookies and may not set them, so the first page
+ * render of a new visitor has no sandbox yet. It needs none - the page reads
+ * nothing tenant-scoped - so it renders under a tenant that owns no records.
+ * The first API call from that page mints the real one.
+ */
+export const UNMINTED_SANDBOX = 'unminted';
+
+/**
+ * A minted sandbox id: 32 lowercase hex characters (a UUID with its dashes
+ * removed). Checked rather than trusted, so a hand-written cookie cannot name
+ * an arbitrary tenant - and 128 random bits cannot be guessed into somebody
+ * else's sandbox.
+ */
+const SANDBOX_ID = /^[0-9a-f]{32}$/;
+
+export function isSandboxId(value: string | undefined): value is string {
+  return value !== undefined && SANDBOX_ID.test(value);
+}
+
+/**
+ * The stand-in principal for an anonymous visitor in public demo mode.
+ *
+ * Owner, because every panel on the page mutates (a scan is a write) and a
+ * read-only demo is a page of failing buttons. That is safe only because the
+ * tenant is per-visitor: the store is partitioned by `tenantId`, so one
+ * visitor's scans, schedules and channels are unreachable from another's.
+ */
+export function publicDemoSession(sandboxId: string): IntelSession {
+  return {
+    userId: `demo-user-${sandboxId}`,
+    tenantId: `demo-${sandboxId}`,
+    roles: ['Owner'],
+    permissions: [],
+  };
+}
+
 /** The verified principal, mirrored from the API's `AuthContext`. */
 export type IntelSession = PlatformSession;
 

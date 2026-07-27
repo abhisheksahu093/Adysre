@@ -35,6 +35,7 @@ import {
   type LucideIcon,
 } from 'lucide-react';
 import { APP_HOME } from '@/config/navigation';
+import { API_STUDIO_ROUTE } from './api-studio';
 
 /** Accent families available to a landing module, each backed by a theme token. */
 export type Accent = 'primary' | 'secondary' | 'accent';
@@ -150,6 +151,9 @@ export const LANDING_LINKS = {
   templates: '/templates',
   // "Open the workspace" drops you straight into the browser IDE.
   codeStudio: '/code-studio',
+  // The self-hosted HTTP client. Shares the developer group with Code Studio in
+  // the header menu, and has its own section on the home page.
+  apiStudio: API_STUDIO_ROUTE,
   // The components page leads with its "Customize your project" playground CTA.
   customize: '/components',
   // Tools module destinations, surfaced in the header "Tools" menu.

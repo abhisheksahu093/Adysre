@@ -17,6 +17,14 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
+      /*
+       * `NEXT_OUTPUT=standalone` (set by apps/web/Dockerfile) makes Next emit
+       * the self-contained server. Declared here for two reasons: a task only
+       * sees variables this file lists, and the flag CHANGES the output, so it
+       * has to be part of the cache key - otherwise a Docker build could replay
+       * a local build's cache and ship an image with no server in it.
+       */
+      "env": ["NEXT_OUTPUT"],
       "outputs": ["dist/**", ".next/**", "!.next/cache/**"]
     },
     "adysre#build": {

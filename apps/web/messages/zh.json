@@ -2163,8 +2163,31 @@
         "words": "自然语言",
         "verdict": "针对订单运行"
       },
+      "input": "运行所针对的订单",
+      "trace": "判定过程",
+      "applied": "已应用的动作",
       "matched": "匹配",
       "cta": "打开规则引擎"
+    },
+    "apiStudio": {
+      "badge": "API 工作室",
+      "title": "运行在你自己技术栈里的 API 客户端",
+      "subtitle": "集合、环境、鉴权与断言，与你在这里构建的一切一同自托管。请求在你自己的服务器上执行，发送的内容不会落到别人手里。",
+      "stats": {
+        "methods": "HTTP 方法",
+        "auth": "鉴权方式",
+        "bodies": "请求体类型",
+        "assertions": "断言运算符"
+      },
+      "capabilities": {
+        "collections": "集合与文件夹",
+        "environments": "环境与变量",
+        "auth": "内置鉴权",
+        "history": "请求历史",
+        "tests": "断言与测试",
+        "selfHosted": "自托管"
+      },
+      "cta": "打开 API 工作室"
     }
   },
   "designPlayground": {

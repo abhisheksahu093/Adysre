@@ -2163,8 +2163,31 @@
         "words": "In plain English",
         "verdict": "Run against an order"
       },
+      "input": "The order it ran against",
+      "trace": "How it decided",
+      "applied": "Action applied",
       "matched": "Matched",
       "cta": "Open the rules engine"
+    },
+    "apiStudio": {
+      "badge": "API Studio",
+      "title": "An API client that lives inside your stack",
+      "subtitle": "Collections, environments, auth and assertions, self-hosted next to everything else you build here. Requests run on your own server, so nothing you send is anybody else's to keep.",
+      "stats": {
+        "methods": "HTTP methods",
+        "auth": "Auth schemes",
+        "bodies": "Body types",
+        "assertions": "Assertion operators"
+      },
+      "capabilities": {
+        "collections": "Collections and folders",
+        "environments": "Environments and variables",
+        "auth": "Auth built in",
+        "history": "Request history",
+        "tests": "Assertions and tests",
+        "selfHosted": "Self-hosted"
+      },
+      "cta": "Open API Studio"
     }
   },
   "designPlayground": {

@@ -62,6 +62,65 @@ body {
   padding-right: 1rem;
 }
 
+/* ---- Landing: inset code lanes ------------------------------------------ */
+/* The home page insets code inside panels that own their own surface (the rules
+   document, the API Studio request and response) and fade out at the edges
+   rather than scroll. Overriding the shared block rather than forking it
+   (Rule 3). Placed after `.shiki-code` deliberately — same specificity, so
+   source order decides. */
+.code-inset pre {
+  background-color: transparent !important;
+  padding: 0;
+  overflow: hidden;
+}
+
+.code-inset code .line::before {
+  width: 2rem;
+  padding-right: 0.75rem;
+  opacity: 0.35;
+}
+
+/* A ring leaving the chip, so the three lanes read as a flow rather than three
+   boxes. `currentColor` and `inherit`, so the pulse takes the tone and the
+   shape of whatever wears it — the connector chips and the matched badge. */
+@keyframes rules-pulse {
+  0% {
+    opacity: 0.35;
+    transform: scale(0.9);
+  }
+  70% {
+    opacity: 0;
+    transform: scale(1.5);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.5);
+  }
+}
+
+.rules-pulse::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background-color: currentColor;
+  animation: rules-pulse 2.6s ease-out infinite;
+}
+
+/* The second connector fires half a beat later, so the pulse travels left to
+   right — the direction the projection actually runs. */
+.rules-pulse--late::after {
+  animation-delay: 1.3s;
+}
+
+/* Decoration: someone who asked for less motion gets a still chip. */
+@media (prefers-reduced-motion: reduce) {
+  .rules-pulse::after {
+    animation: none;
+    opacity: 0;
+  }
+}
+
 /* ---- Component previews ------------------------------------------------- */
 /* The skeleton loader's shimmer needs keyframes Tailwind can't express inline.
    Ships here so the copied Tailwind/React variants work as-is. The highlight is

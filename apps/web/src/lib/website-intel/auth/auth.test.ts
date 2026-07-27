@@ -7,6 +7,9 @@ import {
   verifyAccessToken,
   resolveDevSession,
   constantTimeEqual,
+  isSandboxId,
+  publicDemoSession,
+  UNMINTED_SANDBOX,
   WRITE_ROLES,
   type IntelSession,
 } from './policy';
@@ -125,6 +128,38 @@ describe('resolveDevSession', () => {
     assert.equal(resolveDevSession('anonymous'), null);
     // Unknown but not "anonymous" → falls back to Owner (never a silent deny).
     assert.deepEqual(resolveDevSession('bogus')?.roles, ['Owner']);
+  });
+});
+
+describe('publicDemoSession', () => {
+  it('is an Owner, so every panel on the page works', () => {
+    const session = publicDemoSession('0123456789abcdef0123456789abcdef');
+    assert.deepEqual(session.roles, ['Owner']);
+    assert.equal(canWrite(session), true);
+  });
+
+  it('gives each sandbox its own tenant, which is what keeps visitors apart', () => {
+    const one = publicDemoSession('0123456789abcdef0123456789abcdef');
+    const two = publicDemoSession('fedcba9876543210fedcba9876543210');
+    assert.notEqual(one.tenantId, two.tenantId);
+    assert.notEqual(one.userId, two.userId);
+  });
+});
+
+describe('isSandboxId', () => {
+  it('accepts a minted id', () => {
+    assert.equal(isSandboxId(crypto.randomUUID().replaceAll('-', '')), true);
+  });
+
+  it('rejects anything hand-written, so a cookie cannot name a tenant', () => {
+    assert.equal(isSandboxId(undefined), false);
+    assert.equal(isSandboxId(''), false);
+    assert.equal(isSandboxId('demo'), false);
+    assert.equal(isSandboxId(UNMINTED_SANDBOX), false);
+    // Right alphabet, wrong length; and right length, wrong alphabet.
+    assert.equal(isSandboxId('0123456789abcdef'), false);
+    assert.equal(isSandboxId('0123456789ABCDEF0123456789ABCDEF'), false);
+    assert.equal(isSandboxId('../../etc/passwd'), false);
   });
 });
 

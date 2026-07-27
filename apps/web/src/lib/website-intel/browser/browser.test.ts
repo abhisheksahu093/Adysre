@@ -133,8 +133,11 @@ describe('applyBrowserAnalysis', () => {
     assert.equal(merged.findings[0]?.severity, 'critical');
     assert.equal(byCat.get('performance')?.findings[0]?.ruleId, 'lh-lcp');
 
-    // Overall = mean(80, 90, 100, 40) = 77.5 → 78.
-    assert.equal(merged.overallScore, 78);
+    // Weighted, not a flat mean: seo 25, accessibility 5, bestPractices 10 and
+    // performance 25, so a 40 for performance bites and a thin accessibility
+    // category cannot paper over it.
+    // (80*25 + 90*5 + 100*10 + 40*25) / 65 = 68.46 → 68.
+    assert.equal(merged.overallScore, 68);
     assert.equal(merged.metrics.webVitals?.lcp, 4200);
   });
 });

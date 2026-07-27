@@ -6,6 +6,7 @@ import { ArrowRight, Clock, Download, Loader2, Radar, Search, ShieldAlert } from
 import { cn } from 'adysre';
 import type { ScanResult, Severity, WebVitals } from '@/lib/website-intel/types';
 import type { ScanComparison, ScanRecord, ScanSummary } from '@/lib/website-intel/history/types';
+import { UNMEASURED_CATEGORIES } from '@/lib/website-intel/score';
 
 /**
  * The working scan console.
@@ -206,11 +207,42 @@ export function ScanConsole({ placeholder }: { placeholder: string }) {
                     <div className="h-1.5 overflow-hidden rounded-full bg-muted">
                       <div className={cn('h-full rounded-full', tone.bar)} style={{ width: `${category.score}%` }} />
                     </div>
+                    {/* The evidence behind the number: "6 of 8 checks" cannot be
+                        mistaken for a verdict the way a bare 75 can. */}
+                    {category.checks !== undefined && (
+                      <p className="mt-1 text-[11px] text-muted-foreground/70">
+                        {t('checks', {
+                          passed: category.passed ?? category.checks - category.findings.length,
+                          total: category.checks,
+                        })}
+                      </p>
+                    )}
                   </div>
                 );
               })}
+
+              {/* Named rather than omitted, so a category this scan cannot
+                  measure is never read as one it measured and passed. */}
+              {UNMEASURED_CATEGORIES.map((category) => (
+                <div key={category}>
+                  <div className="flex min-h-[2.25rem] items-start justify-between gap-2">
+                    <dt className="text-xs leading-snug text-muted-foreground">
+                      {t(`categories.${category}`)}
+                    </dt>
+                    <dd className="text-sm font-semibold text-muted-foreground/60">—</dd>
+                  </div>
+                  <div className="h-1.5 overflow-hidden rounded-full bg-muted" />
+                  <p className="mt-1 text-[11px] text-muted-foreground/70">{t('notMeasured')}</p>
+                </div>
+              ))}
             </dl>
           </div>
+
+          {/* States the scope in the report itself: this is not a Lighthouse
+              performance grade and must not be compared to one. */}
+          <p className="rounded-xl border border-border bg-muted/40 px-4 py-3 text-xs leading-relaxed text-muted-foreground">
+            {t('scopeNote')}
+          </p>
 
           {recordId && (
             <div className="flex flex-wrap items-center gap-2">
@@ -242,8 +274,6 @@ export function ScanConsole({ placeholder }: { placeholder: string }) {
           {result.metrics.webVitals && (
             <WebVitalsRow vitals={result.metrics.webVitals} title={t('webVitalsTitle')} />
           )}
-
-          <p className="text-xs text-muted-foreground">{t('browserNote')}</p>
 
           {/* Technologies */}
           {result.technologies.length > 0 && (

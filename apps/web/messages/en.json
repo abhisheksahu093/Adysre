@@ -2487,7 +2487,7 @@
     },
     "badge": "Website Intelligence",
     "title": "Know exactly what is wrong with any website",
-    "subtitle": "Point it at any public URL and get one report across performance, SEO, accessibility, security, Core Web Vitals and more, backed by 500+ rules and no paid AI.",
+    "subtitle": "Point it at any public URL and get one report across SEO, security, HTML, assets and best practices, backed by {count} rule-based checks and no paid AI. Performance and Core Web Vitals arrive with the browser engine.",
     "comingSoon": "In development",
     "scan": {
       "placeholder": "https://example.com",
@@ -2500,8 +2500,8 @@
       "formats": "Export formats",
       "paidAi": "Paid AI APIs"
     },
-    "capabilitiesTitle": "Eleven analyses, one scan",
-    "capabilitiesSubtitle": "Every scan runs the full suite and rolls the findings into an overall score.",
+    "capabilitiesTitle": "What one scan covers",
+    "capabilitiesSubtitle": "Every check runs in a single pass, and the findings roll into one score.",
     "capabilities": {
       "performance": {
         "title": "Performance",
@@ -2580,7 +2580,7 @@
       "cta": "Explore the platform",
       "secondary": "See what it scans",
       "moreFindings": "See all {count} findings in the full report",
-      "subtitle": "Point it at any public URL and get one report across performance, SEO, accessibility, security, Core Web Vitals and more, backed by 500+ rules."
+      "subtitle": "Point it at any public URL and get one report across SEO, security, HTML, assets and best practices, backed by {count} rule-based checks. Performance and Core Web Vitals arrive with the browser engine."
     },
     "console": {
       "label": "Scan a website",
@@ -2592,6 +2592,9 @@
       "noFindings": "No issues found in this pass. Nice.",
       "scannedIn": "Scanned in {ms} ms",
       "browserNote": "Performance, accessibility and Core Web Vitals need the browser engine, which is a later phase.",
+      "checks": "{passed} of {total, plural, one {# check} other {# checks}}",
+      "notMeasured": "Not measured",
+      "scopeNote": "This score covers what a page can be judged on without running it: SEO, security, HTML, assets and best practices. It is not a performance grade. Lighthouse tools (PageSpeed Insights, GTmetrix) headline Core Web Vitals, which need the browser engine, so the two numbers answer different questions.",
       "categories": {
         "seo": "SEO",
         "security": "Security",

@@ -153,6 +153,16 @@ export interface CategoryScore {
   /** 0-100, where 100 is clean. */
   score: number;
   findings: Finding[];
+  /**
+   * How many checks this category ran, and how many passed.
+   *
+   * Reported so a score can be read as evidence rather than as a verdict: a
+   * category backed by one check saying 100 means "the one thing we looked at
+   * was fine", not "this site is accessible". Optional because scans recorded
+   * before this existed are still readable.
+   */
+  checks?: number;
+  passed?: number;
 }
 
 /** The whole scan, as returned by the API. */

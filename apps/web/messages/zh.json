@@ -2487,7 +2487,7 @@
     },
     "badge": "网站智能分析",
     "title": "精准掌握任意网站的问题所在",
-    "subtitle": "指向任意公开网址，即可获得一份涵盖性能、SEO、无障碍、安全、Core Web Vitals 等的报告——由 500+ 条规则驱动，且无需任何付费 AI。",
+    "subtitle": "指向任意公开网址，即可获得一份涵盖 SEO、安全、HTML、资源与最佳实践的报告，依托 {count} 项基于规则的检查，不使用付费 AI。性能与 Core Web Vitals 将随浏览器引擎一同推出。",
     "comingSoon": "开发中",
     "scan": {
       "placeholder": "https://example.com",
@@ -2500,8 +2500,8 @@
       "formats": "导出格式",
       "paidAi": "付费 AI 接口"
     },
-    "capabilitiesTitle": "十一项分析，一次扫描",
-    "capabilitiesSubtitle": "每次扫描都运行全部项目，并将结果汇总为总体评分。",
+    "capabilitiesTitle": "一次扫描涵盖哪些内容",
+    "capabilitiesSubtitle": "所有检查在一次扫描中完成，结果汇总为一个评分。",
     "capabilities": {
       "performance": {
         "title": "性能",
@@ -2580,7 +2580,7 @@
       "cta": "进入平台",
       "secondary": "查看扫描内容",
       "moreFindings": "在完整报告中查看全部 {count} 项发现",
-      "subtitle": "指向任意公开网址，即可获得一份涵盖性能、SEO、无障碍、安全、Core Web Vitals 等的报告，由 500+ 条规则驱动。"
+      "subtitle": "指向任意公开网址，即可获得一份涵盖 SEO、安全、HTML、资源与最佳实践的报告，依托 {count} 项基于规则的检查。性能与 Core Web Vitals 将随浏览器引擎一同推出。"
     },
     "console": {
       "label": "扫描网站",
@@ -2592,6 +2592,9 @@
       "noFindings": "本次未发现问题，很好。",
       "scannedIn": "用时 {ms} ms",
       "browserNote": "性能、无障碍与 Core Web Vitals 需要浏览器引擎，将在后续阶段提供。",
+      "checks": "{total} 项检查通过 {passed} 项",
+      "notMeasured": "未测量",
+      "scopeNote": "此评分只涵盖无需运行页面即可判断的部分：SEO、安全、HTML、资源与最佳实践，并不是性能评分。基于 Lighthouse 的工具（PageSpeed Insights、GTmetrix）主要展示需要浏览器引擎的 Core Web Vitals，因此两个数字回答的是不同的问题。",
       "categories": {
         "seo": "SEO",
         "security": "安全",

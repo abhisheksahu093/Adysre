@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl';
 import { ArrowRight, Loader2, Radar, Search, ShieldAlert } from 'lucide-react';
 import { cn } from 'adysre';
 import type { ScanResult, Severity } from '@/lib/website-intel/types';
+import { UNMEASURED_CATEGORIES } from '@/lib/website-intel/score';
 import { Link } from '@/i18n/navigation';
 import { INTEL_ROUTE } from '@/data/website-intelligence';
 
@@ -165,9 +166,36 @@ export function WebsiteChecker() {
                     <div className="mt-1.5 h-1.5 overflow-hidden rounded-full bg-muted">
                       <div className={cn('h-full rounded-full', tone.bar)} style={{ width: `${category.score}%` }} />
                     </div>
+                    {/* What the score is made of. A bare 100 reads as "perfect";
+                        "1 of 1 checks" reads as what it is. */}
+                    {category.checks !== undefined && (
+                      <p className="mt-1 text-[11px] text-muted-foreground/70">
+                        {t('console.checks', {
+                          passed: category.passed ?? category.checks - category.findings.length,
+                          total: category.checks,
+                        })}
+                      </p>
+                    )}
                   </div>
                 );
               })}
+
+              {/* Named, not omitted: a category we cannot measure yet must not
+                  look like one we measured and found nothing wrong with. */}
+              {UNMEASURED_CATEGORIES.map((category) => (
+                <div key={category}>
+                  <div className="flex items-baseline justify-between gap-2">
+                    <dt className="text-xs text-muted-foreground">
+                      {t(`console.categories.${category}`)}
+                    </dt>
+                    <dd className="text-sm font-semibold text-muted-foreground/60">—</dd>
+                  </div>
+                  <div className="mt-1.5 h-1.5 overflow-hidden rounded-full bg-muted" />
+                  <p className="mt-1 text-[11px] text-muted-foreground/70">
+                    {t('console.notMeasured')}
+                  </p>
+                </div>
+              ))}
             </dl>
           </div>
 
@@ -209,7 +237,11 @@ export function WebsiteChecker() {
             )}
           </div>
 
-          <p className="text-xs text-muted-foreground">{t('console.browserNote')}</p>
+          {/* Says plainly what the number covers, so it is not read as a
+              Lighthouse performance grade. */}
+          <p className="rounded-xl border border-border bg-muted/40 px-4 py-3 text-xs leading-relaxed text-muted-foreground">
+            {t('console.scopeNote')}
+          </p>
 
           {/* Funnel: the compact demo hands off to the full app experience. */}
           <Link

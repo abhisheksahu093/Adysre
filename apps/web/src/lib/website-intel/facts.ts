@@ -120,9 +120,18 @@ function extractScripts(html: string): PageFacts['scripts'] {
     const isDefer = /\bdefer\b/i.test(s);
     const type = (attr(s, 'type') ?? '').toLowerCase();
     const isModule = type === 'module'; // modules are deferred by default
+    /*
+     * `nomodule` is the legacy fallback beside a module bundle: any browser
+     * that understands modules ignores it entirely - it is never fetched, never
+     * executed, and never blocks render. Counting it cost every modern
+     * framework build a false "render-blocking scripts" finding; Next.js emits
+     * exactly one of these, which was enough to take 25 points off a site whose
+     * real blocking count is zero.
+     */
+    const isNoModule = /\bnomodule\b/i.test(s);
     if (isAsync) asyncCount += 1;
     if (isDefer) deferCount += 1;
-    if (!isAsync && !isDefer && !isModule) blocking += 1;
+    if (!isAsync && !isDefer && !isModule && !isNoModule) blocking += 1;
   }
   return { total: scripts.length, blocking, async: asyncCount, defer: deferCount };
 }

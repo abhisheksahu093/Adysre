@@ -12,6 +12,7 @@ import { LANDING_STATS } from '@/data/library-stats';
 import { TemplatesTeaser } from '@/components/landing/templates-teaser';
 import { IntelligenceSection } from '@/components/landing/intelligence-section';
 import { RulesSection } from '@/components/landing/rules-section';
+import { ApiStudioSection } from '@/components/landing/api-studio-section';
 import { Faq } from '@/components/landing/faq';
 import { CtaBand } from '@/components/landing/cta-band';
 import { LandingFooter } from '@/components/landing/landing-footer';
@@ -60,6 +61,10 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
         <IntelligenceSection />
         <FeatureGrid />
         <RulesSection />
+        {/* The two developer modules sit together: a rule engine and an API
+            client are for the same visitor, and both previews are built the
+            same way, so the page keeps its rhythm across them. */}
+        <ApiStudioSection />
         {/* A visitor who has just seen what the modules are should be told they
             can install the whole thing before being asked to browse. */}
         <InstallSection />

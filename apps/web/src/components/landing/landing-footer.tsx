@@ -33,6 +33,7 @@ export async function LandingFooter() {
     {
       heading: t('footer.tools'),
       links: [
+        { href: LANDING_LINKS.apiStudio, label: tNav('apiStudio') },
         { href: LANDING_LINKS.aiTools, label: tNav('aiTools') },
         { href: LANDING_LINKS.codes, label: tNav('codes') },
         { href: LANDING_LINKS.documents, label: tNav('documents') },

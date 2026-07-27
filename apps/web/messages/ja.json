@@ -2163,8 +2163,31 @@
         "words": "平易な文章で",
         "verdict": "注文に対して実行"
       },
+      "input": "実行した対象の注文",
+      "trace": "判定の内訳",
+      "applied": "適用されたアクション",
       "matched": "一致",
       "cta": "ルールエンジンを開く"
+    },
+    "apiStudio": {
+      "badge": "APIスタジオ",
+      "title": "自分のスタックの中で動くAPIクライアント",
+      "subtitle": "コレクション、環境、認証、アサーションを、ここで作る他のすべてと同じ場所にセルフホスト。リクエストは自分のサーバーで実行されるので、送った内容が他人の手に渡ることはありません。",
+      "stats": {
+        "methods": "HTTPメソッド",
+        "auth": "認証方式",
+        "bodies": "ボディ形式",
+        "assertions": "アサーション演算子"
+      },
+      "capabilities": {
+        "collections": "コレクションとフォルダー",
+        "environments": "環境と変数",
+        "auth": "認証を標準搭載",
+        "history": "リクエスト履歴",
+        "tests": "アサーションとテスト",
+        "selfHosted": "セルフホスト"
+      },
+      "cta": "APIスタジオを開く"
     }
   },
   "designPlayground": {

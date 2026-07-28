@@ -13,10 +13,12 @@ import { FormAlert } from '@/components/auth/form-alert';
 import { OAuthButtons, AuthDivider } from '@/components/auth/oauth-buttons';
 import { OAuthError } from '@/components/auth/oauth-error';
 import { login } from '@/lib/auth';
+import { useResetSessionCache } from '@/hooks/use-session-cache';
 import { APP_HOME } from '@/config/navigation';
 
 export default function LoginPage() {
   const router = useRouter();
+  const resetSessionCache = useResetSessionCache();
   const t = useTranslations('auth.signIn');
   const tf = useTranslations('auth.fields');
   const to = useTranslations('auth.oauth');
@@ -30,6 +32,9 @@ export default function LoginPage() {
   async function onSubmit(data: LoginInput) {
     try {
       await login(data);
+      // The session cookie is set; anything cached before it belongs to
+      // whoever was here previously, including the signed-out placeholder.
+      resetSessionCache();
       router.push(APP_HOME);
     } catch (err) {
       // Only the API's own errors are safe to show; anything else would leak a

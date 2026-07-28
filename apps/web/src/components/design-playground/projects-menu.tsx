@@ -1,11 +1,20 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { useTranslations, useFormatter } from 'next-intl';
+import { useTranslations, useFormatter, useNow } from 'next-intl';
 import { ChevronDown, FilePlus2, Loader2, Pencil } from 'lucide-react';
 import { cn } from 'adysre';
 import { listProjects, type ProjectSummary } from '@/lib/design-playground/project-client';
 import { useDesignDocumentStore } from '@/stores/design-document-store';
+
+/**
+ * How often the "edited 5 minutes ago" labels re-read the clock. Relative times
+ * need an explicit reference point (an implicit `new Date()` per render would
+ * differ between server and client), and a fixed one taken at mount goes stale
+ * in a long editing session: autosave keeps moving `updatedAt` forward, so the
+ * project you just saved would read as being in the future.
+ */
+const RELATIVE_TIME_REFRESH_MS = 30_000;
 
 /**
  * The project menu: what you are working on, and everything you worked on
@@ -19,6 +28,7 @@ import { useDesignDocumentStore } from '@/stores/design-document-store';
 export function ProjectsMenu() {
   const t = useTranslations('designPlayground');
   const format = useFormatter();
+  const now = useNow({ updateInterval: RELATIVE_TIME_REFRESH_MS });
 
   const [open, setOpen] = useState(false);
   const [projects, setProjects] = useState<ProjectSummary[] | null>(null);
@@ -165,7 +175,7 @@ export function ProjectsMenu() {
                   >
                     <span className="w-full truncate text-xs font-medium">{project.name}</span>
                     <span className="text-[11px] text-muted-foreground">
-                      {format.relativeTime(new Date(project.updatedAt))}
+                      {format.relativeTime(new Date(project.updatedAt), now)}
                     </span>
                   </button>
                 </li>

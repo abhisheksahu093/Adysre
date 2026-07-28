@@ -9,6 +9,7 @@ import { Link, getPathname, usePathname, useRouter } from '@/i18n/navigation';
 import { LOCALE_LABELS, routing, type Locale } from '@/i18n/routing';
 import { USER_MENU_ITEMS, type UserMenuItem } from '@/config/user-menu';
 import { fetchProfile, initials, ANONYMOUS_USER } from '@/lib/session';
+import { useResetSessionCache } from '@/hooks/use-session-cache';
 import { logout } from '@/lib/auth';
 
 const ROW =
@@ -107,6 +108,7 @@ function SubmenuRow({
 
 export function UserMenu() {
   const router = useRouter();
+  const resetSessionCache = useResetSessionCache();
   const pathname = usePathname();
   const locale = useLocale();
   const t = useTranslations('userMenu');
@@ -150,6 +152,10 @@ export function UserMenu() {
   async function onLogout() {
     closeAll();
     await logout();
+    // After the cookies are gone, never before: a query that refetched while
+    // the session was still valid would put this user's data straight back
+    // into the cache the next person to sign in reads from.
+    resetSessionCache();
     router.push('/login');
   }
 

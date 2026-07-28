@@ -28,6 +28,9 @@ import { GeneratingState } from './generating-state';
 import { TemplateResult } from './template-result';
 import { ProjectPaletteDialog } from './project-palette-dialog';
 import { PaletteGenerator } from '@/components/palettes/palette-generator';
+import { PremiumModal } from '@/components/entitlements/premium-modal';
+import { useEntitlement } from '@/hooks/use-entitlement';
+import { useRouter } from '@/i18n/navigation';
 
 /**
  * Playground mode. Moves through stages - start → generating → result →
@@ -38,6 +41,7 @@ import { PaletteGenerator } from '@/components/palettes/palette-generator';
  */
 export function PlaygroundView({ components }: { components: LocalizedComponent[] }) {
   const t = useTranslations('components');
+  const router = useRouter();
   const stage = usePlaygroundStore((s) => s.stage);
   const exit = usePlaygroundStore((s) => s.exit);
   const device = usePlaygroundStore((s) => s.device);
@@ -55,8 +59,37 @@ export function PlaygroundView({ components }: { components: LocalizedComponent[
   const sectionStyles = useActiveSectionStyles();
   const order = useActiveOrder();
   const [exportOpen, setExportOpen] = useState(false);
+  const [upgradeOpen, setUpgradeOpen] = useState(false);
   const [paletteChooserOpen, setPaletteChooserOpen] = useState(false);
   const [paletteGeneratorOpen, setPaletteGeneratorOpen] = useState(false);
+
+  /**
+   * Taking the code is the premium capability, so the door is where it is
+   * asked for.
+   *
+   * The export dialog shows the assembled source and hands out per-file
+   * downloads, so opening it IS the paid thing - gating only the zipped project
+   * inside it (which `ExportDialog` still does, because that is where a unit is
+   * actually consumed) would leave the same code a copy button away. Nothing
+   * here knows what the limit is; the server's answer decides.
+   */
+  const codeExport = useEntitlement('builder.generate-code');
+
+  function requestCode(): void {
+    if (codeExport.allowed) {
+      setExportOpen(true);
+      return;
+    }
+    // No feature record means nobody is signed in (usage answers 401) or the
+    // key is unknown - either way we cannot describe a limit we were never
+    // told, so send them to the page that owns the comparison rather than
+    // opening a modal with nothing in it.
+    if (!codeExport.feature) {
+      router.push('/pricing');
+      return;
+    }
+    setUpgradeOpen(true);
+  }
 
   const resolved = useMemo(
     () => resolveSelections(selectionsForPage, components),
@@ -155,7 +188,10 @@ export function PlaygroundView({ components }: { components: LocalizedComponent[
               type="button"
               size="sm"
               data-tour="export"
-              onClick={() => setExportOpen(true)}
+              // Disabled only while the answer is in flight: a button that
+              // opens the dialog and then takes it back reads as a bug.
+              disabled={codeExport.isLoading}
+              onClick={requestCode}
               className="gap-1.5"
             >
               <Code2 className="h-4 w-4" aria-hidden />
@@ -177,7 +213,7 @@ export function PlaygroundView({ components }: { components: LocalizedComponent[
           variationsBySlot={variationsBySlot}
           onSelectSlot={setActiveSlot}
           onChange={select}
-          onDownload={() => setExportOpen(true)}
+          onDownload={requestCode}
         />
       )}
 
@@ -211,6 +247,14 @@ export function PlaygroundView({ components }: { components: LocalizedComponent[
         palette={palette}
         contentOverrides={contentOverrides}
         sectionStyles={sectionStyles}
+      />
+
+      {/* Opened before anything is consumed, from the feature's own state: the
+          click asked for code, and this is the answer to that question. */}
+      <PremiumModal
+        open={upgradeOpen}
+        onClose={() => setUpgradeOpen(false)}
+        denial={codeExport.feature}
       />
 
       <ProjectPaletteDialog

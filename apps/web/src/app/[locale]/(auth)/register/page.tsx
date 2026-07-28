@@ -13,6 +13,7 @@ import { FormAlert } from '@/components/auth/form-alert';
 import { OAuthButtons, AuthDivider } from '@/components/auth/oauth-buttons';
 import { OAuthError } from '@/components/auth/oauth-error';
 import { register as registerAccount } from '@/lib/auth';
+import { useResetSessionCache } from '@/hooks/use-session-cache';
 import { APP_HOME } from '@/config/navigation';
 
 function slugify(value: string): string {
@@ -26,6 +27,7 @@ function slugify(value: string): string {
 
 export default function RegisterPage() {
   const router = useRouter();
+  const resetSessionCache = useResetSessionCache();
   const t = useTranslations('auth.register');
   const tf = useTranslations('auth.fields');
   const to = useTranslations('auth.oauth');
@@ -40,6 +42,9 @@ export default function RegisterPage() {
   async function onSubmit(data: RegisterInput) {
     try {
       await registerAccount(data);
+      // A brand new workspace inherits nothing: whatever this browser cached
+      // was read as somebody else, or as nobody.
+      resetSessionCache();
       router.push(APP_HOME);
     } catch (err) {
       // Only the API's own errors are safe to show; anything else would leak a

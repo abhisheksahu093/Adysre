@@ -44,10 +44,14 @@ export function ProfileDetails() {
       </CardHeader>
       <CardContent className="space-y-6">
         <dl className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-          <Field label={t('fullName')}>{user.name}</Field>
-          <Field label={t('email')}>{user.email}</Field>
+          {/* Every field says "loading" together, or none does. Rendering the
+              identity as blank while the request is in flight makes a pending
+              profile look exactly like a broken one, which is how this page
+              was read as empty after signing in. */}
+          <Field label={t('fullName')}>{isLoading ? t('loading') : user.name}</Field>
+          <Field label={t('email')}>{isLoading ? t('loading') : user.email}</Field>
           {/* Role and plan are different axes - see SessionUser. */}
-          <Field label={t('role')}>{user.role}</Field>
+          <Field label={t('role')}>{isLoading ? t('loading') : user.role}</Field>
           <Field label={t('status')}>{isLoading ? t('loading') : t('active')}</Field>
         </dl>
 

@@ -13,7 +13,19 @@ async function bootstrap() {
   app.setGlobalPrefix('api');
   app.enableVersioning({ type: VersioningType.URI, defaultVersion: '1' });
   app.use(cookieParser());
-  app.enableCors({ origin: process.env.API_CORS_ORIGIN?.split(',') ?? true, credentials: true });
+const corsOrigins = process.env.API_CORS_ORIGIN
+  ?.split(',')
+  .map((origin) => origin.trim());
+
+app.enableCors({
+  origin: corsOrigins ?? true,
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: [
+    'Content-Type',
+    'Authorization',
+  ],
+});
 
   app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
   app.useGlobalInterceptors(new ResponseInterceptor());

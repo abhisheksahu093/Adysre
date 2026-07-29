@@ -7,7 +7,7 @@
 # Same prune strategy as the other images. No exposed port - it consumes the
 # Redis queue rather than serving HTTP.
 
-FROM node:20-alpine AS base
+FROM node:24-alpine AS base
 RUN corepack enable && apk add --no-cache libc6-compat openssl
 WORKDIR /app
 

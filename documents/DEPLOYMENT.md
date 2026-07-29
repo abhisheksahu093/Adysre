@@ -85,7 +85,7 @@ The standalone output is opt-in: `apps/web/Dockerfile` sets `NEXT_OUTPUT=standal
 laptop or on Vercel skips it, because that copy is several GB and only this image
 reads it.
 
-Base image is `node:20-alpine`; `libc6-compat` + `openssl` are installed because
+Base image is `node:24-alpine`; `libc6-compat` + `openssl` are installed because
 the Prisma engine needs them on musl.
 
 ## Local development

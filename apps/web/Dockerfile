@@ -11,9 +11,9 @@
 # dependencies. That output is several GB and nothing outside this image wants
 # it, which is why the flag lives here rather than in the config.
 
-# ── Base: Node 20 + pnpm (corepack). Prisma engines need musl compat + openssl
+# ── Base: Node 24 + pnpm (corepack). Prisma engines need musl compat + openssl
 #    because @adysre/database is a transitive dependency of the web build. ─────
-FROM node:20-alpine AS base
+FROM node:24-alpine AS base
 RUN corepack enable && apk add --no-cache libc6-compat openssl
 WORKDIR /app
 

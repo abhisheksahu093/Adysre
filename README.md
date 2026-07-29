@@ -9,7 +9,7 @@ audit, AI) built as a pnpm + Turborepo monorepo.
 
 ## Requirements
 
-- **Node 20+** (`nvm use` reads `.nvmrc`)
+- **Node 24+** (`nvm use` reads `.nvmrc`)
 - **pnpm 9+** (`corepack enable`)
 - **Docker + Docker Compose** (Postgres + Redis)
 

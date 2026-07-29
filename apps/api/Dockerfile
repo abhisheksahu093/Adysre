@@ -8,7 +8,7 @@
 # runner (see docker-compose.prod.yml): it carries the Prisma schema, migrations
 # and CLI, so `pnpm --filter @adysre/database db:deploy` runs from it.
 
-FROM node:20-alpine AS base
+FROM node:24-alpine AS base
 RUN corepack enable && apk add --no-cache libc6-compat openssl
 WORKDIR /app
 

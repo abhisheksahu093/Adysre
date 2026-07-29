@@ -39,7 +39,7 @@ before editing anything under `packages/ui` or adding an asset family.
 - **API:** NestJS (modular monolith) + Prisma
 - **Data:** PostgreSQL + Redis + BullMQ
 - **Infra:** Docker + Docker Compose
-- **Runtime:** Node 20+ (see `.nvmrc`)
+- **Runtime:** Node 24+ (see `.nvmrc`)
 
 ## 3. Repository layout
 

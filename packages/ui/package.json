@@ -68,7 +68,7 @@
     "@adysre/config": "workspace:*",
     "@adysre/theme": "workspace:*",
     "@tailwindcss/cli": "^4.0.0",
-    "@types/node": "^20.16.10",
+    "@types/node": "^24.13.3",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "framer-motion": "^12.42.2",

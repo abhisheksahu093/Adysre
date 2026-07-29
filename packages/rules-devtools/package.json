@@ -29,7 +29,7 @@
   },
   "devDependencies": {
     "@adysre/config": "workspace:*",
-    "@types/node": "^20.16.10",
+    "@types/node": "^24.13.3",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "eslint-plugin-react-hooks": "^7.1.1",

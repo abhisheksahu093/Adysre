@@ -5,13 +5,22 @@ import { useTranslations } from 'next-intl';
 import { OAUTH_PROVIDERS, type OAuthProvider } from '@adysre/validators';
 import { FormAlert } from './form-alert';
 
-/** Error codes the OAuth callback can redirect back with (see the API). */
+/**
+ * Error codes the OAuth callback can redirect back with.
+ *
+ * Kept in step with the `failure()` calls in
+ * `app/api/auth/oauth/[provider]/{route,callback/route}.ts`. An unrecognised
+ * code renders nothing rather than a raw string, so a hand-edited URL cannot
+ * put arbitrary text on the sign-in page.
+ */
 const KNOWN_ERRORS = new Set([
   'oauth',
   'oauth_state',
   'oauth_not_configured',
   'oauth_no_email',
   'oauth_invalid',
+  'oauth_unverified',
+  'oauth_ambiguous',
 ]);
 
 const LABELS: Record<OAuthProvider, string> = {

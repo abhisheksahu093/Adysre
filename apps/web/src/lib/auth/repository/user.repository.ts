@@ -80,9 +80,19 @@ export async function isSlugTaken(slug: string): Promise<boolean> {
 export interface RegisterData {
   email: string;
   name: string;
-  passwordHash: string;
+  /**
+   * Null for an account created through OAuth, which has no password to hash.
+   * The column has always allowed it; only this type did not. Such a user signs
+   * in through their provider, or through a password reset once they set one.
+   */
+  passwordHash: string | null;
   organizationName: string;
   organizationSlug: string;
+  /**
+   * When the provider has already vouched for the address, so the user is not
+   * asked to verify an email they just proved they control.
+   */
+  emailVerifiedAt?: Date | null;
 }
 
 export interface RegisterResult {
@@ -126,6 +136,7 @@ export async function createTenantWithOwner(data: RegisterData): Promise<Registe
         email: data.email.toLowerCase(),
         name: data.name,
         passwordHash: data.passwordHash,
+        emailVerifiedAt: data.emailVerifiedAt ?? null,
         createdBy: userId,
         updatedBy: userId,
       },

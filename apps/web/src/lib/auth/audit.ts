@@ -28,6 +28,16 @@ export type AuthAuditAction =
   | 'auth.password.changed'
   | 'auth.account.locked'
   | 'auth.profile.updated'
+  /** Signed in through a provider, into an account that already existed. */
+  | 'auth.oauth.login'
+  /** A provider sign-in that created a new workspace. */
+  | 'auth.oauth.register'
+  /**
+   * A provider sign-in that was refused. Worth recording separately from
+   * `auth.login.failed`: a burst of these means the provider integration is
+   * broken, not that someone is guessing passwords.
+   */
+  | 'auth.oauth.failed'
   /**
    * A workspace hit a wall. The clearest upgrade signal there is, and the
    * clearest sign a limit is set wrong.

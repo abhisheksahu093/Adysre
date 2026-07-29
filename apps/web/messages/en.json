@@ -314,7 +314,9 @@
       "email": "Email",
       "emailPlaceholder": "you@company.com",
       "password": "Password",
-      "passwordPlaceholder": "••••••••••••"
+      "passwordPlaceholder": "••••••••••••",
+      "showPassword": "Show password",
+      "hidePassword": "Hide password"
     },
     "oauth": {
       "continueWith": "Continue with {provider}",
@@ -326,7 +328,9 @@
         "oauth_state": "Your sign-in session expired. Please try again.",
         "oauth_not_configured": "{provider} sign-in is not set up yet. Use email instead.",
         "oauth_no_email": "We could not get a verified email from {provider}. Use email instead.",
-        "oauth_invalid": "That sign-in option is not available."
+        "oauth_invalid": "That sign-in option is not available.",
+        "oauth_unverified": "{provider} has not confirmed that email address. Verify it with {provider}, then try again.",
+        "oauth_ambiguous": "That email belongs to more than one workspace. Sign in with your email and password to choose one."
       }
     },
     "verifyEmail": {

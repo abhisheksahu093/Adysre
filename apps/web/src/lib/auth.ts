@@ -122,15 +122,20 @@ export async function logout(): Promise<void> {
 }
 
 /**
- * OAuth entry point, which still lives in the NestJS app.
+ * OAuth entry point.
  *
- * Returns null when `NEXT_PUBLIC_API_URL` is unset, because there is then no
- * deployment to redirect to. Callers disable the buttons rather than send
- * someone to a URL that cannot answer, which is what the old
- * `?? 'http://localhost:4000'` default did in production.
+ * Same-origin, like every other auth endpoint here. It used to point at
+ * `NEXT_PUBLIC_API_URL` and the NestJS app, which could never work on the
+ * deployment target: that is a different origin, so the session cookie the
+ * callback sets would need `SameSite=None` to be readable by the pages that
+ * consume it, and the whole reason authentication moved into this app was to
+ * avoid exactly that.
+ *
+ * @param next Relative path to return to afterwards. Passed through, never
+ *   trusted: the server validates it with `safeNext` on the way in AND on the
+ *   way back out, because an unchecked value here is an open redirect.
  */
-export function oauthUrl(provider: OAuthProvider): string | null {
-  const base = process.env.NEXT_PUBLIC_API_URL;
-  if (!base) return null;
-  return `${base}/auth/oauth/${provider}`;
+export function oauthUrl(provider: OAuthProvider, next?: string | null): string {
+  const url = `/api/auth/oauth/${provider}`;
+  return next ? `${url}?next=${encodeURIComponent(next)}` : url;
 }

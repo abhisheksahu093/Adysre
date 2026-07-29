@@ -254,7 +254,12 @@
     "terms": "服务条款",
     "privacy": "隐私政策",
     "dmca": "DMCA",
-    "signOut": "退出登录"
+    "signOut": "退出登录",
+    "plan": {
+      "free": "免费版",
+      "premium": "高级版",
+      "enterprise": "企业版"
+    }
   },
   "comingSoon": {
     "heading": "{title}即将推出",
@@ -1956,7 +1961,6 @@
       "skip": "跳到内容",
       "menus": {
         "colorsSurfaces": "颜色与表面",
-        "library": "资源库",
         "tools": "工具"
       }
     },
@@ -3339,6 +3343,22 @@
           "body": "一个带版本与还原的存储契约。还原会写入新版本而不是回退历史。"
         }
       }
+    }
+  },
+  "toast": {
+    "region": "通知",
+    "dismiss": "关闭",
+    "auth": {
+      "signedIn": "欢迎回来",
+      "signedInBody": "您已登录 ADYSRE。",
+      "registered": "账户已创建",
+      "registeredBody": "欢迎使用 ADYSRE。您已登录，可以开始使用了。"
+    },
+    "quota": {
+      "low": "{feature} 即将用完",
+      "spent": "您已用完所有 {feature}",
+      "resets": "{when} 重置。",
+      "upgrade": "升级方案可获得更多额度。"
     }
   }
 }

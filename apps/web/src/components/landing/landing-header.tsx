@@ -10,6 +10,8 @@ import { ThemeSwitcher } from '@/components/theme-switcher';
 import { NotificationsMenu } from '@/components/notifications-menu';
 import { CartMenu } from '@/components/cart-menu';
 import { PremiumButton } from '@/components/premium-button';
+import { UserMenu } from '@/components/user-menu';
+import { useSessionUser } from '@/hooks/use-session-user';
 import { LANDING_LINKS } from '@/data/landing';
 
 interface NavItem {
@@ -20,18 +22,16 @@ interface NavItem {
 }
 
 /**
- * Marketing nav grouped into two dropdowns. Link labels come from the shared
- * `nav` namespace (so wording never drifts from the in-app sidebar); the group
- * labels come from `landing.nav.menus.*`.
+ * Marketing nav grouped into dropdowns. Link labels come from the shared `nav`
+ * namespace (so wording never drifts from the in-app sidebar); the group labels
+ * come from `landing.nav.menus.*`.
+ *
+ * Components has no dropdown of its own: once icons moved in with the colour
+ * families, the old Library menu had a single child, and a menu you open to find
+ * one link is worse than the link. It is a top-level destination now, like
+ * Templates.
  */
 const NAV_MENUS: { key: string; items: NavItem[] }[] = [
-  {
-    key: 'library',
-    items: [
-      { href: LANDING_LINKS.components, navKey: 'components' },
-      { href: LANDING_LINKS.icons, navKey: 'icons' },
-    ],
-  },
   {
     key: 'colorsSurfaces',
     items: [
@@ -39,6 +39,7 @@ const NAV_MENUS: { key: string; items: NavItem[] }[] = [
       { href: '/colors-surfaces?tab=gradients', navKey: 'gradients' },
       { href: '/colors-surfaces?tab=patterns', navKey: 'patterns' },
       { href: '/colors-surfaces?tab=textures', navKey: 'textures' },
+      { href: '/colors-surfaces?tab=icons', navKey: 'icons' },
     ],
   },
   {
@@ -58,7 +59,7 @@ const NAV_MENUS: { key: string; items: NavItem[] }[] = [
   },
 ];
 
-/** Auth entry point - a visitor signs in rather than opening an account menu. */
+/** Where a visitor with no session goes. Signed-in people get `UserMenu`. */
 const LOGIN_HREF = '/login';
 
 /**
@@ -145,10 +146,17 @@ function NavMenu({
 /**
  * Sticky marketing header for the landing page.
  *
- * Distinct from the in-app Topbar: this is the pre-login chrome. It reuses the
- * app's notifications, cart and premium controls (Rule 3 - never duplicate) and
- * adds a sign-in link, so an account action is always one click away. Client
+ * Distinct from the in-app Topbar: this is the marketing chrome. It reuses the
+ * app's notifications, cart, premium and account controls (Rule 3 - never
+ * duplicate) and shows whichever account affordance fits: a sign-in link for a
+ * visitor, the same `UserMenu` the app shell uses for someone already signed
+ * in, so returning here does not look like having been logged out. Client
  * Component because it tracks scroll for the backdrop and owns the mobile menu.
+ *
+ * The session is resolved in the BROWSER rather than passed down from the page.
+ * This header renders on the landing page, which `generateStaticParams`
+ * pre-renders; reading the auth cookie on the server would make the whole
+ * marketing page dynamic to decide the state of one button.
  */
 export function LandingHeader() {
   const t = useTranslations('landing');
@@ -156,8 +164,14 @@ export function LandingHeader() {
   const tCommon = useTranslations('common');
   const tAuth = useTranslations('auth');
   const tPremium = useTranslations('premium');
+  const { signedIn, isLoading: sessionLoading } = useSessionUser();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+
+  // Neither affordance until the session is known: showing "Sign in" to someone
+  // who is signed in, or an avatar to someone who is not, is worse than a
+  // momentarily empty slot.
+  const showSignIn = !sessionLoading && !signedIn;
 
   // A hairline border and blur appear once the page moves, so the header reads
   // as flat over the hero and lifted over content.
@@ -181,6 +195,13 @@ export function LandingHeader() {
         </Link>
 
         <nav aria-label={tNav('mainLabel')} className="ml-2 hidden items-center gap-1 lg:flex">
+          <Link
+            href={LANDING_LINKS.components}
+            className="whitespace-nowrap rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          >
+            {tNav('components')}
+          </Link>
+
           {NAV_MENUS.map((menu) => (
             <NavMenu
               key={menu.key}
@@ -215,14 +236,32 @@ export function LandingHeader() {
           {/* Text actions collapse into the mobile menu below `lg`. */}
           <div className="hidden items-center gap-1 lg:flex">
             <PremiumButton />
-            <Link href={LOGIN_HREF} className={cn(buttonVariants({ variant: 'ghost', size: 'sm' }))}>
-              {tAuth('signIn.title')}
-            </Link>
+            {/* One slot, one state: the account menu takes the place the
+                sign-in link had, rather than sitting beside it. */}
+            {showSignIn && (
+              <Link href={LOGIN_HREF} className={cn(buttonVariants({ variant: 'ghost', size: 'sm' }))}>
+                {tAuth('signIn.title')}
+              </Link>
+            )}
+            {signedIn && (
+              <div className="mx-1">
+                <UserMenu />
+              </div>
+            )}
             <Link href={LANDING_LINKS.designPlayground} className={cn(buttonVariants({ size: 'sm' }), 'gap-1.5')}>
               <PenTool className="h-3.5 w-3.5" aria-hidden />
               {tNav('designPlayground')}
             </Link>
           </div>
+
+          {/* Below `lg` the account menu stays in the bar instead of moving into
+              the drawer: it is already a compact avatar, and signing out should
+              not be two taps behind a hamburger. */}
+          {signedIn && (
+            <div className="ml-1 lg:hidden">
+              <UserMenu />
+            </div>
+          )}
 
           <button
             type="button"
@@ -241,6 +280,15 @@ export function LandingHeader() {
       {open && (
         <div className="border-t border-border bg-background lg:hidden">
           <nav aria-label={tNav('mainLabel')} className="mx-auto max-w-7xl space-y-1 px-4 py-3 sm:px-6">
+            {/* Top level here too, matching the desktop nav. */}
+            <Link
+              href={LANDING_LINKS.components}
+              onClick={() => setOpen(false)}
+              className="block rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+            >
+              {tNav('components')}
+            </Link>
+
             {NAV_MENUS.map((menu) => (
               <div key={menu.key} className="pb-1">
                 <p className="px-3 pb-1 pt-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
@@ -281,13 +329,17 @@ export function LandingHeader() {
             >
               {tPremium('cta')}
             </Link>
-            <Link
-              href={LOGIN_HREF}
-              onClick={() => setOpen(false)}
-              className={cn(buttonVariants({ variant: 'outline', size: 'sm' }), 'mt-1 w-full')}
-            >
-              {tAuth('signIn.title')}
-            </Link>
+            {/* Absent once signed in - the avatar in the bar above owns the
+                account from that point on. */}
+            {showSignIn && (
+              <Link
+                href={LOGIN_HREF}
+                onClick={() => setOpen(false)}
+                className={cn(buttonVariants({ variant: 'outline', size: 'sm' }), 'mt-1 w-full')}
+              >
+                {tAuth('signIn.title')}
+              </Link>
+            )}
             <Link
               href={LANDING_LINKS.designPlayground}
               onClick={() => setOpen(false)}

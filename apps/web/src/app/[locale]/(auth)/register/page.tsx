@@ -14,6 +14,7 @@ import { OAuthButtons, AuthDivider } from '@/components/auth/oauth-buttons';
 import { OAuthError } from '@/components/auth/oauth-error';
 import { register as registerAccount } from '@/lib/auth';
 import { useResetSessionCache } from '@/hooks/use-session-cache';
+import { toast } from '@/lib/toast';
 import { APP_HOME } from '@/config/navigation';
 
 function slugify(value: string): string {
@@ -31,6 +32,7 @@ export default function RegisterPage() {
   const t = useTranslations('auth.register');
   const tf = useTranslations('auth.fields');
   const to = useTranslations('auth.oauth');
+  const tToast = useTranslations('toast.auth');
   const {
     register,
     handleSubmit,
@@ -45,6 +47,9 @@ export default function RegisterPage() {
       // A brand new workspace inherits nothing: whatever this browser cached
       // was read as somebody else, or as nobody.
       resetSessionCache();
+      // Survives the redirect (module-level store), so the welcome lands on the
+      // first page of the app rather than flashing on the form being left.
+      toast.success(tToast('registered'), { description: tToast('registeredBody') });
       router.push(APP_HOME);
     } catch (err) {
       // Only the API's own errors are safe to show; anything else would leak a

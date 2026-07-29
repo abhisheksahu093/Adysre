@@ -10,6 +10,7 @@ import type {
 import { ApiClientError } from '@adysre/sdk';
 import { authApi } from './api-client';
 import { csrfHeaders } from './csrf-client';
+import type { AccessLevel } from './access';
 
 /**
  * Auth actions: the single place the web app talks to its own auth endpoints.
@@ -94,6 +95,8 @@ export interface ProfileResponse {
     lastLoginAt: string | null;
   };
   organization: { id: string; name: string; slug: string };
+  /** The WORKSPACE's entitlement, resolved server-side. Never role-derived. */
+  accessLevel: AccessLevel;
   roles?: string[];
   permissions?: string[];
 }

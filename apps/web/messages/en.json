@@ -254,7 +254,12 @@
     "terms": "Terms of service",
     "privacy": "Privacy policy",
     "dmca": "DMCA",
-    "signOut": "Sign out"
+    "signOut": "Sign out",
+    "plan": {
+      "free": "Free plan",
+      "premium": "Premium",
+      "enterprise": "Enterprise"
+    }
   },
   "comingSoon": {
     "heading": "{title} is coming soon",
@@ -1956,7 +1961,6 @@
       "skip": "Skip to content",
       "menus": {
         "colorsSurfaces": "Colors & Surfaces",
-        "library": "Library",
         "tools": "Tools"
       }
     },
@@ -3339,6 +3343,22 @@
           "body": "One storage contract with versioning and restore. A restore writes a new version rather than rewinding, and any adapter you write can be checked against the same suite the built-in ones pass."
         }
       }
+    }
+  },
+  "toast": {
+    "region": "Notifications",
+    "dismiss": "Dismiss",
+    "auth": {
+      "signedIn": "Welcome back",
+      "signedInBody": "You are signed in to ADYSRE.",
+      "registered": "Account created",
+      "registeredBody": "Welcome to ADYSRE. You are signed in and ready to go."
+    },
+    "quota": {
+      "low": "Almost out of {feature}",
+      "spent": "You have used all your {feature}",
+      "resets": "Resets {when}.",
+      "upgrade": "Upgrade your plan for more."
     }
   }
 }

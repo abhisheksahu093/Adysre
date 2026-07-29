@@ -20,7 +20,9 @@ interface Result {
 /** Top-level destinations, searchable by name. */
 const PAGE_LINKS: { key: string; href: string; icon: typeof Blocks }[] = [
   { key: 'components', href: '/components', icon: Blocks },
-  { key: 'icons', href: '/icons', icon: Shapes },
+  // Icons is a tab of Colours & Surfaces, but keeps its own palette entry:
+  // people search for "icons", not for the page that happens to host them.
+  { key: 'icons', href: '/colors-surfaces?tab=icons', icon: Shapes },
   { key: 'colorsSurfaces', href: '/colors-surfaces', icon: SwatchBook },
   { key: 'templates', href: '/templates', icon: LayoutTemplate },
 ];

@@ -1,14 +1,15 @@
 'use client';
 
 import { useEffect, useRef, useState, useTransition } from 'react';
-import { useQuery } from '@tanstack/react-query';
 import { useLocale, useTranslations } from 'next-intl';
 import { LogOut, ChevronRight, Check, ExternalLink, Loader2, type LucideIcon } from 'lucide-react';
-import { cn } from 'adysre';
+import { Badge, cn } from 'adysre';
 import { Link, getPathname, usePathname, useRouter } from '@/i18n/navigation';
 import { LOCALE_LABELS, routing, type Locale } from '@/i18n/routing';
 import { USER_MENU_ITEMS, type UserMenuItem } from '@/config/user-menu';
-import { fetchProfile, initials, ANONYMOUS_USER } from '@/lib/session';
+import { initials } from '@/lib/session';
+import { isPremium } from '@/lib/access';
+import { useSessionUser } from '@/hooks/use-session-user';
 import { useResetSessionCache } from '@/hooks/use-session-cache';
 import { logout } from '@/lib/auth';
 
@@ -117,11 +118,7 @@ export function UserMenu() {
   const [isPending, startTransition] = useTransition();
   const ref = useRef<HTMLDivElement>(null);
 
-  const { data: user = ANONYMOUS_USER } = useQuery({
-    queryKey: ['profile'],
-    queryFn: fetchProfile,
-    staleTime: 60_000,
-  });
+  const { user } = useSessionUser();
 
   const closeAll = () => {
     setOpen(false);
@@ -213,6 +210,16 @@ export function UserMenu() {
             <div className="min-w-0">
               <p className="truncate text-sm font-medium text-foreground">{user.name}</p>
               <p className="truncate text-xs text-muted-foreground">{user.email}</p>
+              {/* The plan sits with the identity because that is the question
+                  someone opens this menu to answer, and knowing it here is what
+                  makes a locked template downstream make sense. Its own axis,
+                  never the org role: see SessionUser. */}
+              <Badge
+                variant={isPremium(user.accessLevel) ? 'primary' : 'default'}
+                className="mt-1.5 text-[10px] uppercase tracking-wide"
+              >
+                {t(`plan.${user.accessLevel}`)}
+              </Badge>
             </div>
           </div>
 

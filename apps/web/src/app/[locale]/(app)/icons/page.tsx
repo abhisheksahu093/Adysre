@@ -1,38 +1,28 @@
-import type { Metadata } from 'next';
-import { getTranslations, setRequestLocale } from 'next-intl/server';
-import { IconsView } from '@/components/icons/icons-view';
-import { ICON_COUNT } from '@/data/icons';
-import { NpmUsage } from '@/components/npm/npm-usage';
+import { redirect } from '@/i18n/navigation';
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ locale: string }>;
-}): Promise<Metadata> {
-  const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: 'icons' });
-  return {
-    title: t('title'),
-    description: t('subtitle', { count: ICON_COUNT }),
-    alternates: { canonical: locale === 'en' ? '/icons' : `/${locale}/icons` },
-  };
-}
-
-/** Icons are static, unlocalised data, so the whole page is the client view. */
-// The grid reads the active category from `?category=` (sidebar submenu).
-export const dynamic = 'force-dynamic';
-
+/**
+ * Icons now live as a tab of the Colours & Surfaces page. This redirect keeps
+ * old links (and any `?category=` deep links) working by forwarding to that tab.
+ *
+ * Same treatment the four colour families already got: one canonical URL for the
+ * view, and every inbound link in the app, the docs, the footer and the
+ * announcement list keeps working without being re-pointed.
+ */
 export default async function IconsPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ locale: string }>;
+  searchParams: Promise<{ category?: string | string[] }>;
 }) {
   const { locale } = await params;
-  setRequestLocale(locale);
-  return (
-    <>
-      <IconsView />
-      <NpmUsage module="icons" />
-    </>
-  );
+  const { category } = await searchParams;
+  const categoryValue = Array.isArray(category) ? category[0] : category;
+  redirect({
+    locale,
+    href: {
+      pathname: '/colors-surfaces',
+      query: { tab: 'icons', ...(categoryValue ? { category: categoryValue } : {}) },
+    },
+  });
 }

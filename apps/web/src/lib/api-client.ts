@@ -1,4 +1,5 @@
 import { createApiClient } from '@adysre/sdk';
+import { authFetch } from './auth-fetch';
 
 /**
  * Browser-side API clients.
@@ -25,8 +26,16 @@ import { createApiClient } from '@adysre/sdk';
  * comes from the verified session and never from a header a browser can edit.
  */
 
-/** Same-origin: an empty base means paths resolve against the current host. */
-export const authApi = createApiClient({ baseUrl: '' });
+/**
+ * Same-origin: an empty base means paths resolve against the current host.
+ *
+ * Goes through `authFetch`, so an expired access token is refreshed and the
+ * request retried once instead of surfacing as a 401. Without this the refresh
+ * machinery was reachable by nothing: access tokens are short-lived by design,
+ * so every signed-in user silently became "signed out" to the UI a few minutes
+ * after logging in, while their refresh cookie sat there still valid.
+ */
+export const authApi = createApiClient({ baseUrl: '', fetchImpl: authFetch });
 
 /**
  * The NestJS API, for endpoints this app does not serve.

@@ -14,12 +14,14 @@ import { OAuthButtons, AuthDivider } from '@/components/auth/oauth-buttons';
 import { OAuthError } from '@/components/auth/oauth-error';
 import { login } from '@/lib/auth';
 import { useResetSessionCache } from '@/hooks/use-session-cache';
+import { toast } from '@/lib/toast';
 import { APP_HOME } from '@/config/navigation';
 
 export default function LoginPage() {
   const router = useRouter();
   const resetSessionCache = useResetSessionCache();
   const t = useTranslations('auth.signIn');
+  const tToast = useTranslations('toast.auth');
   const tf = useTranslations('auth.fields');
   const to = useTranslations('auth.oauth');
   const {
@@ -35,6 +37,10 @@ export default function LoginPage() {
       // The session cookie is set; anything cached before it belongs to
       // whoever was here previously, including the signed-out placeholder.
       resetSessionCache();
+      // Fired before the redirect on purpose: the toast store is module state,
+      // so it survives the client-side navigation and greets the user on the
+      // page they land on, which is where the confirmation is worth reading.
+      toast.success(tToast('signedIn'), { description: tToast('signedInBody') });
       router.push(APP_HOME);
     } catch (err) {
       // Only the API's own errors are safe to show; anything else would leak a

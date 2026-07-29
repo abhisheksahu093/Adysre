@@ -1,6 +1,7 @@
 import { NOT_FOUND, ok, reportRouteError } from '@/lib/api/response';
 import { requireAuth } from '@/lib/auth/guard';
 import { findProfile } from '@/lib/auth/repository/user.repository';
+import { resolveTier } from '@/lib/entitlements/service';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -16,13 +17,21 @@ export const dynamic = 'force-dynamic';
  * and read as a bug. Authorization keeps using the token, because that is what
  * every other route authorizes against and a second source would let this
  * endpoint disagree with them.
+ *
+ * `accessLevel` rides along because the profile menu shows the plan next to the
+ * name, and a second request only to learn "free or premium" would make that
+ * badge pop in after the rest of the menu. It is the workspace's entitlement,
+ * not the user's role, and `resolveTier` fails closed to `free`.
  */
 export async function GET() {
   const auth = await requireAuth();
   if (!auth.ok) return auth.response;
 
   try {
-    const profile = await findProfile(auth.session.tenantId, auth.session.userId);
+    const [profile, accessLevel] = await Promise.all([
+      findProfile(auth.session.tenantId, auth.session.userId),
+      resolveTier(auth.session.tenantId),
+    ]);
 
     // A valid token whose user is gone: deleted, or moved tenants. The token is
     // still cryptographically fine, so this is not a 401.
@@ -38,6 +47,7 @@ export async function GET() {
         lastLoginAt: profile.lastLoginAt,
       },
       organization: profile.organization,
+      accessLevel,
       roles: auth.session.roles,
       permissions: auth.session.permissions,
     });

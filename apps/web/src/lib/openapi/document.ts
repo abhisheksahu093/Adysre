@@ -13,6 +13,7 @@ import {
   resetPasswordSchema,
   updateProfileSchema,
 } from '@adysre/validators';
+import { ACCESS_LEVELS } from '@/lib/access';
 
 /**
  * The OpenAPI description of the auth API.
@@ -112,6 +113,9 @@ const profile = registry.register(
       name: z.string(),
       slug: z.string(),
     }),
+    // The WORKSPACE's entitlement, not the caller's role. Resolved from the
+    // subscription and failing closed to `free`.
+    accessLevel: z.enum(ACCESS_LEVELS).openapi({ example: 'free' }),
     roles: z.array(z.string()).openapi({ example: ['Owner'] }),
     permissions: z.array(z.string()).openapi({ example: ['api-studio:collection:read'] }),
   }),

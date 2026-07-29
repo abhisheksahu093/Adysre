@@ -162,6 +162,7 @@ expired, and already-used alike.
 { "success": true, "data": {
   "user": { "id", "email", "name", "avatarUrl", "emailVerifiedAt" },
   "organization": { "id", "name", "slug" },
+  "accessLevel": "free",
   "roles": ["Owner"],
   "permissions": ["api-studio:collection:read"]
 } }
@@ -169,6 +170,14 @@ expired, and already-used alike.
 Reads from the **database**, not from the token claims. The token is up to 15
 minutes stale, and a profile screen showing a name the user just changed is a
 bug report. Authorization still uses the token; this is display data.
+
+`accessLevel` is the **workspace's** entitlement (`free | premium |
+enterprise`), resolved from its subscription by `resolveTier` and failing closed
+to `free`. It rides along on this response so the profile menu can show the plan
+beside the name without a second request. It is a different axis from `roles`:
+an Owner on the free plan is still on the free plan. `PATCH /api/auth/profile`
+returns it too, because that response is allowed to replace the cached profile
+outright and must therefore carry every field the cached shape has.
 
 Replaces the `DEMO_USER` fallback in `apps/web/src/lib/session.ts`, which
 currently returns a fake "Demo Owner" whenever the call fails.

@@ -25,13 +25,25 @@ export interface ApiClientOptions {
   baseUrl: string;
   /** Extra headers (e.g. server-side forwarded cookies). */
   headers?: Record<string, string>;
+  /**
+   * `fetch` replacement, for callers that need to react to the response before
+   * the client sees it.
+   *
+   * The same-origin client passes one that recovers from an expired access
+   * token by refreshing and retrying once. That has to happen at the transport
+   * layer: by the time `request` has read the body, the 401 is already an
+   * `ApiClientError` and the caller has no way to tell "your session lapsed"
+   * apart from "you may not do this".
+   */
+  fetchImpl?: (input: string, init?: RequestInit) => Promise<Response>;
 }
 
 export class ApiClient {
   constructor(private readonly opts: ApiClientOptions) {}
 
   private async request<T>(path: string, init?: RequestInit): Promise<T> {
-    const res = await fetch(`${this.opts.baseUrl}${path}`, {
+    const doFetch = this.opts.fetchImpl ?? fetch;
+    const res = await doFetch(`${this.opts.baseUrl}${path}`, {
       ...init,
       credentials: 'include',
       headers: {

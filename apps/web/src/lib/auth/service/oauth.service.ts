@@ -7,6 +7,7 @@ import {
   loadAuthContext,
   recordSuccessfulLogin,
 } from '../repository/user.repository';
+import { findLink, linkAccount, touchLink } from '../repository/oauth-account.repository';
 import { issueSession, type IssuedSession, type RequestInfo } from './issue';
 import type { OAuthProfile } from '../oauth/client';
 
@@ -15,22 +16,28 @@ import type { OAuthProfile } from '../oauth/client';
  *
  * Mirrors `login.service` and `register.service` and shares their last two
  * steps (`loadAuthContext` then `issueSession`), so a session minted through
- * Google is indistinguishable from one minted with a password. Anything less
- * would mean two session shapes to keep in step.
+ * Google is indistinguishable from one minted with a password.
  *
- * ## Accounts are matched by email, and that is a deliberate limit
+ * ## Three ways in, in this order
  *
- * There is no table linking a provider account to a user, so `providerAccountId`
- * is carried through the flow and then dropped. A user who changes their
- * address at the provider therefore arrives as a stranger and gets a new
- * workspace. Fixing that needs a schema change (a `provider` +
- * `providerAccountId` unique pair), which is why this matches the behaviour
- * `apps/api` already shipped rather than inventing a third thing.
+ * 1. **A known provider account.** `oauth_accounts` is checked first, on the
+ *    provider's own id. This is what makes identity survive an email change:
+ *    someone who renames their Google address still lands in their own
+ *    workspace instead of being handed a new, empty one.
+ * 2. **A verified email that already has an account.** The link is created and
+ *    the user signs in. This is how existing password accounts adopt a
+ *    provider, and how the first sign-in after this table was added works.
+ * 3. **Neither.** A new workspace is created with this person as its Owner,
+ *    and linked.
  *
- * What that limit makes non-negotiable is the verification check below: with
- * email as the only join key, an unverified address from a provider would let
- * anyone who can type a victim's address into a throwaway account walk into
- * that victim's workspace.
+ * ## Why verification only gates the second path
+ *
+ * Creating a link on an email match is a claim that two identities are the same
+ * person, and the only evidence is the address. An unverified one proves
+ * nothing: anyone able to put a victim's address on a throwaway provider
+ * account would inherit that victim's workspace. Once the link exists it stands
+ * on the provider account id, which the provider cannot be tricked into
+ * misreporting, so step 1 needs no such check.
  */
 
 /** The provider did not vouch for the address, so it cannot identify anyone. */
@@ -62,38 +69,57 @@ export interface OAuthSignInResult extends IssuedSession {
   tenantId: string;
   /** True when this sign-in created the workspace, for the audit trail. */
   created: boolean;
+  /** True when this sign-in attached the provider to an existing account. */
+  linked: boolean;
 }
 
 export async function signInWithOAuth(
   profile: OAuthProfile,
   request: RequestInfo = {},
 ): Promise<OAuthSignInResult> {
-  // Checked before anything is looked up, so an unverified address never even
-  // reveals whether an account exists by taking a different code path.
+  // 1. A provider account we have seen before. No email involved at all.
+  const link = await findLink(profile.provider, profile.providerAccountId);
+  if (link) {
+    if (!link.isActive) throw new OAuthAccountInactiveError();
+
+    await touchLink(link.id);
+    await recordSuccessfulLogin(link.userId);
+    const session = await finish(link.tenantId, link.userId, request);
+    return { ...session, created: false, linked: false };
+  }
+
+  // From here the address is the only evidence, so it has to be trustworthy.
   if (!profile.emailVerified || profile.email === '') {
     throw new OAuthEmailUnverifiedError();
   }
 
   const candidates = await findCandidatesByEmail(profile.email);
 
+  // 2. An existing account with this address: adopt the provider.
   if (candidates.length > 1) {
     // Password sign-in answers this with a workspace picker. A provider
     // redirect has nowhere to ask, so it sends the user back to choose by
-    // signing in with their email instead of guessing on their behalf.
+    // signing in with their email rather than guessing on their behalf.
     throw new OAuthAmbiguousError();
   }
 
   const existing = candidates[0];
-
   if (existing) {
     if (!existing.isActive) throw new OAuthAccountInactiveError();
 
+    await linkAccount({
+      tenantId: existing.tenantId,
+      userId: existing.id,
+      provider: profile.provider,
+      providerAccountId: profile.providerAccountId,
+      email: profile.email,
+    });
     await recordSuccessfulLogin(existing.id);
-    const auth = await loadAuthContext(existing.tenantId, existing.id);
-    const session = await issueSession(auth, request);
-    return { ...session, userId: existing.id, tenantId: existing.tenantId, created: false };
+    const session = await finish(existing.tenantId, existing.id, request);
+    return { ...session, created: false, linked: true };
   }
 
+  // 3. Nobody by that address: a new workspace, owned by this person.
   const name = profile.name.trim() || profile.email.split('@')[0] || 'Owner';
   const { userId, tenantId } = await createTenantWithOwner({
     email: profile.email,
@@ -108,9 +134,27 @@ export async function signInWithOAuth(
     emailVerifiedAt: new Date(),
   });
 
+  await linkAccount({
+    tenantId,
+    userId,
+    provider: profile.provider,
+    providerAccountId: profile.providerAccountId,
+    email: profile.email,
+  });
+
+  const session = await finish(tenantId, userId, request);
+  return { ...session, created: true, linked: true };
+}
+
+/** The last two steps, identical for all three paths. */
+async function finish(
+  tenantId: string,
+  userId: string,
+  request: RequestInfo,
+): Promise<IssuedSession & { userId: string; tenantId: string }> {
   const auth = await loadAuthContext(tenantId, userId);
   const session = await issueSession(auth, request);
-  return { ...session, userId, tenantId, created: true };
+  return { ...session, userId, tenantId };
 }
 
 /**

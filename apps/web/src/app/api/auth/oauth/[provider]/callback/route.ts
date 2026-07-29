@@ -78,7 +78,11 @@ export async function GET(
     await recordAuthEvent(
       { tenantId: result.tenantId, actorId: result.userId, ...context },
       result.created ? 'auth.oauth.register' : 'auth.oauth.login',
-      { provider },
+      // `linked` distinguishes "adopted this provider on an existing account"
+      // from "signed in on a link that already existed", which is the pair of
+      // events worth telling apart when someone asks how a provider got
+      // attached to their workspace.
+      { provider, linked: result.linked },
     );
 
     // `next` was validated by `safeNext` before it went into the cookie;

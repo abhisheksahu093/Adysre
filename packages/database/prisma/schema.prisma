@@ -73,6 +73,7 @@ model Organization {
   ruleVersions        RuleVersion[]
   emailVerifications  EmailVerification[]
   passwordResets      PasswordReset[]
+  oauthAccounts       OAuthAccount[]
   subscription        Subscription?
   featureUsageEvents  FeatureUsageEvent[]
 
@@ -119,6 +120,7 @@ model User {
   notifications      Notification[]
   emailVerifications EmailVerification[]
   passwordResets     PasswordReset[]
+  oauthAccounts      OAuthAccount[]
 
   @@unique([tenantId, email])
   @@index([tenantId, isActive])
@@ -549,6 +551,71 @@ model EmailVerification {
   @@index([userId])
   @@index([expiresAt])
   @@map("email_verifications")
+}
+
+/// A user's account at an external identity provider.
+///
+/// Exists so a provider account, not an email address, is what identifies a
+/// returning user. Matching on email alone breaks the moment someone changes
+/// their address at Google: they arrive as a stranger and get a second, empty
+/// workspace, with no way to reach the first through that button again.
+///
+/// It also removes a piece of trust. With email as the only join key, an
+/// address the provider has not verified cannot be accepted at all, because
+/// anyone able to put a victim's address on a throwaway account would inherit
+/// the victim's workspace. Verification is still required to CREATE a link, but
+/// once made the link stands on the provider's own account id.
+model OAuthAccount {
+  id       String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  tenantId String @map("tenant_id") @db.Uuid
+  userId   String @map("user_id") @db.Uuid
+
+  /// `google` | `microsoft` | `github`, matching `OAUTH_PROVIDERS`.
+  ///
+  /// Text rather than a Postgres enum on purpose: a provider turns on when its
+  /// credentials appear in the environment, and an enum would make adding one a
+  /// migration and a deploy instead of a config change.
+  provider String
+
+  /// The provider's stable id for this account: Google's `sub`, Microsoft's
+  /// Graph `id`, GitHub's numeric user id. The join key, and the one field here
+  /// that must never change meaning.
+  providerAccountId String @map("provider_account_id")
+
+  /// The address the provider reported when the link was made.
+  ///
+  /// Kept for the audit trail and for support ("which Google account is this
+  /// workspace attached to?"). Deliberately NOT used to find the row: the whole
+  /// point of this table is that identity survives an email change.
+  email String
+
+  /// Last sign-in through this link, for the security screen and for spotting
+  /// links nobody uses. Not part of any authorization decision.
+  lastUsedAt DateTime? @map("last_used_at")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  organization Organization @relation(fields: [tenantId], references: [id])
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  /// The sign-in lookup, and GLOBAL rather than tenant-scoped on purpose.
+  ///
+  /// At the callback there is a provider account and nothing else: no tenant,
+  /// no session, nothing to scope by. This is the same reason `users` is unique
+  /// on `(tenant_id, email)` while sign-in still has to search by address
+  /// across tenants. It also enforces the rule that matters: one provider
+  /// account belongs to exactly one user, platform-wide.
+  @@unique([provider, providerAccountId])
+  /// One link per provider per user, so re-linking overwrites instead of
+  /// accumulating rows nobody can see or clean up.
+  @@unique([userId, provider])
+  @@index([tenantId, userId])
+  /// No `deleted_at`, unlike the business tables and like `sessions` and
+  /// `email_verifications`. Unlinking has to free the unique pair above, and a
+  /// soft-deleted row would keep occupying it: the user would unlink Google and
+  /// then be unable to link it again, to this account or any other.
+  @@map("oauth_accounts")
 }
 
 model PasswordReset {

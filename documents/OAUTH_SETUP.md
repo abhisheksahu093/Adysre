@@ -37,31 +37,48 @@ Browser ──▶ {APP_URL}{next}              (or {APP_URL}/login?error=… on 
 is validated with `safeNext` on the way in and again on the way out, so it can
 never become an open redirect. It defaults to the app home.
 
-**Account behaviour**
+**Account behaviour: three ways in, tried in this order**
 
-- If the provider returns a **verified email that already has an account**, that
-  user is signed in (so "Sign in with Google" and an earlier email signup with
-  the same address are the same account).
-- Otherwise a **new organization** is created with this person as its **Owner**,
-  mirroring email registration but with no password, and with the email already
-  marked verified because the provider just proved it.
+1. **A known provider account.** `oauth_accounts` is checked first, on the
+   provider's own account id. This is what makes identity survive an email
+   change: rename your Google address and you still land in your own workspace.
+2. **A verified email that already has an account.** The link is created and the
+   user signs in, so "Sign in with Google" and an earlier email signup with the
+   same address become the same account.
+3. **Neither.** A **new organization** is created with this person as its
+   **Owner**, mirroring email registration but with no password, and with the
+   email already marked verified because the provider just proved it.
 
-**Two limits worth knowing.**
+**Verification gates step 2 only.** Creating a link on an email match is a claim
+that two identities are the same person, and the only evidence is the address,
+so an unverified one is refused (`oauth_unverified`). Without that, anyone able
+to put a victim's address on a throwaway provider account would inherit that
+victim's workspace. Once the link exists it stands on the provider's account id,
+which cannot be spoofed by claiming an address, so step 1 needs no such check.
+Google, Microsoft and GitHub all report verification (GitHub via the primary
+verified email).
 
-Accounts are matched by **email only**. No table links a provider account to a
-user, so `providerAccountId` is read and then dropped. Someone who changes their
-address at the provider arrives as a stranger and gets a new workspace. Closing
-that needs a schema change: a `provider` + `providerAccountId` unique pair.
-
-Because email is the only join key, an **unverified** address is refused
-outright (`oauth_unverified`) rather than matched. Without that, anyone able to
-put a victim's address on a throwaway provider account could walk into the
-victim's workspace. Google, Microsoft and GitHub all report verification (GitHub
-via the primary verified email).
-
-An address that exists in **more than one workspace** is also refused
-(`oauth_ambiguous`): password sign-in answers that with a workspace picker, and
+**An address in more than one workspace is refused** (`oauth_ambiguous`) when
+there is no link yet: password sign-in answers that with a workspace picker, and
 a provider redirect has nowhere to ask.
+
+### The `oauth_accounts` table
+
+One row per user per provider (`packages/database/prisma/schema.prisma`,
+migration `20260729183000_oauth_account_linking`).
+
+- `(provider, provider_account_id)` is unique **platform-wide**, not per tenant.
+  At the callback there is a provider account and nothing else, so there is no
+  tenant to scope by. It also enforces the rule that matters: one provider
+  account belongs to exactly one user.
+- `(user_id, provider)` is unique too, so re-linking overwrites rather than
+  accumulating rows nobody can see. Someone who deletes their Google account and
+  makes a new one keeps their workspace.
+- `email` is stored for the audit trail and support, and is deliberately never
+  used to find the row.
+- There is **no `deleted_at`**, unlike the business tables and like `sessions`.
+  Unlinking must free both unique pairs, and a soft-deleted row would keep
+  occupying them: you would unlink Google and then be unable to link it again.
 
 ---
 

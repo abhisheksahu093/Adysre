@@ -111,6 +111,9 @@ async function cleanup(): Promise<void> {
   if (orgs.length === 0) return;
   const tenantIds = orgs.map((o) => o.id);
 
+  // `oauth_accounts` restricts deletion of its organization, so it has to go
+  // first even though nothing in this file creates one.
+  await prisma.oAuthAccount.deleteMany({ where: { tenantId: { in: tenantIds } } });
   await prisma.auditLog.deleteMany({ where: { tenantId: { in: tenantIds } } });
   await prisma.passwordReset.deleteMany({ where: { tenantId: { in: tenantIds } } });
   await prisma.emailVerification.deleteMany({ where: { tenantId: { in: tenantIds } } });

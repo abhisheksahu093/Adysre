@@ -6,6 +6,7 @@ on:
       - main
 
 jobs:
+
   build:
 
     runs-on: ubuntu-latest
@@ -19,13 +20,20 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 24
 
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
           version: 9.12.0
+          run_install: false
+
+
+      - name: Verify tools
+        run: |
+          node -v
+          pnpm -v
 
 
       - name: Install dependencies
@@ -40,8 +48,25 @@ jobs:
         run: pnpm build
 
 
-      - name: Restart PM2
-        run: |
-          pm2 restart adysre-api
-          pm2 restart adysre-web
-          pm2 save
+      - name: Deploy to Lightsail
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ubuntu
+          key: ${{ secrets.SERVER_SSH_KEY }}
+
+          script: |
+            cd /home/ubuntu/Adysre
+
+            git pull origin main
+
+            pnpm install --frozen-lockfile
+
+            pnpm db:generate
+
+            pnpm build
+
+            pm2 restart adysre-api
+            pm2 restart adysre-web
+
+            pm2 save

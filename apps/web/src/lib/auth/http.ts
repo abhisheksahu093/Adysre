@@ -50,24 +50,51 @@ export function formatZodError(error: ZodError): string {
  * caller for no security gain (a browser always sends it on cross-origin
  * requests, which is the case that matters).
  */
+// export function verifyOrigin(request: Request): NextResponse | null {
+//   const origin = request.headers.get('origin');
+//   if (!origin) return null;
+
+//   const allowed = new Set(
+//     [process.env.NEXT_PUBLIC_APP_URL, ...(process.env.ALLOWED_ORIGINS?.split(',') ?? [])]
+//       .map((value) => value?.trim())
+//       .filter((value): value is string => Boolean(value)),
+//   );
+
+//   // Nothing configured means we cannot judge. Allowing is the pragmatic choice
+//   // for a local or preview deployment; SameSite=Lax is still doing the real
+//   // work, and failing closed here would break every dev environment.
+//   if (allowed.size === 0) return null;
+
+//   if (!allowed.has(origin)) {
+//     return FORBIDDEN('Request origin is not allowed.');
+//   }
+//   return null;
+// }
 export function verifyOrigin(request: Request): NextResponse | null {
   const origin = request.headers.get('origin');
+
+  console.log('Origin:', origin);
+  console.log('NEXT_PUBLIC_APP_URL:', process.env.NEXT_PUBLIC_APP_URL);
+  console.log('ALLOWED_ORIGINS:', process.env.ALLOWED_ORIGINS);
+
   if (!origin) return null;
 
   const allowed = new Set(
-    [process.env.NEXT_PUBLIC_APP_URL, ...(process.env.ALLOWED_ORIGINS?.split(',') ?? [])]
-      .map((value) => value?.trim())
-      .filter((value): value is string => Boolean(value)),
+    [
+      process.env.NEXT_PUBLIC_APP_URL,
+      ...(process.env.ALLOWED_ORIGINS?.split(',') ?? []),
+    ]
+      .map(v => v?.trim())
+      .filter(Boolean)
   );
 
-  // Nothing configured means we cannot judge. Allowing is the pragmatic choice
-  // for a local or preview deployment; SameSite=Lax is still doing the real
-  // work, and failing closed here would break every dev environment.
-  if (allowed.size === 0) return null;
+  console.log('Allowed:', [...allowed]);
 
   if (!allowed.has(origin)) {
+    console.log('Origin blocked');
     return FORBIDDEN('Request origin is not allowed.');
   }
+
   return null;
 }
 

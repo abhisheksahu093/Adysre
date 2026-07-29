@@ -124,6 +124,15 @@
               "slug"
             ]
           },
+          "accessLevel": {
+            "type": "string",
+            "enum": [
+              "free",
+              "premium",
+              "enterprise"
+            ],
+            "example": "free"
+          },
           "roles": {
             "type": "array",
             "items": {
@@ -146,6 +155,7 @@
         "required": [
           "user",
           "organization",
+          "accessLevel",
           "roles",
           "permissions"
         ]
@@ -952,11 +962,21 @@
                             "name",
                             "slug"
                           ]
+                        },
+                        "accessLevel": {
+                          "type": "string",
+                          "enum": [
+                            "free",
+                            "premium",
+                            "enterprise"
+                          ],
+                          "example": "free"
                         }
                       },
                       "required": [
                         "user",
-                        "organization"
+                        "organization",
+                        "accessLevel"
                       ]
                     }
                   },

@@ -7,7 +7,12 @@ import { ChevronDown } from 'lucide-react';
 import { Tooltip, cn } from 'adysre';
 import { Link, usePathname } from '@/i18n/navigation';
 import { NAV_ITEMS } from '@/config/navigation';
-import { NAV_SUBMENUS, type LabelMode, type ModuleSubmenu } from '@/config/nav-submenus';
+import {
+  NAV_SUBMENUS,
+  type LabelMode,
+  type ModuleSubmenu,
+  type SubmenuGroup,
+} from '@/config/nav-submenus';
 import { humanizeKey } from '@/lib/humanize';
 import { Logo, LogoIcon } from './logo';
 
@@ -104,10 +109,17 @@ function SidebarNavWithParams({
   const activeModule = Object.values(NAV_SUBMENUS).find(
     (m) => pathname === m.href || pathname.startsWith(`${m.href}/`),
   );
-  const activeValue = activeModule ? searchParams.get(activeModule.param) : null;
   // The active tab drives which sub-module (and its filters) is highlighted in
   // the nested colours & surfaces menu.
   const activeTab = activeModule?.nested ? searchParams.get('tab') : null;
+  // Read the filter from whichever param the ACTIVE sub-module uses, not the
+  // module default: icons share the colours & surfaces page but filter on
+  // `?category=`, so reading `?tag=` there would find nothing and leave the
+  // open leaf unhighlighted.
+  const activeParam =
+    (activeTab ? activeModule?.groups?.find((g) => g.tab === activeTab)?.param : undefined) ??
+    activeModule?.param;
+  const activeValue = activeParam ? searchParams.get(activeParam) : null;
 
   return (
     <SidebarNavInner
@@ -188,15 +200,29 @@ function SidebarNavInner({
     );
   }
 
-  /** One filter link (a submenu leaf). `tab` scopes it to a nested sub-module. */
-  function Leaf({ submenu, value, tab }: { submenu: ModuleSubmenu; value: string; tab?: string }) {
+  /**
+   * One filter link (a submenu leaf). `group` scopes it to a nested sub-module,
+   * and carries any override of the filter axis (icons filter on `?category=`
+   * where their sibling colour families filter on `?tag=`).
+   */
+  function Leaf({
+    submenu,
+    value,
+    group,
+  }: {
+    submenu: ModuleSubmenu;
+    value: string;
+    group?: SubmenuGroup;
+  }) {
+    const tab = group?.tab;
+    const param = group?.param ?? submenu.param;
     const isActive =
       activeModuleKey === submenu.navKey &&
       activeValue === value &&
       (tab === undefined || activeTab === tab);
     const href = tab
-      ? `${submenu.href}?tab=${tab}&${submenu.param}=${value}`
-      : `${submenu.href}?${submenu.param}=${value}`;
+      ? `${submenu.href}?tab=${tab}&${param}=${value}`
+      : `${submenu.href}?${param}=${value}`;
     return (
       <Link
         href={href}
@@ -210,7 +236,7 @@ function SidebarNavInner({
             : 'text-muted-foreground hover:bg-muted hover:text-foreground',
         )}
       >
-        {resolveLabel(submenu.labelMode, value)}
+        {resolveLabel(group?.labelMode ?? submenu.labelMode, value)}
       </Link>
     );
   }
@@ -402,9 +428,11 @@ function SidebarNavInner({
                           </div>
                           {groupOpen && (
                             <div className="mt-0.5 space-y-0.5 border-l border-border pl-2">
-                              {sortedValues(submenu.labelMode, group.values).map((value) => (
-                                <Leaf key={value} submenu={submenu} value={value} tab={group.tab ?? ''} />
-                              ))}
+                              {sortedValues(group.labelMode ?? submenu.labelMode, group.values).map(
+                                (value) => (
+                                  <Leaf key={value} submenu={submenu} value={value} group={group} />
+                                ),
+                              )}
                             </div>
                           )}
                         </div>

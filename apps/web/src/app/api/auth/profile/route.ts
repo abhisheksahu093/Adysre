@@ -5,6 +5,7 @@ import { requireAuth } from '@/lib/auth/guard';
 import { invalid, readJson, verifyOrigin } from '@/lib/auth/http';
 import { rateLimit } from '@/lib/auth/rate-limit';
 import { findProfile, updateProfile } from '@/lib/auth/repository/user.repository';
+import { resolveTier } from '@/lib/entitlements/service';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -49,8 +50,14 @@ export async function PATCH(request: Request) {
     );
 
     // Re-read and return the whole profile, so the client does not have to
-    // guess what the server stored and can replace its cache outright.
-    const profile = await findProfile(auth.session.tenantId, auth.session.userId);
+    // guess what the server stored and can replace its cache outright. That is
+    // also why `accessLevel` is here and not only on `/me`: a response this one
+    // is allowed to overwrite the cache with must carry every field the cached
+    // shape has, or editing a name would silently downgrade the plan badge.
+    const [profile, accessLevel] = await Promise.all([
+      findProfile(auth.session.tenantId, auth.session.userId),
+      resolveTier(auth.session.tenantId),
+    ]);
     if (!profile) return NOT_FOUND('Your account could not be found.');
 
     return ok(
@@ -64,6 +71,7 @@ export async function PATCH(request: Request) {
           lastLoginAt: profile.lastLoginAt,
         },
         organization: profile.organization,
+        accessLevel,
       },
       'Profile updated.',
     );

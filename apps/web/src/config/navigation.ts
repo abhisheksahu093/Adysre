@@ -1,6 +1,5 @@
 import {
   Blocks,
-  Shapes,
   SwatchBook,
   PenTool,
   LayoutTemplate,
@@ -41,14 +40,10 @@ export const NAV_ITEMS: NavItem[] = [
     href: '/components',
     icon: Blocks,
   },
-  {
-    key: 'icons',
-    href: '/icons',
-    icon: Shapes,
-    descriptionKey: 'icons',
-  },
-  // Palettes, gradients, patterns and textures are combined into one tabbed
-  // module (Colors & Surfaces); each remains a sub-menu with its own filters.
+  // Palettes, gradients, patterns, textures and icons are combined into one
+  // tabbed module (Colors & Surfaces); each remains a sub-menu with its own
+  // filters. Icons has no entry of its own here for that reason: a second
+  // top-level item pointing at the same page would light up alongside this one.
   {
     key: 'colorsSurfaces',
     href: '/colors-surfaces',

@@ -12,11 +12,18 @@
  *   - components: category ids in `data/components/types.ts`
  *   - icons:      `ICON_CATEGORY_IDS` in `data/icons`
  *   - tags:       derived from the gradient/palette datasets
+ *
+ * Icons have no module entry of their own: they are a tab of Colours & Surfaces
+ * and hang off that submenu as a group, the same way the four colour families
+ * do. See the `param`/`labelMode` overrides on `SubmenuGroup`.
  */
 
 export type LabelMode =
   | { ns: 'components' | 'icons'; prefix: string }
   | 'humanize';
+
+/** URL query key a page reads to apply a submenu filter. */
+export type FilterParam = 'category' | 'tag';
 
 export interface SubmenuGroup {
   /** Key under `nav.groups` (flat groups), or a stable id (nested modules). */
@@ -30,6 +37,14 @@ export interface SubmenuGroup {
    */
   tab?: string;
   labelKey?: string;
+  /**
+   * Overrides for a nested sub-module whose filter axis differs from its
+   * siblings'. Icons live on the same tabbed page as the colour families but
+   * filter on `?category=` with translated category names, where the colours
+   * filter on free-form `?tag=`. Both fall back to the module's own values.
+   */
+  param?: FilterParam;
+  labelMode?: LabelMode;
 }
 
 export interface ModuleSubmenu {
@@ -38,7 +53,7 @@ export interface ModuleSubmenu {
   /** The module route the items link to. */
   href: string;
   /** URL query key the target page reads to apply the filter. */
-  param: 'category' | 'tag';
+  param: FilterParam;
   labelMode: LabelMode;
   /** Grouped layout (components); mutually exclusive with `values`. */
   groups?: SubmenuGroup[];
@@ -188,16 +203,9 @@ export const NAV_SUBMENUS: Record<string, ModuleSubmenu> = {
     labelMode: { ns: 'components', prefix: 'categories.' },
     groups: COMPONENT_GROUPS,
   },
-  icons: {
-    navKey: 'icons',
-    href: '/icons',
-    param: 'category',
-    labelMode: { ns: 'icons', prefix: 'categories.' },
-    values: ICON_CATEGORIES,
-  },
-  // Colours & Surfaces: one tabbed page (/colors-surfaces) whose four families
+  // Colours & Surfaces: one tabbed page (/colors-surfaces) whose five families
   // are sub-modules. Each group links to its tab and expands to that family's
-  // tag filters, so the sidebar mirrors the page's four tabs.
+  // filters, so the sidebar mirrors the page's five tabs.
   colorsSurfaces: {
     navKey: 'colorsSurfaces',
     href: '/colors-surfaces',
@@ -209,6 +217,16 @@ export const NAV_SUBMENUS: Record<string, ModuleSubmenu> = {
       { groupKey: 'gradients', tab: 'gradients', labelKey: 'gradients', values: GRADIENT_TAGS },
       { groupKey: 'patterns', tab: 'patterns', labelKey: 'patterns', values: PATTERN_TAGS },
       { groupKey: 'textures', tab: 'textures', labelKey: 'textures', values: TEXTURE_TAGS },
+      // Icons are the one sub-module with its own filter axis: named categories
+      // on `?category=`, not free-form tags. The overrides carry that.
+      {
+        groupKey: 'icons',
+        tab: 'icons',
+        labelKey: 'icons',
+        values: ICON_CATEGORIES,
+        param: 'category',
+        labelMode: { ns: 'icons', prefix: 'categories.' },
+      },
     ],
   },
 };

@@ -3,6 +3,8 @@
 import { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { Search } from 'lucide-react';
+import { Link } from '@/i18n/navigation';
+import { LogoIcon } from './logo';
 import { MobileNav } from './mobile-nav';
 import { SidebarToggle } from './sidebar-toggle';
 import { ThemeSwitcher } from './theme-switcher';
@@ -32,6 +34,13 @@ export function Topbar() {
   return (
     <header className="sticky top-0 z-10 flex h-14 items-center gap-1 border-b border-border bg-background/80 px-4 backdrop-blur sm:gap-2 sm:px-6">
       <MobileNav />
+      {/* Below `md` the sidebar is a drawer, so its rail mark is the only
+          branding on screen and it is not on screen. The compact mark stands in
+          here, and doubles as the way home: on a phone the wordmark in the
+          drawer is two taps away. Hidden from `md` up, where the rail shows it. */}
+      <Link href="/" aria-label="ADYSRE" className="mr-1 shrink-0 md:hidden">
+        <LogoIcon height={20} priority />
+      </Link>
       <SidebarToggle />
       <button
         type="button"

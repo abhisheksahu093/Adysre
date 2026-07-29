@@ -62,9 +62,10 @@ export async function fetchProfile(): Promise<SessionUser> {
       // The token's roles, which is what authorization actually uses. Falls
       // back to Member, the least privileged named role, rather than to Owner.
       role: profile.roles?.[0] ?? 'Member',
-      // TODO(billing): read the real entitlement once the API returns one.
-      // Until then assume the least, never the most.
-      accessLevel: 'free',
+      // Resolved from the workspace's subscription by the endpoint, which fails
+      // closed. The `??` covers an older deployment answering without the
+      // field: absent means free, never premium.
+      accessLevel: profile.accessLevel ?? 'free',
     };
   } catch {
     return ANONYMOUS_USER;

@@ -254,7 +254,12 @@
     "terms": "利用規約",
     "privacy": "プライバシーポリシー",
     "dmca": "DMCA",
-    "signOut": "ログアウト"
+    "signOut": "ログアウト",
+    "plan": {
+      "free": "無料プラン",
+      "premium": "プレミアム",
+      "enterprise": "エンタープライズ"
+    }
   },
   "comingSoon": {
     "heading": "{title} は近日公開予定です",
@@ -1956,7 +1961,6 @@
       "skip": "本文へスキップ",
       "menus": {
         "colorsSurfaces": "カラーとサーフェス",
-        "library": "ライブラリ",
         "tools": "ツール"
       }
     },
@@ -3339,6 +3343,22 @@
           "body": "バージョン管理と復元を備えた単一のストレージ契約。復元は巻き戻しではなく新しいバージョンを書きます。"
         }
       }
+    }
+  },
+  "toast": {
+    "region": "通知",
+    "dismiss": "閉じる",
+    "auth": {
+      "signedIn": "おかえりなさい",
+      "signedInBody": "ADYSRE にサインインしました。",
+      "registered": "アカウントを作成しました",
+      "registeredBody": "ADYSRE へようこそ。サインインが完了し、すぐに使い始められます。"
+    },
+    "quota": {
+      "low": "{feature} の残りがわずかです",
+      "spent": "{feature} をすべて使い切りました",
+      "resets": "{when} にリセットされます。",
+      "upgrade": "プランをアップグレードすると上限が増えます。"
     }
   }
 }

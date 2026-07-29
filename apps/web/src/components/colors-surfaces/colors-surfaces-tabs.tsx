@@ -2,29 +2,34 @@
 
 import { useSearchParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
-import { Palette, Blend, Grid2x2, Waves } from 'lucide-react';
+import { Palette, Blend, Grid2x2, Waves, Shapes } from 'lucide-react';
 import { cn } from 'adysre';
 import { useRouter } from '@/i18n/navigation';
 import { PalettesView } from '@/components/palettes/palettes-view';
 import { GradientsView } from '@/components/gradients/gradients-view';
 import { PatternsView } from '@/components/patterns/patterns-view';
 import { TexturesView } from '@/components/textures/textures-view';
+import { IconsView } from '@/components/icons/icons-view';
 
 /**
- * Colours & Surfaces - one page, four tabs. Each tab renders the existing family
- * view (palettes / gradients / patterns / textures) unchanged, with all its own
- * filters, generator and tour.
+ * Colours & Surfaces - one page, five tabs. Each tab renders the existing family
+ * view (palettes / gradients / patterns / textures / icons) unchanged, with all
+ * its own filters, generator and tour.
  *
  * The active tab lives in the URL (`?tab=`), so the sidebar's deep links
- * (`?tab=&tag=`) land on the right tab and the server page can pick the matching
- * npm-usage panel. Only the active view mounts, so the shared `?tag=` filter
- * never bleeds from one family into another.
+ * (`?tab=&tag=`, or `?tab=icons&category=`) land on the right tab and the server
+ * page can pick the matching npm-usage panel. Only the active view mounts, so
+ * the shared `?tag=` filter never bleeds from one family into another.
  */
 const TABS = [
   { id: 'palettes', icon: Palette, View: PalettesView },
   { id: 'gradients', icon: Blend, View: GradientsView },
   { id: 'patterns', icon: Grid2x2, View: PatternsView },
   { id: 'textures', icon: Waves, View: TexturesView },
+  // Icons joined the family last and sits last. It filters on `?category=`
+  // rather than `?tag=`, which costs nothing here: switching tabs rebuilds the
+  // query from scratch, so neither param survives into a tab that ignores it.
+  { id: 'icons', icon: Shapes, View: IconsView },
 ] as const;
 
 type TabId = (typeof TABS)[number]['id'];

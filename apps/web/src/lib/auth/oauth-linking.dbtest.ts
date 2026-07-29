@@ -34,6 +34,9 @@ const PASSWORD = 'CorrectHorse12';
 /** Slug prefix for every tenant this file creates, so cleanup can find them. */
 const PREFIX = 'oauthtest';
 
+/** Email domain for every user this file creates. The other half of cleanup. */
+const DOMAIN = '@oauthtest.local';
+
 let counter = 0;
 function uniqueSlug(): string {
   counter += 1;
@@ -41,7 +44,7 @@ function uniqueSlug(): string {
 }
 
 function uniqueEmail(): string {
-  return `${uniqueSlug()}@oauthtest.local`;
+  return `${uniqueSlug()}${DOMAIN}`;
 }
 
 /**
@@ -62,19 +65,59 @@ function profile(overrides: Partial<OAuthProfile> = {}): OAuthProfile {
     providerAccountId: `sub-${randomUUID()}`,
     email: uniqueEmail(),
     emailVerified: true,
-    name: 'Test Person',
+    // Carries PREFIX on purpose. When this profile creates a NEW workspace the
+    // service derives that workspace's slug from this name, not from anything
+    // the test chose, so a name like "Test Person" produces `test-person-a1b2`
+    // and slips straight past a cleanup that looks for the prefix. Every such
+    // workspace then survives the run.
+    name: `${PREFIX} person`,
     ...overrides,
   };
 }
 
-/** Remove every tenant this file created, children first. */
-async function cleanup(): Promise<void> {
-  const orgs = await prisma.organization.findMany({
-    where: { slug: { startsWith: PREFIX } },
-    select: { id: true },
+/**
+ * A second workspace holding an address that already exists elsewhere.
+ *
+ * Written directly rather than through `register`, which refuses a duplicate
+ * address outright. The ambiguous state is real and reachable (two workspaces
+ * invited the same person), it just cannot be reached through the front door.
+ */
+async function secondWorkspaceWith(email: string): Promise<string> {
+  const slug = uniqueSlug();
+  const tenantId = randomUUID();
+
+  await prisma.organization.create({
+    data: { id: tenantId, tenantId, name: `Second ${slug}`, slug },
   });
-  if (orgs.length === 0) return;
-  const tenantIds = orgs.map((o) => o.id);
+  await prisma.user.create({
+    data: { id: randomUUID(), tenantId, email, name: 'Second Owner', passwordHash: null },
+  });
+
+  return tenantId;
+}
+
+/**
+ * Remove every tenant this file created, children first.
+ *
+ * Finds them two ways, and needs both. The slug prefix catches the tenants the
+ * test names itself; the email domain catches the ones the SERVICE names, whose
+ * slug comes from the provider profile and is not the test's to choose. Relying
+ * on the slug alone silently leaked a workspace per sign-in.
+ */
+async function cleanup(): Promise<void> {
+  const [byslug, byEmail] = await Promise.all([
+    prisma.organization.findMany({
+      where: { slug: { startsWith: PREFIX } },
+      select: { id: true },
+    }),
+    prisma.user.findMany({
+      where: { email: { endsWith: DOMAIN } },
+      select: { tenantId: true },
+    }),
+  ]);
+
+  const tenantIds = [...new Set([...byslug.map((o) => o.id), ...byEmail.map((u) => u.tenantId)])];
+  if (tenantIds.length === 0) return;
 
   await prisma.oAuthAccount.deleteMany({ where: { tenantId: { in: tenantIds } } });
   await prisma.auditLog.deleteMany({ where: { tenantId: { in: tenantIds } } });
@@ -232,20 +275,34 @@ describe('an existing account with the same address', () => {
 
 describe('an address in more than one workspace', () => {
   it('refuses, because a redirect has nowhere to ask which', async () => {
-    const email = uniqueEmail();
-
-    for (const _ of [0, 1]) {
-      const slug = uniqueSlug();
-      await register({
-        email,
-        password: PASSWORD,
-        name: 'Owner',
-        organizationName: `Test ${slug}`,
-        organizationSlug: slug,
-      });
-    }
+    const slug = uniqueSlug();
+    const email = `${slug}@oauthtest.local`;
+    await register({
+      email,
+      password: PASSWORD,
+      name: 'Owner',
+      organizationName: `Test ${slug}`,
+      organizationSlug: slug,
+    });
+    await secondWorkspaceWith(email);
 
     await assert.rejects(() => signInWithOAuth(profile({ email })), OAuthAmbiguousError);
+  });
+
+  it('signs in anyway once one of them has a link', async () => {
+    // Ambiguity is only a problem while the address is the only evidence. A
+    // link resolves it, so someone who signed in before a colleague was
+    // invited elsewhere is not locked out by that invitation.
+    const slug = uniqueSlug();
+    const email = `${slug}@oauthtest.local`;
+    const sub = providerId('ambiguous-sub');
+
+    const first = await signInWithOAuth(profile({ providerAccountId: sub, email }));
+    await secondWorkspaceWith(email);
+
+    const again = await signInWithOAuth(profile({ providerAccountId: sub, email }));
+    assert.equal(again.userId, first.userId);
+    assert.equal(again.tenantId, first.tenantId);
   });
 });
 

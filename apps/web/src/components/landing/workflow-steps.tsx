@@ -1,51 +1,46 @@
 import { getTranslations } from 'next-intl/server';
-import { cn } from 'adysre';
 import { WORKFLOW_STEPS } from '@/data/landing';
-import { SectionHeading } from './section-heading';
+import { WorkbenchSection } from './workbench/section';
+import { Hud } from './workbench/panel';
 
 /**
- * Three-step "how teams use it" strip. Server Component. On wide viewports the
- * cards sit in a row over a faint connector line; on narrow ones they stack.
+ * How teams use it, as a pipeline.
+ *
+ * The steps keep their numbering because this is one of the few things on the
+ * page that genuinely is a sequence: you pick, then you make it yours, then you
+ * ship it. The numbers are structure, not decoration.
+ *
+ * Server Component. On wide viewports the three sit in a ruled row; on narrow
+ * ones they stack, and the rules become the dividers between them.
  */
 export async function WorkflowSteps() {
   const t = await getTranslations('landing');
 
   return (
-    <section className="border-y border-border bg-muted/20">
-      <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-28">
-        <SectionHeading title={t('workflow.title')} subtitle={t('workflow.subtitle')} />
-
-        <div className="relative mt-14 grid grid-cols-1 gap-8 md:grid-cols-3">
-          {/* Connector line behind the row, desktop only. */}
-          <div
-            className="absolute inset-x-0 top-6 hidden h-px bg-gradient-to-r from-transparent via-border to-transparent md:block"
-            aria-hidden
-          />
-          {WORKFLOW_STEPS.map((step, i) => {
-            const Icon = step.icon;
-            return (
-              <div key={step.id} className="relative flex flex-col items-center text-center">
-                <div
-                  className={cn(
-                    'relative z-10 flex h-12 w-12 items-center justify-center rounded-full border border-border bg-card text-primary',
-                  )}
-                >
-                  <Icon className="h-5 w-5" aria-hidden />
-                  <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-[11px] font-semibold text-primary-foreground">
-                    {i + 1}
-                  </span>
-                </div>
-                <h3 className="mt-5 text-base font-semibold tracking-tight">
-                  {t(`workflow.steps.${step.id}.title`)}
-                </h3>
-                <p className="mt-2 max-w-xs text-sm leading-relaxed text-muted-foreground">
-                  {t(`workflow.steps.${step.id}.desc`)}
-                </p>
+    <WorkbenchSection
+      label={t('workbench.panels.pipeline')}
+      title={t('workflow.title')}
+      description={t('workflow.subtitle')}
+    >
+      <ol className="grid gap-px overflow-hidden rounded-xl border border-line bg-line md:grid-cols-3">
+        {WORKFLOW_STEPS.map((step, i) => {
+          const Icon = step.icon;
+          return (
+            <li key={step.id} className="bg-panel p-5 sm:p-6">
+              <div className="flex items-center gap-2.5">
+                <Icon className="h-4 w-4 text-muted-foreground" aria-hidden />
+                <Hud strong>{String(i + 1).padStart(2, '0')}</Hud>
               </div>
-            );
-          })}
-        </div>
-      </div>
-    </section>
+              <h3 className="mt-4 text-[17px] font-semibold tracking-tight">
+                {t(`workflow.steps.${step.id}.title`)}
+              </h3>
+              <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
+                {t(`workflow.steps.${step.id}.desc`)}
+              </p>
+            </li>
+          );
+        })}
+      </ol>
+    </WorkbenchSection>
   );
 }

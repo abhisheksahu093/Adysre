@@ -1968,6 +1968,42 @@
         "tools": "टूल"
       }
     },
+    "workbench": {
+      "artboard": "आर्टबोर्ड",
+      "layers": "लेयर",
+      "properties": "प्रॉपर्टी",
+      "swapPalette": "पैलेट",
+      "swapGradient": "ग्रेडिएंट",
+      "swapPattern": "पैटर्न",
+      "swapTexture": "टेक्सचर",
+      "autosaved": "अपने आप सेव",
+      "browse": "{family} देखें",
+      "objects": {
+        "block": "टीम प्लान ब्लॉक",
+        "surface": "ग्रेडिएंट टाइल",
+        "pattern": "पैटर्न टाइल",
+        "texture": "टेक्सचर टाइल",
+        "icons": "आइकन सेट"
+      },
+      "props": {
+        "width": "चौड़ाई",
+        "radius": "रेडियस",
+        "fill": "फ़िल",
+        "source": "स्रोत",
+        "type": "प्रकार",
+        "name": "नाम",
+        "size": "साइज़",
+        "stroke": "स्ट्रोक",
+        "available": "उपलब्ध"
+      },
+      "panels": {
+        "library": "लाइब्रेरी",
+        "materials": "सामग्री",
+        "pipeline": "प्रक्रिया",
+        "scanner": "स्कैनर",
+        "package": "पैकेज"
+      }
+    },
     "hero": {
       "badge": "नया: ग्रेडिएंट और पैलेट जनरेटर",
       "title": "आपकी टीम को ज़रूरी हर ब्लॉक, रंग और टूल",

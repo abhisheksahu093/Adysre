@@ -51,19 +51,21 @@ export function AnnouncementBar() {
     <div
       role="region"
       aria-label={t('announcement.region')}
-      className="relative z-50 border-b border-border bg-gradient-to-r from-primary/10 via-secondary/10 to-accent/10"
+      className="relative z-50 border-b border-line bg-panel"
     >
-      <div className="mx-auto flex max-w-7xl items-center gap-2 px-4 py-2 sm:px-6">
+      <div className="mx-auto flex max-w-[1440px] items-center gap-3 px-4 py-2 sm:px-6">
         <Link
           href={ANNOUNCEMENT.href}
-          className="group mx-auto flex items-center gap-x-2 gap-y-1 text-center text-xs font-medium sm:text-sm"
+          className="group flex min-w-0 items-center gap-x-2.5 gap-y-1 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
         >
-          <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-primary/15 px-2 py-0.5 text-primary">
+          <span className="inline-flex shrink-0 items-center gap-1.5 font-hud text-[10.5px] uppercase tracking-[0.08em] text-signal">
             <Icon className="h-3.5 w-3.5" aria-hidden />
             {t('announcement.badge')}
           </span>
-          <span className="text-foreground">{t('announcement.label')}</span>
-          <span className="hidden shrink-0 items-center gap-1 text-primary group-hover:underline sm:inline-flex">
+          <span className="truncate text-[13px] font-medium text-foreground">
+            {t('announcement.label')}
+          </span>
+          <span className="hidden shrink-0 items-center gap-1 text-[13px] text-muted-foreground group-hover:text-foreground sm:inline-flex">
             {t('announcement.cta')}
             <ArrowRight
               className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5"
@@ -79,7 +81,7 @@ export function AnnouncementBar() {
           title={t('announcement.dismiss')}
           className={cn(
             'ml-auto flex h-7 w-7 shrink-0 items-center justify-center rounded-md text-muted-foreground transition-colors',
-            'hover:bg-background/60 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
+            'hover:bg-panel-raised hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
           )}
         >
           <X className="h-4 w-4" />

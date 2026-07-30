@@ -17,6 +17,170 @@
 /* Dark mode is class-based (next-themes toggles `.dark` on <html>). */
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* ---- Workbench: the marketing canvas ------------------------------------ */
+/* The home page is drawn as a work surface: a canvas with panels floating on
+   it, instrument type for anything measured, and one signal colour for tool
+   chrome (selection, active state, the thing under the cursor). The surface
+   itself is quieter and flatter than the app shell on purpose; the hue on it
+   belongs to the material inside a panel - a palette, a gradient, a template -
+   and to the brand blue on anything a visitor can act on.
+
+   These are semantic tokens like every other colour in the product, declared
+   once here and bound to utilities below. Nothing in a component may name a
+   hex. Both themes are defined: the marketing page carries the same theme
+   toggle the app does. */
+:root {
+  --canvas: #f6f7f9;
+  --panel: #ffffff;
+  --panel-raised: #f1f3f6;
+  --line: #e3e6ea;
+  --line-strong: #ccd1d8;
+  /* Tool chrome only, and never a gradient. Dark enough to pass AA against the
+     panel it labels. The marketing canvas rebinds this to the brand blue below;
+     this default is what a canvas gets when it does not. */
+  --signal: #a35c00;
+  --signal-foreground: #ffffff;
+  --grid-dot: #dfe3e8;
+  /* One square of the grid. Declared once because three things are measured in
+     it: the tile itself, the drift that loops after exactly one tile, and the
+     distance the cursor is allowed to drag the field. */
+  --grid-tile: 26px;
+  /* Radius of one dot. Enough to read as a plotted point at 100%, well under a
+     quarter of the tile so the field stays a grid and not a texture. */
+  --grid-dot-size: 1.5px;
+  /* Where the page's wash starts before it falls back to `--canvas`. A canvas
+     token like the ones above it, declared per theme rather than mixed from
+     `--primary`: the build drops a `color-mix()` custom property re-declared in
+     a second theme block, so the dark value would silently never arrive. Light
+     keeps a trace of blue; the dark canvas is where blue into black reads. */
+  --canvas-tint: #eef1f8;
+}
+
+.dark {
+  --canvas: #08090a;
+  --panel: #0f1114;
+  --panel-raised: #14171b;
+  --line: #1d2026;
+  --line-strong: #2b2f37;
+  --signal: #ffb020;
+  --signal-foreground: #08090a;
+  --grid-dot: #15181d;
+  /* Deep navy, not a blue: it has to survive being the first thing behind the
+     hero and still fall away into #08090a within a screen and a half. */
+  --canvas-tint: #0d1a31;
+}
+
+@theme inline {
+  --color-canvas: var(--canvas);
+  --color-panel: var(--panel);
+  --color-panel-raised: var(--panel-raised);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-signal: var(--signal);
+  --color-signal-foreground: var(--signal-foreground);
+  --color-grid-dot: var(--grid-dot);
+
+  --font-display: var(--font-inter-tight), "Inter Tight", system-ui, sans-serif;
+  --font-hud: var(--font-plex-mono), ui-monospace, monospace;
+}
+
+/* The canvas stays quiet - panels, lines and instrument type are neutral - but
+   the brand blue owns everything a visitor can act on. `primary` and `ring`
+   therefore keep the values `@adysre/theme` ships, so buttons, focus rings, the
+   scanner and the studios all read blue without being rewritten or forked.
+
+   `--signal` (tool chrome: selection, hover, the thing under the cursor) is
+   bound to the same blue for the length of the page, so the surface carries one
+   accent rather than two. The token stays in place for any other canvas that
+   wants its own signal colour.
+
+   `success`, `warning` and `danger` are deliberately untouched: a scan score
+   and an HTTP status carry meaning in their colour. */
+.workbench-theme {
+  --signal: var(--primary);
+  --signal-foreground: var(--primary-foreground);
+}
+
+/* The canvas itself: a dot grid, the way an artboard reads at 100%. It sits on
+   the page rather than on each section so panels appear to float over one
+   continuous surface.
+
+   The field is never quite still. It drifts one tile every `canvas-drift` cycle
+   - the loop is seamless because a tile-length offset lands the pattern back on
+   itself - and the cursor drags it: `--grid-shift-*` is written by
+   `components/landing/workbench/canvas.tsx` from pointer movement, so the dots
+   push the way the hand pushes and settle back when it stops.
+
+   Two separate inputs, one position, so they are kept as separate registered
+   properties and added in `calc()`. Registering them with `@property` is what
+   makes `--grid-drift` animatable at all: an unregistered custom property has no
+   type, and CSS cannot interpolate it. */
+@property --grid-drift {
+  syntax: '<length>';
+  inherits: false;
+  initial-value: 0px;
+}
+
+@property --grid-shift-x {
+  syntax: '<length>';
+  inherits: false;
+  initial-value: 0px;
+}
+
+@property --grid-shift-y {
+  syntax: '<length>';
+  inherits: false;
+  initial-value: 0px;
+}
+
+@keyframes canvas-drift {
+  to {
+    --grid-drift: var(--grid-tile);
+  }
+}
+
+.canvas-grid {
+  /* The dot itself and where the field currently sits, named once: the wash
+     below rebuilds the same background list with a second layer under it, and
+     the two must stay one pattern. */
+  --grid-dots: radial-gradient(
+    circle at var(--grid-dot-size) var(--grid-dot-size),
+    var(--grid-dot) var(--grid-dot-size),
+    transparent 0
+  );
+  --grid-offset-x: calc(var(--grid-drift) + var(--grid-shift-x));
+  --grid-offset-y: calc(var(--grid-drift) + var(--grid-shift-y));
+
+  background-image: var(--grid-dots);
+  background-size: var(--grid-tile) var(--grid-tile);
+  background-position: var(--grid-offset-x) var(--grid-offset-y);
+  animation: canvas-drift 14s linear infinite;
+}
+
+/* The page canvas: the same grid, over a wash that carries the brand blue at the
+   top and has fallen back to the canvas by a screen and a half down, so the page
+   opens blue and settles into black as it is read.
+
+   A separate class rather than part of `.canvas-grid`, because the artboard in
+   the hero reuses the grid inside a panel a few hundred pixels tall - a wash
+   measured in viewports would flood it. Must follow `.canvas-grid`: same
+   specificity, so source order decides which background list wins. */
+.canvas-wash {
+  background-image: var(--grid-dots), linear-gradient(180deg, var(--canvas-tint), var(--canvas));
+  background-size: var(--grid-tile) var(--grid-tile), 100% 150vh;
+  background-position: var(--grid-offset-x) var(--grid-offset-y), 0 0;
+  background-repeat: repeat, no-repeat;
+}
+
+/* The grid is the page's atmosphere, not information. Someone who asked for less
+   motion gets the still artboard the page was drawn as; the component reads the
+   same query and stops writing the shift. */
+@media (prefers-reduced-motion: reduce) {
+  .canvas-grid {
+    animation: none;
+  }
+}
+
 body {
   background-color: var(--background);
   color: var(--foreground);
@@ -322,3 +486,374 @@ body {
     8px -8px,
     -8px 0;
 }
+
+/* ---- Landing: the artboard's materials ---------------------------------- */
+/* The objects on the board are live materials, so they behave like materials
+   rather than like pictures of them. A gradient pans across an oversized fill; a
+   pattern and a texture drift, which they can do without a seam because they
+   tile; the icon set lights in a wave across the grid.
+
+   Everything is `alternate`, so nothing has to loop back to its start and no
+   sample ever jumps - the drift distance need not be a whole number of tiles. */
+@keyframes artboard-pan {
+  to {
+    background-position: 100% 100%;
+  }
+}
+
+.artboard-gradient {
+  background-size: 200% 200%;
+  animation: artboard-pan 16s ease-in-out infinite alternate;
+}
+
+@keyframes artboard-drift {
+  to {
+    background-position: 120px 120px;
+  }
+}
+
+.artboard-tile {
+  animation: artboard-drift 24s linear infinite alternate;
+}
+
+/* A set of icons breathing in sequence, used by both places a set is shown: the
+   artboard object and the materials shelf. One animation, two callers - each
+   sets `--glyph-index` per glyph, which is what turns a synchronised blink into
+   a wave crossing the grid in order. */
+@keyframes glyph-wave {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: none;
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-1.5px);
+  }
+}
+
+.glyph-wave {
+  display: inline-flex;
+  animation: glyph-wave 3.4s ease-in-out infinite;
+  animation-delay: calc(var(--glyph-index, 0) * 110ms);
+}
+
+/* Under the cursor a glyph leaves the wave entirely rather than pausing in it:
+   a paused animation holds whatever opacity it had reached, which would leave
+   the one icon you are pointing at dimmer than its neighbours. */
+.group:hover .glyph-wave {
+  animation: none;
+}
+
+/* The board still shows every material; it just stops performing. */
+@media (prefers-reduced-motion: reduce) {
+  .artboard-gradient,
+  .artboard-tile,
+  .glyph-wave {
+    animation: none;
+  }
+
+  .glyph-wave {
+    opacity: 1;
+  }
+}
+
+/* ---- Premium: the upsell button ----------------------------------------- */
+/* The one button in the product that is allowed to shine. It sits beside plain
+   actions in both the marketing rail and the app topbar, so it borrows their
+   hover (`.cta`) and adds three things they never get: a light that orbits the
+   edge, a sheen that crosses the face every few seconds, and a sparkle that
+   answers on the same beat.
+
+   The orbit is a conic gradient clipped to the border box under a flat fill
+   clipped to the padding box - one element, no ring div, and the label keeps the
+   solid `--primary` behind it, so the colour running around the edge never
+   touches the contrast of the text. */
+@property --premium-angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@keyframes premium-orbit {
+  to {
+    --premium-angle: 1turn;
+  }
+}
+
+/* Idle for most of the cycle, then one pass. A sheen that never rests reads as
+   a loading state rather than a surface catching the light. */
+@keyframes premium-sheen {
+  0%,
+  62% {
+    transform: translateX(-140%) skewX(-12deg);
+  }
+  100% {
+    transform: translateX(280%) skewX(-12deg);
+  }
+}
+
+@keyframes premium-twinkle {
+  0%,
+  62%,
+  100% {
+    transform: none;
+  }
+  72% {
+    transform: scale(1.22) rotate(14deg);
+  }
+  86% {
+    transform: scale(0.97) rotate(-5deg);
+  }
+}
+
+.premium-cta {
+  /* Thin enough to still be a rim, thick enough that the light running around
+     it is something you can see rather than infer. */
+  border: 1.5px solid transparent;
+  background-image:
+    linear-gradient(var(--primary), var(--primary)),
+    conic-gradient(
+      from var(--premium-angle),
+      color-mix(in oklab, var(--primary-foreground) 80%, var(--accent)) 0deg,
+      var(--accent) 28deg,
+      var(--secondary) 96deg,
+      var(--primary) 190deg,
+      var(--secondary) 276deg,
+      var(--accent) 332deg,
+      color-mix(in oklab, var(--primary-foreground) 80%, var(--accent)) 360deg
+    );
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  --tw-shadow: 0 1px 2px color-mix(in oklab, var(--primary) 34%, transparent);
+  box-shadow:
+    var(--tw-inset-shadow),
+    var(--tw-inset-ring-shadow),
+    var(--tw-ring-offset-shadow),
+    var(--tw-ring-shadow),
+    var(--tw-shadow);
+  animation: premium-orbit 6s linear infinite;
+}
+
+.premium-cta:hover {
+  --tw-shadow:
+    0 2px 8px color-mix(in oklab, var(--primary) 32%, transparent),
+    0 14px 32px -14px color-mix(in oklab, var(--secondary) 70%, transparent);
+}
+
+/* Same reason as a filled action: the ring token is the fill's own blue, so
+   keyboard focus is drawn inside in the label's colour. */
+.premium-cta:focus-visible {
+  --tw-ring-inset: inset;
+  --tw-ring-color: var(--primary-foreground);
+}
+
+.premium-cta::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 45%;
+  pointer-events: none;
+  background-image: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in oklab, var(--primary-foreground) 32%, transparent),
+    transparent
+  );
+  transform: translateX(-140%) skewX(-12deg);
+  animation: premium-sheen 5.5s ease-in-out infinite;
+}
+
+.premium-glyph {
+  animation: premium-twinkle 5.5s ease-in-out infinite;
+}
+
+/* All three are decoration on a button that already says what it is. */
+@media (prefers-reduced-motion: reduce) {
+  .premium-cta,
+  .premium-cta::after,
+  .premium-glyph {
+    animation: none;
+  }
+}
+
+/* ---- Landing: the closing band ------------------------------------------ */
+/* The last panel on the page, and the only one that raises its voice. It does it
+   with light rather than by inverting: the panel surface, lifted towards the
+   brand at the top-left corner where the heading sits and settling back into the
+   panel by the far edge. Both themes get the same move, so neither one ends the
+   page on a slab of the opposite colour. */
+.cta-band {
+  background-color: var(--panel);
+  background-image: linear-gradient(
+    135deg,
+    color-mix(in oklab, var(--primary) 14%, var(--panel)),
+    var(--panel) 62%
+  );
+}
+
+/* ---- Landing: call-to-action buttons ------------------------------------ */
+/* Every action on the marketing canvas wears the brand blue and the only
+   pointer-driven motion on the page: a 1px lift, a glow that widens with it, a
+   single sheen crossing the fill, and a press that goes back down. The
+   treatment sits on top of the shared button (Rule 3) - it adds depth and
+   movement, it never restates the button's colours. Everything here is derived
+   from `--primary`/`--primary-foreground` with color-mix, so retheming the
+   brand moves the whole set; components name the class, never a value.
+
+   Compose via `src/components/landing/cta.ts`, which is the only place the
+   class names and the button variant are paired. */
+@keyframes cta-sheen {
+  from {
+    transform: translateX(-130%) skewX(-12deg);
+  }
+  to {
+    transform: translateX(260%) skewX(-12deg);
+  }
+}
+
+/* Depth is set through Tailwind's own shadow variables rather than `box-shadow`
+   directly, and every `box-shadow` here repeats Tailwind's composition. A plain
+   `box-shadow` on these classes would win (they are unlayered, utilities are
+   not) and take the `focus-visible:ring-2` ring down with it - the ring is a
+   shadow in the same stack. Keyboard focus has to survive the decoration. */
+.cta,
+.cta-solid,
+.cta-solid:hover,
+.cta-quiet:hover {
+  box-shadow:
+    var(--tw-inset-shadow),
+    var(--tw-inset-ring-shadow),
+    var(--tw-ring-offset-shadow),
+    var(--tw-ring-shadow),
+    var(--tw-shadow);
+}
+
+.cta {
+  position: relative;
+  isolation: isolate;
+  /* Clips the sheen to the button's radius. The ring is drawn outside the box,
+     so it survives this. */
+  overflow: hidden;
+  transition-property: color, background-color, background-image, border-color, box-shadow, transform;
+  transition-duration: 200ms;
+  transition-timing-function: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.cta:hover {
+  transform: translateY(-1px);
+}
+
+/* An action that cannot be taken does not lift, glow or sweep. The shared button
+   already sets this; the one hand-built action on the page (the scanner's submit,
+   which is sized to its input) does not, so it belongs here. */
+.cta:disabled {
+  pointer-events: none;
+}
+
+/* A press should feel faster than the hover it interrupts. */
+.cta:active {
+  transform: translateY(0) scale(0.98);
+  transition-duration: 90ms;
+}
+
+/* Filled actions: a top-lit gradient rather than a flat fill, lifting off the
+   canvas on a coloured shadow. */
+.cta-solid {
+  background-image: linear-gradient(
+    to bottom,
+    color-mix(in oklab, var(--primary) 86%, var(--primary-foreground)),
+    var(--primary)
+  );
+  --tw-shadow: 0 1px 2px color-mix(in oklab, var(--primary) 30%, transparent);
+  --tw-inset-shadow: inset 0 1px 0
+    color-mix(in oklab, var(--primary-foreground) 18%, transparent);
+}
+
+.cta-solid:hover {
+  background-image: linear-gradient(
+    to bottom,
+    color-mix(in oklab, var(--primary) 78%, var(--primary-foreground)),
+    color-mix(in oklab, var(--primary) 96%, var(--primary-foreground))
+  );
+  --tw-shadow:
+    0 2px 6px color-mix(in oklab, var(--primary) 28%, transparent),
+    0 14px 30px -14px color-mix(in oklab, var(--primary) 60%, transparent);
+  --tw-inset-shadow: inset 0 1px 0
+    color-mix(in oklab, var(--primary-foreground) 26%, transparent);
+}
+
+/* The ring token is the same blue as the fill, so on a filled action it would
+   sit invisibly against its own colour. Drawn inside, in the button's own
+   foreground, it reads on the fill from any surface the button lands on - the
+   canvas, a panel, or the inverted closing band. */
+.cta-solid:focus-visible {
+  --tw-ring-inset: inset;
+  --tw-ring-color: var(--primary-foreground);
+}
+
+.cta-solid::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 40%;
+  pointer-events: none;
+  background-image: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in oklab, var(--primary-foreground) 28%, transparent),
+    transparent
+  );
+  transform: translateX(-130%) skewX(-12deg);
+}
+
+/* Once per hover, not a loop: a highlight passing over the surface reads as
+   material, a repeating one reads as a loading state. */
+.cta-solid:hover::after {
+  animation: cta-sheen 620ms cubic-bezier(0.3, 0, 0.2, 1);
+}
+
+/* Quiet actions (outline, ghost) tint towards the same blue instead of filling
+   with it, so the hierarchy between the two survives the hover. */
+.cta-quiet:hover {
+  color: var(--primary);
+  border-color: color-mix(in oklab, var(--primary) 40%, transparent);
+  background-color: color-mix(in oklab, var(--primary) 8%, transparent);
+  --tw-shadow: 0 10px 24px -18px color-mix(in oklab, var(--primary) 70%, transparent);
+}
+
+/* Icons inside an action: the trailing arrow leads on hover, a leading glyph
+   tilts. Both are children, so the parent's hover drives them. */
+.cta-arrow,
+.cta-glyph {
+  transition: transform 200ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.cta:hover .cta-arrow {
+  transform: translateX(2px);
+}
+
+.cta:hover .cta-glyph {
+  transform: rotate(-9deg) scale(1.06);
+}
+
+/* The colour is the state; the movement is decoration. Someone who asked for
+   less motion keeps the blue, the glow and the tint, and loses the travel. */
+@media (prefers-reduced-motion: reduce) {
+  .cta:hover,
+  .cta:active,
+  .cta:hover .cta-arrow,
+  .cta:hover .cta-glyph {
+    transform: none;
+  }
+
+  .cta-solid:hover::after {
+    animation: none;
+  }
+}
+
+

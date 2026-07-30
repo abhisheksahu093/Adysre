@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
+import { IBM_Plex_Mono, Inter_Tight } from 'next/font/google';
 import { notFound } from 'next/navigation';
 import { hasLocale, NextIntlClientProvider } from 'next-intl';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
@@ -7,6 +8,28 @@ import { routing } from '@/i18n/routing';
 import { ExtensionErrorSilencer } from '@/components/system/extension-error-silencer';
 import { Providers } from './providers';
 import '../globals.css';
+
+/**
+ * The two faces the marketing canvas is set in, self-hosted by `next/font` so
+ * no request ever leaves for a font CDN and there is no swap flash.
+ *
+ * They are exposed as CSS variables and bound to the `font-display` and
+ * `font-hud` utilities in `globals.css`; the app shell keeps the `--font-sans`
+ * token from `@adysre/theme` and is untouched by either.
+ */
+const displayFace = Inter_Tight({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-inter-tight',
+});
+
+/** The instrument voice: measurements, coordinates, counts, status. */
+const hudFace = IBM_Plex_Mono({
+  subsets: ['latin'],
+  weight: ['400', '500'],
+  display: 'swap',
+  variable: '--font-plex-mono',
+});
 
 /** Pre-render every locale at build time instead of on first request. */
 export function generateStaticParams() {
@@ -45,7 +68,11 @@ export default async function LocaleLayout({
 
   return (
     // `lang` must track the locale - screen readers pick pronunciation from it.
-    <html lang={locale} suppressHydrationWarning>
+    <html
+      lang={locale}
+      suppressHydrationWarning
+      className={`${displayFace.variable} ${hudFace.variable}`}
+    >
       <head>
         <ExtensionErrorSilencer />
       </head>

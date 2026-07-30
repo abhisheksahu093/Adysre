@@ -1968,6 +1968,42 @@
         "tools": "Tools"
       }
     },
+    "workbench": {
+      "artboard": "Artboard",
+      "layers": "Layers",
+      "properties": "Properties",
+      "swapPalette": "Palette",
+      "swapGradient": "Gradient",
+      "swapPattern": "Pattern",
+      "swapTexture": "Texture",
+      "autosaved": "Autosaved",
+      "browse": "Browse {family}",
+      "objects": {
+        "block": "Team plan block",
+        "surface": "Gradient tile",
+        "pattern": "Pattern tile",
+        "texture": "Texture tile",
+        "icons": "Icon set"
+      },
+      "props": {
+        "width": "Width",
+        "radius": "Radius",
+        "fill": "Fill",
+        "source": "Source",
+        "type": "Type",
+        "name": "Name",
+        "size": "Size",
+        "stroke": "Stroke",
+        "available": "Available"
+      },
+      "panels": {
+        "library": "Library",
+        "materials": "Materials",
+        "pipeline": "Pipeline",
+        "scanner": "Scanner",
+        "package": "Package"
+      }
+    },
     "hero": {
       "badge": "New: gradient and palette generators",
       "title": "Every block, colour and tool your team needs",

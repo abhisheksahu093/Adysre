@@ -4,12 +4,11 @@ import {
   CheckCircle2,
   ChevronRight,
   FileJson2,
-  GitBranch,
   MessageSquareText,
   Timer,
   Zap,
 } from 'lucide-react';
-import { buttonVariants, cn } from 'adysre';
+import { cn } from 'adysre';
 import { Link } from '@/i18n/navigation';
 import {
   builtinPlugins,
@@ -24,8 +23,9 @@ import { describeRule, type Segment } from '@adysre/rules-renderer';
 import { EXAMPLES, registryFor } from '@adysre/rules-playground';
 import { FUNCTION_COUNT, OPERATOR_COUNT, RULE_KIND_COUNT } from '@/data/rules-engine';
 import { highlight } from '@/lib/highlight';
-import { LandingBackdrop } from './landing-backdrop';
-import { SectionHeading } from './section-heading';
+import { CTA_ARROW, ctaClass } from './cta';
+import { WorkbenchSection } from './workbench/section';
+import { Hud } from './workbench/panel';
 
 /**
  * "Business Rules" — the home-page pitch.
@@ -144,38 +144,10 @@ export async function RulesSection() {
   ] as const;
 
   return (
-    <section className="relative isolate overflow-hidden border-y border-border">
-      <LandingBackdrop className="opacity-70" />
-
-      <div className="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24">
-        <SectionHeading
-          eyebrow={
-            <span className="inline-flex items-center gap-1.5">
-              <GitBranch className="h-4 w-4" aria-hidden />
-              {tHome('badge')}
-            </span>
-          }
-          title={t('title')}
-          subtitle={tHome('subtitle')}
-          className="max-w-3xl"
-        />
-
-        {/* One rule, three ways, one slab. The lanes share a surface because
-            they are one artefact seen from three sides, not three features. */}
-        <div className="relative mx-auto mt-12 max-w-6xl">
-          {/* Aura: token colours at low opacity, so the slab lifts off the page
-              in both themes without a single hardcoded shade. */}
-          <div
-            aria-hidden
-            className="absolute -inset-4 rounded-[2rem] bg-gradient-to-r from-primary/20 via-secondary/10 to-accent/20 opacity-70 blur-3xl"
-          />
-
-          <div className="relative overflow-hidden rounded-2xl border border-border bg-card/80 shadow-2xl ring-1 ring-inset ring-foreground/5 backdrop-blur-xl">
-            {/* A lit top edge, the way a focused window reads. */}
-            <div
-              aria-hidden
-              className="h-px w-full bg-gradient-to-r from-transparent via-primary/60 to-transparent"
-            />
+    <WorkbenchSection label={tHome('badge')} title={t('title')} description={tHome('subtitle')}>
+      {/* One rule, three ways, one panel. The lanes share a surface because
+          they are one artefact seen from three sides, not three features. */}
+      <div className="overflow-hidden rounded-xl border border-line bg-panel shadow-[0_1px_2px_rgb(0_0_0/0.04),0_20px_50px_-36px_rgb(0_0_0/0.6)]">
 
             {/* Title bar: this is a FILE, and the numbers next to it are what
                 running it actually cost. */}
@@ -395,38 +367,33 @@ export async function RulesSection() {
                 );
               })}
             </div>
-          </div>
-        </div>
-
-        {/* The breadth behind the one example. Counts derive from the registry
-            (Rule 6), and are locale-formatted like every other figure. */}
-        <dl className="mx-auto mt-12 grid max-w-3xl grid-cols-3 divide-x divide-border overflow-hidden rounded-xl border border-border bg-card/60 backdrop-blur">
-          {[
-            { id: 'operators', value: OPERATOR_COUNT },
-            { id: 'functions', value: FUNCTION_COUNT },
-            { id: 'kinds', value: RULE_KIND_COUNT },
-          ].map((stat) => (
-            <div key={stat.id} className="flex flex-col-reverse gap-1 px-4 py-5 text-center">
-              <dt className="text-xs uppercase tracking-wider text-muted-foreground">
-                {t(`stats.${stat.id}`)}
-              </dt>
-              <dd className="bg-gradient-to-br from-foreground to-muted-foreground bg-clip-text text-3xl font-semibold tabular-nums text-transparent sm:text-4xl">
-                {stat.value}
-              </dd>
-            </div>
-          ))}
-        </dl>
-
-        <div className="mt-10 flex justify-center">
-          <Link
-            className={cn(buttonVariants({ size: 'lg' }), 'gap-2 shadow-lg shadow-primary/20')}
-            href="/rules"
-          >
-            {tHome('cta')}
-            <ArrowRight aria-hidden className="h-4 w-4" />
-          </Link>
-        </div>
       </div>
-    </section>
+
+      {/* The breadth behind the one example. Counts derive from the registry
+          (Rule 6), and are locale-formatted like every other figure. */}
+      <dl className="mt-3 grid grid-cols-3 gap-px overflow-hidden rounded-xl border border-line bg-line">
+        {[
+          { id: 'operators', value: OPERATOR_COUNT },
+          { id: 'functions', value: FUNCTION_COUNT },
+          { id: 'kinds', value: RULE_KIND_COUNT },
+        ].map((stat) => (
+          <div key={stat.id} className="flex flex-col gap-1 bg-panel px-4 py-3.5">
+            <dd className="font-hud text-[19px] font-medium leading-none tabular-nums">
+              {stat.value}
+            </dd>
+            <dt>
+              <Hud>{t(`stats.${stat.id}`)}</Hud>
+            </dt>
+          </div>
+        ))}
+      </dl>
+
+      <div className="mt-5">
+        <Link className={ctaClass({ size: 'sm', className: 'gap-1.5' })} href="/rules">
+          {tHome('cta')}
+          <ArrowRight aria-hidden className={cn('h-4 w-4', CTA_ARROW)} />
+        </Link>
+      </div>
+    </WorkbenchSection>
   );
 }

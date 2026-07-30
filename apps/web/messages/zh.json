@@ -1968,6 +1968,42 @@
         "tools": "工具"
       }
     },
+    "workbench": {
+      "artboard": "画板",
+      "layers": "图层",
+      "properties": "属性",
+      "swapPalette": "调色板",
+      "swapGradient": "渐变",
+      "swapPattern": "图案",
+      "swapTexture": "纹理",
+      "autosaved": "已自动保存",
+      "browse": "浏览{family}",
+      "objects": {
+        "block": "团队方案区块",
+        "surface": "渐变色块",
+        "pattern": "图案图块",
+        "texture": "纹理图块",
+        "icons": "图标集"
+      },
+      "props": {
+        "width": "宽度",
+        "radius": "圆角",
+        "fill": "填充",
+        "source": "来源",
+        "type": "类型",
+        "name": "名称",
+        "size": "尺寸",
+        "stroke": "描边",
+        "available": "可用数量"
+      },
+      "panels": {
+        "library": "模块库",
+        "materials": "素材",
+        "pipeline": "流程",
+        "scanner": "扫描器",
+        "package": "安装包"
+      }
+    },
     "hero": {
       "badge": "新功能：渐变与调色板生成器",
       "title": "团队所需的每个模块、颜色与工具",

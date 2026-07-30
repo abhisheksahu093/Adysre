@@ -106,8 +106,13 @@ export function WebsiteChecker() {
           type="submit"
           disabled={status === 'loading' || url.trim() === ''}
           className={cn(
+            // Not `ctaClass`: this one is taller and squarer than a shared
+            // button so it lines up with the URL field beside it. It borrows the
+            // canvas's motion classes so the page's one filled action still
+            // behaves the same everywhere.
+            'cta cta-solid',
             'inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-5 py-3 text-sm font-medium text-primary-foreground',
-            'transition-opacity hover:opacity-90 disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
+            'disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
           )}
         >
           {status === 'loading' ? (

@@ -1968,6 +1968,42 @@
         "tools": "ツール"
       }
     },
+    "workbench": {
+      "artboard": "アートボード",
+      "layers": "レイヤー",
+      "properties": "プロパティ",
+      "swapPalette": "パレット",
+      "swapGradient": "グラデーション",
+      "swapPattern": "パターン",
+      "swapTexture": "テクスチャ",
+      "autosaved": "自動保存済み",
+      "browse": "{family}を見る",
+      "objects": {
+        "block": "チームプランのブロック",
+        "surface": "グラデーションタイル",
+        "pattern": "パターンタイル",
+        "texture": "テクスチャタイル",
+        "icons": "アイコンセット"
+      },
+      "props": {
+        "width": "幅",
+        "radius": "角丸",
+        "fill": "塗り",
+        "source": "ソース",
+        "type": "種類",
+        "name": "名前",
+        "size": "サイズ",
+        "stroke": "線幅",
+        "available": "収録数"
+      },
+      "panels": {
+        "library": "ライブラリ",
+        "materials": "マテリアル",
+        "pipeline": "流れ",
+        "scanner": "スキャナー",
+        "package": "パッケージ"
+      }
+    },
     "hero": {
       "badge": "新機能: グラデーションとパレットのジェネレーター",
       "title": "チームに必要なすべてのブロック、カラー、ツール",

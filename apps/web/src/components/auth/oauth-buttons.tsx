@@ -6,6 +6,7 @@ import { OAUTH_PROVIDERS, type OAuthProvider } from '@adysre/validators';
 import { Button } from 'adysre';
 import { authApi } from '@/lib/api-client';
 import { oauthUrl } from '@/lib/auth';
+import { SOCIAL_SIGN_IN_ENABLED } from '@/config/auth';
 import { PROVIDER_ICONS } from './provider-icons';
 
 /** Provider names are brands - never translated. */
@@ -90,6 +91,24 @@ export function OAuthButtons() {
         );
       })}
     </div>
+  );
+}
+
+/**
+ * The whole social block: the providers and the separator under them.
+ *
+ * Both auth pages render this one thing rather than the two pieces, so
+ * `SOCIAL_SIGN_IN_ENABLED` has a single place to be honoured and the pages
+ * cannot drift into showing a lone "or" with nothing above it.
+ */
+export function SocialSignIn({ dividerLabel }: { dividerLabel: string }) {
+  if (!SOCIAL_SIGN_IN_ENABLED) return null;
+
+  return (
+    <>
+      <OAuthButtons />
+      <AuthDivider label={dividerLabel} />
+    </>
   );
 }
 

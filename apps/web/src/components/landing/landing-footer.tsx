@@ -2,14 +2,17 @@ import { getTranslations } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
 import { Logo } from '@/components/logo';
 import { LANDING_LINKS } from '@/data/landing';
+import { Hud } from './workbench/panel';
 
 /** The year is stamped at render; no client clock needed. */
 const YEAR = new Date().getFullYear();
 
 /**
- * Marketing footer. Server Component. Link labels reuse the shared `nav` and
- * `userMenu` catalogues wherever an entry already exists, so the footer can
- * never disagree with the sidebar or the account menu.
+ * Marketing footer, drawn as the last panel on the canvas.
+ *
+ * Server Component. Link labels reuse the shared `nav`, `userMenu` and
+ * `pricing` catalogues wherever an entry already exists, so the footer can never
+ * disagree with the sidebar or the account menu.
  */
 export async function LandingFooter() {
   const [t, tNav, tUser, tPricing] = await Promise.all([
@@ -60,11 +63,11 @@ export async function LandingFooter() {
   ];
 
   return (
-    <footer className="border-t border-border">
-      <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6">
-        <div className="grid grid-cols-2 gap-10 md:grid-cols-6">
+    <footer className="mx-auto max-w-[1440px] px-4 pb-10 sm:px-6">
+      <div className="overflow-hidden rounded-xl border border-line bg-panel">
+        <div className="grid grid-cols-2 gap-8 p-6 sm:p-8 md:grid-cols-6">
           <div className="col-span-2">
-            <Logo height={26} />
+            <Logo height={24} />
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted-foreground">
               {t('footer.tagline')}
             </p>
@@ -72,13 +75,13 @@ export async function LandingFooter() {
 
           {columns.map((col) => (
             <nav key={col.heading} aria-label={col.heading}>
-              <h3 className="text-sm font-semibold">{col.heading}</h3>
-              <ul className="mt-4 space-y-2.5">
+              <Hud>{col.heading}</Hud>
+              <ul className="mt-3.5 space-y-2">
                 {col.links.map((link) => (
                   <li key={link.href}>
                     <Link
                       href={link.href}
-                      className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                      className="text-[13px] text-muted-foreground transition-colors hover:text-foreground"
                     >
                       {link.label}
                     </Link>
@@ -89,11 +92,11 @@ export async function LandingFooter() {
           ))}
         </div>
 
-        <div className="mt-12 flex flex-col items-center justify-between gap-3 border-t border-border pt-6 text-xs text-muted-foreground sm:flex-row">
-          <p>
-            &copy; {YEAR} ADYSRE. {t('footer.rights')}
-          </p>
-          <p>{t('footer.built')}</p>
+        <div className="flex flex-col gap-2 border-t border-line bg-panel-raised px-6 py-3.5 sm:flex-row sm:items-center sm:justify-between sm:px-8">
+          <Hud>
+            © {YEAR} ADYSRE. {t('footer.rights')}
+          </Hud>
+          <Hud>{t('footer.built')}</Hud>
         </div>
       </div>
     </footer>

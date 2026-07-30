@@ -1,5 +1,5 @@
 import { getFormatter, getLocale, getTranslations } from 'next-intl/server';
-import { ArrowRight, Check, Send, Webhook, X } from 'lucide-react';
+import { ArrowRight, Check, Send, X } from 'lucide-react';
 import { buttonVariants, cn } from 'adysre';
 import { Link } from '@/i18n/navigation';
 import { METHOD_TONES, STATUS_TONES, statusClass } from '@/modules/api-studio/constants/http';
@@ -15,8 +15,9 @@ import {
   PREVIEW_RESPONSE,
 } from '@/data/api-studio';
 import { highlight } from '@/lib/highlight';
-import { LandingBackdrop } from './landing-backdrop';
-import { SectionHeading } from './section-heading';
+import { CTA_ARROW, ctaClass } from './cta';
+import { WorkbenchSection } from './workbench/section';
+import { Hud } from './workbench/panel';
 
 /**
  * "API Studio" - the home-page pitch for the self-hosted HTTP client.
@@ -78,35 +79,10 @@ export async function ApiStudioSection() {
   };
 
   return (
-    <section className="relative isolate overflow-hidden border-y border-border">
-      <LandingBackdrop className="opacity-70" />
-
-      <div className="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24">
-        <SectionHeading
-          eyebrow={
-            <span className="inline-flex items-center gap-1.5">
-              <Webhook className="h-4 w-4" aria-hidden />
-              {t('badge')}
-            </span>
-          }
-          title={t('title')}
-          subtitle={t('subtitle')}
-          className="max-w-3xl"
-        />
-
-        {/* The workspace, as a slab. Same construction as the rules section so
-            the two flagship previews read as one family. */}
-        <div className="relative mx-auto mt-12 max-w-6xl">
-          <div
-            aria-hidden
-            className="absolute -inset-4 rounded-[2rem] bg-gradient-to-r from-accent/20 via-primary/10 to-secondary/20 opacity-70 blur-3xl"
-          />
-
-          <div className="relative overflow-hidden rounded-2xl border border-border bg-card/80 shadow-2xl ring-1 ring-inset ring-foreground/5 backdrop-blur-xl">
-            <div
-              aria-hidden
-              className="h-px w-full bg-gradient-to-r from-transparent via-accent/60 to-transparent"
-            />
+    <WorkbenchSection label={t('badge')} title={t('title')} description={t('subtitle')}>
+      {/* The studio, docked. Same construction as the rules panel so the two
+          flagship previews read as one family. */}
+      <div className="overflow-hidden rounded-xl border border-line bg-panel shadow-[0_1px_2px_rgb(0_0_0/0.04),0_20px_50px_-36px_rgb(0_0_0/0.6)]">
 
             {/* Window bar: the open tab, and the environment every `{{variable}}`
                 below resolves against. */}
@@ -207,7 +183,10 @@ export async function ApiStudioSection() {
                   <span
                     className={cn(
                       buttonVariants({ size: 'sm' }),
-                      'pointer-events-none gap-1.5 shadow-sm',
+                      // Part of the preview, not a real control: it takes the
+                      // filled treatment so it matches the Send button in the
+                      // studio, and nothing else.
+                      'cta cta-solid pointer-events-none gap-1.5',
                     )}
                   >
                     <Send className="h-3.5 w-3.5" aria-hidden />
@@ -315,45 +294,36 @@ export async function ApiStudioSection() {
                 </div>
               </div>
             </div>
+      </div>
+
+      {/* Counted from the module, never typed by hand. */}
+      <dl className="mt-3 grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-line bg-line sm:grid-cols-4">
+        {API_STUDIO_STATS.map((stat) => (
+          <div key={stat.id} className="flex flex-col gap-1 bg-panel px-4 py-3.5">
+            <dd className="font-hud text-[19px] font-medium leading-none tabular-nums">
+              {format.number(stat.value)}
+            </dd>
+            <dt>
+              <Hud>{t(`stats.${stat.id}`)}</Hud>
+            </dt>
           </div>
-        </div>
+        ))}
+      </dl>
 
-        {/* Counted from the module, never typed by hand. */}
-        <dl className="mx-auto mt-12 grid max-w-4xl grid-cols-2 divide-x divide-y divide-border overflow-hidden rounded-xl border border-border bg-card/60 backdrop-blur sm:grid-cols-4 sm:divide-y-0">
-          {API_STUDIO_STATS.map((stat) => (
-            <div key={stat.id} className="flex flex-col-reverse gap-1 px-4 py-5 text-center">
-              <dt className="text-xs uppercase tracking-wider text-muted-foreground">
-                {t(`stats.${stat.id}`)}
-              </dt>
-              <dd className="bg-gradient-to-br from-foreground to-muted-foreground bg-clip-text text-3xl font-semibold tabular-nums text-transparent sm:text-4xl">
-                {format.number(stat.value)}
-              </dd>
-            </div>
-          ))}
-        </dl>
-
-        <ul className="mx-auto mt-8 flex max-w-4xl flex-wrap justify-center gap-2">
+      <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-2">
+        <Link className={ctaClass({ size: 'sm', className: 'gap-1.5' })} href={API_STUDIO_ROUTE}>
+          {t('cta')}
+          <ArrowRight aria-hidden className={cn('h-4 w-4', CTA_ARROW)} />
+        </Link>
+        <ul className="flex flex-wrap items-center gap-x-4 gap-y-1.5">
           {API_STUDIO_CAPABILITIES.map(({ id, icon: Icon }) => (
-            <li
-              key={id}
-              className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-3 py-1.5 text-xs font-medium text-muted-foreground"
-            >
-              <Icon className="h-3.5 w-3.5 text-accent" aria-hidden />
-              {t(`capabilities.${id}`)}
+            <li key={id} className="inline-flex items-center gap-1.5">
+              <Icon className="h-3.5 w-3.5 text-muted-foreground" aria-hidden />
+              <Hud>{t(`capabilities.${id}`)}</Hud>
             </li>
           ))}
         </ul>
-
-        <div className="mt-10 flex justify-center">
-          <Link
-            className={cn(buttonVariants({ size: 'lg' }), 'gap-2 shadow-lg shadow-primary/20')}
-            href={API_STUDIO_ROUTE}
-          >
-            {t('cta')}
-            <ArrowRight aria-hidden className="h-4 w-4" />
-          </Link>
-        </div>
       </div>
-    </section>
+    </WorkbenchSection>
   );
 }

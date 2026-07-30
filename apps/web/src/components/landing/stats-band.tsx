@@ -3,26 +3,24 @@
 import { useEffect, useRef, useState } from 'react';
 import { useFormatter, useTranslations } from 'next-intl';
 import { useReducedMotion } from 'framer-motion';
-import { ArrowUpRight } from 'lucide-react';
 import { cn } from 'adysre';
 import { Link } from '@/i18n/navigation';
 import { STAT_META, type Stat as StatData } from '@/data/landing';
-import { ACCENT_ICON } from './accent';
+import { Hud } from './workbench/panel';
 
 /** Ease-out so the count decelerates into its final value. */
 const easeOut = (x: number) => 1 - Math.pow(1 - x, 3);
 
 /**
- * A single metric: an accent chip, a figure that counts up the first time it
- * scrolls into view, and a label. The number is locale-formatted at every frame,
- * so digit grouping stays correct in every language. Under
- * `prefers-reduced-motion` it renders the final value at once, with no animation.
+ * One reading on the status bar: a figure that counts up the first time it
+ * scrolls into view, over the name of the catalogue it measures. The number is
+ * locale-formatted on every frame, so digit grouping stays correct in every
+ * language. Under `prefers-reduced-motion` the final value renders at once.
  *
- * Where the metric has a page behind it the whole tile is a link — a visitor who
- * reads "448 icons" and wants to see them should not have to hunt the nav for
- * the way in. `teams` has no page, so it renders as a plain tile.
+ * Where the figure has a page behind it the whole cell is a link - someone who
+ * reads "448 icons" and wants to see them should not have to hunt the nav.
  */
-function Stat({
+function Reading({
   id,
   value,
   suffix,
@@ -39,7 +37,6 @@ function Stat({
   const [display, setDisplay] = useState(reduce ? value : 0);
 
   const meta = STAT_META[id];
-  const Icon = meta?.icon;
 
   useEffect(() => {
     if (reduce) {
@@ -76,70 +73,54 @@ function Stat({
   }, [value, reduce]);
 
   const body = (
-    <div ref={ref} className="flex flex-col items-start gap-3">
-      {Icon && meta && (
-        <span
-          aria-hidden
-          className={cn(
-            'flex h-9 w-9 items-center justify-center rounded-lg transition-transform',
-            'group-hover:scale-105',
-            ACCENT_ICON[meta.accent],
-          )}
-        >
-          <Icon className="h-[18px] w-[18px]" />
-        </span>
-      )}
-
-      <div>
-        <div className="text-3xl font-semibold tracking-tight tabular-nums sm:text-4xl">
-          {format.number(display)}
-          {suffix && <span className="text-primary">{suffix}</span>}
-        </div>
-        <div className="mt-1 flex items-center gap-1 text-sm text-muted-foreground">
-          {label}
-          {meta?.href && (
-            <ArrowUpRight
-              className="h-3.5 w-3.5 opacity-0 transition-opacity group-hover:opacity-100"
-              aria-hidden
-            />
-          )}
-        </div>
-      </div>
+    <div ref={ref} className="flex flex-col gap-1 px-4 py-3.5 sm:px-5">
+      <span className="font-hud text-[19px] font-medium leading-none tabular-nums text-foreground sm:text-[22px]">
+        {format.number(display)}
+        {suffix}
+      </span>
+      <Hud className="truncate">{label}</Hud>
     </div>
   );
 
-  const tile = cn(
-    'group relative rounded-xl border border-border bg-card p-5 transition-all',
-    meta?.href &&
-      'hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
-  );
+  const cell = 'block h-full bg-panel transition-colors';
 
   return meta?.href ? (
-    <Link href={meta.href} className={tile}>
+    <Link
+      href={meta.href}
+      className={cn(
+        cell,
+        'hover:bg-panel-raised focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring',
+      )}
+    >
       {body}
     </Link>
   ) : (
-    <div className={tile}>{body}</div>
+    <div className={cell}>{body}</div>
   );
 }
 
 /**
- * Headline metrics band. Client Component for the on-scroll count-up; the
- * figures are computed on the server (from the real catalogues) and handed in as
- * props, so no catalogue is bundled into this client chunk.
+ * The status bar under the board: every catalogue in the product, measured.
+ *
+ * It replaces the old grid of stat cards. A status bar is what a work surface
+ * puts its numbers in, and running them together in one ruled strip says "this
+ * is the size of the thing" better than seven boxes do. The dividers are drawn
+ * by the grid itself (a gap filled by the panel border colour), so the strip
+ * stays ruled at every breakpoint without per-cell border juggling.
+ *
+ * Client Component for the on-scroll count-up; the figures are computed on the
+ * server from the real catalogues and handed in as props, so no catalogue is
+ * bundled into this chunk.
  */
 export function StatsBand({ stats }: { stats: StatData[] }) {
   const t = useTranslations('landing');
 
   return (
-    <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20">
-      <h2 className="text-center text-sm font-medium uppercase tracking-widest text-muted-foreground">
-        {t('stats.title')}
-      </h2>
-
-      <div className="mt-10 grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-4">
+    <section className="mx-auto max-w-[1440px] px-4 py-6 sm:px-6 sm:py-8">
+      <h2 className="sr-only">{t('stats.title')}</h2>
+      <div className="grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-line bg-line sm:grid-cols-4 lg:grid-cols-7">
         {stats.map((s) => (
-          <Stat
+          <Reading
             key={s.id}
             id={s.id}
             value={s.value}

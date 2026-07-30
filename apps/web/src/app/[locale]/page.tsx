@@ -16,6 +16,7 @@ import { ApiStudioSection } from '@/components/landing/api-studio-section';
 import { Faq } from '@/components/landing/faq';
 import { CtaBand } from '@/components/landing/cta-band';
 import { LandingFooter } from '@/components/landing/landing-footer';
+import { WorkbenchCanvas } from '@/components/landing/workbench/canvas';
 
 export async function generateMetadata({
   params,
@@ -42,10 +43,13 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
   const t = await getTranslations({ locale, namespace: 'landing' });
 
   return (
-    <div className="min-h-screen bg-background">
+    // One canvas from the announcement bar to the footer: the dot grid is the
+    // page, every section is a panel resting on it, and the surface drifts and
+    // answers the cursor.
+    <WorkbenchCanvas>
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-primary focus:px-4 focus:py-2 focus:text-sm focus:text-primary-foreground"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-foreground focus:px-4 focus:py-2 focus:text-sm focus:text-background"
       >
         {t('nav.skip')}
       </a>
@@ -55,11 +59,15 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
 
       <main id="main">
         <LandingHero />
-        {/* Second: the working website checker is the strongest interactive
-            hook, so it sits right below the hero - a visitor can scan a real URL
-            before scrolling anything else. */}
+        {/* The board's own readings come first: what the library actually
+            contains, straight under the thing it is made of. */}
+        <StatsBand stats={LANDING_STATS} />
+        {/* Then the working checker - the strongest interactive hook on the
+            page, and a visitor can scan a real URL before scrolling further. */}
         <IntelligenceSection />
         <FeatureGrid />
+        {/* The material itself, once the modules holding it have been named. */}
+        <Showcase />
         <RulesSection />
         {/* The two developer modules sit together: a rule engine and an API
             client are for the same visitor, and both previews are built the
@@ -68,15 +76,13 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
         {/* A visitor who has just seen what the modules are should be told they
             can install the whole thing before being asked to browse. */}
         <InstallSection />
-        <WorkflowSteps />
-        <Showcase />
-        <StatsBand stats={LANDING_STATS} />
         <TemplatesTeaser />
+        <WorkflowSteps />
         <Faq />
         <CtaBand />
       </main>
 
       <LandingFooter />
-    </div>
+    </WorkbenchCanvas>
   );
 }

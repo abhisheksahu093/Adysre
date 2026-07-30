@@ -1,123 +1,84 @@
-'use client';
-
-import { motion, useReducedMotion, type Variants } from 'framer-motion';
-import { useTranslations } from 'next-intl';
-import { ArrowRight, Sparkles, Check, PenTool } from 'lucide-react';
-import { buttonVariants, cn } from 'adysre';
+import { getTranslations } from 'next-intl/server';
+import { ArrowRight, PenTool } from 'lucide-react';
+import { cn } from 'adysre';
 import { Link } from '@/i18n/navigation';
-import { PREVIEW_MODULES, LANDING_LINKS } from '@/data/landing';
+import { CTA_ARROW, CTA_GLYPH, ctaClass } from './cta';
+import { LANDING_LINKS } from '@/data/landing';
+import { ICON_COUNT } from '@/data/library-stats';
+import {
+  ARTBOARD_GRADIENTS,
+  ARTBOARD_ICONS,
+  ARTBOARD_PALETTES,
+  ARTBOARD_PATTERNS,
+  ARTBOARD_TEXTURES,
+} from '@/data/workbench';
 import { TRUSTED_BUILDERS } from '@/config/audience';
-import { LandingBackdrop } from './landing-backdrop';
-import { WorkspacePreview } from './workspace-preview';
+import { Artboard } from './workbench/artboard';
+import { Hud } from './workbench/panel';
 
 /**
- * Hero section: value proposition, primary calls to action, and a stylised
- * preview of the workspace. Client Component for the entrance animation, which
- * collapses to a static render when the visitor asks for reduced motion.
+ * The opening of the home page: a claim, three ways in, and the board.
+ *
+ * Server Component. The hero used to be a centred stack over a glow with a
+ * drawing of the workspace beneath it; this one puts a working piece of the
+ * workspace on the page and sets the claim beside it. Only the board needs a
+ * client bundle, and it receives its material samples as props, so no catalogue
+ * crosses into the browser.
  */
-export function LandingHero() {
-  const t = useTranslations('landing');
-  const reduce = useReducedMotion();
-
-  // A gentle stagger: each child rises a little and fades in. Disabled outright
-  // under prefers-reduced-motion so the content simply appears.
-  const container: Variants = {
-    hidden: {},
-    show: { transition: { staggerChildren: reduce ? 0 : 0.08 } },
-  };
-  const item: Variants = {
-    hidden: reduce ? { opacity: 0 } : { opacity: 0, y: 16 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } },
-  };
+export async function LandingHero() {
+  const t = await getTranslations('landing');
 
   return (
-    <section className="relative isolate overflow-hidden">
-      <LandingBackdrop />
+    <section className="mx-auto max-w-[1440px] px-4 pb-6 pt-10 sm:px-6 sm:pb-8 sm:pt-16">
+      <div className="grid gap-x-12 gap-y-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] lg:items-end">
+        <div>
+          <Hud>{t('hero.badge')}</Hud>
+          <h1 className="mt-4 text-balance text-[38px] font-semibold leading-[0.98] tracking-[-0.04em] sm:text-[52px] lg:text-[60px]">
+            {t('hero.title')} <span className="text-muted-foreground">{t('hero.titleAccent')}</span>
+          </h1>
+        </div>
 
-      <div className="relative mx-auto max-w-7xl px-4 pb-16 pt-16 sm:px-6 sm:pb-20 sm:pt-24">
-        <motion.div
-          variants={container}
-          initial="hidden"
-          animate="show"
-          className="mx-auto max-w-3xl text-center"
-        >
-          <motion.div variants={item} className="flex justify-center">
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-border bg-muted/60 px-3 py-1 text-xs font-medium text-muted-foreground backdrop-blur">
-              <Sparkles className="h-3.5 w-3.5 text-primary" aria-hidden />
-              {t('hero.badge')}
-            </span>
-          </motion.div>
-
-          <motion.h1
-            variants={item}
-            className="mt-6 text-balance text-4xl font-semibold tracking-tight sm:text-5xl md:text-6xl"
-          >
-            {t('hero.title')}{' '}
-            <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-              {t('hero.titleAccent')}
-            </span>
-          </motion.h1>
-
-          <motion.p
-            variants={item}
-            className="mx-auto mt-5 max-w-2xl text-pretty text-base leading-relaxed text-muted-foreground sm:text-lg"
-          >
+        <div className="lg:pb-2">
+          <p className="max-w-xl text-pretty text-[15px] leading-relaxed text-muted-foreground">
             {t('hero.subtitle')}
-          </motion.p>
+          </p>
 
-          {/* Stacked full-width on phones - the labels are `whitespace-nowrap`,
-              so a two-up mobile row would overflow in the longer locales. From
-              `sm` up the three sit on one wrapping row. */}
-          <motion.div
-            variants={item}
-            className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row sm:flex-wrap"
-          >
-            <Link
-              href={LANDING_LINKS.components}
-              className={cn(buttonVariants({ variant: 'outline', size: 'lg' }), 'w-full sm:w-auto')}
-            >
-              {t('hero.ctaComponents')}
-            </Link>
-            {/* The playground is the headline action, so it takes the filled
-                variant and sits between the two outline links. */}
+          <div className="mt-6 flex flex-col gap-2.5 sm:flex-row sm:flex-wrap sm:items-center">
             <Link
               href={LANDING_LINKS.designPlayground}
-              className={cn(buttonVariants({ size: 'lg' }), 'w-full gap-1.5 sm:w-auto')}
+              className={ctaClass({ size: 'lg', className: 'gap-1.5' })}
             >
-              <PenTool className="h-4 w-4" aria-hidden />
+              <PenTool className={cn('h-4 w-4', CTA_GLYPH)} aria-hidden />
               {t('hero.ctaPlayground')}
             </Link>
             <Link
               href={LANDING_LINKS.codeStudio}
-              className={cn(buttonVariants({ variant: 'outline', size: 'lg' }), 'w-full gap-1.5 sm:w-auto')}
+              className={ctaClass({ tone: 'quiet', size: 'lg', className: 'gap-1.5' })}
             >
               {t('hero.ctaWorkspace')}
-              <ArrowRight className="h-4 w-4" aria-hidden />
+              <ArrowRight className={cn('h-4 w-4', CTA_ARROW)} aria-hidden />
             </Link>
-          </motion.div>
+            <Link href={LANDING_LINKS.components} className={ctaClass({ tone: 'bare', size: 'lg' })}>
+              {t('hero.ctaComponents')}
+            </Link>
+          </div>
 
-          <motion.div
-            variants={item}
-            className="mt-6 flex flex-col items-center justify-center gap-2 text-xs text-muted-foreground sm:flex-row sm:gap-4"
-          >
-            <span className="inline-flex items-center gap-1.5">
-              <Check className="h-3.5 w-3.5 text-success" aria-hidden />
-              {t('hero.hint')}
-            </span>
-            <span className="hidden h-3 w-px bg-border sm:block" aria-hidden />
-            {/* `number` formatting, not a literal: Hindi groups as 18,000. */}
-            <span>{t('hero.trust', { count: TRUSTED_BUILDERS })}</span>
-          </motion.div>
-        </motion.div>
+          <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-1.5">
+            <Hud>{t('hero.hint')}</Hud>
+            <Hud>{t('hero.trust', { count: TRUSTED_BUILDERS })}</Hud>
+          </div>
+        </div>
+      </div>
 
-        <motion.div
-          initial={reduce ? { opacity: 0 } : { opacity: 0, y: 32 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: reduce ? 0 : 0.35, ease: 'easeOut' }}
-          className="mx-auto mt-14 max-w-5xl"
-        >
-          <WorkspacePreview modules={PREVIEW_MODULES} />
-        </motion.div>
+      <div className="mt-10 sm:mt-12">
+        <Artboard
+          palettes={ARTBOARD_PALETTES}
+          gradients={ARTBOARD_GRADIENTS}
+          patterns={ARTBOARD_PATTERNS}
+          textures={ARTBOARD_TEXTURES}
+          icons={ARTBOARD_ICONS}
+          iconCount={ICON_COUNT}
+        />
       </div>
     </section>
   );

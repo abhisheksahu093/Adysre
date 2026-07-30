@@ -1,6 +1,6 @@
 import { getFormatter, getTranslations } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
-import { ArrowUpRight, Package, Terminal } from 'lucide-react';
+import { ArrowUpRight, Terminal } from 'lucide-react';
 import { cn } from 'adysre';
 import { highlight } from '@/lib/highlight';
 import {
@@ -13,24 +13,30 @@ import {
   SETUP_SNIPPET,
   USAGE_SNIPPET,
 } from '@/data/install';
-import { LandingBackdrop } from './landing-backdrop';
-import { SectionHeading } from './section-heading';
+import { CTA_ARROW, ctaClass } from './cta';
+import { WorkbenchSection } from './workbench/section';
+import { Hud, Panel } from './workbench/panel';
 import { InstallCommand } from './install-command';
 import { InstallSnippet } from './install-snippet';
 
 /**
- * "Install it" — the section that turns a visitor browsing the catalogue into
+ * "Install it" - the section that turns a visitor browsing the catalogue into
  * someone with the package in their project.
  *
- * Server Component. Both snippets are highlighted here, at render, and handed to
- * the client pieces as HTML; only the tab strip and the two copy buttons need a
- * browser bundle. The package name, version and every count are read from the
- * package and the catalogues rather than typed, so a release or a new gradient
- * updates this section on its own.
+ * Everything the old section carried is still here: the package identity, the
+ * manager tabs, both snippets, all six subpath entry points with their live
+ * counts, and both calls to action. What changed is the frame - one package
+ * panel whose title bar states name, version and licence the way a manifest
+ * does, rather than three pills floating over a glow.
+ *
+ * Server Component. Both snippets are highlighted here, at render, and handed
+ * to the client pieces as HTML; only the tab strip and the two copy buttons
+ * need a browser bundle. The package name, version and every count are read
+ * from the package and the catalogues rather than typed, so a release or a new
+ * gradient updates this section on its own.
  */
 export async function InstallSection() {
-  const t = await getTranslations('landing.install');
-  const format = await getFormatter();
+  const [t, format] = await Promise.all([getTranslations('landing.install'), getFormatter()]);
 
   const [setupHtml, usageHtml] = await Promise.all([
     highlight(SETUP_SNIPPET, 'css'),
@@ -38,36 +44,42 @@ export async function InstallSection() {
   ]);
 
   return (
-    <section id="install" className="relative overflow-hidden border-y border-border">
-      <LandingBackdrop />
-
-      <div className="relative mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-28">
-        <SectionHeading
-          eyebrow={t('eyebrow')}
-          title={t('title')}
-          subtitle={t('subtitle')}
-          className="max-w-3xl"
-        />
-
-        {/* Package identity: name, current version, licence. */}
-        <div className="mt-8 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-xs">
-          <span className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-3 py-1 font-mono text-foreground">
-            <Package className="h-3.5 w-3.5 text-primary" aria-hidden />
-            {PACKAGE_NAME}
+    <WorkbenchSection
+      id="install"
+      label={t('eyebrow')}
+      title={t('title')}
+      description={t('subtitle')}
+      actions={
+        <>
+          {/* Both were hand-built ink buttons; they use the page's shared
+              actions now, so this pair matches every other section CTA. */}
+          <a
+            href={PACKAGE_URL}
+            target="_blank"
+            rel="noreferrer noopener"
+            className={ctaClass({ size: 'sm', className: 'gap-1.5' })}
+          >
+            {t('cta.npm')}
+            <ArrowUpRight className={cn('h-4 w-4', CTA_ARROW)} aria-hidden />
+          </a>
+          <Link href="/components" className={ctaClass({ tone: 'quiet', size: 'sm' })}>
+            {t('cta.browse')}
+          </Link>
+        </>
+      }
+    >
+      <Panel
+        title={<span className="font-hud text-[13px] font-medium">{PACKAGE_NAME}</span>}
+        actions={
+          <span className="flex items-center gap-4">
+            <Hud strong>v{PACKAGE_VERSION}</Hud>
+            <Hud>{t('license', { license: PACKAGE_LICENSE })}</Hud>
           </span>
-          <span className="rounded-full border border-border bg-card px-3 py-1 font-mono text-muted-foreground">
-            v{PACKAGE_VERSION}
-          </span>
-          <span className="rounded-full border border-border bg-card px-3 py-1 text-muted-foreground">
-            {t('license', { license: PACKAGE_LICENSE })}
-          </span>
-        </div>
+        }
+      >
+        <InstallCommand managers={PACKAGE_MANAGERS} />
 
-        <div className="mt-8">
-          <InstallCommand managers={PACKAGE_MANAGERS} />
-        </div>
-
-        <div className="mt-14 grid gap-6 lg:grid-cols-2">
+        <div className="mt-6 grid gap-4 lg:grid-cols-2">
           <InstallSnippet
             step={1}
             title={t('steps.styles.title')}
@@ -87,32 +99,31 @@ export async function InstallSection() {
         </div>
 
         {/* What each subpath gives you. Counts come from the catalogues. */}
-        <div className="mt-14">
-          <h3 className="text-center text-sm font-medium uppercase tracking-widest text-muted-foreground">
-            {t('entriesTitle')}
+        <div className="mt-8 border-t border-line pt-5">
+          <h3>
+            <Hud>{t('entriesTitle')}</Hud>
           </h3>
 
-          <ul className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          <ul className="mt-3 grid gap-px overflow-hidden rounded-lg border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
             {ENTRY_POINTS.map((entry) => (
-              <li key={entry.id}>
+              <li key={entry.id} className="bg-panel">
                 <Link
                   href={entry.href}
                   className={cn(
-                    'group flex items-center gap-3 rounded-xl border border-border bg-card px-4 py-3.5',
-                    'transition-colors hover:border-primary/40 hover:bg-muted/40',
-                    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
+                    'group flex h-full items-center gap-3 px-3.5 py-3 transition-colors hover:bg-panel-raised',
+                    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring',
                   )}
                 >
-                  <Terminal className="h-4 w-4 shrink-0 text-primary" aria-hidden />
+                  <Terminal className="h-4 w-4 shrink-0 text-muted-foreground" aria-hidden />
                   <span className="min-w-0 flex-1">
-                    <span className="block truncate font-mono text-xs text-foreground">
+                    <span className="block truncate font-hud text-xs text-foreground">
                       {entry.specifier}
                     </span>
-                    <span className="mt-0.5 block text-xs text-muted-foreground">
+                    <span className="mt-0.5 block truncate text-xs text-muted-foreground">
                       {t(`entries.${entry.id}`)}
                     </span>
                   </span>
-                  <span className="shrink-0 font-mono text-sm font-semibold tabular-nums text-primary">
+                  <span className="shrink-0 font-hud text-[13px] font-medium tabular-nums text-foreground">
                     {format.number(entry.count)}
                   </span>
                 </Link>
@@ -120,31 +131,7 @@ export async function InstallSection() {
             ))}
           </ul>
         </div>
-
-        <div className="mt-12 flex flex-wrap items-center justify-center gap-3">
-          <a
-            href={PACKAGE_URL}
-            target="_blank"
-            rel="noreferrer noopener"
-            className={cn(
-              'inline-flex items-center gap-2 rounded-lg bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground',
-              'transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
-            )}
-          >
-            {t('cta.npm')}
-            <ArrowUpRight className="h-4 w-4" aria-hidden />
-          </a>
-          <Link
-            href="/components"
-            className={cn(
-              'inline-flex items-center gap-2 rounded-lg border border-border bg-card px-5 py-2.5 text-sm font-medium',
-              'transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
-            )}
-          >
-            {t('cta.browse')}
-          </Link>
-        </div>
-      </div>
-    </section>
+      </Panel>
+    </WorkbenchSection>
   );
 }

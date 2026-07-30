@@ -10,7 +10,7 @@ import { Button, Card, CardContent, CardHeader, CardTitle, CardDescription } fro
 import { Link, useRouter } from '@/i18n/navigation';
 import { FormField } from '@/components/auth/form-field';
 import { FormAlert } from '@/components/auth/form-alert';
-import { OAuthButtons, AuthDivider } from '@/components/auth/oauth-buttons';
+import { SocialSignIn } from '@/components/auth/oauth-buttons';
 import { OAuthError } from '@/components/auth/oauth-error';
 import { register as registerAccount } from '@/lib/auth';
 import { useResetSessionCache } from '@/hooks/use-session-cache';
@@ -68,8 +68,7 @@ export default function RegisterPage() {
         <Suspense fallback={null}>
           <OAuthError />
         </Suspense>
-        <OAuthButtons />
-        <AuthDivider label={to('dividerSignUp')} />
+        <SocialSignIn dividerLabel={to('dividerSignUp')} />
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" noValidate>
           {errors.root && <FormAlert>{errors.root.message}</FormAlert>}
           <FormField

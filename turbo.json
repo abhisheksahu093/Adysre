@@ -12,8 +12,31 @@
    * `prisma generate` reads the datasource block, and a build that silently
    * runs without them is the kind that succeeds locally and produces a broken
    * deployment.
+   *
+   * EVERY `NEXT_PUBLIC_*` variable belongs here, without exception. Next inlines
+   * them into the bundle at BUILD time, so one withheld here is not a missing
+   * runtime value that throws - it is a literal `undefined` compiled into the
+   * output, and the app runs perfectly while behaving wrongly.
+   *
+   * `NEXT_PUBLIC_APP_URL` is the one that bites: `[locale]/layout.tsx` feeds it
+   * to `metadataBase`, which is evaluated while prerendering. Withheld, it falls
+   * back to `http://localhost:3000` and every canonical and Open Graph URL in
+   * the static HTML points at the visitor's own machine. The build is green and
+   * the pages render; only the tags are wrong, so nothing surfaces it.
+   *
+   * None of this reproduces locally, which is the trap: `next.config.mjs` reads
+   * the root `.env` itself and bypasses this filter entirely. On a platform
+   * there is no root `.env`, and this list is the only way through.
    */
-  "globalEnv": ["NODE_ENV", "NODE_VERSION", "DATABASE_URL", "DIRECT_URL"],
+  "globalEnv": [
+    "NODE_ENV",
+    "NODE_VERSION",
+    "DATABASE_URL",
+    "DIRECT_URL",
+    "NEXT_PUBLIC_APP_URL",
+    "NEXT_PUBLIC_APP_NAME",
+    "NEXT_PUBLIC_API_URL"
+  ],
   "tasks": {
     "build": {
       "dependsOn": ["^build"],

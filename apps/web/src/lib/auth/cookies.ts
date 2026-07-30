@@ -18,6 +18,18 @@ import { accessTtlSeconds, isProduction, refreshTtlSeconds } from './config';
 /** Matches the API's `REFRESH_COOKIE`, so both apps name the cookie the same. */
 export const REFRESH_COOKIE = 'refresh_token';
 
+/** Holds the in-flight OAuth nonce between the redirect out and the callback. */
+export const OAUTH_STATE_COOKIE = 'oauth_state';
+
+/**
+ * How long a user has to finish at the provider.
+ *
+ * Ten minutes is long enough to type a password and clear an MFA prompt, and
+ * short enough that an abandoned attempt does not leave a usable nonce sitting
+ * in the browser for the rest of the day.
+ */
+const OAUTH_STATE_TTL_SECONDS = 600;
+
 function baseOptions() {
   return {
     /**
@@ -101,4 +113,63 @@ export async function readRefreshCookie(): Promise<string | null> {
 export async function readAccessCookie(): Promise<string | null> {
   const store = await cookies();
   return store.get(ACCESS_COOKIE)?.value ?? null;
+}
+
+/** What the OAuth start leg remembers for the callback leg to check. */
+export interface OAuthStatePayload {
+  /** The nonce echoed through the provider as `state`. */
+  state: string;
+  /** Where to send the user afterwards. Already validated by `safeNext`. */
+  next?: string;
+}
+
+/**
+ * Remember the OAuth nonce for the return leg.
+ *
+ * The nonce is what makes the callback trustworthy: an attacker who can make a
+ * victim's browser hit our callback with their own `code` gets the victim
+ * signed into the attacker's account, unless the request also carries a nonce
+ * that only our own start leg could have set. The cookie is HTTP-only, so a
+ * script cannot read it back out and forge a matching pair.
+ *
+ * `next` rides in the cookie rather than in the `state` parameter, so the
+ * return path never crosses the provider and cannot be swapped in transit.
+ */
+export async function setOAuthState(payload: OAuthStatePayload): Promise<void> {
+  const store = await cookies();
+  store.set(OAUTH_STATE_COOKIE, JSON.stringify(payload), {
+    ...baseOptions(),
+    maxAge: OAUTH_STATE_TTL_SECONDS,
+  });
+}
+
+/** The in-flight OAuth state, or null when absent or unreadable. */
+export async function readOAuthState(): Promise<OAuthStatePayload | null> {
+  const store = await cookies();
+  const raw = store.get(OAUTH_STATE_COOKIE)?.value;
+  if (!raw) return null;
+
+  try {
+    const parsed = JSON.parse(raw) as unknown;
+    if (typeof parsed !== 'object' || parsed === null) return null;
+    const { state, next } = parsed as Record<string, unknown>;
+    if (typeof state !== 'string' || state === '') return null;
+    return { state, ...(typeof next === 'string' ? { next } : {}) };
+  } catch {
+    // A malformed cookie is treated as no cookie. Someone hand-editing it gets
+    // a failed sign-in, not a parse error surfaced as a 500.
+    return null;
+  }
+}
+
+/**
+ * Clear the OAuth nonce.
+ *
+ * Called on every callback before anything else is decided, success or failure,
+ * so a nonce is single-use. Leaving it in place would let a captured callback
+ * URL be replayed for as long as the cookie lived.
+ */
+export async function clearOAuthState(): Promise<void> {
+  const store = await cookies();
+  store.set(OAUTH_STATE_COOKIE, '', { ...baseOptions(), maxAge: 0 });
 }

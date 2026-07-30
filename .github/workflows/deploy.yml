@@ -1,3 +1,10 @@
+# Deploys the API to Lightsail.
+#
+# The WEB app is not deployed here. It is built and served by Vercel, which
+# deploys itself from the same push, so this workflow builds and restarts the
+# API only. Restarting a web process here too would leave a second frontend
+# running against the same database, quietly serving whatever the last server
+# build produced while Vercel serves the real one.
 name: Deploy ADYSRE Production
 
 on:
@@ -44,6 +51,9 @@ jobs:
         run: pnpm db:generate
 
 
+      # The whole workspace, as a build check. This runs on the runner and is
+      # thrown away; it exists so a broken web build fails the pipeline here
+      # rather than only showing up in Vercel's own deployment.
       - name: Build ADYSRE
         run: pnpm build
 
@@ -56,6 +66,8 @@ jobs:
           key: ${{ secrets.SERVER_SSH_KEY }}
 
           script: |
+            set -e
+
             cd /home/ubuntu/Adysre
 
             git pull origin main
@@ -64,9 +76,12 @@ jobs:
 
             pnpm db:generate
 
-            pnpm build
+            # API only. `--filter` still builds what the API depends on, so
+            # @adysre/database (prisma generate) and the shared packages are
+            # covered; it just skips the web app, which Vercel owns and which is
+            # by far the longest part of a full build.
+            pnpm turbo run build --filter=@adysre/api
 
             pm2 restart adysre-api
-            pm2 restart adysre-web
 
             pm2 save

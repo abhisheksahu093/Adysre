@@ -314,7 +314,9 @@
       "email": "メールアドレス",
       "emailPlaceholder": "you@company.com",
       "password": "パスワード",
-      "passwordPlaceholder": "••••••••••••"
+      "passwordPlaceholder": "••••••••••••",
+      "showPassword": "パスワードを表示",
+      "hidePassword": "パスワードを非表示"
     },
     "oauth": {
       "continueWith": "{provider} で続行",
@@ -326,7 +328,9 @@
         "oauth_state": "サインインの有効期限が切れました。もう一度お試しください。",
         "oauth_not_configured": "{provider} ログインはまだ設定されていません。メールをご利用ください。",
         "oauth_no_email": "{provider} から確認済みのメールを取得できませんでした。メールをご利用ください。",
-        "oauth_invalid": "そのサインイン方法は利用できません。"
+        "oauth_invalid": "そのサインイン方法は利用できません。",
+        "oauth_unverified": "{provider} がそのメールアドレスを確認できていません。{provider} で確認してから、もう一度お試しください。",
+        "oauth_ambiguous": "そのメールアドレスは複数のワークスペースに登録されています。メールアドレスとパスワードでサインインして選択してください。"
       }
     },
     "verifyEmail": {

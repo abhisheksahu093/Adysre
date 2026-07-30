@@ -314,7 +314,9 @@
       "email": "ईमेल",
       "emailPlaceholder": "you@company.com",
       "password": "पासवर्ड",
-      "passwordPlaceholder": "••••••••••••"
+      "passwordPlaceholder": "••••••••••••",
+      "showPassword": "पासवर्ड दिखाएं",
+      "hidePassword": "पासवर्ड छिपाएं"
     },
     "oauth": {
       "continueWith": "{provider} से जारी रखें",
@@ -326,7 +328,9 @@
         "oauth_state": "आपका साइन-इन सत्र समाप्त हो गया। कृपया फिर से प्रयास करें।",
         "oauth_not_configured": "{provider} साइन-इन अभी सेट नहीं है। इसके बजाय ईमेल का उपयोग करें।",
         "oauth_no_email": "{provider} से सत्यापित ईमेल नहीं मिल सका। इसके बजाय ईमेल का उपयोग करें।",
-        "oauth_invalid": "वह साइन-इन विकल्प उपलब्ध नहीं है।"
+        "oauth_invalid": "वह साइन-इन विकल्प उपलब्ध नहीं है।",
+        "oauth_unverified": "{provider} ने उस ईमेल पते की पुष्टि नहीं की है। पहले {provider} पर उसे सत्यापित करें, फिर पुनः प्रयास करें।",
+        "oauth_ambiguous": "वह ईमेल एक से अधिक वर्कस्पेस से जुड़ा है। कोई एक चुनने के लिए ईमेल और पासवर्ड से साइन इन करें।"
       }
     },
     "verifyEmail": {

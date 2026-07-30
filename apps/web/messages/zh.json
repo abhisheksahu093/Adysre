@@ -314,7 +314,9 @@
       "email": "邮箱",
       "emailPlaceholder": "you@company.com",
       "password": "密码",
-      "passwordPlaceholder": "••••••••••••"
+      "passwordPlaceholder": "••••••••••••",
+      "showPassword": "显示密码",
+      "hidePassword": "隐藏密码"
     },
     "oauth": {
       "continueWith": "使用 {provider} 继续",
@@ -326,7 +328,9 @@
         "oauth_state": "登录会话已过期，请重试。",
         "oauth_not_configured": "{provider} 登录尚未配置，请改用邮箱。",
         "oauth_no_email": "无法从 {provider} 获取已验证的邮箱，请改用邮箱。",
-        "oauth_invalid": "该登录方式不可用。"
+        "oauth_invalid": "该登录方式不可用。",
+        "oauth_unverified": "{provider} 尚未验证该邮箱地址。请先在 {provider} 完成验证，然后重试。",
+        "oauth_ambiguous": "该邮箱关联了多个工作区。请使用邮箱和密码登录以选择其中一个。"
       }
     },
     "verifyEmail": {

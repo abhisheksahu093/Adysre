@@ -15,6 +15,25 @@ export const brand = {
 
 export type BrandColor = keyof typeof brand;
 
+/**
+ * The dark semantic surface, mirroring the `.dark` block in `tokens.css`.
+ *
+ * Exists for the handful of renderers that cannot read a CSS custom property:
+ * social card images (`next/og` rasterises to PNG, with no stylesheet and no
+ * cascade), canvas and any generated bitmap. Everything that renders into the
+ * DOM must still use the tokens, not these literals.
+ *
+ * Dark only, because a social card has no theme to follow. It is drawn on the
+ * brand's own surface, whatever theme the viewer's app happens to be in.
+ */
+export const surface = {
+  background: '#09090b',
+  foreground: '#fafafa',
+  muted: '#18181b',
+  mutedForeground: '#a1a1aa',
+  border: '#27272a',
+} as const;
+
 export const typography = {
   fontSans: '"Inter Variable", Inter, system-ui, sans-serif',
   fontMono: '"JetBrains Mono", ui-monospace, monospace',

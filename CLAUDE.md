@@ -105,7 +105,8 @@ See [`docs/AUTHENTICATION_ARCHITECTURE.md`](./docs/AUTHENTICATION_ARCHITECTURE.m
 **`/docs` vs `/documents`.** `/documents` holds the product and platform specs
 (what we are building). `/docs` holds implementation guides for the backend:
 authentication, API, schema, security, environment, local dev, deployment,
-testing.
+testing, and [SEO and page weight](./docs/SEO.md) (canonicals, hreflang, Open
+Graph, structured data, and what the home page's bytes are made of).
 
 ## 8. Database rules ([`DATABASE_ARCHITECTURE.md`](./documents/DATABASE_ARCHITECTURE.md))
 

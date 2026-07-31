@@ -92,7 +92,7 @@ is why.
 | Variable | Example | Notes |
 |---|---|---|
 | `NODE_ENV` | `development` | Set to `production` by Vercel. Controls the `secure` cookie flag and disables all dev auth fallbacks. |
-| `NEXT_PUBLIC_APP_URL` | `http://localhost:3000` | Origin used to build reset and verification links, and to verify request origins. Must be the real public URL in production. |
+| `NEXT_PUBLIC_APP_URL` | `http://localhost:3000` | Origin used to build reset and verification links, to verify request origins, and to build every canonical, hreflang, Open Graph URL and sitemap entry. Must be the real public URL in production, **`www` included** — a canonical that redirects is worse than none. See [SEO.md](./SEO.md). |
 
 `NEXT_PUBLIC_*` is inlined into the client bundle at build time. **Never put a
 secret behind that prefix.** It is not a config prefix, it is a publication

@@ -125,6 +125,19 @@ subdomain, so one compromised or forgotten subdomain reads production sessions.
 Host-only is the default for a reason. `COOKIE_DOMAIN` in `.env.example` exists
 for the cross-origin NestJS setup and should stay empty for the web app.
 
+**Every cookie this app sets carries these flags, not just the session ones.**
+That includes `NEXT_LOCALE`, which holds nothing more sensitive than `"ja"`: a
+`Set-Cookie` without `Secure` on an https-only site is what a scanner flags, and
+there is no reason to be the site that has one. Its flags live in
+`apps/web/src/i18n/locale-cookie.ts` and `httpOnly` is applied in `proxy.ts`,
+because next-intl's own config cannot set that flag. It is only safe to set
+because the language switcher posts to `/api/locale` instead of writing the
+cookie with `document.cookie` — if you make anything in the browser read this
+cookie, that decision has to be revisited.
+
+The one deliberate exception is `adysre_csrf`, which is readable by design: the
+page's own JavaScript has to echo it back in a header (see §5).
+
 ---
 
 ## 5. CSRF
@@ -348,25 +361,56 @@ after rotation, which means it was captured.
 
 ## 12. Response headers
 
-Set in `next.config.ts` for all routes:
+Set in `apps/web/next.config.mjs` for all routes:
 
 ```
+Content-Security-Policy: (see below)
 Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
 X-Content-Type-Options: nosniff
-X-Frame-Options: DENY
+X-Frame-Options: SAMEORIGIN
 Referrer-Policy: strict-origin-when-cross-origin
-Permissions-Policy: camera=(), microphone=(), geolocation=()
+Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+Cross-Origin-Opener-Policy: same-origin
 ```
 
-`X-Frame-Options: DENY` prevents clickjacking, where the app is framed
-invisibly over bait and a user clicks a real button unknowingly.
+`X-Frame-Options` prevents clickjacking, where the app is framed invisibly over
+bait and a user clicks a real button unknowingly. `SAMEORIGIN` rather than
+`DENY`: the playground canvas and the template gallery render their previews as
+same-origin iframes, and `DENY` blanks both. A third party framing us is the
+threat; our own origin framing itself is not.
 
 `Referrer-Policy` matters specifically for reset links: with a permissive
 policy, a page loaded at `/reset-password?token=...` leaks the full URL,
 including the token, in the `Referer` header of every outbound request it makes.
 
-CSP is Phase 6. It needs per-route nonces to coexist with Next's inline
-scripts, and a wrong CSP breaks the app in ways that are hard to diagnose.
+### Content-Security-Policy
+
+```
+default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline';
+img-src 'self' data: blob: https:; font-src 'self' data:; connect-src 'self' <api origin>;
+frame-src 'self' blob: data:; media-src 'self' data: blob:; worker-src 'self' blob:;
+manifest-src 'self'; form-action 'self'; frame-ancestors 'self'; base-uri 'none';
+object-src 'none'; upgrade-insecure-requests
+```
+
+**Read this as containment, not as XSS prevention.** `script-src` allows inline,
+so the policy does not stop an injected `<script>` from running. What it stops
+is everything that makes one useful: loading code from another host, posting
+what it reads to one, re-pointing relative URLs with an injected `<base>`, and
+re-targeting a form at an attacker's collector.
+
+**Why there is no nonce.** The textbook policy is `'nonce-<random>'` plus
+`'strict-dynamic'`. A nonce has to be minted per request and stamped onto Next's
+own bootstrap tags, which means generating it in the proxy and rendering every
+page dynamically. Every page here is prerendered and served from the edge cache,
+and the RSC payload is itself a stream of inline `self.__next_f.push` scripts,
+so there is no hash set to enumerate either. Adopting a nonce is a decision to
+render dynamically, and it should be taken as that trade, not as a tidy-up.
+
+`img-src https:` is deliberate: the API Studio response viewer and Website
+Intelligence render images from whatever URL the user pointed them at.
+`'unsafe-eval'` and `ws:` are added in development only, for React Refresh and
+the HMR socket.
 
 ---
 

@@ -25,7 +25,16 @@ const displayFace = Inter_Tight({
   variable: '--font-inter-tight',
 });
 
-/** The instrument voice: measurements, coordinates, counts, status. */
+/**
+ * The instrument voice: measurements, coordinates, counts, status.
+ *
+ * Preloaded, and it has to stay that way. Dropping the preload to free 22 KB
+ * of bandwidth for the hero looks right on paper and measures worse: this face
+ * sets the announcement bar and the header's labels, so it is on the first
+ * screen, and discovering it during style rather than in the preload scan cost
+ * ~300ms of First Contentful Paint for no Largest Contentful Paint in return.
+ * Measured, twice, before being put back.
+ */
 const hudFace = IBM_Plex_Mono({
   subsets: ['latin'],
   weight: ['400', '500'],

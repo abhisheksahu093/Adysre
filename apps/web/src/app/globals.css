@@ -57,17 +57,24 @@
 }
 
 .dark {
-  --canvas: #08090a;
-  --panel: #0f1114;
-  --panel-raised: #14171b;
-  --line: #1d2026;
-  --line-strong: #2b2f37;
+  /* One hue for the whole dark surface, ~217deg, held at a low chroma so the
+     panels read as a material rather than as blue boxes. The canvas used to be
+     a neutral black, which left the wash at the top of the page looking like a
+     coloured light shone on a grey wall; the ramp below is the wash's own hue
+     carried all the way down, so a panel sits *in* the page instead of on it.
+     Each step is a real step in lightness, so a raised surface still reads as
+     raised and a hairline still reads as a hairline. */
+  --canvas: #060a12;
+  --panel: #0c131f;
+  --panel-raised: #111a29;
+  --line: #1b2536;
+  --line-strong: #283449;
   --signal: #ffb020;
-  --signal-foreground: #08090a;
-  --grid-dot: #15181d;
+  --signal-foreground: #060a12;
+  --grid-dot: #131c2b;
   /* Deep navy, not a blue: it has to survive being the first thing behind the
-     hero and still fall away into #08090a within a screen and a half. */
-  --canvas-tint: #0d1a31;
+     hero and still fall away into the canvas within a screen and a half. */
+  --canvas-tint: #0e1c35;
 }
 
 @theme inline {
@@ -99,6 +106,25 @@
 .workbench-theme {
   --signal: var(--primary);
   --signal-foreground: var(--primary-foreground);
+}
+
+/* The canvas tokens above cover the surfaces the home page draws itself - the
+   panels, the lines, the grid. They do not cover the surfaces it borrows from
+   the shared component layer: a shadcn card, a code block's `--muted`, a badge
+   on `--border`. Left alone those stay neutral zinc, and a grey code lane
+   inside a navy panel is the one thing that gives the retint away.
+   So the shared roles are rebound to the same ramp, for the length of the
+   canvas only: the app shell, the editor and every dialog keep the neutral
+   dark theme `@adysre/theme` ships. Literal values rather than `color-mix()`,
+   because a mixed custom property re-declared per theme does not survive the
+   build. */
+.dark .workbench-theme {
+  --background: #070c15;
+  --card: #0c131f;
+  --muted: #141d2d;
+  --muted-foreground: #9aa4b8;
+  --border: #232e41;
+  --input: #232e41;
 }
 
 /* The canvas itself: a dot grid, the way an artboard reads at 100%. It sits on
@@ -133,6 +159,38 @@
   initial-value: 0px;
 }
 
+/* The two positions the drift and the drag add up to, and the dot they are
+   drawn with. These have to be registered for one reason, and it is not
+   interpolation: an UNregistered custom property inherits, and the element
+   carrying the page's grid is the element wrapping every section on it. An
+   inherited property whose value changes 60 times a second makes the browser
+   recompute inherited style for the whole subtree on every frame - two
+   thousand elements, forever, for a background that moves 26px a minute. That
+   one detail was the page's cost: 108s of the 167s of main-thread work, a
+   52s total blocking time, and no CPU idle period for Lighthouse to measure
+   interactivity in at all.
+   Declared `inherits: false`, the change stops at the element that owns the
+   background, and the per-frame work becomes the repaint it always should
+   have been. `--grid-dots` never changes, but it is declared here too so the
+   grid's three properties stay one set rather than two rules with a footgun
+   between them. */
+@property --grid-offset-x {
+  syntax: '<length>';
+  inherits: false;
+  initial-value: 0px;
+}
+
+@property --grid-offset-y {
+  syntax: '<length>';
+  inherits: false;
+  initial-value: 0px;
+}
+
+@property --grid-dots {
+  syntax: '*';
+  inherits: false;
+}
+
 @keyframes canvas-drift {
   to {
     --grid-drift: var(--grid-tile);
@@ -155,6 +213,26 @@
   background-size: var(--grid-tile) var(--grid-tile);
   background-position: var(--grid-offset-x) var(--grid-offset-y);
   animation: canvas-drift 14s linear infinite;
+}
+
+/* A section the browser is allowed to skip until it is close to being read.
+   The home page is twelve sections and a little over two thousand elements, and
+   without this the browser styles, lays out and paints every one of them before
+   the visitor has seen past the hero - and re-does the offscreen ones on every
+   frame the surface animates. `auto` keeps the section in the accessibility
+   tree, findable by ctrl-F and reachable by anchor link; it only defers the
+   rendering work.
+
+   The intrinsic size is what the scrollbar believes about a section that has
+   not been rendered yet. `auto` in front of it means "use the height you last
+   measured", so the guess is only ever used once per section per page load,
+   and the guess itself is deliberately close to what these sections actually
+   measure - a bad one moves the scrollbar under the visitor's thumb. The hero
+   deliberately does not wear this: it is on screen at first paint, and
+   deferring it would only add a measurement to the critical path. */
+.section-deferred {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 900px;
 }
 
 /* The page canvas: the same grid, over a wash that carries the brand blue at the

@@ -268,6 +268,12 @@ export function LandingHeader() {
         <div className="pointer-events-auto flex w-full items-center gap-1 rounded-xl border border-line bg-panel p-1.5 shadow-[0_1px_2px_rgb(0_0_0/0.04),0_18px_50px_-30px_rgb(0_0_0/0.7)] lg:w-auto">
           <Link
             href="/"
+            // This header is only ever rendered on the home page, so the logo
+            // points at the page it is already on. Left to prefetch, it spends
+            // 34 KB of a first-time visitor's bandwidth re-fetching the route
+            // they are currently reading, in the same window the hero is trying
+            // to paint.
+            prefetch={false}
             aria-label="ADYSRE"
             className="shrink-0 rounded-lg px-2.5 py-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >

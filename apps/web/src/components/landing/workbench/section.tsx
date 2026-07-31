@@ -32,7 +32,16 @@ export function WorkbenchSection({
   className?: string;
 }) {
   return (
-    <section id={id} className={cn('mx-auto max-w-[1440px] px-4 py-14 sm:px-6 sm:py-20', className)}>
+    <section
+      id={id}
+      className={cn(
+        // Rendering work for a section is deferred until it is near the
+        // viewport; see `.section-deferred`. Every section on the page is one
+        // of these, so this is the one place it needs saying.
+        'section-deferred mx-auto max-w-[1440px] px-4 py-14 sm:px-6 sm:py-20',
+        className,
+      )}
+    >
       <div className="grid gap-x-10 gap-y-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,26rem)] lg:items-end">
         <div>
           {label && (

@@ -191,27 +191,85 @@
   inherits: false;
 }
 
+/* One tile, on both axes. The pattern repeats every tile, so a translation of
+   exactly one tile lands the field back on itself and the loop is seamless.
+   `transform` and not a custom property feeding one: the compositor can animate
+   a transform on its own, and cannot animate a custom property at all - given
+   `--grid-drift` it has to wake the main thread every frame to resolve the
+   value before it can move anything. */
 @keyframes canvas-drift {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
   to {
-    --grid-drift: var(--grid-tile);
+    transform: translate3d(var(--grid-tile), var(--grid-tile), 0);
   }
 }
 
+/* Anything the dot field is drawn behind. It only has to establish where the
+   field is positioned and keep it underneath the content; the field itself is a
+   separate layer, for the reason written on it. */
 .canvas-grid {
-  /* The dot itself and where the field currently sits, named once: the wash
-     below rebuilds the same background list with a second layer under it, and
-     the two must stay one pattern. */
-  --grid-dots: radial-gradient(
+  position: relative;
+  isolation: isolate;
+}
+
+/* The dot field.
+   Its own element, with nothing inside it, and moved with `transform` rather
+   than `background-position`. Both halves of that matter.
+
+   `background-position` is not a property the compositor can animate, so a
+   drifting background is a main-thread REPAINT of the element on every frame -
+   and the element carrying this one is the size of the page. That is invisible
+   on a developer's machine, where a frame lands well inside its budget, and it
+   is sixteen seconds of blocked main thread on the hardware a visitor actually
+   holds: every frame crosses 50ms, so every frame is a long task. Measured on a
+   throttled run, the drifting backgrounds were about eighty per cent of all the
+   main-thread work this page does.
+
+   A transform on a childless layer is the same picture for none of that cost:
+   nothing repaints, the compositor moves an already-rastered layer, and the
+   style recalculation the animated custom property still triggers has exactly
+   one element to walk. The layer is a tile larger than its container on every
+   side so that a field pushed by up to one tile never uncovers an edge, and the
+   pattern repeats every tile, so a drift of exactly one tile loops seamlessly. */
+.canvas-field {
+  position: absolute;
+  inset: calc(var(--grid-tile) * -1);
+  z-index: -20;
+  pointer-events: none;
+  /* The push from the pointer, and nothing else. Written by the canvas
+     component on this element, which has one child and no content, so a value
+     that changes with every pointer move invalidates almost nothing. */
+  transform: translate3d(var(--grid-shift-x), var(--grid-shift-y), 0);
+}
+
+/* The page's own field is the size of the SCREEN, not the size of the document.
+   An absolutely positioned layer on a page this tall is a composited layer tens
+   of thousands of pixels high, and rasterising it costs more than the repaint
+   this was meant to replace - measured: paint went up, not down. Fixed, it is
+   one viewport, rastered once and then only moved. The dot field is atmosphere
+   rather than content, so it holding still while the panels scroll over it is
+   the work surface reading as a work surface. */
+.canvas-field--viewport {
+  position: fixed;
+}
+
+/* The dots, and the drift. Separated from the layer above so that each carries
+   exactly one transform: the pointer's push there, the endless drift here.
+   Composed by the browser, and neither one has to know about the other. */
+.canvas-field-drift {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(
     circle at var(--grid-dot-size) var(--grid-dot-size),
     var(--grid-dot) var(--grid-dot-size),
     transparent 0
   );
-  --grid-offset-x: calc(var(--grid-drift) + var(--grid-shift-x));
-  --grid-offset-y: calc(var(--grid-drift) + var(--grid-shift-y));
-
-  background-image: var(--grid-dots);
   background-size: var(--grid-tile) var(--grid-tile);
-  background-position: var(--grid-offset-x) var(--grid-offset-y);
+  /* This layer exists to be moved forever; saying so lets the browser raster it
+     once and keep it on the compositor rather than re-deciding every frame. */
+  will-change: transform;
   animation: canvas-drift 14s linear infinite;
 }
 
@@ -235,26 +293,24 @@
   contain-intrinsic-size: auto 900px;
 }
 
-/* The page canvas: the same grid, over a wash that carries the brand blue at the
-   top and has fallen back to the canvas by a screen and a half down, so the page
-   opens blue and settles into black as it is read.
+/* The wash the page opens on: the brand blue at the top, fallen back to the
+   canvas by a screen and a half down, so the page opens blue and settles into
+   black as it is read.
 
-   A separate class rather than part of `.canvas-grid`, because the artboard in
-   the hero reuses the grid inside a panel a few hundred pixels tall - a wash
-   measured in viewports would flood it. Must follow `.canvas-grid`: same
-   specificity, so source order decides which background list wins. */
+   A separate class from the field, because the artboard in the hero reuses the
+   same grid inside a panel a few hundred pixels tall, and a wash measured in
+   viewports would flood it. Static - it never moves, so it costs one paint. */
 .canvas-wash {
-  background-image: var(--grid-dots), linear-gradient(180deg, var(--canvas-tint), var(--canvas));
-  background-size: var(--grid-tile) var(--grid-tile), 100% 150vh;
-  background-position: var(--grid-offset-x) var(--grid-offset-y), 0 0;
-  background-repeat: repeat, no-repeat;
+  background-image: linear-gradient(180deg, var(--canvas-tint), var(--canvas));
+  background-size: 100% 150vh;
+  background-repeat: no-repeat;
 }
 
 /* The grid is the page's atmosphere, not information. Someone who asked for less
    motion gets the still artboard the page was drawn as; the component reads the
    same query and stops writing the shift. */
 @media (prefers-reduced-motion: reduce) {
-  .canvas-grid {
+  .canvas-field-drift {
     animation: none;
   }
 }
@@ -572,25 +628,50 @@ body {
    tile; the icon set lights in a wave across the grid.
 
    Everything is `alternate`, so nothing has to loop back to its start and no
-   sample ever jumps - the drift distance need not be a whole number of tiles. */
+   sample ever jumps - the drift distance need not be a whole number of tiles.
+
+   Each material moves by being MOVED, not by having its background re-placed
+   underneath it. These three samples are 144px square and they were, together,
+   the single most expensive thing on the page: about twenty seconds of
+   main-thread work on a throttled run, more than the page-sized dot grid cost,
+   because `background-position` is a main-thread repaint and what these three
+   repaint is a stack of gradients. As transforms on oversized layers they are
+   the same motion for a compositor move. Each sample's frame is already
+   `relative` and `overflow-hidden`, so it does the clipping. */
 @keyframes artboard-pan {
   to {
-    background-position: 100% 100%;
+    transform: translate3d(-50%, -50%, 0);
   }
 }
 
+/* Twice its frame in both directions, panned by half itself: the same travel
+   the oversized fill had when the fill was a background. */
 .artboard-gradient {
-  background-size: 200% 200%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200%;
+  height: 200%;
+  will-change: transform;
   animation: artboard-pan 16s ease-in-out infinite alternate;
 }
 
 @keyframes artboard-drift {
   to {
-    background-position: 120px 120px;
+    transform: translate3d(var(--artboard-drift), var(--artboard-drift), 0);
   }
 }
 
+/* A tiling material, hung one drift-length past the top left of its frame so
+   that travelling back down and right never uncovers the far edge. */
 .artboard-tile {
+  --artboard-drift: 120px;
+  position: absolute;
+  top: calc(var(--artboard-drift) * -1);
+  left: calc(var(--artboard-drift) * -1);
+  right: 0;
+  bottom: 0;
+  will-change: transform;
   animation: artboard-drift 24s linear infinite alternate;
 }
 

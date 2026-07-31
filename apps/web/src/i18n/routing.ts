@@ -1,4 +1,5 @@
 import { defineRouting } from 'next-intl/routing';
+import { LOCALE_COOKIE_ROUTING_OPTIONS } from './locale-cookie';
 
 /**
  * Locale routing - the single source of truth for which languages exist.
@@ -14,6 +15,9 @@ export const routing = defineRouting({
   locales: ['en', 'ja', 'zh', 'hi'],
   defaultLocale: 'en',
   localePrefix: 'as-needed',
+  // Flags for the `NEXT_LOCALE` cookie the proxy sets. `httpOnly` is not in
+  // this option's type and is applied in `proxy.ts`; see `locale-cookie.ts`.
+  localeCookie: LOCALE_COOKIE_ROUTING_OPTIONS,
 });
 
 export type Locale = (typeof routing.locales)[number];

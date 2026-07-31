@@ -165,16 +165,33 @@ export function UserMenu() {
    * render), which both errors and risks a theme flash. A reload also
    * guarantees `<html lang>` is server-rendered correctly for screen readers.
    *
-   * The cookie must be written by hand. next-intl's router sets it for us, but
-   * a raw navigation doesn't - and with `localePrefix: 'as-needed'` the English
-   * URL carries no prefix, so a stale cookie would make the middleware bounce
-   * us straight back to the old locale.
+   * The choice has to be RECORDED before that navigation. next-intl's router
+   * would do it for us, but a raw navigation doesn't, and with
+   * `localePrefix: 'as-needed'` the English URL carries no prefix - so a stale
+   * cookie would make the proxy bounce us straight back to the old locale.
+   *
+   * It is recorded by the server rather than with `document.cookie`, which is
+   * what lets `NEXT_LOCALE` be `HttpOnly` (see `i18n/locale-cookie.ts`). The
+   * navigation waits for that write: starting it first would race the proxy
+   * against a cookie that has not landed yet.
    */
   function onSelectLocale(next: Locale) {
     closeAll();
     if (next === locale) return;
-    document.cookie = `NEXT_LOCALE=${next};path=/;max-age=31536000;samesite=lax`;
-    startTransition(() => {
+
+    startTransition(async () => {
+      try {
+        await fetch('/api/locale', {
+          method: 'POST',
+          credentials: 'same-origin',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ locale: next }),
+        });
+      } catch {
+        // Offline, or the request was blocked. Navigate anyway: a prefixed URL
+        // still resolves to the right language without the cookie, so the user
+        // gets what they asked for and only the preference fails to stick.
+      }
       window.location.href = getPathname({ href: pathname, locale: next });
     });
   }

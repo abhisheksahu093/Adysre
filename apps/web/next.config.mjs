@@ -71,19 +71,118 @@ const nextConfig = {
 };
 
 /**
- * Security response headers, applied to every route.
+ * Content-Security-Policy.
  *
- * Deliberately excludes Content-Security-Policy. A correct CSP for this app
- * needs per-request nonces to coexist with Next's inline bootstrap scripts, and
- * a wrong one breaks the app in ways that are hard to attribute. Shipping a
- * permissive `unsafe-inline` policy to claim the header would be worse than
- * having none: it reads as protection while providing almost none.
+ * ─── Why `script-src` allows inline, and what that costs ────────────────────
+ * The textbook policy is `script-src 'nonce-<random>' 'strict-dynamic'`, and it
+ * is not available to this app. A nonce has to be minted per request and
+ * stamped onto Next's own bootstrap tags, which means generating it in the
+ * proxy and rendering every page DYNAMICALLY. Every page here is prerendered
+ * (`x-nextjs-prerender: 1` on the live site) and served from the edge cache;
+ * switching them to per-request rendering to gain the nonce would trade the
+ * site's entire first-byte story for it. The RSC payload is itself a sequence
+ * of inline `self.__next_f.push` scripts, so there is no hash set to enumerate
+ * either: it changes with every render.
+ *
+ * So this policy does NOT stop an injected inline `<script>`. What it does stop
+ * is everything an injection normally needs to be useful, and that is not
+ * nothing:
+ *
+ *   script-src 'self'   no loading code from an attacker's host
+ *   connect-src         no exfiltrating what it reads to one
+ *   base-uri 'none'     no injected <base> silently re-pointing every relative
+ *                       script URL on the page at another origin
+ *   object-src 'none'   no <object>/<embed> plugin bypass
+ *   form-action 'self'  no re-targeting a form post at an attacker's collector
+ *   frame-ancestors     clickjacking, and the directive that actually binds
+ *                       (X-Frame-Options is the legacy spelling below)
+ *
+ * The honest summary: this is a containment policy, not an XSS-proof one. It is
+ * documented that way so nobody reads the header's presence as more than it is.
+ * The upgrade path is a nonce, and it is gated on being willing to render
+ * dynamically, not on effort.
+ *
+ * ─── The two `unsafe-inline` grants ─────────────────────────────────────────
+ * `style-src` needs it for next/font's injected faces, Tailwind's runtime
+ * custom properties and every `style` attribute the workbench canvas animates.
+ * `script-src` needs it for the reasons above.
+ *
+ * ─── Sources that are not 'self' ────────────────────────────────────────────
+ * `img-src https:` because the API Studio response viewer and Website
+ * Intelligence render images fetched from whatever URL the user pointed them
+ * at. `blob:` and `data:` because half the tools build their download or
+ * preview client-side out of a Blob. `connect-src` gains the NestJS API's
+ * origin only when it is configured and genuinely cross-origin.
+ */
+function contentSecurityPolicy() {
+  const dev = process.env.NODE_ENV !== 'production';
+
+  /**
+   * The NestJS API, when it is on another origin.
+   *
+   * `api-client.ts` calls it straight from the browser, so a cross-origin
+   * deployment fails every request with a CSP violation if it is not named
+   * here. Same-origin (the Vercel default, where the route handlers serve the
+   * browser) adds nothing.
+   */
+  const apiOrigin = (() => {
+    const raw = process.env.NEXT_PUBLIC_API_URL;
+    if (!raw) return null;
+    try {
+      return new URL(raw).origin;
+    } catch {
+      return null; // Malformed value: the app has bigger problems than the CSP.
+    }
+  })();
+
+  const directives = {
+    'default-src': ["'self'"],
+    // No nonce is available (see above), so this is containment, not prevention.
+    'script-src': ["'self'", "'unsafe-inline'", ...(dev ? ["'unsafe-eval'"] : [])],
+    'style-src': ["'self'", "'unsafe-inline'"],
+    'img-src': ["'self'", 'data:', 'blob:', 'https:'],
+    'font-src': ["'self'", 'data:'],
+    'connect-src': [
+      "'self'",
+      ...(apiOrigin ? [apiOrigin] : []),
+      // Turbopack's HMR socket. Development only; a production build must never
+      // permit an arbitrary websocket.
+      ...(dev ? ['ws:', 'wss:'] : []),
+    ],
+    // Same-origin only, matching X-Frame-Options: SAMEORIGIN below. `blob:` is
+    // for the tools that preview a generated document before download.
+    'frame-src': ["'self'", 'blob:', 'data:'],
+    'media-src': ["'self'", 'data:', 'blob:'],
+    'worker-src': ["'self'", 'blob:'],
+    'manifest-src': ["'self'"],
+    'form-action': ["'self'"],
+    'frame-ancestors': ["'self'"],
+    'base-uri': ["'none'"],
+    'object-src': ["'none'"],
+  };
+
+  const serialised = Object.entries(directives)
+    .map(([directive, sources]) => `${directive} ${sources.join(' ')}`)
+    .join('; ');
+
+  // Valueless directive, so it is appended rather than mapped. Skipped in
+  // development, where the site is served over plain http and upgrading every
+  // subresource to https would break local asset loading outright.
+  return dev ? serialised : `${serialised}; upgrade-insecure-requests`;
+}
+
+/**
+ * Security response headers, applied to every route.
  */
 async function securityHeaders() {
   return [
     {
       source: '/:path*',
       headers: [
+        {
+          key: 'Content-Security-Policy',
+          value: contentSecurityPolicy(),
+        },
         {
           // Two years, and only meaningful over https, so it is skipped in
           // development where the site is served over http.

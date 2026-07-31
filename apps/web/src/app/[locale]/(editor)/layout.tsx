@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { FullMessages } from '@/i18n/client-messages';
 
 /**
  * Full-viewport shell for editor routes.
@@ -9,5 +10,9 @@ import type { ReactNode } from 'react';
  * globals.css, providers - which is all an editor needs.
  */
 export default function EditorLayout({ children }: { children: ReactNode }) {
-  return <div className="h-dvh overflow-hidden">{children}</div>;
+  return (
+    <FullMessages>
+      <div className="h-dvh overflow-hidden">{children}</div>
+    </FullMessages>
+  );
 }

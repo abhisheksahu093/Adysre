@@ -19,7 +19,7 @@ export async function CtaBand() {
   const t = await getTranslations('landing');
 
   return (
-    <section className="mx-auto max-w-[1440px] px-4 pb-16 pt-6 sm:px-6 sm:pb-24">
+    <section className="section-deferred mx-auto max-w-[1440px] px-4 pb-16 pt-6 sm:px-6 sm:pb-24">
       <div className="cta-band overflow-hidden rounded-xl border border-line px-6 py-12 sm:px-10 sm:py-16">
         <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-2xl">

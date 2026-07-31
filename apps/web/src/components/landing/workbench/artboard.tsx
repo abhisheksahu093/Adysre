@@ -172,6 +172,14 @@ export function Artboard({
         </div>
 
         <div className="canvas-grid flex flex-wrap items-start gap-5 bg-panel p-5 sm:gap-7 sm:p-8">
+          {/* The same dot field the page rests on, drawn on its own layer. Out
+              of flow, so it sits under the board without joining the flex row.
+              Absolute rather than fixed: this board is a few hundred pixels
+              tall, so its field is small enough to scroll with it. */}
+          <div aria-hidden className="canvas-field">
+            <div className="canvas-field-drift" />
+          </div>
+
           {/* A block from the library, wearing the selected palette. */}
           <div className={cn(selectionRing('block'), 'w-full bg-panel-raised p-4 sm:w-72')}>
             {selected === 'block' && <Handles />}
@@ -194,31 +202,22 @@ export function Artboard({
               gradient can do on its own. */}
           <div className={cn(selectionRing('surface'), 'h-36 w-36 overflow-hidden')}>
             {selected === 'surface' && <Handles />}
-            <span
-              aria-hidden
-              className="artboard-gradient block h-full w-full rounded-[11px]"
-              style={gradient?.style}
-            />
+            {/* Sized and clipped by the frame around it, which is already
+                rounded and `overflow-hidden`: this layer is deliberately larger
+                than what you can see of it, because it moves. */}
+            <span aria-hidden className="artboard-gradient" style={gradient?.style} />
           </div>
 
           {/* A pattern and a texture, both painted entirely by their own CSS and
               both drifting, since a tiling material can move without a seam. */}
           <div className={cn(selectionRing('pattern'), 'h-36 w-36 overflow-hidden')}>
             {selected === 'pattern' && <Handles />}
-            <span
-              aria-hidden
-              className="artboard-tile block h-full w-full rounded-[11px]"
-              style={pattern?.style}
-            />
+            <span aria-hidden className="artboard-tile" style={pattern?.style} />
           </div>
 
           <div className={cn(selectionRing('texture'), 'h-36 w-36 overflow-hidden')}>
             {selected === 'texture' && <Handles />}
-            <span
-              aria-hidden
-              className="artboard-tile block h-full w-full rounded-[11px]"
-              style={texture?.style}
-            />
+            <span aria-hidden className="artboard-tile" style={texture?.style} />
           </div>
 
           {/* The icon set, at its real 24px and stroke, lighting in a wave so the

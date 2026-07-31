@@ -10,6 +10,25 @@ function readLength(styles: CSSStyleDeclaration, name: string): number {
 }
 
 /**
+ * How far the drift has carried the field, in px, read back off its transform.
+ *
+ * The drift is a composited transform rather than a custom property, which is
+ * what keeps it off the main thread; the cost is that its current value is a
+ * matrix rather than a length. `none` is what an element reports before its
+ * animation has produced a first frame, and both axes carry the same distance
+ * by construction, so one number describes the whole field.
+ */
+function readDrift(styles: CSSStyleDeclaration): number {
+  const transform = styles.transform;
+  if (!transform || transform === 'none') return 0;
+  try {
+    return new DOMMatrixReadOnly(transform).m41;
+  } catch {
+    return 0;
+  }
+}
+
+/**
  * The four edges drawn from each dot, as `[stepX, stepY, unitX, unitY]`.
  *
  * Steps are in tiles; the unit vector is the same edge normalised, which is what
@@ -29,8 +48,9 @@ const LINKS = [
  *
  * One canvas from the announcement bar to the footer: the dot grid is the page,
  * and every section is a panel floating over it. The surface itself is drawn in
- * CSS (`.canvas-grid`, `.canvas-wash`), including the slow drift; this component
- * adds the two things that need the browser, both driven by the pointer.
+ * CSS - a static wash on this element (`.canvas-wash`) and the drifting dot
+ * field on a layer of its own (`.canvas-field`) - and this component adds the
+ * two things that need the browser, both driven by the pointer.
  *
  * First, weight: a pointer move pushes the field the way it travelled, friction
  * bleeds the push off and a spring returns the field to rest, so the grid reads
@@ -55,11 +75,15 @@ export function WorkbenchCanvas({
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const meshRef = useRef<HTMLCanvasElement>(null);
+  const fieldRef = useRef<HTMLDivElement>(null);
+  const driftRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const surface = ref.current;
     const mesh = meshRef.current;
-    if (!surface || !mesh) return;
+    const field = fieldRef.current;
+    const drift = driftRef.current;
+    if (!surface || !mesh || !field || !drift) return;
 
     const context = mesh.getContext('2d');
     if (!context) return;
@@ -94,9 +118,13 @@ export function WorkbenchCanvas({
 
     const clamp = (value: number) => Math.min(maxShift, Math.max(-maxShift, value));
 
+    // The push is written on the field itself, not on the surface. The field is
+    // the element the transform is on, and it has no children, so a value that
+    // changes with every pointer move has one element's style to invalidate
+    // rather than the page's.
     const write = () => {
-      surface.style.setProperty('--grid-shift-x', `${shiftX.toFixed(2)}px`);
-      surface.style.setProperty('--grid-shift-y', `${shiftY.toFixed(2)}px`);
+      field.style.setProperty('--grid-shift-x', `${shiftX.toFixed(2)}px`);
+      field.style.setProperty('--grid-shift-y', `${shiftY.toFixed(2)}px`);
     };
 
     const resize = () => {
@@ -114,18 +142,19 @@ export function WorkbenchCanvas({
       if (charge < faint) return;
 
       // The grid as CSS currently has it: tile, dot radius, and how far the
-      // pattern has drifted and been dragged. Read live so the mesh cannot fall
-      // out of step with the background it is drawing on top of.
-      const styles = getComputedStyle(surface);
+      // pattern has drifted and been dragged. Read off the drifting layer, which
+      // is the element the animation is on, and read live so the mesh cannot
+      // fall out of step with the dots it is drawing between.
+      const styles = getComputedStyle(drift);
       const tile = readLength(styles, '--grid-tile');
       const dot = readLength(styles, '--grid-dot-size');
       if (tile <= 0) return;
 
-      const drift = readLength(styles, '--grid-drift');
-      // The background is painted on the page, the mesh on the viewport, so the
-      // scroll offset is the difference between the two.
-      const originX = drift + shiftX + dot - window.scrollX;
-      const originY = drift + shiftY + dot - window.scrollY;
+      // Both the field and the mesh are fixed to the viewport now, so there is
+      // no scroll offset between them to correct for.
+      const carried = readDrift(styles);
+      const originX = carried + shiftX + dot;
+      const originY = carried + shiftY + dot;
 
       const speed = Math.hypot(velocityX, velocityY);
       const directionX = speed > 0 ? velocityX / speed : 0;
@@ -286,6 +315,13 @@ export function WorkbenchCanvas({
         className,
       )}
     >
+      {/* The dot field: one layer for the pointer's push, one for the endless
+          drift, so both are composited transforms rather than a repaint of the
+          page. Fixed to the viewport, so the layer is a screen and not a
+          document. */}
+      <div ref={fieldRef} aria-hidden className="canvas-field canvas-field--viewport">
+        <div ref={driftRef} className="canvas-field-drift" />
+      </div>
       <canvas ref={meshRef} aria-hidden className="pointer-events-none fixed inset-0 -z-10" />
       {children}
     </div>

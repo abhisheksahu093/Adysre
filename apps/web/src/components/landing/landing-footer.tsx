@@ -63,7 +63,7 @@ export async function LandingFooter() {
   ];
 
   return (
-    <footer className="mx-auto max-w-[1440px] px-4 pb-10 sm:px-6">
+    <footer className="section-deferred mx-auto max-w-[1440px] px-4 pb-10 sm:px-6">
       <div className="overflow-hidden rounded-xl border border-line bg-panel">
         <div className="grid grid-cols-2 gap-8 p-6 sm:p-8 md:grid-cols-6">
           <div className="col-span-2">

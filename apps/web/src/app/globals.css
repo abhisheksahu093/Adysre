@@ -105,7 +105,16 @@
    and an HTTP status carry meaning in their colour. */
 .workbench-theme {
   --signal: var(--primary);
-  --signal-foreground: var(--primary-foreground);
+  /* Not `--primary-foreground`. White on the brand blue is 3.7:1, and every
+     surface wearing a signal fill on this page is instrument type at 10px,
+     where AA asks for 4.5. The deep end of the canvas ramp on the same blue is
+     5.1:1, so the fill keeps the brand colour and the label becomes readable
+     instead of the other way round. A literal because it has to hold in BOTH
+     themes: the contrast here is decided by the blue underneath it, not by
+     whether the page around it is light or dark, and `var(--canvas)` would go
+     near-white in light mode and fail. Dark text on a signal fill is already
+     what the non-workbench dark theme does with its amber. */
+  --signal-foreground: #060a12;
 }
 
 /* The canvas tokens above cover the surfaces the home page draws itself - the

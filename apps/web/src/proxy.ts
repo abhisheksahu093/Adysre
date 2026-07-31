@@ -1,8 +1,16 @@
 import createMiddleware from 'next-intl/middleware';
 import type { NextRequest } from 'next/server';
 import { routing } from './i18n/routing';
-import { LOCALE_COOKIE, localeCookieOptions } from './i18n/locale-cookie';
+import { LOCALE_COOKIE, isSecureContext, localeCookieOptions } from './i18n/locale-cookie';
 import { canonicalLinkHeader } from './lib/seo/canonical-header';
+import {
+  SESSION_HINT_COOKIE,
+  SESSION_HINT_VALUE,
+  sessionHintOptions,
+} from './lib/auth/session-hint';
+
+/** Matches `lib/auth/cookies.ts`. Named here so the proxy imports no node code. */
+const REFRESH_COOKIE = 'refresh_token';
 
 /**
  * Resolves the active locale for every page request (URL prefix → cookie →
@@ -43,6 +51,27 @@ export default function proxy(request: NextRequest) {
    */
   const locale = response.cookies.get(LOCALE_COOKIE)?.value;
   if (locale) response.cookies.set(LOCALE_COOKIE, locale, localeCookieOptions());
+
+  /**
+   * Keep the readable session hint in step with the real session cookie.
+   *
+   * Written from the HTTP-only refresh cookie, which only the server can see,
+   * so the statically rendered pages can stop asking the server who is signed
+   * in on behalf of visitors who plainly are not. See `lib/auth/session-hint`
+   * for why this is safe and why it lives here; the short version is that it
+   * carries one bit and authorises nothing.
+   *
+   * Written only when it disagrees with the truth, so the common case (an
+   * anonymous visitor with no cookies at all, or a signed-in one who already
+   * has the flag) adds no `Set-Cookie` to the response.
+   */
+  const signedIn = request.cookies.has(REFRESH_COOKIE);
+  const hinted = request.cookies.get(SESSION_HINT_COOKIE)?.value === SESSION_HINT_VALUE;
+  if (signedIn && !hinted) {
+    response.cookies.set({ ...sessionHintOptions(isSecureContext()), value: SESSION_HINT_VALUE });
+  } else if (!signedIn && hinted) {
+    response.cookies.set({ ...sessionHintOptions(isSecureContext()), value: '', maxAge: 0 });
+  }
 
   /**
    * Declare the canonical URL as an HTTP header.

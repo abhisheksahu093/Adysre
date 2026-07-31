@@ -136,6 +136,15 @@ duplicate: `/api/`, the preview routes, per-tenant reports and the QR redirect.
 **Disallow is not access control** — anything that must not be read needs the
 permission check it already has.
 
+`llms.txt` sits beside them, for the same per-origin reason, and answers the
+question robots.txt does not: not "what may you crawl" but "what is this site
+and what is each part of it for". The convention (llmstxt.org) is Markdown with
+one H1, a blockquote summary and sections of annotated links; a model that runs
+no JavaScript and follows no menus still gets an accurate map. Every count and
+every path in it is read from the same catalogues and the same `LANDING_LINKS`
+the pages render from, so it cannot drift into describing a library that no
+longer exists.
+
 ---
 
 ## 7. Page weight
@@ -198,3 +207,53 @@ namespace is missing from the list. Add it; do not switch the route to
 
 None of these were touched. They are the next round, and (1) needs a real
 profile rather than a guess.
+
+---
+
+## 8. The render path
+
+**The stylesheet is inlined** (`experimental.inlineCss`). A linked stylesheet is
+render-blocking by definition, so the 53 KB chunk cost a whole round trip in
+front of first paint: 430 ms of the critical path, and the longest chain on the
+page was the document followed by exactly that file. Inlined, the CSS arrives
+with the document and the chain is one hop. The trade is that it is no longer
+separately cacheable across hard navigations, which is the right way round for
+a marketing page whose visitors mostly arrive once. It needs nothing new from
+the CSP, which already allows inline styles for next/font's faces.
+
+**Supported browsers are declared** in `apps/web/package.json`:
+
+```
+chrome >= 111, edge >= 111, firefox >= 128, safari >= 16.4
+```
+
+That is not a preference, it is the floor the app already had. Tailwind v4
+requires it, and the page's own CSS uses `@property` and `color-mix()`, so a
+browser below this line cannot render the site at all. Declaring it stops the
+build transpiling Baseline features for browsers that were never going to work.
+
+It does **not** clear Lighthouse's "Legacy JavaScript" finding. That 13 KB is
+Next.js's own `polyfill-module` (`String.prototype.trimStart`, `Object.hasOwn`
+and friends), bundled inside the framework chunk and not reachable from
+application config. Confirmed by reading the emitted chunk. Do not go looking
+for it in our code.
+
+## 9. What the auditors measure, and how to reproduce it
+
+Lighthouse's **simulated** throttling (the CLI default) estimates CPU cost
+instead of applying it, which on a fast machine can report a 12 ms total
+blocking time for a page that GTmetrix scores at 15,870 ms. When an external
+report disagrees with a local one, that is usually why.
+
+To reproduce what the graders see:
+
+```bash
+npx lighthouse@12 <url> --only-categories=performance \
+  --form-factor=mobile --screenEmulation.mobile \
+  --throttling-method=devtools --throttling.cpuSlowdownMultiplier=20
+```
+
+That configuration scored this page 0.65 against GTmetrix's 66. Two cautions
+learned the hard way: run three times and take the median, because a single run
+at 20× swings by a factor of three; and check the machine is idle first, since a
+dev server on another port is enough to make every number meaningless.

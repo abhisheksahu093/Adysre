@@ -117,7 +117,7 @@ export async function ApiStudioSection() {
               {/* Collection rail. Hidden on phones, where the request itself is
                   the whole story and 13rem of tree is not. */}
               <div className="hidden flex-col gap-1 border-r border-border bg-muted/20 p-3 lg:flex">
-                <p className="px-1.5 pb-1 font-mono text-[10px] uppercase tracking-widest text-muted-foreground/70">
+                <p className="px-1.5 pb-1 font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
                   {tStudio('sidebar.collections')}
                 </p>
                 <p className="truncate px-1.5 py-1 text-xs font-medium">{collection}</p>
@@ -223,7 +223,7 @@ export async function ApiStudioSection() {
                 <div className="grid divide-y divide-border md:grid-cols-2 md:divide-x md:divide-y-0">
                   {/* What goes out. */}
                   <div className="min-w-0">
-                    <p className="border-b border-border/60 px-4 py-2 font-mono text-[10px] uppercase tracking-widest text-muted-foreground/70">
+                    <p className="border-b border-border/60 px-4 py-2 font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
                       {tStudio('request.body')}
                     </p>
                     <div
@@ -260,7 +260,7 @@ export async function ApiStudioSection() {
 
                 {/* The checks, as the engine answered them. */}
                 <div className="flex flex-col gap-2 border-t border-border bg-muted/20 px-4 py-3">
-                  <p className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground/70">
+                  <p className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
                     {tStudio('tests.assertions')}
                     <span className="ml-2 text-success">
                       {format.number(run.passed)}/{format.number(run.results.length)}

@@ -174,7 +174,7 @@ export function WebsiteChecker() {
                     {/* What the score is made of. A bare 100 reads as "perfect";
                         "1 of 1 checks" reads as what it is. */}
                     {category.checks !== undefined && (
-                      <p className="mt-1 text-[11px] text-muted-foreground/70">
+                      <p className="mt-1 text-[11px] text-muted-foreground">
                         {t('console.checks', {
                           passed: category.passed ?? category.checks - category.findings.length,
                           total: category.checks,
@@ -193,10 +193,10 @@ export function WebsiteChecker() {
                     <dt className="text-xs text-muted-foreground">
                       {t(`console.categories.${category}`)}
                     </dt>
-                    <dd className="text-sm font-semibold text-muted-foreground/60">—</dd>
+                    <dd className="text-sm font-semibold text-muted-foreground">—</dd>
                   </div>
                   <div className="mt-1.5 h-1.5 overflow-hidden rounded-full bg-muted" />
-                  <p className="mt-1 text-[11px] text-muted-foreground/70">
+                  <p className="mt-1 text-[11px] text-muted-foreground">
                     {t('console.notMeasured')}
                   </p>
                 </div>

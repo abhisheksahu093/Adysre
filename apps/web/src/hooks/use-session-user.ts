@@ -1,6 +1,8 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
+import { hasSessionHint } from '@/lib/auth/session-hint';
 import { ANONYMOUS_USER, fetchProfile, isSignedIn, type SessionUser } from '@/lib/session';
 
 /**
@@ -34,11 +36,35 @@ export interface SessionState {
 }
 
 export function useSessionUser(): SessionState {
+  /**
+   * Whether to ask the server at all.
+   *
+   * Read after mount rather than during render, because the hint lives in
+   * `document.cookie`, which the server render cannot see: deciding on it while
+   * rendering would make the server and the client produce different markup and
+   * fail hydration. `checked` is what separates "no session" from "have not
+   * looked yet" - without it the first frame reports a confident "signed out",
+   * and a signed-in visitor watches the header flash `Sign in` at them.
+   */
+  const [hint, setHint] = useState<{ checked: boolean; present: boolean }>({
+    checked: false,
+    present: false,
+  });
+
+  useEffect(() => {
+    setHint({ checked: true, present: hasSessionHint() });
+  }, []);
+
   const { data = ANONYMOUS_USER, isPending } = useQuery({
     queryKey: PROFILE_QUERY_KEY,
     queryFn: fetchProfile,
     staleTime: 60_000,
+    enabled: hint.present,
   });
 
-  return { user: data, signedIn: isSignedIn(data), isLoading: isPending };
+  // A disabled query stays `pending` forever, so it cannot be the whole answer:
+  // once we have looked and found no hint, the answer is known and final.
+  const isLoading = !hint.checked || (hint.present && isPending);
+
+  return { user: data, signedIn: isSignedIn(data), isLoading };
 }

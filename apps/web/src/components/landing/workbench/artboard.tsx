@@ -247,7 +247,10 @@ export function Artboard({
               key={swap.id}
               type="button"
               onClick={swap.onSwap}
-              className="group flex items-center gap-2 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              // The label is instrument type at 10.5px, which left the control
+              // itself 16px tall: under the 24px a finger needs. The padding is
+              // what makes it a target rather than just a word you can tap.
+              className="group flex min-h-6 items-center gap-2 rounded px-1.5 py-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
               <Hud>{swap.label}</Hud>
               <Hud strong className="group-hover:text-signal">

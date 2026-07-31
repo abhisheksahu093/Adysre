@@ -92,7 +92,7 @@ const SEGMENT_TONE: Record<Segment['type'], string> = {
 const VERDICT_TONE: Record<Verdict, string> = {
   matched: 'text-success',
   unmatched: 'text-muted-foreground',
-  skipped: 'text-muted-foreground/60',
+  skipped: 'text-muted-foreground',
   errored: 'text-danger',
 };
 
@@ -202,7 +202,7 @@ export async function RulesSection() {
                       <h3 className="truncate text-sm font-medium">{tHome(`panels.${lane.id}`)}</h3>
                       {/* The stage number carries the direction in every
                           language, so it needs no translation. */}
-                      <span className="ml-auto font-mono text-[10px] tracking-widest text-muted-foreground/60">
+                      <span className="ml-auto font-mono text-[10px] tracking-widest text-muted-foreground">
                         {String(index + 1).padStart(2, '0')}
                       </span>
                     </div>
@@ -291,7 +291,7 @@ export async function RulesSection() {
                           </div>
 
                           <div className="flex flex-col gap-2">
-                            <p className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground/70">
+                            <p className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
                               {tHome('trace')}
                             </p>
                             <ul className="flex flex-col gap-1.5">

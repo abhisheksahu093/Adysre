@@ -66,6 +66,25 @@ const nextConfig = {
   // dozens of files).
   experimental: {
     optimizePackageImports: ['lucide-react'],
+    /**
+     * Inline the route's CSS into the document instead of linking it.
+     *
+     * A stylesheet is render-blocking by definition: the browser will not paint
+     * until it has one, so the 53 KB chunk cost a whole extra round trip in
+     * front of first paint - measured at 430ms of the critical path, and the
+     * longest chain on the page (1,630ms) was the document followed by exactly
+     * this file. Inlined, the CSS arrives WITH the document that needs it and
+     * the chain is one hop.
+     *
+     * The trade is that the CSS is no longer separately cacheable across
+     * navigations, so a repeat visitor re-downloads it inside each document.
+     * That is the right way round for a marketing page, where the visit that
+     * matters is the first one and most visitors only ever have a first one.
+     *
+     * Compatible with the policy below, which already allows inline styles for
+     * next/font's injected faces; this needs nothing new from the CSP.
+     */
+    inlineCss: true,
   },
   headers: securityHeaders,
 };

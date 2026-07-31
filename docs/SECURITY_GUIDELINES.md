@@ -135,8 +135,26 @@ because the language switcher posts to `/api/locale` instead of writing the
 cookie with `document.cookie` — if you make anything in the browser read this
 cookie, that decision has to be revisited.
 
-The one deliberate exception is `adysre_csrf`, which is readable by design: the
-page's own JavaScript has to echo it back in a header (see §5).
+There are two deliberate exceptions, both readable by design.
+
+`adysre_csrf`, because the page's own JavaScript has to echo it back in a header
+(see §5).
+
+`adysre_session`, which is a flag and not a credential: one bit, value `1`,
+meaning "a refresh cookie exists, so it is worth asking the server who this is".
+The home page is statically prerendered and therefore cannot read cookies while
+rendering, so without it every anonymous visitor paid `GET /api/auth/me` → 401
+followed by `POST /api/auth/refresh` → 401 on the critical path, and got two
+console errors for it. The proxy writes it from the real HTTP-only refresh
+cookie on every page response, which keeps it honest and makes it self-healing
+for sessions that predate it.
+
+**It authorises nothing.** Anyone can set it in a console; all that buys them is
+a request that answers 401, exactly as before. The rule for reviewers is simple:
+if you find code branching on `adysre_session` for anything other than deciding
+whether to make a request, that is a bug. The real cookies stay `httpOnly`, and
+every answer still comes from a server-side check. See
+`apps/web/src/lib/auth/session-hint.ts`.
 
 ---
 
